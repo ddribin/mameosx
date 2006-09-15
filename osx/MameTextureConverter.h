@@ -1,0 +1,256 @@
+/*
+ *  MameTextureConverter.h
+ *  mameosx
+ *
+ *  Created by Dave Dribin on 9/12/06.
+ *
+ */
+
+#import <QuartzCore/QuartzCore.h>
+
+extern "C" {
+    
+#include "osdepend.h"
+#include "render.h"
+    
+}
+
+
+// Force inlining, even for non-optimized builds.  The performance impact is just
+// too high.
+#define inline inline __attribute__((always_inline))
+
+class MamePalette16PixelIterator
+{
+public:
+    MamePalette16PixelIterator(UINT16 * base, const rgb_t * palette)
+        : mCurrentPixel(base), mPalette(palette)
+    {
+    }
+    
+
+    UINT32 inline xrgb_value() const
+    {
+        return mPalette[*mCurrentPixel];
+    }
+
+    void inline next()
+    {
+        mCurrentPixel++;
+    }
+
+private:
+    UINT16 * mCurrentPixel;
+    const rgb_t * mPalette;
+};
+
+
+class MameARGB32PixelIterator
+{
+public:
+    MameARGB32PixelIterator(UINT32 * base)
+        : mCurrentPixel(base)
+    {
+    }
+    
+    UINT32 inline argb_value() const
+    {
+        return *mCurrentPixel;
+    }
+    
+    void inline next()
+    {
+        mCurrentPixel++;
+    }
+    
+private:
+    UINT32 * mCurrentPixel;
+};
+
+
+class MameTexture
+{
+public:
+    MameTexture(const render_texinfo * texture)
+        : mTexture(texture)
+    {
+    }
+    
+    int width() const
+    {
+        return mTexture->width;
+    }
+    
+    int height() const
+    {
+        return mTexture->height;
+    }
+    
+protected:
+        const render_texinfo * mTexture;
+};
+
+class MamePalette16Texture : public MameTexture
+{
+public:
+    typedef MamePalette16PixelIterator Iterator;
+
+    MamePalette16Texture(const render_texinfo * texture)
+        : MameTexture(texture)
+    {
+    }
+    
+    Iterator iteratorForRow(int row)
+    {
+        UINT16 * startAddress = (UINT16 *) mTexture->base;
+        startAddress += row * mTexture->rowpixels;
+        return Iterator(startAddress, mTexture->palette);
+    }
+};
+
+
+class MameARGB32Texture : public MameTexture
+{
+public:
+    typedef MameARGB32PixelIterator Iterator;
+    
+    MameARGB32Texture(const render_texinfo * texture)
+        : MameTexture(texture)
+    {
+    }
+    
+    Iterator iteratorForRow(int row)
+    {
+        UINT32 * startAddress = (UINT32 *) mTexture->base;
+        startAddress += row * mTexture->rowpixels;
+        return Iterator(startAddress);
+    }
+};
+
+class BGRA32PixelIterator
+{
+public:
+    static const int kPixelFormat = k32BGRAPixelFormat;
+    
+    BGRA32PixelIterator(UINT32 * base)
+        : mCurrentPixel(base)
+    {
+    }
+    
+    void inline copy_from(const MamePalette16PixelIterator & src)
+    {
+        UINT32 xrgb_value = src.xrgb_value();
+        *mCurrentPixel =
+            (xrgb_value & 0xff0000) >>  8 |
+            (xrgb_value & 0x00ff00) <<  8 |
+            (xrgb_value & 0x0000ff) << 24 |
+            0x000000ff;
+    }
+    
+    void inline copy_from(const MameARGB32PixelIterator & src)
+    {
+        UINT32 argb_value = src.argb_value();
+        *mCurrentPixel =
+            (argb_value & 0x000000ff) << 24 |
+            (argb_value & 0x0000ff00) <<  8 |
+            (argb_value & 0x00ff0000) >>  8 |
+            (argb_value & 0xff000000) >> 24;
+    }
+    
+    void inline next()
+    {
+        mCurrentPixel++;
+    }
+    
+private:
+    UINT32 * mCurrentPixel;
+};
+
+
+class ARGB32PixelIterator
+{
+public:
+    static const int kPixelFormat = k32ARGBPixelFormat;
+
+    ARGB32PixelIterator(UINT32 * base)
+        : mCurrentPixel(base)
+    {
+    }
+    
+    void inline copy_from(const MamePalette16PixelIterator & src)
+    {
+        UINT32 xrgb_value = src.xrgb_value();
+        *mCurrentPixel = 0xff000000 | xrgb_value;
+    }
+    
+    void inline copy_from(const MameARGB32PixelIterator & src)
+    {
+        *mCurrentPixel = src.argb_value();
+    }
+    
+    void inline next()
+    {
+        mCurrentPixel++;
+    }
+    
+private:
+    UINT32 * mCurrentPixel;
+};
+
+template <typename PixelIterator>
+class Generic32PixelBuffer
+{
+public:
+    typedef PixelIterator Iterator;
+    
+    static const int kPixelFormat = PixelIterator::kPixelFormat;
+    
+    Generic32PixelBuffer(void * base, size_t bytesPerRow)
+        : mBase(base), mBytesPerRow(bytesPerRow)
+    {
+    }
+    
+    Iterator iteratorForRow(int row)
+    {
+        UINT8 * startAddress = (UINT8 *) mBase;
+        startAddress += row * mBytesPerRow;
+        return Iterator((UINT32 *) startAddress);
+    }
+    
+private:
+    void * mBase;
+    size_t mBytesPerRow;
+};
+
+typedef Generic32PixelBuffer<ARGB32PixelIterator> ARGB32PixelBuffer;
+typedef Generic32PixelBuffer<BGRA32PixelIterator> BGRA32PixelBuffer;
+
+template <typename SourceType, typename DestType>
+inline void convertTexture(SourceType & source, DestType & dest)
+{
+    int height = source.height();
+    int width = source.width();
+    
+    for (int y = 0; y < height; y++)
+    {
+        typename SourceType::Iterator sourceIterator = source.iteratorForRow(y);
+        typename DestType::Iterator destIterator = dest.iteratorForRow(y);
+        
+        for (int x = 0; x < width; x++)
+        {
+            destIterator.copy_from(sourceIterator);
+            sourceIterator.next();
+            destIterator.next();
+        }
+    }
+};
+
+
+#if 0
+typedef BGRA32PixelBuffer PixelBuffer;
+#else
+typedef ARGB32PixelBuffer PixelBuffer;
+#endif
+
+
+#undef inline

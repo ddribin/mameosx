@@ -1,0 +1,19 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {filterChanged = id; nullAction = id; togglePause = id; }; 
+            CLASS = MameController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {mDrawer = NSDrawer; mFilterButton = NSPopUpButton; mMameView = MameView; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            CLASS = MameView; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {mController = MameController; }; 
+            SUPERCLASS = NSOpenGLView; 
+        }
+    ); 
+    IBVersion = 1; 
+}
