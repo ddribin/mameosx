@@ -477,7 +477,7 @@ static void cv_assert(CVReturn cr, NSString * message)
 }
 
 // refresh rate while paused
-#define PAUSED_REFRESH_RATE         60
+#define PAUSED_REFRESH_RATE         30
 
 - (void) updateThrottle: (mame_time) emutime;
 {
