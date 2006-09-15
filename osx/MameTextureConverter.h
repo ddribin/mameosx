@@ -130,7 +130,11 @@ public:
 class BGRA32PixelIterator
 {
 public:
+#if __BIG_ENDIAN
     static const int kPixelFormat = k32BGRAPixelFormat;
+#else
+    static const int kPixelFormat = k32ARGBPixelFormat;
+#endif
     
     BGRA32PixelIterator(UINT32 * base)
         : mCurrentPixel(base)
@@ -170,7 +174,11 @@ private:
 class ARGB32PixelIterator
 {
 public:
+#if __BIG_ENDIAN
     static const int kPixelFormat = k32ARGBPixelFormat;
+#else
+    static const int kPixelFormat = k32BGRAPixelFormat;
+#endif
 
     ARGB32PixelIterator(UINT32 * base)
         : mCurrentPixel(base)
@@ -246,10 +254,11 @@ inline void convertTexture(SourceType & source, DestType & dest)
 };
 
 
-#if 0
-typedef BGRA32PixelBuffer PixelBuffer;
-#else
+#if 1
+// ARGB32 is faster on OS X
 typedef ARGB32PixelBuffer PixelBuffer;
+#else
+typedef BGRA32PixelBuffer PixelBuffer;
 #endif
 
 

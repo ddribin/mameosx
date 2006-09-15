@@ -825,12 +825,9 @@ static UINT32 texture_compute_hash(const render_texinfo *texture, UINT32 flags)
     
     if (!texture->data)
     {
-        cv_assert(CVPixelBufferCreate(NULL, texture->rawwidth, texture->rawheight,
-#if __BIG_ENDIAN__
+        cv_assert(CVPixelBufferCreate(NULL, texture->rawwidth,
+                                      texture->rawheight,
                                       PixelBuffer::kPixelFormat,
-#else
-                                      k32ARGBPixelFormat,
-#endif
                                       NULL, &texture->data),
                   @"Could not create pixle buffer");
     }

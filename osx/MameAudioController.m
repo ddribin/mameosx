@@ -118,7 +118,9 @@ OSStatus static MyRenderer(void	* inRefCon,
     UInt32 formatFlags = 0
 		| kLinearPCMFormatFlagIsPacked
         | kLinearPCMFormatFlagIsSignedInteger 
+#if __BIG_ENDIAN__
         | kLinearPCMFormatFlagIsBigEndian
+#endif
         ;
 
 	// We tell the Output Unit what format we're going to supply data to it
