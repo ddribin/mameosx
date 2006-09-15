@@ -253,23 +253,6 @@
 		};
 /* End PBXBuildRule section */
 
-/* Begin PBXBuildStyle section */
-		553AD8410ABAF6C400535A7A /* Development */ = {
-			isa = PBXBuildStyle;
-			buildSettings = {
-				COPY_PHASE_STRIP = NO;
-			};
-			name = Development;
-		};
-		553AD8420ABAF6C400535A7A /* Deployment */ = {
-			isa = PBXBuildStyle;
-			buildSettings = {
-				COPY_PHASE_STRIP = YES;
-			};
-			name = Deployment;
-		};
-/* End PBXBuildStyle section */
-
 /* Begin PBXContainerItemProxy section */
 		5501E8A40AB276D400756C9B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2977,12 +2960,6 @@
 		556A42440AA4E9CE00602CC5 /* Project object */ = {
 			isa = PBXProject;
 			buildConfigurationList = 556A42450AA4E9CE00602CC5 /* Build configuration list for PBXProject "mameosx" */;
-			buildSettings = {
-			};
-			buildStyles = (
-				553AD8410ABAF6C400535A7A /* Development */,
-				553AD8420ABAF6C400535A7A /* Deployment */,
-			);
 			hasScannedForEncodings = 0;
 			mainGroup = 556A42420AA4E9CE00602CC5;
 			productRefGroup = 556A42510AA4E9E500602CC5 /* Products */;

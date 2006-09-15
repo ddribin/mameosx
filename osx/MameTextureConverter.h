@@ -130,7 +130,7 @@ public:
 class BGRA32PixelIterator
 {
 public:
-#if __BIG_ENDIAN
+#if __BIG_ENDIAN__
     static const int kPixelFormat = k32BGRAPixelFormat;
 #else
     static const int kPixelFormat = k32ARGBPixelFormat;
@@ -174,7 +174,7 @@ private:
 class ARGB32PixelIterator
 {
 public:
-#if __BIG_ENDIAN
+#if __BIG_ENDIAN__
     static const int kPixelFormat = k32ARGBPixelFormat;
 #else
     static const int kPixelFormat = k32BGRAPixelFormat;
