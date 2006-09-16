@@ -94,7 +94,7 @@
     unsigned bytesRead = [mBuffer readBytes: dest_p length: sizeof(dest)];
     STAssertEquals(bytesRead, 6U, nil);
     STAssertEquals(0, memcmp(source_p, dest_p, 3), nil);
-    STAssertEquals(0, memcmp(source_p+3, dest_p, 3), nil);
+    STAssertEquals(0, memcmp(source_p, dest_p+3, 3), nil);
     bytesRead = [mBuffer readBytes: dest_p length: sizeof(dest)];
     STAssertEquals(bytesRead, 0U, nil);
 }
