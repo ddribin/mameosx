@@ -320,17 +320,9 @@ static void cv_assert(CVReturn cr, NSString * message)
 - (void) initCoreVideoBuffer;
 {
     mLock = [[NSRecursiveLock alloc] init];
-    NSOpenGLPixelFormat*            glPixelFormat;
-    NSMutableDictionary*            bufferOptions;
 
     //Create the OpenGL context used to render the composition (a separate OpenGL context from the destination one is needed to render into CoreVideo OpenGL buffers)
-    NSOpenGLPixelFormatAttribute    attributes[] = {
-        NSOpenGLPFAPixelBuffer,
-        NSOpenGLPFAAccelerated,
-        NSOpenGLPFANoRecovery,
-        NSOpenGLPFADepthSize, (NSOpenGLPixelFormatAttribute) 24,
-        (NSOpenGLPixelFormatAttribute) 0};
-    glPixelFormat = [[[NSOpenGLPixelFormat alloc] initWithAttributes:attributes] autorelease];
+    NSOpenGLPixelFormat * glPixelFormat = [mMameView pixelFormat];
     mGlContext = [[NSOpenGLContext alloc] initWithFormat:glPixelFormat shareContext:nil];
     [mGlContext makeCurrentContext];
     
@@ -347,7 +339,7 @@ static void cv_assert(CVReturn cr, NSString * message)
     glOrtho(0.0, (GLdouble)mWindowWidth, (GLdouble)mWindowHeight, 0.0, 0.0, -1.0);
     
 
-    bufferOptions = [NSMutableDictionary dictionary];
+    NSMutableDictionary * bufferOptions = [NSMutableDictionary dictionary];
     [bufferOptions setValue:[NSNumber numberWithInt: mWindowWidth]
                      forKey:(NSString*)kCVOpenGLBufferWidth];
     [bufferOptions setValue:[NSNumber numberWithInt: mWindowHeight]
