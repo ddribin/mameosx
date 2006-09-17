@@ -19,7 +19,28 @@
  * The key states above 511 are for modifier keys.
  */
 
-#define FUNC_TO_INDEX(_func_unichar_) (_func_unichar_ - 0xF700 + 256)
+#define FIRST_FUNCTION_KEY 0xF700
+#define LAST_FUNCTION_KEY 0xF7FF
+#define FUNCTION_KEY_INDEX_BASE 256
+
+static inline BOOL isAscii(unichar code)
+{
+    if (code < 256)
+        return YES;
+    else
+        return NO;
+}
+
+static inline BOOL isFunctionKey(unichar code)
+{
+    if ((code >= FIRST_FUNCTION_KEY) && (code <= LAST_FUNCTION_KEY))
+        return YES;
+    else
+        return NO;
+}
+
+// This needs to be a macro so it can be used in the codelist initializer
+#define FUNC_TO_INDEX(_func_unichar_) (_func_unichar_ - FIRST_FUNCTION_KEY + 256)
 
 enum
 {
@@ -141,11 +162,11 @@ static os_code_info codelist[] = {
 {
     NSString * characters = [event charactersIgnoringModifiers];
     unichar firstChar = [characters characterAtIndex: 0];
-    if (firstChar < 256)
+    if (isAscii(firstChar))
     {
         mKeyStates[firstChar] = 1;
     }
-    else if ((firstChar >= 0xF700) && (firstChar <= 0xF7FF))
+    else if (isFunctionKey(firstChar))
     {
         mKeyStates[FUNC_TO_INDEX(firstChar)] = 1;
     }
@@ -155,12 +176,11 @@ static os_code_info codelist[] = {
 {
     NSString * characters = [event charactersIgnoringModifiers];
     unichar firstChar = [characters characterAtIndex: 0];
-    if (firstChar < 256)
+    if (isAscii(firstChar))
     {
-        int index = firstChar;
-        mKeyStates[index] = 0;
+        mKeyStates[firstChar] = 0;
     }
-    else if ((firstChar >= 0xF700) && (firstChar <= 0xF7FF))
+    else if (isFunctionKey(firstChar))
     {
         mKeyStates[FUNC_TO_INDEX(firstChar)] = 0;
     }
