@@ -47,6 +47,7 @@ enum
     MAME_OSX_CONTROL = 512,
     MAME_OSX_OPTION,
     MAME_OSX_COMMAND,
+    MAME_OSX_SHIFT,
 
     MAME_OSX_NUM_KEYSTATES
 };
@@ -54,6 +55,8 @@ enum
 static os_code_info codelist[] = {
     {"ESC",     '\e',   KEYCODE_ESC},
     {"Tab",     '\t',   KEYCODE_TAB},
+    {"Return",  '\r',   KEYCODE_ENTER},
+    
     {"1",       '1',    KEYCODE_1},
     {"2",       '2',    KEYCODE_2},
     {"3",       '3',    KEYCODE_3},
@@ -115,9 +118,10 @@ static os_code_info codelist[] = {
     {"F15",		FUNC_TO_INDEX(NSF15FunctionKey),		KEYCODE_F15},
 	
     
-    {"Control", MAME_OSX_CONTROL,     KEYCODE_LCONTROL},
-    {"Option",  MAME_OSX_OPTION,      KEYCODE_LALT},
-    {"Command", MAME_OSX_COMMAND,     KEYCODE_LWIN},
+    {"Control", MAME_OSX_CONTROL,   KEYCODE_LCONTROL},
+    {"Option",  MAME_OSX_OPTION,    KEYCODE_LALT},
+    {"Command", MAME_OSX_COMMAND,   KEYCODE_LWIN},
+    {"Shift",   MAME_OSX_SHIFT,     KEYCODE_LSHIFT},
     
     {0,         0,      0}
 };
