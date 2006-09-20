@@ -6,6 +6,8 @@
 //
 
 #import "MameConfiguration.h"
+#import "MameController.h"
+#import "MameFileManager.h"
 #include "mame.h"
 
 @implementation MameConfiguration
@@ -116,6 +118,16 @@ static MameConfiguration * sGlobalConfiguration = nil;
     return sGlobalConfiguration;
 }
 
+- (id) initWithController: (MameController *) controller;
+{
+    if ([super init] == nil)
+        return nil;
+    
+    mController = controller;
+    
+    return self;
+}
+
 - (void) dealloc
 {
     if (mRomPath != 0)
@@ -136,8 +148,14 @@ static MameConfiguration * sGlobalConfiguration = nil;
     [self setSoundEnabled: [defaults boolForKey: MameSoundEnabled]];
     
     cli_init();
-    [self setRomPath: [[defaults stringForKey: MameRomPath] UTF8String]];
+    NSString * romPath = [defaults stringForKey: MameRomPath];
+    [self setRomPath: [romPath UTF8String]];
     options_set_string("rompath", mRomPath);
+    MameFileManager * fileManager = [mController fileManager];
+    [fileManager setPaths: [NSArray arrayWithObject: romPath]
+                  forType: FILETYPE_ROM];
+    [fileManager setPaths: [NSArray arrayWithObject: @"cfg"]
+                  forType: FILETYPE_CONFIG];
     
 #ifdef MAME_DEBUG
     options.mame_debug = [defaults boolForKey: MameDebugKey];

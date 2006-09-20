@@ -3,6 +3,7 @@
 #import "MameController.h"
 #import "MameInputController.h"
 #import "MameAudioController.h"
+#import "MameFileManager.h"
 
 #include <unistd.h>
 
@@ -206,6 +207,177 @@ const char *osd_get_fps_text(const performance_info *performance)
 {
     return "DLD FPS: 0";
 }
+
+
+/******************************************************************************
+
+    File I/O
+
+******************************************************************************/
+
+static MameFileManager * sFileManager = nil;
+
+void osd_set_file_manager(MameFileManager * fileManager)
+{
+    sFileManager = fileManager;
+}
+
+#if 1
+const char * osd_pathtype_string(int pathtype)
+{
+    switch(pathtype)
+    {
+        case FILETYPE_RAW: return "FILETYPE_RAW";
+        case FILETYPE_ROM: return "FILETYPE_ROM";
+        case FILETYPE_IMAGE: return "FILETYPE_IMAGE";
+        case FILETYPE_IMAGE_DIFF: return "FILETYPE_IMAGE_DIFF";
+        case FILETYPE_SAMPLE: return "FILETYPE_SAMPLE";
+        case FILETYPE_ARTWORK: return "FILETYPE_ARTWORK";
+        case FILETYPE_NVRAM: return "FILETYPE_NVRAM";
+        case FILETYPE_HIGHSCORE: return "FILETYPE_HIGHSCORE";
+        case FILETYPE_HIGHSCORE_DB: return "FILETYPE_HIGHSCORE_DB";
+        case FILETYPE_CONFIG: return "FILETYPE_CONFIG";
+        case FILETYPE_INPUTLOG: return "FILETYPE_INPUTLOG";
+        case FILETYPE_STATE: return "FILETYPE_STATE";
+        case FILETYPE_MEMCARD: return "FILETYPE_MEMCARD";
+        case FILETYPE_SCREENSHOT: return "FILETYPE_SCREENSHOT";
+        case FILETYPE_MOVIE: return "FILETYPE_MOVIE";
+        case FILETYPE_HISTORY: return "FILETYPE_HISTORY";
+        case FILETYPE_CHEAT: return "FILETYPE_CHEAT";
+        case FILETYPE_LANGUAGE: return "FILETYPE_LANGUAGE";
+        case FILETYPE_CTRLR: return "FILETYPE_CTRLR";
+        case FILETYPE_INI: return "FILETYPE_INI";
+        case FILETYPE_COMMENT: return "FILETYPE_COMMENT";
+        case FILETYPE_DEBUGLOG: return "FILETYPE_DEBUGLOG";
+        case FILETYPE_HASH: return "FILETYPE_HASH";
+        case FILETYPE_FONT: return "FILETYPE_FONT";
+        default: return "FILETYPE uknown";
+    }
+}
+
+/* Return the number of paths for a given type */
+int osd_get_path_count(int pathtype)
+{
+    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+    int rc = [sFileManager osd_get_path_count: pathtype];
+    [pool release];
+    return rc;
+}
+
+/* Get information on the existence of a file */
+int osd_get_path_info(int pathtype, int pathindex, const char *filename)
+{
+    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+    int rc = [sFileManager osd_get_path_info: pathtype
+                                   pathindex: pathindex
+                                    filename: filename];
+    [pool release];
+    return rc;
+}
+
+/* Create a directory if it doesn't already exist */
+int osd_create_directory(int pathtype, int pathindex, const char *dirname)
+{
+    printf("osd_create_directory(%s, %d, %s)\n", osd_pathtype_string(pathtype), pathindex, dirname);
+    return 0;
+}
+
+/* Attempt to open a file with the given name and mode using the specified path type */
+osd_file *osd_fopen(int pathtype, int pathindex, const char *filename, const char *mode, osd_file_error *error)
+{
+    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+    osd_file * rc = [sFileManager osd_fopen: pathtype
+                                  pathindex: pathindex
+                                   filename: filename
+                                       mode: mode
+                                      error: error];
+    [pool release];
+    return rc;
+}
+
+/* Seek within a file */
+int osd_fseek(osd_file *file, INT64 offset, int whence)
+{
+    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+    int rc = [sFileManager osd_fseek: file
+                              offset: offset
+                              whence: whence];
+    [pool release];
+    return rc;
+}
+
+/* Return current file position */
+UINT64 osd_ftell(osd_file *file)
+{
+    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+    int rc = [sFileManager osd_ftell: file];
+    [pool release];
+    return rc;
+}    
+
+/* Return 1 if we're at the end of file */
+int osd_feof(osd_file *file)
+{
+    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+    int rc = [sFileManager osd_feof: file];
+    [pool release];
+    return rc;
+}
+
+/* Read bytes from a file */
+UINT32 osd_fread(osd_file *file, void *buffer, UINT32 length)
+{
+    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+    int rc = [sFileManager osd_fread: file
+                              buffer: buffer
+                              length: length];
+    [pool release];
+    return rc;
+}
+
+/* Write bytes to a file */
+UINT32 osd_fwrite(osd_file *file, const void *buffer, UINT32 length)
+{
+    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+    int rc = [sFileManager osd_fwrite: file
+                               buffer: buffer
+                               length: length];
+    [pool release];
+    return rc;
+}
+
+/* Close an open file */
+void osd_fclose(osd_file *file)
+{
+    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+    [sFileManager osd_fclose: file];
+    [pool release];
+}
+
+void set_pathlist(int file_type, const char *new_rawpath)
+{
+}
+
+//============================================================
+//	osd_display_loading_rom_message
+//============================================================
+
+// called while loading ROMs. It is called a last time with name == 0 to signal
+// that the ROM loading process is finished.
+// return non-zero to abort loading
+int osd_display_loading_rom_message(const char *name, rom_load_data *romdata)
+{
+	if (name)
+		fprintf(stdout, "loading %-12s\r", name);
+	else
+		fprintf(stdout, "                    \r");
+	fflush(stdout);
+    
+	return 0;
+}
+
+#endif
+
 
 /******************************************************************************
 

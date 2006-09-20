@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		5501E89D0AB2764700756C9B /* CircularBufferTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5501E89C0AB2764700756C9B /* CircularBufferTest.m */; };
 		5501E9020AB27D3F00756C9B /* CircularBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5501E8440AB232B900756C9B /* CircularBuffer.m */; };
+		5548EBE80ABCA30E008D1F74 /* MameFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5548EBE70ABCA30E008D1F74 /* MameFileManager.m */; };
+		5548ECDF0ABCB463008D1F74 /* MameFileManagerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5548ECDE0ABCB463008D1F74 /* MameFileManagerTest.m */; };
+		5548EDCB0ABE3CEF008D1F74 /* file.txt in Resources */ = {isa = PBXBuildFile; fileRef = 5548EDCA0ABE3CEF008D1F74 /* file.txt */; };
 		556A42D70AA4EBB300602CC5 /* audit.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A42740AA4EB9200602CC5 /* audit.c */; };
 		556A42D80AA4EBB300602CC5 /* audit.h in Headers */ = {isa = PBXBuildFile; fileRef = 556A42750AA4EB9200602CC5 /* audit.h */; };
 		556A42D90AA4EBB300602CC5 /* chd.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A42760AA4EB9200602CC5 /* chd.c */; };
@@ -186,7 +189,6 @@
 		556A4DA10AA5158400602CC5 /* liblocalexpat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 556A49BB0AA4F86600602CC5 /* liblocalexpat.a */; };
 		556A4DA20AA5158400602CC5 /* liblocalzlib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 556A4A010AA4F8EC00602CC5 /* liblocalzlib.a */; };
 		556A4DB30AA515DA00602CC5 /* config.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A4DAE0AA515DA00602CC5 /* config.c */; };
-		556A4DB40AA515DA00602CC5 /* fileio.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A4DB00AA515DA00602CC5 /* fileio.c */; };
 		556A4DB50AA515DA00602CC5 /* misc.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A4DB10AA515DA00602CC5 /* misc.c */; };
 		556A4E120AA5193E00602CC5 /* fronthlp.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A4E110AA5193E00602CC5 /* fronthlp.c */; };
 		556A4E660AA51BD700602CC5 /* jrpacman.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A4E630AA51BD700602CC5 /* jrpacman.c */; };
@@ -320,6 +322,11 @@
 		5501E89B0AB2764700756C9B /* CircularBufferTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircularBufferTest.h; sourceTree = "<group>"; };
 		5501E89C0AB2764700756C9B /* CircularBufferTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircularBufferTest.m; sourceTree = "<group>"; };
 		5503D7F30AB7B63E003F407E /* MameTextureConverter.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = MameTextureConverter.h; sourceTree = "<group>"; };
+		5548EBE60ABCA30E008D1F74 /* MameFileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MameFileManager.h; sourceTree = "<group>"; };
+		5548EBE70ABCA30E008D1F74 /* MameFileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MameFileManager.m; sourceTree = "<group>"; };
+		5548ECDD0ABCB463008D1F74 /* MameFileManagerTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MameFileManagerTest.h; sourceTree = "<group>"; };
+		5548ECDE0ABCB463008D1F74 /* MameFileManagerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MameFileManagerTest.m; sourceTree = "<group>"; };
+		5548EDCA0ABE3CEF008D1F74 /* file.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = file.txt; sourceTree = "<group>"; };
 		556A42740AA4EB9200602CC5 /* audit.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = audit.c; sourceTree = "<group>"; };
 		556A42750AA4EB9200602CC5 /* audit.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = audit.h; sourceTree = "<group>"; };
 		556A42760AA4EB9200602CC5 /* chd.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = chd.c; sourceTree = "<group>"; };
@@ -1215,12 +1222,23 @@
 		5501E89A0AB2762700756C9B /* Unit Tests */ = {
 			isa = PBXGroup;
 			children = (
+				5548EDC90ABE3CC7008D1F74 /* Resources */,
 				5501E8920AB275FA00756C9B /* UnitTests-Info.plist */,
 				5501E89B0AB2764700756C9B /* CircularBufferTest.h */,
 				5501E89C0AB2764700756C9B /* CircularBufferTest.m */,
+				5548ECDD0ABCB463008D1F74 /* MameFileManagerTest.h */,
+				5548ECDE0ABCB463008D1F74 /* MameFileManagerTest.m */,
 			);
 			name = "Unit Tests";
 			path = tests;
+			sourceTree = "<group>";
+		};
+		5548EDC90ABE3CC7008D1F74 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				5548EDCA0ABE3CEF008D1F74 /* file.txt */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 		556A42420AA4E9CE00602CC5 = {
@@ -2332,6 +2350,8 @@
 				5503D7F30AB7B63E003F407E /* MameTextureConverter.h */,
 				5501E8430AB232B900756C9B /* CircularBuffer.h */,
 				5501E8440AB232B900756C9B /* CircularBuffer.m */,
+				5548EBE60ABCA30E008D1F74 /* MameFileManager.h */,
+				5548EBE70ABCA30E008D1F74 /* MameFileManager.m */,
 				55744C190AAB4FC800EC1423 /* osinline.h */,
 				5574492D0AAB28D900EC1423 /* osd_cpu.h */,
 				556A4DAE0AA515DA00602CC5 /* config.c */,
@@ -2983,6 +3003,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5548EDCB0ABE3CEF008D1F74 /* file.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3018,6 +3039,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5501E89D0AB2764700756C9B /* CircularBufferTest.m in Sources */,
+				5548ECDF0ABCB463008D1F74 /* MameFileManagerTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3180,7 +3202,6 @@
 				556A4CEF0AA5117200602CC5 /* MameController.mm in Sources */,
 				556A4D8A0AA514C300602CC5 /* osd_osx.m in Sources */,
 				556A4DB30AA515DA00602CC5 /* config.c in Sources */,
-				556A4DB40AA515DA00602CC5 /* fileio.c in Sources */,
 				556A4DB50AA515DA00602CC5 /* misc.c in Sources */,
 				556A4E120AA5193E00602CC5 /* fronthlp.c in Sources */,
 				556A51170AA54C4600602CC5 /* MameView.m in Sources */,
@@ -3189,6 +3210,7 @@
 				55FE25E80AAD2F6100C4054A /* MameAudioController.m in Sources */,
 				5501E9020AB27D3F00756C9B /* CircularBuffer.m in Sources */,
 				55BB89350AB90EAB00B7933B /* MameConfiguration.m in Sources */,
+				5548EBE80ABCA30E008D1F74 /* MameFileManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3269,7 +3291,7 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Cocoa.framework/Headers/Cocoa.h";
+				GCC_PREFIX_HEADER = mame.pch;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_PEDANTIC = NO;
 				GCC_WARN_UNINITIALIZED_AUTOS = NO;

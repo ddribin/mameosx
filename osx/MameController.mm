@@ -9,6 +9,7 @@
 #import "MameView.h"
 #import "MameInputController.h"
 #import "MameAudioController.h"
+#import "MameFileManager.h"
 #import "MameConfiguration.h"
 #import <OpenGL/OpenGL.h>
 #import <OpenGL/gl.h>
@@ -77,8 +78,9 @@ void leaks_sleeper()
         return nil;
    
     mInputController = [[MameInputController alloc] init];
-    mAudioController = [[MameAudioController alloc] init];
-    mConfiguration = [[MameConfiguration globalConfiguration] retain];
+    mAudioController = [[MameAudioController alloc] initWithController: self];
+    mFileManager = [[MameFileManager alloc] init];
+    mConfiguration = [[MameConfiguration alloc] initWithController: self];
     mSyncToRefresh = NO;
 
     return self;
@@ -94,6 +96,7 @@ void leaks_sleeper()
     osd_set_controller(self);
     osd_set_input_controller(mInputController);
     osd_set_audio_controller(mAudioController);
+    osd_set_file_manager(mFileManager);
     
     [mDrawer setContentSize: NSMakeSize(20, 60)];
     mIsFiltered = NO;
@@ -165,6 +168,11 @@ void leaks_sleeper()
 - (MameConfiguration *) configuration;
 {
     return mConfiguration;
+}
+
+- (MameFileManager *) fileManager;
+{
+    return mFileManager;
 }
 
 - (int) osd_update: (mame_time) emutime;

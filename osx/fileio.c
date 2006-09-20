@@ -27,7 +27,7 @@
 #endif
 
 
-#define VERBOSE				0
+#define VERBOSE				1
 
 #define MAX_OPEN_FILES		128
 #define FILE_BUFFER_SIZE	256

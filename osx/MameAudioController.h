@@ -9,9 +9,12 @@
 #import <AudioUnit/AudioUnit.h>
 #include "osdepend.h"
 
+@class MameController;
 @class CircularBuffer;
 
-@interface MameAudioController : NSObject {
+@interface MameAudioController : NSObject
+{
+    MameController * mController;
     int mAttenuation;
     AudioUnit mOutputUnit;
     CircularBuffer * mBuffer;
@@ -34,6 +37,8 @@
     uint64_t mOverflows;
     uint64_t mUnderflows;
 }
+
+- (id) initWithController: (MameController *) controller;
 
 - (void) osd_init;
 

@@ -49,6 +49,7 @@ struct _texture_info
 @class MameView;
 @class MameInputController;
 @class MameAudioController;
+@class MameFileManager;
 @class MameConfiguration;
 
 @interface MameController : NSObject
@@ -58,6 +59,7 @@ struct _texture_info
     IBOutlet NSDrawer * mDrawer;
     MameInputController * mInputController;
     MameAudioController * mAudioController;
+    MameFileManager * mFileManager;
     MameConfiguration * mConfiguration;
     cycles_t mCyclesPerSecond;
     render_target * mTarget;
@@ -95,6 +97,8 @@ struct _texture_info
 }
 
 - (MameConfiguration *) configuration;
+
+- (MameFileManager *) fileManager;
 
 - (BOOL) isFiltered;
 - (void) setIsFiltered: (BOOL) flag;

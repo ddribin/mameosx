@@ -6,6 +6,7 @@
 //
 
 #import "MameAudioController.h"
+#import "MameController.h"
 #import "MameConfiguration.h"
 #import "CircularBuffer.h"
 
@@ -66,11 +67,12 @@ OSStatus static MyRenderer(void	* inRefCon,
 
 @implementation MameAudioController
 
-- (id) init
+- (id) initWithController: (MameController *) controller;
 {
     if ([super init] == nil)
         return nil;
     
+    mController = controller;
     mBuffer = nil;
     mOverflows = 0;
     mUnderflows = 0;
@@ -184,7 +186,7 @@ OSStatus static MyRenderer(void	* inRefCon,
     
 	// Start the rendering
 	// The DefaultOutputUnit will do any format conversions to the format of the default device
-    if ([[MameConfiguration globalConfiguration] soundEnabled])
+    if ([[mController configuration] soundEnabled])
     {
         err = AudioOutputUnitStart (mOutputUnit);
         if (err) { NSLog(@"AudioOutputUnitStart=%ld", err); return; }
