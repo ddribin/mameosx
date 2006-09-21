@@ -1215,20 +1215,30 @@
 		5501E89A0AB2762700756C9B /* Unit Tests */ = {
 			isa = PBXGroup;
 			children = (
-				5548EDC90ABE3CC7008D1F74 /* Resources */,
-				5501E8920AB275FA00756C9B /* UnitTests-Info.plist */,
 				5501E89B0AB2764700756C9B /* CircularBufferTest.h */,
 				5501E89C0AB2764700756C9B /* CircularBufferTest.m */,
 				5548ECDD0ABCB463008D1F74 /* MameFileManagerTest.h */,
 				5548ECDE0ABCB463008D1F74 /* MameFileManagerTest.m */,
+				5548EDC90ABE3CC7008D1F74 /* Resources */,
 			);
 			name = "Unit Tests";
 			path = tests;
 			sourceTree = "<group>";
 		};
+		551A621A0AC2564100AECE1E /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				556A4C2A0AA50D6200602CC5 /* Info.plist */,
+				556A4C500AA50E5800602CC5 /* MainMenu.nib */,
+				551A61390AC24B2000AECE1E /* ui.bdf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		5548EDC90ABE3CC7008D1F74 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				5501E8920AB275FA00756C9B /* UnitTests-Info.plist */,
 				5548EDCA0ABE3CEF008D1F74 /* file.txt */,
 			);
 			name = Resources;
@@ -2330,7 +2340,6 @@
 		556A4C5A0AA50E7200602CC5 /* osx */ = {
 			isa = PBXGroup;
 			children = (
-				551A61390AC24B2000AECE1E /* ui.bdf */,
 				556A4CED0AA5117200602CC5 /* MameController.h */,
 				556A4CEE0AA5117200602CC5 /* MameController.mm */,
 				55CDE6E20AAC60CB0021CEA0 /* MameInputController.h */,
@@ -2351,8 +2360,7 @@
 				55CDE8D70AAC93E90021CEA0 /* osd_osx.h */,
 				556A4D890AA514C300602CC5 /* osd_osx.m */,
 				556A4C650AA50F2800602CC5 /* main.m */,
-				556A4C2A0AA50D6200602CC5 /* Info.plist */,
-				556A4C500AA50E5800602CC5 /* MainMenu.nib */,
+				551A621A0AC2564100AECE1E /* Resources */,
 			);
 			path = osx;
 			sourceTree = "<group>";
