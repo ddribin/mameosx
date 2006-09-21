@@ -17,7 +17,6 @@
     BOOL mSyncToRefresh;
     BOOL mSoundEnabled;
     
-    char * mRomPath;
     char * mSaveGame;
     char * mBios;
 }
@@ -34,9 +33,6 @@
 
 - (BOOL) soundEnabled;
 - (void) setSoundEnabled: (BOOL) flag;
-
-- (const char *) romPath;
-- (void) setRomPath: (const char *) newRomPath;
 
 - (const char *) saveGame;
 - (void) setSaveGame: (const char *) newSaveGame;

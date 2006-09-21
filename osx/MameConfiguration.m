@@ -152,8 +152,6 @@ static MameConfiguration * sGlobalConfiguration = nil;
 
 - (void) dealloc
 {
-    if (mRomPath != 0)
-        free(mRomPath);
     if (mSaveGame != 0)
         free(mSaveGame);
     if (mBios != 0)
@@ -240,29 +238,6 @@ static MameConfiguration * sGlobalConfiguration = nil;
 - (void) setSoundEnabled: (BOOL) flag
 {
     mSoundEnabled = flag;
-}
-
-//=========================================================== 
-//  romPath 
-//=========================================================== 
-- (char *) romPath
-{
-    return mRomPath; 
-}
-
-- (void) setRomPath: (char *) newRomPath
-{
-    if (mRomPath != 0)
-    {
-        free(mRomPath);
-        mRomPath = 0;
-    }
-
-    if (newRomPath != 0)
-    {
-        mRomPath = malloc(strlen(newRomPath) + 1);
-        strcpy(mRomPath, newRomPath);
-    }
 }
 
 //=========================================================== 
