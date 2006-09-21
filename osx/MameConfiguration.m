@@ -20,7 +20,19 @@
 @implementation MameConfiguration
 
 NSString * MameRomPath = @"RomPath";
+NSString * MameSamplePath = @"SamplePath";
 NSString * MameConfigPath = @"ConfigPath";
+NSString * MameNvramPath = @"NvramPath";
+NSString * MameMemcardPath = @"MemcardPath";
+NSString * MameInputPath = @"InputPath";
+NSString * MameHighScorePath = @"HighScorePath";
+NSString * MameStatePath = @"StatePath";
+NSString * MameArtworkPath = @"ArtworkPath";
+NSString * MameSnapshotPath = @"SnapshotPath";
+NSString * MameDiffPath = @"DiffPath";
+NSString * MameCtrlrPath = @"CtrlrPath";
+NSString * MameCommentPath = @"CommentPath";
+NSString * MameCheatPath = @"CheatPath";
 
 NSString * MameThrottledKey = @"Throttled";
 NSString * MameSyncToRefreshKey = @"SyncToRefresh";
@@ -311,8 +323,16 @@ static MameConfiguration * sGlobalConfiguration = nil;
         NSString * path;
     }
     defaultPaths[] = {
-    { MameRomPath,          @"ROMs"},
-    { MameConfigPath,       @"Config"},
+    { MameRomPath,          @"ROMs" },
+    { MameSamplePath,       @"Sound Samples" },
+    { MameConfigPath,       @"Config" },
+    { MameNvramPath,        @"NVRAM" },
+    { MameMemcardPath,      @"Memcard" },
+    { MameInputPath,        @"Input" },
+    { MameHighScorePath,    @"High Scores" },
+    { MameStatePath,        @"States" },
+    { MameArtworkPath,      @"Cabinet Art" },
+    { MameSnapshotPath,     @"Screenshots" },
     { 0, nil }
     };
     
@@ -342,7 +362,19 @@ static MameConfiguration * sGlobalConfiguration = nil;
     defaultPaths[] = {
     { FILETYPE_ROM,         MameRomPath },
     { FILETYPE_IMAGE,       MameRomPath },
+    { FILETYPE_IMAGE_DIFF,  MameDiffPath },
+    { FILETYPE_SAMPLE,      MameSamplePath },
+    { FILETYPE_ARTWORK,     MameArtworkPath },
+    { FILETYPE_NVRAM,       MameNvramPath },
+    { FILETYPE_HIGHSCORE,   MameHighScorePath },
     { FILETYPE_CONFIG,      MameConfigPath },
+    { FILETYPE_INPUTLOG,    MameInputPath },
+    { FILETYPE_STATE,       MameStatePath },
+    { FILETYPE_MEMCARD,     MameMemcardPath },
+    { FILETYPE_SCREENSHOT,  MameSnapshotPath },
+    { FILETYPE_MOVIE,       MameSnapshotPath },
+    { FILETYPE_CTRLR,       MameCtrlrPath },
+    { FILETYPE_COMMENT,     MameCommentPath },
     { 0, nil }
     };
     
@@ -350,7 +382,11 @@ static MameConfiguration * sGlobalConfiguration = nil;
     int i;
     for (i = 0; defaultPaths[i].preference != nil; i++)
     {
-        [fileManager setPath: [defaults stringForKey: defaultPaths[i].preference]
+        NSString * defaultValue =
+            [defaults stringForKey: defaultPaths[i].preference];
+        if (defaultValue == nil)
+            continue;
+        [fileManager setPath: defaultValue
                      forType: defaultPaths[i].pathtype];
     }
 }
