@@ -42,6 +42,11 @@ struct _osd_file
     [mPathsByType setObject: paths forKey: [NSNumber numberWithInt: pathtype]];
 }
 
+- (void) setPath: (NSString *) path forType: (int) pathtype;
+{
+    [self setPaths: [NSArray arrayWithObject: path] forType: pathtype];
+}
+
 - (NSArray *) pathsForType: (int) pathtype;
 {
     NSArray * paths = [mPathsByType objectForKey: [NSNumber numberWithInt: pathtype]];

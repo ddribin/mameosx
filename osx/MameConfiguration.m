@@ -10,11 +10,20 @@
 #import "MameFileManager.h"
 #include "mame.h"
 
+@interface MameConfiguration (Private)
+
++ (void) initializeDefaultPaths: (NSMutableDictionary *) defaultValues;
+- (void) loadDefaultPaths: (NSUserDefaults *) defaults;
+
+@end
+
 @implementation MameConfiguration
+
+NSString * MameRomPath = @"RomPath";
+NSString * MameConfigPath = @"ConfigPath";
 
 NSString * MameThrottledKey = @"Throttled";
 NSString * MameSyncToRefreshKey = @"SyncToRefresh";
-NSString * MameRomPath = @"RomPath";
 NSString * MameSoundEnabled = @"SoundEnabled";
 
 #ifdef MAME_DEBUG
@@ -50,12 +59,13 @@ NSString * MameDebugDepthKey = @"DebugDepth";
 {
     NSMutableDictionary * defaultValues = [NSMutableDictionary dictionary];
     
+    [self initializeDefaultPaths: defaultValues];
+
     [defaultValues setObject: [NSNumber numberWithBool: YES]
                       forKey: MameThrottledKey];
     [defaultValues setObject: [NSNumber numberWithBool: YES]
                       forKey: MameSyncToRefreshKey];
-    [defaultValues setObject: [@"~/Documents/MacMAME User Data/ROMs" stringByExpandingTildeInPath]
-                      forKey: MameRomPath];
+
     [defaultValues setObject: [NSNumber numberWithBool: YES]
                       forKey: MameSoundEnabled];
     
@@ -143,19 +153,12 @@ static MameConfiguration * sGlobalConfiguration = nil;
 - (void) loadUserDefaults;
 {
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+
+    [self loadDefaultPaths: defaults];
+
     [self setThrottled: [defaults boolForKey: MameThrottledKey]];
     [self setSyncToRefresh: [defaults boolForKey: MameSyncToRefreshKey]];
     [self setSoundEnabled: [defaults boolForKey: MameSoundEnabled]];
-    
-    cli_init();
-    NSString * romPath = [defaults stringForKey: MameRomPath];
-    [self setRomPath: [romPath UTF8String]];
-    options_set_string("rompath", mRomPath);
-    MameFileManager * fileManager = [mController fileManager];
-    [fileManager setPaths: [NSArray arrayWithObject: romPath]
-                  forType: FILETYPE_ROM];
-    [fileManager setPaths: [NSArray arrayWithObject: @"cfg"]
-                  forType: FILETYPE_CONFIG];
     
 #ifdef MAME_DEBUG
     options.mame_debug = [defaults boolForKey: MameDebugKey];
@@ -293,6 +296,62 @@ static MameConfiguration * sGlobalConfiguration = nil;
     {
         mBios = malloc(strlen(newBios) + 1);
         strcpy(mBios, newBios);
+    }
+}
+
+@end
+
+@implementation MameConfiguration (Private)
+
++ (void) initializeDefaultPaths: (NSMutableDictionary *) defaultValues;
+{
+    const struct
+    {
+        NSString * preference;
+        NSString * path;
+    }
+    defaultPaths[] = {
+    { MameRomPath,          @"ROMs"},
+    { MameConfigPath,       @"Config"},
+    { 0, nil }
+    };
+    
+    NSArray * paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString * baseDirectory = @"";
+    if ([paths count] > 0)
+    {
+        baseDirectory = [paths objectAtIndex: 0];
+        baseDirectory = [baseDirectory stringByAppendingPathComponent: @"MacMAME User Data"];
+    }
+    
+    int i;
+    for (i = 0; defaultPaths[i].path != nil; i++)
+    {
+        NSString * path = [baseDirectory stringByAppendingPathComponent: defaultPaths[i].path];
+        [defaultValues setObject: path forKey: defaultPaths[i].preference];
+    }
+}
+
+- (void) loadDefaultPaths: (NSUserDefaults *) defaults;
+{
+    const struct
+    {
+        int pathtype;
+        NSString * preference;
+    }
+    defaultPaths[] = {
+    { FILETYPE_ROM,         MameRomPath },
+    { FILETYPE_IMAGE,       MameRomPath },
+    { FILETYPE_CONFIG,      MameConfigPath },
+    { 0, nil }
+    };
+    
+    MameFileManager * fileManager = [mController fileManager];
+    int i;
+    for (i = 0; defaultPaths[i].preference != nil; i++)
+    {
+        [fileManager setPath: [defaults stringForKey: defaultPaths[i].preference]
+                     forType: defaultPaths[i].pathtype];
     }
 }
 

@@ -41,6 +41,7 @@ enum
     TEXTURE_TYPE_SURFACE
 };
 
+- (void) setUpDefaultPaths;
 - (NSString *) getGameNameToRun;
 - (int) getGameIndex: (NSString *) gameName;
 - (void) initTimer;
@@ -105,6 +106,7 @@ void leaks_sleeper()
     if (NSClassFromString(@"SenTestCase") != nil)
         return;
     
+    [self setUpDefaultPaths];
     [mConfiguration loadUserDefaults];
     [self setThrottled: [mConfiguration throttled]];
     [self setSyncToRefresh: [mConfiguration syncToRefresh]];
@@ -276,6 +278,12 @@ void leaks_sleeper()
 @end
 
 @implementation MameController (Private)
+
+- (void) setUpDefaultPaths;
+{
+    NSBundle * myBundle = [NSBundle bundleForClass: [self class]];
+    [mFileManager setPath: [myBundle resourcePath] forType: FILETYPE_FONT];
+}
 
 - (NSString *) getGameNameToRun;
 {

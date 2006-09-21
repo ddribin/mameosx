@@ -15,6 +15,8 @@
 
 - (void) setPaths: (NSArray *) paths forType: (int) pathtype;
 
+- (void) setPath: (NSString *) path forType: (int) pathtype;
+
 - (NSArray *) pathsForType: (int) pathtype;
 
 - (NSString *) composePathForFile: (const char *) utf8File
