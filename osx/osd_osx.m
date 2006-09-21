@@ -354,10 +354,6 @@ void osd_fclose(osd_file *file)
     [pool release];
 }
 
-void set_pathlist(int file_type, const char *new_rawpath)
-{
-}
-
 //============================================================
 //	osd_display_loading_rom_message
 //============================================================
