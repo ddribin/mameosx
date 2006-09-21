@@ -189,7 +189,6 @@
 		556A4DA00AA5158400602CC5 /* libcpu.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 556A498B0AA4F70A00602CC5 /* libcpu.a */; };
 		556A4DA10AA5158400602CC5 /* liblocalexpat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 556A49BB0AA4F86600602CC5 /* liblocalexpat.a */; };
 		556A4DA20AA5158400602CC5 /* liblocalzlib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 556A4A010AA4F8EC00602CC5 /* liblocalzlib.a */; };
-		556A4DB50AA515DA00602CC5 /* misc.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A4DB10AA515DA00602CC5 /* misc.c */; };
 		556A4E660AA51BD700602CC5 /* jrpacman.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A4E630AA51BD700602CC5 /* jrpacman.c */; };
 		556A4E670AA51BD700602CC5 /* pacman.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A4E640AA51BD700602CC5 /* pacman.c */; };
 		556A4E680AA51BD700602CC5 /* pengo.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A4E650AA51BD700602CC5 /* pengo.c */; };
@@ -863,8 +862,6 @@
 		556A4CED0AA5117200602CC5 /* MameController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MameController.h; sourceTree = "<group>"; };
 		556A4CEE0AA5117200602CC5 /* MameController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MameController.mm; sourceTree = "<group>"; };
 		556A4D890AA514C300602CC5 /* osd_osx.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = osd_osx.m; sourceTree = "<group>"; };
-		556A4DB10AA515DA00602CC5 /* misc.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = misc.c; sourceTree = "<group>"; };
-		556A4DB20AA515DA00602CC5 /* misc.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = misc.h; sourceTree = "<group>"; };
 		556A4E630AA51BD700602CC5 /* jrpacman.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = jrpacman.c; path = drivers/jrpacman.c; sourceTree = "<group>"; };
 		556A4E640AA51BD700602CC5 /* pacman.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = pacman.c; path = drivers/pacman.c; sourceTree = "<group>"; };
 		556A4E650AA51BD700602CC5 /* pengo.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = pengo.c; path = drivers/pengo.c; sourceTree = "<group>"; };
@@ -2351,8 +2348,6 @@
 				5548EBE70ABCA30E008D1F74 /* MameFileManager.m */,
 				55744C190AAB4FC800EC1423 /* osinline.h */,
 				5574492D0AAB28D900EC1423 /* osd_cpu.h */,
-				556A4DB10AA515DA00602CC5 /* misc.c */,
-				556A4DB20AA515DA00602CC5 /* misc.h */,
 				55CDE8D70AAC93E90021CEA0 /* osd_osx.h */,
 				556A4D890AA514C300602CC5 /* osd_osx.m */,
 				556A4C650AA50F2800602CC5 /* main.m */,
@@ -3195,7 +3190,6 @@
 				556A4C660AA50F2800602CC5 /* main.m in Sources */,
 				556A4CEF0AA5117200602CC5 /* MameController.mm in Sources */,
 				556A4D8A0AA514C300602CC5 /* osd_osx.m in Sources */,
-				556A4DB50AA515DA00602CC5 /* misc.c in Sources */,
 				556A51170AA54C4600602CC5 /* MameView.m in Sources */,
 				55744C440AAB523700EC1423 /* test_drivers.c in Sources */,
 				55CDE6E40AAC60CB0021CEA0 /* MameInputController.m in Sources */,
