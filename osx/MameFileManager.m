@@ -116,6 +116,7 @@ struct _osd_file
     }
     
     osd_file * fileStruct = malloc(sizeof(fileStruct));
+    *error = FILEERR_SUCCESS;
     fileStruct->fileHandle = handle;
     return fileStruct;
 }
