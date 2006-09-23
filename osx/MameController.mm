@@ -98,8 +98,8 @@ void leaks_sleeper()
     [self setThrottled: [mConfiguration throttled]];
     [self setSyncToRefresh: [mConfiguration syncToRefresh]];
 
-    NSLog(@"Running");
     NSString * gameName = [self getGameNameToRun];
+    NSLog(@"Running %@", gameName);
     int game_index = [self getGameIndex: gameName];
     
     // have we decided on a game?
@@ -107,10 +107,10 @@ void leaks_sleeper()
         res = run_game(game_index);
     
     cycles_t cps = [mTimingController osd_cycles_per_second];
-    printf("Average FPS displayed: %f (%qi frames)\n",
+    NSLog(@"Average FPS displayed: %f (%qi frames)\n",
            (double)cps / (mFrameEndTime - mFrameStartTime) * mFramesDisplayed,
            mFramesDisplayed);
-    printf("Average FPS rendered: %f (%qi frames)\n",
+    NSLog(@"Average FPS rendered: %f (%qi frames)\n",
            (double)cps / (mFrameEndTime - mFrameStartTime) * mFramesRendered,
            mFramesRendered);
     
@@ -120,6 +120,9 @@ void leaks_sleeper()
 - (int) osd_init;
 {
     NSLog(@"osd_init");
+
+    [mGameLoading stopAnimation: nil];
+    [mOpenPanel orderOut: [mMameView window]];
 
     [mInputController osd_init];
     [mAudioController osd_init];
@@ -207,6 +210,17 @@ void leaks_sleeper()
 {
 }
 
+- (IBAction) raiseOpenPanel: (id) sender;
+{
+    [NSApp runModalForWindow: mOpenPanel];
+    [mGameLoading startAnimation: nil];
+}
+
+- (IBAction) endOpenPanel: (id) sender;
+{
+    [NSApp stopModal];
+}
+
 //=========================================================== 
 //  throttled 
 //=========================================================== 
@@ -257,11 +271,16 @@ void leaks_sleeper()
 - (NSString *) getGameNameToRun;
 {
     NSArray * arguments = [[NSProcessInfo processInfo] arguments];
-    if ([arguments count] > 1)
+    NSString * lastArgument = [arguments lastObject];
+    if (([arguments count] > 1) && ![lastArgument hasPrefix: @"-"])
     {
-        return [arguments lastObject];
+        return lastArgument;
     }
-    return nil;
+    else
+    {
+        [self raiseOpenPanel: nil];
+        return [mGameTextField stringValue];
+    }
 }
 
 - (int) getGameIndex: (NSString *) gameName;

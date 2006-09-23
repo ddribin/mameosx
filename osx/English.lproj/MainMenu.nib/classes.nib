@@ -2,10 +2,23 @@
     IBClasses = (
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
         {
-            ACTIONS = {filterChanged = id; nullAction = id; togglePause = id; }; 
+            ACTIONS = {
+                endOpenPanel = id; 
+                filterChanged = id; 
+                nullAction = id; 
+                raiseOpenPanel = id; 
+                togglePause = id; 
+            }; 
             CLASS = MameController; 
             LANGUAGE = ObjC; 
-            OUTLETS = {mDrawer = NSDrawer; mFilterButton = NSPopUpButton; mMameView = MameView; }; 
+            OUTLETS = {
+                mDrawer = NSDrawer; 
+                mFilterButton = NSPopUpButton; 
+                mGameLoading = NSProgressIndicator; 
+                mGameTextField = NSTextField; 
+                mMameView = MameView; 
+                mOpenPanel = NSWindow; 
+            }; 
             SUPERCLASS = NSObject; 
         }, 
         {

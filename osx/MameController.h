@@ -32,6 +32,9 @@ extern "C" {
     IBOutlet MameView * mMameView;
     IBOutlet NSPopUpButton * mFilterButton;
     IBOutlet NSDrawer * mDrawer;
+    IBOutlet NSWindow * mOpenPanel;
+    IBOutlet NSTextField * mGameTextField;
+    IBOutlet NSProgressIndicator * mGameLoading;
     MameInputController * mInputController;
     MameAudioController * mAudioController;
     MameTimingController * mTimingController;
@@ -85,6 +88,8 @@ extern "C" {
 - (IBAction) filterChanged: (id) sender;
 - (IBAction) togglePause: (id) sender;
 - (IBAction) nullAction: (id) sender;
+- (IBAction) raiseOpenPanel: (id) sender;
+- (IBAction) endOpenPanel: (id) sender;
 
 - (int) osd_init;
 - (int) osd_update: (mame_time) emutime;
