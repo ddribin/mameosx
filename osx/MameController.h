@@ -37,8 +37,8 @@ extern "C" {
     MameTimingController * mTimingController;
     MameFileManager * mFileManager;
     MameConfiguration * mConfiguration;
+
     MameTextureTable * mTextureTable;
-    cycles_t mCyclesPerSecond;
     render_target * mTarget;
     int32_t mWindowWidth;
     int32_t mWindowHeight;
@@ -57,7 +57,6 @@ extern "C" {
     uint64_t mFramesRendered;
     cycles_t mFrameStartTime;
     cycles_t mFrameEndTime;
-        
     
     BOOL mIsFiltered;
     NSMutableArray * mFilters;

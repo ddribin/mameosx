@@ -30,24 +30,13 @@ extern "C" {
 #include "config.h"
 #include "render.h"
 #include "options.h"
-
-extern int *_NSGetArgc(void);
-extern char ***_NSGetArgv(void);
 }
 
 @interface MameController (Private)
 
-enum
-{
-    TEXTURE_TYPE_PLAIN,
-    TEXTURE_TYPE_DYNAMIC,
-    TEXTURE_TYPE_SURFACE
-};
-
 - (void) setUpDefaultPaths;
 - (NSString *) getGameNameToRun;
 - (int) getGameIndex: (NSString *) gameName;
-- (void) initTimer;
 - (void) initCoreVideoBuffer;
 - (void) initFilters;
 - (void) pumpEvents;
@@ -132,7 +121,6 @@ void leaks_sleeper()
 {
     NSLog(@"osd_init");
 
-    [self initTimer];
     [mInputController osd_init];
     [mAudioController osd_init];
     [mTimingController osd_init];
@@ -281,17 +269,6 @@ void leaks_sleeper()
     if (gameName == nil)
         return -1;
     return driver_get_index([gameName UTF8String]);
-}
-
-- (void) initTimer;
-{
-    mach_timebase_info_data_t info;
-    mach_timebase_info(&info);
-    
-    mCyclesPerSecond = 1000000000LL *
-        ((uint64_t)info.denom) / ((uint64_t)info.numer);
-    NSLog(@"cycles/second = %u/%u = %lld\n", info.denom, info.numer,
-          mCyclesPerSecond);
 }
 
 CVReturn myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink, 
