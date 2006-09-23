@@ -864,7 +864,7 @@
 		556A4B840AA5015100602CC5 /* nes_defs.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = nes_defs.h; sourceTree = "<group>"; };
 		556A4BDE0AA504C700602CC5 /* dac.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = dac.c; sourceTree = "<group>"; };
 		556A4BDF0AA504C700602CC5 /* dac.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = dac.h; sourceTree = "<group>"; };
-		556A4C280AA50D6200602CC5 /* mameosx.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mameosx.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		556A4C280AA50D6200602CC5 /* MAME OS X.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MAME OS X.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		556A4C2A0AA50D6200602CC5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Info.plist; sourceTree = "<group>"; };
 		556A4C510AA50E5800602CC5 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/MainMenu.nib; sourceTree = "<group>"; };
 		556A4C650AA50F2800602CC5 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -1269,7 +1269,7 @@
 		556A42510AA4E9E500602CC5 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				556A4C280AA50D6200602CC5 /* mameosx.app */,
+				556A4C280AA50D6200602CC5 /* MAME OS X.app */,
 				556A42D40AA4EBA200602CC5 /* libcore.a */,
 				556A44380AA4F4CD00602CC5 /* libdrivers.a */,
 				556A4B780AA5011100602CC5 /* libsounds.a */,
@@ -2946,9 +2946,9 @@
 			productReference = 556A4B780AA5011100602CC5 /* libsounds.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		556A4C270AA50D6200602CC5 /* mameosx */ = {
+		556A4C270AA50D6200602CC5 /* MAME OS X */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 556A4C2B0AA50D6300602CC5 /* Build configuration list for PBXNativeTarget "mameosx" */;
+			buildConfigurationList = 556A4C2B0AA50D6300602CC5 /* Build configuration list for PBXNativeTarget "MAME OS X" */;
 			buildPhases = (
 				556A4C240AA50D6200602CC5 /* Resources */,
 				556A4C250AA50D6200602CC5 /* Sources */,
@@ -2964,9 +2964,9 @@
 				556A4D980AA5156800602CC5 /* PBXTargetDependency */,
 				556A4D9A0AA5156800602CC5 /* PBXTargetDependency */,
 			);
-			name = mameosx;
+			name = "MAME OS X";
 			productName = mameosx;
-			productReference = 556A4C280AA50D6200602CC5 /* mameosx.app */;
+			productReference = 556A4C280AA50D6200602CC5 /* MAME OS X.app */;
 			productType = "com.apple.product-type.application";
 		};
 		557449DF0AAB35D800EC1423 /* file2str */ = {
@@ -2996,7 +2996,7 @@
 			productRefGroup = 556A42510AA4E9E500602CC5 /* Products */;
 			projectDirPath = "";
 			targets = (
-				556A4C270AA50D6200602CC5 /* mameosx */,
+				556A4C270AA50D6200602CC5 /* MAME OS X */,
 				556A42D30AA4EBA200602CC5 /* core */,
 				556A44370AA4F4CD00602CC5 /* drivers */,
 				556A4B770AA5011100602CC5 /* sounds */,
@@ -3239,7 +3239,7 @@
 /* Begin PBXTargetDependency section */
 		5501E8A50AB276D400756C9B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 556A4C270AA50D6200602CC5 /* mameosx */;
+			target = 556A4C270AA50D6200602CC5 /* MAME OS X */;
 			targetProxy = 5501E8A40AB276D400756C9B /* PBXContainerItemProxy */;
 		};
 		556A4D900AA5156800602CC5 /* PBXTargetDependency */ = {
@@ -3294,7 +3294,7 @@
 		5501E8940AB275FA00756C9B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/mameosx.app/Contents/MacOS/mameosx";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/MAME OS X.app/Contents/MacOS/MAME OS X";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
@@ -3326,7 +3326,7 @@
 		5501E8950AB275FA00756C9B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/mameosx.app/Contents/MacOS/mameosx";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/MAME OS X.app/Contents/MacOS/MAME OS X";
 				COPY_PHASE_STRIP = YES;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -3596,7 +3596,7 @@
 					AppKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = mameosx;
+				PRODUCT_NAME = "MAME OS X";
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;
 			};
@@ -3622,7 +3622,7 @@
 					AppKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = mameosx;
+				PRODUCT_NAME = "MAME OS X";
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;
 			};
@@ -3733,7 +3733,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		556A4C2B0AA50D6300602CC5 /* Build configuration list for PBXNativeTarget "mameosx" */ = {
+		556A4C2B0AA50D6300602CC5 /* Build configuration list for PBXNativeTarget "MAME OS X" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				556A4C2C0AA50D6300602CC5 /* Debug */,
