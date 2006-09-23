@@ -3,6 +3,7 @@
 #import "MameController.h"
 #import "MameInputController.h"
 #import "MameAudioController.h"
+#import "MameTimingController.h"
 #import "MameFileManager.h"
 
 #include <unistd.h>
@@ -103,10 +104,17 @@ void osd_lock_free(osd_lock *lock)
 
 ******************************************************************************/
 
+static MameTimingController * sTimingController;
+
+void osd_set_timing_controller(MameTimingController * timingController)
+{
+    sTimingController = timingController;
+}
+
 cycles_t osd_cycles(void)
 {
     NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-    cycles_t rc = [sController osd_cycles];
+    cycles_t rc = [sTimingController osd_cycles];
     [pool release];
     return rc;
 }
@@ -114,7 +122,7 @@ cycles_t osd_cycles(void)
 cycles_t osd_cycles_per_second(void)
 {
     NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-    cycles_t rc = [sController osd_cycles_per_second];
+    cycles_t rc = [sTimingController osd_cycles_per_second];
     [pool release];
     return rc;
 }
@@ -122,7 +130,7 @@ cycles_t osd_cycles_per_second(void)
 cycles_t osd_profiling_ticks(void)
 {
     NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-    cycles_t rc = [sController osd_profiling_ticks];
+    cycles_t rc = [sTimingController osd_profiling_ticks];
     [pool release];
     return rc;
 }

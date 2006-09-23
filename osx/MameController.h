@@ -22,6 +22,7 @@ extern "C" {
 @class MameView;
 @class MameInputController;
 @class MameAudioController;
+@class MameTimingController;
 @class MameFileManager;
 @class MameConfiguration;
 @class MameTextureTable;
@@ -33,6 +34,7 @@ extern "C" {
     IBOutlet NSDrawer * mDrawer;
     MameInputController * mInputController;
     MameAudioController * mAudioController;
+    MameTimingController * mTimingController;
     MameFileManager * mFileManager;
     MameConfiguration * mConfiguration;
     MameTextureTable * mTextureTable;
@@ -65,9 +67,6 @@ extern "C" {
     
     BOOL mSyncToRefresh;
     BOOL mThrottled;
-    cycles_t mThrottleLastCycles;
-    mame_time mThrottleRealtime;
-    mame_time mThrottleEmutime;
 }
 
 - (MameConfiguration *) configuration;
@@ -89,9 +88,5 @@ extern "C" {
 
 - (int) osd_init;
 - (int) osd_update: (mame_time) emutime;
-
-- (cycles_t) osd_cycles;
-- (cycles_t) osd_cycles_per_second;
-- (cycles_t) osd_profiling_ticks;
 
 @end
