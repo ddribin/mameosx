@@ -19,38 +19,12 @@ extern "C" {
 }
 #endif
 
-/* texture_info holds information about a texture */
-typedef struct _texture_info texture_info;
-struct _texture_info
-{
-	texture_info *			next;				// next texture in the list
-	UINT32				hash;				// hash value for the texture
-	UINT32				flags;				// rendering flags
-	render_texinfo			texinfo;			// copy of the texture info
-	float				ustart, ustop;			// beginning/ending U coordinates
-	float				vstart, vstop;			// beginning/ending V coordinates
-	int				rawwidth, rawheight;		// raw width/height of the texture
-	int				type;				// what type of texture are we?
-	int				borderpix;			// do we have a 1 pixel border?
-	int				xprescale;			// what is our X prescale factor?
-	int				yprescale;			// what is our Y prescale factor?
-	int				uploadedonce;			// were we uploaded once already?
-    
-	UINT32				texturename;			// OpenGL texture "name"/ID
-    
-    CVPixelBufferRef    data;
-    CVOpenGLTextureRef  cv_texture;
-    
-    
-	UINT32				uploadlevel;			// you'll see...
-};
-
-
 @class MameView;
 @class MameInputController;
 @class MameAudioController;
 @class MameFileManager;
 @class MameConfiguration;
+@class MameTextureTable;
 
 @interface MameController : NSObject
 {
@@ -61,11 +35,11 @@ struct _texture_info
     MameAudioController * mAudioController;
     MameFileManager * mFileManager;
     MameConfiguration * mConfiguration;
+    MameTextureTable * mTextureTable;
     cycles_t mCyclesPerSecond;
     render_target * mTarget;
     int32_t mWindowWidth;
     int32_t mWindowHeight;
-    texture_info * mTextList;
 
     NSRecursiveLock * mLock;
     NSOpenGLContext * mGlContext;

@@ -13,6 +13,8 @@
 #import "MameConfiguration.h"
 #import <OpenGL/OpenGL.h>
 #import <OpenGL/gl.h>
+#import "MameTextureTable.h"
+#import "MameOpenGLTexture.h"
 #import "MameTextureConverter.h"
 
 #include <mach/mach_time.h>
@@ -53,17 +55,6 @@ enum
 - (void) renderFrame;
 - (void) drawFrame;
 
-- (texture_info *) textureFind: (const render_primitive *) prim;
-- (void) textureSetData: (texture_info *) texture
-                 source: (const render_texinfo *) texsource
-                  flags: (UINT32) flags;
-- (texture_info *) textureCreate: (const render_texinfo *) texsource
-                           flags: (UINT32) flags;
-- (void) textureComputeSize: (int) texwidth height: (int) texheight
-                    texture: (texture_info *) texture flags: (UINT32) flags;
-
-- (void) textureUpdate: (const render_primitive *) prim;
-
 @end
 
 void leaks_sleeper()
@@ -82,6 +73,7 @@ void leaks_sleeper()
     mAudioController = [[MameAudioController alloc] initWithController: self];
     mFileManager = [[MameFileManager alloc] init];
     mConfiguration = [[MameConfiguration alloc] initWithController: self];
+    mTextureTable = [[MameTextureTable alloc] init];
     mSyncToRefresh = NO;
 
     return self;
@@ -158,8 +150,6 @@ void leaks_sleeper()
     [window setContentSize: NSMakeSize(mWindowWidth + diffX, mWindowHeight+diffY)];
     [window center];
     [window makeKeyAndOrderFront: nil];
-    
-    mTextList = 0;
     
     [mMameView createCIContext];
     [self initCoreVideoBuffer];
@@ -562,7 +552,7 @@ static void cv_assert(CVReturn cr, NSString * message)
     return;
 }
 
-INLINE void set_blendmode(int blendmode, texture_info *texture)
+INLINE void set_blendmode(int blendmode)
 {
         switch (blendmode)
         {
@@ -654,7 +644,6 @@ INLINE void set_blendmode(int blendmode, texture_info *texture)
 
 - (void) renderFrame;
 {
-    texture_info * texture;
     float du, dv, vofs, hofs;
 
    
@@ -706,7 +695,7 @@ INLINE void set_blendmode(int blendmode, texture_info *texture)
     {
         if (prim->texture.base != NULL)
         {
-            [self textureUpdate: prim];
+            [mTextureTable update: prim textureCache: mPrimTextureCache];
         }
     }
     
@@ -716,7 +705,7 @@ INLINE void set_blendmode(int blendmode, texture_info *texture)
         switch (prim->type)
         {
             case RENDER_PRIMITIVE_LINE:
-                set_blendmode(PRIMFLAG_GET_BLENDMODE(prim->flags), 0);
+                set_blendmode(PRIMFLAG_GET_BLENDMODE(prim->flags));
                 
                 // check if it's really a point
                 if (((prim->bounds.x1 - prim->bounds.x0) == 0) && ((prim->bounds.y1 - prim->bounds.y0) == 0))
@@ -737,12 +726,12 @@ INLINE void set_blendmode(int blendmode, texture_info *texture)
                 break;
                 
             case RENDER_PRIMITIVE_QUAD:
-                texture = [self textureFind: prim];
-                
-                set_blendmode(PRIMFLAG_GET_BLENDMODE(prim->flags), texture);
+                MameOpenGLTexture * texture = [mTextureTable findTextureForPrimitive: prim];
+
+                set_blendmode(PRIMFLAG_GET_BLENDMODE(prim->flags));
                 
                 // select the texture
-                if (texture != NULL)
+                if (texture != nil)
                 {
                     du = texture->ustop - texture->ustart; 
                     dv = texture->vstop - texture->vstart;
@@ -783,224 +772,21 @@ INLINE void set_blendmode(int blendmode, texture_info *texture)
                     glEnd();
                     glDisable(textureTarget);
                 }
-                else    // untextured quad
-                {
-                    glBegin(GL_QUADS);
-                    glColor4f(prim->color.r, prim->color.g, prim->color.b, prim->color.a);
-                    glVertex2f(prim->bounds.x0 + hofs, prim->bounds.y0 + vofs);
-                    glColor4f(prim->color.r, prim->color.g, prim->color.b, prim->color.a);
-                    glVertex2f(prim->bounds.x1 + hofs, prim->bounds.y0 + vofs);
-                    glColor4f(prim->color.r, prim->color.g, prim->color.b, prim->color.a);
-                    glVertex2f(prim->bounds.x1 + hofs, prim->bounds.y1 + vofs);
-                    glColor4f(prim->color.r, prim->color.g, prim->color.b, prim->color.a);
-                    glVertex2f(prim->bounds.x0 + hofs, prim->bounds.y1 + vofs);
-                    glEnd();
-                }
-                break;
+                    else    // untextured quad
+                    {
+                        glBegin(GL_QUADS);
+                        glColor4f(prim->color.r, prim->color.g, prim->color.b, prim->color.a);
+                        glVertex2f(prim->bounds.x0 + hofs, prim->bounds.y0 + vofs);
+                        glColor4f(prim->color.r, prim->color.g, prim->color.b, prim->color.a);
+                        glVertex2f(prim->bounds.x1 + hofs, prim->bounds.y0 + vofs);
+                        glColor4f(prim->color.r, prim->color.g, prim->color.b, prim->color.a);
+                        glVertex2f(prim->bounds.x1 + hofs, prim->bounds.y1 + vofs);
+                        glColor4f(prim->color.r, prim->color.g, prim->color.b, prim->color.a);
+                        glVertex2f(prim->bounds.x0 + hofs, prim->bounds.y1 + vofs);
+                        glEnd();
+                    }
+                        break;
         }
-    }
-}
-
-static UINT32 texture_compute_hash(const render_texinfo *texture, UINT32 flags)
-{
-    return (UINT32)texture->base ^ (flags & (PRIMFLAG_BLENDMODE_MASK | PRIMFLAG_TEXFORMAT_MASK));
-}
-
-- (texture_info *) textureFind: (const render_primitive *) prim;
-{
-    UINT32 texhash = texture_compute_hash(&prim->texture, prim->flags);
-    texture_info *texture;
-    
-    // find a match
-    for (texture = mTextList; texture != NULL; texture = texture->next)
-        if (texture->hash == texhash &&
-            texture->texinfo.base == prim->texture.base &&
-            texture->texinfo.width == prim->texture.width &&
-            texture->texinfo.height == prim->texture.height &&
-            ((texture->flags ^ prim->flags) & (PRIMFLAG_BLENDMODE_MASK | PRIMFLAG_TEXFORMAT_MASK)) == 0)
-            return texture;
-    
-    // nothing found
-    return 0;
-}
-
-- (void) textureSetData: (texture_info *) texture
-                 source: (const render_texinfo *) texsource
-                  flags: (UINT32) flags;
-{
-    UINT32 *dst32, *dbuf;
-    int x, y;
-    
-    if (!texture->data)
-    {
-        cv_assert(CVPixelBufferCreate(NULL, texture->rawwidth,
-                                      texture->rawheight,
-                                      PixelBuffer::kPixelFormat,
-                                      NULL, &texture->data),
-                  @"Could not create pixle buffer");
-    }
-    
-    int texformat =  PRIMFLAG_GET_TEXFORMAT(flags);
-    
-    cv_assert(CVPixelBufferLockBaseAddress(texture->data, 0),
-              @"Could not lock pixel buffer");
-
-    PixelBuffer pixelBuffer(CVPixelBufferGetBaseAddress(texture->data),
-                            CVPixelBufferGetBytesPerRow(texture->data));
-
-    if (texformat == TEXFORMAT_ARGB32)
-    {
-        MameARGB32Texture cppTexture(texsource);
-        convertTexture(cppTexture, pixelBuffer);
-    }
-    else if (texformat == TEXFORMAT_PALETTE16)
-    {
-        MamePalette16Texture cppTexture(texsource);
-        convertTexture(cppTexture, pixelBuffer);
-    }
-#if 0
-    case TEXFORMAT_RGB15:
-        src16 = (UINT16 *)texsource->base + y * texsource->rowpixels;
-        if (texsource->palette != NULL)
-        {
-            for (x = 0; x < texsource->width; x++)
-            {
-                UINT16 pix = *src16++;
-                
-                *dst32++ = 0xff | texsource->palette[0x40 + ((pix >> 10) & 0x1f)]>>8 | texsource->palette[0x20 + ((pix >> 5) & 0x1f)]<<8 | texsource->palette[0x00 + ((pix >> 0) & 0x1f)]<<24;
-            }
-        }
-            else
-            {
-                for (x = 0; x < texsource->width; x++)
-                {
-                    UINT32 pix = (UINT32)*src16++;        
-                    
-                    *dst32++ = ((pix & 0x7c00) << 1) | ((pix & 0x03e0) << 14) | ((pix & 0x001f) << 27) | 0xff; 
-                }
-            }
-            break;                             
-        
-    case TEXFORMAT_RGB32:
-        src32 = (UINT32 *)texsource->base + y * texsource->rowpixels;
-        if (texsource->palette != NULL)
-        {
-            for (x = 0; x < texsource->width; x++)
-            {
-                UINT32 srcpix = *src32++;
-                *dst32++ = 0xff | 
-                    (texsource->palette[0x200 + RGB_RED(srcpix)])>>8 | 
-                    (texsource->palette[0x100 + RGB_GREEN(srcpix)])<<8 | 
-                    texsource->palette[RGB_BLUE(srcpix)]<<24;
-            }
-        }
-            else
-            {
-                for (x = 0; x < texsource->width; x++)
-                {
-                    *dst32++ = (*src32&0x00ff0000) >> 8 |
-                    (*src32&0x0000ff00) << 8 |
-                    (*src32&0x000000ff) <<24 | 0xff;
-                    src32++;
-                }
-            }
-            break;
-#endif
-    else
-    {
-        fprintf(stderr, "Unknown texture blendmode=%d format=%d\n", PRIMFLAG_GET_BLENDMODE(flags), PRIMFLAG_GET_TEXFORMAT(flags));
-        return;
-    }
-
-    cv_assert(CVPixelBufferUnlockBaseAddress(texture->data, 0),
-              @"Could not unlock pixel buffer");
-    cv_assert(CVOpenGLTextureCacheCreateTextureFromImage(NULL, mPrimTextureCache, texture->data,
-                                               NULL, &texture->cv_texture),
-              @"Could not create primitive texture");
-}
-
-- (texture_info *) textureCreate: (const render_texinfo *) texsource
-                           flags: (UINT32) flags;
-{
-    texture_info *texture;
-    
-    // allocate a new texture
-    texture = (texture_info *) malloc_or_die(sizeof(*texture));
-    memset(texture, 0, sizeof(*texture));
-    
-    // fill in the core data
-    texture->hash = texture_compute_hash(texsource, flags);
-    texture->flags = flags;
-    texture->texinfo = *texsource;
-    texture->xprescale = /* DLD video_config.prescale */ 1;
-    texture->yprescale = /* DLD video_config.prescale */ 1;
-    
-    // compute the size
-    [self textureComputeSize: texsource->width
-                      height: texsource->height
-                     texture: texture
-                       flags: flags];
-    
-    // copy the data to the texture
-    [self textureSetData: texture source: texsource flags: flags];
-    
-    // add us to the texture list
-    texture->next = mTextList;
-    mTextList = texture;
-    return texture;
-}
-
-//============================================================
-//  texture_compute_size
-//============================================================
-
-- (void) textureComputeSize: (int) texwidth height: (int) texheight
-                    texture: (texture_info *) texture flags: (UINT32) flags;
-{
-    int finalheight = texheight;
-    int finalwidth = texwidth;
-    
-    // if we're above the max width/height, do what?
-    if (finalwidth > 2048 || finalheight > 2048)
-    {
-        static int printed = FALSE;
-        if (!printed) fprintf(stderr, "Texture too big! (wanted: %dx%d, max is %dx%d)\n", finalwidth, finalheight, 2048, 2048);
-        printed = TRUE;
-    }
-    
-    // compute the U/V scale factors
-    texture->ustart = 0.0f;
-    texture->ustop = (float)texwidth / (float)finalwidth;
-    texture->vstart = 0.0f;
-    texture->vstop = (float)texheight / (float)finalheight;
-    
-    // set the final values
-    texture->rawwidth = finalwidth;
-    texture->rawheight = finalheight;
-}
-
-- (void) textureUpdate: (const render_primitive *) prim;
-{
-    texture_info *texture = [self textureFind: prim];
-    
-    // if we didn't find one, create a new texture
-    if (texture == NULL)
-        texture = [self textureCreate: &prim->texture flags: prim->flags];
-    
-    // if we found it, but with a different seqid, copy the data
-    if (texture->texinfo.seqid != prim->texture.seqid)
-    {
-        if (texture->data)
-        {
-            CVPixelBufferRelease(texture->data);
-            CVOpenGLTextureRelease(texture->cv_texture);
-            
-            texture->data = NULL;
-            texture->cv_texture = NULL;
-        }
-        
-        [self textureSetData: texture source: &prim->texture flags: prim->flags];
-        texture->texinfo.seqid = prim->texture.seqid;
     }
 }
 

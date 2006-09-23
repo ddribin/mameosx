@@ -10,6 +10,8 @@
 		5501E89D0AB2764700756C9B /* CircularBufferTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5501E89C0AB2764700756C9B /* CircularBufferTest.m */; };
 		5501E9020AB27D3F00756C9B /* CircularBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5501E8440AB232B900756C9B /* CircularBuffer.m */; };
 		551A613A0AC24B2000AECE1E /* ui.bdf in Resources */ = {isa = PBXBuildFile; fileRef = 551A61390AC24B2000AECE1E /* ui.bdf */; };
+		554339E00AC4D79800F10925 /* MameOpenGLTexture.mm in Sources */ = {isa = PBXBuildFile; fileRef = 554339DF0AC4D79800F10925 /* MameOpenGLTexture.mm */; };
+		554339E70AC4DBB300F10925 /* MameTextureTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 554339E60AC4DBB300F10925 /* MameTextureTable.m */; };
 		5548EBE80ABCA30E008D1F74 /* MameFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5548EBE70ABCA30E008D1F74 /* MameFileManager.m */; };
 		5548ECDF0ABCB463008D1F74 /* MameFileManagerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5548ECDE0ABCB463008D1F74 /* MameFileManagerTest.m */; };
 		5548EDCB0ABE3CEF008D1F74 /* file.txt in Resources */ = {isa = PBXBuildFile; fileRef = 5548EDCA0ABE3CEF008D1F74 /* file.txt */; };
@@ -321,6 +323,10 @@
 		5501E89C0AB2764700756C9B /* CircularBufferTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircularBufferTest.m; sourceTree = "<group>"; };
 		5503D7F30AB7B63E003F407E /* MameTextureConverter.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = MameTextureConverter.h; sourceTree = "<group>"; };
 		551A61390AC24B2000AECE1E /* ui.bdf */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = ui.bdf; sourceTree = "<group>"; };
+		554339DE0AC4D79800F10925 /* MameOpenGLTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MameOpenGLTexture.h; sourceTree = "<group>"; };
+		554339DF0AC4D79800F10925 /* MameOpenGLTexture.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MameOpenGLTexture.mm; sourceTree = "<group>"; };
+		554339E50AC4DBB300F10925 /* MameTextureTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MameTextureTable.h; sourceTree = "<group>"; };
+		554339E60AC4DBB300F10925 /* MameTextureTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MameTextureTable.m; sourceTree = "<group>"; };
 		5548EBE60ABCA30E008D1F74 /* MameFileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MameFileManager.h; sourceTree = "<group>"; };
 		5548EBE70ABCA30E008D1F74 /* MameFileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MameFileManager.m; sourceTree = "<group>"; };
 		5548ECDD0ABCB463008D1F74 /* MameFileManagerTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MameFileManagerTest.h; sourceTree = "<group>"; };
@@ -2342,6 +2348,10 @@
 			children = (
 				556A4CED0AA5117200602CC5 /* MameController.h */,
 				556A4CEE0AA5117200602CC5 /* MameController.mm */,
+				554339E50AC4DBB300F10925 /* MameTextureTable.h */,
+				554339E60AC4DBB300F10925 /* MameTextureTable.m */,
+				554339DE0AC4D79800F10925 /* MameOpenGLTexture.h */,
+				554339DF0AC4D79800F10925 /* MameOpenGLTexture.mm */,
 				55CDE6E20AAC60CB0021CEA0 /* MameInputController.h */,
 				55CDE6E30AAC60CB0021CEA0 /* MameInputController.m */,
 				55FE25E60AAD2F6100C4054A /* MameAudioController.h */,
@@ -3205,6 +3215,8 @@
 				5501E9020AB27D3F00756C9B /* CircularBuffer.m in Sources */,
 				55BB89350AB90EAB00B7933B /* MameConfiguration.m in Sources */,
 				5548EBE80ABCA30E008D1F74 /* MameFileManager.m in Sources */,
+				554339E00AC4D79800F10925 /* MameOpenGLTexture.mm in Sources */,
+				554339E70AC4DBB300F10925 /* MameTextureTable.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
