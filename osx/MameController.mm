@@ -535,8 +535,6 @@ static void cv_assert(CVReturn cr, NSString * message)
 
 - (void) renderFrame;
 {
-    float vofs, hofs;
-
     // clear the screen and Z-buffer
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -573,7 +571,7 @@ static void cv_assert(CVReturn cr, NSString * message)
     glOrtho(0.0, (GLdouble)mWindowWidth, (GLdouble)mWindowHeight, 0.0, 0.0, -1.0);
     
     // compute centering parameters
-    vofs = hofs = 0.0f;
+    mCenteringOffset = NSMakeSize(0.0f, 0.0f);
 
     render_target_set_bounds(mTarget, mWindowWidth, mWindowHeight, 0);
     const render_primitive_list * primlist = render_target_get_primitives(mTarget);
@@ -634,59 +632,57 @@ INLINE void set_blendmode(int blendmode)
 
 - (void) renderLine: (render_primitive *) prim;
 {
-    float vofs, hofs;
-    vofs = hofs = 0.0f;
-    
     set_blendmode(PRIMFLAG_GET_BLENDMODE(prim->flags));
     
     // check if it's really a point
-    if (((prim->bounds.x1 - prim->bounds.x0) == 0) && ((prim->bounds.y1 - prim->bounds.y0) == 0))
+    if (((prim->bounds.x1 - prim->bounds.x0) == 0) &&
+        ((prim->bounds.y1 - prim->bounds.y0) == 0))
     {
         glBegin(GL_POINTS);
         glColor4f(prim->color.r, prim->color.g, prim->color.b, prim->color.a);
-        glVertex2f(prim->bounds.x0+hofs, prim->bounds.y0+vofs);
+        glVertex2f(prim->bounds.x0 + mCenteringOffset.width,
+                   prim->bounds.y0 + mCenteringOffset.height);
         glEnd();
     }
     else
     {
         glBegin(GL_LINES);
         glColor4f(prim->color.r, prim->color.g, prim->color.b, prim->color.a);
-        glVertex2f(prim->bounds.x0+hofs, prim->bounds.y0+vofs);
-        glVertex2f(prim->bounds.x1+hofs, prim->bounds.y1+vofs);
+        glVertex2f(prim->bounds.x0 + mCenteringOffset.width,
+                   prim->bounds.y0 + mCenteringOffset.height);
+        glVertex2f(prim->bounds.x1 + mCenteringOffset.width,
+                   prim->bounds.y1 + mCenteringOffset.height);
         glEnd();
     }
 }
 
 - (void) renderQuad: (render_primitive *) prim;
 {
-    float vofs, hofs;
-    vofs = hofs = 0.0f;
-
     set_blendmode(PRIMFLAG_GET_BLENDMODE(prim->flags));
     glBegin(GL_QUADS);
     glColor4f(prim->color.r, prim->color.g, prim->color.b, prim->color.a);
-    glVertex2f(prim->bounds.x0 + hofs, prim->bounds.y0 + vofs);
+    glVertex2f(prim->bounds.x0 + mCenteringOffset.width,
+               prim->bounds.y0 + mCenteringOffset.height);
+    glColor4f(prim->color.r, prim->color.g,
+              prim->color.b, prim->color.a);
+    glVertex2f(prim->bounds.x1 + mCenteringOffset.width,
+               prim->bounds.y0 + mCenteringOffset.height);
     glColor4f(prim->color.r, prim->color.g, prim->color.b, prim->color.a);
-    glVertex2f(prim->bounds.x1 + hofs, prim->bounds.y0 + vofs);
+    glVertex2f(prim->bounds.x1 + mCenteringOffset.width,
+               prim->bounds.y1 + mCenteringOffset.height);
     glColor4f(prim->color.r, prim->color.g, prim->color.b, prim->color.a);
-    glVertex2f(prim->bounds.x1 + hofs, prim->bounds.y1 + vofs);
-    glColor4f(prim->color.r, prim->color.g, prim->color.b, prim->color.a);
-    glVertex2f(prim->bounds.x0 + hofs, prim->bounds.y1 + vofs);
+    glVertex2f(prim->bounds.x0 + mCenteringOffset.width,
+               prim->bounds.y1 + mCenteringOffset.height);
     glEnd();
 }
 
 - (void) renderTexturedQuad: (render_primitive *) prim 
                     texture: (MameOpenGLTexture *) texture;
 {
-    float vofs, hofs;
-    vofs = hofs = 0.0f;
+    float du = texture->ustop - texture->ustart; 
+    float dv = texture->vstop - texture->vstart;
     
     set_blendmode(PRIMFLAG_GET_BLENDMODE(prim->flags));
-    float du, dv;
-    du = texture->ustop - texture->ustart; 
-    dv = texture->vstop - texture->vstart;
-    
-    //                  printf("draw: %d  alpha: %f\n", texture->texturename, prim->color.a);
     
     GLenum textureTarget = CVOpenGLTextureGetTarget(texture->cv_texture);
     glEnable(textureTarget);
@@ -703,22 +699,30 @@ INLINE void set_blendmode(int blendmode)
     
     // texture coordinates for TEXTURE_RECTANGLE are 0,0 -> w,h
     // rather than 0,0 -> 1,1 as with normal OpenGL texturing
-    du *= (float)texture->rawwidth;
-    dv *= (float)texture->rawheight;
+    du *= (float) texture->rawwidth;
+    dv *= (float) texture->rawheight;
     
     glBegin(GL_QUADS);
     glColor4f(prim->color.r, prim->color.g, prim->color.b, prim->color.a);
-    glTexCoord2f(texture->ustart + du * prim->texcoords.tl.u, texture->vstart + dv * prim->texcoords.tl.v);
-    glVertex2f(prim->bounds.x0 + hofs, prim->bounds.y0 + vofs);
+    glTexCoord2f(texture->ustart + du * prim->texcoords.tl.u,
+                 texture->vstart + dv * prim->texcoords.tl.v);
+    glVertex2f(prim->bounds.x0 + mCenteringOffset.width,
+               prim->bounds.y0 + mCenteringOffset.height);
     glColor4f(prim->color.r, prim->color.g, prim->color.b, prim->color.a);
-    glTexCoord2f(texture->ustart + du * prim->texcoords.tr.u, texture->vstart + dv * prim->texcoords.tr.v);
-    glVertex2f(prim->bounds.x1 + hofs, prim->bounds.y0 + vofs);
+    glTexCoord2f(texture->ustart + du * prim->texcoords.tr.u,
+                 texture->vstart + dv * prim->texcoords.tr.v);
+    glVertex2f(prim->bounds.x1 + mCenteringOffset.width,
+               prim->bounds.y0 + mCenteringOffset.height);
     glColor4f(prim->color.r, prim->color.g, prim->color.b, prim->color.a);
-    glTexCoord2f(texture->ustart + du * prim->texcoords.br.u, texture->vstart + dv * prim->texcoords.br.v);
-    glVertex2f(prim->bounds.x1 + hofs, prim->bounds.y1 + vofs);
+    glTexCoord2f(texture->ustart + du * prim->texcoords.br.u,
+                 texture->vstart + dv * prim->texcoords.br.v);
+    glVertex2f(prim->bounds.x1 + mCenteringOffset.width,
+               prim->bounds.y1 + mCenteringOffset.height);
     glColor4f(prim->color.r, prim->color.g, prim->color.b, prim->color.a);
-    glTexCoord2f(texture->ustart + du * prim->texcoords.bl.u, texture->vstart + dv * prim->texcoords.bl.v);
-    glVertex2f(prim->bounds.x0 + hofs, prim->bounds.y1 + vofs);
+    glTexCoord2f(texture->ustart + du * prim->texcoords.bl.u,
+                 texture->vstart + dv * prim->texcoords.bl.v);
+    glVertex2f(prim->bounds.x0 + mCenteringOffset.width,
+               prim->bounds.y1 + mCenteringOffset.height);
     glEnd();
     glDisable(textureTarget);
 }

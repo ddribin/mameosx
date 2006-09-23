@@ -42,6 +42,7 @@ extern "C" {
     render_target * mTarget;
     int32_t mWindowWidth;
     int32_t mWindowHeight;
+    NSSize mCenteringOffset;
 
     NSRecursiveLock * mLock;
     NSOpenGLContext * mGlContext;
