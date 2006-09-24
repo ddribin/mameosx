@@ -16,6 +16,7 @@
 		5548ECDF0ABCB463008D1F74 /* MameFileManagerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5548ECDE0ABCB463008D1F74 /* MameFileManagerTest.m */; };
 		5548EDCB0ABE3CEF008D1F74 /* file.txt in Resources */ = {isa = PBXBuildFile; fileRef = 5548EDCA0ABE3CEF008D1F74 /* file.txt */; };
 		5561FBA30AC58C6900BE1BF5 /* MameTimingController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5561FBA20AC58C6900BE1BF5 /* MameTimingController.m */; };
+		5561FF240AC62C4700BE1BF5 /* MameRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5561FF230AC62C4700BE1BF5 /* MameRenderer.m */; };
 		556A42D70AA4EBB300602CC5 /* audit.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A42740AA4EB9200602CC5 /* audit.c */; };
 		556A42D80AA4EBB300602CC5 /* audit.h in Headers */ = {isa = PBXBuildFile; fileRef = 556A42750AA4EB9200602CC5 /* audit.h */; };
 		556A42D90AA4EBB300602CC5 /* chd.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A42760AA4EB9200602CC5 /* chd.c */; };
@@ -335,6 +336,8 @@
 		5548EDCA0ABE3CEF008D1F74 /* file.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = file.txt; sourceTree = "<group>"; };
 		5561FBA10AC58C6900BE1BF5 /* MameTimingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MameTimingController.h; sourceTree = "<group>"; };
 		5561FBA20AC58C6900BE1BF5 /* MameTimingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MameTimingController.m; sourceTree = "<group>"; };
+		5561FF220AC62C4700BE1BF5 /* MameRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MameRenderer.h; sourceTree = "<group>"; };
+		5561FF230AC62C4700BE1BF5 /* MameRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MameRenderer.m; sourceTree = "<group>"; };
 		556A42740AA4EB9200602CC5 /* audit.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = audit.c; sourceTree = "<group>"; };
 		556A42750AA4EB9200602CC5 /* audit.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = audit.h; sourceTree = "<group>"; };
 		556A42760AA4EB9200602CC5 /* chd.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = chd.c; sourceTree = "<group>"; };
@@ -2351,6 +2354,8 @@
 			children = (
 				556A4CED0AA5117200602CC5 /* MameController.h */,
 				556A4CEE0AA5117200602CC5 /* MameController.mm */,
+				5561FF220AC62C4700BE1BF5 /* MameRenderer.h */,
+				5561FF230AC62C4700BE1BF5 /* MameRenderer.m */,
 				554339E50AC4DBB300F10925 /* MameTextureTable.h */,
 				554339E60AC4DBB300F10925 /* MameTextureTable.m */,
 				554339DE0AC4D79800F10925 /* MameOpenGLTexture.h */,
@@ -3223,6 +3228,7 @@
 				554339E00AC4D79800F10925 /* MameOpenGLTexture.mm in Sources */,
 				554339E70AC4DBB300F10925 /* MameTextureTable.m in Sources */,
 				5561FBA30AC58C6900BE1BF5 /* MameTimingController.m in Sources */,
+				5561FF240AC62C4700BE1BF5 /* MameRenderer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3333,7 +3339,7 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Cocoa.framework/Headers/Cocoa.h";
+				GCC_PREFIX_HEADER = mame.pch;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_PEDANTIC = NO;
 				GCC_WARN_UNINITIALIZED_AUTOS = NO;
@@ -3371,6 +3377,10 @@
 		556A42470AA4E9CE00602CC5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = (
+					ppc,
+					i386,
+				);
 				COPY_PHASE_STRIP = YES;
 				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

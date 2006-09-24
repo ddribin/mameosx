@@ -20,12 +20,12 @@ extern "C" {
 #endif
 
 @class MameView;
+@class MameRenderer;
 @class MameInputController;
 @class MameAudioController;
 @class MameTimingController;
 @class MameFileManager;
 @class MameConfiguration;
-@class MameTextureTable;
 
 @interface MameController : NSObject
 {
@@ -35,26 +35,20 @@ extern "C" {
     IBOutlet NSWindow * mOpenPanel;
     IBOutlet NSTextField * mGameTextField;
     IBOutlet NSProgressIndicator * mGameLoading;
+
+    MameRenderer * mRenderer;
     MameInputController * mInputController;
     MameAudioController * mAudioController;
     MameTimingController * mTimingController;
     MameFileManager * mFileManager;
     MameConfiguration * mConfiguration;
 
-    MameTextureTable * mTextureTable;
     render_target * mTarget;
     int32_t mWindowWidth;
     int32_t mWindowHeight;
-    NSSize mCenteringOffset;
 
     NSRecursiveLock * mLock;
-    NSOpenGLContext * mGlContext;
-    CVOpenGLBufferPoolRef mBufferPool;
-    CVOpenGLBufferRef mCurrentFrame;
     CVDisplayLinkRef mDisplayLink;
-    CVOpenGLTextureCacheRef mFrameTextureCache;
-    CVOpenGLTextureRef mCurrentFrameTexture;
-    CVOpenGLTextureCacheRef mPrimTextureCache;
 
     uint64_t mFramesDisplayed;
     uint64_t mFramesRendered;
