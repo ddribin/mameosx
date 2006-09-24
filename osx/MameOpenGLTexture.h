@@ -3,7 +3,6 @@
 //  mameosx
 //
 //  Created by Dave Dribin on 9/22/06.
-//  Copyright 2006 Bit Maki, Inc. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>
