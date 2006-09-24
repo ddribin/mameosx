@@ -116,8 +116,15 @@ struct _osd_file
     }
     
     osd_file * fileStruct = malloc(sizeof(fileStruct));
-    *error = FILEERR_SUCCESS;
+    if (fileStruct == 0)
+    {
+        fclose(handle);
+        *error = FILEERR_OUT_OF_MEMORY;
+        return 0;
+    }
+    
     fileStruct->fileHandle = handle;
+    *error = FILEERR_SUCCESS;
     return fileStruct;
 }
 
