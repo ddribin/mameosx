@@ -149,12 +149,18 @@ INLINE void set_blendmode(int blendmode)
 
 - (void) renderLine: (render_primitive *) prim;
 {    
+    GLfloat color[4];
+    color[0] = prim->color.r;
+    color[1] = prim->color.g;
+    color[2] = prim->color.b;
+    color[3] = prim->color.a;
+
     // check if it's really a point
     if (((prim->bounds.x1 - prim->bounds.x0) == 0) &&
         ((prim->bounds.y1 - prim->bounds.y0) == 0))
     {
         glBegin(GL_POINTS);
-        glColor4f(prim->color.r, prim->color.g, prim->color.b, prim->color.a);
+        glColor4fv(color);
         glVertex2f(prim->bounds.x0 + mCenteringOffset.width,
                    prim->bounds.y0 + mCenteringOffset.height);
         glEnd();
@@ -162,7 +168,7 @@ INLINE void set_blendmode(int blendmode)
     else
     {
         glBegin(GL_LINES);
-        glColor4f(prim->color.r, prim->color.g, prim->color.b, prim->color.a);
+        glColor4fv(color);
         glVertex2f(prim->bounds.x0 + mCenteringOffset.width,
                    prim->bounds.y0 + mCenteringOffset.height);
         glVertex2f(prim->bounds.x1 + mCenteringOffset.width,
@@ -173,18 +179,23 @@ INLINE void set_blendmode(int blendmode)
 
 - (void) renderQuad: (render_primitive *) prim;
 {
+    GLfloat color[4];
+    color[0] = prim->color.r;
+    color[1] = prim->color.g;
+    color[2] = prim->color.b;
+    color[3] = prim->color.a;
+
     glBegin(GL_QUADS);
-    glColor4f(prim->color.r, prim->color.g, prim->color.b, prim->color.a);
+    glColor4fv(color);
     glVertex2f(prim->bounds.x0 + mCenteringOffset.width,
                prim->bounds.y0 + mCenteringOffset.height);
-    glColor4f(prim->color.r, prim->color.g,
-              prim->color.b, prim->color.a);
+    glColor4fv(color);
     glVertex2f(prim->bounds.x1 + mCenteringOffset.width,
                prim->bounds.y0 + mCenteringOffset.height);
-    glColor4f(prim->color.r, prim->color.g, prim->color.b, prim->color.a);
+    glColor4fv(color);
     glVertex2f(prim->bounds.x1 + mCenteringOffset.width,
                prim->bounds.y1 + mCenteringOffset.height);
-    glColor4f(prim->color.r, prim->color.g, prim->color.b, prim->color.a);
+    glColor4fv(color);
     glVertex2f(prim->bounds.x0 + mCenteringOffset.width,
                prim->bounds.y1 + mCenteringOffset.height);
     glEnd();
