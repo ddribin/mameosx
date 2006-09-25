@@ -41,6 +41,8 @@ extern "C" {
 - (void) initFilters;
 - (void) pumpEvents;
 - (void) drawFrame;
+- (void) drawFrameUsingCoreImage;
+- (void) drawFrameUsingOpenGL;
 - (void) updateVideo;
 
 @end
@@ -144,6 +146,14 @@ void leaks_sleeper()
     [window makeKeyAndOrderFront: nil];
     
     [mMameView createCIContext];
+
+    // This code fragment is from the VideoViewer sample code
+    [[mMameView openGLContext] makeCurrentContext];
+    // CoreImage might be too slow if the current renderer doesn't support GL_ARB_fragment_program
+    const char * glExtensions = (const char*)glGetString(GL_EXTENSIONS);
+    mCoreImageAccelerated = (strstr(glExtensions, "GL_ARB_fragment_program") != NULL);
+    NSLog(@"Use Core Image: %@", mCoreImageAccelerated? @"YES" : @"NO");
+    
     [mRenderer osd_init: [mMameView openGLContext]
                  format: [mMameView pixelFormat]
                   width: mWindowWidth
@@ -313,7 +323,7 @@ static void cv_assert(CVReturn cr, NSString * message)
 - (void) initCoreVideoBuffer;
 {
     mLock = [[NSRecursiveLock alloc] init];
-
+    
     [self initFilters];
 
     CVReturn            error = kCVReturnSuccess;
@@ -425,37 +435,10 @@ static void cv_assert(CVReturn cr, NSString * message)
     glClearColor(0.0, 0.0, 0.0, 0.0);
     glClear(GL_COLOR_BUFFER_BIT);
 
-#if 0
-    CIImage * inputImage = [CIImage imageWithCVImageBuffer: mCurrentFrameTexture];
-#endif
-    CIImage * inputImage = [CIImage imageWithCVImageBuffer: [mRenderer currentFrameTexture]];
-    CIContext * ciContext = [mMameView ciContext];
-    CGRect      imageRect;
-    imageRect = [inputImage extent];
-
-   
-    CIImage * imageToDraw = inputImage;
-    if (mIsFiltered)
-    {
-        if (mMoveInputCenter)
-        {
-            inputCenterX += 2;
-            if (inputCenterX > mWindowWidth)
-                inputCenterX = 0;
-
-            [mCurrentFilter setValue: [CIVector vectorWithX: inputCenterX Y: inputCenterY]  
-                             forKey: @"inputCenter"];
-        }
-        
-        [mCurrentFilter setValue: inputImage forKey:@"inputImage"];
-        imageToDraw = [mCurrentFilter valueForKey: @"outputImage"];
-    }
-   
-#if 1
-    [ciContext drawImage: imageToDraw
-                 atPoint: CGPointMake(0, 0)
-                fromRect: imageRect];
-#endif
+    if (mCoreImageAccelerated)
+        [self drawFrameUsingCoreImage];
+    else
+        [self drawFrameUsingOpenGL];
     
     glFlush();
     
@@ -465,13 +448,76 @@ static void cv_assert(CVReturn cr, NSString * message)
     mFrameEndTime = [mTimingController osd_cycles];
 }
 
+- (void) drawFrameUsingCoreImage;
+{
+    CIImage * inputImage = [CIImage imageWithCVImageBuffer: [mRenderer currentFrameTexture]];
+    CIContext * ciContext = [mMameView ciContext];
+    CGRect      imageRect;
+    imageRect = [inputImage extent];
+    
+    
+    CIImage * imageToDraw = inputImage;
+    if (mIsFiltered)
+    {
+        if (mMoveInputCenter)
+        {
+            inputCenterX += 2;
+            if (inputCenterX > mWindowWidth)
+                inputCenterX = 0;
+            
+            [mCurrentFilter setValue: [CIVector vectorWithX: inputCenterX Y: inputCenterY]  
+                              forKey: @"inputCenter"];
+        }
+        
+        [mCurrentFilter setValue: inputImage forKey:@"inputImage"];
+        imageToDraw = [mCurrentFilter valueForKey: @"outputImage"];
+    }
+    
+    [ciContext drawImage: imageToDraw
+                 atPoint: CGPointMake(0, 0)
+                fromRect: imageRect];
+}
+
+- (void) drawFrameUsingOpenGL;
+{
+    CVOpenGLTextureRef texture = [mRenderer currentFrameTexture];
+    GLfloat vertices[4][2];
+    GLfloat texCoords[4][2];
+        
+    // Configure OpenGL to get vertex and texture coordinates from our two arrays
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    glVertexPointer(2, GL_FLOAT, 0, vertices);
+    glTexCoordPointer(2, GL_FLOAT, 0, texCoords);
+    
+    // Specify video rectangle vertices counter-clockwise from (0,0)
+    memset(vertices, 0, sizeof(vertices));
+    vertices[1][0] = vertices[2][0] = mWindowWidth;
+    vertices[2][1] = vertices[3][1] = mWindowHeight;
+    
+    GLenum textureTarget = CVOpenGLTextureGetTarget(texture);
+    
+    // Make sure the correct texture target is enabled
+    if (textureTarget != mLastTextureTarget)
+    {
+        glDisable(mLastTextureTarget);
+        mLastTextureTarget = textureTarget;
+        glEnable(mLastTextureTarget);
+    }
+    
+    // Get the current texture's coordinates, bind the texture, and draw our rectangle
+    CVOpenGLTextureGetCleanTexCoords(texture, texCoords[0], texCoords[1], texCoords[2], texCoords[3]);
+    glBindTexture(mLastTextureTarget, CVOpenGLTextureGetName(texture));
+    glDrawArrays(GL_QUADS, 0, 4);
+}
+
 - (void) updateVideo;
 {
     [mLock lock];
 
     render_target_set_bounds(mTarget, mWindowWidth, mWindowHeight, 0);
     const render_primitive_list * primlist = render_target_get_primitives(mTarget);
-    [mRenderer updateVideo: primlist];
+    [mRenderer renderFrame: primlist];
     
     [mLock unlock];
     mFramesRendered++;
