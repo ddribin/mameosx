@@ -37,6 +37,8 @@ extern "C" {
     IBOutlet NSProgressIndicator * mGameLoading;
 
     MameRenderer * mRenderer;
+    BOOL mCoreImageAccelerated;
+    GLenum mLastTextureTarget;
     MameInputController * mInputController;
     MameAudioController * mAudioController;
     MameTimingController * mTimingController;
