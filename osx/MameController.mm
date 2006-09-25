@@ -73,8 +73,6 @@ void leaks_sleeper()
 
 - (void) applicationDidFinishLaunching: (NSNotification*) notification;
 {
-    NSLog(@"didFinishLaunching");
-
 #if 0
     atexit(leaks_sleeper);
 #endif
