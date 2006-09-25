@@ -82,7 +82,11 @@ void leaks_sleeper()
     osd_set_timing_controller(mTimingController);
     osd_set_file_manager(mFileManager);
     
+    // Work around for an IB issue:
+    // "Why does my bottom or top drawer size itself improperly?"
+    // http://developer.apple.com/documentation/DeveloperTools/Conceptual/IBTips/Articles/FreqAskedQuests.html
     [mDrawer setContentSize: NSMakeSize(20, 60)];
+
     mIsFiltered = NO;
     int res = 0;
     
