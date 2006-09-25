@@ -37,6 +37,7 @@ extern "C" {
 - (void) setUpDefaultPaths;
 - (NSString *) getGameNameToRun;
 - (int) getGameIndex: (NSString *) gameName;
+- (void) detectAcceleratedCoreImage;
 - (void) initCoreVideoBuffer;
 - (void) initFilters;
 - (void) pumpEvents;
@@ -146,13 +147,7 @@ void leaks_sleeper()
     [window makeKeyAndOrderFront: nil];
     
     [mMameView createCIContext];
-
-    // This code fragment is from the VideoViewer sample code
-    [[mMameView openGLContext] makeCurrentContext];
-    // CoreImage might be too slow if the current renderer doesn't support GL_ARB_fragment_program
-    const char * glExtensions = (const char*)glGetString(GL_EXTENSIONS);
-    mCoreImageAccelerated = (strstr(glExtensions, "GL_ARB_fragment_program") != NULL);
-    NSLog(@"Use Core Image: %@", mCoreImageAccelerated? @"YES" : @"NO");
+    [self detectAcceleratedCoreImage];
     
     [mRenderer osd_init: [mMameView openGLContext]
                  format: [mMameView pixelFormat]
@@ -318,6 +313,17 @@ static void cv_assert(CVReturn cr, NSString * message)
 {
     if (cr != kCVReturnSuccess)
         NSLog(@"Core video returned: %d: %@", cr, message);
+}
+
+- (void) detectAcceleratedCoreImage;
+{
+    
+    // This code fragment is from the VideoViewer sample code
+    [[mMameView openGLContext] makeCurrentContext];
+    // CoreImage might be too slow if the current renderer doesn't support GL_ARB_fragment_program
+    const char * glExtensions = (const char*)glGetString(GL_EXTENSIONS);
+    mCoreImageAccelerated = (strstr(glExtensions, "GL_ARB_fragment_program") != NULL);
+    NSLog(@"Use Core Image: %@", mCoreImageAccelerated? @"YES" : @"NO");
 }
 
 - (void) initCoreVideoBuffer;
