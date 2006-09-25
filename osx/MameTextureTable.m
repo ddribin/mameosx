@@ -41,13 +41,6 @@
     [super dealloc];
 }
 
-+ (UINT32) computeHashForPrimitive: (const render_primitive *) primitive;
-{
-    const render_texinfo * texinfo = &primitive->texture;
-    UINT32 flags = primitive->flags;
-    return (UINT32)texinfo->base ^ (flags & (PRIMFLAG_BLENDMODE_MASK | PRIMFLAG_TEXFORMAT_MASK));
-}
-
 - (MameOpenGLTexture *) findTextureForPrimitive: (const render_primitive *) primitive;
 {
     MameOpenGLTexture * texture;
@@ -74,7 +67,7 @@
 }
 
 
-- (void) update: (const render_primitive *) primitive
+- (void) updateTextureForPrimitive: (const render_primitive *) primitive;
 {
     MameOpenGLTexture * texture = [self findOrCreateTextureForPrimitive: primitive];
     if ([texture sequenceId] != primitive->texture.seqid)

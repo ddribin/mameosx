@@ -50,8 +50,8 @@ static void cv_assert(CVReturn cr, NSString * message)
 
 - (BOOL) isEqualToPrimitive: (const render_primitive *) primitive;
 {
-    UINT32 primtiveHash = [MameOpenGLTexture computeHashForPrimitive: primitive];
-    if ((hash == primtiveHash) &&
+    UINT32 primitiveHash = [MameOpenGLTexture computeHashForPrimitive: primitive];
+    if ((hash == primitiveHash) &&
         (texinfo.base == primitive->texture.base) &&
         (texinfo.width == primitive->texture.width) &&
         (texinfo.height == primitive->texture.height) &&

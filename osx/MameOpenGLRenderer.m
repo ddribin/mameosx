@@ -105,7 +105,7 @@ INLINE void set_blendmode(int blendmode)
     {
         if (prim->texture.base != NULL)
         {
-            [mTextureTable update: prim];
+            [mTextureTable updateTextureForPrimitive: prim];
         }
     }
     

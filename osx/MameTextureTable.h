@@ -18,8 +18,6 @@
     NSMutableArray * mTextures;
 }
 
-+ (UINT32) computeHashForPrimitive: (const render_primitive *) primitive;
-
 - (id) initWithContext: (NSOpenGLContext *) context
            pixelFormat: (NSOpenGLPixelFormat *) pixelFormat;
 
@@ -27,7 +25,7 @@
 
 - (MameOpenGLTexture *) findOrCreateTextureForPrimitive: (const render_primitive *) primitive;
 
-- (void) update: (const render_primitive *) primitive;
+- (void) updateTextureForPrimitive: (const render_primitive *) primitive;
 
 - (void) performHousekeeping;
 

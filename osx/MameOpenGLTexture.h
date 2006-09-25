@@ -33,8 +33,8 @@ extern "C" {
 	int				xprescale;			// what is our X prescale factor?
 	int				yprescale;			// what is our Y prescale factor?
     
-    CVPixelBufferRef    mPixelBuffer;
-    CVOpenGLTextureRef  mCVTexture;
+    CVPixelBufferRef mPixelBuffer;
+    CVOpenGLTextureRef mCVTexture;
 }
 
 + (UINT32) computeHashForPrimitive: (const render_primitive *) primitive;
