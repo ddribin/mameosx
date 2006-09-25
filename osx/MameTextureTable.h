@@ -14,18 +14,22 @@
 
 @interface MameTextureTable : NSObject
 {
+    CVOpenGLTextureCacheRef mTextureCache;
     NSMutableArray * mTextures;
 }
 
 + (UINT32) computeHashForPrimitive: (const render_primitive *) primitive;
 
+- (id) initWithContext: (NSOpenGLContext *) context
+           pixelFormat: (NSOpenGLPixelFormat *) pixelFormat;
+
 - (MameOpenGLTexture *) findTextureForPrimitive: (const render_primitive *) primitive;
 
-- (MameOpenGLTexture *) findOrCreateTextureForPrimitive: (const render_primitive *) primitive
-                                           textureCache: (CVOpenGLTextureCacheRef) textureCache;
+- (MameOpenGLTexture *) findOrCreateTextureForPrimitive: (const render_primitive *) primitive;
 
-- (void) update: (const render_primitive *) primitive
-   textureCache: (CVOpenGLTextureCacheRef) textureCache;
+- (void) update: (const render_primitive *) primitive;
+
+- (void) performHousekeeping;
 
 
 @end

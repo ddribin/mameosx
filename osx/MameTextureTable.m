@@ -11,13 +11,21 @@
 
 @implementation MameTextureTable
 
-- (id) init
+- (id) initWithContext: (NSOpenGLContext *) context
+           pixelFormat: (NSOpenGLPixelFormat *) pixelFormat;
 {
     if ([super init] == nil)
         return nil;
     
+    CVReturn rc =
+        CVOpenGLTextureCacheCreate(NULL, 0, (CGLContextObj) [context CGLContextObj],
+                                   (CGLPixelFormatObj) [pixelFormat CGLPixelFormatObj],
+                                   0, &mTextureCache);
+    if (rc != kCVReturnSuccess)
+        return nil;
+
     mTextures = [[NSMutableArray alloc] init];
-   
+    
     return self;
 }
 
@@ -26,6 +34,7 @@
 //=========================================================== 
 - (void) dealloc
 {
+    CVOpenGLTextureCacheRelease(mTextureCache);
     [mTextures release];
     
     mTextures = nil;
@@ -51,14 +60,13 @@
     return nil;
 }
 
-- (MameOpenGLTexture *) findOrCreateTextureForPrimitive: (const render_primitive *) primitive
-                                           textureCache: (CVOpenGLTextureCacheRef) textureCache;
+- (MameOpenGLTexture *) findOrCreateTextureForPrimitive: (const render_primitive *) primitive;
 {
     MameOpenGLTexture * texture = [self findTextureForPrimitive: primitive];
     if (texture == nil)
     {
         texture = [[MameOpenGLTexture alloc] initWithPrimitive: primitive
-                                                  textureCache: textureCache];
+                                                  textureCache: mTextureCache];
         [texture autorelease];
         [mTextures addObject: texture];
     }
@@ -67,14 +75,17 @@
 
 
 - (void) update: (const render_primitive *) primitive
-   textureCache: (CVOpenGLTextureCacheRef) textureCache;
 {
-    MameOpenGLTexture * texture = [self findOrCreateTextureForPrimitive: primitive
-                                                           textureCache: textureCache];
+    MameOpenGLTexture * texture = [self findOrCreateTextureForPrimitive: primitive];
     if ([texture sequenceId] != primitive->texture.seqid)
     {
-        [texture updateData: primitive textureCache: textureCache];
+        [texture updateData: primitive textureCache: mTextureCache];
     }
+}
+
+- (void) performHousekeeping;
+{
+    CVOpenGLTextureCacheFlush(mTextureCache, 0);
 }
 
 @end

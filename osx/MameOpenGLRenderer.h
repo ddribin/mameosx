@@ -20,7 +20,6 @@
     NSSize mCenteringOffset;
     
     NSOpenGLContext * mGlContext;
-    CVOpenGLTextureCacheRef mPrimTextureCache;
 }
 
 - (void) osd_init: (NSOpenGLContext *) mameViewContext

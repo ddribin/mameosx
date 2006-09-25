@@ -17,12 +17,6 @@
 
 @end
 
-static void cv_assert(CVReturn cr, NSString * message)
-{
-    if (cr != kCVReturnSuccess)
-        NSLog(@"Core video returned: %d: %@", cr, message);
-}
-
 @implementation MameOpenGLRenderer
 
 - (void) osd_init: (NSOpenGLContext *) mameViewContext
@@ -32,14 +26,12 @@ static void cv_assert(CVReturn cr, NSString * message)
 {
     mWindowWidth = windowWidth;
     mWindowHeight = windowHeight;
-    mTextureTable = [[MameTextureTable alloc] init];
         
     NSOpenGLPixelFormat * glPixelFormat = mameViewFormat;
     mGlContext = [mameViewContext retain];
    
-    cv_assert(CVOpenGLTextureCacheCreate(NULL, 0, (CGLContextObj) [mGlContext CGLContextObj],
-                                         (CGLPixelFormatObj) [glPixelFormat CGLPixelFormatObj], 0, &mPrimTextureCache),
-              @"Could not create primitive texture cache");
+    mTextureTable = [[MameTextureTable alloc] initWithContext: mGlContext 
+                                                  pixelFormat: glPixelFormat];
 }
 
 
@@ -106,14 +98,14 @@ INLINE void set_blendmode(int blendmode)
     mCenteringOffset = NSMakeSize(0.0f, 0.0f);
     
     // first update/upload the textures
-    CVOpenGLTextureCacheFlush(mPrimTextureCache, 0);
+    [mTextureTable performHousekeeping];
     
     render_primitive * prim;
     for (prim = primlist->head; prim != NULL; prim = prim->next)
     {
         if (prim->texture.base != NULL)
         {
-            [mTextureTable update: prim textureCache: mPrimTextureCache];
+            [mTextureTable update: prim];
         }
     }
     
