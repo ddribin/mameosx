@@ -33,12 +33,14 @@ static void cv_assert(CVReturn cr, NSString * message)
     if ([super init] == nil)
         return nil;
     
-    mPrimitive = primitive;
-    hash = [MameOpenGLTexture computeHashForPrimitive: mPrimitive];
-    flags = mPrimitive->flags;
-    texinfo = mPrimitive->texture;
+    hash = [MameOpenGLTexture computeHashForPrimitive: primitive];
+    flags = primitive->flags;
+    texinfo = primitive->texture;
     xprescale = 1;
     yprescale = 1;
+    
+    mPixelBuffer = NULL;
+    mCVTexture = NULL;
     
     [self computeSize];
     [self setData: textureCache];
@@ -48,8 +50,8 @@ static void cv_assert(CVReturn cr, NSString * message)
 
 - (BOOL) isEqualToPrimitive: (const render_primitive *) primitive;
 {
-    UINT32 otherHash = [MameOpenGLTexture computeHashForPrimitive: mPrimitive];
-    if ((hash == otherHash) &&
+    UINT32 primtiveHash = [MameOpenGLTexture computeHashForPrimitive: primitive];
+    if ((hash == primtiveHash) &&
         (texinfo.base == primitive->texture.base) &&
         (texinfo.width == primitive->texture.width) &&
         (texinfo.height == primitive->texture.height) &&
@@ -98,22 +100,22 @@ static void cv_assert(CVReturn cr, NSString * message)
     UINT32 *dst32, *dbuf;
     int x, y;
 
-    if (!data)
+    if (mPixelBuffer == NULL)
     {
         cv_assert(CVPixelBufferCreate(NULL, rawwidth,
                                       rawheight,
                                       PixelBuffer::kPixelFormat,
-                                      NULL, &data),
+                                      NULL, &mPixelBuffer),
                   @"Could not create pixle buffer");
     }
     
     int texformat = PRIMFLAG_GET_TEXFORMAT(flags);
     
-    cv_assert(CVPixelBufferLockBaseAddress(data, 0),
+    cv_assert(CVPixelBufferLockBaseAddress(mPixelBuffer, 0),
               @"Could not lock pixel buffer");
     
-    PixelBuffer pixelBuffer(CVPixelBufferGetBaseAddress(data),
-                            CVPixelBufferGetBytesPerRow(data));
+    PixelBuffer pixelBuffer(CVPixelBufferGetBaseAddress(mPixelBuffer),
+                            CVPixelBufferGetBytesPerRow(mPixelBuffer));
     
     if (texformat == TEXFORMAT_ARGB32)
     {
@@ -179,28 +181,84 @@ static void cv_assert(CVReturn cr, NSString * message)
         return;
     }
 
-    cv_assert(CVPixelBufferUnlockBaseAddress(data, 0),
+    cv_assert(CVPixelBufferUnlockBaseAddress(mPixelBuffer, 0),
               @"Could not unlock pixel buffer");
-    cv_assert(CVOpenGLTextureCacheCreateTextureFromImage(NULL, textureCache, data,
-                                                         NULL, &cv_texture),
+    cv_assert(CVOpenGLTextureCacheCreateTextureFromImage(NULL, textureCache, mPixelBuffer,
+                                                         NULL, &mCVTexture),
               @"Could not create primitive texture");
 }
 
 - (void) updateData: (const render_primitive *) primitive
        textureCache: (CVOpenGLTextureCacheRef) textureCache;
 {
-    if (data)
+    if (mPixelBuffer != NULL)
     {
-        CVPixelBufferRelease(data);
-        CVOpenGLTextureRelease(cv_texture);
-        data = NULL;
-        cv_texture = NULL;
+        CVPixelBufferRelease(mPixelBuffer);
+        CVOpenGLTextureRelease(mCVTexture);
+        mPixelBuffer = NULL;
+        mCVTexture = NULL;
     }
 
-    mPrimitive = primitive;
     flags = primitive->flags;
     texinfo.seqid = primitive->texture.seqid;
     [self setData: textureCache];
+}
+
+- (void) renderPrimitive: (const render_primitive * ) primitive
+         centeringOffset: (NSSize) mCenteringOffset;
+{
+    MameOpenGLTexture * texture = self;
+    
+    float du = ustop - ustart; 
+    float dv = vstop - vstart;
+    
+    GLenum textureTarget = CVOpenGLTextureGetTarget(mCVTexture);
+    glEnable(textureTarget);
+    glBindTexture(CVOpenGLTextureGetTarget(mCVTexture),
+                  CVOpenGLTextureGetName(mCVTexture));
+    
+    // non-screen textures will never be filtered
+    glTexParameteri(textureTarget, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(textureTarget, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    
+    // texture rectangles can't wrap
+    glTexParameteri(textureTarget, GL_TEXTURE_WRAP_S, GL_CLAMP);
+    glTexParameteri(textureTarget, GL_TEXTURE_WRAP_T, GL_CLAMP);
+    
+    // texture coordinates for TEXTURE_RECTANGLE are 0,0 -> w,h
+    // rather than 0,0 -> 1,1 as with normal OpenGL texturing
+    du *= (float) rawwidth;
+    dv *= (float) rawheight;
+    
+    GLfloat color[4];
+    color[0] = primitive->color.r;
+    color[1] = primitive->color.g;
+    color[2] = primitive->color.b;
+    color[3] = primitive->color.a;
+    
+    glBegin(GL_QUADS);
+    glColor4fv(color);
+    glTexCoord2f(ustart + du * primitive->texcoords.tl.u,
+                 vstart + dv * primitive->texcoords.tl.v);
+    glVertex2f(primitive->bounds.x0 + mCenteringOffset.width,
+               primitive->bounds.y0 + mCenteringOffset.height);
+    glColor4fv(color);
+    glTexCoord2f(ustart + du * primitive->texcoords.tr.u,
+                 vstart + dv * primitive->texcoords.tr.v);
+    glVertex2f(primitive->bounds.x1 + mCenteringOffset.width,
+               primitive->bounds.y0 + mCenteringOffset.height);
+    glColor4fv(color);
+    glTexCoord2f(ustart + du * primitive->texcoords.br.u,
+                 vstart + dv * primitive->texcoords.br.v);
+    glVertex2f(primitive->bounds.x1 + mCenteringOffset.width,
+               primitive->bounds.y1 + mCenteringOffset.height);
+    glColor4fv(color);
+    glTexCoord2f(ustart + du * primitive->texcoords.bl.u,
+                 vstart + dv * primitive->texcoords.bl.v);
+    glVertex2f(primitive->bounds.x0 + mCenteringOffset.width,
+               primitive->bounds.y1 + mCenteringOffset.height);
+    glEnd();
+    glDisable(textureTarget);
 }
 
 @end

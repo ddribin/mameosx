@@ -14,8 +14,6 @@
 
 - (void) renderLine: (render_primitive *) primitive;
 - (void) renderQuad: (render_primitive *) primitive;
-- (void) renderTexturedQuad: (render_primitive *) primitive
-                    texture: (MameOpenGLTexture *) texture;
 
 @end
 
@@ -44,6 +42,28 @@ static void cv_assert(CVReturn cr, NSString * message)
               @"Could not create primitive texture cache");
 }
 
+
+INLINE void set_blendmode(int blendmode)
+{
+    switch (blendmode)
+    {
+        case BLENDMODE_NONE:
+            glDisable(GL_BLEND);
+            break;
+        case BLENDMODE_ALPHA:       
+            glEnable(GL_BLEND);
+            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+            break;
+        case BLENDMODE_RGB_MULTIPLY:    
+            glEnable(GL_BLEND);
+            glBlendFunc(GL_DST_COLOR, GL_ZERO);
+            break;
+        case BLENDMODE_ADD:     
+            glEnable(GL_BLEND);
+            glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+            break;
+    }
+}
 
 - (void) renderFrame : (const render_primitive_list *) primlist
 {
@@ -100,6 +120,7 @@ static void cv_assert(CVReturn cr, NSString * message)
     // now draw
     for (prim = primlist->head; prim != NULL; prim = prim->next)
     {
+        set_blendmode(PRIMFLAG_GET_BLENDMODE(prim->flags));
         switch (prim->type)
         {
             case RENDER_PRIMITIVE_LINE:
@@ -112,7 +133,10 @@ static void cv_assert(CVReturn cr, NSString * message)
                 if (texture == nil)
                     [self renderQuad: prim];
                 else
-                    [self renderTexturedQuad: prim texture: texture];
+                {
+                    [texture renderPrimitive: prim
+                             centeringOffset: mCenteringOffset];
+                }
             }
                 break;
         }
@@ -123,32 +147,8 @@ static void cv_assert(CVReturn cr, NSString * message)
 
 @implementation MameOpenGLRenderer (Private)
 
-INLINE void set_blendmode(int blendmode)
-{
-    switch (blendmode)
-    {
-        case BLENDMODE_NONE:
-            glDisable(GL_BLEND);
-            break;
-        case BLENDMODE_ALPHA:       
-            glEnable(GL_BLEND);
-            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-            break;
-        case BLENDMODE_RGB_MULTIPLY:    
-            glEnable(GL_BLEND);
-            glBlendFunc(GL_DST_COLOR, GL_ZERO);
-            break;
-        case BLENDMODE_ADD:     
-            glEnable(GL_BLEND);
-            glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-            break;
-    }
-}
-
 - (void) renderLine: (render_primitive *) prim;
-{
-    set_blendmode(PRIMFLAG_GET_BLENDMODE(prim->flags));
-    
+{    
     // check if it's really a point
     if (((prim->bounds.x1 - prim->bounds.x0) == 0) &&
         ((prim->bounds.y1 - prim->bounds.y0) == 0))
@@ -173,7 +173,6 @@ INLINE void set_blendmode(int blendmode)
 
 - (void) renderQuad: (render_primitive *) prim;
 {
-    set_blendmode(PRIMFLAG_GET_BLENDMODE(prim->flags));
     glBegin(GL_QUADS);
     glColor4f(prim->color.r, prim->color.g, prim->color.b, prim->color.a);
     glVertex2f(prim->bounds.x0 + mCenteringOffset.width,
@@ -189,57 +188,6 @@ INLINE void set_blendmode(int blendmode)
     glVertex2f(prim->bounds.x0 + mCenteringOffset.width,
                prim->bounds.y1 + mCenteringOffset.height);
     glEnd();
-}
-
-- (void) renderTexturedQuad: (render_primitive *) prim 
-                    texture: (MameOpenGLTexture *) texture;
-{
-    float du = texture->ustop - texture->ustart; 
-    float dv = texture->vstop - texture->vstart;
-    
-    set_blendmode(PRIMFLAG_GET_BLENDMODE(prim->flags));
-    
-    GLenum textureTarget = CVOpenGLTextureGetTarget(texture->cv_texture);
-    glEnable(textureTarget);
-    glBindTexture(CVOpenGLTextureGetTarget(texture->cv_texture),
-                  CVOpenGLTextureGetName(texture->cv_texture));
-    
-    // non-screen textures will never be filtered
-    glTexParameteri(textureTarget, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexParameteri(textureTarget, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    
-    // texture rectangles can't wrap
-    glTexParameteri(textureTarget, GL_TEXTURE_WRAP_S, GL_CLAMP);
-    glTexParameteri(textureTarget, GL_TEXTURE_WRAP_T, GL_CLAMP);
-    
-    // texture coordinates for TEXTURE_RECTANGLE are 0,0 -> w,h
-    // rather than 0,0 -> 1,1 as with normal OpenGL texturing
-    du *= (float) texture->rawwidth;
-    dv *= (float) texture->rawheight;
-    
-    glBegin(GL_QUADS);
-    glColor4f(prim->color.r, prim->color.g, prim->color.b, prim->color.a);
-    glTexCoord2f(texture->ustart + du * prim->texcoords.tl.u,
-                 texture->vstart + dv * prim->texcoords.tl.v);
-    glVertex2f(prim->bounds.x0 + mCenteringOffset.width,
-               prim->bounds.y0 + mCenteringOffset.height);
-    glColor4f(prim->color.r, prim->color.g, prim->color.b, prim->color.a);
-    glTexCoord2f(texture->ustart + du * prim->texcoords.tr.u,
-                 texture->vstart + dv * prim->texcoords.tr.v);
-    glVertex2f(prim->bounds.x1 + mCenteringOffset.width,
-               prim->bounds.y0 + mCenteringOffset.height);
-    glColor4f(prim->color.r, prim->color.g, prim->color.b, prim->color.a);
-    glTexCoord2f(texture->ustart + du * prim->texcoords.br.u,
-                 texture->vstart + dv * prim->texcoords.br.v);
-    glVertex2f(prim->bounds.x1 + mCenteringOffset.width,
-               prim->bounds.y1 + mCenteringOffset.height);
-    glColor4f(prim->color.r, prim->color.g, prim->color.b, prim->color.a);
-    glTexCoord2f(texture->ustart + du * prim->texcoords.bl.u,
-                 texture->vstart + dv * prim->texcoords.bl.v);
-    glVertex2f(prim->bounds.x0 + mCenteringOffset.width,
-               prim->bounds.y1 + mCenteringOffset.height);
-    glEnd();
-    glDisable(textureTarget);
 }
 
 @end
