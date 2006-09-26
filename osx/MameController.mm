@@ -71,6 +71,7 @@ void leaks_sleeper()
     mConfiguration = [[MameConfiguration alloc] initWithController: self];
     mSyncToRefresh = NO;
     mMameLock = [[NSLock alloc] init];
+    mMameIsRunning = NO;
 
     return self;
 }
@@ -130,6 +131,20 @@ void leaks_sleeper()
                              toTarget: self
                            withObject: [NSNumber numberWithInt: game_index]];
 #endif
+}
+
+- (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender
+{
+    NSApplicationTerminateReply reply = NSTerminateNow;
+    [mMameLock lock];
+    if (mMameIsRunning)
+    {
+        mame_schedule_exit();
+        // Thread notification will actually terminate the app
+        reply =  NSTerminateCancel;
+    }
+    [mMameLock unlock];
+    return reply;
 }
 
 - (int) osd_init;
@@ -592,8 +607,10 @@ static void cv_assert(CVReturn cr, NSString * message)
         return;
     
     [mMameLock lock];
+    mMameIsRunning = YES;
     mMamePool = [[NSAutoreleasePool alloc] init];
     run_game(gameIndex);
+    mMameIsRunning = NO;
     [mMamePool release];
     [mMameLock unlock];
     

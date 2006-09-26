@@ -45,6 +45,7 @@ extern "C" {
     MameFileManager * mFileManager;
     MameConfiguration * mConfiguration;
 
+    BOOL mMameIsRunning;
     NSLock * mMameLock;
     NSAutoreleasePool * mMamePool;
     render_target * mTarget;
