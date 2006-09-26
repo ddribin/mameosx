@@ -46,6 +46,9 @@ extern "C" {
 - (void) drawFrameUsingOpenGL;
 - (void) updateVideo;
 
+- (void) gameThread: (NSNumber *) gameIndexNumber;
+- (void) gameFinished: (NSNotification *) note;
+
 @end
 
 void leaks_sleeper()
@@ -67,6 +70,7 @@ void leaks_sleeper()
     mFileManager = [[MameFileManager alloc] init];
     mConfiguration = [[MameConfiguration alloc] initWithController: self];
     mSyncToRefresh = NO;
+    mMameLock = [[NSLock alloc] init];
 
     return self;
 }
@@ -103,6 +107,7 @@ void leaks_sleeper()
     int game_index = [self getGameIndex: gameName];
     
     // have we decided on a game?
+#if 0
     if (game_index != -1)
         res = run_game(game_index);
     
@@ -115,14 +120,25 @@ void leaks_sleeper()
            mFramesRendered);
     
     exit(res);
+#else
+    [[NSNotificationCenter defaultCenter] addObserver: self
+                                             selector: @selector(gameFinished:)
+                                                 name: NSThreadWillExitNotification
+                                               object: nil];
+
+    [NSThread detachNewThreadSelector: @selector(gameThread:)
+                             toTarget: self
+                           withObject: [NSNumber numberWithInt: game_index]];
+#endif
 }
 
 - (int) osd_init;
 {
     NSLog(@"osd_init");
-
-    [mGameLoading stopAnimation: nil];
-    [mOpenPanel orderOut: [mMameView window]];
+    
+    [self performSelectorOnMainThread: @selector(hideOpenPanel:)
+                           withObject: nil
+                        waitUntilDone: NO];
 
     [mInputController osd_init];
     [mAudioController osd_init];
@@ -171,11 +187,25 @@ void leaks_sleeper()
     return mFileManager;
 }
 
+- (MameInputController *) inputController
+{
+    return mInputController;
+}
+
 - (int) osd_update: (mame_time) emutime;
 {
+    // Drain the pool
+    [mMamePool release];
+    mMamePool = [[NSAutoreleasePool alloc] init];
+    
     [self updateVideo];
     [self pumpEvents];
     [mTimingController updateThrottle: emutime];
+
+    // Open lock to allow pending MAME calls
+    [mMameLock unlock];
+    [mMameLock lock];
+
     return 0;
 }
 
@@ -207,10 +237,12 @@ void leaks_sleeper()
 
 - (IBAction) togglePause: (id) sender;
 {
+    [mMameLock lock];
     if (mame_is_paused())
         mame_pause(FALSE);
     else
         mame_pause(TRUE);
+    [mMameLock unlock];
 }
 
 - (IBAction) nullAction: (id) sender;
@@ -228,17 +260,29 @@ void leaks_sleeper()
     [NSApp stopModal];
 }
 
+- (IBAction) hideOpenPanel: (id) sender;
+{
+    [mGameLoading stopAnimation: nil];
+    [mOpenPanel orderOut: [mMameView window]];
+}
+
 //=========================================================== 
 //  throttled 
 //=========================================================== 
 - (BOOL) throttled
 {
-    return mThrottled;
+    @synchronized(self)
+    {
+        return mThrottled;
+    }
 }
 
 - (void) setThrottled: (BOOL) flag
 {
-    mThrottled = flag;
+    @synchronized(self)
+    {
+        mThrottled = flag;
+    }
 }
 
 //=========================================================== 
@@ -246,22 +290,28 @@ void leaks_sleeper()
 //=========================================================== 
 - (BOOL) syncToRefresh
 {
-    return mSyncToRefresh;
+    @synchronized(self)
+    {
+        return mSyncToRefresh;
+    }
 }
 
 - (void) setSyncToRefresh: (BOOL) flag
 {
-    mSyncToRefresh = flag;
-    long swapInterval;
-    if (mSyncToRefresh)
-        swapInterval = 1;
-    else
-        swapInterval = 0;
-    
-    [mLock lock];
-    [[mMameView openGLContext] setValues: &swapInterval
-                            forParameter: NSOpenGLCPSwapInterval];
-    [mLock unlock];
+    @synchronized(self)
+    {
+        mSyncToRefresh = flag;
+        long swapInterval;
+        if (mSyncToRefresh)
+            swapInterval = 1;
+        else
+            swapInterval = 0;
+        
+        [mLock lock];
+        [[mMameView openGLContext] setValues: &swapInterval
+                                forParameter: NSOpenGLCPSwapInterval];
+        [mLock unlock];
+    }
 }
 
 
@@ -424,12 +474,14 @@ static void cv_assert(CVReturn cr, NSString * message)
         if (event == nil)
             break;
         
+#if 0
         if ([event type] == NSKeyDown)
             [mInputController handleKeyDown: event];
         else if ([event type] == NSKeyUp)
             [mInputController handleKeyUp: event];
         else if ([event type] == NSFlagsChanged)
             [mInputController flagsChanged: event];
+#endif
         
         [NSApp sendEvent: event];
     }
@@ -529,6 +581,36 @@ static void cv_assert(CVReturn cr, NSString * message)
     
     [mLock unlock];
     mFramesRendered++;
+}
+
+- (void) gameThread: (NSNumber *) gameIndexNumber;
+{
+    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+    
+    int gameIndex = [gameIndexNumber intValue];
+    if (gameIndex == -1)
+        return;
+    
+    [mMameLock lock];
+    mMamePool = [[NSAutoreleasePool alloc] init];
+    run_game(gameIndex);
+    [mMamePool release];
+    [mMameLock unlock];
+    
+    cycles_t cps = [mTimingController osd_cycles_per_second];
+    NSLog(@"Average FPS displayed: %f (%qi frames)\n",
+          (double)cps / (mFrameEndTime - mFrameStartTime) * mFramesDisplayed,
+          mFramesDisplayed);
+    NSLog(@"Average FPS rendered: %f (%qi frames)\n",
+          (double)cps / (mFrameEndTime - mFrameStartTime) * mFramesRendered,
+          mFramesRendered);
+    
+    [pool release];
+}
+
+- (void) gameFinished: (NSNotification *) note;
+{
+    [NSApp terminate: nil];
 }
 
 @end

@@ -45,6 +45,8 @@ extern "C" {
     MameFileManager * mFileManager;
     MameConfiguration * mConfiguration;
 
+    NSLock * mMameLock;
+    NSAutoreleasePool * mMamePool;
     render_target * mTarget;
     int32_t mWindowWidth;
     int32_t mWindowHeight;
@@ -72,6 +74,8 @@ extern "C" {
 
 - (MameFileManager *) fileManager;
 
+- (MameInputController *) inputController;
+
 - (BOOL) isFiltered;
 - (void) setIsFiltered: (BOOL) flag;
 
@@ -86,6 +90,7 @@ extern "C" {
 - (IBAction) nullAction: (id) sender;
 - (IBAction) raiseOpenPanel: (id) sender;
 - (IBAction) endOpenPanel: (id) sender;
+- (IBAction) hideOpenPanel: (id) sender;
 
 - (int) osd_init;
 - (int) osd_update: (mame_time) emutime;

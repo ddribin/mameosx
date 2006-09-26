@@ -19,8 +19,8 @@
 - (const os_code_info *) osd_get_code_list;
 - (INT32) osd_get_code_value: (os_code) code;
 
-- (void) handleKeyDown: (NSEvent *) event;
-- (void) handleKeyUp: (NSEvent *) event;
+- (void) keyDown: (NSEvent *) event;
+- (void) keyUp: (NSEvent *) event;
 - (void) flagsChanged: (NSEvent *) event;
 
 

@@ -159,43 +159,55 @@ static os_code_info codelist[] = {
 
 - (INT32) osd_get_code_value: (os_code) code;
 {
-    return mKeyStates[code];
-}
-
-- (void) handleKeyDown: (NSEvent *) event;
-{
-    NSString * characters = [event charactersIgnoringModifiers];
-    unichar firstChar = [characters characterAtIndex: 0];
-    if (isAscii(firstChar))
+    @synchronized(self)
     {
-        mKeyStates[firstChar] = 1;
-    }
-    else if (isFunctionKey(firstChar))
-    {
-        mKeyStates[FUNC_TO_INDEX(firstChar)] = 1;
+        return mKeyStates[code];
     }
 }
 
-- (void) handleKeyUp: (NSEvent *) event;
+- (void) keyDown: (NSEvent *) event;
 {
-    NSString * characters = [event charactersIgnoringModifiers];
-    unichar firstChar = [characters characterAtIndex: 0];
-    if (isAscii(firstChar))
+    @synchronized(self)
     {
-        mKeyStates[firstChar] = 0;
+        NSString * characters = [event charactersIgnoringModifiers];
+        unichar firstChar = [characters characterAtIndex: 0];
+        if (isAscii(firstChar))
+        {
+            mKeyStates[firstChar] = 1;
+        }
+        else if (isFunctionKey(firstChar))
+        {
+            mKeyStates[FUNC_TO_INDEX(firstChar)] = 1;
+        }
     }
-    else if (isFunctionKey(firstChar))
+}
+
+- (void) keyUp: (NSEvent *) event;
+{
+    @synchronized(self)
     {
-        mKeyStates[FUNC_TO_INDEX(firstChar)] = 0;
+        NSString * characters = [event charactersIgnoringModifiers];
+        unichar firstChar = [characters characterAtIndex: 0];
+        if (isAscii(firstChar))
+        {
+            mKeyStates[firstChar] = 0;
+        }
+        else if (isFunctionKey(firstChar))
+        {
+            mKeyStates[FUNC_TO_INDEX(firstChar)] = 0;
+        }
     }
 }
 
 - (void) flagsChanged: (NSEvent *) event;
 {
-    unsigned int flags = [event modifierFlags];
-    mKeyStates[MAME_OSX_CONTROL] = (flags & NSControlKeyMask) ? 1 : 0;
-    mKeyStates[MAME_OSX_OPTION] = (flags & NSAlternateKeyMask) ? 1 : 0;
-    mKeyStates[MAME_OSX_COMMAND] = (flags & NSCommandKeyMask) ? 1 : 0;
+    @synchronized(self)
+    {
+        unsigned int flags = [event modifierFlags];
+        mKeyStates[MAME_OSX_CONTROL] = (flags & NSControlKeyMask) ? 1 : 0;
+        mKeyStates[MAME_OSX_OPTION] = (flags & NSAlternateKeyMask) ? 1 : 0;
+        mKeyStates[MAME_OSX_COMMAND] = (flags & NSCommandKeyMask) ? 1 : 0;
+    }
 }
 
 @end

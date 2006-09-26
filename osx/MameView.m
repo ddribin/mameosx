@@ -53,6 +53,17 @@
 - (void) keyDown: (NSEvent *) event
 {
     [NSCursor setHiddenUntilMouseMoves: YES];
+    [[mController inputController] keyDown: event];
+}
+
+- (void) keyUp: (NSEvent *) event
+{
+    [[mController inputController] keyUp: event];
+}
+
+- (void) flagsChanged: (NSEvent *) event
+{
+    [[mController inputController] flagsChanged: event];
 }
 
 //  adjust the viewport
