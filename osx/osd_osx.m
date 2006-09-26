@@ -30,47 +30,32 @@ void osd_set_audio_controller(MameAudioController * audioController)
 
 int osd_start_audio_stream(int stereo)
 {
-    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-    int rc = [sAudioController osd_start_audio_stream: stereo];
-    [pool release];
-    return rc;
+    return [sAudioController osd_start_audio_stream: stereo];
 }
 
 int osd_update_audio_stream(INT16 *buffer)
 {
-    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-    int rc = [sAudioController osd_update_audio_stream: buffer];
-    [pool release];
-    return rc;
+     return [sAudioController osd_update_audio_stream: buffer];
 }
 
 void osd_stop_audio_stream(void)
 {
-    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
     [sAudioController osd_stop_audio_stream];
-    [pool release];
 }
 
 void osd_set_mastervolume(int attenuation)
 {
-    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
     [sAudioController osd_set_mastervolume: attenuation];
-    [pool release];
 }
 
 int osd_get_mastervolume(void)
 {
-    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-    int rc = [sAudioController osd_get_mastervolume];
-    [pool release];
-    return rc;
+    return [sAudioController osd_get_mastervolume];
 }
 
 void osd_sound_enable(int enable)
 {
-    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
     [sAudioController osd_sound_enable: enable];
-    [pool release];
 }
 
 // locking stubs
@@ -113,26 +98,17 @@ void osd_set_timing_controller(MameTimingController * timingController)
 
 cycles_t osd_cycles(void)
 {
-    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-    cycles_t rc = [sTimingController osd_cycles];
-    [pool release];
-    return rc;
+    return [sTimingController osd_cycles];
 }
 
 cycles_t osd_cycles_per_second(void)
 {
-    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-    cycles_t rc = [sTimingController osd_cycles_per_second];
-    [pool release];
-    return rc;
+    return [sTimingController osd_cycles_per_second];
 }
 
 cycles_t osd_profiling_ticks(void)
 {
-    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-    cycles_t rc = [sTimingController osd_profiling_ticks];
-    [pool release];
-    return rc;
+    return [sTimingController osd_profiling_ticks];
 }
 
 
@@ -205,10 +181,7 @@ void osd_joystick_end_calibration(void)
 
 int osd_update(mame_time emutime)
 {
-    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-    int rc = [sController osd_update: emutime];
-    [pool release];
-    return rc;
+    return [sController osd_update: emutime];
 }
 
 const char *osd_get_fps_text(const performance_info *performance)
@@ -266,21 +239,15 @@ const char * osd_pathtype_string(int pathtype)
 /* Return the number of paths for a given type */
 int osd_get_path_count(int pathtype)
 {
-    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-    int rc = [sFileManager osd_get_path_count: pathtype];
-    [pool release];
-    return rc;
+    return [sFileManager osd_get_path_count: pathtype];
 }
 
 /* Get information on the existence of a file */
 int osd_get_path_info(int pathtype, int pathindex, const char *filename)
 {
-    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-    int rc = [sFileManager osd_get_path_info: pathtype
-                                   pathindex: pathindex
-                                    filename: filename];
-    [pool release];
-    return rc;
+    return [sFileManager osd_get_path_info: pathtype
+                                 pathindex: pathindex
+                                  filename: filename];
 }
 
 /* Create a directory if it doesn't already exist */
@@ -293,73 +260,53 @@ int osd_create_directory(int pathtype, int pathindex, const char *dirname)
 /* Attempt to open a file with the given name and mode using the specified path type */
 osd_file *osd_fopen(int pathtype, int pathindex, const char *filename, const char *mode, osd_file_error *error)
 {
-    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-    osd_file * rc = [sFileManager osd_fopen: pathtype
-                                  pathindex: pathindex
-                                   filename: filename
-                                       mode: mode
-                                      error: error];
-    [pool release];
-    return rc;
+    return [sFileManager osd_fopen: pathtype
+                         pathindex: pathindex
+                          filename: filename
+                              mode: mode
+                             error: error];
 }
 
 /* Seek within a file */
 int osd_fseek(osd_file *file, INT64 offset, int whence)
 {
-    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-    int rc = [sFileManager osd_fseek: file
-                              offset: offset
-                              whence: whence];
-    [pool release];
-    return rc;
+    return [sFileManager osd_fseek: file
+                            offset: offset
+                            whence: whence];
 }
 
 /* Return current file position */
 UINT64 osd_ftell(osd_file *file)
 {
-    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-    int rc = [sFileManager osd_ftell: file];
-    [pool release];
-    return rc;
+    return [sFileManager osd_ftell: file];
 }    
 
 /* Return 1 if we're at the end of file */
 int osd_feof(osd_file *file)
 {
-    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-    int rc = [sFileManager osd_feof: file];
-    [pool release];
-    return rc;
+    return [sFileManager osd_feof: file];
 }
 
 /* Read bytes from a file */
 UINT32 osd_fread(osd_file *file, void *buffer, UINT32 length)
 {
-    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-    int rc = [sFileManager osd_fread: file
-                              buffer: buffer
-                              length: length];
-    [pool release];
-    return rc;
+    return [sFileManager osd_fread: file
+                            buffer: buffer
+                            length: length];
 }
 
 /* Write bytes to a file */
 UINT32 osd_fwrite(osd_file *file, const void *buffer, UINT32 length)
 {
-    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-    int rc = [sFileManager osd_fwrite: file
-                               buffer: buffer
-                               length: length];
-    [pool release];
-    return rc;
+    return [sFileManager osd_fwrite: file
+                             buffer: buffer
+                             length: length];
 }
 
 /* Close an open file */
 void osd_fclose(osd_file *file)
 {
-    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
     [sFileManager osd_fclose: file];
-    [pool release];
 }
 
 //============================================================
@@ -394,8 +341,5 @@ int osd_display_loading_rom_message(const char *name, rom_load_data *romdata)
 
 int osd_init(void)
 {
-    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-    int rc = [sController osd_init];
-    [pool release];
-    return rc;
+    return [sController osd_init];
 }
