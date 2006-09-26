@@ -214,7 +214,7 @@ void leaks_sleeper()
     mMamePool = [[NSAutoreleasePool alloc] init];
     
     [self updateVideo];
-    [self pumpEvents];
+    // [self pumpEvents];
     [mTimingController updateThrottle: emutime];
 
     // Open lock to allow pending MAME calls
@@ -488,16 +488,6 @@ static void cv_assert(CVReturn cr, NSString * message)
                                                dequeue: YES];
         if (event == nil)
             break;
-        
-#if 0
-        if ([event type] == NSKeyDown)
-            [mInputController handleKeyDown: event];
-        else if ([event type] == NSKeyUp)
-            [mInputController handleKeyUp: event];
-        else if ([event type] == NSFlagsChanged)
-            [mInputController flagsChanged: event];
-#endif
-        
         [NSApp sendEvent: event];
     }
 }
