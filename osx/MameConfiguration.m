@@ -37,6 +37,7 @@ NSString * MameCheatPath = @"CheatPath";
 NSString * MameThrottledKey = @"Throttled";
 NSString * MameSyncToRefreshKey = @"SyncToRefresh";
 NSString * MameSoundEnabled = @"SoundEnabled";
+NSString * MameRenderInCV = @"RenderInCV";
 
 #ifdef MAME_DEBUG
 NSString * MameDebugKey = @"MameDebug";
@@ -80,6 +81,9 @@ NSString * MameDebugDepthKey = @"DebugDepth";
 
     [defaultValues setObject: [NSNumber numberWithBool: YES]
                       forKey: MameSoundEnabled];
+    
+    [defaultValues setObject: [NSNumber numberWithBool: YES]
+                      forKey: MameRenderInCV];
     
 #ifdef MAME_DEBUG
     [defaultValues setObject: [NSNumber numberWithBool: NO]
@@ -169,6 +173,7 @@ static MameConfiguration * sGlobalConfiguration = nil;
     [self setThrottled: [defaults boolForKey: MameThrottledKey]];
     [self setSyncToRefresh: [defaults boolForKey: MameSyncToRefreshKey]];
     [self setSoundEnabled: [defaults boolForKey: MameSoundEnabled]];
+    [self setRenderInCV: [defaults boolForKey: MameRenderInCV]];
     
 #ifdef MAME_DEBUG
     options.mame_debug = [defaults boolForKey: MameDebugKey];
@@ -238,6 +243,19 @@ static MameConfiguration * sGlobalConfiguration = nil;
 - (void) setSoundEnabled: (BOOL) flag
 {
     mSoundEnabled = flag;
+}
+
+//=========================================================== 
+//  renderInCV 
+//=========================================================== 
+- (BOOL) renderInCV
+{
+    return mRenderInCV;
+}
+
+- (void) setRenderInCV: (BOOL) flag
+{
+    mRenderInCV = flag;
 }
 
 //=========================================================== 

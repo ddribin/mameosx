@@ -16,6 +16,7 @@
     BOOL mThrottled;
     BOOL mSyncToRefresh;
     BOOL mSoundEnabled;
+    BOOL mRenderInCV;
     
     char * mSaveGame;
     char * mBios;
@@ -30,6 +31,9 @@
 
 - (BOOL) syncToRefresh;
 - (void) setSyncToRefresh: (BOOL) flag;
+
+- (BOOL) renderInCV;
+- (void) setRenderInCV: (BOOL) flag;
 
 - (BOOL) soundEnabled;
 - (void) setSoundEnabled: (BOOL) flag;

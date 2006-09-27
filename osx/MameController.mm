@@ -322,10 +322,10 @@ void leaks_sleeper()
         else
             swapInterval = 0;
         
-        [mLock lock];
+        [mDisplayLock lock];
         [[mMameView openGLContext] setValues: &swapInterval
                                 forParameter: NSOpenGLCPSwapInterval];
-        [mLock unlock];
+        [mDisplayLock unlock];
     }
 }
 
@@ -391,11 +391,13 @@ static void cv_assert(CVReturn cr, NSString * message)
     const char * glExtensions = (const char*)glGetString(GL_EXTENSIONS);
     mCoreImageAccelerated = (strstr(glExtensions, "GL_ARB_fragment_program") != NULL);
     NSLog(@"Use Core Image: %@", mCoreImageAccelerated? @"YES" : @"NO");
+    NSLog(@"Render in Core Video callback: %@",
+          [mConfiguration renderInCV]? @"YES" : @"NO");
 }
 
 - (void) initCoreVideoBuffer;
 {
-    mLock = [[NSRecursiveLock alloc] init];
+    mDisplayLock = [[NSRecursiveLock alloc] init];
     mPrimitives = 0;
     
     [self initFilters];
@@ -493,45 +495,54 @@ static void cv_assert(CVReturn cr, NSString * message)
     }
 }
 
-// Hmmm... rendering in the Core Video callback causes some weird artifacts.
-// Every once in a while a "blank" frame comes through.  By setting the clear
-// color to red, this shows up as a red flash.  Not sure what is causing it,
-// so disable for now.
-#define RENDER_IN_CV 0
-
 - (void) drawFrame;
 {
-    [mLock lock];
+    [mDisplayLock lock];
     
-#if RENDER_IN_CV
-    const render_primitive_list * primitives = 0;
-    @synchronized(self)
+
+    if ([mConfiguration renderInCV])
     {
-        primitives = mPrimitives;
-        mPrimitives = 0;
-        
+        const render_primitive_list * primitives = 0;
+        BOOL skipFrame = NO;
+        @synchronized(self)
+        {
+            primitives = mPrimitives;
+            mPrimitives = 0;
+        }
+            
         if (primitives == 0)
         {
-            NSLog(@"No primitives");
-            // [mLock unlock];
-            // return;
+            skipFrame = YES;
         }
         else
         {
             osd_lock_acquire(primitives->lock);
-            [mRenderer renderFrame: primitives];
+            if (primitives->head == NULL)
+            {
+                NSLog(@"No primitives");
+                skipFrame = YES;
+            }
+            else
+            {
+                [mRenderer renderFrame: primitives];
+                skipFrame = NO;
+            }
             osd_lock_release(primitives->lock);
         }
+        
+        if (skipFrame)
+        {
+            [mDisplayLock unlock];
+            return;
+        }
     }
-#endif
     
     [[mMameView openGLContext] makeCurrentContext];
 
-#if RENDER_IN_CV
-    glClearColor(1.0, 0.0, 0.0, 0.0);
-#else
-    glClearColor(0.0, 0.0, 0.0, 0.0);
-#endif
+    if ([mConfiguration renderInCV])
+        glClearColor(0.0, 0.0, 0.0, 0.0);
+    else
+        glClearColor(0.0, 0.0, 0.0, 0.0);
     glClear(GL_COLOR_BUFFER_BIT);
 
     CVOpenGLTextureRef texture = [mRenderer currentFrameTexture];
@@ -549,7 +560,7 @@ static void cv_assert(CVReturn cr, NSString * message)
     mFramesDisplayed++;
     mFrameEndTime = [mTimingController osd_cycles];
 
-    [mLock unlock];
+    [mDisplayLock unlock];
 }
 
 - (void) drawFrameUsingCoreImage: (CVOpenGLTextureRef) texture;
@@ -620,25 +631,28 @@ static void cv_assert(CVReturn cr, NSString * message)
 
 - (void) updateVideo;
 {
-#if !RENDER_IN_CV
-    [mLock lock];
-
-    render_target_set_bounds(mTarget, mWindowWidth, mWindowHeight, 0.0);
-    const render_primitive_list * primlist = render_target_get_primitives(mTarget);
-    [mRenderer renderFrame: primlist];
-    
-    [mLock unlock];
-#else
-    // [mLock lock];
-    render_target_set_bounds(mTarget, mWindowWidth, mWindowHeight, 0.0);
-    const render_primitive_list * primitives = render_target_get_primitives(mTarget);
-    @synchronized(self)
+    if ([mConfiguration renderInCV])
     {
-        mPrimitives = primitives;
+        render_target_set_bounds(mTarget, mWindowWidth, mWindowHeight, 0.0);
+        const render_primitive_list * primitives = render_target_get_primitives(mTarget);
+        @synchronized(self)
+        {
+            mPrimitives = primitives;
+        }
     }
-    // [mLock unlock];
-#endif
-    mFramesRendered++;
+    else
+    {
+        [mDisplayLock lock];
+        
+        render_target_set_bounds(mTarget, mWindowWidth, mWindowHeight, 0.0);
+        const render_primitive_list * primlist = render_target_get_primitives(mTarget);
+        [mRenderer renderFrame: primlist];
+        
+        [mDisplayLock unlock];
+    }
+
+    if (!mame_is_paused(Machine))
+        mFramesRendered++;
 }
 
 - (void) gameThread: (NSNumber *) gameIndexNumber;

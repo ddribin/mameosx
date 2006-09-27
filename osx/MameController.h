@@ -53,7 +53,7 @@ extern "C" {
     int32_t mWindowWidth;
     int32_t mWindowHeight;
 
-    NSRecursiveLock * mLock;
+    NSRecursiveLock * mDisplayLock;
     CVDisplayLinkRef mDisplayLink;
 
     uint64_t mFramesDisplayed;
