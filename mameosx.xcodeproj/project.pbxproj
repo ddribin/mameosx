@@ -11,6 +11,25 @@
 		5501E9020AB27D3F00756C9B /* CircularBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5501E8440AB232B900756C9B /* CircularBuffer.m */; };
 		551A613A0AC24B2000AECE1E /* ui.bdf in Resources */ = {isa = PBXBuildFile; fileRef = 551A61390AC24B2000AECE1E /* ui.bdf */; };
 		552F01110AC812A200A14DFA /* MameOpenGLRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 552F01100AC812A200A14DFA /* MameOpenGLRenderer.m */; };
+		5530FE030ACA42270083BB04 /* debugcmd.c in Sources */ = {isa = PBXBuildFile; fileRef = 5530FDF20ACA42270083BB04 /* debugcmd.c */; };
+		5530FE040ACA42270083BB04 /* debugcmd.h in Headers */ = {isa = PBXBuildFile; fileRef = 5530FDF30ACA42270083BB04 /* debugcmd.h */; };
+		5530FE050ACA42270083BB04 /* debugcmt.c in Sources */ = {isa = PBXBuildFile; fileRef = 5530FDF40ACA42270083BB04 /* debugcmt.c */; };
+		5530FE060ACA42270083BB04 /* debugcmt.h in Headers */ = {isa = PBXBuildFile; fileRef = 5530FDF50ACA42270083BB04 /* debugcmt.h */; };
+		5530FE070ACA42270083BB04 /* debugcon.c in Sources */ = {isa = PBXBuildFile; fileRef = 5530FDF60ACA42270083BB04 /* debugcon.c */; };
+		5530FE080ACA42270083BB04 /* debugcon.h in Headers */ = {isa = PBXBuildFile; fileRef = 5530FDF70ACA42270083BB04 /* debugcon.h */; };
+		5530FE090ACA42270083BB04 /* debugcpu.c in Sources */ = {isa = PBXBuildFile; fileRef = 5530FDF80ACA42270083BB04 /* debugcpu.c */; };
+		5530FE0A0ACA42270083BB04 /* debugcpu.h in Headers */ = {isa = PBXBuildFile; fileRef = 5530FDF90ACA42270083BB04 /* debugcpu.h */; };
+		5530FE0B0ACA42270083BB04 /* debughlp.c in Sources */ = {isa = PBXBuildFile; fileRef = 5530FDFA0ACA42270083BB04 /* debughlp.c */; };
+		5530FE0C0ACA42270083BB04 /* debughlp.h in Headers */ = {isa = PBXBuildFile; fileRef = 5530FDFB0ACA42270083BB04 /* debughlp.h */; };
+		5530FE0D0ACA42270083BB04 /* debugvw.c in Sources */ = {isa = PBXBuildFile; fileRef = 5530FDFC0ACA42270083BB04 /* debugvw.c */; };
+		5530FE0E0ACA42270083BB04 /* debugvw.h in Headers */ = {isa = PBXBuildFile; fileRef = 5530FDFD0ACA42270083BB04 /* debugvw.h */; };
+		5530FE0F0ACA42270083BB04 /* eainfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 5530FDFE0ACA42270083BB04 /* eainfo.h */; };
+		5530FE100ACA42270083BB04 /* express.c in Sources */ = {isa = PBXBuildFile; fileRef = 5530FDFF0ACA42270083BB04 /* express.c */; };
+		5530FE110ACA42270083BB04 /* express.h in Headers */ = {isa = PBXBuildFile; fileRef = 5530FE000ACA42270083BB04 /* express.h */; };
+		5530FE120ACA42270083BB04 /* textbuf.c in Sources */ = {isa = PBXBuildFile; fileRef = 5530FE010ACA42270083BB04 /* textbuf.c */; };
+		5530FE130ACA42270083BB04 /* textbuf.h in Headers */ = {isa = PBXBuildFile; fileRef = 5530FE020ACA42270083BB04 /* textbuf.h */; };
+		5530FE1B0ACA42B90083BB04 /* ppu2c0x.c in Sources */ = {isa = PBXBuildFile; fileRef = 5530FE150ACA42990083BB04 /* ppu2c0x.c */; };
+		5530FE1E0ACA42C10083BB04 /* ppu2c0x.h in Headers */ = {isa = PBXBuildFile; fileRef = 5530FE160ACA42990083BB04 /* ppu2c0x.h */; };
 		554339E00AC4D79800F10925 /* MameOpenGLTexture.mm in Sources */ = {isa = PBXBuildFile; fileRef = 554339DF0AC4D79800F10925 /* MameOpenGLTexture.mm */; };
 		554339E70AC4DBB300F10925 /* MameTextureTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 554339E60AC4DBB300F10925 /* MameTextureTable.m */; };
 		5548EBE80ABCA30E008D1F74 /* MameFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5548EBE70ABCA30E008D1F74 /* MameFileManager.m */; };
@@ -125,9 +144,6 @@
 		556A435D0AA4ECB700602CC5 /* generic.h in Headers */ = {isa = PBXBuildFile; fileRef = 556A435B0AA4ECB700602CC5 /* generic.h */; };
 		556A43600AA4ECD000602CC5 /* vector.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A435E0AA4ECD000602CC5 /* vector.c */; };
 		556A43610AA4ECD000602CC5 /* vector.h in Headers */ = {isa = PBXBuildFile; fileRef = 556A435F0AA4ECD000602CC5 /* vector.h */; };
-		556A437E0AA4EDB500602CC5 /* mamedbg.h in Headers */ = {isa = PBXBuildFile; fileRef = 556A437A0AA4EDB500602CC5 /* mamedbg.h */; };
-		556A437F0AA4EDB500602CC5 /* window.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A437B0AA4EDB500602CC5 /* window.c */; };
-		556A43800AA4EDB500602CC5 /* window.h in Headers */ = {isa = PBXBuildFile; fileRef = 556A437C0AA4EDB500602CC5 /* window.h */; };
 		556A498C0AA4F71C00602CC5 /* m6502.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A48990AA4F64000602CC5 /* m6502.c */; };
 		556A498D0AA4F72100602CC5 /* m6502.h in Headers */ = {isa = PBXBuildFile; fileRef = 556A489A0AA4F64000602CC5 /* m6502.h */; };
 		556A49DC0AA4F8A800602CC5 /* ascii.h in Headers */ = {isa = PBXBuildFile; fileRef = 556A49CA0AA4F8A800602CC5 /* ascii.h */; };
@@ -328,6 +344,25 @@
 		551A61390AC24B2000AECE1E /* ui.bdf */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = ui.bdf; sourceTree = "<group>"; };
 		552F010F0AC812A200A14DFA /* MameOpenGLRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MameOpenGLRenderer.h; sourceTree = "<group>"; };
 		552F01100AC812A200A14DFA /* MameOpenGLRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MameOpenGLRenderer.m; sourceTree = "<group>"; };
+		5530FDF20ACA42270083BB04 /* debugcmd.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = debugcmd.c; sourceTree = "<group>"; };
+		5530FDF30ACA42270083BB04 /* debugcmd.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = debugcmd.h; sourceTree = "<group>"; };
+		5530FDF40ACA42270083BB04 /* debugcmt.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = debugcmt.c; sourceTree = "<group>"; };
+		5530FDF50ACA42270083BB04 /* debugcmt.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = debugcmt.h; sourceTree = "<group>"; };
+		5530FDF60ACA42270083BB04 /* debugcon.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = debugcon.c; sourceTree = "<group>"; };
+		5530FDF70ACA42270083BB04 /* debugcon.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = debugcon.h; sourceTree = "<group>"; };
+		5530FDF80ACA42270083BB04 /* debugcpu.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = debugcpu.c; sourceTree = "<group>"; };
+		5530FDF90ACA42270083BB04 /* debugcpu.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = debugcpu.h; sourceTree = "<group>"; };
+		5530FDFA0ACA42270083BB04 /* debughlp.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = debughlp.c; sourceTree = "<group>"; };
+		5530FDFB0ACA42270083BB04 /* debughlp.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = debughlp.h; sourceTree = "<group>"; };
+		5530FDFC0ACA42270083BB04 /* debugvw.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = debugvw.c; sourceTree = "<group>"; };
+		5530FDFD0ACA42270083BB04 /* debugvw.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = debugvw.h; sourceTree = "<group>"; };
+		5530FDFE0ACA42270083BB04 /* eainfo.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = eainfo.h; sourceTree = "<group>"; };
+		5530FDFF0ACA42270083BB04 /* express.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = express.c; sourceTree = "<group>"; };
+		5530FE000ACA42270083BB04 /* express.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = express.h; sourceTree = "<group>"; };
+		5530FE010ACA42270083BB04 /* textbuf.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = textbuf.c; sourceTree = "<group>"; };
+		5530FE020ACA42270083BB04 /* textbuf.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = textbuf.h; sourceTree = "<group>"; };
+		5530FE150ACA42990083BB04 /* ppu2c0x.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = ppu2c0x.c; path = vidhrdw/ppu2c0x.c; sourceTree = "<group>"; };
+		5530FE160ACA42990083BB04 /* ppu2c0x.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ppu2c0x.h; path = vidhrdw/ppu2c0x.h; sourceTree = "<group>"; };
 		554339DE0AC4D79800F10925 /* MameOpenGLTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MameOpenGLTexture.h; sourceTree = "<group>"; };
 		554339DF0AC4D79800F10925 /* MameOpenGLTexture.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MameOpenGLTexture.mm; sourceTree = "<group>"; };
 		554339E50AC4DBB300F10925 /* MameTextureTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MameTextureTable.h; sourceTree = "<group>"; };
@@ -450,10 +485,6 @@
 		556A435E0AA4ECD000602CC5 /* vector.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = vector.c; sourceTree = "<group>"; };
 		556A435F0AA4ECD000602CC5 /* vector.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = vector.h; sourceTree = "<group>"; };
 		556A43650AA4ECF800602CC5 /* mamedriv.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = mamedriv.c; sourceTree = "<group>"; };
-		556A43790AA4EDB500602CC5 /* mamedbg.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = mamedbg.c; sourceTree = "<group>"; };
-		556A437A0AA4EDB500602CC5 /* mamedbg.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = mamedbg.h; sourceTree = "<group>"; };
-		556A437B0AA4EDB500602CC5 /* window.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = window.c; sourceTree = "<group>"; };
-		556A437C0AA4EDB500602CC5 /* window.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = window.h; sourceTree = "<group>"; };
 		556A44380AA4F4CD00602CC5 /* libdrivers.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libdrivers.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		556A47F30AA4F64000602CC5 /* 2100dasm.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = 2100dasm.c; sourceTree = "<group>"; };
 		556A47F40AA4F64000602CC5 /* 2100ops.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = 2100ops.c; sourceTree = "<group>"; };
@@ -1250,6 +1281,30 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
+		5530FDF10ACA42270083BB04 /* debug */ = {
+			isa = PBXGroup;
+			children = (
+				5530FDF20ACA42270083BB04 /* debugcmd.c */,
+				5530FDF30ACA42270083BB04 /* debugcmd.h */,
+				5530FDF40ACA42270083BB04 /* debugcmt.c */,
+				5530FDF50ACA42270083BB04 /* debugcmt.h */,
+				5530FDF60ACA42270083BB04 /* debugcon.c */,
+				5530FDF70ACA42270083BB04 /* debugcon.h */,
+				5530FDF80ACA42270083BB04 /* debugcpu.c */,
+				5530FDF90ACA42270083BB04 /* debugcpu.h */,
+				5530FDFA0ACA42270083BB04 /* debughlp.c */,
+				5530FDFB0ACA42270083BB04 /* debughlp.h */,
+				5530FDFC0ACA42270083BB04 /* debugvw.c */,
+				5530FDFD0ACA42270083BB04 /* debugvw.h */,
+				5530FDFE0ACA42270083BB04 /* eainfo.h */,
+				5530FDFF0ACA42270083BB04 /* express.c */,
+				5530FE000ACA42270083BB04 /* express.h */,
+				5530FE010ACA42270083BB04 /* textbuf.c */,
+				5530FE020ACA42270083BB04 /* textbuf.h */,
+			);
+			path = debug;
+			sourceTree = "<group>";
+		};
 		5548EDC90ABE3CC7008D1F74 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -1291,7 +1346,7 @@
 		556A42590AA4E9F400602CC5 /* core */ = {
 			isa = PBXGroup;
 			children = (
-				556A43700AA4ED7400602CC5 /* Debugger */,
+				5530FDF10ACA42270083BB04 /* debug */,
 				556A43650AA4ECF800602CC5 /* mamedriv.c */,
 				556A43360AA4EBDD00602CC5 /* sound */,
 				556A43490AA4EC2800602CC5 /* machine */,
@@ -1437,18 +1492,6 @@
 				556A435F0AA4ECD000602CC5 /* vector.h */,
 			);
 			path = vidhrdw;
-			sourceTree = "<group>";
-		};
-		556A43700AA4ED7400602CC5 /* Debugger */ = {
-			isa = PBXGroup;
-			children = (
-				556A43790AA4EDB500602CC5 /* mamedbg.c */,
-				556A437A0AA4EDB500602CC5 /* mamedbg.h */,
-				556A437B0AA4EDB500602CC5 /* window.c */,
-				556A437C0AA4EDB500602CC5 /* window.h */,
-			);
-			name = Debugger;
-			path = debug;
 			sourceTree = "<group>";
 		};
 		556A44390AA4F4D600602CC5 /* src */ = {
@@ -2309,6 +2352,8 @@
 		556A4B3E0AA4FEF400602CC5 /* nintendo */ = {
 			isa = PBXGroup;
 			children = (
+				5530FE150ACA42990083BB04 /* ppu2c0x.c */,
+				5530FE160ACA42990083BB04 /* ppu2c0x.h */,
 				556A4B670AA5006500602CC5 /* rp5h01.c */,
 				556A4B680AA5006500602CC5 /* rp5h01.h */,
 				556A4B5A0AA5004300602CC5 /* ppu2c03b.c */,
@@ -2750,14 +2795,21 @@
 				556A43590AA4EC9900602CC5 /* generic.h in Headers */,
 				556A435D0AA4ECB700602CC5 /* generic.h in Headers */,
 				556A43610AA4ECD000602CC5 /* vector.h in Headers */,
-				556A437E0AA4EDB500602CC5 /* mamedbg.h in Headers */,
-				556A43800AA4EDB500602CC5 /* window.h in Headers */,
 				556A4B180AA4FD5400602CC5 /* generic.h in Headers */,
 				557449370AAB290900EC1423 /* osd_cpu.h in Headers */,
 				55744C1A0AAB4FC800EC1423 /* osinline.h in Headers */,
 				558D9F2A0AAE70B1007B2A32 /* cpu_config.h in Headers */,
 				558D9F2C0AAE70E9007B2A32 /* sound_config.h in Headers */,
 				558D9F2E0AAE7117007B2A32 /* config.h in Headers */,
+				5530FE040ACA42270083BB04 /* debugcmd.h in Headers */,
+				5530FE060ACA42270083BB04 /* debugcmt.h in Headers */,
+				5530FE080ACA42270083BB04 /* debugcon.h in Headers */,
+				5530FE0A0ACA42270083BB04 /* debugcpu.h in Headers */,
+				5530FE0C0ACA42270083BB04 /* debughlp.h in Headers */,
+				5530FE0E0ACA42270083BB04 /* debugvw.h in Headers */,
+				5530FE0F0ACA42270083BB04 /* eainfo.h in Headers */,
+				5530FE110ACA42270083BB04 /* express.h in Headers */,
+				5530FE130ACA42270083BB04 /* textbuf.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2767,6 +2819,7 @@
 			files = (
 				556A4B5D0AA5004300602CC5 /* ppu2c03b.h in Headers */,
 				556A4B6A0AA5006500602CC5 /* rp5h01.h in Headers */,
+				5530FE1E0ACA42C10083BB04 /* ppu2c0x.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3138,8 +3191,15 @@
 				556A43580AA4EC9900602CC5 /* generic.c in Sources */,
 				556A435C0AA4ECB700602CC5 /* generic.c in Sources */,
 				556A43600AA4ECD000602CC5 /* vector.c in Sources */,
-				556A437F0AA4EDB500602CC5 /* window.c in Sources */,
 				556A4B170AA4FD5400602CC5 /* generic.c in Sources */,
+				5530FE030ACA42270083BB04 /* debugcmd.c in Sources */,
+				5530FE050ACA42270083BB04 /* debugcmt.c in Sources */,
+				5530FE070ACA42270083BB04 /* debugcon.c in Sources */,
+				5530FE090ACA42270083BB04 /* debugcpu.c in Sources */,
+				5530FE0B0ACA42270083BB04 /* debughlp.c in Sources */,
+				5530FE0D0ACA42270083BB04 /* debugvw.c in Sources */,
+				5530FE100ACA42270083BB04 /* express.c in Sources */,
+				5530FE120ACA42270083BB04 /* textbuf.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3161,6 +3221,7 @@
 				556A4E720AA51C3400602CC5 /* mspacman.c in Sources */,
 				556A4E730AA51C3400602CC5 /* pacplus.c in Sources */,
 				556A4E740AA51C3400602CC5 /* theglobp.c in Sources */,
+				5530FE1B0ACA42B90083BB04 /* ppu2c0x.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
