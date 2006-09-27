@@ -42,8 +42,8 @@ extern "C" {
 - (void) initFilters;
 - (void) pumpEvents;
 - (void) drawFrame;
-- (void) drawFrameUsingCoreImage;
-- (void) drawFrameUsingOpenGL;
+- (void) drawFrameUsingCoreImage: (CVOpenGLTextureRef) texture;
+- (void) drawFrameUsingOpenGL: (CVOpenGLTextureRef) texture;
 - (void) updateVideo;
 
 - (void) gameThread: (NSNumber *) gameIndexNumber;
@@ -139,7 +139,7 @@ void leaks_sleeper()
     [mMameLock lock];
     if (mMameIsRunning)
     {
-        mame_schedule_exit();
+        mame_schedule_exit(Machine);
         // Thread notification will actually terminate the app
         reply =  NSTerminateCancel;
     }
@@ -253,10 +253,10 @@ void leaks_sleeper()
 - (IBAction) togglePause: (id) sender;
 {
     [mMameLock lock];
-    if (mame_is_paused())
-        mame_pause(FALSE);
+    if (mame_is_paused(Machine))
+        mame_pause(Machine, FALSE);
     else
-        mame_pause(TRUE);
+        mame_pause(Machine, TRUE);
     [mMameLock unlock];
 }
 
@@ -396,6 +396,7 @@ static void cv_assert(CVReturn cr, NSString * message)
 - (void) initCoreVideoBuffer;
 {
     mLock = [[NSRecursiveLock alloc] init];
+    mPrimitives = 0;
     
     [self initFilters];
 
@@ -492,34 +493,76 @@ static void cv_assert(CVReturn cr, NSString * message)
     }
 }
 
+// Hmmm... rendering in the Core Video callback causes some weird artifacts.
+// Every once in a while a "blank" frame comes through.  By setting the clear
+// color to red, this shows up as a red flash.  Not sure what is causing it,
+// so disable for now.
+#define RENDER_IN_CV 0
+
 - (void) drawFrame;
 {
     [mLock lock];
+    
+#if RENDER_IN_CV
+    const render_primitive_list * primitives = 0;
+    @synchronized(self)
+    {
+        primitives = mPrimitives;
+        mPrimitives = 0;
+        
+        if (primitives == 0)
+        {
+            NSLog(@"No primitives");
+            // [mLock unlock];
+            // return;
+        }
+        else
+        {
+            osd_lock_acquire(primitives->lock);
+            [mRenderer renderFrame: primitives];
+            osd_lock_release(primitives->lock);
+        }
+    }
+#endif
+    
     [[mMameView openGLContext] makeCurrentContext];
 
+#if RENDER_IN_CV
+    glClearColor(1.0, 0.0, 0.0, 0.0);
+#else
     glClearColor(0.0, 0.0, 0.0, 0.0);
+#endif
     glClear(GL_COLOR_BUFFER_BIT);
 
+    CVOpenGLTextureRef texture = [mRenderer currentFrameTexture];
+    if (texture == NULL)
+    {
+        NSLog(@"No frame");
+    }
     if (mCoreImageAccelerated)
-        [self drawFrameUsingCoreImage];
+        [self drawFrameUsingCoreImage: texture];
     else
-        [self drawFrameUsingOpenGL];
+        [self drawFrameUsingOpenGL: texture];
     
     glFlush();
     
-    [mLock unlock];
-
     mFramesDisplayed++;
     mFrameEndTime = [mTimingController osd_cycles];
+
+    [mLock unlock];
 }
 
-- (void) drawFrameUsingCoreImage;
+- (void) drawFrameUsingCoreImage: (CVOpenGLTextureRef) texture;
 {
-    CIImage * inputImage = [CIImage imageWithCVImageBuffer: [mRenderer currentFrameTexture]];
+    CIImage * inputImage = [CIImage imageWithCVImageBuffer: texture];
     CIContext * ciContext = [mMameView ciContext];
     CGRect      imageRect;
     imageRect = [inputImage extent];
     
+    if (imageRect.size.width == 0)
+        NSLog(@"imageRect.size.width == 0");
+    if (imageRect.size.height == 0)
+        NSLog(@"imageRect.size.height == 0");
     
     CIImage * imageToDraw = inputImage;
     if (mIsFiltered)
@@ -543,9 +586,8 @@ static void cv_assert(CVReturn cr, NSString * message)
                 fromRect: imageRect];
 }
 
-- (void) drawFrameUsingOpenGL;
+- (void) drawFrameUsingOpenGL: (CVOpenGLTextureRef) texture;
 {
-    CVOpenGLTextureRef texture = [mRenderer currentFrameTexture];
     GLfloat vertices[4][2];
     GLfloat texCoords[4][2];
         
@@ -578,13 +620,24 @@ static void cv_assert(CVReturn cr, NSString * message)
 
 - (void) updateVideo;
 {
+#if !RENDER_IN_CV
     [mLock lock];
 
-    render_target_set_bounds(mTarget, mWindowWidth, mWindowHeight, 0);
+    render_target_set_bounds(mTarget, mWindowWidth, mWindowHeight, 0.0);
     const render_primitive_list * primlist = render_target_get_primitives(mTarget);
     [mRenderer renderFrame: primlist];
     
     [mLock unlock];
+#else
+    // [mLock lock];
+    render_target_set_bounds(mTarget, mWindowWidth, mWindowHeight, 0.0);
+    const render_primitive_list * primitives = render_target_get_primitives(mTarget);
+    @synchronized(self)
+    {
+        mPrimitives = primitives;
+    }
+    // [mLock unlock];
+#endif
     mFramesRendered++;
 }
 
