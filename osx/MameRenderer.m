@@ -78,6 +78,8 @@ static void cv_assert(CVReturn cr, NSString * message)
 
 - (void) renderFrame: (const render_primitive_list *) primlist
 {
+    [mGlContext makeCurrentContext];
+
     CVOpenGLTextureRelease(mCurrentFrameTexture);
     mCurrentFrameTexture = NULL;
     CVOpenGLTextureCacheFlush(mFrameTextureCache, 0);
@@ -90,6 +92,10 @@ static void cv_assert(CVReturn cr, NSString * message)
         CVOpenGLTextureCacheCreateTextureFromImage(NULL, mFrameTextureCache,
                                                    mCurrentFrame,
                                                    0, &mCurrentFrameTexture);
+    }
+    else
+    {
+        NSLog(@"CV error");
     }
 }
 
