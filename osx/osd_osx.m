@@ -58,28 +58,41 @@ void osd_sound_enable(int enable)
     [sAudioController osd_sound_enable: enable];
 }
 
-// locking stubs
 
-osd_lock *osd_lock_alloc(void)
+/******************************************************************************
+
+    Locking
+
+******************************************************************************/
+
+osd_lock * osd_lock_alloc(void)
 {
-    return (osd_lock *)1;
+    NSRecursiveLock * lock = [[NSRecursiveLock alloc] init];;
+    return (osd_lock *) lock;
 }
 
-void osd_lock_acquire(osd_lock *lock)
+void osd_lock_acquire(osd_lock * mame_lock)
 {
+    NSRecursiveLock * lock = (NSRecursiveLock *) mame_lock;
+    [lock lock];
 }
 
-int osd_lock_try(osd_lock *lock)
+int osd_lock_try(osd_lock * mame_lock)
 {
-        return TRUE;
+    NSRecursiveLock * lock = (NSRecursiveLock *) mame_lock;
+    return [lock tryLock];
 }
 
-void osd_lock_release(osd_lock *lock)
+void osd_lock_release(osd_lock * mame_lock)
 {
+    NSRecursiveLock * lock = (NSRecursiveLock *) mame_lock;
+    [lock unlock];
 }
 
-void osd_lock_free(osd_lock *lock)
+void osd_lock_free(osd_lock * mame_lock)
 {
+    NSRecursiveLock * lock = (NSRecursiveLock *) mame_lock;
+    [lock release];
 }
 
 
@@ -339,7 +352,11 @@ int osd_display_loading_rom_message(const char *name, rom_load_data *romdata)
 ******************************************************************************/
 
 
-int osd_init(void)
+int osd_init(running_machine *machine)
 {
     return [sController osd_init];
+}
+
+void osd_break_into_debugger(const char *message)
+{
 }
