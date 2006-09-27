@@ -330,7 +330,7 @@ OSStatus static MyRenderer(void	* inRefCon,
          bufferList: (AudioBufferList *) ioData;
 {
     memset(ioData->mBuffers[0].mData, 0, ioData->mBuffers[0].mDataByteSize);
-    if (mame_is_paused())
+    if (mame_is_paused(Machine))
         return noErr;
     if (!mInitialBufferThresholdReached && ([mBuffer size] < mLowWaterMarker))
     {
