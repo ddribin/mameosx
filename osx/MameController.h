@@ -36,6 +36,7 @@ extern "C" {
     IBOutlet NSTextField * mGameTextField;
     IBOutlet NSProgressIndicator * mGameLoading;
 
+    const render_primitive_list * mPrimitives;
     MameRenderer * mRenderer;
     BOOL mCoreImageAccelerated;
     GLenum mLastTextureTarget;
