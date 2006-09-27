@@ -516,7 +516,6 @@ static void cv_assert(CVReturn cr, NSString * message)
             osd_lock_acquire(primitives->lock);
             if (primitives->head == NULL)
             {
-                NSLog(@"No primitives");
                 skipFrame = YES;
             }
             else
