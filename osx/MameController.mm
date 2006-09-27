@@ -38,8 +38,8 @@ extern "C" {
 - (void) initFilters;
 - (void) pumpEvents;
 - (void) drawFrame;
-- (void) drawFrameUsingCoreImage: (CVOpenGLTextureRef) texture;
-- (void) drawFrameUsingOpenGL: (CVOpenGLTextureRef) texture;
+- (void) drawFrameUsingCoreImage: (CVOpenGLTextureRef) frame;
+- (void) drawFrameUsingOpenGL: (CVOpenGLTextureRef) frame;
 - (void) updateVideo;
 
 - (void) gameThread: (NSNumber *) gameIndexNumber;
@@ -542,15 +542,11 @@ static void cv_assert(CVReturn cr, NSString * message)
         glClearColor(0.0, 0.0, 0.0, 0.0);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    CVOpenGLTextureRef texture = [mRenderer currentFrameTexture];
-    if (texture == NULL)
-    {
-        NSLog(@"No frame");
-    }
+    CVOpenGLTextureRef frame = [mRenderer currentFrameTexture];
     if (mCoreImageAccelerated)
-        [self drawFrameUsingCoreImage: texture];
+        [self drawFrameUsingCoreImage: frame];
     else
-        [self drawFrameUsingOpenGL: texture];
+        [self drawFrameUsingOpenGL: frame];
     
     glFlush();
     
@@ -560,17 +556,12 @@ static void cv_assert(CVReturn cr, NSString * message)
     [mDisplayLock unlock];
 }
 
-- (void) drawFrameUsingCoreImage: (CVOpenGLTextureRef) texture;
+- (void) drawFrameUsingCoreImage: (CVOpenGLTextureRef) frame;
 {
-    CIImage * inputImage = [CIImage imageWithCVImageBuffer: texture];
+    CIImage * inputImage = [CIImage imageWithCVImageBuffer: frame];
     CIContext * ciContext = [mMameView ciContext];
     CGRect      imageRect;
     imageRect = [inputImage extent];
-    
-    if (imageRect.size.width == 0)
-        NSLog(@"imageRect.size.width == 0");
-    if (imageRect.size.height == 0)
-        NSLog(@"imageRect.size.height == 0");
     
     CIImage * imageToDraw = inputImage;
     if (mIsFiltered)
@@ -594,7 +585,7 @@ static void cv_assert(CVReturn cr, NSString * message)
                 fromRect: imageRect];
 }
 
-- (void) drawFrameUsingOpenGL: (CVOpenGLTextureRef) texture;
+- (void) drawFrameUsingOpenGL: (CVOpenGLTextureRef) frame;
 {
     GLfloat vertices[4][2];
     GLfloat texCoords[4][2];
@@ -610,7 +601,7 @@ static void cv_assert(CVReturn cr, NSString * message)
     vertices[1][0] = vertices[2][0] = mWindowWidth;
     vertices[2][1] = vertices[3][1] = mWindowHeight;
     
-    GLenum textureTarget = CVOpenGLTextureGetTarget(texture);
+    GLenum textureTarget = CVOpenGLTextureGetTarget(frame);
     
     // Make sure the correct texture target is enabled
     if (textureTarget != mLastTextureTarget)
@@ -621,8 +612,8 @@ static void cv_assert(CVReturn cr, NSString * message)
     }
     
     // Get the current texture's coordinates, bind the texture, and draw our rectangle
-    CVOpenGLTextureGetCleanTexCoords(texture, texCoords[0], texCoords[1], texCoords[2], texCoords[3]);
-    glBindTexture(mLastTextureTarget, CVOpenGLTextureGetName(texture));
+    CVOpenGLTextureGetCleanTexCoords(frame, texCoords[0], texCoords[1], texCoords[2], texCoords[3]);
+    glBindTexture(mLastTextureTarget, CVOpenGLTextureGetName(frame));
     glDrawArrays(GL_QUADS, 0, 4);
 }
 
