@@ -20,14 +20,12 @@
 
 #include <mach/mach_time.h>
 #include <unistd.h>
-#include "osd_osx.h"
+#include "osd_osx.h"            
 
 // MAME headers
 extern "C" {
 #include "driver.h"
-#include "config.h"
 #include "render.h"
-#include "options.h"
 }
 
 @interface MameController (Private)
