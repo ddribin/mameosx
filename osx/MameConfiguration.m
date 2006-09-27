@@ -9,6 +9,8 @@
 #import "MameController.h"
 #import "MameFileManager.h"
 #include "mame.h"
+#include <mach/mach_host.h>
+#include <mach/host_info.h>
 
 @interface MameConfiguration (Private)
 
@@ -68,6 +70,20 @@ NSString * MameDebugHeightKey = @"DebugHeight";
 NSString * MameDebugDepthKey = @"DebugDepth";
 
 
+static BOOL hasMultipleCPUs()
+{
+	host_basic_info_data_t hostInfo;
+	mach_msg_type_number_t infoCount;
+	
+	infoCount = HOST_BASIC_INFO_COUNT;
+	host_info(mach_host_self(), HOST_BASIC_INFO, 
+			  (host_info_t)&hostInfo, &infoCount);
+    if (hostInfo.avail_cpus > 1)
+        return YES;
+    else
+        return NO;
+}
+
 + (void) initialize
 {
     NSMutableDictionary * defaultValues = [NSMutableDictionary dictionary];
@@ -81,9 +97,17 @@ NSString * MameDebugDepthKey = @"DebugDepth";
 
     [defaultValues setObject: [NSNumber numberWithBool: YES]
                       forKey: MameSoundEnabled];
-    
-    [defaultValues setObject: [NSNumber numberWithBool: YES]
-                      forKey: MameRenderInCV];
+
+    if (hasMultipleCPUs())
+    {
+        [defaultValues setObject: [NSNumber numberWithBool: YES]
+                          forKey: MameRenderInCV];
+    }
+    else
+    {
+        [defaultValues setObject: [NSNumber numberWithBool: NO]
+                          forKey: MameRenderInCV];
+    }
     
 #ifdef MAME_DEBUG
     [defaultValues setObject: [NSNumber numberWithBool: NO]
