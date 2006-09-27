@@ -22,8 +22,6 @@
 #include <unistd.h>
 #include "osd_osx.h"
 
-
-
 // MAME headers
 extern "C" {
 #include "driver.h"
@@ -181,6 +179,10 @@ void leaks_sleeper()
     
     [mMameView createCIContext];
     [self detectAcceleratedCoreImage];
+
+    NSLog(@"Use Core Image: %@", mCoreImageAccelerated? @"YES" : @"NO");
+    NSLog(@"Render in Core Video thread: %@",
+          [mConfiguration renderInCV]? @"YES" : @"NO");
     
     [mRenderer osd_init: [mMameView openGLContext]
                  format: [mMameView pixelFormat]
@@ -390,9 +392,6 @@ static void cv_assert(CVReturn cr, NSString * message)
     // CoreImage might be too slow if the current renderer doesn't support GL_ARB_fragment_program
     const char * glExtensions = (const char*)glGetString(GL_EXTENSIONS);
     mCoreImageAccelerated = (strstr(glExtensions, "GL_ARB_fragment_program") != NULL);
-    NSLog(@"Use Core Image: %@", mCoreImageAccelerated? @"YES" : @"NO");
-    NSLog(@"Render in Core Video callback: %@",
-          [mConfiguration renderInCV]? @"YES" : @"NO");
 }
 
 - (void) initCoreVideoBuffer;
