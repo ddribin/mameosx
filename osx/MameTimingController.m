@@ -59,7 +59,7 @@
 #if 0
     NSLog(@"emutime: %i, %qi", emutime.seconds, emutime.subseconds);
 #endif
-    int paused = mame_is_paused();
+    int paused = mame_is_paused(Machine);
     if (paused)
     {
 #if 0        
