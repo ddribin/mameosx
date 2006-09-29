@@ -39,7 +39,7 @@
     NSRecursiveLock * mDisplayLock;
     CVDisplayLinkRef mDisplayLink;
     BOOL mRenderInCoreVideoThread;
-    CIFilter * mCurrentFilter;
+    CIFilter * mFilter;
     int32_t mWindowWidth;
     int32_t mWindowHeight;
     
@@ -89,6 +89,9 @@
 
 - (BOOL) audioEnabled;
 - (void) setAudioEnabled: (BOOL) flag;
+
+- (CIFilter *) filter;
+- (void) setFilter: (CIFilter *) aFilter;
 
 - (int) osd_init;
 - (int) osd_update: (mame_time) emutime;

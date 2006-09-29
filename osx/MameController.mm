@@ -49,6 +49,7 @@ void leaks_sleeper()
         return nil;
    
     mConfiguration = [[MameConfiguration alloc] init];
+    [self initFilters];
 
     return self;
 }
@@ -120,6 +121,10 @@ void leaks_sleeper()
 - (void) setIsFiltered: (BOOL) flag
 {
     mIsFiltered = flag;
+    if (mIsFiltered)
+        [mMameView setFilter: mCurrentFilter];
+    else
+        [mMameView setFilter: nil];
 }
 
 - (IBAction) filterChanged: (id) sender;
@@ -133,6 +138,8 @@ void leaks_sleeper()
         mMoveInputCenter = YES;
     else
         mMoveInputCenter = NO;
+    if (mIsFiltered)
+        [mMameView setFilter: mCurrentFilter];
 }
 
 - (IBAction) togglePause: (id) sender;

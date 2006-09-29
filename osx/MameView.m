@@ -183,6 +183,7 @@
 //  adjust the viewport
 - (void)reshape
 { 
+    [mDisplayLock lock];
 	GLfloat minX, minY, maxX, maxY;
     
     NSRect sceneBounds = [self bounds];
@@ -216,6 +217,17 @@
     
 	glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_BLEND);
+    [mDisplayLock unlock];
+}
+
+- (void)drawRect:(NSRect)aRect
+{
+    NSLog(@"drawRect");
+#if 0
+    [mDisplayLock lock];
+    [self drawFrame];
+    [mDisplayLock unlock];
+#endif
 }
 
 
@@ -380,6 +392,23 @@
     [mAudioController setEnabled: flag];
 }
 
+//=========================================================== 
+//  filter 
+//=========================================================== 
+- (CIFilter *) filter
+{
+    return [[mFilter retain] autorelease]; 
+}
+
+- (void) setFilter: (CIFilter *) aFilter
+{
+    if (mFilter != aFilter)
+    {
+        [mFilter release];
+        mFilter = [aFilter retain];
+    }
+}
+
 @end
 
 @implementation MameView (Private)
@@ -535,7 +564,7 @@ CVReturn myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
     imageRect = [inputImage extent];
     
     CIImage * imageToDraw = inputImage;
-    if (mCurrentFilter != nil)
+    if (mFilter != nil)
     {
         if (mMoveInputCenter)
         {
@@ -543,12 +572,12 @@ CVReturn myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
             if (inputCenterX > mWindowWidth)
                 inputCenterX = 0;
             
-            [mCurrentFilter setValue: [CIVector vectorWithX: inputCenterX Y: inputCenterY]  
-                              forKey: @"inputCenter"];
+            [mFilter setValue: [CIVector vectorWithX: inputCenterX Y: inputCenterY]  
+                       forKey: @"inputCenter"];
         }
         
-        [mCurrentFilter setValue: inputImage forKey:@"inputImage"];
-        imageToDraw = [mCurrentFilter valueForKey: @"outputImage"];
+        [mFilter setValue: inputImage forKey:@"inputImage"];
+        imageToDraw = [mFilter valueForKey: @"outputImage"];
     }
     
     [ciContext drawImage: imageToDraw
