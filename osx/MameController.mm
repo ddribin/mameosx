@@ -33,7 +33,6 @@ extern "C" {
 - (void) setUpDefaultPaths;
 - (NSString *) getGameNameToRun;
 - (void) initFilters;
-- (void) pumpEvents;
 
 @end
 
@@ -272,21 +271,6 @@ void leaks_sleeper()
     [mFilters addObject: filter];
     
     mCurrentFilter = [mFilters objectAtIndex: 0];
-}
-
-- (void) pumpEvents;
-{
-    while(1)
-    {
-        /* Poll for an event. This will not block */
-        NSEvent * event = [NSApp nextEventMatchingMask: NSAnyEventMask
-                                             untilDate: nil
-                                                inMode: NSDefaultRunLoopMode
-                                               dequeue: YES];
-        if (event == nil)
-            break;
-        [NSApp sendEvent: event];
-    }
 }
 
 @end
