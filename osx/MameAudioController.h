@@ -14,7 +14,7 @@
 
 @interface MameAudioController : NSObject
 {
-    MameController * mController;
+    BOOL mEnabled;
     int mAttenuation;
     AudioUnit mOutputUnit;
     CircularBuffer * mBuffer;
@@ -38,7 +38,10 @@
     uint64_t mUnderflows;
 }
 
-- (id) initWithController: (MameController *) controller;
+- (id) init;
+
+- (BOOL) enabled;
+- (void) setEnabled: (BOOL) flag;
 
 - (void) osd_init;
 

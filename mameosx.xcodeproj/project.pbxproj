@@ -35,6 +35,7 @@
 		5548EBE80ABCA30E008D1F74 /* MameFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5548EBE70ABCA30E008D1F74 /* MameFileManager.m */; };
 		5548ECDF0ABCB463008D1F74 /* MameFileManagerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5548ECDE0ABCB463008D1F74 /* MameFileManagerTest.m */; };
 		5548EDCB0ABE3CEF008D1F74 /* file.txt in Resources */ = {isa = PBXBuildFile; fileRef = 5548EDCA0ABE3CEF008D1F74 /* file.txt */; };
+		556149600ACCD64F008951F8 /* ThreadSafeQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 5561495F0ACCD64F008951F8 /* ThreadSafeQueue.m */; };
 		5561FBA30AC58C6900BE1BF5 /* MameTimingController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5561FBA20AC58C6900BE1BF5 /* MameTimingController.m */; };
 		5561FF240AC62C4700BE1BF5 /* MameRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5561FF230AC62C4700BE1BF5 /* MameRenderer.m */; };
 		556A42D70AA4EBB300602CC5 /* audit.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A42740AA4EB9200602CC5 /* audit.c */; };
@@ -372,6 +373,8 @@
 		5548ECDD0ABCB463008D1F74 /* MameFileManagerTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MameFileManagerTest.h; sourceTree = "<group>"; };
 		5548ECDE0ABCB463008D1F74 /* MameFileManagerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MameFileManagerTest.m; sourceTree = "<group>"; };
 		5548EDCA0ABE3CEF008D1F74 /* file.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = file.txt; sourceTree = "<group>"; };
+		5561495E0ACCD64F008951F8 /* ThreadSafeQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThreadSafeQueue.h; sourceTree = "<group>"; };
+		5561495F0ACCD64F008951F8 /* ThreadSafeQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThreadSafeQueue.m; sourceTree = "<group>"; };
 		5561FBA10AC58C6900BE1BF5 /* MameTimingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MameTimingController.h; sourceTree = "<group>"; };
 		5561FBA20AC58C6900BE1BF5 /* MameTimingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MameTimingController.m; sourceTree = "<group>"; };
 		5561FF220AC62C4700BE1BF5 /* MameRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MameRenderer.h; sourceTree = "<group>"; };
@@ -2423,6 +2426,8 @@
 				55BB89340AB90EAB00B7933B /* MameConfiguration.m */,
 				5501E8430AB232B900756C9B /* CircularBuffer.h */,
 				5501E8440AB232B900756C9B /* CircularBuffer.m */,
+				5561495E0ACCD64F008951F8 /* ThreadSafeQueue.h */,
+				5561495F0ACCD64F008951F8 /* ThreadSafeQueue.m */,
 				5548EBE60ABCA30E008D1F74 /* MameFileManager.h */,
 				5548EBE70ABCA30E008D1F74 /* MameFileManager.m */,
 				55744C190AAB4FC800EC1423 /* osinline.h */,
@@ -3296,6 +3301,7 @@
 				5561FBA30AC58C6900BE1BF5 /* MameTimingController.m in Sources */,
 				5561FF240AC62C4700BE1BF5 /* MameRenderer.m in Sources */,
 				552F01110AC812A200A14DFA /* MameOpenGLRenderer.m in Sources */,
+				556149600ACCD64F008951F8 /* ThreadSafeQueue.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

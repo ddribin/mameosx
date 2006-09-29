@@ -36,30 +36,9 @@ extern "C" {
     IBOutlet NSTextField * mGameTextField;
     IBOutlet NSProgressIndicator * mGameLoading;
 
-    const render_primitive_list * mPrimitives;
-    MameRenderer * mRenderer;
-    BOOL mCoreImageAccelerated;
-    GLenum mLastTextureTarget;
-    MameInputController * mInputController;
-    MameAudioController * mAudioController;
-    MameTimingController * mTimingController;
-    MameFileManager * mFileManager;
     MameConfiguration * mConfiguration;
 
     BOOL mMameIsRunning;
-    NSLock * mMameLock;
-    NSAutoreleasePool * mMamePool;
-    render_target * mTarget;
-    int32_t mWindowWidth;
-    int32_t mWindowHeight;
-
-    NSRecursiveLock * mDisplayLock;
-    CVDisplayLinkRef mDisplayLink;
-
-    uint64_t mFramesDisplayed;
-    uint64_t mFramesRendered;
-    cycles_t mFrameStartTime;
-    cycles_t mFrameEndTime;
     
     BOOL mIsFiltered;
     NSMutableArray * mFilters;
@@ -67,16 +46,7 @@ extern "C" {
     float inputCenterX;
     float inputCenterY;
     BOOL mMoveInputCenter;
-    
-    BOOL mSyncToRefresh;
-    BOOL mThrottled;
 }
-
-- (MameConfiguration *) configuration;
-
-- (MameFileManager *) fileManager;
-
-- (MameInputController *) inputController;
 
 - (BOOL) isFiltered;
 - (void) setIsFiltered: (BOOL) flag;

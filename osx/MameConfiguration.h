@@ -8,11 +8,11 @@
 #import <Cocoa/Cocoa.h>
 
 
-@class MameController;
+@class MameFileManager;
 
 @interface MameConfiguration : NSObject
 {
-    MameController * mController;
+    MameFileManager * mFileManager;
     BOOL mThrottled;
     BOOL mSyncToRefresh;
     BOOL mSoundEnabled;
@@ -22,7 +22,8 @@
     char * mBios;
 }
 
-- (id) initWithController: (MameController *) controller;
+- (MameFileManager *) fileManager;
+- (void) setFileManager: (MameFileManager *) theFileManager;
 
 - (void) loadUserDefaults;
 

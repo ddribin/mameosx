@@ -168,14 +168,21 @@ static MameConfiguration * sGlobalConfiguration = nil;
     return sGlobalConfiguration;
 }
 
-- (id) initWithController: (MameController *) controller;
+//=========================================================== 
+//  fileManager 
+//=========================================================== 
+- (MameFileManager *) fileManager
 {
-    if ([super init] == nil)
-        return nil;
-    
-    mController = controller;
-    
-    return self;
+    return [[mFileManager retain] autorelease]; 
+}
+
+- (void) setFileManager: (MameFileManager *) theFileManager
+{
+    if (mFileManager != theFileManager)
+    {
+        [mFileManager release];
+        mFileManager = [theFileManager retain];
+    }
 }
 
 - (void) dealloc
@@ -395,7 +402,6 @@ static MameConfiguration * sGlobalConfiguration = nil;
     { 0, nil }
     };
     
-    MameFileManager * fileManager = [mController fileManager];
     int i;
     for (i = 0; defaultPaths[i].preference != nil; i++)
     {
@@ -403,8 +409,8 @@ static MameConfiguration * sGlobalConfiguration = nil;
             [defaults stringForKey: defaultPaths[i].preference];
         if (defaultValue == nil)
             continue;
-        [fileManager setPath: defaultValue
-                     forType: defaultPaths[i].pathtype];
+        [mFileManager setPath: defaultValue
+                      forType: defaultPaths[i].pathtype];
     }
 }
 

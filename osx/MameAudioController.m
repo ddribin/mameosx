@@ -67,17 +67,30 @@ OSStatus static MyRenderer(void	* inRefCon,
 
 @implementation MameAudioController
 
-- (id) initWithController: (MameController *) controller;
+- (id) init;
 {
     if ([super init] == nil)
         return nil;
     
-    mController = controller;
+    mEnabled = YES;
     mBuffer = nil;
     mOverflows = 0;
     mUnderflows = 0;
    
     return self;
+}
+
+//=========================================================== 
+//  enabled 
+//=========================================================== 
+- (BOOL) enabled
+{
+    return mEnabled;
+}
+
+- (void) setEnabled: (BOOL) flag
+{
+    mEnabled = flag;
 }
 
 - (void) osd_init;
@@ -186,7 +199,7 @@ OSStatus static MyRenderer(void	* inRefCon,
     
 	// Start the rendering
 	// The DefaultOutputUnit will do any format conversions to the format of the default device
-    if ([[mController configuration] soundEnabled])
+    if (mEnabled)
     {
         err = AudioOutputUnitStart (mOutputUnit);
         if (err) { NSLog(@"AudioOutputUnitStart=%ld", err); return; }

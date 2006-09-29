@@ -12,16 +12,6 @@
 
 @implementation MameTimingController
 
-- (id) initWithController: (MameController *) controller;
-{
-    if ([super init] == nil)
-        return nil;
-   
-    mController = controller;
-
-    return self;
-}
-
 - (void) osd_init;
 {
     mach_timebase_info_data_t info;
@@ -50,6 +40,18 @@
     return mach_absolute_time();
 }
 
+//=========================================================== 
+//  throttled 
+//=========================================================== 
+- (BOOL) throttled
+{
+    return mThrottled;
+}
+
+- (void) setThrottled: (BOOL) flag
+{
+    mThrottled = flag;
+}
 
 // refresh rate while paused
 #define PAUSED_REFRESH_RATE         30
@@ -110,7 +112,7 @@
     cycles_t curr = [self osd_cycles];
     uint64_t count = 0;
 #if 1
-    if ([mController throttled])
+    if (mThrottled)
     {
         for (curr = [self osd_cycles]; curr - target < 0; curr = [self osd_cycles])
         {
