@@ -30,6 +30,7 @@
     NSString * mGame;
     int mGameIndex;
 
+    running_machine * mMachine;
     render_target * mTarget;
     const render_primitive_list * mPrimitives;
     MameRenderer * mRenderer;
@@ -93,7 +94,8 @@
 - (CIFilter *) filter;
 - (void) setFilter: (CIFilter *) aFilter;
 
-- (int) osd_init;
+- (int) osd_init: (running_machine *) machine;
+- (void) mameDidExit: (running_machine *) machine;
 - (int) osd_update: (mame_time) emutime;
 
 @end

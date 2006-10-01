@@ -97,10 +97,11 @@
     mRenderInCoreVideoThread = flag;
 }
 
-- (int) osd_init;
+- (int) osd_init: (running_machine *) machine;
 {
     NSLog(@"osd_init");
     
+    mMachine = machine;
     [mInputController osd_init];
     [mAudioController osd_init];
     [mTimingController osd_init];
@@ -122,7 +123,6 @@
     float diffX = windowSize.width - viewSize.width;
     float diffY = windowSize.height - viewSize.height;
     [window setContentSize: NSMakeSize(mWindowWidth + diffX, mWindowHeight+diffY)];
-    [window center];
     [window makeKeyAndOrderFront: nil];
     
     [self createCIContext];
@@ -134,12 +134,16 @@
     
     [mRenderer osd_init: [self openGLContext]
                  format: [self pixelFormat]
-                  width: mWindowWidth
-                 height: mWindowHeight];
+                   size: NSIntegralRect([self bounds]).size];
     
     [self initDisplayLink];
     
     return 0;
+}
+
+- (void) mameDidExit: (running_machine *) machine;
+{
+    mPrimitives = 0;
 }
 
 - (int) osd_update: (mame_time) emutime;
@@ -149,7 +153,6 @@
     mMamePool = [[NSAutoreleasePool alloc] init];
     
     [self updateVideo];
-    // [self pumpEvents];
     [mTimingController updateThrottle: emutime];
     
     // Open lock briefly to allow pending MAME calls
@@ -180,59 +183,6 @@
     [mInputController flagsChanged: event];
 }
 
-//  adjust the viewport
-- (void)reshape
-{ 
-    [mDisplayLock lock];
-	GLfloat minX, minY, maxX, maxY;
-    
-    NSRect sceneBounds = [self bounds];
- 	NSRect frame = [self frame];
-	
-    minX = NSMinX(sceneBounds);
-	minY = NSMinY(sceneBounds);
-	maxX = NSMaxX(sceneBounds);
-	maxY = NSMaxY(sceneBounds);
-    
-    // for best results when using Core Image to render into an OpenGL context follow these guidelines:
-    // * ensure that the a single unit in the coordinate space of the OpenGL context represents a single pixel in the output device
-    // * the Core Image coordinate space has the origin in the bottom left corner of the screen -- you should configure the OpenGL
-    //   context in the same way
-    // * the OpenGL context blending state is respected by Core Image -- if the image you want to render contains translucent pixels,
-    //   itÕs best to enable blending using a blend function with the parameters GL_ONE, GL_ONE_MINUS_SRC_ALPHA
-    
-    // some typical initialization code for a view with width W and height H
-    
-    glViewport(0, 0, (GLsizei)frame.size.width, (GLsizei)(frame.size.height));	// set the viewport
-    
-    glMatrixMode(GL_MODELVIEW);    // select the modelview matrix
-    glLoadIdentity();              // reset it
-
-    glMatrixMode(GL_PROJECTION);   // select the projection matrix
-    glLoadIdentity();              // reset it
-    
-#if 1
-    gluOrtho2D(minX, maxX, minY, maxY);	// define a 2-D orthographic projection matrix
-#endif
-    
-	glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
-    glEnable(GL_BLEND);
-    [mDisplayLock unlock];
-}
-
-- (void)drawRect:(NSRect)aRect
-{
-    NSLog(@"drawRect");
-#if 0
-    [mDisplayLock lock];
-    [self drawFrame];
-    [mDisplayLock unlock];
-#endif
-}
-
-
-
-#if 0
 - (void) reshape
 {
 	NSOpenGLContext *currentContext = nil;
@@ -240,8 +190,8 @@
 	
 	currentContext = [self openGLContext];
 	bounds = [self bounds];
-
-	// [self Lock];
+    
+    [mDisplayLock lock];
 	{
         float x = bounds.origin.x;
         float y = bounds.origin.y;
@@ -257,11 +207,15 @@
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
 	}
-	// [self Unlock];
-	
-	[self setNeedsDisplay:YES];
+    [mDisplayLock unlock];
 }
-#endif
+
+- (void)drawRect:(NSRect)aRect
+{
+    [mDisplayLock lock];
+    [self drawFrame];
+    [mDisplayLock unlock];
+}
 
 //=========================================================== 
 //  game 
@@ -291,6 +245,7 @@
         return NO;
     
     // osd_set_controller(self);
+    osd_set_controller(self);
     osd_set_input_controller(mInputController);
     osd_set_audio_controller(mAudioController);
     osd_set_timing_controller(mTimingController);
@@ -307,17 +262,17 @@
 - (void) stop;
 {
     [mMameLock lock];
-    mame_schedule_exit(Machine);
+    mame_schedule_exit(mMachine);
     [mMameLock unlock];
 }
 
 - (void) togglePause;
 {
     [mMameLock lock];
-    if (mame_is_paused(Machine))
-        mame_pause(Machine, FALSE);
+    if (mame_is_paused(mMachine))
+        mame_pause(mMachine, FALSE);
     else
-        mame_pause(Machine, TRUE);
+        mame_pause(mMachine, TRUE);
     [mMameLock unlock];
 }
 
@@ -419,11 +374,12 @@
     // This code fragment is from the VideoViewer sample code
     [[self openGLContext] makeCurrentContext];
     // CoreImage might be too slow if the current renderer doesn't support GL_ARB_fragment_program
-    const char * glExtensions = (const char*)glGetString(GL_EXTENSIONS);
-    mCoreImageAccelerated = (strstr(glExtensions, "GL_ARB_fragment_program") != NULL);
+    const GLubyte * glExtensions = glGetString(GL_EXTENSIONS);
+    const GLubyte * extension = (const GLubyte *)"GL_ARB_fragment_program";
+    mCoreImageAccelerated = gluCheckExtension(extension, glExtensions);
 }
 
-CVReturn myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink, 
+CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink, 
                                        const CVTimeStamp *inNow, 
                                        const CVTimeStamp *inOutputTime, 
                                        CVOptionFlags flagsIn, 
@@ -505,7 +461,6 @@ CVReturn myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
         @synchronized(self)
         {
             primitives = mPrimitives;
-            mPrimitives = 0;
         }
         
         if (primitives == 0)
@@ -521,7 +476,8 @@ CVReturn myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
             }
             else
             {
-                [mRenderer renderFrame: primitives];
+                [mRenderer renderFrame: primitives
+                              withSize: NSIntegralRect([self bounds]).size];
                 skipFrame = NO;
             }
             osd_lock_release(primitives->lock);
@@ -537,9 +493,9 @@ CVReturn myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
     [[self openGLContext] makeCurrentContext];
     
     if (mRenderInCoreVideoThread)
-        glClearColor(0.0, 0.0, 0.0, 0.0);
+        glClearColor(1.0, 0.0, 0.0, 0.0);
     else
-        glClearColor(0.0, 0.0, 0.0, 0.0);
+        glClearColor(1.0, 0.0, 0.0, 0.0);
     glClear(GL_COLOR_BUFFER_BIT);
     
     CVOpenGLTextureRef frame = [mRenderer currentFrameTexture];
@@ -569,7 +525,7 @@ CVReturn myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
         if (mMoveInputCenter)
         {
             inputCenterX += 2;
-            if (inputCenterX > mWindowWidth)
+            if (inputCenterX > [self bounds].size.width)
                 inputCenterX = 0;
             
             [mFilter setValue: [CIVector vectorWithX: inputCenterX Y: inputCenterY]  
@@ -597,9 +553,10 @@ CVReturn myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
     glTexCoordPointer(2, GL_FLOAT, 0, texCoords);
     
     // Specify video rectangle vertices counter-clockwise from (0,0)
+    NSSize size = [self bounds].size;
     memset(vertices, 0, sizeof(vertices));
-    vertices[1][0] = vertices[2][0] = mWindowWidth;
-    vertices[2][1] = vertices[3][1] = mWindowHeight;
+    vertices[1][0] = vertices[2][0] = size.width;
+    vertices[2][1] = vertices[3][1] = size.height;
     
     GLenum textureTarget = CVOpenGLTextureGetTarget(frame);
     
@@ -619,9 +576,10 @@ CVReturn myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
 
 - (void) updateVideo;
 {
+    NSSize windowSize = NSIntegralRect([self bounds]).size;
     if (mRenderInCoreVideoThread)
     {
-        render_target_set_bounds(mTarget, mWindowWidth, mWindowHeight, 0.0);
+        render_target_set_bounds(mTarget, windowSize.width, windowSize.height, 0.0);
         const render_primitive_list * primitives = render_target_get_primitives(mTarget);
         @synchronized(self)
         {
@@ -632,14 +590,15 @@ CVReturn myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
     {
         [mDisplayLock lock];
         
-        render_target_set_bounds(mTarget, mWindowWidth, mWindowHeight, 0.0);
-        const render_primitive_list * primlist = render_target_get_primitives(mTarget);
-        [mRenderer renderFrame: primlist];
+        render_target_set_bounds(mTarget, windowSize.width, windowSize.height, 0.0);
+        const render_primitive_list * primitives = render_target_get_primitives(mTarget);
+        [mRenderer renderFrame: primitives
+                      withSize: windowSize];
         
         [mDisplayLock unlock];
     }
     
-    if (!mame_is_paused(Machine))
+    if (!mame_is_paused(mMachine))
         mFramesRendered++;
 }
 

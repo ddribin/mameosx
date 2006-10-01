@@ -2405,6 +2405,8 @@
 			children = (
 				556A4CED0AA5117200602CC5 /* MameController.h */,
 				556A4CEE0AA5117200602CC5 /* MameController.mm */,
+				556A51150AA54C4600602CC5 /* MameView.h */,
+				556A51160AA54C4600602CC5 /* MameView.m */,
 				5561FF220AC62C4700BE1BF5 /* MameRenderer.h */,
 				5561FF230AC62C4700BE1BF5 /* MameRenderer.m */,
 				552F010F0AC812A200A14DFA /* MameOpenGLRenderer.h */,
@@ -2420,8 +2422,6 @@
 				55FE25E70AAD2F6100C4054A /* MameAudioController.m */,
 				5561FBA10AC58C6900BE1BF5 /* MameTimingController.h */,
 				5561FBA20AC58C6900BE1BF5 /* MameTimingController.m */,
-				556A51150AA54C4600602CC5 /* MameView.h */,
-				556A51160AA54C4600602CC5 /* MameView.m */,
 				55BB89330AB90EAB00B7933B /* MameConfiguration.h */,
 				55BB89340AB90EAB00B7933B /* MameConfiguration.m */,
 				5501E8430AB232B900756C9B /* CircularBuffer.h */,

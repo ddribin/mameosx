@@ -20,13 +20,8 @@
 @implementation MameOpenGLRenderer
 
 - (void) osd_init: (NSOpenGLContext *) mameViewContext
-           format: (NSOpenGLPixelFormat *) mameViewFormat
-            width: (float) windowWidth
-           height: (float) windowHeight;
+           format: (NSOpenGLPixelFormat *) mameViewFormat;
 {
-    mWindowWidth = windowWidth;
-    mWindowHeight = windowHeight;
-        
     NSOpenGLPixelFormat * glPixelFormat = mameViewFormat;
     mGlContext = [mameViewContext retain];
    
@@ -58,6 +53,7 @@ INLINE void set_blendmode(int blendmode)
 }
 
 - (void) renderFrame : (const render_primitive_list *) primlist
+             withSize: (NSSize) size;
 {
     // clear the screen and Z-buffer
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -89,10 +85,10 @@ INLINE void set_blendmode(int blendmode)
     //   |_________|
     // (0,h)     (w,h)
     
-    glViewport(0.0, 0.0, (GLsizei)mWindowWidth, (GLsizei)mWindowHeight);
+    glViewport(0.0, 0.0, (GLsizei)size.width, (GLsizei)size.height);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    glOrtho(0.0, (GLdouble)mWindowWidth, (GLdouble)mWindowHeight, 0.0, 0.0, -1.0);
+    glOrtho(0.0, (GLdouble)size.width, (GLdouble)size.height, 0.0, 0.0, -1.0);
     
     // compute centering parameters
     mCenteringOffset = NSMakeSize(0.0f, 0.0f);

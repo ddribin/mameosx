@@ -17,8 +17,7 @@
 {
     MameOpenGLRenderer * mOpenGLRenderer;
     MameTextureTable * mTextureTable;
-    int32_t mWindowWidth;
-    int32_t mWindowHeight;
+    NSSize mCurrentFrameSize;
     NSSize mCenteringOffset;
 
     NSOpenGLContext * mGlContext;
@@ -31,9 +30,9 @@
 
 - (void) osd_init: (NSOpenGLContext *) mameViewContext
            format: (NSOpenGLPixelFormat *) mameViewFormat
-            width: (float) windowWidth
-           height: (float) windowHeight;
+             size: (NSSize) size;
 
-- (void) renderFrame: (const render_primitive_list *) primlist;
+- (void) renderFrame: (const render_primitive_list *) primitives
+            withSize: (NSSize) size;
 
 @end

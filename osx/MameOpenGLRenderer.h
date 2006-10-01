@@ -15,18 +15,15 @@
 @interface MameOpenGLRenderer : NSObject
 {
     MameTextureTable * mTextureTable;
-    int32_t mWindowWidth;
-    int32_t mWindowHeight;
     NSSize mCenteringOffset;
     
     NSOpenGLContext * mGlContext;
 }
 
 - (void) osd_init: (NSOpenGLContext *) mameViewContext
-           format: (NSOpenGLPixelFormat *) mameViewFormat
-            width: (float) windowWidth
-           height: (float) windowHeight;
+           format: (NSOpenGLPixelFormat *) mameViewFormat;
 
-- (void) renderFrame : (const render_primitive_list *) primlist;
+- (void) renderFrame : (const render_primitive_list *) primlist
+             withSize: (NSSize) size;
 
 @end

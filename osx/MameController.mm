@@ -54,12 +54,17 @@ void leaks_sleeper()
     return self;
 }
 
+- (void) awakeFromNib
+{
+    [[mMameView window] center];
+}
+
 - (void) applicationDidFinishLaunching: (NSNotification*) notification;
 {
 #if 0
     atexit(leaks_sleeper);
 #endif
-    osd_set_controller(self);
+
     
     // Work around for an IB issue:
     // "Why does my bottom or top drawer size itself improperly?"
@@ -94,21 +99,9 @@ void leaks_sleeper()
     return reply;
 }
 
-- (int) osd_init;
-{
-    [mMameView osd_init];
-    return 0;
-}
-
 - (MameConfiguration *) configuration;
 {
     return mConfiguration;
-}
-
-- (int) osd_update: (mame_time) emutime;
-{
-    [mMameView osd_update: emutime];
-    return 0;
 }
 
 //=========================================================== 

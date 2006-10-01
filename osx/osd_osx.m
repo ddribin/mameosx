@@ -1,6 +1,6 @@
 #include "osdepend.h"
 #include "render.h"
-#import "MameController.h"
+#import "MameView.h"
 #import "MameInputController.h"
 #import "MameAudioController.h"
 #import "MameTimingController.h"
@@ -8,11 +8,31 @@
 
 #include <unistd.h>
 
-static MameController * sController;
 
-void osd_set_controller(MameController * controller)
+static void mame_did_exit(running_machine * machine);
+
+/******************************************************************************
+
+    Core
+
+******************************************************************************/
+
+static MameView * sController;
+
+void osd_set_controller(MameView * controller)
 {
     sController = controller;
+}
+
+int osd_init(running_machine *machine)
+{
+    add_exit_callback(machine, mame_did_exit);
+    return [sController osd_init: machine];
+}
+
+static void mame_did_exit(running_machine * machine)
+{
+    [sController mameDidExit: machine];
 }
 
 /******************************************************************************
@@ -343,19 +363,6 @@ int osd_display_loading_rom_message(const char *name, rom_load_data *romdata)
 }
 
 #endif
-
-
-/******************************************************************************
-
-    Core
-
-******************************************************************************/
-
-
-int osd_init(running_machine *machine)
-{
-    return [sController osd_init];
-}
 
 void osd_break_into_debugger(const char *message)
 {

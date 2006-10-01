@@ -64,7 +64,4 @@ extern "C" {
 - (IBAction) endOpenPanel: (id) sender;
 - (IBAction) hideOpenPanel: (id) sender;
 
-- (int) osd_init;
-- (int) osd_update: (mame_time) emutime;
-
 @end
