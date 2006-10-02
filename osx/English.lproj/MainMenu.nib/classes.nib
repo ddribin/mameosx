@@ -5,8 +5,11 @@
             ACTIONS = {
                 endOpenPanel = id; 
                 filterChanged = id; 
+                hideOpenPanel = id; 
                 nullAction = id; 
                 raiseOpenPanel = id; 
+                setActualSize = id; 
+                setDoubleSize = id; 
                 togglePause = id; 
             }; 
             CLASS = MameController; 

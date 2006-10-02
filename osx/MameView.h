@@ -41,8 +41,7 @@
     CVDisplayLinkRef mDisplayLink;
     BOOL mRenderInCoreVideoThread;
     CIFilter * mFilter;
-    int32_t mWindowWidth;
-    int32_t mWindowHeight;
+    NSSize mNaturalSize;
     
     float inputCenterX;
     float inputCenterY;
@@ -74,6 +73,8 @@
 - (void) togglePause;
 - (BOOL) isRunning;
 
+- (NSSize) naturalSize;
+
 - (BOOL) renderInCoreVideoThread;
 - (void) setRenderInCoreVideoThread: (BOOL) flag;
 
@@ -99,3 +100,5 @@
 - (int) osd_update: (mame_time) emutime;
 
 @end
+
+extern NSString * MameViewNaturalSizeDidChange;

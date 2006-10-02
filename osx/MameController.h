@@ -63,5 +63,7 @@ extern "C" {
 - (IBAction) raiseOpenPanel: (id) sender;
 - (IBAction) endOpenPanel: (id) sender;
 - (IBAction) hideOpenPanel: (id) sender;
+- (IBAction) setActualSize: (id) sender;
+- (IBAction) setDoubleSize: (id) sender;
 
 @end

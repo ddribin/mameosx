@@ -30,6 +30,8 @@ extern "C" {
 
 @interface MameController (Private)
 
+- (void) setViewSize: (NSSize) viewSize;
+- (void) viewNaturalSizeDidChange: (NSNotification *) notification;
 - (void) setUpDefaultPaths;
 - (NSString *) getGameNameToRun;
 - (void) initFilters;
@@ -57,6 +59,10 @@ void leaks_sleeper()
 - (void) awakeFromNib
 {
     [[mMameView window] center];
+    [[NSNotificationCenter defaultCenter] addObserver: self
+                                             selector: @selector(viewNaturalSizeDidChange:)
+                                                 name: MameViewNaturalSizeDidChange
+                                               object: mMameView];
 }
 
 - (void) applicationDidFinishLaunching: (NSNotification*) notification;
@@ -162,6 +168,21 @@ void leaks_sleeper()
     [mOpenPanel orderOut: [mMameView window]];
 }
 
+- (IBAction) setActualSize: (id) sender;
+{
+    NSSize naturalSize = [mMameView naturalSize];
+    [self setViewSize: naturalSize];
+}
+
+- (IBAction) setDoubleSize: (id) sender;
+{
+    NSSize naturalSize = [mMameView naturalSize];
+    naturalSize.width *= 2;
+    naturalSize.height *= 2;
+    [self setViewSize: naturalSize];
+}
+
+
 //=========================================================== 
 //  throttled 
 //=========================================================== 
@@ -192,6 +213,32 @@ void leaks_sleeper()
 @end
 
 @implementation MameController (Private)
+
+- (void) setViewSize: (NSSize) viewSize;
+{
+    NSWindow * window = [mMameView window];
+    NSRect windowFrame = [[window contentView] frame];
+    NSLog(@"windowFrame: %@", NSStringFromRect(windowFrame));
+    NSSize windowSize = windowFrame.size;
+    NSSize currentViewSize = [mMameView frame].size;
+    float diffWidth = windowSize.width - currentViewSize.width;
+    float diffHeight = windowSize.height - currentViewSize.height;
+
+    windowFrame.size.width = viewSize.width + diffWidth;
+    windowFrame.size.height = viewSize.height + diffHeight;
+
+    [window setFrame: windowFrame
+             display: YES
+             animate: YES];
+}
+
+- (void) viewNaturalSizeDidChange: (NSNotification *) notification;
+{
+    [self setDoubleSize: nil];
+    NSWindow * window = [mMameView window];
+    [window center];
+    [window makeKeyAndOrderFront: nil];
+}
 
 - (void) setUpDefaultPaths;
 {

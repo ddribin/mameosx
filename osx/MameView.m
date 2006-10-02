@@ -29,6 +29,8 @@
 
 @end
 
+NSString * MameViewNaturalSizeDidChange = @"NaturalSizeDidChange";
+
 @implementation MameView
 
 - (id) initWithCoder: (NSCoder *) coder
@@ -97,6 +99,11 @@
     mRenderInCoreVideoThread = flag;
 }
 
+- (NSSize) naturalSize;
+{
+    return mNaturalSize;
+}
+
 - (int) osd_init: (running_machine *) machine;
 {
     NSLog(@"osd_init");
@@ -111,20 +118,14 @@
     render_target_set_orientation(mTarget, ROT0);
     render_target_set_layer_config(mTarget, LAYER_CONFIG_DEFAULT);
     render_target_set_view(mTarget, 0);
-    render_target_get_minimum_size(mTarget, &mWindowWidth, &mWindowHeight);
-    mWindowWidth *= 2;
-    mWindowHeight *= 2;
-    NSLog(@"%dx%d\n", mWindowWidth, mWindowHeight);
-    
-    NSWindow * window = [self window];
-    NSSize windowSize = [[window contentView] frame].size;
-    NSSize viewSize = [self frame].size;
-    NSLog(@"Window size: %@, view size: %@", NSStringFromSize(windowSize), NSStringFromSize(viewSize));
-    float diffX = windowSize.width - viewSize.width;
-    float diffY = windowSize.height - viewSize.height;
-    [window setContentSize: NSMakeSize(mWindowWidth + diffX, mWindowHeight+diffY)];
-    [window makeKeyAndOrderFront: nil];
-    
+
+    INT32 minimumWidth;
+    INT32 minimumHeight;
+    render_target_get_minimum_size(mTarget, &minimumWidth, &minimumHeight);
+    mNaturalSize = NSMakeSize(minimumWidth, minimumHeight);
+    [[NSNotificationCenter defaultCenter] postNotificationName: MameViewNaturalSizeDidChange
+                                                        object: self];
+        
     [self createCIContext];
     [self detectAcceleratedCoreImage];
     
