@@ -214,20 +214,24 @@ void leaks_sleeper()
 
 @implementation MameController (Private)
 
-- (void) setViewSize: (NSSize) viewSize;
+- (void) setViewSize: (NSSize) newViewSize;
 {
     NSWindow * window = [mMameView window];
-    NSRect windowFrame = [[window contentView] frame];
-    NSLog(@"windowFrame: %@", NSStringFromRect(windowFrame));
-    NSSize windowSize = windowFrame.size;
+    NSRect currentWindowFrame = [window frame];
+    NSSize currentWindowSize = currentWindowFrame.size;
     NSSize currentViewSize = [mMameView frame].size;
-    float diffWidth = windowSize.width - currentViewSize.width;
-    float diffHeight = windowSize.height - currentViewSize.height;
+    float diffWidth = currentWindowSize.width - currentViewSize.width;
+    float diffHeight = currentWindowSize.height - currentViewSize.height;
 
-    windowFrame.size.width = viewSize.width + diffWidth;
-    windowFrame.size.height = viewSize.height + diffHeight;
+    NSRect newWindowFrame = currentWindowFrame;
+    newWindowFrame.size.width = newViewSize.width + diffWidth;
+    newWindowFrame.size.height = newViewSize.height + diffHeight;
 
-    [window setFrame: windowFrame
+    // Adjust origin so title bar stays in same location
+    newWindowFrame.origin.y +=
+        currentWindowFrame.size.height - newWindowFrame.size.height;
+
+    [window setFrame: newWindowFrame
              display: YES
              animate: YES];
 }
