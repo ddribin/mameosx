@@ -14,6 +14,8 @@
 #import "MameFileManager.h"
 #import "MameConfiguration.h"
 
+static NSRect centerNSSizeWithinRect(NSSize size, NSRect rect);
+
 @interface MameView (Private)
 
 - (void) detectAcceleratedCoreImage;
@@ -367,6 +369,26 @@ NSString * MameViewNaturalSizeDidChange = @"NaturalSizeDidChange";
 
 @end
 
+static NSRect centerNSSizeWithinRect(NSSize size, NSRect rect)
+{
+    float delta;
+    if( NSHeight(rect) / NSWidth(rect) > size.height / size.width )
+    {
+        // rect is taller: fit width
+        delta = rect.size.height - size.height * NSWidth(rect) / size.width;
+        rect.size.height -= delta;
+        rect.origin.y += delta/2;
+    }
+    else
+    {
+        // rect is wider: fit height
+        delta = rect.size.width - size.width * NSHeight(rect) / size.height;
+        rect.size.width -= delta;
+        rect.origin.x += delta/2;
+    }
+    return rect;
+}
+
 @implementation MameView (Private)
 
 - (void) detectAcceleratedCoreImage;
@@ -519,7 +541,6 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
 {
     CIImage * inputImage = [CIImage imageWithCVImageBuffer: frame];
     CIContext * ciContext = [self ciContext];
-    CGRect imageRect = [inputImage extent];
 
     CIImage * imageToDraw = inputImage;
     if (mFilter != nil)
@@ -537,11 +558,14 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
         [mFilter setValue: inputImage forKey:@"inputImage"];
         imageToDraw = [mFilter valueForKey: @"outputImage"];
     }
+    CGRect imageRect = [imageToDraw extent];
     
-    NSRect destRect = [self bounds];
+    NSRect bounds = [self bounds];
+    NSRect nsDest = centerNSSizeWithinRect(mRenderSize, bounds);
+    CGRect destRect = CGRectMake(nsDest.origin.x, nsDest.origin.y,
+                                 nsDest.size.width, nsDest.size.height);
     [ciContext drawImage: imageToDraw
-                  inRect: CGRectMake(destRect.origin.x,destRect.origin.y,
-                                     destRect.size.width,destRect.size.height)
+                  inRect: *(CGRect *) &nsDest
                 fromRect: imageRect];
 }
 
@@ -556,11 +580,18 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
     glVertexPointer(2, GL_FLOAT, 0, vertices);
     glTexCoordPointer(2, GL_FLOAT, 0, texCoords);
     
-    // Specify video rectangle vertices counter-clockwise from (0,0)
-    NSSize size = [self bounds].size;
-    memset(vertices, 0, sizeof(vertices));
-    vertices[1][0] = vertices[2][0] = size.width;
-    vertices[2][1] = vertices[3][1] = size.height;
+    // Specify video rectangle vertices counter-clockwise from the
+    // origin (lower left) after centering
+    NSRect bounds = centerNSSizeWithinRect(mRenderSize, [self bounds]);
+
+    vertices[0][0] = bounds.origin.x;
+    vertices[0][1] = bounds.origin.y;
+    vertices[1][0] = NSMaxX(bounds);
+    vertices[1][1] = bounds.origin.y;
+    vertices[2][0] = NSMaxX(bounds);
+    vertices[2][1] = NSMaxY(bounds);
+    vertices[3][0] = bounds.origin.x;
+    vertices[3][1] = NSMaxY(bounds);
     
     GLenum textureTarget = CVOpenGLTextureGetTarget(frame);
     
@@ -583,14 +614,15 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
 
 - (void) updateVideo;
 {
-    NSSize windowSize = NSIntegralRect([self bounds]).size;
+    NSSize renderSize = centerNSSizeWithinRect(mNaturalSize, [self bounds]).size;
+    
     if (mRenderInCoreVideoThread)
     {
-        render_target_set_bounds(mTarget, windowSize.width, windowSize.height, 0.0);
+        render_target_set_bounds(mTarget, renderSize.width, renderSize.height, 0.0);
         const render_primitive_list * primitives = render_target_get_primitives(mTarget);
         @synchronized(self)
         {
-            mRenderSize = windowSize;
+            mRenderSize = renderSize;
             mPrimitives = primitives;
         }
     }
@@ -598,10 +630,11 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
     {
         [mDisplayLock lock];
         
-        render_target_set_bounds(mTarget, windowSize.width, windowSize.height, 0.0);
+        render_target_set_bounds(mTarget, renderSize.width, renderSize.height, 0.0);
         const render_primitive_list * primitives = render_target_get_primitives(mTarget);
         [mRenderer renderFrame: primitives
-                      withSize: windowSize];
+                      withSize: renderSize];
+        mRenderSize = renderSize;
         
         [mDisplayLock unlock];
     }
