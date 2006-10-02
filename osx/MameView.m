@@ -458,10 +458,12 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
     if (mRenderInCoreVideoThread)
     {
         const render_primitive_list * primitives = 0;
+        NSSize renderSize;
         BOOL skipFrame = NO;
         @synchronized(self)
         {
             primitives = mPrimitives;
+            renderSize = mRenderSize;
         }
         
         if (primitives == 0)
@@ -478,7 +480,7 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
             else
             {
                 [mRenderer renderFrame: primitives
-                              withSize: NSIntegralRect([self bounds]).size];
+                              withSize: renderSize];
                 skipFrame = NO;
             }
             osd_lock_release(primitives->lock);
@@ -517,9 +519,8 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
 {
     CIImage * inputImage = [CIImage imageWithCVImageBuffer: frame];
     CIContext * ciContext = [self ciContext];
-    CGRect      imageRect;
-    imageRect = [inputImage extent];
-    
+    CGRect imageRect = [inputImage extent];
+
     CIImage * imageToDraw = inputImage;
     if (mFilter != nil)
     {
@@ -537,8 +538,10 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
         imageToDraw = [mFilter valueForKey: @"outputImage"];
     }
     
+    NSRect destRect = [self bounds];
     [ciContext drawImage: imageToDraw
-                 atPoint: CGPointMake(0, 0)
+                  inRect: CGRectMake(destRect.origin.x,destRect.origin.y,
+                                     destRect.size.width,destRect.size.height)
                 fromRect: imageRect];
 }
 
@@ -569,6 +572,9 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
         glEnable(mLastTextureTarget);
     }
     
+    glTexParameteri(textureTarget, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(textureTarget, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
     // Get the current texture's coordinates, bind the texture, and draw our rectangle
     CVOpenGLTextureGetCleanTexCoords(frame, texCoords[0], texCoords[1], texCoords[2], texCoords[3]);
     glBindTexture(mLastTextureTarget, CVOpenGLTextureGetName(frame));
@@ -584,6 +590,7 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
         const render_primitive_list * primitives = render_target_get_primitives(mTarget);
         @synchronized(self)
         {
+            mRenderSize = windowSize;
             mPrimitives = primitives;
         }
     }

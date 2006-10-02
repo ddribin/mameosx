@@ -36,6 +36,7 @@
     MameRenderer * mRenderer;
     BOOL mCoreImageAccelerated;
     GLenum mLastTextureTarget;
+    NSSize mRenderSize;
 
     NSRecursiveLock * mDisplayLock;
     CVDisplayLinkRef mDisplayLink;
