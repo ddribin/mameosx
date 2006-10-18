@@ -10,6 +10,7 @@
 #import <OpenGL/OpenGL.h>
 #import <OpenGL/gl.h>
 #import <OpenGL/glu.h>
+#import "DDCustomOpenGLView.h"
 
 #include "osdepend.h"
 #include "render.h"
@@ -22,10 +23,11 @@
 @class MameFileManager;
 @class MameConfiguration;
 
-@interface MameView : NSOpenGLView
+@interface MameView : DDCustomOpenGLView
 {
     IBOutlet MameController * mController;
     CIContext * mCiContext;
+    CIContext * mFullScreenCiContext;
     
     NSString * mGame;
     int mGameIndex;
@@ -38,17 +40,6 @@
     GLenum mLastTextureTarget;
     NSSize mRenderSize;
     
-    BOOL mOpenGLInitialized;
-    NSOpenGLContext * mWindowedContext;
-    NSOpenGLPixelFormat * mWindowedPixelFormat;
-    
-    NSOpenGLContext * mFullScreenContext;
-    NSOpenGLPixelFormat * mFullScreenPixelFormat;
-	NSRect mFullScreenRect;
-	float mFullScreenMouseOffset;
-
-    NSRecursiveLock * mDisplayLock;
-    CVDisplayLinkRef mDisplayLink;
     BOOL mRenderInCoreVideoThread;
     CIFilter * mFilter;
     NSSize mNaturalSize;
@@ -73,7 +64,6 @@
 
     BOOL mSyncToRefresh;
     BOOL mThrottled;
-    BOOL mFullScreen;
 }
 
 - (NSString *) game;
@@ -103,8 +93,10 @@
 - (BOOL) audioEnabled;
 - (void) setAudioEnabled: (BOOL) flag;
 
+#if 0
 - (BOOL) fullScreen;
 - (void) setFullScreen: (BOOL) flag;
+#endif
 
 - (CIFilter *) filter;
 - (void) setFilter: (CIFilter *) aFilter;

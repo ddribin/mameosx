@@ -18,14 +18,18 @@ static NSRect centerNSSizeWithinRect(NSSize size, NSRect rect);
 
 @interface MameView (Private)
 
+#if 0
 - (BOOL) setupOpenGL;
 - (NSOpenGLContext *) openGLContext;
 - (NSOpenGLPixelFormat *) pixelFormat;
 - (void)update;
 - (void) surfaceNeedsUpdate: (NSNotification*) notification;
+#endif
 
 - (void) detectAcceleratedCoreImage;
+#if 0
 - (void) initDisplayLink;
+#endif
 
 - (void) gameThread;
 - (void) gameFinished;
@@ -33,6 +37,7 @@ static NSRect centerNSSizeWithinRect(NSSize size, NSRect rect);
 #pragma mark -
 #pragma mark "full screen"
 
+#if 0
 - (NSOpenGLContext *) fullScreenContext;
 - (NSOpenGLContext *) currentOpenGLContext;
 - (void) enterFullScreen;
@@ -44,6 +49,7 @@ static NSRect centerNSSizeWithinRect(NSSize size, NSRect rect);
                                            refresh: (CGRefreshRate) fps;
 - (CGDisplayFadeReservationToken) displayFadeOut;
 - (void) displayFadeIn: (CGDisplayFadeReservationToken) token;
+#endif
 
 
 - (void) drawFrame;
@@ -56,6 +62,54 @@ static NSRect centerNSSizeWithinRect(NSSize size, NSRect rect);
 NSString * MameViewNaturalSizeDidChange = @"NaturalSizeDidChange";
 
 @implementation MameView
+
+-(id) initWithFrame: (NSRect) frameRect
+{
+    NSOpenGLPixelFormatAttribute colorSize = 32;
+    NSOpenGLPixelFormatAttribute depthSize = 32;
+    
+    // pixel format attributes for the view based (non-fullscreen) NSOpenGLContext
+    NSOpenGLPixelFormatAttribute windowedAttributes[] =
+    {
+        // specifying "NoRecovery" gives us a context that cannot fall back to the software renderer
+        // this makes the view-based context a compatible with the fullscreen context,
+        // enabling us to use the "shareContext" feature to share textures, display lists, and other OpenGL objects between the two
+        NSOpenGLPFANoRecovery,
+        // attributes common to fullscreen and window modes
+        NSOpenGLPFAColorSize, colorSize,
+        NSOpenGLPFADepthSize, depthSize,
+        NSOpenGLPFADoubleBuffer,
+        NSOpenGLPFAAccelerated,
+        0
+    };
+    NSOpenGLPixelFormat * windowedPixelFormat = [[NSOpenGLPixelFormat alloc] initWithAttributes: windowedAttributes];
+    [windowedPixelFormat autorelease];
+    
+    self = [super initWithFrame: frameRect pixelFormat: windowedPixelFormat];
+    if (self == nil)
+        return nil;
+    
+    // pixel format attributes for the full screen NSOpenGLContext
+    NSOpenGLPixelFormatAttribute fullScreenAttributes[] =
+    {
+        // specifying "NoRecovery" gives us a context that cannot fall back to the software renderer
+        // this makes the view-based context a compatible with the fullscreen context,
+        // enabling us to use the "shareContext" feature to share textures, display lists, and other OpenGL objects between the two
+        NSOpenGLPFANoRecovery,
+        NSOpenGLPFAScreenMask, CGDisplayIDToOpenGLDisplayMask(kCGDirectMainDisplay),
+        // attributes common to fullscreen and window modes
+        NSOpenGLPFAColorSize, colorSize,
+        NSOpenGLPFADepthSize, depthSize,
+        NSOpenGLPFADoubleBuffer,
+        NSOpenGLPFAAccelerated,
+        0
+    };
+    NSOpenGLPixelFormat * fullScreenPixelFormat = [[NSOpenGLPixelFormat alloc] initWithAttributes: fullScreenAttributes];
+    [fullScreenPixelFormat autorelease];
+    [self setFullScreenPixelFormat: fullScreenPixelFormat];
+        
+    return self;
+}
 
 - (void) awakeFromNib
 {
@@ -71,17 +125,19 @@ NSString * MameViewNaturalSizeDidChange = @"NaturalSizeDidChange";
     mSyncToRefresh = NO;
     mMameLock = [[NSLock alloc] init];
     mMameIsRunning = NO;
-    
-    mDisplayLock = [[NSRecursiveLock alloc] init];
-    mOpenGLInitialized = NO;
-    mWindowedContext = nil;
-    mWindowedPixelFormat = nil;
-    
-    mFullScreen = NO;
-    mFullScreenContext = nil;
 }
 
 - (void) prepareOpenGL;
+{
+    glShadeModel(GL_SMOOTH);
+    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+    glClearDepth(1.0f);
+    glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LEQUAL);
+    glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+}
+
+- (void) prepareOpenGL: (NSOpenGLContext *) context;
 {
     glShadeModel(GL_SMOOTH);
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -105,12 +161,24 @@ NSString * MameViewNaturalSizeDidChange = @"NaturalSizeDidChange";
                                            options:[NSDictionary dictionaryWithObjectsAndKeys:
                                                (id)colorSpace,kCIContextOutputColorSpace,
                                                (id)colorSpace,kCIContextWorkingColorSpace,nil]] retain];
+
+    mFullScreenCiContext = [[CIContext contextWithCGLContext:
+        (CGLContextObj)[[self fullScreenOpenGLContext] CGLContextObj]
+                                       pixelFormat:(CGLPixelFormatObj)
+        [[self fullScreenPixelFormat] CGLPixelFormatObj]
+                                           options:[NSDictionary dictionaryWithObjectsAndKeys:
+                                               (id)colorSpace,kCIContextOutputColorSpace,
+                                               (id)colorSpace,kCIContextWorkingColorSpace,nil]] retain];
+    
     CGColorSpaceRelease(colorSpace);
 }
 
 - (CIContext *) ciContext;
 {
-    return mCiContext;
+    if (mFullScreen)
+        return mFullScreenCiContext;
+    else
+        return mCiContext;
 }
 
 //=========================================================== 
@@ -134,8 +202,10 @@ NSString * MameViewNaturalSizeDidChange = @"NaturalSizeDidChange";
 - (int) osd_init: (running_machine *) machine;
 {
     NSLog(@"osd_init");
+#if 0
     [self setupOpenGL];
     [self fullScreenContext];
+#endif
     
     mMachine = machine;
     [mInputController osd_init];
@@ -152,6 +222,9 @@ NSString * MameViewNaturalSizeDidChange = @"NaturalSizeDidChange";
     INT32 minimumHeight;
     render_target_get_minimum_size(mTarget, &minimumWidth, &minimumHeight);
     mNaturalSize = NSMakeSize(minimumWidth, minimumHeight);
+    
+    [self setFullScreenWidth: minimumWidth*2 height: minimumHeight*2];
+
     [[NSNotificationCenter defaultCenter] postNotificationName: MameViewNaturalSizeDidChange
                                                         object: self];
         
@@ -166,7 +239,9 @@ NSString * MameViewNaturalSizeDidChange = @"NaturalSizeDidChange";
                  format: [self pixelFormat]
                    size: NSIntegralRect([self bounds]).size];
     
+#if 0
     [self initDisplayLink];
+#endif
     
     return 0;
 }
@@ -213,6 +288,8 @@ NSString * MameViewNaturalSizeDidChange = @"NaturalSizeDidChange";
     [mInputController flagsChanged: event];
 }
 
+#if 0
+
 - (void) reshape
 {
 	NSOpenGLContext * currentContext;
@@ -256,6 +333,30 @@ NSString * MameViewNaturalSizeDidChange = @"NaturalSizeDidChange";
     [self drawFrame];
     [mDisplayLock unlock];
 }
+
+#endif
+
+- (void) resize
+{
+    NSRect bounds = [self currentBounds];
+    
+    
+	{
+        float x = bounds.origin.x;
+        float y = bounds.origin.y;
+        float w = bounds.size.width;
+        float h = bounds.size.height;
+        glViewport(x, y, w, h);
+        
+        glMatrixMode(GL_PROJECTION);
+        glLoadIdentity();
+        glOrtho(0, w, 0, h, 0, 1);
+        
+        glMatrixMode(GL_MODELVIEW);
+        glLoadIdentity();
+	}
+}
+
 
 //=========================================================== 
 //  game 
@@ -375,33 +476,6 @@ NSString * MameViewNaturalSizeDidChange = @"NaturalSizeDidChange";
 }
 
 //=========================================================== 
-//  fullScreen 
-//=========================================================== 
-- (BOOL) fullScreen
-{
-    return mFullScreen;
-}
-
-- (void) setFullScreen: (BOOL) fullScreen
-{
-    [mDisplayLock lock];
-    if (fullScreen && !mFullScreen)
-    {
-        if ([self fullScreenContext] != nil)
-        {
-            [self enterFullScreen];
-            mFullScreen = YES;
-        }
-    }
-    else if (!fullScreen && mFullScreen)
-    {
-        [self exitFullScreen];
-        mFullScreen = NO;
-    }
-    [mDisplayLock unlock];
-}
-
-//=========================================================== 
 //  audioEnabled 
 //=========================================================== 
 - (BOOL) audioEnabled
@@ -454,6 +528,8 @@ static NSRect centerNSSizeWithinRect(NSSize size, NSRect rect)
 }
 
 @implementation MameView (Private)
+
+#if 0
 
 - (BOOL) setupOpenGL;
 {
@@ -520,6 +596,8 @@ static NSRect centerNSSizeWithinRect(NSSize size, NSRect rect)
     [self update];
 }
 
+#endif
+
 - (void) detectAcceleratedCoreImage;
 {
     
@@ -531,6 +609,7 @@ static NSRect centerNSSizeWithinRect(NSSize size, NSRect rect)
     mCoreImageAccelerated = gluCheckExtension(extension, glExtensions);
 }
 
+#if 0
 CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink, 
                                        const CVTimeStamp *inNow, 
                                        const CVTimeStamp *inOutputTime, 
@@ -566,6 +645,7 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
     mFramesRendered = 0;
     CVDisplayLinkStart(mDisplayLink);
 }
+#endif
 
 - (void) gameThread
 {
@@ -602,6 +682,8 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
 
 #pragma mark -
 #pragma mark "full screen"
+
+#if 0
 
 - (NSOpenGLContext *) fullScreenContext;
 {
@@ -838,18 +920,16 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
 	}
 }
 
+#endif
+
 
 #pragma mark -
 #pragma mark "frame drawing"
 
 - (void) drawFrame;
 {
-    [mDisplayLock lock];
-    if (!mOpenGLInitialized)
-    {
-        if (![self setupOpenGL])
-            return;
-    }
+    // [mDisplayLock lock];
+    [self resize];
     
     NSOpenGLContext * currentContext = [self currentOpenGLContext];
     
@@ -900,17 +980,20 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
     glClear(GL_COLOR_BUFFER_BIT);
     
     CVOpenGLTextureRef frame = [mRenderer currentFrameTexture];
-    if (NO) //  (mCoreImageAccelerated)
+    if (frame != NULL)
+    {
+    if (NO) // (mCoreImageAccelerated)
         [self drawFrameUsingCoreImage: frame];
     else
         [self drawFrameUsingOpenGL: frame];
+    }
     
-    glFlush();
+    // glFlush();
     
     mFramesDisplayed++;
     mFrameEndTime = [mTimingController osd_cycles];
     
-    [mDisplayLock unlock];
+    // [mDisplayLock unlock];
 }
 
 - (void) drawFrameUsingCoreImage: (CVOpenGLTextureRef) frame;
@@ -937,8 +1020,14 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
     CGRect imageRect = [imageToDraw extent];
     
     NSRect bounds;
-        bounds = [self bounds];
+    bounds = [self currentBounds];
+#if 0
     NSRect nsDest = centerNSSizeWithinRect(mRenderSize, bounds);
+#else
+    NSRect nsDest = bounds;
+    nsDest.size = mRenderSize;
+#endif
+
     CGRect destRect = CGRectMake(nsDest.origin.x, nsDest.origin.y,
                                  nsDest.size.width, nsDest.size.height);
     [ciContext drawImage: imageToDraw
@@ -946,8 +1035,18 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
                 fromRect: imageRect];
 }
 
+#if 0
+- (void) enterFullScreen
+{
+    mLastTextureTarget = 0;
+    [super enterFullScreen];
+}
+#endif
+
 - (void) drawFrameUsingOpenGL: (CVOpenGLTextureRef) frame;
 {
+#if 1
+
     GLfloat vertices[4][2];
     GLfloat texCoords[4][2];
     
@@ -960,6 +1059,7 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
     // Specify video rectangle vertices counter-clockwise from the
     // origin (lower left) after centering
     NSRect bounds;
+#if 0
     if (!mFullScreen)
     {
         bounds = centerNSSizeWithinRect(mRenderSize, [self bounds]);
@@ -981,6 +1081,14 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
     }
+#else
+    bounds = [self currentBounds];
+#if 0
+    NSRect bounds = centerNSSizeWithinRect(mRenderSize, bounds);
+#else
+    bounds.size = mRenderSize;
+#endif
+#endif
 
     vertices[0][0] = bounds.origin.x;
     vertices[0][1] = bounds.origin.y;
@@ -992,21 +1100,28 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
     vertices[3][1] = NSMaxY(bounds);
     
     GLenum textureTarget = CVOpenGLTextureGetTarget(frame);
-    
+    // textureTarget = GL_TEXTURE_RECTANGLE_ARB;
+
+#if 0
     // Make sure the correct texture target is enabled
+    NSLog(@"frame: 0x%p, textureTarget 0x%04x, mLastTextureTarget: 0x%04x", frame,
+          textureTarget, mLastTextureTarget);
     if (textureTarget != mLastTextureTarget)
     {
         glDisable(mLastTextureTarget);
         mLastTextureTarget = textureTarget;
         glEnable(mLastTextureTarget);
     }
+#else
+    glEnable(textureTarget);
+#endif
     
     glTexParameteri(textureTarget, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(textureTarget, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
     // Get the current texture's coordinates, bind the texture, and draw our rectangle
     CVOpenGLTextureGetCleanTexCoords(frame, texCoords[0], texCoords[1], texCoords[2], texCoords[3]);
-    if (mFullScreen)
+    if (NO)
     {
         NSLog(@"texCoords (%f, %f), (%f, %f), (%f, %f), (%f, %f)",
               texCoords[0][0], texCoords[0][1],
@@ -1015,8 +1130,20 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
               texCoords[3][0], texCoords[3][1]);
               
     }
-    glBindTexture(mLastTextureTarget, CVOpenGLTextureGetName(frame));
+    glBindTexture(textureTarget, CVOpenGLTextureGetName(frame));
     glDrawArrays(GL_QUADS, 0, 4);
+    glDisable(textureTarget);
+#else
+    float z = 0.0f;
+    NSRect rect = NSMakeRect(0, 0, 100, 100);
+    glColor3f(0.0f, 0.0f, 1.0f);
+    glBegin(GL_POLYGON);
+    glVertex3f(rect.origin.x,       rect.origin.y,      z);
+    glVertex3f(NSMaxX(rect),        rect.origin.y,      z);
+    glVertex3f(NSMaxX(rect),        NSMaxY(rect),       z);
+    glVertex3f(rect.origin.x,       NSMaxY(rect),       z);
+    glEnd();
+#endif
 }
 
 - (void) updateVideo;

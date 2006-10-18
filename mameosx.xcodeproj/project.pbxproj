@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5501E89D0AB2764700756C9B /* CircularBufferTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5501E89C0AB2764700756C9B /* CircularBufferTest.m */; };
 		5501E9020AB27D3F00756C9B /* CircularBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5501E8440AB232B900756C9B /* CircularBuffer.m */; };
+		5511DE600AE5D34600D416BF /* DDCustomOpenGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5511DE5F0AE5D34600D416BF /* DDCustomOpenGLView.m */; };
 		551A613A0AC24B2000AECE1E /* ui.bdf in Resources */ = {isa = PBXBuildFile; fileRef = 551A61390AC24B2000AECE1E /* ui.bdf */; };
 		552F01110AC812A200A14DFA /* MameOpenGLRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 552F01100AC812A200A14DFA /* MameOpenGLRenderer.m */; };
 		5530FE030ACA42270083BB04 /* debugcmd.c in Sources */ = {isa = PBXBuildFile; fileRef = 5530FDF20ACA42270083BB04 /* debugcmd.c */; };
@@ -342,6 +343,8 @@
 		5501E89B0AB2764700756C9B /* CircularBufferTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircularBufferTest.h; sourceTree = "<group>"; };
 		5501E89C0AB2764700756C9B /* CircularBufferTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircularBufferTest.m; sourceTree = "<group>"; };
 		5503D7F30AB7B63E003F407E /* MameTextureConverter.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = MameTextureConverter.h; sourceTree = "<group>"; };
+		5511DE5E0AE5D34600D416BF /* DDCustomOpenGLView.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DDCustomOpenGLView.h; sourceTree = "<group>"; };
+		5511DE5F0AE5D34600D416BF /* DDCustomOpenGLView.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DDCustomOpenGLView.m; sourceTree = "<group>"; };
 		551A61390AC24B2000AECE1E /* ui.bdf */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = ui.bdf; sourceTree = "<group>"; };
 		552F010F0AC812A200A14DFA /* MameOpenGLRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MameOpenGLRenderer.h; sourceTree = "<group>"; };
 		552F01100AC812A200A14DFA /* MameOpenGLRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MameOpenGLRenderer.m; sourceTree = "<group>"; };
@@ -2403,6 +2406,8 @@
 		556A4C5A0AA50E7200602CC5 /* osx */ = {
 			isa = PBXGroup;
 			children = (
+				5511DE5E0AE5D34600D416BF /* DDCustomOpenGLView.h */,
+				5511DE5F0AE5D34600D416BF /* DDCustomOpenGLView.m */,
 				556A4CED0AA5117200602CC5 /* MameController.h */,
 				556A4CEE0AA5117200602CC5 /* MameController.mm */,
 				556A51150AA54C4600602CC5 /* MameView.h */,
@@ -3302,6 +3307,7 @@
 				5561FF240AC62C4700BE1BF5 /* MameRenderer.m in Sources */,
 				552F01110AC812A200A14DFA /* MameOpenGLRenderer.m in Sources */,
 				556149600ACCD64F008951F8 /* ThreadSafeQueue.m in Sources */,
+				5511DE600AE5D34600D416BF /* DDCustomOpenGLView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
