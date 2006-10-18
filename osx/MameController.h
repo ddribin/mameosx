@@ -57,6 +57,9 @@ extern "C" {
 - (BOOL) syncToRefresh;
 - (void) setSyncToRefresh: (BOOL) flag;
 
+- (BOOL) fullScreen;
+- (void) setFullScreen: (BOOL) fullScreen;
+
 - (IBAction) filterChanged: (id) sender;
 - (IBAction) togglePause: (id) sender;
 - (IBAction) nullAction: (id) sender;

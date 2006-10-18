@@ -209,6 +209,18 @@ void leaks_sleeper()
     [mMameView setSyncToRefresh: flag];
 }
 
+//=========================================================== 
+//  fullScreen 
+//=========================================================== 
+- (BOOL) fullScreen
+{
+    return [mMameView fullScreen];
+}
+
+- (void) setFullScreen: (BOOL) fullScreen;
+{
+    [mMameView setFullScreen: fullScreen];
+}
 
 @end
 

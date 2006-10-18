@@ -36,7 +36,7 @@ static void cv_assert(CVReturn cr, NSString * message)
     
     //Create the OpenGL context used to render the composition (a separate OpenGL context from the destination one is needed to render into CoreVideo OpenGL buffers)
     NSOpenGLPixelFormat * glPixelFormat = mameViewFormat;
-    mGlContext = [[NSOpenGLContext alloc] initWithFormat:glPixelFormat shareContext:nil];
+    mGlContext = [[NSOpenGLContext alloc] initWithFormat:glPixelFormat shareContext:mameViewContext];
     [mGlContext makeCurrentContext];
     
     glShadeModel(GL_SMOOTH);
@@ -74,6 +74,11 @@ static void cv_assert(CVReturn cr, NSString * message)
     
     mOpenGLRenderer = [[MameOpenGLRenderer alloc] init];
     [mOpenGLRenderer osd_init: mGlContext format: glPixelFormat];
+}
+
+- (void) setOpenGLContext: (NSOpenGLContext *) context
+              pixelFormat: (NSOpenGLPixelFormat *) pixelFormat;
+{
 }
 
 - (void) renderFrame: (const render_primitive_list *) primitives

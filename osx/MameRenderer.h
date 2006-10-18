@@ -35,4 +35,7 @@
 - (void) renderFrame: (const render_primitive_list *) primitives
             withSize: (NSSize) size;
 
+- (void) setOpenGLContext: (NSOpenGLContext *) context
+              pixelFormat: (NSOpenGLPixelFormat *) pixelFormat;
+
 @end

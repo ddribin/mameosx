@@ -37,6 +37,15 @@
     BOOL mCoreImageAccelerated;
     GLenum mLastTextureTarget;
     NSSize mRenderSize;
+    
+    BOOL mOpenGLInitialized;
+    NSOpenGLContext * mWindowedContext;
+    NSOpenGLPixelFormat * mWindowedPixelFormat;
+    
+    NSOpenGLContext * mFullScreenContext;
+    NSOpenGLPixelFormat * mFullScreenPixelFormat;
+	NSRect mFullScreenRect;
+	float mFullScreenMouseOffset;
 
     NSRecursiveLock * mDisplayLock;
     CVDisplayLinkRef mDisplayLink;
@@ -64,6 +73,7 @@
 
     BOOL mSyncToRefresh;
     BOOL mThrottled;
+    BOOL mFullScreen;
 }
 
 - (NSString *) game;
@@ -92,6 +102,9 @@
 
 - (BOOL) audioEnabled;
 - (void) setAudioEnabled: (BOOL) flag;
+
+- (BOOL) fullScreen;
+- (void) setFullScreen: (BOOL) flag;
 
 - (CIFilter *) filter;
 - (void) setFilter: (CIFilter *) aFilter;
