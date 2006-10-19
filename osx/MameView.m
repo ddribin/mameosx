@@ -278,7 +278,7 @@ NSString * MameViewNaturalSizeDidChange = @"NaturalSizeDidChange";
 
 - (void) resize
 {
-    NSRect bounds = [self currentBounds];
+    NSRect bounds = [self activeBounds];
     
     
 	{
@@ -530,7 +530,7 @@ NSString * MameViewNaturalSizeDidChange = @"NaturalSizeDidChange";
 {
     [self resize];
     
-    NSOpenGLContext * currentContext = [self currentOpenGLContext];
+    NSOpenGLContext * currentContext = [self activeOpenGLContext];
     
     if (mRenderInCoreVideoThread)
     {
@@ -579,7 +579,7 @@ NSString * MameViewNaturalSizeDidChange = @"NaturalSizeDidChange";
     if (frame == NULL)
         return;
     
-    NSRect currentBounds = [self currentBounds];
+    NSRect currentBounds = [self activeBounds];
     NSRect destRect;
     if ([self fullScreen])
     {
@@ -676,12 +676,12 @@ NSString * MameViewNaturalSizeDidChange = @"NaturalSizeDidChange";
     if ([self fullScreen])
     {
         renderSize = [self centerNSSize: mFullScreenSize
-                             withinRect: [self currentBounds]].size;
+                             withinRect: [self activeBounds]].size;
     }
     else
     {
         renderSize = [self stretchNSSize: mNaturalSize
-                              withinRect: [self currentBounds]].size;
+                              withinRect: [self activeBounds]].size;
     }
 
     if (mRenderInCoreVideoThread)

@@ -21,7 +21,7 @@
 - (void) flushBuffer: (NSOpenGLContext *) context;
 
 #pragma mark -
-#pragma mark "full screen"
+#pragma mark Full Screen
 
 - (void) enterFullScreen;
 - (void) exitFullScreen;
@@ -111,7 +111,7 @@
 - (void) drawRect: (NSRect)rect
 {
     [self lockOpenGLLock];
-    NSOpenGLContext * currentContext = [self currentOpenGLContext];
+    NSOpenGLContext * currentContext = [self activeOpenGLContext];
     {
         [currentContext makeCurrentContext];
         [self drawFrame];
@@ -183,7 +183,10 @@
     // for overriding to initialize OpenGL state, occurs after context creation
 }
 
-- (NSOpenGLContext *) currentOpenGLContext;
+#pragma mark -
+#pragma mark Active OpenGL Properties
+
+- (NSOpenGLContext *) activeOpenGLContext;
 {
     if (mFullScreen)
         return [self fullScreenOpenGLContext];
@@ -191,7 +194,7 @@
         return [self openGLContext];
 }
 
-- (NSOpenGLPixelFormat *) currentPixelFormat;
+- (NSOpenGLPixelFormat *) activePixelFormat;
 {
     if (mFullScreen)
         return [self fullScreenPixelFormat];
@@ -199,7 +202,7 @@
         return [self pixelFormat];
 }
 
-- (NSRect) currentBounds;
+- (NSRect) activeBounds;
 {
     if (mFullScreen)
         return mFullScreenRect;
@@ -220,7 +223,7 @@
     [self lockOpenGLLock];
     {
         // get context. will create if we don't have one yet
-        NSOpenGLContext* context = [self currentOpenGLContext];
+        NSOpenGLContext* context = [self activeOpenGLContext];
         
         // when we are about to draw, make sure we are linked to the view
         if ([context view] != self)
@@ -238,16 +241,16 @@
 
 - (void) update
 {
+    [self lockOpenGLLock];
     {
-        NSOpenGLContext * context = [self currentOpenGLContext];
+        NSOpenGLContext * context = [self activeOpenGLContext];
         
         if ([context view] == self)
         {
-            [self lockOpenGLLock];
             [context update];
-            [self unlockOpenGLLock];
         }
     }
+    [self unlockOpenGLLock];
 }
 
 - (void) lockOpenGLLock;
@@ -265,7 +268,7 @@
 }
 
 #pragma mark -
-#pragma mark "Animation"
+#pragma mark Animation
 
 - (void) startAnimation;
 {
@@ -312,7 +315,7 @@
 }
 
 #pragma mark -
-#pragma mark "Full screen"
+#pragma mark Full Screen
 
 //=========================================================== 
 //  fullScreenOpenGLContext 
@@ -427,6 +430,8 @@
 
 @end
 
+#pragma mark -
+
 @implementation DDCustomOpenGLView (Private)
 
 CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink, 
@@ -479,13 +484,13 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
 
 - (void) drawFrameInternal;
 {
-    NSOpenGLContext * currentContext = [self currentOpenGLContext];
+    NSOpenGLContext * currentContext = [self activeOpenGLContext];
     
     [self lockOpenGLLock];
     {
         [currentContext makeCurrentContext];
         [self drawFrame];
-        [self flushBuffer: [self currentOpenGLContext]];
+        [self flushBuffer: [self activeOpenGLContext]];
     }
     [self unlockOpenGLLock];
 }
@@ -514,7 +519,7 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
 }
 
 #pragma mark -
-#pragma mark "full screen"
+#pragma mark Full Screen
 
 - (void) enterFullScreen;
 {
@@ -558,11 +563,12 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
         mFullScreenMouseOffset = oldHeight - mFullScreenRect.size.height + 1;
         
         // activate the fullscreen context and clear it
-        [mFullScreenOpenGLContext makeCurrentContext];
         mDoubleBuffered = [self isDoubleBuffered: mFullScreenPixelFormat];
-        [mFullScreenOpenGLContext setFullScreen];
+
+        [mFullScreenOpenGLContext makeCurrentContext];
         glClear(GL_COLOR_BUFFER_BIT);
         [self flushBuffer: mFullScreenOpenGLContext];
+        [mFullScreenOpenGLContext setFullScreen];
         
         [self update];
         
@@ -603,8 +609,10 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
         
         // activate the window context and clear it
         NSOpenGLContext * windowContext = [self openGLContext];
-        [windowContext makeCurrentContext];
         mDoubleBuffered = [self isDoubleBuffered: mPixelFormat];
+        [windowContext setView: self];
+        
+        [windowContext makeCurrentContext];
         glClear(GL_COLOR_BUFFER_BIT);
         [self flushBuffer: windowContext];
         

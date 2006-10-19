@@ -43,18 +43,20 @@
 
 - (void) prepareOpenGL: (NSOpenGLContext *) context;
 
-
-- (NSOpenGLContext *) currentOpenGLContext;
-- (NSOpenGLPixelFormat *) currentPixelFormat;
-- (NSRect) currentBounds;
-
 - (void) update;
 
 - (void) lockOpenGLLock;
 - (void) unlockOpenGLLock;
 
 #pragma mark -
-#pragma mark "Animation"
+#pragma mark Active OpenGL Properties
+
+- (NSOpenGLContext *) activeOpenGLContext;
+- (NSOpenGLPixelFormat *) activePixelFormat;
+- (NSRect) activeBounds;
+
+#pragma mark -
+#pragma mark Animation
 
 - (void) startAnimation;
 - (void) stopAnimation;
@@ -64,7 +66,7 @@
 - (void) drawFrame;
 
 #pragma mark -
-#pragma mark "Full screen"
+#pragma mark Full Screen
 
 - (NSOpenGLContext *) fullScreenOpenGLContext;
 - (void) setFullScreenOpenGLContext: (NSOpenGLContext *) aFullScreenOpenGLContext;
