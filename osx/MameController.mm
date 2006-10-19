@@ -106,6 +106,12 @@ void leaks_sleeper()
     return reply;
 }
 
+- (void) applicationWillTerminate: (NSNotification *) notification;
+{
+    [[mMameView window] orderOut: nil];
+    [mMameView setFullScreen: false];
+}
+
 - (MameConfiguration *) configuration;
 {
     return mConfiguration;
