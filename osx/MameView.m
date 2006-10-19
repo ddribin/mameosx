@@ -14,8 +14,6 @@
 #import "MameFileManager.h"
 #import "MameConfiguration.h"
 
-static NSRect centerNSSizeWithinRect(NSSize size, NSRect rect);
-
 @interface MameView (Private)
 
 - (void) detectAcceleratedCoreImage;
@@ -27,9 +25,14 @@ static NSRect centerNSSizeWithinRect(NSSize size, NSRect rect);
 #pragma mark "Frame Drawing"
 
 - (void) drawFrame;
-- (void) drawFrameUsingCoreImage: (CVOpenGLTextureRef) frame;
-- (void) drawFrameUsingOpenGL: (CVOpenGLTextureRef) frame;
+- (void) drawFrameUsingCoreImage: (CVOpenGLTextureRef) frame
+                          inRect: (NSRect) destRect;
+- (void) drawFrameUsingOpenGL: (CVOpenGLTextureRef) frame
+                       inRect: (NSRect) destRect;
 - (void) updateVideo;
+
+- (NSRect) stretchNSSize: (NSSize) size withinRect: (NSRect) rect;
+- (NSRect) centerNSSize: (NSSize) size withinRect: (NSRect) rect;
 
 @end
 
@@ -436,26 +439,6 @@ NSString * MameViewNaturalSizeDidChange = @"NaturalSizeDidChange";
 
 @end
 
-static NSRect centerNSSizeWithinRect(NSSize size, NSRect rect)
-{
-    float delta;
-    if( NSHeight(rect) / NSWidth(rect) > size.height / size.width )
-    {
-        // rect is taller: fit width
-        delta = rect.size.height - size.height * NSWidth(rect) / size.width;
-        rect.size.height -= delta;
-        rect.origin.y += delta/2;
-    }
-    else
-    {
-        // rect is wider: fit height
-        delta = rect.size.width - size.width * NSHeight(rect) / size.height;
-        rect.size.width -= delta;
-        rect.origin.x += delta/2;
-    }
-    return rect;
-}
-
 @implementation MameView (Private)
 
 - (void) detectAcceleratedCoreImage;
@@ -503,7 +486,35 @@ static NSRect centerNSSizeWithinRect(NSSize size, NSRect rect)
 }
 
 #pragma mark -
-#pragma mark "frame drawing"
+#pragma mark "Frame Drawing"
+
+- (NSRect) stretchNSSize: (NSSize) size withinRect: (NSRect) rect;
+{
+    float delta;
+    if( NSHeight(rect) / NSWidth(rect) > size.height / size.width )
+    {
+        // rect is taller: fit width
+        delta = rect.size.height - size.height * NSWidth(rect) / size.width;
+        rect.size.height -= delta;
+        rect.origin.y += delta/2;
+    }
+    else
+    {
+        // rect is wider: fit height
+        delta = rect.size.width - size.width * NSHeight(rect) / size.height;
+        rect.size.width -= delta;
+        rect.origin.x += delta/2;
+    }
+    return rect;
+}
+
+- (NSRect) centerNSSize: (NSSize) size withinRect: (NSRect) rect;
+{
+    rect.origin.x = (rect.size.width - size.width) / 2;
+    rect.origin.y = (rect.size.height - size.height) / 2;
+    rect.size = size;
+    return rect;
+}
 
 - (void) drawFrame;
 {
@@ -557,19 +568,27 @@ static NSRect centerNSSizeWithinRect(NSSize size, NSRect rect)
     glClear(GL_COLOR_BUFFER_BIT);
     
     CVOpenGLTextureRef frame = [mRenderer currentFrameTexture];
-    if (frame != NULL)
-    {
-    if (YES) // (mCoreImageAccelerated)
-        [self drawFrameUsingCoreImage: frame];
+    if (frame == NULL)
+        return;
+    
+    NSRect currentBounds = [self currentBounds];
+    NSRect destRect;
+    if ([self fullScreen])
+        destRect = [self centerNSSize: mRenderSize withinRect: currentBounds];
     else
-        [self drawFrameUsingOpenGL: frame];
-    }
+        destRect = [self stretchNSSize: mRenderSize withinRect: currentBounds];
+
+    if (YES) // (mCoreImageAccelerated)
+        [self drawFrameUsingCoreImage: frame inRect: destRect];
+    else
+        [self drawFrameUsingOpenGL: frame inRect: destRect];
     
     mFramesDisplayed++;
     mFrameEndTime = [mTimingController osd_cycles];
 }
 
-- (void) drawFrameUsingCoreImage: (CVOpenGLTextureRef) frame;
+- (void) drawFrameUsingCoreImage: (CVOpenGLTextureRef) frame
+                          inRect: (NSRect) destRect;
 {
     CIImage * inputImage = [CIImage imageWithCVImageBuffer: frame];
     CIContext * ciContext = [self ciContext];
@@ -592,23 +611,13 @@ static NSRect centerNSSizeWithinRect(NSSize size, NSRect rect)
     }
     CGRect imageRect = [imageToDraw extent];
     
-    NSRect bounds;
-    bounds = [self currentBounds];
-#if 1
-    NSRect nsDest = centerNSSizeWithinRect(mRenderSize, bounds);
-#else
-    NSRect nsDest = bounds;
-    // nsDest.size = mRenderSize;
-#endif
-
-    CGRect destRect = CGRectMake(nsDest.origin.x, nsDest.origin.y,
-                                 nsDest.size.width, nsDest.size.height);
     [ciContext drawImage: imageToDraw
-                  inRect: *(CGRect *) &nsDest
+                  inRect: *(CGRect *) &destRect
                 fromRect: imageRect];
 }
 
-- (void) drawFrameUsingOpenGL: (CVOpenGLTextureRef) frame;
+- (void) drawFrameUsingOpenGL: (CVOpenGLTextureRef) frame
+                       inRect: (NSRect) destRect;
 {
 #if 1
 
@@ -623,46 +632,15 @@ static NSRect centerNSSizeWithinRect(NSSize size, NSRect rect)
     
     // Specify video rectangle vertices counter-clockwise from the
     // origin (lower left) after centering
-    NSRect bounds;
-#if 0
-    if (!mFullScreen)
-    {
-        bounds = centerNSSizeWithinRect(mRenderSize, [self bounds]);
-    }
-    else
-    {
-        bounds = mFullScreenRect;
-        float x = bounds.origin.x;
-        float y = bounds.origin.y;
-        float w = bounds.size.width;
-        float h = bounds.size.height;
 
-        glViewport(x, y, w, h);
-        
-        glMatrixMode(GL_PROJECTION);
-        glLoadIdentity();
-        glOrtho(0, w, 0, h, 0, 1);
-        
-        glMatrixMode(GL_MODELVIEW);
-        glLoadIdentity();
-    }
-#else
-    bounds = [self currentBounds];
-#if 1
-    bounds = centerNSSizeWithinRect(mRenderSize, bounds);
-#else
-    bounds.size = mRenderSize;
-#endif
-#endif
-
-    vertices[0][0] = bounds.origin.x;
-    vertices[0][1] = bounds.origin.y;
-    vertices[1][0] = NSMaxX(bounds);
-    vertices[1][1] = bounds.origin.y;
-    vertices[2][0] = NSMaxX(bounds);
-    vertices[2][1] = NSMaxY(bounds);
-    vertices[3][0] = bounds.origin.x;
-    vertices[3][1] = NSMaxY(bounds);
+    vertices[0][0] = destRect.origin.x;
+    vertices[0][1] = destRect.origin.y;
+    vertices[1][0] = NSMaxX(destRect);
+    vertices[1][1] = destRect.origin.y;
+    vertices[2][0] = NSMaxX(destRect);
+    vertices[2][1] = NSMaxY(destRect);
+    vertices[3][0] = destRect.origin.x;
+    vertices[3][1] = NSMaxY(destRect);
     
     GLenum textureTarget = CVOpenGLTextureGetTarget(frame);
     // textureTarget = GL_TEXTURE_RECTANGLE_ARB;
@@ -713,7 +691,8 @@ static NSRect centerNSSizeWithinRect(NSSize size, NSRect rect)
 
 - (void) updateVideo;
 {
-    NSSize renderSize = centerNSSizeWithinRect(mNaturalSize, [self bounds]).size;
+    NSSize renderSize = [self stretchNSSize: mNaturalSize
+                                 withinRect: [self currentBounds]].size;
     
     if (mRenderInCoreVideoThread)
     {

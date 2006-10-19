@@ -2406,8 +2406,6 @@
 		556A4C5A0AA50E7200602CC5 /* osx */ = {
 			isa = PBXGroup;
 			children = (
-				5511DE5E0AE5D34600D416BF /* DDCustomOpenGLView.h */,
-				5511DE5F0AE5D34600D416BF /* DDCustomOpenGLView.m */,
 				556A4CED0AA5117200602CC5 /* MameController.h */,
 				556A4CEE0AA5117200602CC5 /* MameController.mm */,
 				556A51150AA54C4600602CC5 /* MameView.h */,
@@ -2421,6 +2419,8 @@
 				554339DE0AC4D79800F10925 /* MameOpenGLTexture.h */,
 				554339DF0AC4D79800F10925 /* MameOpenGLTexture.mm */,
 				5503D7F30AB7B63E003F407E /* MameTextureConverter.h */,
+				5511DE5E0AE5D34600D416BF /* DDCustomOpenGLView.h */,
+				5511DE5F0AE5D34600D416BF /* DDCustomOpenGLView.m */,
 				55CDE6E20AAC60CB0021CEA0 /* MameInputController.h */,
 				55CDE6E30AAC60CB0021CEA0 /* MameInputController.m */,
 				55FE25E60AAD2F6100C4054A /* MameAudioController.h */,
