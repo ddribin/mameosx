@@ -64,10 +64,12 @@ NSString * MameViewNaturalSizeDidChange = @"NaturalSizeDidChange";
     // pixel format attributes for the full screen NSOpenGLContext
     NSOpenGLPixelFormatAttribute fullScreenAttributes[] =
     {
-        // specifying "NoRecovery" gives us a context that cannot fall back to the software renderer
-        // this makes the view-based context a compatible with the fullscreen context,
-        // enabling us to use the "shareContext" feature to share textures, display lists, and other OpenGL objects between the two
-        NSOpenGLPFANoRecovery,
+        // specify that we want a fullscreen OpenGL context
+        NSOpenGLPFAFullScreen,
+        // we may be on a multi-display system (and each screen may be driven
+        // by a different renderer), so we need to specify which screen we want
+        // to take over. 
+        // in this case, we'll specify the main screen.
         NSOpenGLPFAScreenMask, CGDisplayIDToOpenGLDisplayMask(kCGDirectMainDisplay),
         // attributes common to fullscreen and window modes
         NSOpenGLPFADoubleBuffer,
