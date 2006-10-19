@@ -37,7 +37,6 @@
     const render_primitive_list * mPrimitives;
     MameRenderer * mRenderer;
     BOOL mCoreImageAccelerated;
-    GLenum mLastTextureTarget;
     NSSize mRenderSize;
     
     BOOL mRenderInCoreVideoThread;

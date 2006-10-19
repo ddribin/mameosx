@@ -619,8 +619,6 @@ NSString * MameViewNaturalSizeDidChange = @"NaturalSizeDidChange";
 - (void) drawFrameUsingOpenGL: (CVOpenGLTextureRef) frame
                        inRect: (NSRect) destRect;
 {
-#if 1
-
     GLfloat vertices[4][2];
     GLfloat texCoords[4][2];
     
@@ -645,48 +643,15 @@ NSString * MameViewNaturalSizeDidChange = @"NaturalSizeDidChange";
     GLenum textureTarget = CVOpenGLTextureGetTarget(frame);
     // textureTarget = GL_TEXTURE_RECTANGLE_ARB;
 
-#if 0
-    // Make sure the correct texture target is enabled
-    NSLog(@"frame: 0x%p, textureTarget 0x%04x, mLastTextureTarget: 0x%04x", frame,
-          textureTarget, mLastTextureTarget);
-    if (textureTarget != mLastTextureTarget)
-    {
-        glDisable(mLastTextureTarget);
-        mLastTextureTarget = textureTarget;
-        glEnable(mLastTextureTarget);
-    }
-#else
     glEnable(textureTarget);
-#endif
-    
     glTexParameteri(textureTarget, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(textureTarget, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
     // Get the current texture's coordinates, bind the texture, and draw our rectangle
     CVOpenGLTextureGetCleanTexCoords(frame, texCoords[0], texCoords[1], texCoords[2], texCoords[3]);
-    if (NO)
-    {
-        NSLog(@"texCoords (%f, %f), (%f, %f), (%f, %f), (%f, %f)",
-              texCoords[0][0], texCoords[0][1],
-              texCoords[1][0], texCoords[1][1],
-              texCoords[2][0], texCoords[2][1],
-              texCoords[3][0], texCoords[3][1]);
-              
-    }
     glBindTexture(textureTarget, CVOpenGLTextureGetName(frame));
     glDrawArrays(GL_QUADS, 0, 4);
     glDisable(textureTarget);
-#else
-    float z = 0.0f;
-    NSRect rect = NSMakeRect(0, 0, 100, 100);
-    glColor3f(0.0f, 0.0f, 1.0f);
-    glBegin(GL_POLYGON);
-    glVertex3f(rect.origin.x,       rect.origin.y,      z);
-    glVertex3f(NSMaxX(rect),        rect.origin.y,      z);
-    glVertex3f(NSMaxX(rect),        NSMaxY(rect),       z);
-    glVertex3f(rect.origin.x,       NSMaxY(rect),       z);
-    glEnd();
-#endif
 }
 
 - (void) updateVideo;
