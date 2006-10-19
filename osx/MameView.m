@@ -158,7 +158,7 @@ NSString * MameViewNaturalSizeDidChange = @"NaturalSizeDidChange";
 
 - (CIContext *) ciContext;
 {
-    if (mFullScreen)
+    if ([self fullScreen])
         return mFullScreenCiContext;
     else
         return mCiContext;
@@ -574,7 +574,15 @@ NSString * MameViewNaturalSizeDidChange = @"NaturalSizeDidChange";
     NSRect currentBounds = [self currentBounds];
     NSRect destRect;
     if ([self fullScreen])
+    {
         destRect = [self centerNSSize: mRenderSize withinRect: currentBounds];
+#if 0
+        NSLog(@"currentBounds: %@, renderSize: %@, destRect: %@",
+              NSStringFromRect(currentBounds),
+              NSStringFromSize(mRenderSize),
+              NSStringFromRect(destRect));
+#endif
+    }
     else
         destRect = [self stretchNSSize: mRenderSize withinRect: currentBounds];
 
@@ -656,9 +664,20 @@ NSString * MameViewNaturalSizeDidChange = @"NaturalSizeDidChange";
 
 - (void) updateVideo;
 {
-    NSSize renderSize = [self stretchNSSize: mNaturalSize
-                                 withinRect: [self currentBounds]].size;
-    
+    NSSize renderSize;
+    if ([self fullScreen])
+    {
+        NSSize fullScreenSize = NSMakeSize([self fullScreenWidth],
+                                           [self fullScreenHeight]);
+        renderSize = [self centerNSSize: fullScreenSize
+                             withinRect: [self currentBounds]].size;
+    }
+    else
+    {
+        renderSize = [self stretchNSSize: mNaturalSize
+                              withinRect: [self currentBounds]].size;
+    }
+
     if (mRenderInCoreVideoThread)
     {
         render_target_set_bounds(mTarget, renderSize.width, renderSize.height, 0.0);

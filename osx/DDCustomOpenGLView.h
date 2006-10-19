@@ -73,6 +73,8 @@
 - (void) setFullScreenPixelFormat: (NSOpenGLPixelFormat *) aFullScreenPixelFormat;
 
 - (void) setFullScreenWidth: (int) width height: (int) height;
+- (int) fullScreenWidth;
+- (int) fullScreenHeight;
 
 - (BOOL) fullScreen;
 - (void) setFullScreen: (BOOL) flag;

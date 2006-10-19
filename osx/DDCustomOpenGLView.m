@@ -374,6 +374,16 @@
     mFullScreenHeight = height;
 }
 
+- (int) fullScreenWidth;
+{
+    return mFullScreenWidth;
+}
+
+- (int) fullScreenHeight;
+{
+    return mFullScreenHeight;
+}
+
 //=========================================================== 
 //  fullScreen 
 //=========================================================== 
