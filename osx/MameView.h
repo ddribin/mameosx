@@ -93,11 +93,6 @@
 - (BOOL) audioEnabled;
 - (void) setAudioEnabled: (BOOL) flag;
 
-#if 0
-- (BOOL) fullScreen;
-- (void) setFullScreen: (BOOL) flag;
-#endif
-
 - (CIFilter *) filter;
 - (void) setFilter: (CIFilter *) aFilter;
 
