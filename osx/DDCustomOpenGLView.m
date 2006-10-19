@@ -15,8 +15,8 @@
 - (void) initDisplayLink;
 - (void) emptyThreadEntry;
 - (void) surfaceNeedsUpdate: (NSNotification *) notification;
-- (void) drawFrameInternal;
-- (void) animationTimer;
+- (void) drawFrameAndFlush;
+- (void) animationTimerFired;
 - (BOOL) isDoubleBuffered: (NSOpenGLPixelFormat *) pixelFormat;
 - (void) flushBuffer: (NSOpenGLContext *) context;
 
@@ -37,7 +37,7 @@
 
 @implementation DDCustomOpenGLView
 
-+ (NSOpenGLPixelFormat*)defaultPixelFormat
++ (NSOpenGLPixelFormat *) defaultPixelFormat
 {
     NSOpenGLPixelFormatAttribute attribs[] = {0};
     return [[(NSOpenGLPixelFormat *)[NSOpenGLPixelFormat alloc] initWithAttributes:attribs] autorelease];
@@ -55,10 +55,7 @@
     self = [super initWithFrame: frame];
     if (self == nil)
         return nil;
-    
-    // Initialization code here.
-    NSLog(@"initWithFrame: %@, %@", NSStringFromRect(frame), pixelFormat);
-    
+        
     mOpenGLContext = nil;
     mPixelFormat = [pixelFormat retain];
     
@@ -67,6 +64,9 @@
     mFullScreenOpenGLContext = nil;
     mFullScreenPixelFormat = nil;
     mFullScreen = NO;
+    mFullScreenWidth = 800;
+    mFullScreenHeight = 600;
+    mFullScreenRefreshRate = 60;
     
     mOpenGLLock = [[NSRecursiveLock alloc] init];
     
@@ -278,7 +278,7 @@
     mAnimationTimer =
         [NSTimer scheduledTimerWithTimeInterval: 1.0f/60.0f
                                          target: self
-                                       selector: @selector(animationTimer)
+                                       selector: @selector(animationTimerFired)
                                        userInfo: nil
                                         repeats: YES];
     [mAnimationTimer retain];
@@ -387,6 +387,17 @@
     return mFullScreenHeight;
 }
 
+- (void) setFullScreenRefreshRate: (int) fullScreenRefreshRate;
+{
+    mFullScreenRefreshRate = fullScreenRefreshRate;
+}
+
+- (int) fullScreenRefreshRate;
+{
+    return mFullScreenRefreshRate;
+}
+
+
 //=========================================================== 
 //  fullScreen 
 //=========================================================== 
@@ -443,23 +454,21 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
 {
     NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
     DDCustomOpenGLView * view = (DDCustomOpenGLView *) displayLinkContext;
-    [view updateAnimation];
-    [view drawFrameInternal];
+    [view animationTimerFired];
     [pool release];
     return kCVReturnSuccess;
 }
 
 - (void) initDisplayLink;
 {
-    // Detaching a thread forces [NSThread isMultiThreaded]
-    // return YES. See:
+    // Detaching a thread forces [NSThread isMultiThreaded] to return YES.
     // http://developer.apple.com/documentation/Cocoa/Conceptual/Multithreading/articles/CocoaDetaching.html
     [NSThread detachNewThreadSelector: @selector(emptyThreadEntry)
                              toTarget: self
                            withObject: nil];
     
-    CVReturn            error = kCVReturnSuccess;
-    CGDirectDisplayID   displayID = CGMainDisplayID();
+    CVReturn error = kCVReturnSuccess;
+    CGDirectDisplayID displayID = CGMainDisplayID();
     
     error = CVDisplayLinkCreateWithCGDisplay(displayID, &mDisplayLink);
     if(error)
@@ -472,6 +481,12 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
                                            myCVDisplayLinkOutputCallback, self);
 }
 
+- (void) animationTimerFired;
+{
+    [self updateAnimation];
+    [self drawFrameAndFlush];
+}
+
 - (void) emptyThreadEntry;
 {
     // Exit right away.
@@ -482,7 +497,7 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
     [self update];
 }
 
-- (void) drawFrameInternal;
+- (void) drawFrameAndFlush;
 {
     NSOpenGLContext * currentContext = [self activeOpenGLContext];
     
@@ -493,12 +508,6 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
         [self flushBuffer: [self activeOpenGLContext]];
     }
     [self unlockOpenGLLock];
-}
-
-- (void) animationTimer;
-{
-    [self updateAnimation];
-    [self drawFrameInternal];
 }
 
 - (BOOL) isDoubleBuffered: (NSOpenGLPixelFormat *) pixelFormat;
@@ -550,7 +559,7 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
         [self setFullScreenParametersForDisplay: kCGDirectMainDisplay
                                           width: mFullScreenWidth
                                          height: mFullScreenHeight
-                                        refresh: 60];
+                                        refresh: mFullScreenRefreshRate];
         
         // find out the new device bounds
         mFullScreenRect.origin.x = 0; 
@@ -648,7 +657,7 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
 - (CGDisplayErr) setFullScreenParametersForDisplay: (CGDirectDisplayID) display
                                              width: (size_t) width 
                                             height: (size_t) height
-                                           refresh: (CGRefreshRate) fps;
+                                           refresh: (CGRefreshRate) refreshRate;
 {
     CFDictionaryRef displayMode =
         CGDisplayBestModeForParametersAndRefreshRateWithProperty(
@@ -656,7 +665,7 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
             CGDisplayBitsPerPixel(display),     
             width,                              
             height,                             
-            fps,                                
+            refreshRate,                                
             kCGDisplayModeIsSafeForHardware,
             NULL);
     return CGDisplaySwitchToMode(display, displayMode);

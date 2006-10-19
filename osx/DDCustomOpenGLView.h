@@ -21,6 +21,7 @@
     BOOL mFullScreen;
     int mFullScreenWidth;
     int mFullScreenHeight;
+    int mFullScreenRefreshRate;
     NSRect mFullScreenRect;
     float mFullScreenMouseOffset;
 
@@ -77,6 +78,9 @@
 - (void) setFullScreenWidth: (int) width height: (int) height;
 - (int) fullScreenWidth;
 - (int) fullScreenHeight;
+
+- (void) setFullScreenRefreshRate: (int) fullScreenRefreshRate;
+- (int) fullScreenRefreshRate;
 
 - (BOOL) fullScreen;
 - (void) setFullScreen: (BOOL) flag;
