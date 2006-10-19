@@ -203,6 +203,8 @@ NSString * MameViewNaturalSizeDidChange = @"NaturalSizeDidChange";
     mNaturalSize = NSMakeSize(minimumWidth, minimumHeight);
     
     [self setFullScreenWidth: minimumWidth*2 height: minimumHeight*2];
+    mFullScreenSize = NSMakeSize([self fullScreenWidth], 
+                                 [self fullScreenHeight]);
 
     [[NSNotificationCenter defaultCenter] postNotificationName: MameViewNaturalSizeDidChange
                                                         object: self];
@@ -667,9 +669,7 @@ NSString * MameViewNaturalSizeDidChange = @"NaturalSizeDidChange";
     NSSize renderSize;
     if ([self fullScreen])
     {
-        NSSize fullScreenSize = NSMakeSize([self fullScreenWidth],
-                                           [self fullScreenHeight]);
-        renderSize = [self centerNSSize: fullScreenSize
+        renderSize = [self centerNSSize: mFullScreenSize
                              withinRect: [self currentBounds]].size;
     }
     else

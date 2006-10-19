@@ -42,6 +42,7 @@
     BOOL mRenderInCoreVideoThread;
     CIFilter * mFilter;
     NSSize mNaturalSize;
+    NSSize mFullScreenSize;
     
     float inputCenterX;
     float inputCenterY;
