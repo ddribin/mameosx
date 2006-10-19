@@ -67,6 +67,7 @@
     mFullScreenWidth = 800;
     mFullScreenHeight = 600;
     mFullScreenRefreshRate = 60;
+    mFadeTime = 0.5f;
     
     mOpenGLLock = [[NSRecursiveLock alloc] init];
     
@@ -397,6 +398,16 @@
     return mFullScreenRefreshRate;
 }
 
+- (void) setFadeTime: (float) fadeTime;
+{
+    mFadeTime = fadeTime;
+}
+
+- (float) fadeTime;
+{
+    return mFadeTime;
+}
+
 
 //=========================================================== 
 //  fullScreen 
@@ -678,7 +689,7 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
         CGAcquireDisplayFadeReservation(kCGMaxDisplayReservationInterval, &token); 
     if (err == CGDisplayNoErr)
     {
-        CGDisplayFade(token, 0.5f, kCGDisplayBlendNormal,
+        CGDisplayFade(token, mFadeTime, kCGDisplayBlendNormal,
                       kCGDisplayBlendSolidColor, 0, 0, 0, true); 
     }
     else
@@ -693,7 +704,7 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
 {
     if (token != kCGDisplayFadeReservationInvalidToken)
     {
-        CGDisplayFade(token, 0.5f, kCGDisplayBlendSolidColor,
+        CGDisplayFade(token, mFadeTime, kCGDisplayBlendSolidColor,
                       kCGDisplayBlendNormal, 0, 0, 0, true); 
         CGReleaseDisplayFadeReservation(token); 
     }

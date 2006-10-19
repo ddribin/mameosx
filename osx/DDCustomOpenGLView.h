@@ -24,6 +24,7 @@
     int mFullScreenRefreshRate;
     NSRect mFullScreenRect;
     float mFullScreenMouseOffset;
+    float mFadeTime;
 
     CVDisplayLinkRef mDisplayLink;
     NSTimer * mAnimationTimer;
@@ -81,6 +82,9 @@
 
 - (void) setFullScreenRefreshRate: (int) fullScreenRefreshRate;
 - (int) fullScreenRefreshRate;
+
+- (void) setFadeTime: (float) fadeTime;
+- (float) fadeTime;
 
 - (BOOL) fullScreen;
 - (void) setFullScreen: (BOOL) flag;

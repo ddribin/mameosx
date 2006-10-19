@@ -77,6 +77,7 @@ NSString * MameViewNaturalSizeDidChange = @"NaturalSizeDidChange";
     NSOpenGLPixelFormat * fullScreenPixelFormat = [[NSOpenGLPixelFormat alloc] initWithAttributes: fullScreenAttributes];
     [fullScreenPixelFormat autorelease];
     [self setFullScreenPixelFormat: fullScreenPixelFormat];
+    [self setFadeTime: 0.25f];
     
     mClearToRed = NO;
         
