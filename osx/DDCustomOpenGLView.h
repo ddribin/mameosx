@@ -11,6 +11,7 @@
 
 @interface DDCustomOpenGLView : NSView
 {
+    NSRecursiveLock * mOpenGLLock;
     NSOpenGLContext * mOpenGLContext;
     NSOpenGLPixelFormat * mPixelFormat;
     
@@ -23,8 +24,10 @@
     NSRect mFullScreenRect;
     float mFullScreenMouseOffset;
 
-    NSRecursiveLock * mDisplayLock;
     CVDisplayLinkRef mDisplayLink;
+    NSTimer * mAnimationTimer;
+    
+    BOOL mDoubleBuffered;
 }
 
 + (NSOpenGLPixelFormat*)defaultPixelFormat;
@@ -38,26 +41,46 @@
 - (NSOpenGLPixelFormat *) pixelFormat;
 - (void) setPixelFormat: (NSOpenGLPixelFormat *) aPixelFormat;
 
+- (void) prepareOpenGL: (NSOpenGLContext *) context;
+
+
+- (NSOpenGLContext *) currentOpenGLContext;
+- (NSOpenGLPixelFormat *) currentPixelFormat;
+- (NSRect) currentBounds;
+
+- (void) update;
+
+- (void) lockOpenGLLock;
+- (void) unlockOpenGLLock;
+
+#pragma mark -
+#pragma mark "Animation"
+
+- (void) startAnimation;
+- (void) stopAnimation;
+- (BOOL) isAnimationRunning;
+
+- (void) updateAnimation;
+- (void) drawFrame;
+
+#pragma mark -
+#pragma mark "Full screen"
+
 - (NSOpenGLContext *) fullScreenOpenGLContext;
 - (void) setFullScreenOpenGLContext: (NSOpenGLContext *) aFullScreenOpenGLContext;
 
 - (NSOpenGLPixelFormat *) fullScreenPixelFormat;
 - (void) setFullScreenPixelFormat: (NSOpenGLPixelFormat *) aFullScreenPixelFormat;
 
-- (void) prepareOpenGL: (NSOpenGLContext *) context;
-
-- (void) updateAnimation;
-- (void) drawFrame;
-
-- (NSOpenGLContext *) currentOpenGLContext;
-- (NSOpenGLPixelFormat *) currentPixelFormat;
-- (NSRect) currentBounds;
-
 - (void) setFullScreenWidth: (int) width height: (int) height;
 
 - (BOOL) fullScreen;
 - (void) setFullScreen: (BOOL) flag;
 
-- (void) update;
+- (void) willEnterFullScreen;
+- (void) willExitFullScreen;
+
+- (void) didEnterFullScreen;
+- (void) didExitFullScreen;
 
 @end

@@ -139,6 +139,12 @@ NSString * MameViewNaturalSizeDidChange = @"NaturalSizeDidChange";
 
 - (void) prepareOpenGL: (NSOpenGLContext *) context;
 {
+    long swapInterval;
+    swapInterval = 1;
+    
+    [context setValues: &swapInterval
+                       forParameter: NSOpenGLCPSwapInterval];
+
     glShadeModel(GL_SMOOTH);
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
     glClearDepth(1.0f);
@@ -239,9 +245,7 @@ NSString * MameViewNaturalSizeDidChange = @"NaturalSizeDidChange";
                  format: [self pixelFormat]
                    size: NSIntegralRect([self bounds]).size];
     
-#if 0
-    [self initDisplayLink];
-#endif
+    [self startAnimation];
     
     return 0;
 }
@@ -461,6 +465,7 @@ NSString * MameViewNaturalSizeDidChange = @"NaturalSizeDidChange";
 {
     @synchronized(self)
     {
+#if 0
         mSyncToRefresh = flag;
         long swapInterval;
         if (mSyncToRefresh)
@@ -472,6 +477,7 @@ NSString * MameViewNaturalSizeDidChange = @"NaturalSizeDidChange";
         [[self openGLContext] setValues: &swapInterval
                                 forParameter: NSOpenGLCPSwapInterval];
         [mDisplayLock unlock];
+#endif
     }
 }
 
@@ -928,7 +934,6 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
 
 - (void) drawFrame;
 {
-    // [mDisplayLock lock];
     [self resize];
     
     NSOpenGLContext * currentContext = [self currentOpenGLContext];
@@ -966,7 +971,6 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
         
         if (skipFrame)
         {
-            [mDisplayLock unlock];
             return;
         }
     }
@@ -988,12 +992,8 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
         [self drawFrameUsingOpenGL: frame];
     }
     
-    // glFlush();
-    
     mFramesDisplayed++;
     mFrameEndTime = [mTimingController osd_cycles];
-    
-    // [mDisplayLock unlock];
 }
 
 - (void) drawFrameUsingCoreImage: (CVOpenGLTextureRef) frame;
@@ -1021,11 +1021,11 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
     
     NSRect bounds;
     bounds = [self currentBounds];
-#if 0
+#if 1
     NSRect nsDest = centerNSSizeWithinRect(mRenderSize, bounds);
 #else
     NSRect nsDest = bounds;
-    nsDest.size = mRenderSize;
+    // nsDest.size = mRenderSize;
 #endif
 
     CGRect destRect = CGRectMake(nsDest.origin.x, nsDest.origin.y,
@@ -1083,8 +1083,8 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
     }
 #else
     bounds = [self currentBounds];
-#if 0
-    NSRect bounds = centerNSSizeWithinRect(mRenderSize, bounds);
+#if 1
+    bounds = centerNSSizeWithinRect(mRenderSize, bounds);
 #else
     bounds.size = mRenderSize;
 #endif
@@ -1162,7 +1162,7 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
     }
     else
     {
-        [mDisplayLock lock];
+        [self lockOpenGLLock];
         
         render_target_set_bounds(mTarget, renderSize.width, renderSize.height, 0.0);
         const render_primitive_list * primitives = render_target_get_primitives(mTarget);
@@ -1170,7 +1170,7 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
                       withSize: renderSize];
         mRenderSize = renderSize;
         
-        [mDisplayLock unlock];
+        [self unlockOpenGLLock];
     }
     
     if (!mame_is_paused(mMachine))
