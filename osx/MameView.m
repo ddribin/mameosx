@@ -42,9 +42,6 @@ NSString * MameViewNaturalSizeDidChange = @"NaturalSizeDidChange";
 
 -(id) initWithFrame: (NSRect) frameRect
 {
-    NSOpenGLPixelFormatAttribute colorSize = 32;
-    NSOpenGLPixelFormatAttribute depthSize = 32;
-    
     // pixel format attributes for the view based (non-fullscreen) NSOpenGLContext
     NSOpenGLPixelFormatAttribute windowedAttributes[] =
     {
@@ -53,8 +50,6 @@ NSString * MameViewNaturalSizeDidChange = @"NaturalSizeDidChange";
         // enabling us to use the "shareContext" feature to share textures, display lists, and other OpenGL objects between the two
         NSOpenGLPFANoRecovery,
         // attributes common to fullscreen and window modes
-        NSOpenGLPFAColorSize, colorSize,
-        NSOpenGLPFADepthSize, depthSize,
         NSOpenGLPFADoubleBuffer,
         NSOpenGLPFAAccelerated,
         0
@@ -75,8 +70,6 @@ NSString * MameViewNaturalSizeDidChange = @"NaturalSizeDidChange";
         NSOpenGLPFANoRecovery,
         NSOpenGLPFAScreenMask, CGDisplayIDToOpenGLDisplayMask(kCGDirectMainDisplay),
         // attributes common to fullscreen and window modes
-        NSOpenGLPFAColorSize, colorSize,
-        NSOpenGLPFADepthSize, depthSize,
         NSOpenGLPFADoubleBuffer,
         NSOpenGLPFAAccelerated,
         0
@@ -84,6 +77,8 @@ NSString * MameViewNaturalSizeDidChange = @"NaturalSizeDidChange";
     NSOpenGLPixelFormat * fullScreenPixelFormat = [[NSOpenGLPixelFormat alloc] initWithAttributes: fullScreenAttributes];
     [fullScreenPixelFormat autorelease];
     [self setFullScreenPixelFormat: fullScreenPixelFormat];
+    
+    mClearToRed = NO;
         
     return self;
 }
@@ -175,6 +170,19 @@ NSString * MameViewNaturalSizeDidChange = @"NaturalSizeDidChange";
 - (void) setRenderInCoreVideoThread: (BOOL) flag
 {
     mRenderInCoreVideoThread = flag;
+}
+
+//=========================================================== 
+//  clearToRed 
+//=========================================================== 
+- (BOOL) clearToRed;
+{
+    return mClearToRed;
+}
+
+- (void) setClearToRed: (BOOL) clearToRed;
+{
+    mClearToRed = clearToRed;
 }
 
 - (NSSize) naturalSize;
@@ -563,9 +571,7 @@ NSString * MameViewNaturalSizeDidChange = @"NaturalSizeDidChange";
     
     [currentContext makeCurrentContext];
     
-    if (mRenderInCoreVideoThread)
-        glClearColor(1.0, 0.0, 0.0, 0.0);
-    else
+    if (mClearToRed)
         glClearColor(1.0, 0.0, 0.0, 0.0);
     glClear(GL_COLOR_BUFFER_BIT);
     

@@ -43,6 +43,7 @@
     CIFilter * mFilter;
     NSSize mNaturalSize;
     NSSize mFullScreenSize;
+    BOOL mClearToRed;
     
     float inputCenterX;
     float inputCenterY;
@@ -78,6 +79,9 @@
 
 - (BOOL) renderInCoreVideoThread;
 - (void) setRenderInCoreVideoThread: (BOOL) flag;
+
+- (BOOL) clearToRed;
+- (void) setClearToRed: (BOOL) clearToRed;
 
 - (void) createCIContext;
 - (CIContext *) ciContext;

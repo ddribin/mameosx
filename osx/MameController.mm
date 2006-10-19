@@ -87,6 +87,7 @@ void leaks_sleeper()
     [mMameView setThrottled: [mConfiguration throttled]];
     [mMameView setSyncToRefresh: [mConfiguration syncToRefresh]];
     [mMameView setRenderInCoreVideoThread: [mConfiguration renderInCV]];
+    [mMameView setClearToRed: [mConfiguration clearToRed]];
     
     [mMameView setGame: [self getGameNameToRun]];
     [mMameView start];

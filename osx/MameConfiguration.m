@@ -40,6 +40,7 @@ NSString * MameThrottledKey = @"Throttled";
 NSString * MameSyncToRefreshKey = @"SyncToRefresh";
 NSString * MameSoundEnabled = @"SoundEnabled";
 NSString * MameRenderInCV = @"RenderInCV";
+NSString * MameClearToRed = @"ClearToRed";
 
 #ifdef MAME_DEBUG
 NSString * MameDebugKey = @"MameDebug";
@@ -108,6 +109,9 @@ static BOOL hasMultipleCPUs()
         [defaultValues setObject: [NSNumber numberWithBool: NO]
                           forKey: MameRenderInCV];
     }
+    
+    [defaultValues setObject: [NSNumber numberWithBool: NO]
+                      forKey: MameClearToRed];
     
 #ifdef MAME_DEBUG
     [defaultValues setObject: [NSNumber numberWithBool: NO]
@@ -205,6 +209,7 @@ static MameConfiguration * sGlobalConfiguration = nil;
     [self setSyncToRefresh: [defaults boolForKey: MameSyncToRefreshKey]];
     [self setSoundEnabled: [defaults boolForKey: MameSoundEnabled]];
     [self setRenderInCV: [defaults boolForKey: MameRenderInCV]];
+    [self setClearToRed: [defaults boolForKey: MameClearToRed]];
     
 #ifdef MAME_DEBUG
     options.mame_debug = [defaults boolForKey: MameDebugKey];
@@ -287,6 +292,19 @@ static MameConfiguration * sGlobalConfiguration = nil;
 - (void) setRenderInCV: (BOOL) flag
 {
     mRenderInCV = flag;
+}
+
+//=========================================================== 
+//  clearToRed 
+//=========================================================== 
+- (BOOL) clearToRed;
+{
+    return mClearToRed;
+}
+
+- (void) setClearToRed: (BOOL) clearToRed;
+{
+    mClearToRed = clearToRed;
 }
 
 //=========================================================== 

@@ -17,6 +17,7 @@
     BOOL mSyncToRefresh;
     BOOL mSoundEnabled;
     BOOL mRenderInCV;
+    BOOL mClearToRed;
     
     char * mSaveGame;
     char * mBios;
@@ -35,6 +36,9 @@
 
 - (BOOL) renderInCV;
 - (void) setRenderInCV: (BOOL) flag;
+
+- (BOOL) clearToRed;
+- (void) setClearToRed: (BOOL) clearToRed;
 
 - (BOOL) soundEnabled;
 - (void) setSoundEnabled: (BOOL) flag;
