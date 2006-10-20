@@ -608,12 +608,11 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
         [mFullScreenOpenGLContext setFullScreen];
         
         [self update];
-        
-        [self didEnterFullScreen];
     }
     [self unlockOpenGLLock];
     
     [self displayFadeIn: token];    
+    [self didEnterFullScreen];
     if (isAnimationRunning)
         [self startAnimation];
     
@@ -655,12 +654,11 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
         [self flushBuffer: windowContext];
         
         [self update];
-        
-        [self didExitFullScreen];
     }
     [self unlockOpenGLLock];
     
     [self displayFadeIn: token];
+    [self didExitFullScreen];
     if (isAnimationRunning)
         [self startAnimation];
 }

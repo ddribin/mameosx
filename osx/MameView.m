@@ -352,12 +352,25 @@ NSString * MameViewNaturalSizeDidChange = @"NaturalSizeDidChange";
 
 - (void) togglePause;
 {
+    if (!mMameIsRunning)
+        return;
     [mMameLock lock];
     if (mame_is_paused(mMachine))
         mame_pause(mMachine, FALSE);
     else
         mame_pause(mMachine, TRUE);
     [mMameLock unlock];
+}
+
+- (BOOL) pause: (BOOL) pause
+{
+    if (!mMameIsRunning)
+        return;
+    [mMameLock lock];
+    BOOL isPaused = mame_is_paused(mMachine);
+    mame_pause(mMachine, pause);
+    [mMameLock unlock];
+    return isPaused;
 }
 
 - (MameFileManager *) fileManager;
@@ -497,6 +510,27 @@ NSString * MameViewNaturalSizeDidChange = @"NaturalSizeDidChange";
 {
    [NSApp terminate: nil];
 }
+
+- (void) willEnterFullScreen;
+{
+    mUnpauseOnFullScreenTransition = [self pause: YES];
+}
+
+- (void) willExitFullScreen;
+{
+    mUnpauseOnFullScreenTransition = [self pause: YES];
+}
+
+- (void) didEnterFullScreen;
+{
+    [self pause: mUnpauseOnFullScreenTransition];
+}
+
+- (void) didExitFullScreen;
+{
+    [self pause: mUnpauseOnFullScreenTransition];
+}
+
 
 #pragma mark -
 #pragma mark "Frame Drawing"

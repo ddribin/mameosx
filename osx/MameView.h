@@ -65,6 +65,8 @@
 
     BOOL mSyncToRefresh;
     BOOL mThrottled;
+    
+    BOOL mUnpauseOnFullScreenTransition;
 }
 
 - (NSString *) game;
