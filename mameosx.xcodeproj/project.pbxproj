@@ -251,7 +251,6 @@
 		55744C040AAB4F6D00EC1423 /* dualhovu.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A450AAB392F00EC1423 /* dualhovu.lay */; };
 		55744C1A0AAB4FC800EC1423 /* osinline.h in Headers */ = {isa = PBXBuildFile; fileRef = 55744C190AAB4FC800EC1423 /* osinline.h */; };
 		55744C1C0AAB4FFA00EC1423 /* snap.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A5A0AAB393000EC1423 /* snap.lay */; };
-		55744C440AAB523700EC1423 /* test_drivers.c in Sources */ = {isa = PBXBuildFile; fileRef = 55744C430AAB523700EC1423 /* test_drivers.c */; };
 		558D9F2A0AAE70B1007B2A32 /* cpu_config.h in Headers */ = {isa = PBXBuildFile; fileRef = 558D9F290AAE70B1007B2A32 /* cpu_config.h */; };
 		558D9F2C0AAE70E9007B2A32 /* sound_config.h in Headers */ = {isa = PBXBuildFile; fileRef = 558D9F2B0AAE70E9007B2A32 /* sound_config.h */; };
 		558D9F2E0AAE7117007B2A32 /* config.h in Headers */ = {isa = PBXBuildFile; fileRef = 558D9F2D0AAE7117007B2A32 /* config.h */; };
@@ -260,6 +259,7 @@
 		55CDE6E40AAC60CB0021CEA0 /* MameInputController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55CDE6E30AAC60CB0021CEA0 /* MameInputController.m */; };
 		55FE25E80AAD2F6100C4054A /* MameAudioController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55FE25E70AAD2F6100C4054A /* MameAudioController.m */; };
 		55FE26330AAD33AB00C4054A /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55FE26320AAD33AB00C4054A /* AudioUnit.framework */; };
+		55FEC76B0AEC52F7001A1CAB /* tiny.c in Sources */ = {isa = PBXBuildFile; fileRef = 55FEC76A0AEC52F7001A1CAB /* tiny.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXBuildRule section */
@@ -1161,7 +1161,6 @@
 		55744A630AAB393000EC1423 /* vertical.lay */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = vertical.lay; sourceTree = "<group>"; };
 		55744A640AAB393000EC1423 /* voffff20.lay */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = voffff20.lay; sourceTree = "<group>"; };
 		55744C190AAB4FC800EC1423 /* osinline.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = osinline.h; sourceTree = "<group>"; };
-		55744C430AAB523700EC1423 /* test_drivers.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = test_drivers.c; sourceTree = "<group>"; };
 		558D9F290AAE70B1007B2A32 /* cpu_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cpu_config.h; sourceTree = "<group>"; };
 		558D9F2B0AAE70E9007B2A32 /* sound_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sound_config.h; sourceTree = "<group>"; };
 		558D9F2D0AAE7117007B2A32 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
@@ -1174,6 +1173,8 @@
 		55FE25E60AAD2F6100C4054A /* MameAudioController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MameAudioController.h; sourceTree = "<group>"; };
 		55FE25E70AAD2F6100C4054A /* MameAudioController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MameAudioController.m; sourceTree = "<group>"; };
 		55FE26320AAD33AB00C4054A /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = /System/Library/Frameworks/AudioUnit.framework; sourceTree = "<absolute>"; };
+		55FEC7680AEC51DA001A1CAB /* tinymame.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tinymame.pch; sourceTree = "<group>"; };
+		55FEC76A0AEC52F7001A1CAB /* tiny.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = tiny.c; path = src/tiny.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1260,6 +1261,7 @@
 				558D9F2D0AAE7117007B2A32 /* config.h */,
 				558D9F290AAE70B1007B2A32 /* cpu_config.h */,
 				558D9F2B0AAE70E9007B2A32 /* sound_config.h */,
+				55FEC7680AEC51DA001A1CAB /* tinymame.pch */,
 			);
 			name = config;
 			sourceTree = "<group>";
@@ -1326,7 +1328,6 @@
 				5501E89A0AB2762700756C9B /* Unit Tests */,
 				556A4C5A0AA50E7200602CC5 /* osx */,
 				5501E8990AB2760B00756C9B /* config */,
-				55744C430AAB523700EC1423 /* test_drivers.c */,
 				557449110AAB278200EC1423 /* mame */,
 				556A42510AA4E9E500602CC5 /* Products */,
 				556A4AB00AA4FAA300602CC5 /* Frameworks */,
@@ -2680,6 +2681,7 @@
 		557449110AAB278200EC1423 /* mame */ = {
 			isa = PBXGroup;
 			children = (
+				55FEC76A0AEC52F7001A1CAB /* tiny.c */,
 				55744A380AAB392F00EC1423 /* layout */,
 				557449E50AAB360100EC1423 /* file2str.c */,
 				556A4E7D0AA51CA300602CC5 /* includes */,
@@ -3295,7 +3297,6 @@
 				556A4CEF0AA5117200602CC5 /* MameController.mm in Sources */,
 				556A4D8A0AA514C300602CC5 /* osd_osx.m in Sources */,
 				556A51170AA54C4600602CC5 /* MameView.m in Sources */,
-				55744C440AAB523700EC1423 /* test_drivers.c in Sources */,
 				55CDE6E40AAC60CB0021CEA0 /* MameInputController.m in Sources */,
 				55FE25E80AAD2F6100C4054A /* MameAudioController.m in Sources */,
 				5501E9020AB27D3F00756C9B /* CircularBuffer.m in Sources */,
@@ -3308,6 +3309,7 @@
 				552F01110AC812A200A14DFA /* MameOpenGLRenderer.m in Sources */,
 				556149600ACCD64F008951F8 /* ThreadSafeQueue.m in Sources */,
 				5511DE600AE5D34600D416BF /* DDCustomOpenGLView.m in Sources */,
+				55FEC76B0AEC52F7001A1CAB /* tiny.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3674,7 +3676,7 @@
 				GCC_MODEL_TUNING = G4;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = mame.pch;
+				GCC_PREFIX_HEADER = tinymame.pch;
 				INFOPLIST_FILE = osx/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_CFLAGS = "-falign-loops=16";
@@ -3700,7 +3702,7 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G4;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = mame.pch;
+				GCC_PREFIX_HEADER = tinymame.pch;
 				INFOPLIST_FILE = osx/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_CFLAGS = "-falign-loops=16";
