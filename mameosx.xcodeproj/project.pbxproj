@@ -207,9 +207,6 @@
 		556A4CEF0AA5117200602CC5 /* MameController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 556A4CEE0AA5117200602CC5 /* MameController.mm */; };
 		556A4D8A0AA514C300602CC5 /* osd_osx.m in Sources */ = {isa = PBXBuildFile; fileRef = 556A4D890AA514C300602CC5 /* osd_osx.m */; };
 		556A4D9D0AA5158400602CC5 /* libcore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 556A42D40AA4EBA200602CC5 /* libcore.a */; };
-		556A4D9E0AA5158400602CC5 /* libdrivers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 556A44380AA4F4CD00602CC5 /* libdrivers.a */; };
-		556A4D9F0AA5158400602CC5 /* libsounds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 556A4B780AA5011100602CC5 /* libsounds.a */; };
-		556A4DA00AA5158400602CC5 /* libcpu.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 556A498B0AA4F70A00602CC5 /* libcpu.a */; };
 		556A4DA10AA5158400602CC5 /* liblocalexpat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 556A49BB0AA4F86600602CC5 /* liblocalexpat.a */; };
 		556A4DA20AA5158400602CC5 /* liblocalzlib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 556A4A010AA4F8EC00602CC5 /* liblocalzlib.a */; };
 		556A4E660AA51BD700602CC5 /* jrpacman.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A4E630AA51BD700602CC5 /* jrpacman.c */; };
@@ -260,6 +257,41 @@
 		55FE25E80AAD2F6100C4054A /* MameAudioController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55FE25E70AAD2F6100C4054A /* MameAudioController.m */; };
 		55FE26330AAD33AB00C4054A /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55FE26320AAD33AB00C4054A /* AudioUnit.framework */; };
 		55FEC76B0AEC52F7001A1CAB /* tiny.c in Sources */ = {isa = PBXBuildFile; fileRef = 55FEC76A0AEC52F7001A1CAB /* tiny.c */; };
+		55FEC7BB0AEC5723001A1CAB /* z80.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A49720AA4F64000602CC5 /* z80.c */; };
+		55FEC7BC0AEC5723001A1CAB /* m6502.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A48990AA4F64000602CC5 /* m6502.c */; };
+		55FEC7BD0AEC5723001A1CAB /* m6502.h in Headers */ = {isa = PBXBuildFile; fileRef = 556A489A0AA4F64000602CC5 /* m6502.h */; };
+		55FEC7BE0AEC5723001A1CAB /* s2650.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A49000AA4F64000602CC5 /* s2650.c */; };
+		55FEC7BF0AEC5723001A1CAB /* z80daisy.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A49740AA4F64000602CC5 /* z80daisy.c */; };
+		55FEC7D50AEC5898001A1CAB /* rp5h01.h in Headers */ = {isa = PBXBuildFile; fileRef = 556A4B680AA5006500602CC5 /* rp5h01.h */; };
+		55FEC7D60AEC5898001A1CAB /* pacplus.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A4E6E0AA51C3400602CC5 /* pacplus.c */; };
+		55FEC7D70AEC5898001A1CAB /* pacman.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A4E640AA51BD700602CC5 /* pacman.c */; };
+		55FEC7D80AEC5898001A1CAB /* jrpacman.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A4E630AA51BD700602CC5 /* jrpacman.c */; };
+		55FEC7D90AEC5898001A1CAB /* jumpshot.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A4E6C0AA51C3400602CC5 /* jumpshot.c */; };
+		55FEC7DA0AEC5898001A1CAB /* ppu2c03b.h in Headers */ = {isa = PBXBuildFile; fileRef = 556A4B5B0AA5004300602CC5 /* ppu2c03b.h */; };
+		55FEC7DB0AEC5898001A1CAB /* ppu2c0x.c in Sources */ = {isa = PBXBuildFile; fileRef = 5530FE150ACA42990083BB04 /* ppu2c0x.c */; };
+		55FEC7DC0AEC5898001A1CAB /* ppu2c0x.h in Headers */ = {isa = PBXBuildFile; fileRef = 5530FE160ACA42990083BB04 /* ppu2c0x.h */; };
+		55FEC7DD0AEC5898001A1CAB /* ppu2c03b.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A4B5A0AA5004300602CC5 /* ppu2c03b.c */; };
+		55FEC7DE0AEC5898001A1CAB /* vsnes.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A4B4B0AA4FF6200602CC5 /* vsnes.c */; };
+		55FEC7DF0AEC5898001A1CAB /* pacman.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A4E690AA51BEF00602CC5 /* pacman.c */; };
+		55FEC7E00AEC5898001A1CAB /* pengo.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A4E650AA51BD700602CC5 /* pengo.c */; };
+		55FEC7E10AEC5898001A1CAB /* vsnes.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A4B440AA4FF3200602CC5 /* vsnes.c */; };
+		55FEC7E20AEC5898001A1CAB /* mspacman.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A4E6D0AA51C3400602CC5 /* mspacman.c */; };
+		55FEC7E30AEC5898001A1CAB /* theglobp.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A4E6F0AA51C3400602CC5 /* theglobp.c */; };
+		55FEC7E40AEC5898001A1CAB /* acitya.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A4E6B0AA51C3400602CC5 /* acitya.c */; };
+		55FEC7E50AEC5898001A1CAB /* rp5h01.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A4B670AA5006500602CC5 /* rp5h01.c */; };
+		55FEC7E60AEC5898001A1CAB /* vsnes.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A4B490AA4FF4E00602CC5 /* vsnes.c */; };
+		55FEC7E90AEC58AD001A1CAB /* namco.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A4F480AA51E0B00602CC5 /* namco.c */; };
+		55FEC7EA0AEC58AD001A1CAB /* ay8910.h in Headers */ = {isa = PBXBuildFile; fileRef = 556A4F7A0AA5203400602CC5 /* ay8910.h */; };
+		55FEC7EB0AEC58AD001A1CAB /* sn76496.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A4F750AA5202400602CC5 /* sn76496.c */; };
+		55FEC7EC0AEC58AD001A1CAB /* dac.h in Headers */ = {isa = PBXBuildFile; fileRef = 556A4BDF0AA504C700602CC5 /* dac.h */; };
+		55FEC7ED0AEC58AD001A1CAB /* nes_apu.h in Headers */ = {isa = PBXBuildFile; fileRef = 556A4B830AA5015100602CC5 /* nes_apu.h */; };
+		55FEC7EE0AEC58AD001A1CAB /* sn76496.h in Headers */ = {isa = PBXBuildFile; fileRef = 556A4F760AA5202400602CC5 /* sn76496.h */; };
+		55FEC7EF0AEC58AD001A1CAB /* nes_apu.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A4B820AA5015100602CC5 /* nes_apu.c */; };
+		55FEC7F00AEC58AD001A1CAB /* dac.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A4BDE0AA504C700602CC5 /* dac.c */; };
+		55FEC7F10AEC58AD001A1CAB /* nes_defs.h in Headers */ = {isa = PBXBuildFile; fileRef = 556A4B840AA5015100602CC5 /* nes_defs.h */; };
+		55FEC7F20AEC58AD001A1CAB /* ay8910.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A4F790AA5203400602CC5 /* ay8910.c */; };
+		55FEC7F30AEC58AD001A1CAB /* namco.h in Headers */ = {isa = PBXBuildFile; fileRef = 556A4F490AA51E0B00602CC5 /* namco.h */; };
+		55FEC7FA0AEC58F6001A1CAB /* libtiny.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55FEC7B60AEC5713001A1CAB /* libtiny.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXBuildRule section */
@@ -291,27 +323,6 @@
 			remoteGlobalIDString = 556A42D30AA4EBA200602CC5;
 			remoteInfo = core;
 		};
-		556A4D910AA5156800602CC5 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 556A42440AA4E9CE00602CC5 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 556A44370AA4F4CD00602CC5;
-			remoteInfo = drivers;
-		};
-		556A4D930AA5156800602CC5 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 556A42440AA4E9CE00602CC5 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 556A4B770AA5011100602CC5;
-			remoteInfo = sounds;
-		};
-		556A4D950AA5156800602CC5 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 556A42440AA4E9CE00602CC5 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 556A498A0AA4F70A00602CC5;
-			remoteInfo = cpu;
-		};
 		556A4D970AA5156800602CC5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 556A42440AA4E9CE00602CC5 /* Project object */;
@@ -332,6 +343,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 557449DF0AAB35D800EC1423;
 			remoteInfo = file2str;
+		};
+		55FEC7F80AEC58D8001A1CAB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 556A42440AA4E9CE00602CC5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 55FEC7B50AEC5713001A1CAB /* tiny */;
+			remoteInfo = tiny;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -1175,6 +1193,7 @@
 		55FE26320AAD33AB00C4054A /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = /System/Library/Frameworks/AudioUnit.framework; sourceTree = "<absolute>"; };
 		55FEC7680AEC51DA001A1CAB /* tinymame.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tinymame.pch; sourceTree = "<group>"; };
 		55FEC76A0AEC52F7001A1CAB /* tiny.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = tiny.c; path = src/tiny.c; sourceTree = "<group>"; };
+		55FEC7B60AEC5713001A1CAB /* libtiny.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libtiny.a; path = build/Debug/libtiny.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1232,9 +1251,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				556A4D9D0AA5158400602CC5 /* libcore.a in Frameworks */,
-				556A4D9E0AA5158400602CC5 /* libdrivers.a in Frameworks */,
-				556A4D9F0AA5158400602CC5 /* libsounds.a in Frameworks */,
-				556A4DA00AA5158400602CC5 /* libcpu.a in Frameworks */,
+				55FEC7FA0AEC58F6001A1CAB /* libtiny.a in Frameworks */,
 				556A4DA10AA5158400602CC5 /* liblocalexpat.a in Frameworks */,
 				556A4DA20AA5158400602CC5 /* liblocalzlib.a in Frameworks */,
 				556A4C6E0AA50F4D00602CC5 /* Cocoa.framework in Frameworks */,
@@ -1245,6 +1262,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		557449DE0AAB35D800EC1423 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		55FEC7B40AEC5713001A1CAB /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1344,6 +1368,7 @@
 				556A498B0AA4F70A00602CC5 /* libcpu.a */,
 				556A49BB0AA4F86600602CC5 /* liblocalexpat.a */,
 				556A4A010AA4F8EC00602CC5 /* liblocalzlib.a */,
+				55FEC7B60AEC5713001A1CAB /* libtiny.a */,
 				557449E00AAB35D800EC1423 /* file2str */,
 				5501E8910AB275F900756C9B /* UnitTests.octest */,
 			);
@@ -1501,12 +1526,13 @@
 			path = vidhrdw;
 			sourceTree = "<group>";
 		};
-		556A44390AA4F4D600602CC5 /* src */ = {
+		556A44390AA4F4D600602CC5 /* drivers */ = {
 			isa = PBXGroup;
 			children = (
 				556A4E5E0AA51B8700602CC5 /* pacman */,
 				556A4B3E0AA4FEF400602CC5 /* nintendo */,
 			);
+			name = drivers;
 			path = src;
 			sourceTree = "<group>";
 		};
@@ -2688,7 +2714,7 @@
 				556A4A040AA4F91500602CC5 /* zlib */,
 				556A49BC0AA4F87400602CC5 /* expat */,
 				556A47F10AA4F64000602CC5 /* cpu */,
-				556A44390AA4F4D600602CC5 /* src */,
+				556A44390AA4F4D600602CC5 /* drivers */,
 				556A4B6E0AA500C300602CC5 /* sound */,
 				556A42590AA4E9F400602CC5 /* core */,
 			);
@@ -2895,6 +2921,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		55FEC7B20AEC5713001A1CAB /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55FEC7BD0AEC5723001A1CAB /* m6502.h in Headers */,
+				55FEC7D50AEC5898001A1CAB /* rp5h01.h in Headers */,
+				55FEC7DA0AEC5898001A1CAB /* ppu2c03b.h in Headers */,
+				55FEC7DC0AEC5898001A1CAB /* ppu2c0x.h in Headers */,
+				55FEC7EA0AEC58AD001A1CAB /* ay8910.h in Headers */,
+				55FEC7EC0AEC58AD001A1CAB /* dac.h in Headers */,
+				55FEC7ED0AEC58AD001A1CAB /* nes_apu.h in Headers */,
+				55FEC7EE0AEC58AD001A1CAB /* sn76496.h in Headers */,
+				55FEC7F10AEC58AD001A1CAB /* nes_defs.h in Headers */,
+				55FEC7F30AEC58AD001A1CAB /* namco.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
@@ -3033,9 +3076,7 @@
 			);
 			dependencies = (
 				556A4D900AA5156800602CC5 /* PBXTargetDependency */,
-				556A4D920AA5156800602CC5 /* PBXTargetDependency */,
-				556A4D940AA5156800602CC5 /* PBXTargetDependency */,
-				556A4D960AA5156800602CC5 /* PBXTargetDependency */,
+				55FEC7F90AEC58D8001A1CAB /* PBXTargetDependency */,
 				556A4D980AA5156800602CC5 /* PBXTargetDependency */,
 				556A4D9A0AA5156800602CC5 /* PBXTargetDependency */,
 			);
@@ -3060,6 +3101,23 @@
 			productReference = 557449E00AAB35D800EC1423 /* file2str */;
 			productType = "com.apple.product-type.tool";
 		};
+		55FEC7B50AEC5713001A1CAB /* tiny */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 55FEC7C00AEC5744001A1CAB /* Build configuration list for PBXNativeTarget "tiny" */;
+			buildPhases = (
+				55FEC7B20AEC5713001A1CAB /* Headers */,
+				55FEC7B30AEC5713001A1CAB /* Sources */,
+				55FEC7B40AEC5713001A1CAB /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = tiny;
+			productName = tiny;
+			productReference = 55FEC7B60AEC5713001A1CAB /* libtiny.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -3080,6 +3138,7 @@
 				556A4A000AA4F8EC00602CC5 /* localzlib */,
 				557449DF0AAB35D800EC1423 /* file2str */,
 				5501E8900AB275F900756C9B /* UnitTests */,
+				55FEC7B50AEC5713001A1CAB /* tiny */,
 			);
 		};
 /* End PBXProject section */
@@ -3321,6 +3380,37 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		55FEC7B30AEC5713001A1CAB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55FEC7BB0AEC5723001A1CAB /* z80.c in Sources */,
+				55FEC7BC0AEC5723001A1CAB /* m6502.c in Sources */,
+				55FEC7BE0AEC5723001A1CAB /* s2650.c in Sources */,
+				55FEC7BF0AEC5723001A1CAB /* z80daisy.c in Sources */,
+				55FEC7D60AEC5898001A1CAB /* pacplus.c in Sources */,
+				55FEC7D70AEC5898001A1CAB /* pacman.c in Sources */,
+				55FEC7D80AEC5898001A1CAB /* jrpacman.c in Sources */,
+				55FEC7D90AEC5898001A1CAB /* jumpshot.c in Sources */,
+				55FEC7DB0AEC5898001A1CAB /* ppu2c0x.c in Sources */,
+				55FEC7DD0AEC5898001A1CAB /* ppu2c03b.c in Sources */,
+				55FEC7DE0AEC5898001A1CAB /* vsnes.c in Sources */,
+				55FEC7DF0AEC5898001A1CAB /* pacman.c in Sources */,
+				55FEC7E00AEC5898001A1CAB /* pengo.c in Sources */,
+				55FEC7E10AEC5898001A1CAB /* vsnes.c in Sources */,
+				55FEC7E20AEC5898001A1CAB /* mspacman.c in Sources */,
+				55FEC7E30AEC5898001A1CAB /* theglobp.c in Sources */,
+				55FEC7E40AEC5898001A1CAB /* acitya.c in Sources */,
+				55FEC7E50AEC5898001A1CAB /* rp5h01.c in Sources */,
+				55FEC7E60AEC5898001A1CAB /* vsnes.c in Sources */,
+				55FEC7E90AEC58AD001A1CAB /* namco.c in Sources */,
+				55FEC7EB0AEC58AD001A1CAB /* sn76496.c in Sources */,
+				55FEC7EF0AEC58AD001A1CAB /* nes_apu.c in Sources */,
+				55FEC7F00AEC58AD001A1CAB /* dac.c in Sources */,
+				55FEC7F20AEC58AD001A1CAB /* ay8910.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -3333,21 +3423,6 @@
 			isa = PBXTargetDependency;
 			target = 556A42D30AA4EBA200602CC5 /* core */;
 			targetProxy = 556A4D8F0AA5156800602CC5 /* PBXContainerItemProxy */;
-		};
-		556A4D920AA5156800602CC5 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 556A44370AA4F4CD00602CC5 /* drivers */;
-			targetProxy = 556A4D910AA5156800602CC5 /* PBXContainerItemProxy */;
-		};
-		556A4D940AA5156800602CC5 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 556A4B770AA5011100602CC5 /* sounds */;
-			targetProxy = 556A4D930AA5156800602CC5 /* PBXContainerItemProxy */;
-		};
-		556A4D960AA5156800602CC5 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 556A498A0AA4F70A00602CC5 /* cpu */;
-			targetProxy = 556A4D950AA5156800602CC5 /* PBXContainerItemProxy */;
 		};
 		556A4D980AA5156800602CC5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -3363,6 +3438,11 @@
 			isa = PBXTargetDependency;
 			target = 557449DF0AAB35D800EC1423 /* file2str */;
 			targetProxy = 557449F80AAB364200EC1423 /* PBXContainerItemProxy */;
+		};
+		55FEC7F90AEC58D8001A1CAB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 55FEC7B50AEC5713001A1CAB /* tiny */;
+			targetProxy = 55FEC7F80AEC58D8001A1CAB /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -3679,6 +3759,11 @@
 				GCC_PREFIX_HEADER = tinymame.pch;
 				INFOPLIST_FILE = osx/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_1)",
+				);
+				LIBRARY_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)/build/Debug\"";
 				OTHER_CFLAGS = "-falign-loops=16";
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -3705,6 +3790,11 @@
 				GCC_PREFIX_HEADER = tinymame.pch;
 				INFOPLIST_FILE = osx/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_1)",
+				);
+				LIBRARY_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)/build/Debug\"";
 				OTHER_CFLAGS = "-falign-loops=16";
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -3745,6 +3835,36 @@
 				INSTALL_PATH = "$(HOME)/bin";
 				PREBINDING = NO;
 				PRODUCT_NAME = file2str;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		55FEC7C10AEC5744001A1CAB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INSTALL_PATH = /usr/local/lib;
+				PREBINDING = NO;
+				PRODUCT_NAME = tiny;
+				ZERO_LINK = YES;
+			};
+			name = Debug;
+		};
+		55FEC7C20AEC5744001A1CAB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				INSTALL_PATH = /usr/local/lib;
+				PREBINDING = NO;
+				PRODUCT_NAME = tiny;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -3838,6 +3958,15 @@
 			buildConfigurations = (
 				557449E30AAB35F800EC1423 /* Debug */,
 				557449E40AAB35F800EC1423 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		55FEC7C00AEC5744001A1CAB /* Build configuration list for PBXNativeTarget "tiny" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				55FEC7C10AEC5744001A1CAB /* Debug */,
+				55FEC7C20AEC5744001A1CAB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
