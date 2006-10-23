@@ -6,6 +6,20 @@
 	objectVersion = 42;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		55BEF9830AEC5C7200357340 /* All */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 55BEF9880AEC5CAB00357340 /* Build configuration list for PBXAggregateTarget "All" */;
+			buildPhases = (
+			);
+			dependencies = (
+				55BEF9850AEC5C7D00357340 /* PBXTargetDependency */,
+			);
+			name = All;
+			productName = All;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		5501E89D0AB2764700756C9B /* CircularBufferTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5501E89C0AB2764700756C9B /* CircularBufferTest.m */; };
 		5501E9020AB27D3F00756C9B /* CircularBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5501E8440AB232B900756C9B /* CircularBuffer.m */; };
@@ -344,11 +358,18 @@
 			remoteGlobalIDString = 557449DF0AAB35D800EC1423;
 			remoteInfo = file2str;
 		};
+		55BEF9840AEC5C7D00357340 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 556A42440AA4E9CE00602CC5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5501E8900AB275F900756C9B /* UnitTests */;
+			remoteInfo = UnitTests;
+		};
 		55FEC7F80AEC58D8001A1CAB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 556A42440AA4E9CE00602CC5 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 55FEC7B50AEC5713001A1CAB /* tiny */;
+			remoteGlobalIDString = 55FEC7B50AEC5713001A1CAB;
 			remoteInfo = tiny;
 		};
 /* End PBXContainerItemProxy section */
@@ -925,7 +946,7 @@
 		556A4B840AA5015100602CC5 /* nes_defs.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = nes_defs.h; sourceTree = "<group>"; };
 		556A4BDE0AA504C700602CC5 /* dac.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = dac.c; sourceTree = "<group>"; };
 		556A4BDF0AA504C700602CC5 /* dac.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = dac.h; sourceTree = "<group>"; };
-		556A4C280AA50D6200602CC5 /* MAME OS X.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MAME OS X.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		556A4C280AA50D6200602CC5 /* MAME OS X-tiny.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MAME OS X-tiny.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		556A4C2A0AA50D6200602CC5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Info.plist; sourceTree = "<group>"; };
 		556A4C510AA50E5800602CC5 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/MainMenu.nib; sourceTree = "<group>"; };
 		556A4C650AA50F2800602CC5 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -1193,7 +1214,7 @@
 		55FE26320AAD33AB00C4054A /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = /System/Library/Frameworks/AudioUnit.framework; sourceTree = "<absolute>"; };
 		55FEC7680AEC51DA001A1CAB /* tinymame.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tinymame.pch; sourceTree = "<group>"; };
 		55FEC76A0AEC52F7001A1CAB /* tiny.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = tiny.c; path = src/tiny.c; sourceTree = "<group>"; };
-		55FEC7B60AEC5713001A1CAB /* libtiny.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libtiny.a; path = build/Debug/libtiny.a; sourceTree = "<group>"; };
+		55FEC7B60AEC5713001A1CAB /* libtiny.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libtiny.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1361,7 +1382,7 @@
 		556A42510AA4E9E500602CC5 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				556A4C280AA50D6200602CC5 /* MAME OS X.app */,
+				556A4C280AA50D6200602CC5 /* MAME OS X-tiny.app */,
 				556A42D40AA4EBA200602CC5 /* libcore.a */,
 				556A44380AA4F4CD00602CC5 /* libdrivers.a */,
 				556A4B780AA5011100602CC5 /* libsounds.a */,
@@ -3064,9 +3085,9 @@
 			productReference = 556A4B780AA5011100602CC5 /* libsounds.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		556A4C270AA50D6200602CC5 /* MAME OS X */ = {
+		556A4C270AA50D6200602CC5 /* MAME OS X (tiny) */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 556A4C2B0AA50D6300602CC5 /* Build configuration list for PBXNativeTarget "MAME OS X" */;
+			buildConfigurationList = 556A4C2B0AA50D6300602CC5 /* Build configuration list for PBXNativeTarget "MAME OS X (tiny)" */;
 			buildPhases = (
 				556A4C240AA50D6200602CC5 /* Resources */,
 				556A4C250AA50D6200602CC5 /* Sources */,
@@ -3080,9 +3101,9 @@
 				556A4D980AA5156800602CC5 /* PBXTargetDependency */,
 				556A4D9A0AA5156800602CC5 /* PBXTargetDependency */,
 			);
-			name = "MAME OS X";
+			name = "MAME OS X (tiny)";
 			productName = mameosx;
-			productReference = 556A4C280AA50D6200602CC5 /* MAME OS X.app */;
+			productReference = 556A4C280AA50D6200602CC5 /* MAME OS X-tiny.app */;
 			productType = "com.apple.product-type.application";
 		};
 		557449DF0AAB35D800EC1423 /* file2str */ = {
@@ -3129,16 +3150,17 @@
 			productRefGroup = 556A42510AA4E9E500602CC5 /* Products */;
 			projectDirPath = "";
 			targets = (
-				556A4C270AA50D6200602CC5 /* MAME OS X */,
+				55BEF9830AEC5C7200357340 /* All */,
+				556A4C270AA50D6200602CC5 /* MAME OS X (tiny) */,
 				556A42D30AA4EBA200602CC5 /* core */,
 				556A44370AA4F4CD00602CC5 /* drivers */,
 				556A4B770AA5011100602CC5 /* sounds */,
 				556A498A0AA4F70A00602CC5 /* cpu */,
+				55FEC7B50AEC5713001A1CAB /* tiny */,
 				556A49BA0AA4F86600602CC5 /* localexpat */,
 				556A4A000AA4F8EC00602CC5 /* localzlib */,
 				557449DF0AAB35D800EC1423 /* file2str */,
 				5501E8900AB275F900756C9B /* UnitTests */,
-				55FEC7B50AEC5713001A1CAB /* tiny */,
 			);
 		};
 /* End PBXProject section */
@@ -3416,7 +3438,7 @@
 /* Begin PBXTargetDependency section */
 		5501E8A50AB276D400756C9B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 556A4C270AA50D6200602CC5 /* MAME OS X */;
+			target = 556A4C270AA50D6200602CC5 /* MAME OS X (tiny) */;
 			targetProxy = 5501E8A40AB276D400756C9B /* PBXContainerItemProxy */;
 		};
 		556A4D900AA5156800602CC5 /* PBXTargetDependency */ = {
@@ -3438,6 +3460,11 @@
 			isa = PBXTargetDependency;
 			target = 557449DF0AAB35D800EC1423 /* file2str */;
 			targetProxy = 557449F80AAB364200EC1423 /* PBXContainerItemProxy */;
+		};
+		55BEF9850AEC5C7D00357340 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5501E8900AB275F900756C9B /* UnitTests */;
+			targetProxy = 55BEF9840AEC5C7D00357340 /* PBXContainerItemProxy */;
 		};
 		55FEC7F90AEC58D8001A1CAB /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -3461,7 +3488,7 @@
 		5501E8940AB275FA00756C9B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/MAME OS X.app/Contents/MacOS/MAME OS X";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/MAME OS X-tiny.app/Contents/MacOS/MAME OS X-tiny";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
@@ -3493,7 +3520,7 @@
 		5501E8950AB275FA00756C9B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/MAME OS X.app/Contents/MacOS/MAME OS X";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/MAME OS X-tiny.app/Contents/MacOS/MAME OS X-tiny";
 				COPY_PHASE_STRIP = YES;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -3772,7 +3799,7 @@
 					AppKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = "MAME OS X";
+				PRODUCT_NAME = "MAME OS X-tiny";
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;
 			};
@@ -3803,7 +3830,7 @@
 					AppKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = "MAME OS X";
+				PRODUCT_NAME = "MAME OS X-tiny";
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;
 			};
@@ -3835,6 +3862,28 @@
 				INSTALL_PATH = "$(HOME)/bin";
 				PREBINDING = NO;
 				PRODUCT_NAME = file2str;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		55BEF9890AEC5CAB00357340 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = All;
+			};
+			name = Debug;
+		};
+		55BEF98A0AEC5CAB00357340 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				PRODUCT_NAME = All;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -3944,7 +3993,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		556A4C2B0AA50D6300602CC5 /* Build configuration list for PBXNativeTarget "MAME OS X" */ = {
+		556A4C2B0AA50D6300602CC5 /* Build configuration list for PBXNativeTarget "MAME OS X (tiny)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				556A4C2C0AA50D6300602CC5 /* Debug */,
@@ -3958,6 +4007,15 @@
 			buildConfigurations = (
 				557449E30AAB35F800EC1423 /* Debug */,
 				557449E40AAB35F800EC1423 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		55BEF9880AEC5CAB00357340 /* Build configuration list for PBXAggregateTarget "All" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				55BEF9890AEC5CAB00357340 /* Debug */,
+				55BEF98A0AEC5CAB00357340 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
