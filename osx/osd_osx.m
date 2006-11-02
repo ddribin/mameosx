@@ -367,3 +367,7 @@ int osd_display_loading_rom_message(const char *name, rom_load_data *romdata)
 void osd_break_into_debugger(const char *message)
 {
 }
+
+void osd_wait_for_debugger(void)
+{
+}

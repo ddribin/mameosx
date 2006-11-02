@@ -20,4 +20,7 @@
 #define _scalb scalb
 #define CRLF 2
 
+#define MAME_DEBUG 1
+#define NEW_DEBUGGER 1
+
 #endif
