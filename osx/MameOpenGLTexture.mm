@@ -127,6 +127,24 @@ static void cv_assert(CVReturn cr, NSString * message)
         MamePalette16Texture cppTexture(texsource);
         convertTexture(cppTexture, pixelBuffer);
     }
+    else if (texformat == TEXFORMAT_RGB15)
+    {
+        static bool loggedRGB15 = NO;
+        if (!loggedRGB15)
+        {
+            NSLog(@"TEXFORMAT_RGB15 not yet supported");
+            loggedRGB15 = YES;
+        }
+    }
+    else if (texformat == TEXFORMAT_RGB32)
+    {
+        static bool loggedRGB32 = NO;
+        if (!loggedRGB32)
+        {
+            NSLog(@"TEXFORMAT_RGB32 not yet supported");
+            loggedRGB32 = YES;
+        }
+    }
 #if 0
     case TEXFORMAT_RGB15:
         src16 = (UINT16 *)texsource->base + y * texsource->rowpixels;
@@ -177,7 +195,8 @@ static void cv_assert(CVReturn cr, NSString * message)
 #endif
     else
     {
-        fprintf(stderr, "Unknown texture blendmode=%d format=%d\n", PRIMFLAG_GET_BLENDMODE(flags), PRIMFLAG_GET_TEXFORMAT(flags));
+        NSLog(@"Unknown texture blendmode=%d format=%d\n", PRIMFLAG_GET_BLENDMODE(flags), 
+              PRIMFLAG_GET_TEXFORMAT(flags));
         return;
     }
 
