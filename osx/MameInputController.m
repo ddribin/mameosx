@@ -53,10 +53,6 @@ enum
 };
 
 static os_code_info codelist[] = {
-    {"ESC",     '\e',   KEYCODE_ESC},
-    {"Tab",     '\t',   KEYCODE_TAB},
-    {"Return",  '\r',   KEYCODE_ENTER},
-    
     {"1",       '1',    KEYCODE_1},
     {"2",       '2',    KEYCODE_2},
     {"3",       '3',    KEYCODE_3},
@@ -94,8 +90,24 @@ static os_code_info codelist[] = {
     {"Y",       'y',    KEYCODE_Y},
     {"Z",       'z',    KEYCODE_Z},
 	
+    {"ESC",     '\e',   KEYCODE_ESC},
+    {"~",       '~',    KEYCODE_TILDE},
+    {"-",       '-',    KEYCODE_MINUS},
+    {"=",       '=',    KEYCODE_EQUALS},
+    // KEYCODE_BACKSPACE
+    {"Tab",     '\t',   KEYCODE_TAB},
+    {"{",       '{',    KEYCODE_OPENBRACE},
+    {"}",       '}',    KEYCODE_CLOSEBRACE},
+    {"Return",  '\r',   KEYCODE_ENTER},
+    {":",       ':',    KEYCODE_COLON},
+    {"'",       '\'',   KEYCODE_QUOTE},
+    {"\\",      '\\',   KEYCODE_BACKSLASH},
+    // KEYCODE_BACKSLASH2
+    {",",       ',',    KEYCODE_COMMA},
+    // KEYCODE_STOP
+    {"/",       '/',    KEYCODE_SLASH},
     {"Space",   ' ',    KEYCODE_SPACE},
-    
+
     {"Up",      FUNC_TO_INDEX(NSUpArrowFunctionKey),    KEYCODE_UP},
     {"Down",    FUNC_TO_INDEX(NSDownArrowFunctionKey),  KEYCODE_DOWN},
     {"Left",    FUNC_TO_INDEX(NSLeftArrowFunctionKey),  KEYCODE_LEFT},
