@@ -502,22 +502,53 @@
 		556A516E0AA54F1F00602CC5 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 556A4AB10AA4FACB00602CC5 /* OpenGL.framework */; };
 		557449370AAB290900EC1423 /* osd_cpu.h in Headers */ = {isa = PBXBuildFile; fileRef = 5574492D0AAB28D900EC1423 /* osd_cpu.h */; };
 		557449E60AAB360100EC1423 /* file2str.c in Sources */ = {isa = PBXBuildFile; fileRef = 557449E50AAB360100EC1423 /* file2str.c */; };
-		55744BE80AAB4F1900EC1423 /* dualhsxs.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A460AAB392F00EC1423 /* dualhsxs.lay */; };
-		55744BE90AAB4F1900EC1423 /* dualhuov.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A470AAB392F00EC1423 /* dualhuov.lay */; };
-		55744BEA0AAB4F1900EC1423 /* horizont.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A510AAB393000EC1423 /* horizont.lay */; };
-		55744BEB0AAB4F1900EC1423 /* triphsxs.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A610AAB393000EC1423 /* triphsxs.lay */; };
-		55744BEC0AAB4F1900EC1423 /* vertical.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A630AAB393000EC1423 /* vertical.lay */; };
-		55744BED0AAB4F3800EC1423 /* ho20ffff.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A4A0AAB392F00EC1423 /* ho20ffff.lay */; };
-		55744BEE0AAB4F3800EC1423 /* ho2eff2e.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A4B0AAB392F00EC1423 /* ho2eff2e.lay */; };
-		55744BEF0AAB4F3800EC1423 /* ho4f893d.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A4C0AAB392F00EC1423 /* ho4f893d.lay */; };
-		55744BF00AAB4F3800EC1423 /* ho88ffff.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A4D0AAB392F00EC1423 /* ho88ffff.lay */; };
-		55744BF10AAB4F3800EC1423 /* hoa0a0ff.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A4E0AAB392F00EC1423 /* hoa0a0ff.lay */; };
-		55744BF20AAB4F3800EC1423 /* hoffe457.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A4F0AAB393000EC1423 /* hoffe457.lay */; };
-		55744BF30AAB4F3800EC1423 /* hoffff20.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A500AAB393000EC1423 /* hoffff20.lay */; };
-		55744BF40AAB4F3800EC1423 /* voffff20.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A640AAB393000EC1423 /* voffff20.lay */; };
-		55744C040AAB4F6D00EC1423 /* dualhovu.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A450AAB392F00EC1423 /* dualhovu.lay */; };
 		55744C1A0AAB4FC800EC1423 /* osinline.h in Headers */ = {isa = PBXBuildFile; fileRef = 55744C190AAB4FC800EC1423 /* osinline.h */; };
-		55744C1C0AAB4FFA00EC1423 /* snap.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A5A0AAB393000EC1423 /* snap.lay */; };
+		55785CBC0AFAE93D000AE388 /* williams.h in Headers */ = {isa = PBXBuildFile; fileRef = 55785CBB0AFAE93D000AE388 /* williams.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		55785CD30AFAF7B6000AE388 /* mpu4.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55BE033B0AEC7EA800357340 /* mpu4.lay */; };
+		55785CD90AFAF827000AE388 /* abaseb.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A390AAB392F00EC1423 /* abaseb.lay */; };
+		55785CDA0AFAF827000AE388 /* atarifb.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A3A0AAB392F00EC1423 /* atarifb.lay */; };
+		55785CDB0AFAF827000AE388 /* atarifb4.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A3B0AAB392F00EC1423 /* atarifb4.lay */; };
+		55785CDC0AFAF827000AE388 /* avalnche.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A3C0AAB392F00EC1423 /* avalnche.lay */; };
+		55785CDD0AFAF827000AE388 /* bfm_sc2.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A3D0AAB392F00EC1423 /* bfm_sc2.lay */; };
+		55785CDE0AFAF827000AE388 /* buckrog.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A3E0AAB392F00EC1423 /* buckrog.lay */; };
+		55785CDF0AFAF827000AE388 /* bzone.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A3F0AAB392F00EC1423 /* bzone.lay */; };
+		55785CE00AFAF827000AE388 /* circus.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A400AAB392F00EC1423 /* circus.lay */; };
+		55785CE10AFAF827000AE388 /* clowns.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A410AAB392F00EC1423 /* clowns.lay */; };
+		55785CE20AFAF827000AE388 /* copsnrob.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A420AAB392F00EC1423 /* copsnrob.lay */; };
+		55785CE30AFAF827000AE388 /* darius.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A430AAB392F00EC1423 /* darius.lay */; };
+		55785CE40AFAF827000AE388 /* deadeye.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A440AAB392F00EC1423 /* deadeye.lay */; };
+		55785CE50AFAF827000AE388 /* dualhovu.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A450AAB392F00EC1423 /* dualhovu.lay */; };
+		55785CE60AFAF827000AE388 /* dualhsxs.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A460AAB392F00EC1423 /* dualhsxs.lay */; };
+		55785CE70AFAF827000AE388 /* dualhuov.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A470AAB392F00EC1423 /* dualhuov.lay */; };
+		55785CE80AFAF827000AE388 /* geebee.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A480AAB392F00EC1423 /* geebee.lay */; };
+		55785CE90AFAF827000AE388 /* gypsyjug.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A490AAB392F00EC1423 /* gypsyjug.lay */; };
+		55785CEA0AFAF827000AE388 /* ho20ffff.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A4A0AAB392F00EC1423 /* ho20ffff.lay */; };
+		55785CEB0AFAF827000AE388 /* ho2eff2e.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A4B0AAB392F00EC1423 /* ho2eff2e.lay */; };
+		55785CEC0AFAF827000AE388 /* ho4f893d.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A4C0AAB392F00EC1423 /* ho4f893d.lay */; };
+		55785CED0AFAF827000AE388 /* ho88ffff.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A4D0AAB392F00EC1423 /* ho88ffff.lay */; };
+		55785CEE0AFAF827000AE388 /* hoa0a0ff.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A4E0AAB392F00EC1423 /* hoa0a0ff.lay */; };
+		55785CEF0AFAF827000AE388 /* hoffe457.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A4F0AAB393000EC1423 /* hoffe457.lay */; };
+		55785CF00AFAF827000AE388 /* hoffff20.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A500AAB393000EC1423 /* hoffff20.lay */; };
+		55785CF10AFAF827000AE388 /* horizont.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A510AAB393000EC1423 /* horizont.lay */; };
+		55785CF20AFAF827000AE388 /* invad2ct.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A520AAB393000EC1423 /* invad2ct.lay */; };
+		55785CF30AFAF827000AE388 /* invaders.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A530AAB393000EC1423 /* invaders.lay */; };
+		55785CF40AFAF827000AE388 /* invrvnge.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A540AAB393000EC1423 /* invrvnge.lay */; };
+		55785CF50AFAF827000AE388 /* lazercmd.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A550AAB393000EC1423 /* lazercmd.lay */; };
+		55785CF60AFAF827000AE388 /* maxaflex.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A560AAB393000EC1423 /* maxaflex.lay */; };
+		55785CF70AFAF827000AE388 /* nbmj8688.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A570AAB393000EC1423 /* nbmj8688.lay */; };
+		55785CF80AFAF827000AE388 /* rocknms.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A580AAB393000EC1423 /* rocknms.lay */; };
+		55785CF90AFAF827000AE388 /* sbrkout.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A590AAB393000EC1423 /* sbrkout.lay */; };
+		55785CFA0AFAF827000AE388 /* snap.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A5A0AAB393000EC1423 /* snap.lay */; };
+		55785CFB0AFAF827000AE388 /* solarq.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A5B0AAB393000EC1423 /* solarq.lay */; };
+		55785CFC0AFAF827000AE388 /* sos.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A5C0AAB393000EC1423 /* sos.lay */; };
+		55785CFD0AFAF827000AE388 /* sspeedr.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A5D0AAB393000EC1423 /* sspeedr.lay */; };
+		55785CFE0AFAF827000AE388 /* starcas.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A5E0AAB393000EC1423 /* starcas.lay */; };
+		55785CFF0AFAF827000AE388 /* subroc3d.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A5F0AAB393000EC1423 /* subroc3d.lay */; };
+		55785D000AFAF827000AE388 /* tinv2650.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A600AAB393000EC1423 /* tinv2650.lay */; };
+		55785D010AFAF827000AE388 /* triphsxs.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A610AAB393000EC1423 /* triphsxs.lay */; };
+		55785D020AFAF827000AE388 /* turbo.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A620AAB393000EC1423 /* turbo.lay */; };
+		55785D030AFAF827000AE388 /* vertical.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A630AAB393000EC1423 /* vertical.lay */; };
+		55785D040AFAF827000AE388 /* voffff20.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A640AAB393000EC1423 /* voffff20.lay */; };
 		558D9F2A0AAE70B1007B2A32 /* cpu_config.h in Headers */ = {isa = PBXBuildFile; fileRef = 558D9F290AAE70B1007B2A32 /* cpu_config.h */; };
 		558D9F2C0AAE70E9007B2A32 /* sound_config.h in Headers */ = {isa = PBXBuildFile; fileRef = 558D9F2B0AAE70E9007B2A32 /* sound_config.h */; };
 		558D9F2E0AAE7117007B2A32 /* config.h in Headers */ = {isa = PBXBuildFile; fileRef = 558D9F2D0AAE7117007B2A32 /* config.h */; };
@@ -1132,52 +1163,7 @@
 		55BE025F0AEC716900357340 /* zn.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFEF20AEC716900357340 /* zn.c */; };
 		55BE02600AEC716900357340 /* zodiack.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFEF30AEC716900357340 /* zodiack.c */; };
 		55BE02610AEC716900357340 /* zr107.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFEF40AEC716900357340 /* zr107.c */; };
-		55BE02A10AEC72AA00357340 /* clowns.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A410AAB392F00EC1423 /* clowns.lay */; };
-		55BE02A20AEC72AA00357340 /* invad2ct.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A520AAB393000EC1423 /* invad2ct.lay */; };
-		55BE02A30AEC72AA00357340 /* invaders.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A530AAB393000EC1423 /* invaders.lay */; };
-		55BE02A40AEC72AA00357340 /* invrvnge.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A540AAB393000EC1423 /* invrvnge.lay */; };
-		55BE02E30AEC763200357340 /* abaseb.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A390AAB392F00EC1423 /* abaseb.lay */; };
-		55BE02E40AEC763200357340 /* atarifb.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A3A0AAB392F00EC1423 /* atarifb.lay */; };
-		55BE02E50AEC763200357340 /* atarifb4.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A3B0AAB392F00EC1423 /* atarifb4.lay */; };
-		55BE02E70AEC765100357340 /* avalnche.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A3C0AAB392F00EC1423 /* avalnche.lay */; };
 		55BE02F80AEC774200357340 /* m6800.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A48B20AA4F64000602CC5 /* m6800.c */; };
-		55BE030F0AEC7D3B00357340 /* bfm_sc2.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A3D0AAB392F00EC1423 /* bfm_sc2.lay */; };
-		55BE03110AEC7D4A00357340 /* bzone.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A3F0AAB392F00EC1423 /* bzone.lay */; };
-		55BE03130AEC7D6200357340 /* starcas.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A5E0AAB393000EC1423 /* starcas.lay */; };
-		55BE03160AEC7DF000357340 /* solarq.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A5B0AAB393000EC1423 /* solarq.lay */; };
-		55BE03180AEC7DFD00357340 /* circus.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A400AAB392F00EC1423 /* circus.lay */; };
-		55BE031A0AEC7E0D00357340 /* copsnrob.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A420AAB392F00EC1423 /* copsnrob.lay */; };
-		55BE031C0AEC7E1F00357340 /* buckrog.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A3E0AAB392F00EC1423 /* buckrog.lay */; };
-		55BE031D0AEC7E1F00357340 /* darius.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A430AAB392F00EC1423 /* darius.lay */; };
-		55BE031E0AEC7E1F00357340 /* deadeye.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A440AAB392F00EC1423 /* deadeye.lay */; };
-		55BE031F0AEC7E1F00357340 /* dualhovu.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A450AAB392F00EC1423 /* dualhovu.lay */; };
-		55BE03200AEC7E1F00357340 /* dualhsxs.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A460AAB392F00EC1423 /* dualhsxs.lay */; };
-		55BE03210AEC7E1F00357340 /* dualhuov.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A470AAB392F00EC1423 /* dualhuov.lay */; };
-		55BE03220AEC7E1F00357340 /* geebee.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A480AAB392F00EC1423 /* geebee.lay */; };
-		55BE03230AEC7E1F00357340 /* gypsyjug.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A490AAB392F00EC1423 /* gypsyjug.lay */; };
-		55BE03240AEC7E1F00357340 /* ho20ffff.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A4A0AAB392F00EC1423 /* ho20ffff.lay */; };
-		55BE03250AEC7E1F00357340 /* ho2eff2e.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A4B0AAB392F00EC1423 /* ho2eff2e.lay */; };
-		55BE03260AEC7E1F00357340 /* ho4f893d.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A4C0AAB392F00EC1423 /* ho4f893d.lay */; };
-		55BE03270AEC7E1F00357340 /* ho88ffff.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A4D0AAB392F00EC1423 /* ho88ffff.lay */; };
-		55BE03280AEC7E1F00357340 /* hoa0a0ff.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A4E0AAB392F00EC1423 /* hoa0a0ff.lay */; };
-		55BE03290AEC7E1F00357340 /* hoffe457.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A4F0AAB393000EC1423 /* hoffe457.lay */; };
-		55BE032A0AEC7E1F00357340 /* hoffff20.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A500AAB393000EC1423 /* hoffff20.lay */; };
-		55BE032B0AEC7E1F00357340 /* horizont.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A510AAB393000EC1423 /* horizont.lay */; };
-		55BE032C0AEC7E1F00357340 /* lazercmd.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A550AAB393000EC1423 /* lazercmd.lay */; };
-		55BE032D0AEC7E1F00357340 /* maxaflex.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A560AAB393000EC1423 /* maxaflex.lay */; };
-		55BE032E0AEC7E1F00357340 /* nbmj8688.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A570AAB393000EC1423 /* nbmj8688.lay */; };
-		55BE032F0AEC7E1F00357340 /* rocknms.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A580AAB393000EC1423 /* rocknms.lay */; };
-		55BE03300AEC7E1F00357340 /* sbrkout.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A590AAB393000EC1423 /* sbrkout.lay */; };
-		55BE03310AEC7E1F00357340 /* snap.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A5A0AAB393000EC1423 /* snap.lay */; };
-		55BE03320AEC7E1F00357340 /* sos.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A5C0AAB393000EC1423 /* sos.lay */; };
-		55BE03330AEC7E1F00357340 /* sspeedr.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A5D0AAB393000EC1423 /* sspeedr.lay */; };
-		55BE03340AEC7E1F00357340 /* subroc3d.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A5F0AAB393000EC1423 /* subroc3d.lay */; };
-		55BE03350AEC7E1F00357340 /* tinv2650.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A600AAB393000EC1423 /* tinv2650.lay */; };
-		55BE03360AEC7E1F00357340 /* triphsxs.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A610AAB393000EC1423 /* triphsxs.lay */; };
-		55BE03370AEC7E1F00357340 /* turbo.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A620AAB393000EC1423 /* turbo.lay */; };
-		55BE03380AEC7E1F00357340 /* vertical.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A630AAB393000EC1423 /* vertical.lay */; };
-		55BE03390AEC7E1F00357340 /* voffff20.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55744A640AAB393000EC1423 /* voffff20.lay */; };
-		55BE033C0AEC7EBD00357340 /* mpu4.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55BE033B0AEC7EA800357340 /* mpu4.lay */; };
 		55BE04680AEC817900357340 /* 53c810.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE036C0AEC817700357340 /* 53c810.c */; };
 		55BE04690AEC817900357340 /* 53c810.h in Headers */ = {isa = PBXBuildFile; fileRef = 55BE036D0AEC817700357340 /* 53c810.h */; };
 		55BE046A0AEC817900357340 /* 6522via.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE036E0AEC817700357340 /* 6522via.c */; };
@@ -2624,6 +2610,17 @@
 			);
 			script = "${TARGET_BUILD_DIR}/file2str ${INPUT_FILE_PATH} ${DERIVED_FILES_DIR}/${INPUT_FILE_BASE}.lh layout_${INPUT_FILE_BASE}";
 		};
+		55785CCE0AFAF574000AE388 /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			filePatterns = "*.lay";
+			fileType = pattern.proxy;
+			isEditable = 1;
+			outputFiles = (
+				"$(SYMROOT)/layouts/$(INPUT_FILE_BASE).lh",
+			);
+			script = "${TARGET_BUILD_DIR}/file2str ${INPUT_FILE_PATH} ${SYMROOT}/layouts/${INPUT_FILE_BASE}.lh layout_${INPUT_FILE_BASE}";
+		};
 		55BE02B00AEC72EB00357340 /* PBXBuildRule */ = {
 			isa = PBXBuildRule;
 			compilerSpec = com.apple.compilers.proxy.script;
@@ -2666,11 +2663,25 @@
 			remoteGlobalIDString = 556A4A000AA4F8EC00602CC5;
 			remoteInfo = localzlib;
 		};
-		557449F80AAB364200EC1423 /* PBXContainerItemProxy */ = {
+		55785D090AFAF992000AE388 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 556A42440AA4E9CE00602CC5 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 557449DF0AAB35D800EC1423;
+			remoteGlobalIDString = 55785CC60AFAF55D000AE388 /* layouts */;
+			remoteInfo = layouts;
+		};
+		55785D200AFAFDBD000AE388 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 556A42440AA4E9CE00602CC5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 55785CC60AFAF55D000AE388 /* layouts */;
+			remoteInfo = layouts;
+		};
+		55785D240AFAFDEA000AE388 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 556A42440AA4E9CE00602CC5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 557449DF0AAB35D800EC1423 /* file2str */;
 			remoteInfo = file2str;
 		};
 		55BEF9840AEC5C7D00357340 /* PBXContainerItemProxy */ = {
@@ -3689,7 +3700,6 @@
 		556A4F2C0AA51CA400602CC5 /* vicdual.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = vicdual.h; sourceTree = "<group>"; };
 		556A4F2D0AA51CA400602CC5 /* videopin.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = videopin.h; sourceTree = "<group>"; };
 		556A4F2E0AA51CA400602CC5 /* vindictr.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = vindictr.h; sourceTree = "<group>"; };
-		556A4F2F0AA51CA400602CC5 /* williams.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = williams.h; sourceTree = "<group>"; };
 		556A4F300AA51CA400602CC5 /* wwfwfest.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = wwfwfest.h; sourceTree = "<group>"; };
 		556A4F310AA51CA400602CC5 /* xybots.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = xybots.h; sourceTree = "<group>"; };
 		556A4F320AA51CA400602CC5 /* zaxxon.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = zaxxon.h; sourceTree = "<group>"; };
@@ -3750,6 +3760,8 @@
 		55744A630AAB393000EC1423 /* vertical.lay */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = vertical.lay; sourceTree = "<group>"; };
 		55744A640AAB393000EC1423 /* voffff20.lay */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = voffff20.lay; sourceTree = "<group>"; };
 		55744C190AAB4FC800EC1423 /* osinline.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = osinline.h; sourceTree = "<group>"; };
+		55785CBB0AFAE93D000AE388 /* williams.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = williams.h; sourceTree = "<group>"; };
+		55785CC70AFAF55D000AE388 /* liblayouts.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = liblayouts.a; path = build/Debug/liblayouts.a; sourceTree = "<group>"; };
 		558D9F290AAE70B1007B2A32 /* cpu_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cpu_config.h; sourceTree = "<group>"; };
 		558D9F2B0AAE70E9007B2A32 /* sound_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sound_config.h; sourceTree = "<group>"; };
 		558D9F2D0AAE7117007B2A32 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
@@ -5813,6 +5825,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		55785CC50AFAF55D000AE388 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		55BEF99E0AEC5E5C00357340 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -5965,6 +5984,7 @@
 				55BEF9A00AEC5E5C00357340 /* MameKit.framework */,
 				55BEF9F00AEC618D00357340 /* libosd.a */,
 				55BEFB0D0AEC6D0C00357340 /* MAME OS X.app */,
+				55785CC70AFAF55D000AE388 /* liblayouts.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -7384,7 +7404,6 @@
 				556A4F2C0AA51CA400602CC5 /* vicdual.h */,
 				556A4F2D0AA51CA400602CC5 /* videopin.h */,
 				556A4F2E0AA51CA400602CC5 /* vindictr.h */,
-				556A4F2F0AA51CA400602CC5 /* williams.h */,
 				556A4F300AA51CA400602CC5 /* wwfwfest.h */,
 				556A4F310AA51CA400602CC5 /* xybots.h */,
 				556A4F320AA51CA400602CC5 /* zaxxon.h */,
@@ -9479,6 +9498,7 @@
 				55BE0C070AEC8C9000357340 /* videopin.c */,
 				55BE0C080AEC8C9000357340 /* warpwarp.c */,
 				55BE0C090AEC8C9000357340 /* williams.c */,
+				55785CBB0AFAE93D000AE388 /* williams.h */,
 				55BE0C0B0AEC8C9000357340 /* wiping.c */,
 				55BE0C0C0AEC8C9000357340 /* wow.c */,
 				55BE0C0D0AEC8C9000357340 /* zaxxon.c */,
@@ -9726,6 +9746,7 @@
 				55BE0D5E0AEC8D7C00357340 /* taitosnd.h in Headers */,
 				55BE0D630AEC8D7C00357340 /* timeplt.h in Headers */,
 				5555902F0AF9B117001ADC6D /* mcr.h in Headers */,
+				55785CBC0AFAE93D000AE388 /* williams.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9862,6 +9883,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		55785CC30AFAF55D000AE388 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		55BEF99B0AEC5E5C00357340 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -9963,7 +9991,7 @@
 				55744A2B0AAB368700EC1423 /* PBXBuildRule */,
 			);
 			dependencies = (
-				557449F90AAB364200EC1423 /* PBXTargetDependency */,
+				55785D210AFAFDBD000AE388 /* PBXTargetDependency */,
 			);
 			name = core;
 			productName = core;
@@ -9982,6 +10010,7 @@
 				55BE02B00AEC72EB00357340 /* PBXBuildRule */,
 			);
 			dependencies = (
+				55785D0A0AFAF992000AE388 /* PBXTargetDependency */,
 			);
 			name = drivers;
 			productName = drivers;
@@ -10094,6 +10123,25 @@
 			productReference = 557449E00AAB35D800EC1423 /* file2str */;
 			productType = "com.apple.product-type.tool";
 		};
+		55785CC60AFAF55D000AE388 /* layouts */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 55785CCF0AFAF5C0000AE388 /* Build configuration list for PBXNativeTarget "layouts" */;
+			buildPhases = (
+				55785CC30AFAF55D000AE388 /* Headers */,
+				55785CC40AFAF55D000AE388 /* Sources */,
+				55785CC50AFAF55D000AE388 /* Frameworks */,
+			);
+			buildRules = (
+				55785CCE0AFAF574000AE388 /* PBXBuildRule */,
+			);
+			dependencies = (
+				55785D250AFAFDEA000AE388 /* PBXTargetDependency */,
+			);
+			name = layouts;
+			productName = layouts;
+			productReference = 55785CC70AFAF55D000AE388 /* liblayouts.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		55BEF99F0AEC5E5C00357340 /* MameKit */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 55BEF9A30AEC5E5C00357340 /* Build configuration list for PBXNativeTarget "MameKit" */;
@@ -10198,6 +10246,7 @@
 				55BEF99F0AEC5E5C00357340 /* MameKit */,
 				55BEFB0C0AEC6D0C00357340 /* MAME OS X */,
 				55BE0D9A0AECFEF700357340 /* external */,
+				55785CC60AFAF55D000AE388 /* layouts */,
 			);
 		};
 /* End PBXProject section */
@@ -10268,21 +10317,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55744C040AAB4F6D00EC1423 /* dualhovu.lay in Sources */,
-				55744BE80AAB4F1900EC1423 /* dualhsxs.lay in Sources */,
-				55744BE90AAB4F1900EC1423 /* dualhuov.lay in Sources */,
-				55744BEA0AAB4F1900EC1423 /* horizont.lay in Sources */,
-				55744BEB0AAB4F1900EC1423 /* triphsxs.lay in Sources */,
-				55744BEC0AAB4F1900EC1423 /* vertical.lay in Sources */,
-				55744BED0AAB4F3800EC1423 /* ho20ffff.lay in Sources */,
-				55744BEE0AAB4F3800EC1423 /* ho2eff2e.lay in Sources */,
-				55744BEF0AAB4F3800EC1423 /* ho4f893d.lay in Sources */,
-				55744BF00AAB4F3800EC1423 /* ho88ffff.lay in Sources */,
-				55744BF10AAB4F3800EC1423 /* hoa0a0ff.lay in Sources */,
-				55744BF20AAB4F3800EC1423 /* hoffe457.lay in Sources */,
-				55744BF30AAB4F3800EC1423 /* hoffff20.lay in Sources */,
-				55744BF40AAB4F3800EC1423 /* voffff20.lay in Sources */,
-				55744C1C0AAB4FFA00EC1423 /* snap.lay in Sources */,
 				556A42D70AA4EBB300602CC5 /* audit.c in Sources */,
 				556A42D90AA4EBB300602CC5 /* chd.c in Sources */,
 				556A42DB0AA4EBB300602CC5 /* cheat.c in Sources */,
@@ -10356,51 +10390,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55BE033C0AEC7EBD00357340 /* mpu4.lay in Sources */,
-				55BE02E30AEC763200357340 /* abaseb.lay in Sources */,
-				55BE02E40AEC763200357340 /* atarifb.lay in Sources */,
-				55BE02E50AEC763200357340 /* atarifb4.lay in Sources */,
-				55BE02E70AEC765100357340 /* avalnche.lay in Sources */,
-				55BE030F0AEC7D3B00357340 /* bfm_sc2.lay in Sources */,
-				55BE031C0AEC7E1F00357340 /* buckrog.lay in Sources */,
-				55BE03110AEC7D4A00357340 /* bzone.lay in Sources */,
-				55BE03180AEC7DFD00357340 /* circus.lay in Sources */,
-				55BE02A10AEC72AA00357340 /* clowns.lay in Sources */,
-				55BE031A0AEC7E0D00357340 /* copsnrob.lay in Sources */,
-				55BE031D0AEC7E1F00357340 /* darius.lay in Sources */,
-				55BE031E0AEC7E1F00357340 /* deadeye.lay in Sources */,
-				55BE031F0AEC7E1F00357340 /* dualhovu.lay in Sources */,
-				55BE03200AEC7E1F00357340 /* dualhsxs.lay in Sources */,
-				55BE03210AEC7E1F00357340 /* dualhuov.lay in Sources */,
-				55BE03220AEC7E1F00357340 /* geebee.lay in Sources */,
-				55BE03230AEC7E1F00357340 /* gypsyjug.lay in Sources */,
-				55BE03240AEC7E1F00357340 /* ho20ffff.lay in Sources */,
-				55BE03250AEC7E1F00357340 /* ho2eff2e.lay in Sources */,
-				55BE03260AEC7E1F00357340 /* ho4f893d.lay in Sources */,
-				55BE03270AEC7E1F00357340 /* ho88ffff.lay in Sources */,
-				55BE03280AEC7E1F00357340 /* hoa0a0ff.lay in Sources */,
-				55BE03290AEC7E1F00357340 /* hoffe457.lay in Sources */,
-				55BE032A0AEC7E1F00357340 /* hoffff20.lay in Sources */,
-				55BE032B0AEC7E1F00357340 /* horizont.lay in Sources */,
-				55BE02A20AEC72AA00357340 /* invad2ct.lay in Sources */,
-				55BE02A30AEC72AA00357340 /* invaders.lay in Sources */,
-				55BE02A40AEC72AA00357340 /* invrvnge.lay in Sources */,
-				55BE032C0AEC7E1F00357340 /* lazercmd.lay in Sources */,
-				55BE032D0AEC7E1F00357340 /* maxaflex.lay in Sources */,
-				55BE032E0AEC7E1F00357340 /* nbmj8688.lay in Sources */,
-				55BE032F0AEC7E1F00357340 /* rocknms.lay in Sources */,
-				55BE03300AEC7E1F00357340 /* sbrkout.lay in Sources */,
-				55BE03310AEC7E1F00357340 /* snap.lay in Sources */,
-				55BE03160AEC7DF000357340 /* solarq.lay in Sources */,
-				55BE03320AEC7E1F00357340 /* sos.lay in Sources */,
-				55BE03330AEC7E1F00357340 /* sspeedr.lay in Sources */,
-				55BE03130AEC7D6200357340 /* starcas.lay in Sources */,
-				55BE03340AEC7E1F00357340 /* subroc3d.lay in Sources */,
-				55BE03350AEC7E1F00357340 /* tinv2650.lay in Sources */,
-				55BE03360AEC7E1F00357340 /* triphsxs.lay in Sources */,
-				55BE03370AEC7E1F00357340 /* turbo.lay in Sources */,
-				55BE03380AEC7E1F00357340 /* vertical.lay in Sources */,
-				55BE03390AEC7E1F00357340 /* voffff20.lay in Sources */,
 				556A4B450AA4FF3200602CC5 /* vsnes.c in Sources */,
 				556A4E660AA51BD700602CC5 /* jrpacman.c in Sources */,
 				556A4E670AA51BD700602CC5 /* pacman.c in Sources */,
@@ -12534,6 +12523,58 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		55785CC40AFAF55D000AE388 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55785CD30AFAF7B6000AE388 /* mpu4.lay in Sources */,
+				55785CD90AFAF827000AE388 /* abaseb.lay in Sources */,
+				55785CDA0AFAF827000AE388 /* atarifb.lay in Sources */,
+				55785CDB0AFAF827000AE388 /* atarifb4.lay in Sources */,
+				55785CDC0AFAF827000AE388 /* avalnche.lay in Sources */,
+				55785CDD0AFAF827000AE388 /* bfm_sc2.lay in Sources */,
+				55785CDE0AFAF827000AE388 /* buckrog.lay in Sources */,
+				55785CDF0AFAF827000AE388 /* bzone.lay in Sources */,
+				55785CE00AFAF827000AE388 /* circus.lay in Sources */,
+				55785CE10AFAF827000AE388 /* clowns.lay in Sources */,
+				55785CE20AFAF827000AE388 /* copsnrob.lay in Sources */,
+				55785CE30AFAF827000AE388 /* darius.lay in Sources */,
+				55785CE40AFAF827000AE388 /* deadeye.lay in Sources */,
+				55785CE50AFAF827000AE388 /* dualhovu.lay in Sources */,
+				55785CE60AFAF827000AE388 /* dualhsxs.lay in Sources */,
+				55785CE70AFAF827000AE388 /* dualhuov.lay in Sources */,
+				55785CE80AFAF827000AE388 /* geebee.lay in Sources */,
+				55785CE90AFAF827000AE388 /* gypsyjug.lay in Sources */,
+				55785CEA0AFAF827000AE388 /* ho20ffff.lay in Sources */,
+				55785CEB0AFAF827000AE388 /* ho2eff2e.lay in Sources */,
+				55785CEC0AFAF827000AE388 /* ho4f893d.lay in Sources */,
+				55785CED0AFAF827000AE388 /* ho88ffff.lay in Sources */,
+				55785CEE0AFAF827000AE388 /* hoa0a0ff.lay in Sources */,
+				55785CEF0AFAF827000AE388 /* hoffe457.lay in Sources */,
+				55785CF00AFAF827000AE388 /* hoffff20.lay in Sources */,
+				55785CF10AFAF827000AE388 /* horizont.lay in Sources */,
+				55785CF20AFAF827000AE388 /* invad2ct.lay in Sources */,
+				55785CF30AFAF827000AE388 /* invaders.lay in Sources */,
+				55785CF40AFAF827000AE388 /* invrvnge.lay in Sources */,
+				55785CF50AFAF827000AE388 /* lazercmd.lay in Sources */,
+				55785CF60AFAF827000AE388 /* maxaflex.lay in Sources */,
+				55785CF70AFAF827000AE388 /* nbmj8688.lay in Sources */,
+				55785CF80AFAF827000AE388 /* rocknms.lay in Sources */,
+				55785CF90AFAF827000AE388 /* sbrkout.lay in Sources */,
+				55785CFA0AFAF827000AE388 /* snap.lay in Sources */,
+				55785CFB0AFAF827000AE388 /* solarq.lay in Sources */,
+				55785CFC0AFAF827000AE388 /* sos.lay in Sources */,
+				55785CFD0AFAF827000AE388 /* sspeedr.lay in Sources */,
+				55785CFE0AFAF827000AE388 /* starcas.lay in Sources */,
+				55785CFF0AFAF827000AE388 /* subroc3d.lay in Sources */,
+				55785D000AFAF827000AE388 /* tinv2650.lay in Sources */,
+				55785D010AFAF827000AE388 /* triphsxs.lay in Sources */,
+				55785D020AFAF827000AE388 /* turbo.lay in Sources */,
+				55785D030AFAF827000AE388 /* vertical.lay in Sources */,
+				55785D040AFAF827000AE388 /* voffff20.lay in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		55BEF99D0AEC5E5C00357340 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -12616,10 +12657,20 @@
 			target = 556A4A000AA4F8EC00602CC5 /* localzlib */;
 			targetProxy = 556A4D990AA5156800602CC5 /* PBXContainerItemProxy */;
 		};
-		557449F90AAB364200EC1423 /* PBXTargetDependency */ = {
+		55785D0A0AFAF992000AE388 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 55785CC60AFAF55D000AE388 /* layouts */;
+			targetProxy = 55785D090AFAF992000AE388 /* PBXContainerItemProxy */;
+		};
+		55785D210AFAFDBD000AE388 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 55785CC60AFAF55D000AE388 /* layouts */;
+			targetProxy = 55785D200AFAFDBD000AE388 /* PBXContainerItemProxy */;
+		};
+		55785D250AFAFDEA000AE388 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 557449DF0AAB35D800EC1423 /* file2str */;
-			targetProxy = 557449F80AAB364200EC1423 /* PBXContainerItemProxy */;
+			targetProxy = 55785D240AFAFDEA000AE388 /* PBXContainerItemProxy */;
 		};
 		55BEF9850AEC5C7D00357340 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -12764,7 +12815,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = mame.pch;
 				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/mame/includes",
+					"$(SRCROOT)/mame/src/includes",
 					"$(SRCROOT)/mame/src",
 					"$(SRCROOT)/mame",
 					"$(SRCROOT)/osx",
@@ -12785,7 +12836,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = mame.pch;
 				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/mame/includes",
+					"$(SRCROOT)/mame/src/includes",
 					"$(SRCROOT)/mame/src",
 					"$(SRCROOT)/mame",
 					"$(SRCROOT)/osx",
@@ -12805,7 +12856,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				HEADER_SEARCH_PATHS = (
 					"$(HEADER_SEARCH_PATHS)",
-					"$(SRCROOT)/mame/src/layout",
+					"$(SYMROOT)/layouts",
 				);
 				INSTALL_PATH = /usr/local/lib;
 				PREBINDING = NO;
@@ -12824,7 +12875,7 @@
 				GCC_MODEL_TUNING = G5;
 				HEADER_SEARCH_PATHS = (
 					"$(HEADER_SEARCH_PATHS)",
-					"$(SRCROOT)/mame/src/layout",
+					"$(SYMROOT)/layouts",
 				);
 				INSTALL_PATH = /usr/local/lib;
 				PREBINDING = NO;
@@ -12843,9 +12894,14 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SYMROOT)/layouts",
+				);
 				INSTALL_PATH = /usr/local/lib;
 				PREBINDING = NO;
 				PRODUCT_NAME = drivers;
+				USE_HEADERMAP = "";
 				ZERO_LINK = YES;
 			};
 			name = Debug;
@@ -12857,9 +12913,14 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SYMROOT)/layouts",
+				);
 				INSTALL_PATH = /usr/local/lib;
 				PREBINDING = NO;
 				PRODUCT_NAME = drivers;
+				USE_HEADERMAP = "";
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -13078,6 +13139,36 @@
 				INSTALL_PATH = "$(HOME)/bin";
 				PREBINDING = NO;
 				PRODUCT_NAME = file2str;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		55785CD00AFAF5C0000AE388 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INSTALL_PATH = /usr/local/lib;
+				PREBINDING = NO;
+				PRODUCT_NAME = layouts;
+				ZERO_LINK = YES;
+			};
+			name = Debug;
+		};
+		55785CD10AFAF5C0000AE388 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				INSTALL_PATH = /usr/local/lib;
+				PREBINDING = NO;
+				PRODUCT_NAME = layouts;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -13397,6 +13488,15 @@
 			buildConfigurations = (
 				557449E30AAB35F800EC1423 /* Debug */,
 				557449E40AAB35F800EC1423 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		55785CCF0AFAF5C0000AE388 /* Build configuration list for PBXNativeTarget "layouts" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				55785CD00AFAF5C0000AE388 /* Debug */,
+				55785CD10AFAF5C0000AE388 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
