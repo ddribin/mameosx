@@ -321,7 +321,7 @@ NSString * MameViewNaturalSizeDidChange = @"NaturalSizeDidChange";
     return [[mGame retain] autorelease]; 
 }
 
-- (void) setGame: (NSString *) theGame
+- (BOOL) setGame: (NSString *) theGame
 {
     if (mGame != theGame)
     {
@@ -330,9 +330,18 @@ NSString * MameViewNaturalSizeDidChange = @"NaturalSizeDidChange";
     }
     
     if (mGame != nil)
+    {
         mGameIndex = driver_get_index([mGame UTF8String]);
+        if (mGameIndex != -1)
+            return YES;
+        else
+            return NO;
+    }
     else
+    {
         mGameIndex = -1;
+        return NO;
+    }
 }
 
 - (BOOL) start;

@@ -71,7 +71,7 @@
 }
 
 - (NSString *) game;
-- (void) setGame: (NSString *) theGame;
+- (BOOL) setGame: (NSString *) theGame;
 
 - (BOOL) start;
 - (void) stop;

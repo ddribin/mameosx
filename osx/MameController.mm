@@ -89,9 +89,17 @@ void leaks_sleeper()
     [mMameView setRenderInCoreVideoThread: [mConfiguration renderInCV]];
     [mMameView setClearToRed: [mConfiguration clearToRed]];
     
-    [mMameView setGame: [self getGameNameToRun]];
-    [mMameView start];
-    [self hideOpenPanel: nil];
+    NSString * gameName = [self getGameNameToRun];
+    if ([mMameView setGame: gameName])
+    {
+        [mMameView start];
+        [self hideOpenPanel: nil];
+    }
+    else
+    {
+        NSLog(@"Game not found: %@", gameName);
+        [NSApp terminate: nil];
+    }
 }
 
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender
