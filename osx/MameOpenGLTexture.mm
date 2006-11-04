@@ -129,11 +129,19 @@ static void cv_assert(CVReturn cr, NSString * message)
     }
     else if (texformat == TEXFORMAT_RGB15)
     {
-        static bool loggedRGB15 = NO;
-        if (!loggedRGB15)
+        if (texsource->palette != NULL)
         {
-            NSLog(@"TEXFORMAT_RGB15 not yet supported");
-            loggedRGB15 = YES;
+            MamePaletteRGB15Texture cppTexture(texsource);
+            convertTexture(cppTexture, pixelBuffer);
+        }
+        else
+        {
+            static bool loggedRGB15 = NO;
+            if (!loggedRGB15)
+            {
+                NSLog(@"TEXFORMAT_RGB15 not yet supported: %p", texsource->palette);
+                loggedRGB15 = YES;
+            }
         }
     }
     else if (texformat == TEXFORMAT_RGB32)
