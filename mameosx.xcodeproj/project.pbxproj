@@ -2667,21 +2667,21 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 556A42440AA4E9CE00602CC5 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 55785CC60AFAF55D000AE388 /* layouts */;
+			remoteGlobalIDString = 55785CC60AFAF55D000AE388;
 			remoteInfo = layouts;
 		};
 		55785D200AFAFDBD000AE388 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 556A42440AA4E9CE00602CC5 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 55785CC60AFAF55D000AE388 /* layouts */;
+			remoteGlobalIDString = 55785CC60AFAF55D000AE388;
 			remoteInfo = layouts;
 		};
 		55785D240AFAFDEA000AE388 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 556A42440AA4E9CE00602CC5 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 557449DF0AAB35D800EC1423 /* file2str */;
+			remoteGlobalIDString = 557449DF0AAB35D800EC1423;
 			remoteInfo = file2str;
 		};
 		55BEF9840AEC5C7D00357340 /* PBXContainerItemProxy */ = {
@@ -3761,7 +3761,7 @@
 		55744A640AAB393000EC1423 /* voffff20.lay */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = voffff20.lay; sourceTree = "<group>"; };
 		55744C190AAB4FC800EC1423 /* osinline.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = osinline.h; sourceTree = "<group>"; };
 		55785CBB0AFAE93D000AE388 /* williams.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = williams.h; sourceTree = "<group>"; };
-		55785CC70AFAF55D000AE388 /* liblayouts.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = liblayouts.a; path = build/Debug/liblayouts.a; sourceTree = "<group>"; };
+		55785CC70AFAF55D000AE388 /* liblayouts.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liblayouts.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		558D9F290AAE70B1007B2A32 /* cpu_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cpu_config.h; sourceTree = "<group>"; };
 		558D9F2B0AAE70E9007B2A32 /* sound_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sound_config.h; sourceTree = "<group>"; };
 		558D9F2D0AAE7117007B2A32 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
