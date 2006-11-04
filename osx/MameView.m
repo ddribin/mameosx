@@ -193,6 +193,11 @@ NSString * MameViewNaturalSizeDidChange = @"NaturalSizeDidChange";
     return mNaturalSize;
 }
 
+- (NSSize) optimalSize;
+{
+    return mOptimalSize;
+}
+
 - (int) osd_init: (running_machine *) machine;
 {
     NSLog(@"osd_init");
@@ -213,7 +218,14 @@ NSString * MameViewNaturalSizeDidChange = @"NaturalSizeDidChange";
     render_target_get_minimum_size(mTarget, &minimumWidth, &minimumHeight);
     mNaturalSize = NSMakeSize(minimumWidth, minimumHeight);
     
-    [self setFullScreenWidth: minimumWidth*2 height: minimumHeight*2];
+    mOptimalSize = mNaturalSize;
+    if ((mOptimalSize.width < 640) && (mOptimalSize.height < 480))
+    {
+        mOptimalSize.width *=2;
+        mOptimalSize.height *= 2;
+    }
+    
+    [self setFullScreenWidth: mOptimalSize.width height: mOptimalSize.height];
     mFullScreenSize = NSMakeSize([self fullScreenWidth], 
                                  [self fullScreenHeight]);
 

@@ -42,6 +42,7 @@
     BOOL mRenderInCoreVideoThread;
     CIFilter * mFilter;
     NSSize mNaturalSize;
+    NSSize mOptimalSize;
     NSSize mFullScreenSize;
     BOOL mClearToRed;
     
@@ -78,6 +79,7 @@
 - (BOOL) isRunning;
 
 - (NSSize) naturalSize;
+- (NSSize) optimalSize;
 
 - (BOOL) renderInCoreVideoThread;
 - (void) setRenderInCoreVideoThread: (BOOL) flag;

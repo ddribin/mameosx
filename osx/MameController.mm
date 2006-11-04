@@ -181,6 +181,11 @@ void leaks_sleeper()
     [self setViewSize: naturalSize];
 }
 
+- (IBAction) setOptimalSize: (id) sender;
+{
+    [self setViewSize: [mMameView optimalSize]];
+}
+
 - (IBAction) setDoubleSize: (id) sender;
 {
     NSSize naturalSize = [mMameView naturalSize];
@@ -257,7 +262,7 @@ void leaks_sleeper()
 
 - (void) viewNaturalSizeDidChange: (NSNotification *) notification;
 {
-    [self setDoubleSize: nil];
+    [self setOptimalSize: nil];
     NSWindow * window = [mMameView window];
     [window center];
     [window makeKeyAndOrderFront: nil];
