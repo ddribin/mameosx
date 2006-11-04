@@ -24,6 +24,27 @@
 /* Begin PBXBuildFile section */
 		5501E89D0AB2764700756C9B /* CircularBufferTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5501E89C0AB2764700756C9B /* CircularBufferTest.m */; };
 		551A613A0AC24B2000AECE1E /* ui.bdf in Resources */ = {isa = PBXBuildFile; fileRef = 551A61390AC24B2000AECE1E /* ui.bdf */; };
+		5522F55D0AFD1C390028E5F8 /* astrocde.c in Sources */ = {isa = PBXBuildFile; fileRef = 55558EF20AF9AED3001ADC6D /* astrocde.c */; };
+		5522F5620AFD1CB70028E5F8 /* sndintrf.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A42B40AA4EB9200602CC5 /* sndintrf.c */; };
+		5522F5630AFD1CB70028E5F8 /* sndintrf.h in Headers */ = {isa = PBXBuildFile; fileRef = 556A42B50AA4EB9200602CC5 /* sndintrf.h */; };
+		5522F5640AFD1CB90028E5F8 /* sndintrf.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A42B40AA4EB9200602CC5 /* sndintrf.c */; };
+		5522F5650AFD1CB90028E5F8 /* sndintrf.h in Headers */ = {isa = PBXBuildFile; fileRef = 556A42B50AA4EB9200602CC5 /* sndintrf.h */; };
+		5522F56C0AFD1D0E0028E5F8 /* cpuintrf.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A42800AA4EB9200602CC5 /* cpuintrf.c */; };
+		5522F56D0AFD1D0E0028E5F8 /* cpuintrf.h in Headers */ = {isa = PBXBuildFile; fileRef = 556A42810AA4EB9200602CC5 /* cpuintrf.h */; };
+		5522F56E0AFD1D0F0028E5F8 /* cpuintrf.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A42800AA4EB9200602CC5 /* cpuintrf.c */; };
+		5522F56F0AFD1D0F0028E5F8 /* cpuintrf.h in Headers */ = {isa = PBXBuildFile; fileRef = 556A42810AA4EB9200602CC5 /* cpuintrf.h */; };
+		5522F5870AFD1DEB0028E5F8 /* pacman.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE073F0AEC847900357340 /* pacman.c */; };
+		5522F59B0AFD1E170028E5F8 /* pacplus.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE040C0AEC817800357340 /* pacplus.c */; };
+		5522F5A60AFD1E4B0028E5F8 /* mspacman.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE03F90AEC817800357340 /* mspacman.c */; };
+		5522F5B10AFD1EA20028E5F8 /* vsnes.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE045C0AEC817800357340 /* vsnes.c */; };
+		5522F5B90AFD1EDB0028E5F8 /* vsnes.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE084E0AEC847A00357340 /* vsnes.c */; };
+		5522F5C00AFD1EEC0028E5F8 /* ppu2c0x.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE075F0AEC847900357340 /* ppu2c0x.c */; };
+		5522F5CF0AFD1F0E0028E5F8 /* jumpshot.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE03D10AEC817800357340 /* jumpshot.c */; };
+		5522F5D60AFD1F1C0028E5F8 /* acitya.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE03890AEC817800357340 /* acitya.c */; };
+		5522F5DB0AFD1F280028E5F8 /* theglobp.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE044D0AEC817800357340 /* theglobp.c */; };
+		5522F5E20AFD1F410028E5F8 /* z80dasm.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A49760AA4F64000602CC5 /* z80dasm.c */; };
+		5522F5E50AFD1F610028E5F8 /* 6502dasm.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A48950AA4F64000602CC5 /* 6502dasm.c */; };
+		5522F6150AFD1FD50028E5F8 /* flt_rc.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A433B0AA4EC1B00602CC5 /* flt_rc.c */; };
 		5530FE030ACA42270083BB04 /* debugcmd.c in Sources */ = {isa = PBXBuildFile; fileRef = 5530FDF20ACA42270083BB04 /* debugcmd.c */; };
 		5530FE040ACA42270083BB04 /* debugcmd.h in Headers */ = {isa = PBXBuildFile; fileRef = 5530FDF30ACA42270083BB04 /* debugcmd.h */; };
 		5530FE050ACA42270083BB04 /* debugcmt.c in Sources */ = {isa = PBXBuildFile; fileRef = 5530FDF40ACA42270083BB04 /* debugcmt.c */; };
@@ -336,8 +357,6 @@
 		556A42E00AA4EBB300602CC5 /* cpuexec.h in Headers */ = {isa = PBXBuildFile; fileRef = 556A427D0AA4EB9200602CC5 /* cpuexec.h */; };
 		556A42E10AA4EBB300602CC5 /* cpuint.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A427E0AA4EB9200602CC5 /* cpuint.c */; };
 		556A42E20AA4EBB300602CC5 /* cpuint.h in Headers */ = {isa = PBXBuildFile; fileRef = 556A427F0AA4EB9200602CC5 /* cpuint.h */; };
-		556A42E30AA4EBB300602CC5 /* cpuintrf.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A42800AA4EB9200602CC5 /* cpuintrf.c */; };
-		556A42E40AA4EBB300602CC5 /* cpuintrf.h in Headers */ = {isa = PBXBuildFile; fileRef = 556A42810AA4EB9200602CC5 /* cpuintrf.h */; };
 		556A42E50AA4EBB300602CC5 /* drawgfx.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A42820AA4EB9200602CC5 /* drawgfx.c */; };
 		556A42E60AA4EBB300602CC5 /* drawgfx.h in Headers */ = {isa = PBXBuildFile; fileRef = 556A42830AA4EB9200602CC5 /* drawgfx.h */; };
 		556A42E70AA4EBB300602CC5 /* driver.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A42840AA4EB9200602CC5 /* driver.c */; };
@@ -387,8 +406,6 @@
 		556A43140AA4EBB300602CC5 /* romload.h in Headers */ = {isa = PBXBuildFile; fileRef = 556A42B10AA4EB9200602CC5 /* romload.h */; };
 		556A43150AA4EBB300602CC5 /* sha1.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A42B20AA4EB9200602CC5 /* sha1.c */; };
 		556A43160AA4EBB300602CC5 /* sha1.h in Headers */ = {isa = PBXBuildFile; fileRef = 556A42B30AA4EB9200602CC5 /* sha1.h */; };
-		556A43170AA4EBB300602CC5 /* sndintrf.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A42B40AA4EB9200602CC5 /* sndintrf.c */; };
-		556A43180AA4EBB300602CC5 /* sndintrf.h in Headers */ = {isa = PBXBuildFile; fileRef = 556A42B50AA4EB9200602CC5 /* sndintrf.h */; };
 		556A43190AA4EBB300602CC5 /* sound.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A42B60AA4EB9200602CC5 /* sound.c */; };
 		556A431A0AA4EBB300602CC5 /* sound.h in Headers */ = {isa = PBXBuildFile; fileRef = 556A42B70AA4EB9200602CC5 /* sound.h */; };
 		556A431B0AA4EBB300602CC5 /* state.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A42B80AA4EB9200602CC5 /* state.c */; };
@@ -417,7 +434,6 @@
 		556A43320AA4EBB300602CC5 /* xmlfile.h in Headers */ = {isa = PBXBuildFile; fileRef = 556A42CF0AA4EB9300602CC5 /* xmlfile.h */; };
 		556A43410AA4EC1B00602CC5 /* filter.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A43390AA4EC1B00602CC5 /* filter.c */; };
 		556A43420AA4EC1B00602CC5 /* filter.h in Headers */ = {isa = PBXBuildFile; fileRef = 556A433A0AA4EC1B00602CC5 /* filter.h */; };
-		556A43430AA4EC1B00602CC5 /* flt_rc.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A433B0AA4EC1B00602CC5 /* flt_rc.c */; };
 		556A43440AA4EC1B00602CC5 /* flt_rc.h in Headers */ = {isa = PBXBuildFile; fileRef = 556A433C0AA4EC1B00602CC5 /* flt_rc.h */; };
 		556A43450AA4EC1B00602CC5 /* flt_vol.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A433D0AA4EC1B00602CC5 /* flt_vol.c */; };
 		556A43460AA4EC1B00602CC5 /* flt_vol.h in Headers */ = {isa = PBXBuildFile; fileRef = 556A433E0AA4EC1B00602CC5 /* flt_vol.h */; };
@@ -5807,8 +5823,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				55BEFA2B0AEC62B300357340 /* libosd.a in Frameworks */,
-				556A4D9D0AA5158400602CC5 /* libcore.a in Frameworks */,
 				55FEC7FA0AEC58F6001A1CAB /* libtiny.a in Frameworks */,
+				556A4D9D0AA5158400602CC5 /* libcore.a in Frameworks */,
 				556A4DA10AA5158400602CC5 /* liblocalexpat.a in Frameworks */,
 				556A4DA20AA5158400602CC5 /* liblocalzlib.a in Frameworks */,
 				556A4C6E0AA50F4D00602CC5 /* Cocoa.framework in Frameworks */,
@@ -5837,9 +5853,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				55BEF9E70AEC612600357340 /* libdrivers.a in Frameworks */,
-				55BEF9C40AEC5F2F00357340 /* libcore.a in Frameworks */,
 				55BEF9E80AEC612600357340 /* libsounds.a in Frameworks */,
 				55BEF9E90AEC612600357340 /* libcpu.a in Frameworks */,
+				55BEF9C40AEC5F2F00357340 /* libcore.a in Frameworks */,
 				55BEFA530AEC63E300357340 /* libosd.a in Frameworks */,
 				55BEF9C50AEC5F3500357340 /* liblocalexpat.a in Frameworks */,
 				55BEF9C60AEC5F3500357340 /* liblocalzlib.a in Frameworks */,
@@ -9567,7 +9583,6 @@
 				556A42DE0AA4EBB300602CC5 /* config.h in Headers */,
 				556A42E00AA4EBB300602CC5 /* cpuexec.h in Headers */,
 				556A42E20AA4EBB300602CC5 /* cpuint.h in Headers */,
-				556A42E40AA4EBB300602CC5 /* cpuintrf.h in Headers */,
 				556A42E60AA4EBB300602CC5 /* drawgfx.h in Headers */,
 				556A42E80AA4EBB300602CC5 /* driver.h in Headers */,
 				556A42EA0AA4EBB300602CC5 /* fileio.h in Headers */,
@@ -9593,7 +9608,6 @@
 				556A43120AA4EBB300602CC5 /* restrack.h in Headers */,
 				556A43140AA4EBB300602CC5 /* romload.h in Headers */,
 				556A43160AA4EBB300602CC5 /* sha1.h in Headers */,
-				556A43180AA4EBB300602CC5 /* sndintrf.h in Headers */,
 				556A431A0AA4EBB300602CC5 /* sound.h in Headers */,
 				556A431C0AA4EBB300602CC5 /* state.h in Headers */,
 				556A431E0AA4EBB300602CC5 /* streams.h in Headers */,
@@ -9756,6 +9770,7 @@
 			files = (
 				55558EA40AF9ABC3001ADC6D /* arm7core.h in Headers */,
 				5555908C0AF9B51A001ADC6D /* m68kops.h in Headers */,
+				5522F56D0AFD1D0E0028E5F8 /* cpuintrf.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9880,6 +9895,7 @@
 				555590100AF9AED4001ADC6D /* ymf271.h in Headers */,
 				555590120AF9AED4001ADC6D /* ymf278b.h in Headers */,
 				555590140AF9AED4001ADC6D /* ymz280b.h in Headers */,
+				5522F5630AFD1CB70028E5F8 /* sndintrf.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9938,6 +9954,8 @@
 				55FEC7EE0AEC58AD001A1CAB /* sn76496.h in Headers */,
 				55FEC7F10AEC58AD001A1CAB /* nes_defs.h in Headers */,
 				55FEC7F30AEC58AD001A1CAB /* namco.h in Headers */,
+				5522F5650AFD1CB90028E5F8 /* sndintrf.h in Headers */,
+				5522F56F0AFD1D0F0028E5F8 /* cpuintrf.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10323,7 +10341,6 @@
 				556A42DD0AA4EBB300602CC5 /* config.c in Sources */,
 				556A42DF0AA4EBB300602CC5 /* cpuexec.c in Sources */,
 				556A42E10AA4EBB300602CC5 /* cpuint.c in Sources */,
-				556A42E30AA4EBB300602CC5 /* cpuintrf.c in Sources */,
 				556A42E50AA4EBB300602CC5 /* drawgfx.c in Sources */,
 				556A42E70AA4EBB300602CC5 /* driver.c in Sources */,
 				556A42E90AA4EBB300602CC5 /* fileio.c in Sources */,
@@ -10348,7 +10365,6 @@
 				556A43110AA4EBB300602CC5 /* restrack.c in Sources */,
 				556A43130AA4EBB300602CC5 /* romload.c in Sources */,
 				556A43150AA4EBB300602CC5 /* sha1.c in Sources */,
-				556A43170AA4EBB300602CC5 /* sndintrf.c in Sources */,
 				556A43190AA4EBB300602CC5 /* sound.c in Sources */,
 				556A431B0AA4EBB300602CC5 /* state.c in Sources */,
 				556A431D0AA4EBB300602CC5 /* streams.c in Sources */,
@@ -10364,7 +10380,6 @@
 				556A432F0AA4EBB300602CC5 /* video.c in Sources */,
 				556A43310AA4EBB300602CC5 /* xmlfile.c in Sources */,
 				556A43410AA4EC1B00602CC5 /* filter.c in Sources */,
-				556A43430AA4EC1B00602CC5 /* flt_rc.c in Sources */,
 				556A43450AA4EC1B00602CC5 /* flt_vol.c in Sources */,
 				556A43470AA4EC1B00602CC5 /* wavwrite.c in Sources */,
 				556A43560AA4EC9900602CC5 /* eeprom.c in Sources */,
@@ -10383,6 +10398,7 @@
 				55BE056C0AEC821700357340 /* generic.c in Sources */,
 				555590920AF9B57A001ADC6D /* cdrom.c in Sources */,
 				555590940AF9B57A001ADC6D /* profiler.c in Sources */,
+				5522F6150AFD1FD50028E5F8 /* flt_rc.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12386,6 +12402,7 @@
 				555590A70AF9B67E001ADC6D /* tms9995.c in Sources */,
 				555590AA0AF9B6BF001ADC6D /* 9900dasm.c in Sources */,
 				555590AC0AF9B6F3001ADC6D /* mipsdasm.c in Sources */,
+				5522F56C0AFD1D0E0028E5F8 /* cpuintrf.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12502,6 +12519,7 @@
 				555590110AF9AED4001ADC6D /* ymf278b.c in Sources */,
 				555590130AF9AED4001ADC6D /* ymz280b.c in Sources */,
 				5555901C0AF9AF22001ADC6D /* tms5110r.c in Sources */,
+				5522F5620AFD1CB70028E5F8 /* sndintrf.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12631,6 +12649,20 @@
 				55FEC7EF0AEC58AD001A1CAB /* nes_apu.c in Sources */,
 				55FEC7F00AEC58AD001A1CAB /* dac.c in Sources */,
 				55FEC7F20AEC58AD001A1CAB /* ay8910.c in Sources */,
+				5522F55D0AFD1C390028E5F8 /* astrocde.c in Sources */,
+				5522F5640AFD1CB90028E5F8 /* sndintrf.c in Sources */,
+				5522F56E0AFD1D0F0028E5F8 /* cpuintrf.c in Sources */,
+				5522F5870AFD1DEB0028E5F8 /* pacman.c in Sources */,
+				5522F59B0AFD1E170028E5F8 /* pacplus.c in Sources */,
+				5522F5A60AFD1E4B0028E5F8 /* mspacman.c in Sources */,
+				5522F5B10AFD1EA20028E5F8 /* vsnes.c in Sources */,
+				5522F5B90AFD1EDB0028E5F8 /* vsnes.c in Sources */,
+				5522F5C00AFD1EEC0028E5F8 /* ppu2c0x.c in Sources */,
+				5522F5CF0AFD1F0E0028E5F8 /* jumpshot.c in Sources */,
+				5522F5D60AFD1F1C0028E5F8 /* acitya.c in Sources */,
+				5522F5DB0AFD1F280028E5F8 /* theglobp.c in Sources */,
+				5522F5E20AFD1F410028E5F8 /* z80dasm.c in Sources */,
+				5522F5E50AFD1F610028E5F8 /* 6502dasm.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13378,6 +13410,7 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREFIX_HEADER = tinymame.pch;
 				INSTALL_PATH = /usr/local/lib;
 				PREBINDING = NO;
 				PRODUCT_NAME = tiny;
@@ -13392,6 +13425,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
+				GCC_PREFIX_HEADER = tinymame.pch;
 				INSTALL_PATH = /usr/local/lib;
 				PREBINDING = NO;
 				PRODUCT_NAME = tiny;
