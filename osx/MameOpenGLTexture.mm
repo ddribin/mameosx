@@ -153,54 +153,6 @@ static void cv_assert(CVReturn cr, NSString * message)
             convertTexture(cppTexture, pixelBuffer);
         }
     }
-#if 0
-    case TEXFORMAT_RGB15:
-        src16 = (UINT16 *)texsource->base + y * texsource->rowpixels;
-        if (texsource->palette != NULL)
-        {
-            for (x = 0; x < texsource->width; x++)
-            {
-                UINT16 pix = *src16++;
-                
-                *dst32++ = 0xff | texsource->palette[0x40 + ((pix >> 10) & 0x1f)]>>8 | texsource->palette[0x20 + ((pix >> 5) & 0x1f)]<<8 | texsource->palette[0x00 + ((pix >> 0) & 0x1f)]<<24;
-            }
-        }
-            else
-            {
-                for (x = 0; x < texsource->width; x++)
-                {
-                    UINT32 pix = (UINT32)*src16++;        
-                    
-                    *dst32++ = ((pix & 0x7c00) << 1) | ((pix & 0x03e0) << 14) | ((pix & 0x001f) << 27) | 0xff; 
-                }
-            }
-            break;                             
-        
-    case TEXFORMAT_RGB32:
-        src32 = (UINT32 *)texsource->base + y * texsource->rowpixels;
-        if (texsource->palette != NULL)
-        {
-            for (x = 0; x < texsource->width; x++)
-            {
-                UINT32 srcpix = *src32++;
-                *dst32++ = 0xff | 
-                    (texsource->palette[0x200 + RGB_RED(srcpix)])>>8 | 
-                    (texsource->palette[0x100 + RGB_GREEN(srcpix)])<<8 | 
-                    texsource->palette[RGB_BLUE(srcpix)]<<24;
-            }
-        }
-            else
-            {
-                for (x = 0; x < texsource->width; x++)
-                {
-                    *dst32++ = (*src32&0x00ff0000) >> 8 |
-                    (*src32&0x0000ff00) << 8 |
-                    (*src32&0x000000ff) <<24 | 0xff;
-                    src32++;
-                }
-            }
-            break;
-#endif
     else
     {
         NSLog(@"Unknown texture blendmode=%d format=%d\n", PRIMFLAG_GET_BLENDMODE(flags), 
