@@ -23,9 +23,11 @@ extern "C" {
 class MamePalette16PixelIterator
 {
 public:
-    MamePalette16PixelIterator(UINT16 * base, const rgb_t * palette)
-        : mCurrentPixel(base), mPalette(palette)
+    MamePalette16PixelIterator(const render_texinfo * texture, int row)
+        : mPalette(texture->palette)
     {
+        mCurrentPixel = (UINT16 *) texture->base;
+        mCurrentPixel += row * texture->rowpixels;
     }
     
 
@@ -48,9 +50,10 @@ private:
 class MameARGB32PixelIterator
 {
 public:
-    MameARGB32PixelIterator(UINT32 * base)
-        : mCurrentPixel(base)
+    MameARGB32PixelIterator(const render_texinfo * texture, int row)
     {
+        mCurrentPixel = (UINT32 *) texture->base;
+        mCurrentPixel += row * texture->rowpixels;
     }
     
     UINT32 inline argb_value() const
@@ -70,17 +73,19 @@ private:
 class MamePaletteRGB32PixelIterator
 {
 public:
-    MamePaletteRGB32PixelIterator(UINT32 * base, const rgb_t * palette)
-        : mCurrentPixel(base), mPalette(palette)
+    MamePaletteRGB32PixelIterator(const render_texinfo * texture, int row)
+        : mPalette(texture->palette)
     {
+        mCurrentPixel = (UINT32 *) texture->base;
+        mCurrentPixel += row * texture->rowpixels;
     }
     
     UINT32 inline xrgb_value() const
     {
         UINT32 sourceValue = *mCurrentPixel;
         return
-            mPalette[0x200 + RGB_RED(sourceValue)] << 24 | 
-            mPalette[0x100 + RGB_GREEN(sourceValue)] << 16 | 
+            mPalette[0x200 + RGB_RED(sourceValue)] |
+            mPalette[0x100 + RGB_GREEN(sourceValue)] |
             mPalette[RGB_BLUE(sourceValue)];
     }
     
@@ -129,9 +134,7 @@ public:
     
     Iterator iteratorForRow(int row)
     {
-        UINT16 * startAddress = (UINT16 *) mTexture->base;
-        startAddress += row * mTexture->rowpixels;
-        return Iterator(startAddress, mTexture->palette);
+        return Iterator(mTexture, row);
     }
 };
 
@@ -148,9 +151,7 @@ public:
     
     Iterator iteratorForRow(int row)
     {
-        UINT32 * startAddress = (UINT32 *) mTexture->base;
-        startAddress += row * mTexture->rowpixels;
-        return Iterator(startAddress);
+        return Iterator(mTexture, row);
     }
 };
 
@@ -166,9 +167,7 @@ public:
     
     Iterator iteratorForRow(int row)
     {
-        UINT32 * startAddress = (UINT32 *) mTexture->base;
-        startAddress += row * mTexture->rowpixels;
-        return Iterator(startAddress, mTexture->palette);
+        return Iterator(mTexture, row);
     }
 };
 
