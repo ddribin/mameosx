@@ -24,6 +24,8 @@
 /* Begin PBXBuildFile section */
 		5501E89D0AB2764700756C9B /* CircularBufferTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5501E89C0AB2764700756C9B /* CircularBufferTest.m */; };
 		551A613A0AC24B2000AECE1E /* ui.bdf in Resources */ = {isa = PBXBuildFile; fileRef = 551A61390AC24B2000AECE1E /* ui.bdf */; };
+		551C7B6A0AFD2716008FF3C7 /* generic.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A43540AA4EC9900602CC5 /* generic.c */; };
+		551C7B6B0AFD2716008FF3C7 /* generic.h in Headers */ = {isa = PBXBuildFile; fileRef = 556A43550AA4EC9900602CC5 /* generic.h */; };
 		5522F55D0AFD1C390028E5F8 /* astrocde.c in Sources */ = {isa = PBXBuildFile; fileRef = 55558EF20AF9AED3001ADC6D /* astrocde.c */; };
 		5522F5620AFD1CB70028E5F8 /* sndintrf.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A42B40AA4EB9200602CC5 /* sndintrf.c */; };
 		5522F5630AFD1CB70028E5F8 /* sndintrf.h in Headers */ = {isa = PBXBuildFile; fileRef = 556A42B50AA4EB9200602CC5 /* sndintrf.h */; };
@@ -441,7 +443,6 @@
 		556A43480AA4EC1B00602CC5 /* wavwrite.h in Headers */ = {isa = PBXBuildFile; fileRef = 556A43400AA4EC1B00602CC5 /* wavwrite.h */; };
 		556A43560AA4EC9900602CC5 /* eeprom.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A43520AA4EC9900602CC5 /* eeprom.c */; };
 		556A43570AA4EC9900602CC5 /* eeprom.h in Headers */ = {isa = PBXBuildFile; fileRef = 556A43530AA4EC9900602CC5 /* eeprom.h */; };
-		556A43580AA4EC9900602CC5 /* generic.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A43540AA4EC9900602CC5 /* generic.c */; };
 		556A43590AA4EC9900602CC5 /* generic.h in Headers */ = {isa = PBXBuildFile; fileRef = 556A43550AA4EC9900602CC5 /* generic.h */; };
 		556A435C0AA4ECB700602CC5 /* generic.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A435A0AA4ECB700602CC5 /* generic.c */; };
 		556A435D0AA4ECB700602CC5 /* generic.h in Headers */ = {isa = PBXBuildFile; fileRef = 556A435B0AA4ECB700602CC5 /* generic.h */; };
@@ -1430,7 +1431,6 @@
 		55BE05610AEC817900357340 /* z80sio.h in Headers */ = {isa = PBXBuildFile; fileRef = 55BE04650AEC817900357340 /* z80sio.h */; };
 		55BE05620AEC817900357340 /* znsec.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE04660AEC817900357340 /* znsec.c */; };
 		55BE05630AEC817900357340 /* znsec.h in Headers */ = {isa = PBXBuildFile; fileRef = 55BE04670AEC817900357340 /* znsec.h */; };
-		55BE056C0AEC821700357340 /* generic.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE03C60AEC817800357340 /* generic.c */; };
 		55BE08710AEC847B00357340 /* 1942.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE059C0AEC847700357340 /* 1942.c */; };
 		55BE08720AEC847B00357340 /* 1943.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE059D0AEC847700357340 /* 1943.c */; };
 		55BE08730AEC847B00357340 /* 40love.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE059E0AEC847700357340 /* 40love.c */; };
@@ -9645,6 +9645,7 @@
 				5530FE130ACA42270083BB04 /* textbuf.h in Headers */,
 				555590930AF9B57A001ADC6D /* cdrom.h in Headers */,
 				555590950AF9B57A001ADC6D /* profiler.h in Headers */,
+				551C7B6B0AFD2716008FF3C7 /* generic.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10383,7 +10384,6 @@
 				556A43450AA4EC1B00602CC5 /* flt_vol.c in Sources */,
 				556A43470AA4EC1B00602CC5 /* wavwrite.c in Sources */,
 				556A43560AA4EC9900602CC5 /* eeprom.c in Sources */,
-				556A43580AA4EC9900602CC5 /* generic.c in Sources */,
 				556A435C0AA4ECB700602CC5 /* generic.c in Sources */,
 				556A43600AA4ECD000602CC5 /* vector.c in Sources */,
 				556A4B170AA4FD5400602CC5 /* generic.c in Sources */,
@@ -10395,10 +10395,10 @@
 				5530FE0D0ACA42270083BB04 /* debugvw.c in Sources */,
 				5530FE100ACA42270083BB04 /* express.c in Sources */,
 				5530FE120ACA42270083BB04 /* textbuf.c in Sources */,
-				55BE056C0AEC821700357340 /* generic.c in Sources */,
 				555590920AF9B57A001ADC6D /* cdrom.c in Sources */,
 				555590940AF9B57A001ADC6D /* profiler.c in Sources */,
 				5522F6150AFD1FD50028E5F8 /* flt_rc.c in Sources */,
+				551C7B6A0AFD2716008FF3C7 /* generic.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
