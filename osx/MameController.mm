@@ -35,6 +35,7 @@ extern "C" {
 - (void) setUpDefaultPaths;
 - (NSString *) getGameNameToRun;
 - (void) initFilters;
+- (void) updatePreviousGames: (NSString *) gameName;
 
 @end
 
@@ -63,6 +64,14 @@ void leaks_sleeper()
                                              selector: @selector(viewNaturalSizeDidChange:)
                                                  name: MameViewNaturalSizeDidChange
                                                object: mMameView];
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    [mGameTextField setCompletes: YES];
+    
+    [self willChangeValueForKey: @"previousGames"];
+    mPreviousGames = [[defaults arrayForKey: @"PreviousGames"] mutableCopy];
+    if (mPreviousGames == nil)
+        mPreviousGames = [[NSMutableArray alloc] init];
+    [self didChangeValueForKey: @"previousGames"];
 }
 
 - (void) applicationDidFinishLaunching: (NSNotification*) notification;
@@ -92,6 +101,8 @@ void leaks_sleeper()
     NSString * gameName = [self getGameNameToRun];
     if ([mMameView setGame: gameName])
     {
+        [self updatePreviousGames: gameName];
+        
         [mMameView start];
         [self hideOpenPanel: nil];
     }
@@ -242,6 +253,11 @@ void leaks_sleeper()
     [mMameView setFullScreen: fullScreen];
 }
 
+- (NSArray *) previousGames;
+{
+    return mPreviousGames;
+}
+
 @end
 
 @implementation MameController (Private)
@@ -355,6 +371,18 @@ void leaks_sleeper()
     [mFilters addObject: filter];
     
     mCurrentFilter = [mFilters objectAtIndex: 0];
+}
+
+- (void) updatePreviousGames: (NSString *) gameName;
+{
+    [self willChangeValueForKey: @"previousGames"];
+    [mPreviousGames removeObject: gameName];
+    [mPreviousGames insertObject: gameName atIndex: 0];
+    [self didChangeValueForKey: @"previousGames"];
+    
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject: mPreviousGames forKey: @"PreviousGames"];
+    [defaults synchronize];
 }
 
 @end

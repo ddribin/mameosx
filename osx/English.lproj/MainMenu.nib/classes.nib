@@ -18,7 +18,7 @@
                 mDrawer = NSDrawer; 
                 mFilterButton = NSPopUpButton; 
                 mGameLoading = NSProgressIndicator; 
-                mGameTextField = NSTextField; 
+                mGameTextField = NSComboBox; 
                 mMameView = MameView; 
                 mOpenPanel = NSWindow; 
             }; 

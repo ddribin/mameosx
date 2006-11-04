@@ -33,7 +33,7 @@ extern "C" {
     IBOutlet NSPopUpButton * mFilterButton;
     IBOutlet NSDrawer * mDrawer;
     IBOutlet NSWindow * mOpenPanel;
-    IBOutlet NSTextField * mGameTextField;
+    IBOutlet NSComboBox * mGameTextField;
     IBOutlet NSProgressIndicator * mGameLoading;
 
     MameConfiguration * mConfiguration;
@@ -46,6 +46,7 @@ extern "C" {
     float inputCenterX;
     float inputCenterY;
     BOOL mMoveInputCenter;
+    NSMutableArray * mPreviousGames;
 }
 
 - (BOOL) isFiltered;
@@ -59,6 +60,8 @@ extern "C" {
 
 - (BOOL) fullScreen;
 - (void) setFullScreen: (BOOL) fullScreen;
+
+- (NSArray *) previousGames;
 
 - (IBAction) filterChanged: (id) sender;
 - (IBAction) togglePause: (id) sender;
