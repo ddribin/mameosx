@@ -29,6 +29,8 @@ extern "C" {
 }
 
 NSString * kMamePreviousGames = @"PreviousGames";
+NSString * kMameGame = @"Game";
+
 static const int kMameRunGame = 0;
 static const int kMameCancelGame = 1;
 
@@ -315,17 +317,14 @@ void leaks_sleeper()
 
 - (NSString *) getGameNameToRun;
 {
-    NSArray * arguments = [[NSProcessInfo processInfo] arguments];
-    NSString * lastArgument = [arguments lastObject];
-    if (([arguments count] > 1) && ![lastArgument hasPrefix: @"-"])
-    {
-        return lastArgument;
-    }
-    else
+    NSString * gameToRun = 
+        [[NSUserDefaults standardUserDefaults] stringForKey: kMameGame];
+    if (gameToRun == nil)
     {
         [self raiseOpenPanel: nil];
-        return [mGameTextField stringValue];
+        gameToRun = [mGameTextField stringValue];
     }
+    return gameToRun;
 }
 
 - (void) initFilters;

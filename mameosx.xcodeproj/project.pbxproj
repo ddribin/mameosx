@@ -1496,22 +1496,22 @@
 		55BE08A00AEC847B00357340 /* avalnche.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE05CB0AEC847700357340 /* avalnche.c */; };
 		55BE08A10AEC847B00357340 /* avgdvg.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE05CC0AEC847700357340 /* avgdvg.c */; };
 		55BE08A20AEC847B00357340 /* avgdvg.h in Headers */ = {isa = PBXBuildFile; fileRef = 55BE05CD0AEC847700357340 /* avgdvg.h */; };
-		55BE08A30AEC847B00357340 /* aztarac.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE05CE0AEC847700357340; };
-		55BE08A40AEC847B00357340 /* badlands.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE05CF0AEC847700357340; };
-		55BE08A50AEC847B00357340 /* bagman.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE05D00AEC847700357340; };
-		55BE08A60AEC847B00357340 /* balsente.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE05D10AEC847700357340; };
-		55BE08A70AEC847B00357340 /* bankp.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE05D20AEC847700357340; };
-		55BE08A80AEC847B00357340 /* baraduke.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE05D30AEC847700357340; };
-		55BE08A90AEC847B00357340 /* batman.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE05D40AEC847700357340; };
-		55BE08AA0AEC847B00357340 /* battlane.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE05D50AEC847700357340; };
-		55BE08AB0AEC847B00357340 /* battlera.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE05D60AEC847700357340; };
-		55BE08AC0AEC847B00357340 /* battlex.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE05D70AEC847700357340; };
-		55BE08AD0AEC847B00357340 /* battlnts.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE05D80AEC847700357340; };
-		55BE08AE0AEC847B00357340 /* bbusters.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE05D90AEC847700357340; };
-		55BE08AF0AEC847B00357340 /* beaminv.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE05DA0AEC847700357340; };
-		55BE08B00AEC847B00357340 /* beathead.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE05DB0AEC847700357340; };
-		55BE08B10AEC847B00357340 /* beezer.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE05DC0AEC847700357340; };
-		55BE08B20AEC847B00357340 /* berzerk.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE05DD0AEC847700357340; };
+		55BE08A30AEC847B00357340 /* aztarac.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE05CE0AEC847700357340 /* aztarac.c */; };
+		55BE08A40AEC847B00357340 /* badlands.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE05CF0AEC847700357340 /* badlands.c */; };
+		55BE08A50AEC847B00357340 /* bagman.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE05D00AEC847700357340 /* bagman.c */; };
+		55BE08A60AEC847B00357340 /* balsente.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE05D10AEC847700357340 /* balsente.c */; };
+		55BE08A70AEC847B00357340 /* bankp.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE05D20AEC847700357340 /* bankp.c */; };
+		55BE08A80AEC847B00357340 /* baraduke.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE05D30AEC847700357340 /* baraduke.c */; };
+		55BE08A90AEC847B00357340 /* batman.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE05D40AEC847700357340 /* batman.c */; };
+		55BE08AA0AEC847B00357340 /* battlane.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE05D50AEC847700357340 /* battlane.c */; };
+		55BE08AB0AEC847B00357340 /* battlera.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE05D60AEC847700357340 /* battlera.c */; };
+		55BE08AC0AEC847B00357340 /* battlex.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE05D70AEC847700357340 /* battlex.c */; };
+		55BE08AD0AEC847B00357340 /* battlnts.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE05D80AEC847700357340 /* battlnts.c */; };
+		55BE08AE0AEC847B00357340 /* bbusters.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE05D90AEC847700357340 /* bbusters.c */; };
+		55BE08AF0AEC847B00357340 /* beaminv.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE05DA0AEC847700357340 /* beaminv.c */; };
+		55BE08B00AEC847B00357340 /* beathead.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE05DB0AEC847700357340 /* beathead.c */; };
+		55BE08B10AEC847B00357340 /* beezer.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE05DC0AEC847700357340 /* beezer.c */; };
+		55BE08B20AEC847B00357340 /* berzerk.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE05DD0AEC847700357340 /* berzerk.c */; };
 		55BE08B30AEC847B00357340 /* bfm_adr2.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE05DE0AEC847700357340 /* bfm_adr2.c */; };
 		55BE08B40AEC847B00357340 /* bfm_adr2.h in Headers */ = {isa = PBXBuildFile; fileRef = 55BE05DF0AEC847700357340 /* bfm_adr2.h */; };
 		55BE08B50AEC847B00357340 /* bigevglf.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE05E00AEC847700357340 /* bigevglf.c */; };
@@ -1520,7 +1520,7 @@
 		55BE08B80AEC847B00357340 /* bishi.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE05E30AEC847700357340 /* bishi.c */; };
 		55BE08B90AEC847B00357340 /* bking2.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE05E40AEC847700357340 /* bking2.c */; };
 		55BE08BA0AEC847B00357340 /* bladestl.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE05E50AEC847700357340 /* bladestl.c */; };
-		55BE08BB0AEC847B00357340 /* blktiger.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE05E60AEC847700357340; };
+		55BE08BB0AEC847B00357340 /* blktiger.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE05E60AEC847700357340 /* blktiger.c */; };
 		55BE08BC0AEC847B00357340 /* blmbycar.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE05E70AEC847700357340 /* blmbycar.c */; };
 		55BE08BD0AEC847B00357340 /* blockade.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE05E80AEC847700357340 /* blockade.c */; };
 		55BE08BE0AEC847B00357340 /* blockhl.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE05E90AEC847700357340 /* blockhl.c */; };
@@ -1568,7 +1568,7 @@
 		55BE08E80AEC847B00357340 /* clshroad.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE06130AEC847700357340 /* clshroad.c */; };
 		55BE08E90AEC847B00357340 /* cninja.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE06140AEC847700357340 /* cninja.c */; };
 		55BE08EA0AEC847B00357340 /* combatsc.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE06150AEC847700357340 /* combatsc.c */; };
-		55BE08EB0AEC847B00357340 /* commando.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE06160AEC847700357340; };
+		55BE08EB0AEC847B00357340 /* commando.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE06160AEC847700357340 /* commando.c */; };
 		55BE08EC0AEC847B00357340 /* compgolf.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE06170AEC847700357340 /* compgolf.c */; };
 		55BE08ED0AEC847B00357340 /* contra.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE06180AEC847700357340 /* contra.c */; };
 		55BE08EE0AEC847B00357340 /* cop01.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE06190AEC847700357340 /* cop01.c */; };
@@ -4103,22 +4103,22 @@
 		55BE05CB0AEC847700357340 /* avalnche.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = avalnche.c; sourceTree = "<group>"; };
 		55BE05CC0AEC847700357340 /* avgdvg.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = avgdvg.c; sourceTree = "<group>"; };
 		55BE05CD0AEC847700357340 /* avgdvg.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = avgdvg.h; sourceTree = "<group>"; };
-		55BE05CE0AEC847700357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = aztarac.c; sourceTree = "<group>"; };
-		55BE05CF0AEC847700357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = badlands.c; sourceTree = "<group>"; };
-		55BE05D00AEC847700357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = bagman.c; sourceTree = "<group>"; };
-		55BE05D10AEC847700357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = balsente.c; sourceTree = "<group>"; };
-		55BE05D20AEC847700357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = bankp.c; sourceTree = "<group>"; };
-		55BE05D30AEC847700357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = baraduke.c; sourceTree = "<group>"; };
-		55BE05D40AEC847700357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = batman.c; sourceTree = "<group>"; };
-		55BE05D50AEC847700357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = battlane.c; sourceTree = "<group>"; };
-		55BE05D60AEC847700357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = battlera.c; sourceTree = "<group>"; };
-		55BE05D70AEC847700357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = battlex.c; sourceTree = "<group>"; };
-		55BE05D80AEC847700357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = battlnts.c; sourceTree = "<group>"; };
-		55BE05D90AEC847700357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = bbusters.c; sourceTree = "<group>"; };
-		55BE05DA0AEC847700357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = beaminv.c; sourceTree = "<group>"; };
-		55BE05DB0AEC847700357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = beathead.c; sourceTree = "<group>"; };
-		55BE05DC0AEC847700357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = beezer.c; sourceTree = "<group>"; };
-		55BE05DD0AEC847700357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = berzerk.c; sourceTree = "<group>"; };
+		55BE05CE0AEC847700357340 /* aztarac.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = aztarac.c; sourceTree = "<group>"; };
+		55BE05CF0AEC847700357340 /* badlands.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = badlands.c; sourceTree = "<group>"; };
+		55BE05D00AEC847700357340 /* bagman.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = bagman.c; sourceTree = "<group>"; };
+		55BE05D10AEC847700357340 /* balsente.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = balsente.c; sourceTree = "<group>"; };
+		55BE05D20AEC847700357340 /* bankp.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = bankp.c; sourceTree = "<group>"; };
+		55BE05D30AEC847700357340 /* baraduke.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = baraduke.c; sourceTree = "<group>"; };
+		55BE05D40AEC847700357340 /* batman.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = batman.c; sourceTree = "<group>"; };
+		55BE05D50AEC847700357340 /* battlane.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = battlane.c; sourceTree = "<group>"; };
+		55BE05D60AEC847700357340 /* battlera.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = battlera.c; sourceTree = "<group>"; };
+		55BE05D70AEC847700357340 /* battlex.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = battlex.c; sourceTree = "<group>"; };
+		55BE05D80AEC847700357340 /* battlnts.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = battlnts.c; sourceTree = "<group>"; };
+		55BE05D90AEC847700357340 /* bbusters.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = bbusters.c; sourceTree = "<group>"; };
+		55BE05DA0AEC847700357340 /* beaminv.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = beaminv.c; sourceTree = "<group>"; };
+		55BE05DB0AEC847700357340 /* beathead.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = beathead.c; sourceTree = "<group>"; };
+		55BE05DC0AEC847700357340 /* beezer.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = beezer.c; sourceTree = "<group>"; };
+		55BE05DD0AEC847700357340 /* berzerk.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = berzerk.c; sourceTree = "<group>"; };
 		55BE05DE0AEC847700357340 /* bfm_adr2.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = bfm_adr2.c; sourceTree = "<group>"; };
 		55BE05DF0AEC847700357340 /* bfm_adr2.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = bfm_adr2.h; sourceTree = "<group>"; };
 		55BE05E00AEC847700357340 /* bigevglf.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = bigevglf.c; sourceTree = "<group>"; };
@@ -8738,22 +8738,22 @@
 				55BE05CB0AEC847700357340 /* avalnche.c */,
 				55BE05CC0AEC847700357340 /* avgdvg.c */,
 				55BE05CD0AEC847700357340 /* avgdvg.h */,
-				55BE05CE0AEC847700357340,
-				55BE05CF0AEC847700357340,
-				55BE05D00AEC847700357340,
-				55BE05D10AEC847700357340,
-				55BE05D20AEC847700357340,
-				55BE05D30AEC847700357340,
-				55BE05D40AEC847700357340,
-				55BE05D50AEC847700357340,
-				55BE05D60AEC847700357340,
-				55BE05D70AEC847700357340,
-				55BE05D80AEC847700357340,
-				55BE05D90AEC847700357340,
-				55BE05DA0AEC847700357340,
-				55BE05DB0AEC847700357340,
-				55BE05DC0AEC847700357340,
-				55BE05DD0AEC847700357340,
+				55BE05CE0AEC847700357340 /* aztarac.c */,
+				55BE05CF0AEC847700357340 /* badlands.c */,
+				55BE05D00AEC847700357340 /* bagman.c */,
+				55BE05D10AEC847700357340 /* balsente.c */,
+				55BE05D20AEC847700357340 /* bankp.c */,
+				55BE05D30AEC847700357340 /* baraduke.c */,
+				55BE05D40AEC847700357340 /* batman.c */,
+				55BE05D50AEC847700357340 /* battlane.c */,
+				55BE05D60AEC847700357340 /* battlera.c */,
+				55BE05D70AEC847700357340 /* battlex.c */,
+				55BE05D80AEC847700357340 /* battlnts.c */,
+				55BE05D90AEC847700357340 /* bbusters.c */,
+				55BE05DA0AEC847700357340 /* beaminv.c */,
+				55BE05DB0AEC847700357340 /* beathead.c */,
+				55BE05DC0AEC847700357340 /* beezer.c */,
+				55BE05DD0AEC847700357340 /* berzerk.c */,
 				55BE05DE0AEC847700357340 /* bfm_adr2.c */,
 				55BE05DF0AEC847700357340 /* bfm_adr2.h */,
 				55BE05E00AEC847700357340 /* bigevglf.c */,
