@@ -100,9 +100,12 @@ private:
 };
 
 
+template <typename PixelIterator>
 class MameTexture
 {
 public:
+    typedef PixelIterator Iterator;
+
     MameTexture(const render_texinfo * texture)
         : mTexture(texture)
     {
@@ -118,58 +121,18 @@ public:
         return mTexture->height;
     }
     
+    Iterator iteratorForRow(int row)
+    {
+        return Iterator(mTexture, row);
+    }
+    
 protected:
         const render_texinfo * mTexture;
 };
 
-class MamePalette16Texture : public MameTexture
-{
-public:
-    typedef MamePalette16PixelIterator Iterator;
-
-    MamePalette16Texture(const render_texinfo * texture)
-        : MameTexture(texture)
-    {
-    }
-    
-    Iterator iteratorForRow(int row)
-    {
-        return Iterator(mTexture, row);
-    }
-};
-
-
-class MameARGB32Texture : public MameTexture
-{
-public:
-    typedef MameARGB32PixelIterator Iterator;
-    
-    MameARGB32Texture(const render_texinfo * texture)
-        : MameTexture(texture)
-    {
-    }
-    
-    Iterator iteratorForRow(int row)
-    {
-        return Iterator(mTexture, row);
-    }
-};
-
-class MamePaletteRGB32Texture : public MameTexture
-{
-public:
-    typedef MamePaletteRGB32PixelIterator Iterator;
-    
-    MamePaletteRGB32Texture(const render_texinfo * texture)
-        : MameTexture(texture)
-    {
-    }
-    
-    Iterator iteratorForRow(int row)
-    {
-        return Iterator(mTexture, row);
-    }
-};
+typedef MameTexture<MamePalette16PixelIterator> MamePalette16Texture;
+typedef MameTexture<MameARGB32PixelIterator> MameARGB32Texture;
+typedef MameTexture<MamePaletteRGB32PixelIterator> MamePaletteRGB32Texture;
 
 class BGRA32PixelIterator
 {
