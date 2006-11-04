@@ -3,6 +3,7 @@
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
         {
             ACTIONS = {
+                cancelOpenPanel = id; 
                 endOpenPanel = id; 
                 filterChanged = id; 
                 hideOpenPanel = id; 

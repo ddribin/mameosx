@@ -28,6 +28,10 @@ extern "C" {
 #include "render.h"
 }
 
+NSString * kMamePreviousGames = @"PreviousGames";
+static const int kMameRunGame = 0;
+static const int kMameCancelGame = 1;
+
 @interface MameController (Private)
 
 - (void) setViewSize: (NSSize) viewSize;
@@ -65,10 +69,9 @@ void leaks_sleeper()
                                                  name: MameViewNaturalSizeDidChange
                                                object: mMameView];
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-    [mGameTextField setCompletes: YES];
     
     [self willChangeValueForKey: @"previousGames"];
-    mPreviousGames = [[defaults arrayForKey: @"PreviousGames"] mutableCopy];
+    mPreviousGames = [[defaults arrayForKey: kMamePreviousGames] mutableCopy];
     if (mPreviousGames == nil)
         mPreviousGames = [[NSMutableArray alloc] init];
     [self didChangeValueForKey: @"previousGames"];
@@ -179,13 +182,25 @@ void leaks_sleeper()
 
 - (IBAction) raiseOpenPanel: (id) sender;
 {
-    [NSApp runModalForWindow: mOpenPanel];
-    [mGameLoading startAnimation: nil];
+    int rc = [NSApp runModalForWindow: mOpenPanel];
+    if (rc == kMameRunGame)
+    {
+        [mGameLoading startAnimation: nil];
+    }
+    else
+    {
+        [NSApp terminate: nil];
+    }
 }
 
 - (IBAction) endOpenPanel: (id) sender;
 {
-    [NSApp stopModal];
+    [NSApp stopModalWithCode: kMameRunGame];
+}
+
+- (IBAction) cancelOpenPanel: (id) sender;
+{
+    [NSApp stopModalWithCode: kMameCancelGame];
 }
 
 - (IBAction) hideOpenPanel: (id) sender;
@@ -381,7 +396,7 @@ void leaks_sleeper()
     [self didChangeValueForKey: @"previousGames"];
     
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject: mPreviousGames forKey: @"PreviousGames"];
+    [defaults setObject: mPreviousGames forKey: kMamePreviousGames];
     [defaults synchronize];
 }
 
