@@ -26,6 +26,19 @@
 		551A613A0AC24B2000AECE1E /* ui.bdf in Resources */ = {isa = PBXBuildFile; fileRef = 551A61390AC24B2000AECE1E /* ui.bdf */; };
 		551C7B6A0AFD2716008FF3C7 /* generic.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A43540AA4EC9900602CC5 /* generic.c */; };
 		551C7B6B0AFD2716008FF3C7 /* generic.h in Headers */ = {isa = PBXBuildFile; fileRef = 556A43550AA4EC9900602CC5 /* generic.h */; };
+		551C7B8B0AFD3714008FF3C7 /* argus.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFBA40AEC716700357340 /* argus.c */; };
+		551C7B8C0AFD3714008FF3C7 /* argus.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE05B30AEC847700357340 /* argus.c */; };
+		551C7B9B0AFD374E008FF3C7 /* 2203intf.c in Sources */ = {isa = PBXBuildFile; fileRef = 55558EE20AF9AED3001ADC6D /* 2203intf.c */; };
+		551C7B9C0AFD374E008FF3C7 /* 2203intf.h in Headers */ = {isa = PBXBuildFile; fileRef = 55558EE30AF9AED3001ADC6D /* 2203intf.h */; };
+		551C7BA50AFD3780008FF3C7 /* fm.c in Sources */ = {isa = PBXBuildFile; fileRef = 55558F110AF9AED3001ADC6D /* fm.c */; };
+		551C7BA60AFD3780008FF3C7 /* fm.h in Headers */ = {isa = PBXBuildFile; fileRef = 55558F120AF9AED3001ADC6D /* fm.h */; };
+		551C7BCF0AFD385B008FF3C7 /* crystal.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFC230AEC716700357340 /* crystal.c */; };
+		551C7BD90AFD3895008FF3C7 /* ds1302.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE03B80AEC817800357340 /* ds1302.c */; };
+		551C7BDA0AFD3895008FF3C7 /* ds1302.h in Headers */ = {isa = PBXBuildFile; fileRef = 55BE03B90AEC817800357340 /* ds1302.h */; };
+		551C7BE40AFD38B4008FF3C7 /* vrender0.c in Sources */ = {isa = PBXBuildFile; fileRef = 55558F680AF9AED4001ADC6D /* vrender0.c */; };
+		551C7BE50AFD38B4008FF3C7 /* vrender0.h in Headers */ = {isa = PBXBuildFile; fileRef = 55558F690AF9AED4001ADC6D /* vrender0.h */; };
+		551C7BF10AFD38E8008FF3C7 /* vrender0.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE084C0AEC847A00357340 /* vrender0.c */; };
+		551C7BF20AFD38E8008FF3C7 /* vrender0.h in Headers */ = {isa = PBXBuildFile; fileRef = 55BE084D0AEC847A00357340 /* vrender0.h */; };
 		5522F55D0AFD1C390028E5F8 /* astrocde.c in Sources */ = {isa = PBXBuildFile; fileRef = 55558EF20AF9AED3001ADC6D /* astrocde.c */; };
 		5522F5620AFD1CB70028E5F8 /* sndintrf.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A42B40AA4EB9200602CC5 /* sndintrf.c */; };
 		5522F5630AFD1CB70028E5F8 /* sndintrf.h in Headers */ = {isa = PBXBuildFile; fileRef = 556A42B50AA4EB9200602CC5 /* sndintrf.h */; };
@@ -64,6 +77,8 @@
 		5530FE110ACA42270083BB04 /* express.h in Headers */ = {isa = PBXBuildFile; fileRef = 5530FE000ACA42270083BB04 /* express.h */; };
 		5530FE120ACA42270083BB04 /* textbuf.c in Sources */ = {isa = PBXBuildFile; fileRef = 5530FE010ACA42270083BB04 /* textbuf.c */; };
 		5530FE130ACA42270083BB04 /* textbuf.h in Headers */ = {isa = PBXBuildFile; fileRef = 5530FE020ACA42270083BB04 /* textbuf.h */; };
+		553A06910AFD396600531E1F /* se3208.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A49040AA4F64000602CC5 /* se3208.c */; };
+		553A06920AFD396600531E1F /* se3208dis.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A49060AA4F64000602CC5 /* se3208dis.c */; };
 		5548ECDF0ABCB463008D1F74 /* MameFileManagerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5548ECDE0ABCB463008D1F74 /* MameFileManagerTest.m */; };
 		5548EDCB0ABE3CEF008D1F74 /* file.txt in Resources */ = {isa = PBXBuildFile; fileRef = 5548EDCA0ABE3CEF008D1F74 /* file.txt */; };
 		55558CE50AF9A6E7001ADC6D /* m37710o3.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A48900AA4F64000602CC5 /* m37710o3.c */; };
@@ -9957,6 +9972,11 @@
 				55FEC7F30AEC58AD001A1CAB /* namco.h in Headers */,
 				5522F5650AFD1CB90028E5F8 /* sndintrf.h in Headers */,
 				5522F56F0AFD1D0F0028E5F8 /* cpuintrf.h in Headers */,
+				551C7B9C0AFD374E008FF3C7 /* 2203intf.h in Headers */,
+				551C7BA60AFD3780008FF3C7 /* fm.h in Headers */,
+				551C7BDA0AFD3895008FF3C7 /* ds1302.h in Headers */,
+				551C7BE50AFD38B4008FF3C7 /* vrender0.h in Headers */,
+				551C7BF20AFD38E8008FF3C7 /* vrender0.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12663,6 +12683,16 @@
 				5522F5DB0AFD1F280028E5F8 /* theglobp.c in Sources */,
 				5522F5E20AFD1F410028E5F8 /* z80dasm.c in Sources */,
 				5522F5E50AFD1F610028E5F8 /* 6502dasm.c in Sources */,
+				551C7B8B0AFD3714008FF3C7 /* argus.c in Sources */,
+				551C7B8C0AFD3714008FF3C7 /* argus.c in Sources */,
+				551C7B9B0AFD374E008FF3C7 /* 2203intf.c in Sources */,
+				551C7BA50AFD3780008FF3C7 /* fm.c in Sources */,
+				551C7BCF0AFD385B008FF3C7 /* crystal.c in Sources */,
+				551C7BD90AFD3895008FF3C7 /* ds1302.c in Sources */,
+				551C7BE40AFD38B4008FF3C7 /* vrender0.c in Sources */,
+				551C7BF10AFD38E8008FF3C7 /* vrender0.c in Sources */,
+				553A06910AFD396600531E1F /* se3208.c in Sources */,
+				553A06920AFD396600531E1F /* se3208dis.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
