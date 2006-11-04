@@ -99,6 +99,36 @@ private:
     const rgb_t * mPalette;
 };
 
+
+class MameRGB15PixelIterator
+{
+public:
+    MameRGB15PixelIterator(const render_texinfo * texture, int row)
+    {
+        mCurrentPixel = (UINT16 *) texture->base;
+        mCurrentPixel += row * texture->rowpixels;
+    }
+    
+    UINT32 inline xrgb_value() const
+    {
+        UINT16 pix = *mCurrentPixel;
+        UINT32 color =
+            ((pix & 0x7c00) << 9) |
+            ((pix & 0x03e0) << 6) |
+            ((pix & 0x001f) << 3);
+        
+        return color | ((color >> 5) & 0x070707);
+    }
+    
+    void inline next()
+    {
+        mCurrentPixel++;
+    }
+    
+private:
+    UINT16 * mCurrentPixel;
+};
+
 class MamePaletteRGB32PixelIterator
 {
 public:
@@ -186,6 +216,7 @@ typedef MameTexture<MameARGB32PixelIterator> MameARGB32Texture;
 typedef MameTexture<MamePaletteRGB32PixelIterator> MamePaletteRGB32Texture;
 typedef MameTexture<MameRGB32PixelIterator> MameRGB32Texture;
 typedef MameTexture<MamePaletteRGB15PixelIterator> MamePaletteRGB15Texture;
+typedef MameTexture<MameRGB15PixelIterator> MameRGB15Texture;
 
 class BGRA32PixelIterator
 {
@@ -277,6 +308,12 @@ public:
     }
     
     void inline copy_from(const MamePaletteRGB15PixelIterator & src)
+    {
+        UINT32 xrgb_value = src.xrgb_value();
+        *mCurrentPixel = 0xff000000 | xrgb_value;
+    }
+    
+    void inline copy_from(const MameRGB15PixelIterator & src)
     {
         UINT32 xrgb_value = src.xrgb_value();
         *mCurrentPixel = 0xff000000 | xrgb_value;
