@@ -20,66 +20,51 @@ extern "C" {
 // too high.
 #define inline inline __attribute__((always_inline))
 
-class MamePalette16PixelIterator
+template <typename PixelType>
+class BaseMamePixelIterator
 {
-public:
-    MamePalette16PixelIterator(const render_texinfo * texture, int row)
-        : mPalette(texture->palette)
+  public:
+    void init(const render_texinfo * texture, int row)
     {
-        mCurrentPixel = (UINT16 *) texture->base;
+        mCurrentPixel = (PixelType *) texture->base;
         mCurrentPixel += row * texture->rowpixels;
+        mPalette = texture->palette;
     }
     
-
-    UINT32 inline argb_value() const
-    {
-        return 0xff000000 | mPalette[*mCurrentPixel];
-    }
-
     void inline next()
     {
         mCurrentPixel++;
     }
-
-private:
-    UINT16 * mCurrentPixel;
+    
+protected:
+    PixelType * mCurrentPixel;
     const rgb_t * mPalette;
 };
 
+typedef BaseMamePixelIterator<UINT16> Mame16BitPixelIterator;
+typedef BaseMamePixelIterator<UINT32> Mame32BitPixelIterator;
 
-class MameARGB32PixelIterator
+class MamePalette16PixelIterator : public Mame16BitPixelIterator
 {
 public:
-    MameARGB32PixelIterator(const render_texinfo * texture, int row)
+    UINT32 inline argb_value() const
     {
-        mCurrentPixel = (UINT32 *) texture->base;
-        mCurrentPixel += row * texture->rowpixels;
-    }
-    
+        return 0xff000000 | mPalette[*mCurrentPixel];
+    }    
+};
+
+class MameARGB32PixelIterator : public Mame32BitPixelIterator
+{
+public:    
     UINT32 inline argb_value() const
     {
         return *mCurrentPixel;
     }
-    
-    void inline next()
-    {
-        mCurrentPixel++;
-    }
-    
-private:
-    UINT32 * mCurrentPixel;
 };
 
-class MamePaletteRGB15PixelIterator
+class MamePaletteRGB15PixelIterator : public Mame16BitPixelIterator
 {
 public:
-    MamePaletteRGB15PixelIterator(const render_texinfo * texture, int row)
-        : mPalette(texture->palette)
-    {
-        mCurrentPixel = (UINT16 *) texture->base;
-        mCurrentPixel += row * texture->rowpixels;
-    }
-    
     UINT32 inline argb_value() const
     {
         UINT16 pix = *mCurrentPixel;
@@ -89,27 +74,11 @@ public:
             mPalette[0x20 + ((pix >>  5) & 0x1f)] |
             mPalette[0x00 + ((pix >>  0) & 0x1f)];
     }
-    
-    void inline next()
-    {
-        mCurrentPixel++;
-    }
-    
-private:
-    UINT16 * mCurrentPixel;
-    const rgb_t * mPalette;
-};
+};    
 
-
-class MameRGB15PixelIterator
+class MameRGB15PixelIterator : public Mame16BitPixelIterator
 {
 public:
-    MameRGB15PixelIterator(const render_texinfo * texture, int row)
-    {
-        mCurrentPixel = (UINT16 *) texture->base;
-        mCurrentPixel += row * texture->rowpixels;
-    }
-    
     UINT32 inline argb_value() const
     {
         UINT16 pix = *mCurrentPixel;
@@ -120,26 +89,11 @@ public:
         
         return 0xff000000 | color | ((color >> 5) & 0x070707);
     }
-    
-    void inline next()
-    {
-        mCurrentPixel++;
-    }
-    
-private:
-    UINT16 * mCurrentPixel;
 };
 
-class MamePaletteRGB32PixelIterator
+class MamePaletteRGB32PixelIterator : public Mame32BitPixelIterator
 {
 public:
-    MamePaletteRGB32PixelIterator(const render_texinfo * texture, int row)
-        : mPalette(texture->palette)
-    {
-        mCurrentPixel = (UINT32 *) texture->base;
-        mCurrentPixel += row * texture->rowpixels;
-    }
-    
     UINT32 inline argb_value() const
     {
         UINT32 sourceValue = *mCurrentPixel;
@@ -149,38 +103,15 @@ public:
             mPalette[0x100 + RGB_GREEN(sourceValue)] |
             mPalette[0x000 + RGB_BLUE(sourceValue)];
     }
-    
-    void inline next()
-    {
-        mCurrentPixel++;
-    }
-    
-private:
-    UINT32 * mCurrentPixel;
-    const rgb_t * mPalette;
 };
 
-class MameRGB32PixelIterator
+class MameRGB32PixelIterator : public Mame32BitPixelIterator
 {
 public:
-    MameRGB32PixelIterator(const render_texinfo * texture, int row)
-    {
-        mCurrentPixel = (UINT32 *) texture->base;
-        mCurrentPixel += row * texture->rowpixels;
-    }
-    
     UINT32 inline argb_value() const
     {
         return 0xff000000 | *mCurrentPixel;
     }
-    
-    void inline next()
-    {
-        mCurrentPixel++;
-    }
-    
-private:
-    UINT32 * mCurrentPixel;
 };
 
 template <typename PixelIterator>
@@ -206,11 +137,13 @@ public:
     
     Iterator iteratorForRow(int row)
     {
-        return Iterator(mTexture, row);
+        Iterator i;
+        i.init(mTexture, row);
+        return i;
     }
     
 protected:
-        const render_texinfo * mTexture;
+    const render_texinfo * mTexture;
 };
 
 typedef MameTexture<MamePalette16PixelIterator> MamePalette16Texture;
