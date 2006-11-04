@@ -31,9 +31,9 @@ public:
     }
     
 
-    UINT32 inline xrgb_value() const
+    UINT32 inline argb_value() const
     {
-        return mPalette[*mCurrentPixel];
+        return 0xff000000 | mPalette[*mCurrentPixel];
     }
 
     void inline next()
@@ -80,10 +80,11 @@ public:
         mCurrentPixel += row * texture->rowpixels;
     }
     
-    UINT32 inline xrgb_value() const
+    UINT32 inline argb_value() const
     {
         UINT16 pix = *mCurrentPixel;
         return
+            0xff000000 |
             mPalette[0x40 + ((pix >> 10) & 0x1f)] |
             mPalette[0x20 + ((pix >>  5) & 0x1f)] |
             mPalette[0x00 + ((pix >>  0) & 0x1f)];
@@ -109,7 +110,7 @@ public:
         mCurrentPixel += row * texture->rowpixels;
     }
     
-    UINT32 inline xrgb_value() const
+    UINT32 inline argb_value() const
     {
         UINT16 pix = *mCurrentPixel;
         UINT32 color =
@@ -117,7 +118,7 @@ public:
             ((pix & 0x03e0) << 6) |
             ((pix & 0x001f) << 3);
         
-        return color | ((color >> 5) & 0x070707);
+        return 0xff000000 | color | ((color >> 5) & 0x070707);
     }
     
     void inline next()
@@ -139,10 +140,11 @@ public:
         mCurrentPixel += row * texture->rowpixels;
     }
     
-    UINT32 inline xrgb_value() const
+    UINT32 inline argb_value() const
     {
         UINT32 sourceValue = *mCurrentPixel;
         return
+            0xff000000 |
             mPalette[0x200 + RGB_RED(sourceValue)] |
             mPalette[0x100 + RGB_GREEN(sourceValue)] |
             mPalette[0x000 + RGB_BLUE(sourceValue)];
@@ -167,9 +169,9 @@ public:
         mCurrentPixel += row * texture->rowpixels;
     }
     
-    UINT32 inline xrgb_value() const
+    UINT32 inline argb_value() const
     {
-        return *mCurrentPixel;
+        return 0xff000000 | *mCurrentPixel;
     }
     
     void inline next()
@@ -232,17 +234,8 @@ public:
     {
     }
     
-    void inline copy_from(const MamePalette16PixelIterator & src)
-    {
-        UINT32 xrgb_value = src.xrgb_value();
-        *mCurrentPixel =
-            (xrgb_value & 0x000000ff) << 24 |
-            (xrgb_value & 0x0000ff00) <<  8 |
-            (xrgb_value & 0x00ff0000) >>  8 |
-            0x000000ff;
-    }
-    
-    void inline copy_from(const MameARGB32PixelIterator & src)
+    template <typename MamePixelIterator>
+    void inline copy_from(const MamePixelIterator & src)
     {
         UINT32 argb_value = src.argb_value();
         *mCurrentPixel =
@@ -250,26 +243,6 @@ public:
             (argb_value & 0x0000ff00) <<  8 |
             (argb_value & 0x00ff0000) >>  8 |
             (argb_value & 0xff000000) >> 24;
-    }
-    
-    void inline copy_from(const MamePaletteRGB32PixelIterator & src)
-    {
-        UINT32 xrgb_value = src.xrgb_value();
-        *mCurrentPixel =
-            (xrgb_value & 0x000000ff) << 24 |
-            (xrgb_value & 0x0000ff00) <<  8 |
-            (xrgb_value & 0x00ff0000) >>  8 |
-            0x000000ff;
-    }
-    
-    void inline copy_from(const MameRGB32PixelIterator & src)
-    {
-        UINT32 xrgb_value = src.xrgb_value();
-        *mCurrentPixel =
-            (xrgb_value & 0x000000ff) << 24 |
-            (xrgb_value & 0x0000ff00) <<  8 |
-            (xrgb_value & 0x00ff0000) >>  8 |
-            0x000000ff;
     }
     
     void inline next()
@@ -295,40 +268,11 @@ public:
         : mCurrentPixel(base)
     {
     }
-    
-    void inline copy_from(const MamePalette16PixelIterator & src)
-    {
-        UINT32 xrgb_value = src.xrgb_value();
-        *mCurrentPixel = 0xff000000 | xrgb_value;
-    }
-    
-    void inline copy_from(const MameARGB32PixelIterator & src)
+        
+    template <typename MamePixelIterator>
+    void inline copy_from(const MamePixelIterator & src)
     {
         *mCurrentPixel = src.argb_value();
-    }
-    
-    void inline copy_from(const MamePaletteRGB15PixelIterator & src)
-    {
-        UINT32 xrgb_value = src.xrgb_value();
-        *mCurrentPixel = 0xff000000 | xrgb_value;
-    }
-    
-    void inline copy_from(const MameRGB15PixelIterator & src)
-    {
-        UINT32 xrgb_value = src.xrgb_value();
-        *mCurrentPixel = 0xff000000 | xrgb_value;
-    }
-    
-    void inline copy_from(const MamePaletteRGB32PixelIterator & src)
-    {
-        UINT32 xrgb_value = src.xrgb_value();
-        *mCurrentPixel = 0xff000000 | xrgb_value;
-    }
-    
-    void inline copy_from(const MameRGB32PixelIterator & src)
-    {
-        UINT32 xrgb_value = src.xrgb_value();
-        *mCurrentPixel = 0xff000000 | xrgb_value;
     }
     
     void inline next()
