@@ -145,12 +145,8 @@ static void cv_assert(CVReturn cr, NSString * message)
         }
         else
         {
-            static bool loggedRGB32 = NO;
-            if (!loggedRGB32)
-            {
-                NSLog(@"TEXFORMAT_RGB32 not yet supported (palette: %p)", texsource->palette);
-                loggedRGB32 = YES;
-            }
+            MameRGB32Texture cppTexture(texsource);
+            convertTexture(cppTexture, pixelBuffer);
         }
     }
 #if 0
