@@ -30,6 +30,7 @@ extern "C" {
 
 NSString * kMamePreviousGames = @"PreviousGames";
 NSString * kMameGame = @"Game";
+NSString * kMameSleepAtExit = @"SleepAtExit";
 
 static const int kMameRunGame = 0;
 static const int kMameCancelGame = 1;
@@ -45,9 +46,11 @@ static const int kMameCancelGame = 1;
 
 @end
 
-void leaks_sleeper()
+static BOOL sSleepAtExit = NO;
+
+void exit_sleeper()
 {
-    while (1) sleep(60);
+    while (sSleepAtExit) sleep(60);
 }
 
 @implementation MameController
@@ -60,6 +63,10 @@ void leaks_sleeper()
     mConfiguration = [[MameConfiguration alloc] init];
     [self initFilters];
 
+    sSleepAtExit =
+        [[NSUserDefaults standardUserDefaults] boolForKey: kMameSleepAtExit];
+    atexit(exit_sleeper);
+    
     return self;
 }
 
@@ -81,11 +88,6 @@ void leaks_sleeper()
 
 - (void) applicationDidFinishLaunching: (NSNotification*) notification;
 {
-#if 0
-    atexit(leaks_sleeper);
-#endif
-
-    
     // Work around for an IB issue:
     // "Why does my bottom or top drawer size itself improperly?"
     // http://developer.apple.com/documentation/DeveloperTools/Conceptual/IBTips/Articles/FreqAskedQuests.html
