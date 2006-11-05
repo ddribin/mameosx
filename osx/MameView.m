@@ -13,6 +13,8 @@
 #import "MameTimingController.h"
 #import "MameFileManager.h"
 #import "MameConfiguration.h"
+#import "MameFilter.h"
+
 
 @interface MameView (Private)
 
@@ -470,12 +472,12 @@ NSString * MameViewNaturalSizeDidChange = @"NaturalSizeDidChange";
 //=========================================================== 
 //  filter 
 //=========================================================== 
-- (CIFilter *) filter
+- (MameFilter *) filter
 {
     return [[mFilter retain] autorelease]; 
 }
 
-- (void) setFilter: (CIFilter *) aFilter
+- (void) setFilter: (MameFilter *) aFilter
 {
     if (mFilter != aFilter)
     {
@@ -664,28 +666,16 @@ NSString * MameViewNaturalSizeDidChange = @"NaturalSizeDidChange";
 - (void) drawFrameUsingCoreImage: (CVOpenGLTextureRef) frame
                           inRect: (NSRect) destRect;
 {
-    CIImage * inputImage = [CIImage imageWithCVImageBuffer: frame];
+    CIImage * frameIamge = [CIImage imageWithCVImageBuffer: frame];
     CIContext * ciContext = [self ciContext];
 
-    CIImage * imageToDraw = inputImage;
     if (mFilter != nil)
     {
-        if (mMoveInputCenter)
-        {
-            inputCenterX += 2;
-            if (inputCenterX > [self bounds].size.width)
-                inputCenterX = 0;
-            
-            [mFilter setValue: [CIVector vectorWithX: inputCenterX Y: inputCenterY]  
-                       forKey: @"inputCenter"];
-        }
-        
-        [mFilter setValue: inputImage forKey:@"inputImage"];
-        imageToDraw = [mFilter valueForKey: @"outputImage"];
+        frameIamge = [mFilter filterFrame: frameIamge size: destRect.size];
     }
-    CGRect imageRect = [imageToDraw extent];
+    CGRect imageRect = [frameIamge extent];
     
-    [ciContext drawImage: imageToDraw
+    [ciContext drawImage: frameIamge
                   inRect: *(CGRect *) &destRect
                 fromRect: imageRect];
 }

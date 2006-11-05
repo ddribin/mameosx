@@ -22,6 +22,7 @@
 @class MameTimingController;
 @class MameFileManager;
 @class MameConfiguration;
+@class MameFilter;
 
 @interface MameView : DDCustomOpenGLView
 {
@@ -40,15 +41,11 @@
     NSSize mRenderSize;
     
     BOOL mRenderInCoreVideoThread;
-    CIFilter * mFilter;
+    MameFilter * mFilter;
     NSSize mNaturalSize;
     NSSize mOptimalSize;
     NSSize mFullScreenSize;
     BOOL mClearToRed;
-    
-    float inputCenterX;
-    float inputCenterY;
-    BOOL mMoveInputCenter;
     
     MameInputController * mInputController;
     MameAudioController * mAudioController;
@@ -101,8 +98,8 @@
 - (BOOL) audioEnabled;
 - (void) setAudioEnabled: (BOOL) flag;
 
-- (CIFilter *) filter;
-- (void) setFilter: (CIFilter *) aFilter;
+- (MameFilter *) filter;
+- (void) setFilter: (MameFilter *) aFilter;
 
 - (int) osd_init: (running_machine *) machine;
 - (void) mameDidExit: (running_machine *) machine;

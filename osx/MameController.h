@@ -26,6 +26,7 @@ extern "C" {
 @class MameTimingController;
 @class MameFileManager;
 @class MameConfiguration;
+@class MameFilter;
 
 @interface MameController : NSObject
 {
@@ -42,10 +43,7 @@ extern "C" {
     
     BOOL mIsFiltered;
     NSMutableArray * mFilters;
-    CIFilter * mCurrentFilter;
-    float inputCenterX;
-    float inputCenterY;
-    BOOL mMoveInputCenter;
+    MameFilter * mCurrentFilter;
     NSMutableArray * mPreviousGames;
 }
 

@@ -17,6 +17,7 @@
 #import <OpenGL/gl.h>
 #import "MameOpenGLTexture.h"
 #import "MameTextureConverter.h"
+#import "MameFilter.h"
 
 #include <mach/mach_time.h>
 #include <unistd.h>
@@ -27,6 +28,86 @@ extern "C" {
 #include "driver.h"
 #include "render.h"
 }
+
+@interface MameInputCenterFilter : MameFilter
+{
+}
+
+- (id) initWithFilter: (CIFilter *) filter;
++ (MameInputCenterFilter *) filterWithFilter: (CIFilter *) filter;
+
+@end
+
+@implementation MameInputCenterFilter
+
+- (id) initWithFilter: (CIFilter *) filter;
+{
+    if ([super initWithFilter: filter] == nil)
+        return nil;
+    
+    return self;
+}
+
++ (MameInputCenterFilter *) filterWithFilter: (CIFilter *) filter;
+{
+    return [[[self alloc] initWithFilter: filter] autorelease];
+}
+
+- (CIImage *) filterFrame: (CIImage *) inputImage size: (NSSize) size;
+{
+    [mFilter setValue: [CIVector vectorWithX: size.width/2 Y: size.height/2]
+               forKey: @"inputCenter"];
+    return [super filterFrame: inputImage size: size];
+}
+
+@end
+
+
+@interface MameBumpDistortionFilter : MameFilter
+{
+    float mCenterX;
+}
+
+- (id) init;
++ (MameBumpDistortionFilter *) filter;
+
+@end
+
+@implementation MameBumpDistortionFilter
+
+- (id) init;
+{
+    if ([super initWithFilter: [CIFilter filterWithName: @"CIBumpDistortion"]] == nil)
+        return nil;
+    
+   [mFilter setDefaults];
+   [mFilter setValue: [NSNumber numberWithFloat: 75]  
+              forKey: @"inputRadius"];
+   [mFilter setValue: [NSNumber numberWithFloat:  3.0]  
+              forKey: @"inputScale"];
+   mCenterX = 0;
+    
+    return self;
+}
+
++ (MameBumpDistortionFilter *) filter;
+{
+    return [[[self alloc] init] autorelease];
+}
+
+- (CIImage *) filterFrame: (CIImage *) frame size: (NSSize) size;
+{
+    mCenterX += 2;
+    if (mCenterX > (size.width - 0))
+        mCenterX = 0;
+    
+    [mFilter setValue: [CIVector vectorWithX: mCenterX Y: size.height/2]
+               forKey: @"inputCenter"];
+    return [super filterFrame: frame size: size];
+}
+
+@end
+
 
 NSString * kMamePreviousGames = @"PreviousGames";
 NSString * kMameGame = @"Game";
@@ -167,10 +248,6 @@ void exit_sleeper()
         return;
     
     mCurrentFilter = [mFilters objectAtIndex: index];
-    if (index == 2)
-        mMoveInputCenter = YES;
-    else
-        mMoveInputCenter = NO;
     if (mIsFiltered)
         [mMameView setFilter: mCurrentFilter];
 }
@@ -332,59 +409,44 @@ void exit_sleeper()
 - (void) initFilters;
 {
     mFilters = [[NSMutableArray alloc] init];
-    mMoveInputCenter = NO;
-    // inputCenterX = mWindowWidth/2;
-    // inputCenterY = mWindowHeight/2;
     
     CIFilter * filter;
     
-    filter = [CIFilter filterWithName:@"CIGaussianBlur"];
+    filter = [CIFilter filterWithName: @"CIGaussianBlur"];
     [filter setDefaults];
     [filter setValue: [NSNumber numberWithFloat: 3]  
               forKey: @"inputRadius"];
-    [mFilters addObject: filter];
+    [mFilters addObject: [MameFilter filterWithFilter: filter]];
     
-    filter = [CIFilter filterWithName:@"CIZoomBlur"];
+    filter = [CIFilter filterWithName: @"CIZoomBlur"];
     [filter setDefaults];
-    [filter setValue: [CIVector vectorWithX: inputCenterX Y: inputCenterY]
-              forKey: @"inputCenter"];
     [filter setValue: [NSNumber numberWithFloat: 10]
               forKey: @"inputAmount"];
-    [mFilters addObject: filter];
+    [mFilters addObject: [MameInputCenterFilter filterWithFilter: filter]];
 
-    filter = [CIFilter filterWithName:@"CIBumpDistortion"];
-    [filter setDefaults];
-    [filter setValue: [CIVector vectorWithX: inputCenterX Y: inputCenterY]
-              forKey: @"inputCenter"];
-    [filter setValue: [NSNumber numberWithFloat: 75]  
-              forKey: @"inputRadius"];
-    [filter setValue: [NSNumber numberWithFloat:  3.0]  
-              forKey: @"inputScale"];
-    [mFilters addObject: filter];
+    [mFilters addObject: [MameBumpDistortionFilter filter]];
 
     filter = [CIFilter filterWithName:@"CICrystallize"];
     [filter setDefaults];
-    [filter setValue: [CIVector vectorWithX: inputCenterX Y: inputCenterY]
-              forKey: @"inputCenter"];
     [filter setValue: [NSNumber numberWithFloat: 3]
              forKey: @"inputRadius"];
-    [mFilters addObject: filter];
+    [mFilters addObject: [MameInputCenterFilter filterWithFilter: filter]];
 
     filter = [CIFilter filterWithName:@"CIPerspectiveTile"];
     [filter setDefaults];
-    [mFilters addObject: filter];
+    [mFilters addObject: [MameFilter filterWithFilter: filter]];
     
     filter = [CIFilter filterWithName:@"CIBloom"];
     [filter setDefaults];
     [filter setValue: [NSNumber numberWithFloat: 1.5f]
               forKey: @"inputIntensity"];
-    [mFilters addObject: filter];
+    [mFilters addObject: [MameFilter filterWithFilter: filter]];
     
     filter = [CIFilter filterWithName:@"CIEdges"];
     [filter setDefaults];
     [filter setValue: [NSNumber numberWithFloat: 5]  
               forKey: @"inputIntensity"];
-    [mFilters addObject: filter];
+    [mFilters addObject: [MameFilter filterWithFilter: filter]];
     
     mCurrentFilter = [mFilters objectAtIndex: 0];
 }
@@ -402,3 +464,4 @@ void exit_sleeper()
 }
 
 @end
+
