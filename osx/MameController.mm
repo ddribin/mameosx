@@ -363,7 +363,6 @@ void exit_sleeper()
     }
     else
     {
-        NSLog(@"Game not found: %@", gameName);
         int matches[5];
         driver_get_approx_matches([gameName UTF8String], ARRAY_LENGTH(matches), matches);
         NSMutableString * message = [NSMutableString stringWithString: @"Closest matches:"];
