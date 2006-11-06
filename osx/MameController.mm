@@ -115,6 +115,7 @@ NSString * kMameSleepAtExit = @"SleepAtExit";
 
 static const int kMameRunGame = 0;
 static const int kMameCancelGame = 1;
+static const int kMameMaxGamesInHistory = 100;
 
 @interface MameController (Private)
 
@@ -508,8 +509,18 @@ void exit_sleeper()
 - (void) updatePreviousGames: (NSString *) gameName;
 {
     [self willChangeValueForKey: @"previousGames"];
-    [mPreviousGames removeObject: gameName];
-    [mPreviousGames insertObject: gameName atIndex: 0];
+    {
+        [mPreviousGames removeObject: gameName];
+        [mPreviousGames insertObject: gameName atIndex: 0];
+        
+        unsigned numberOfGames = [mPreviousGames count];
+        if (numberOfGames > kMameMaxGamesInHistory)
+        {
+            unsigned length = numberOfGames - kMameMaxGamesInHistory;     
+            [mPreviousGames removeObjectsInRange:
+                NSMakeRange(kMameMaxGamesInHistory, length)];
+        }
+    }
     [self didChangeValueForKey: @"previousGames"];
     
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
