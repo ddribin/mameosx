@@ -20,11 +20,6 @@ extern "C" {
 #endif
 
 @class MameView;
-@class MameRenderer;
-@class MameInputController;
-@class MameAudioController;
-@class MameTimingController;
-@class MameFileManager;
 @class MameConfiguration;
 @class MameFilter;
 
