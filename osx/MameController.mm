@@ -121,9 +121,18 @@ static const int kMameCancelGame = 1;
 - (void) setViewSize: (NSSize) viewSize;
 - (void) viewNaturalSizeDidChange: (NSNotification *) notification;
 - (void) setUpDefaultPaths;
-- (NSString *) getGameNameToRun;
 - (void) initFilters;
+
+#pragma mark -
+#pragma mark Game Choosing
+
+- (void) chooseGameAndStart;
+- (NSString *) getGameNameToRun;
+- (void) alertDidEnd: (NSAlert *) alert
+          returnCode: (int) returnCode
+         contextInfo: (void *) contextInfo;
 - (void) updatePreviousGames: (NSString *) gameName;
+
 
 @end
 
@@ -186,19 +195,7 @@ void exit_sleeper()
     [mMameView setRenderInCoreVideoThread: [mConfiguration renderInCV]];
     [mMameView setClearToRed: [mConfiguration clearToRed]];
     
-    NSString * gameName = [self getGameNameToRun];
-    if ([mMameView setGame: gameName])
-    {
-        [self updatePreviousGames: gameName];
-        
-        [mMameView start];
-        [self hideOpenPanel: nil];
-    }
-    else
-    {
-        NSLog(@"Game not found: %@", gameName);
-        [NSApp terminate: nil];
-    }
+    [self chooseGameAndStart];
 }
 
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender
@@ -264,11 +261,7 @@ void exit_sleeper()
 - (IBAction) raiseOpenPanel: (id) sender;
 {
     int rc = [NSApp runModalForWindow: mOpenPanel];
-    if (rc == kMameRunGame)
-    {
-        [mGameLoading startAnimation: nil];
-    }
-    else
+    if (rc != kMameRunGame)
     {
         [NSApp terminate: nil];
     }
@@ -394,18 +387,6 @@ void exit_sleeper()
     [[mMameView fileManager] setPath: [myBundle resourcePath] forType: FILETYPE_FONT];
 }
 
-- (NSString *) getGameNameToRun;
-{
-    NSString * gameToRun = 
-        [[NSUserDefaults standardUserDefaults] stringForKey: kMameGame];
-    if (gameToRun == nil)
-    {
-        [self raiseOpenPanel: nil];
-        gameToRun = [mGameTextField stringValue];
-    }
-    return gameToRun;
-}
-
 - (void) initFilters;
 {
     mFilters = [[NSMutableArray alloc] init];
@@ -449,6 +430,79 @@ void exit_sleeper()
     [mFilters addObject: [MameFilter filterWithFilter: filter]];
     
     mCurrentFilter = [mFilters objectAtIndex: 0];
+}
+
+#pragma mark -
+#pragma mark Game Choosing
+
+
+- (void) chooseGameAndStart;
+{
+    
+    NSString * gameName = [self getGameNameToRun];
+    if ([mMameView setGame: gameName])
+    {
+        [mGameLoading startAnimation: nil];
+        [self updatePreviousGames: gameName];
+        
+        [mMameView start];
+        [self hideOpenPanel: nil];
+    }
+    else
+    {
+        NSLog(@"Game not found: %@", gameName);
+        int matches[5];
+        driver_get_approx_matches([gameName UTF8String], ARRAY_LENGTH(matches), matches);
+        NSMutableString * message = [NSMutableString stringWithString: @"Closest matches:"];
+        for (int drvnum = 0; drvnum < ARRAY_LENGTH(matches); drvnum++)
+        {
+            if (matches[drvnum] != -1)
+            {
+                [message appendFormat: @"\n%s [%s]",
+                    drivers[matches[drvnum]]->name,
+                    drivers[matches[drvnum]]->description];
+            }
+        }
+        
+        NSAlert * alert = [[[NSAlert alloc] init] autorelease];
+        [alert addButtonWithTitle: @"Try Again"];
+        [alert addButtonWithTitle: @"Quit"];
+        [alert setMessageText:
+            [NSString stringWithFormat: @"Game not found: %@", gameName]];
+        [alert setInformativeText: message];
+        [alert setAlertStyle: NSWarningAlertStyle];
+        [alert beginSheetModalForWindow: mOpenPanel
+                          modalDelegate: self
+                         didEndSelector: @selector(alertDidEnd:returnCode:contextInfo:)
+                            contextInfo: nil];
+    }
+}
+
+- (NSString *) getGameNameToRun;
+{
+    NSString * gameToRun = 
+    [[NSUserDefaults standardUserDefaults] stringForKey: kMameGame];
+    if (gameToRun == nil)
+    {
+        [self raiseOpenPanel: nil];
+        gameToRun = [mGameTextField stringValue];
+    }
+    return gameToRun;
+}
+
+- (void) alertDidEnd: (NSAlert *) alert
+          returnCode: (int) returnCode
+         contextInfo: (void *) contextInfo;
+{
+    if (returnCode == NSAlertFirstButtonReturn)
+    {
+        [self performSelector: @selector(chooseGameAndStart) withObject: nil
+                   afterDelay: 0.0f];
+    }
+    else
+    {
+        [NSApp terminate: nil];
+    }
 }
 
 - (void) updatePreviousGames: (NSString *) gameName;
