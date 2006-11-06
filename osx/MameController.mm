@@ -6,18 +6,10 @@
 //
 
 #import "MameController.h"
-#import "MameView.h"
-#import "MameRenderer.h"
-#import "MameInputController.h"
-#import "MameAudioController.h"
-#import "MameTimingController.h"
-#import "MameFileManager.h"
-#import "MameConfiguration.h"
 #import <OpenGL/OpenGL.h>
 #import <OpenGL/gl.h>
-#import "MameOpenGLTexture.h"
-#import "MameTextureConverter.h"
-#import "MameFilter.h"
+#import <MameKit/MameKit.h>
+#import "CustomMameFilters.h"
 
 #include <mach/mach_time.h>
 #include <unistd.h>
@@ -28,86 +20,6 @@ extern "C" {
 #include "driver.h"
 #include "render.h"
 }
-
-@interface MameInputCenterFilter : MameFilter
-{
-}
-
-- (id) initWithFilter: (CIFilter *) filter;
-+ (MameInputCenterFilter *) filterWithFilter: (CIFilter *) filter;
-
-@end
-
-@implementation MameInputCenterFilter
-
-- (id) initWithFilter: (CIFilter *) filter;
-{
-    if ([super initWithFilter: filter] == nil)
-        return nil;
-    
-    return self;
-}
-
-+ (MameInputCenterFilter *) filterWithFilter: (CIFilter *) filter;
-{
-    return [[[self alloc] initWithFilter: filter] autorelease];
-}
-
-- (CIImage *) filterFrame: (CIImage *) inputImage size: (NSSize) size;
-{
-    [mFilter setValue: [CIVector vectorWithX: size.width/2 Y: size.height/2]
-               forKey: @"inputCenter"];
-    return [super filterFrame: inputImage size: size];
-}
-
-@end
-
-
-@interface MameBumpDistortionFilter : MameFilter
-{
-    float mCenterX;
-}
-
-- (id) init;
-+ (MameBumpDistortionFilter *) filter;
-
-@end
-
-@implementation MameBumpDistortionFilter
-
-- (id) init;
-{
-    if ([super initWithFilter: [CIFilter filterWithName: @"CIBumpDistortion"]] == nil)
-        return nil;
-    
-   [mFilter setDefaults];
-   [mFilter setValue: [NSNumber numberWithFloat: 75]  
-              forKey: @"inputRadius"];
-   [mFilter setValue: [NSNumber numberWithFloat:  3.0]  
-              forKey: @"inputScale"];
-   mCenterX = 0;
-    
-    return self;
-}
-
-+ (MameBumpDistortionFilter *) filter;
-{
-    return [[[self alloc] init] autorelease];
-}
-
-- (CIImage *) filterFrame: (CIImage *) frame size: (NSSize) size;
-{
-    mCenterX += 2;
-    if (mCenterX > (size.width - 0))
-        mCenterX = 0;
-    
-    [mFilter setValue: [CIVector vectorWithX: mCenterX Y: size.height/2]
-               forKey: @"inputCenter"];
-    return [super filterFrame: frame size: size];
-}
-
-@end
-
 
 NSString * kMamePreviousGames = @"PreviousGames";
 NSString * kMameGame = @"Game";

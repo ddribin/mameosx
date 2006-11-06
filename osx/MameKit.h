@@ -13,3 +13,4 @@
 #import "MameRenderer.h"
 #import "MameTimingController.h"
 #import "MameView.h"
+#import "MameFilter.h"
