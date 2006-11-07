@@ -378,7 +378,7 @@ void exit_sleeper()
         
         NSAlert * alert = [[[NSAlert alloc] init] autorelease];
         [alert addButtonWithTitle: @"Try Again"];
-        [alert addButtonWithTitle: @"Quit"];
+        // [alert addButtonWithTitle: @"Quit"];
         [alert setMessageText:
             [NSString stringWithFormat: @"Game not found: %@", gameName]];
         [alert setInformativeText: message];
