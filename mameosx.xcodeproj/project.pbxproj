@@ -85,6 +85,7 @@
 		553A09B10AFF11B300531E1F /* CustomMameFilters.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 553A09AE0AFF11B300531E1F /* CustomMameFilters.h */; };
 		553A09B20AFF11B300531E1F /* CustomMameFilters.m in Sources */ = {isa = PBXBuildFile; fileRef = 553A09AF0AFF11B300531E1F /* CustomMameFilters.m */; };
 		553A09BD0AFF12BA00531E1F /* MameFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = 553A072E0AFD9E2700531E1F /* MameFilter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		553A0A3F0B00544E00531E1F /* m68kmake.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A48BE0AA4F64000602CC5 /* m68kmake.c */; };
 		5548ECDF0ABCB463008D1F74 /* MameFileManagerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5548ECDE0ABCB463008D1F74 /* MameFileManagerTest.m */; };
 		5548EDCB0ABE3CEF008D1F74 /* file.txt in Resources */ = {isa = PBXBuildFile; fileRef = 5548EDCA0ABE3CEF008D1F74 /* file.txt */; };
 		55558CE50AF9A6E7001ADC6D /* m37710o3.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A48900AA4F64000602CC5 /* m37710o3.c */; };
@@ -2679,6 +2680,13 @@
 			remoteGlobalIDString = 556A4C270AA50D6200602CC5;
 			remoteInfo = mameosx;
 		};
+		553A0A710B00564700531E1F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 556A42440AA4E9CE00602CC5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 553A0A300B00541E00531E1F /* m68kmake */;
+			remoteInfo = m68kmake;
+		};
 		556A4D8F0AA5156800602CC5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 556A42440AA4E9CE00602CC5 /* Project object */;
@@ -2855,6 +2863,7 @@
 		553A07310AFDA09900531E1F /* MameFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MameFilter.m; sourceTree = "<group>"; };
 		553A09AE0AFF11B300531E1F /* CustomMameFilters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomMameFilters.h; sourceTree = "<group>"; };
 		553A09AF0AFF11B300531E1F /* CustomMameFilters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomMameFilters.m; sourceTree = "<group>"; };
+		553A0A310B00541E00531E1F /* m68kmake */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = m68kmake; path = build/Debug/m68kmake; sourceTree = "<group>"; };
 		554339DE0AC4D79800F10925 /* MameOpenGLTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MameOpenGLTexture.h; sourceTree = "<group>"; };
 		554339DF0AC4D79800F10925 /* MameOpenGLTexture.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MameOpenGLTexture.mm; sourceTree = "<group>"; };
 		554339E50AC4DBB300F10925 /* MameTextureTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MameTextureTable.h; sourceTree = "<group>"; };
@@ -5802,6 +5811,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		553A0A2F0B00541E00531E1F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		556A42D20AA4EBA200602CC5 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -6027,6 +6043,7 @@
 				55BEF9F00AEC618D00357340 /* libosd.a */,
 				55BEFB0D0AEC6D0C00357340 /* MAME OS X.app */,
 				55785CC70AFAF55D000AE388 /* liblayouts.a */,
+				553A0A310B00541E00531E1F /* m68kmake */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -10035,6 +10052,23 @@
 			productReference = 5501E8910AB275F900756C9B /* UnitTests.octest */;
 			productType = "com.apple.product-type.bundle";
 		};
+		553A0A300B00541E00531E1F /* m68kmake */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 553A0A360B00542100531E1F /* Build configuration list for PBXNativeTarget "m68kmake" */;
+			buildPhases = (
+				553A0A2E0B00541E00531E1F /* Sources */,
+				553A0A2F0B00541E00531E1F /* Frameworks */,
+				553A0A490B00549C00531E1F /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = m68kmake;
+			productName = m68kmake;
+			productReference = 553A0A310B00541E00531E1F /* m68kmake */;
+			productType = "com.apple.product-type.tool";
+		};
 		556A42D30AA4EBA200602CC5 /* core */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 556A43330AA4EBD100602CC5 /* Build configuration list for PBXNativeTarget "core" */;
@@ -10084,6 +10118,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				553A0A720B00564700531E1F /* PBXTargetDependency */,
 			);
 			name = cpu;
 			productName = cpu;
@@ -10303,6 +10338,7 @@
 				55BEFB0C0AEC6D0C00357340 /* MAME OS X */,
 				55BE0D9A0AECFEF700357340 /* external */,
 				55785CC60AFAF55D000AE388 /* layouts */,
+				553A0A300B00541E00531E1F /* m68kmake */,
 			);
 		};
 /* End PBXProject section */
@@ -10357,6 +10393,19 @@
 			shellPath = /bin/sh;
 			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
 		};
+		553A0A490B00549C00531E1F /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "mkdir -p ${SRCROOT}/mame/generated\n${TARGET_BUILD_DIR}/m68kmake ${SRCROOT}/mame/generated ${SRCROOT}/mame/src/cpu/m68000/m68k_in.c";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -10366,6 +10415,14 @@
 			files = (
 				5501E89D0AB2764700756C9B /* CircularBufferTest.m in Sources */,
 				5548ECDF0ABCB463008D1F74 /* MameFileManagerTest.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		553A0A2E0B00541E00531E1F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				553A0A3F0B00544E00531E1F /* m68kmake.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12724,6 +12781,11 @@
 			target = 556A4C270AA50D6200602CC5 /* MAME OS X (tiny) */;
 			targetProxy = 5501E8A40AB276D400756C9B /* PBXContainerItemProxy */;
 		};
+		553A0A720B00564700531E1F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 553A0A300B00541E00531E1F /* m68kmake */;
+			targetProxy = 553A0A710B00564700531E1F /* PBXContainerItemProxy */;
+		};
 		556A4D900AA5156800602CC5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 556A42D30AA4EBA200602CC5 /* core */;
@@ -12886,6 +12948,36 @@
 				PRODUCT_NAME = UnitTests;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		553A0A370B00542100531E1F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INSTALL_PATH = "$(HOME)/bin";
+				PREBINDING = NO;
+				PRODUCT_NAME = m68kmake;
+				ZERO_LINK = YES;
+			};
+			name = Debug;
+		};
+		553A0A380B00542100531E1F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				INSTALL_PATH = "$(HOME)/bin";
+				PREBINDING = NO;
+				PRODUCT_NAME = m68kmake;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -13491,6 +13583,15 @@
 			buildConfigurations = (
 				5501E8940AB275FA00756C9B /* Debug */,
 				5501E8950AB275FA00756C9B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		553A0A360B00542100531E1F /* Build configuration list for PBXNativeTarget "m68kmake" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				553A0A370B00542100531E1F /* Debug */,
+				553A0A380B00542100531E1F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
