@@ -10399,12 +10399,14 @@
 			files = (
 			);
 			inputPaths = (
+				"$(SRCROOT)/mame/src/cpu/m68000/m68k_in.c",
 			);
 			outputPaths = (
+				"$(SRCROOT)/mame/generated/.timestamp",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "mkdir -p ${SRCROOT}/mame/generated\n${TARGET_BUILD_DIR}/m68kmake ${SRCROOT}/mame/generated ${SRCROOT}/mame/src/cpu/m68000/m68k_in.c";
+			shellScript = "mkdir -p ${SRCROOT}/mame/generated\n${TARGET_BUILD_DIR}/m68kmake ${SRCROOT}/mame/generated ${SRCROOT}/mame/src/cpu/m68000/m68k_in.c\ndate > ${SRCROOT}/mame/generated/.timestamp";
 		};
 /* End PBXShellScriptBuildPhase section */
 
