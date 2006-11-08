@@ -219,7 +219,12 @@ int osd_update(mame_time emutime)
 
 const char *osd_get_fps_text(const performance_info *performance)
 {
-    return "FPS: N/A";
+    static char buffer[1024];
+    sprintf(buffer, "%4d%%%4d/%d fps",
+            (int)(performance->game_speed_percent + 0.5),
+            (int)(performance->frames_per_second + 0.5),
+            (int)(Machine->screen[0].refresh + 0.5));
+    return buffer;
 }
 
 
