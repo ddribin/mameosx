@@ -107,4 +107,4 @@
 
 @end
 
-extern NSString * MameViewNaturalSizeDidChange;
+extern NSString * MameWillStartGame;

@@ -38,7 +38,7 @@
 
 @end
 
-NSString * MameViewNaturalSizeDidChange = @"NaturalSizeDidChange";
+NSString * MameWillStartGame = @"WillStartGame";
 
 @implementation MameView
 
@@ -231,7 +231,7 @@ NSString * MameViewNaturalSizeDidChange = @"NaturalSizeDidChange";
     mFullScreenSize = NSMakeSize([self fullScreenWidth], 
                                  [self fullScreenHeight]);
 
-    [[NSNotificationCenter defaultCenter] postNotificationName: MameViewNaturalSizeDidChange
+    [[NSNotificationCenter defaultCenter] postNotificationName: MameWillStartGame
                                                         object: self];
         
     [self createCIContext];
