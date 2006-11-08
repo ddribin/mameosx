@@ -219,7 +219,7 @@ int osd_update(mame_time emutime)
 
 const char *osd_get_fps_text(const performance_info *performance)
 {
-    return "DLD FPS: 0";
+    return "FPS: N/A";
 }
 
 
