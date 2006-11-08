@@ -31,8 +31,9 @@ static const int kMameMaxGamesInHistory = 100;
 
 @interface MameController (Private)
 
+- (void) setGameLoading: (BOOL) gameLoading;
 - (void) setViewSize: (NSSize) viewSize;
-- (void) viewNaturalSizeDidChange: (NSNotification *) notification;
+- (void) mameWillStartGame: (NSNotification *) notification;
 - (void) setUpDefaultPaths;
 - (void) initFilters;
 
@@ -77,8 +78,8 @@ void exit_sleeper()
 {
     [[mMameView window] center];
     [[NSNotificationCenter defaultCenter] addObserver: self
-                                             selector: @selector(viewNaturalSizeDidChange:)
-                                                 name: MameViewNaturalSizeDidChange
+                                             selector: @selector(mameWillStartGame:)
+                                                 name: MameWillStartGame
                                                object: mMameView];
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     
@@ -192,7 +193,7 @@ void exit_sleeper()
 
 - (IBAction) hideOpenPanel: (id) sender;
 {
-    [mGameLoading stopAnimation: nil];
+    [self setGameLoading: NO];
     [mOpenPanel orderOut: [mMameView window]];
 }
 
@@ -260,9 +261,19 @@ void exit_sleeper()
     return mPreviousGames;
 }
 
+- (BOOL) isGameLoading;
+{
+    return mGameLoading;
+}
+
 @end
 
 @implementation MameController (Private)
+
+- (void) setGameLoading: (BOOL) gameLoading;
+{
+    mGameLoading = gameLoading;
+}
 
 - (void) setViewSize: (NSSize) newViewSize;
 {
@@ -286,8 +297,9 @@ void exit_sleeper()
              animate: YES];
 }
 
-- (void) viewNaturalSizeDidChange: (NSNotification *) notification;
+- (void) mameWillStartGame: (NSNotification *) notification;
 {
+    [self hideOpenPanel: nil];
     [self setOptimalSize: nil];
     NSWindow * window = [mMameView window];
     [window center];
@@ -355,11 +367,10 @@ void exit_sleeper()
     NSString * gameName = [self getGameNameToRun];
     if ([mMameView setGame: gameName])
     {
-        [mGameLoading startAnimation: nil];
+        [self setGameLoading: YES];
         [self updatePreviousGames: gameName];
         
         [mMameView start];
-        [self hideOpenPanel: nil];
     }
     else
     {

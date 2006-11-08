@@ -1876,33 +1876,33 @@
 		55BE0A1A0AEC847C00357340 /* pbaction.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE07450AEC847900357340 /* pbaction.c */; };
 		55BE0A1B0AEC847C00357340 /* pcktgal.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE07460AEC847900357340 /* pcktgal.c */; };
 		55BE0A1C0AEC847C00357340 /* pgm.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE07470AEC847900357340 /* pgm.c */; };
-		55BE0A1D0AEC847C00357340 /* phoenix.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE07480AEC847900357340; };
-		55BE0A1E0AEC847C00357340 /* pingpong.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE07490AEC847900357340; };
-		55BE0A1F0AEC847C00357340 /* pirates.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE074A0AEC847900357340; };
-		55BE0A200AEC847C00357340 /* pitnrun.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE074B0AEC847900357340; };
-		55BE0A210AEC847C00357340 /* pktgaldx.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE074C0AEC847900357340; };
-		55BE0A220AEC847C00357340 /* pkunwar.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE074D0AEC847900357340; };
-		55BE0A230AEC847C00357340 /* playch10.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE074E0AEC847900357340; };
-		55BE0A240AEC847C00357340 /* playmark.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE074F0AEC847900357340; };
-		55BE0A250AEC847C00357340 /* plygonet.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE07500AEC847900357340; };
-		55BE0A260AEC847C00357340 /* pokechmp.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE07510AEC847900357340; };
-		55BE0A270AEC847C00357340 /* polepos.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE07520AEC847900357340; };
-		55BE0A280AEC847C00357340 /* policetr.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE07530AEC847900357340; };
+		55BE0A1D0AEC847C00357340 /* phoenix.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE07480AEC847900357340 /* phoenix.c */; };
+		55BE0A1E0AEC847C00357340 /* pingpong.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE07490AEC847900357340 /* pingpong.c */; };
+		55BE0A1F0AEC847C00357340 /* pirates.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE074A0AEC847900357340 /* pirates.c */; };
+		55BE0A200AEC847C00357340 /* pitnrun.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE074B0AEC847900357340 /* pitnrun.c */; };
+		55BE0A210AEC847C00357340 /* pktgaldx.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE074C0AEC847900357340 /* pktgaldx.c */; };
+		55BE0A220AEC847C00357340 /* pkunwar.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE074D0AEC847900357340 /* pkunwar.c */; };
+		55BE0A230AEC847C00357340 /* playch10.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE074E0AEC847900357340 /* playch10.c */; };
+		55BE0A240AEC847C00357340 /* playmark.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE074F0AEC847900357340 /* playmark.c */; };
+		55BE0A250AEC847C00357340 /* plygonet.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE07500AEC847900357340 /* plygonet.c */; };
+		55BE0A260AEC847C00357340 /* pokechmp.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE07510AEC847900357340 /* pokechmp.c */; };
+		55BE0A270AEC847C00357340 /* polepos.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE07520AEC847900357340 /* polepos.c */; };
+		55BE0A280AEC847C00357340 /* policetr.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE07530AEC847900357340 /* policetr.c */; };
 		55BE0A290AEC847C00357340 /* poly.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE07540AEC847900357340 /* poly.c */; };
 		55BE0A2A0AEC847C00357340 /* poly.h in Headers */ = {isa = PBXBuildFile; fileRef = 55BE07550AEC847900357340 /* poly.h */; };
-		55BE0A2B0AEC847C00357340 /* polyplay.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE07560AEC847900357340; };
-		55BE0A2C0AEC847C00357340 /* poolshrk.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE07570AEC847900357340; };
-		55BE0A2D0AEC847C00357340 /* pooyan.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE07580AEC847900357340; };
-		55BE0A2E0AEC847C00357340 /* popeye.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE07590AEC847900357340; };
-		55BE0A2F0AEC847C00357340 /* popper.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE075A0AEC847900357340; };
-		55BE0A300AEC847C00357340 /* portrait.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE075B0AEC847900357340; };
-		55BE0A310AEC847C00357340 /* powerins.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE075C0AEC847900357340; };
+		55BE0A2B0AEC847C00357340 /* polyplay.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE07560AEC847900357340 /* polyplay.c */; };
+		55BE0A2C0AEC847C00357340 /* poolshrk.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE07570AEC847900357340 /* poolshrk.c */; };
+		55BE0A2D0AEC847C00357340 /* pooyan.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE07580AEC847900357340 /* pooyan.c */; };
+		55BE0A2E0AEC847C00357340 /* popeye.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE07590AEC847900357340 /* popeye.c */; };
+		55BE0A2F0AEC847C00357340 /* popper.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE075A0AEC847900357340 /* popper.c */; };
+		55BE0A300AEC847C00357340 /* portrait.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE075B0AEC847900357340 /* portrait.c */; };
+		55BE0A310AEC847C00357340 /* powerins.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE075C0AEC847900357340 /* powerins.c */; };
 		55BE0A320AEC847C00357340 /* ppu2c03b.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE075D0AEC847900357340 /* ppu2c03b.c */; };
 		55BE0A330AEC847C00357340 /* ppu2c03b.h in Headers */ = {isa = PBXBuildFile; fileRef = 55BE075E0AEC847900357340 /* ppu2c03b.h */; };
 		55BE0A340AEC847C00357340 /* ppu2c0x.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE075F0AEC847900357340 /* ppu2c0x.c */; };
 		55BE0A350AEC847C00357340 /* ppu2c0x.h in Headers */ = {isa = PBXBuildFile; fileRef = 55BE07600AEC847900357340 /* ppu2c0x.h */; };
-		55BE0A360AEC847C00357340 /* prehisle.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE07610AEC847900357340; };
-		55BE0A370AEC847C00357340 /* psikyo.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE07620AEC847900357340; };
+		55BE0A360AEC847C00357340 /* prehisle.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE07610AEC847900357340 /* prehisle.c */; };
+		55BE0A370AEC847C00357340 /* psikyo.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE07620AEC847900357340 /* psikyo.c */; };
 		55BE0A380AEC847C00357340 /* psikyo4.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE07630AEC847900357340 /* psikyo4.c */; };
 		55BE0A390AEC847C00357340 /* psikyosh.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE07640AEC847900357340 /* psikyosh.c */; };
 		55BE0A3A0AEC847C00357340 /* psx.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE07650AEC847900357340 /* psx.c */; };
@@ -2683,7 +2683,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 556A42440AA4E9CE00602CC5 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 553A0A300B00541E00531E1F /* m68kmake */;
+			remoteGlobalIDString = 553A0A300B00541E00531E1F;
 			remoteInfo = m68kmake;
 		};
 		556A4D8F0AA5156800602CC5 /* PBXContainerItemProxy */ = {
@@ -2862,7 +2862,7 @@
 		553A07310AFDA09900531E1F /* MameFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MameFilter.m; sourceTree = "<group>"; };
 		553A09AE0AFF11B300531E1F /* CustomMameFilters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomMameFilters.h; sourceTree = "<group>"; };
 		553A09AF0AFF11B300531E1F /* CustomMameFilters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomMameFilters.m; sourceTree = "<group>"; };
-		553A0A310B00541E00531E1F /* m68kmake */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = m68kmake; path = build/Debug/m68kmake; sourceTree = "<group>"; };
+		553A0A310B00541E00531E1F /* m68kmake */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = m68kmake; sourceTree = BUILT_PRODUCTS_DIR; };
 		554339DE0AC4D79800F10925 /* MameOpenGLTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MameOpenGLTexture.h; sourceTree = "<group>"; };
 		554339DF0AC4D79800F10925 /* MameOpenGLTexture.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MameOpenGLTexture.mm; sourceTree = "<group>"; };
 		554339E50AC4DBB300F10925 /* MameTextureTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MameTextureTable.h; sourceTree = "<group>"; };
@@ -4500,33 +4500,33 @@
 		55BE07450AEC847900357340 /* pbaction.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = pbaction.c; sourceTree = "<group>"; };
 		55BE07460AEC847900357340 /* pcktgal.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = pcktgal.c; sourceTree = "<group>"; };
 		55BE07470AEC847900357340 /* pgm.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = pgm.c; sourceTree = "<group>"; };
-		55BE07480AEC847900357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = phoenix.c; sourceTree = "<group>"; };
-		55BE07490AEC847900357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = pingpong.c; sourceTree = "<group>"; };
-		55BE074A0AEC847900357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = pirates.c; sourceTree = "<group>"; };
-		55BE074B0AEC847900357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = pitnrun.c; sourceTree = "<group>"; };
-		55BE074C0AEC847900357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = pktgaldx.c; sourceTree = "<group>"; };
-		55BE074D0AEC847900357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = pkunwar.c; sourceTree = "<group>"; };
-		55BE074E0AEC847900357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = playch10.c; sourceTree = "<group>"; };
-		55BE074F0AEC847900357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = playmark.c; sourceTree = "<group>"; };
-		55BE07500AEC847900357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = plygonet.c; sourceTree = "<group>"; };
-		55BE07510AEC847900357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = pokechmp.c; sourceTree = "<group>"; };
-		55BE07520AEC847900357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = polepos.c; sourceTree = "<group>"; };
-		55BE07530AEC847900357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = policetr.c; sourceTree = "<group>"; };
+		55BE07480AEC847900357340 /* phoenix.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = phoenix.c; sourceTree = "<group>"; };
+		55BE07490AEC847900357340 /* pingpong.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = pingpong.c; sourceTree = "<group>"; };
+		55BE074A0AEC847900357340 /* pirates.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = pirates.c; sourceTree = "<group>"; };
+		55BE074B0AEC847900357340 /* pitnrun.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = pitnrun.c; sourceTree = "<group>"; };
+		55BE074C0AEC847900357340 /* pktgaldx.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = pktgaldx.c; sourceTree = "<group>"; };
+		55BE074D0AEC847900357340 /* pkunwar.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = pkunwar.c; sourceTree = "<group>"; };
+		55BE074E0AEC847900357340 /* playch10.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = playch10.c; sourceTree = "<group>"; };
+		55BE074F0AEC847900357340 /* playmark.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = playmark.c; sourceTree = "<group>"; };
+		55BE07500AEC847900357340 /* plygonet.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = plygonet.c; sourceTree = "<group>"; };
+		55BE07510AEC847900357340 /* pokechmp.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = pokechmp.c; sourceTree = "<group>"; };
+		55BE07520AEC847900357340 /* polepos.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = polepos.c; sourceTree = "<group>"; };
+		55BE07530AEC847900357340 /* policetr.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = policetr.c; sourceTree = "<group>"; };
 		55BE07540AEC847900357340 /* poly.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = poly.c; sourceTree = "<group>"; };
 		55BE07550AEC847900357340 /* poly.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = poly.h; sourceTree = "<group>"; };
-		55BE07560AEC847900357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = polyplay.c; sourceTree = "<group>"; };
-		55BE07570AEC847900357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = poolshrk.c; sourceTree = "<group>"; };
-		55BE07580AEC847900357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = pooyan.c; sourceTree = "<group>"; };
-		55BE07590AEC847900357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = popeye.c; sourceTree = "<group>"; };
-		55BE075A0AEC847900357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = popper.c; sourceTree = "<group>"; };
-		55BE075B0AEC847900357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = portrait.c; sourceTree = "<group>"; };
-		55BE075C0AEC847900357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = powerins.c; sourceTree = "<group>"; };
+		55BE07560AEC847900357340 /* polyplay.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = polyplay.c; sourceTree = "<group>"; };
+		55BE07570AEC847900357340 /* poolshrk.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = poolshrk.c; sourceTree = "<group>"; };
+		55BE07580AEC847900357340 /* pooyan.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = pooyan.c; sourceTree = "<group>"; };
+		55BE07590AEC847900357340 /* popeye.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = popeye.c; sourceTree = "<group>"; };
+		55BE075A0AEC847900357340 /* popper.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = popper.c; sourceTree = "<group>"; };
+		55BE075B0AEC847900357340 /* portrait.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = portrait.c; sourceTree = "<group>"; };
+		55BE075C0AEC847900357340 /* powerins.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = powerins.c; sourceTree = "<group>"; };
 		55BE075D0AEC847900357340 /* ppu2c03b.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = ppu2c03b.c; sourceTree = "<group>"; };
 		55BE075E0AEC847900357340 /* ppu2c03b.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ppu2c03b.h; sourceTree = "<group>"; };
 		55BE075F0AEC847900357340 /* ppu2c0x.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = ppu2c0x.c; sourceTree = "<group>"; };
 		55BE07600AEC847900357340 /* ppu2c0x.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ppu2c0x.h; sourceTree = "<group>"; };
-		55BE07610AEC847900357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = prehisle.c; sourceTree = "<group>"; };
-		55BE07620AEC847900357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = psikyo.c; sourceTree = "<group>"; };
+		55BE07610AEC847900357340 /* prehisle.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = prehisle.c; sourceTree = "<group>"; };
+		55BE07620AEC847900357340 /* psikyo.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = psikyo.c; sourceTree = "<group>"; };
 		55BE07630AEC847900357340 /* psikyo4.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = psikyo4.c; sourceTree = "<group>"; };
 		55BE07640AEC847900357340 /* psikyosh.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = psikyosh.c; sourceTree = "<group>"; };
 		55BE07650AEC847900357340 /* psx.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = psx.c; sourceTree = "<group>"; };
@@ -9145,33 +9145,33 @@
 				55BE07450AEC847900357340 /* pbaction.c */,
 				55BE07460AEC847900357340 /* pcktgal.c */,
 				55BE07470AEC847900357340 /* pgm.c */,
-				55BE07480AEC847900357340,
-				55BE07490AEC847900357340,
-				55BE074A0AEC847900357340,
-				55BE074B0AEC847900357340,
-				55BE074C0AEC847900357340,
-				55BE074D0AEC847900357340,
-				55BE074E0AEC847900357340,
-				55BE074F0AEC847900357340,
-				55BE07500AEC847900357340,
-				55BE07510AEC847900357340,
-				55BE07520AEC847900357340,
-				55BE07530AEC847900357340,
+				55BE07480AEC847900357340 /* phoenix.c */,
+				55BE07490AEC847900357340 /* pingpong.c */,
+				55BE074A0AEC847900357340 /* pirates.c */,
+				55BE074B0AEC847900357340 /* pitnrun.c */,
+				55BE074C0AEC847900357340 /* pktgaldx.c */,
+				55BE074D0AEC847900357340 /* pkunwar.c */,
+				55BE074E0AEC847900357340 /* playch10.c */,
+				55BE074F0AEC847900357340 /* playmark.c */,
+				55BE07500AEC847900357340 /* plygonet.c */,
+				55BE07510AEC847900357340 /* pokechmp.c */,
+				55BE07520AEC847900357340 /* polepos.c */,
+				55BE07530AEC847900357340 /* policetr.c */,
 				55BE07540AEC847900357340 /* poly.c */,
 				55BE07550AEC847900357340 /* poly.h */,
-				55BE07560AEC847900357340,
-				55BE07570AEC847900357340,
-				55BE07580AEC847900357340,
-				55BE07590AEC847900357340,
-				55BE075A0AEC847900357340,
-				55BE075B0AEC847900357340,
-				55BE075C0AEC847900357340,
+				55BE07560AEC847900357340 /* polyplay.c */,
+				55BE07570AEC847900357340 /* poolshrk.c */,
+				55BE07580AEC847900357340 /* pooyan.c */,
+				55BE07590AEC847900357340 /* popeye.c */,
+				55BE075A0AEC847900357340 /* popper.c */,
+				55BE075B0AEC847900357340 /* portrait.c */,
+				55BE075C0AEC847900357340 /* powerins.c */,
 				55BE075D0AEC847900357340 /* ppu2c03b.c */,
 				55BE075E0AEC847900357340 /* ppu2c03b.h */,
 				55BE075F0AEC847900357340 /* ppu2c0x.c */,
 				55BE07600AEC847900357340 /* ppu2c0x.h */,
-				55BE07610AEC847900357340,
-				55BE07620AEC847900357340,
+				55BE07610AEC847900357340 /* prehisle.c */,
+				55BE07620AEC847900357340 /* psikyo.c */,
 				55BE07630AEC847900357340 /* psikyo4.c */,
 				55BE07640AEC847900357340 /* psikyosh.c */,
 				55BE07650AEC847900357340 /* psx.c */,

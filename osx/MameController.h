@@ -30,7 +30,6 @@ extern "C" {
     IBOutlet NSDrawer * mDrawer;
     IBOutlet NSWindow * mOpenPanel;
     IBOutlet NSComboBox * mGameTextField;
-    IBOutlet NSProgressIndicator * mGameLoading;
 
     MameConfiguration * mConfiguration;
 
@@ -40,6 +39,7 @@ extern "C" {
     NSMutableArray * mFilters;
     MameFilter * mCurrentFilter;
     NSMutableArray * mPreviousGames;
+    BOOL mGameLoading;
 }
 
 - (BOOL) isFiltered;
@@ -53,6 +53,8 @@ extern "C" {
 
 - (BOOL) fullScreen;
 - (void) setFullScreen: (BOOL) fullScreen;
+
+- (BOOL) isGameLoading;
 
 - (NSArray *) previousGames;
 

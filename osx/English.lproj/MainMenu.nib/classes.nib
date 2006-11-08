@@ -18,7 +18,6 @@
             OUTLETS = {
                 mDrawer = NSDrawer; 
                 mFilterButton = NSPopUpButton; 
-                mGameLoading = NSProgressIndicator; 
                 mGameTextField = NSComboBox; 
                 mMameView = MameView; 
                 mOpenPanel = NSWindow; 
