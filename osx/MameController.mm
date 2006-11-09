@@ -87,7 +87,9 @@ void exit_sleeper()
 
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     
-    NSString * mGameName = [[defaults stringForKey: kMameGame] retain];
+    mGameName = [[defaults stringForKey: kMameGame] retain];
+    mQuitOnError = (mGameName == nil)? NO : YES;
+    NSLog(@"gameName: %@", mGameName);
     [self willChangeValueForKey: @"previousGames"];
     mPreviousGames = [[defaults arrayForKey: kMamePreviousGames] mutableCopy];
     if (mPreviousGames == nil)
@@ -428,6 +430,13 @@ void exit_sleeper()
             }
         }
         
+        if (mQuitOnError)
+        {
+            NSLog(@"Game not found: %@\n%@", mGameName, message);
+            [NSApp terminate: nil];
+        }
+        else
+        {
         NSAlert * alert = [[[NSAlert alloc] init] autorelease];
         [alert addButtonWithTitle: @"Try Again"];
         // [alert addButtonWithTitle: @"Quit"];
@@ -439,6 +448,8 @@ void exit_sleeper()
                           modalDelegate: self
                          didEndSelector: @selector(alertDidEnd:returnCode:contextInfo:)
                             contextInfo: nil];
+
+        }
     }
 }
 
