@@ -84,7 +84,8 @@ NSString * MameWillStartGame = @"WillStartGame";
     [self setFadeTime: 0.25f];
     
     mClearToRed = NO;
-        
+    mFrameStartTime = 0;
+
     return self;
 }
 
@@ -263,6 +264,8 @@ NSString * MameWillStartGame = @"WillStartGame";
     mMamePool = [[NSAutoreleasePool alloc] init];
     
     [self updateVideo];
+    if (mFrameStartTime == 0)
+        mFrameStartTime = [mTimingController osd_cycles];
     [mTimingController updateThrottle: emutime];
     
     // Open lock briefly to allow pending MAME calls
