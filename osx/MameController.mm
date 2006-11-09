@@ -109,8 +109,8 @@ void exit_sleeper()
     [self setUpDefaultPaths];
     [mConfiguration loadUserDefaults];
     [mMameView setAudioEnabled: [mConfiguration soundEnabled]];
-    [mMameView setThrottled: [mConfiguration throttled]];
-    [mMameView setSyncToRefresh: [mConfiguration syncToRefresh]];
+    [self setThrottled: [mConfiguration throttled]];
+    [self setSyncToRefresh: [mConfiguration syncToRefresh]];
     [mMameView setRenderInCoreVideoThread: [mConfiguration renderInCV]];
     [mMameView setClearToRed: [mConfiguration clearToRed]];
     
