@@ -1,0 +1,4 @@
+// MM.mmm[ubb]-[rr], e.g. 0.109u1-1
+CURRENT_MARKETING_VERSION = 0.109
+// nnnnn.nn.nn = MMmmm.bb.rr, eg 0.109u1-1 = 00109.01.01
+CURRENT_PROJECT_VERSION = 00109.00.00
