@@ -2872,6 +2872,7 @@
 		5548ECDD0ABCB463008D1F74 /* MameFileManagerTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MameFileManagerTest.h; sourceTree = "<group>"; };
 		5548ECDE0ABCB463008D1F74 /* MameFileManagerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MameFileManagerTest.m; sourceTree = "<group>"; };
 		5548EDCA0ABE3CEF008D1F74 /* file.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = file.txt; sourceTree = "<group>"; };
+		555329F30B027FBD0092FC09 /* versions.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = versions.xcconfig; sourceTree = "<group>"; };
 		55558EDE0AF9AED3001ADC6D /* 262intf.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = 262intf.c; sourceTree = "<group>"; };
 		55558EDF0AF9AED3001ADC6D /* 262intf.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = 262intf.h; sourceTree = "<group>"; };
 		55558EE00AF9AED3001ADC6D /* 2151intf.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = 2151intf.c; sourceTree = "<group>"; };
@@ -5941,6 +5942,7 @@
 				558D9F290AAE70B1007B2A32 /* cpu_config.h */,
 				558D9F2B0AAE70E9007B2A32 /* sound_config.h */,
 				55FEC7680AEC51DA001A1CAB /* tinymame.pch */,
+				555329F30B027FBD0092FC09 /* versions.xcconfig */,
 			);
 			name = config;
 			sourceTree = "<group>";
@@ -12967,6 +12969,7 @@
 		};
 		556A42460AA4E9CE00602CC5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 555329F30B027FBD0092FC09 /* versions.xcconfig */;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -12983,6 +12986,7 @@
 		};
 		556A42470AA4E9CE00602CC5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 555329F30B027FBD0092FC09 /* versions.xcconfig */;
 			buildSettings = {
 				ARCHS = (
 					ppc,

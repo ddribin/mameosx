@@ -9,8 +9,9 @@
                 hideOpenPanel = id; 
                 nullAction = id; 
                 raiseOpenPanel = id; 
-                setActualSize = id; 
-                setDoubleSize = id; 
+                resizeToActualSize = id; 
+                resizeToDoubleSize = id; 
+                resizeToOptimalSize = id; 
                 togglePause = id; 
             }; 
             CLASS = MameController; 

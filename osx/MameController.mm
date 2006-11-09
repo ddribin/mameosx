@@ -32,6 +32,7 @@ static const int kMameMaxGamesInHistory = 100;
 @interface MameController (Private)
 
 - (void) setGameLoading: (BOOL) gameLoading;
+- (void) setGameRunning: (BOOL) gameRunning;
 - (void) setViewSize: (NSSize) viewSize;
 - (void) mameWillStartGame: (NSNotification *) notification;
 - (void) setUpDefaultPaths;
@@ -41,7 +42,6 @@ static const int kMameMaxGamesInHistory = 100;
 #pragma mark Game Choosing
 
 - (void) chooseGameAndStart;
-- (NSString *) getGameNameToRun;
 - (void) alertDidEnd: (NSAlert *) alert
           returnCode: (int) returnCode
          contextInfo: (void *) contextInfo;
@@ -81,8 +81,13 @@ void exit_sleeper()
                                              selector: @selector(mameWillStartGame:)
                                                  name: MameWillStartGame
                                                object: mMameView];
+
+    [self setGameLoading: NO];
+    [self setGameRunning: NO];
+
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     
+    NSString * mGameName = [[defaults stringForKey: kMameGame] retain];
     [self willChangeValueForKey: @"previousGames"];
     mPreviousGames = [[defaults arrayForKey: kMamePreviousGames] mutableCopy];
     if (mPreviousGames == nil)
@@ -130,6 +135,12 @@ void exit_sleeper()
     [mMameView setFullScreen: false];
 }
 
+- (BOOL)windowShouldClose: (id) sender;
+{
+    [NSApp terminate: nil];
+    return YES;
+}
+
 - (MameConfiguration *) configuration;
 {
     return mConfiguration;
@@ -174,46 +185,51 @@ void exit_sleeper()
 
 - (IBAction) raiseOpenPanel: (id) sender;
 {
+#if 0
     int rc = [NSApp runModalForWindow: mOpenPanel];
     if (rc != kMameRunGame)
     {
         [NSApp terminate: nil];
     }
+#else
+    [mOpenPanel center];
+    [mOpenPanel makeKeyAndOrderFront: nil];
+#endif
 }
 
 - (IBAction) endOpenPanel: (id) sender;
 {
-    [NSApp stopModalWithCode: kMameRunGame];
+    mGameName = [[mGameTextField stringValue] retain];
+    [self chooseGameAndStart];
 }
 
 - (IBAction) cancelOpenPanel: (id) sender;
 {
-    [NSApp stopModalWithCode: kMameCancelGame];
+    [NSApp terminate: nil];
 }
 
 - (IBAction) hideOpenPanel: (id) sender;
 {
-    [self setGameLoading: NO];
-    [mOpenPanel orderOut: [mMameView window]];
+    [mOpenPanel orderOut: nil];
 }
 
-- (IBAction) setActualSize: (id) sender;
+- (IBAction) resizeToActualSize: (id) sender;
 {
     NSSize naturalSize = [mMameView naturalSize];
     [self setViewSize: naturalSize];
 }
 
-- (IBAction) setOptimalSize: (id) sender;
-{
-    [self setViewSize: [mMameView optimalSize]];
-}
-
-- (IBAction) setDoubleSize: (id) sender;
+- (IBAction) resizeToDoubleSize: (id) sender;
 {
     NSSize naturalSize = [mMameView naturalSize];
     naturalSize.width *= 2;
     naturalSize.height *= 2;
     [self setViewSize: naturalSize];
+}
+
+- (IBAction) resizeToOptimalSize: (id) sender;
+{
+    [self setViewSize: [mMameView optimalSize]];
 }
 
 
@@ -266,6 +282,11 @@ void exit_sleeper()
     return mGameLoading;
 }
 
+- (BOOL) isGameRunning;
+{
+    return mGameRunning;
+}
+
 @end
 
 @implementation MameController (Private)
@@ -273,6 +294,11 @@ void exit_sleeper()
 - (void) setGameLoading: (BOOL) gameLoading;
 {
     mGameLoading = gameLoading;
+}
+
+- (void) setGameRunning: (BOOL) gameRunning;
+{
+    mGameRunning = gameRunning;
 }
 
 - (void) setViewSize: (NSSize) newViewSize;
@@ -299,8 +325,19 @@ void exit_sleeper()
 
 - (void) mameWillStartGame: (NSNotification *) notification;
 {
+    /*
+     * Some how, setting game loading, before hiding panel causes the following error:
+     *
+     * Assertion failure in -[NSThemeFrame lockFocus], AppKit.subproj/NSView.m:3248
+     * lockFocus sent to a view whose window is deferred and does not yet have a
+     * corresponding platform window
+     */
+
     [self hideOpenPanel: nil];
-    [self setOptimalSize: nil];
+    [self setGameLoading: NO];
+    [self setGameRunning: YES];
+
+    [self resizeToOptimalSize: nil];
     NSWindow * window = [mMameView window];
     [window center];
     [window makeKeyAndOrderFront: nil];
@@ -363,19 +400,23 @@ void exit_sleeper()
 
 - (void) chooseGameAndStart;
 {
-    
-    NSString * gameName = [self getGameNameToRun];
-    if ([mMameView setGame: gameName])
+    if (mGameName == nil)
+    {
+        [self raiseOpenPanel: nil];
+        return;
+    }
+
+    if ([mMameView setGame: mGameName])
     {
         [self setGameLoading: YES];
-        [self updatePreviousGames: gameName];
+        [self updatePreviousGames: mGameName];
         
         [mMameView start];
     }
     else
     {
         int matches[5];
-        driver_get_approx_matches([gameName UTF8String], ARRAY_LENGTH(matches), matches);
+        driver_get_approx_matches([mGameName UTF8String], ARRAY_LENGTH(matches), matches);
         NSMutableString * message = [NSMutableString stringWithString: @"Closest matches:"];
         for (int drvnum = 0; drvnum < ARRAY_LENGTH(matches); drvnum++)
         {
@@ -391,7 +432,7 @@ void exit_sleeper()
         [alert addButtonWithTitle: @"Try Again"];
         // [alert addButtonWithTitle: @"Quit"];
         [alert setMessageText:
-            [NSString stringWithFormat: @"Game not found: %@", gameName]];
+            [NSString stringWithFormat: @"Game not found: %@", mGameName]];
         [alert setInformativeText: message];
         [alert setAlertStyle: NSWarningAlertStyle];
         [alert beginSheetModalForWindow: mOpenPanel
@@ -401,24 +442,14 @@ void exit_sleeper()
     }
 }
 
-- (NSString *) getGameNameToRun;
-{
-    NSString * gameToRun = 
-    [[NSUserDefaults standardUserDefaults] stringForKey: kMameGame];
-    if (gameToRun == nil)
-    {
-        [self raiseOpenPanel: nil];
-        gameToRun = [mGameTextField stringValue];
-    }
-    return gameToRun;
-}
-
 - (void) alertDidEnd: (NSAlert *) alert
           returnCode: (int) returnCode
          contextInfo: (void *) contextInfo;
 {
     if (returnCode == NSAlertFirstButtonReturn)
     {
+        [mGameName release];
+        mGameName = nil;
         [self performSelector: @selector(chooseGameAndStart) withObject: nil
                    afterDelay: 0.0f];
     }

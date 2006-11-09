@@ -38,8 +38,11 @@ extern "C" {
     BOOL mIsFiltered;
     NSMutableArray * mFilters;
     MameFilter * mCurrentFilter;
+
+    NSString * mGameName;
     NSMutableArray * mPreviousGames;
     BOOL mGameLoading;
+    BOOL mGameRunning;
 }
 
 - (BOOL) isFiltered;
@@ -55,17 +58,21 @@ extern "C" {
 - (void) setFullScreen: (BOOL) fullScreen;
 
 - (BOOL) isGameLoading;
+- (BOOL) isGameRunning;
 
 - (NSArray *) previousGames;
 
 - (IBAction) filterChanged: (id) sender;
 - (IBAction) togglePause: (id) sender;
 - (IBAction) nullAction: (id) sender;
+
 - (IBAction) raiseOpenPanel: (id) sender;
 - (IBAction) endOpenPanel: (id) sender;
 - (IBAction) cancelOpenPanel: (id) sender;
 - (IBAction) hideOpenPanel: (id) sender;
-- (IBAction) setActualSize: (id) sender;
-- (IBAction) setDoubleSize: (id) sender;
+
+- (IBAction) resizeToActualSize: (id) sender;
+- (IBAction) resizeToDoubleSize: (id) sender;
+- (IBAction) resizeToOptimalSize: (id) sender;
 
 @end
