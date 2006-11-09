@@ -35,6 +35,7 @@
 - (void) animationTimerFired;
 - (BOOL) isDoubleBuffered: (NSOpenGLPixelFormat *) pixelFormat;
 - (void) flushBuffer: (NSOpenGLContext *) context;
+- (void) updateSyncToRefreshOnContext: (NSOpenGLContext *) context;
 
 #pragma mark -
 #pragma mark Full Screen
@@ -154,6 +155,7 @@
                                            shareContext: nil];
             [mOpenGLContext makeCurrentContext];
             [self prepareOpenGL: mOpenGLContext];
+            [self updateSyncToRefreshOnContext: mOpenGLContext];
         }
     }
     [self unlockOpenGLLock];
@@ -198,6 +200,26 @@
 - (void) prepareOpenGL: (NSOpenGLContext *) context;
 {
     // for overriding to initialize OpenGL state, occurs after context creation
+}
+
+//=========================================================== 
+//  syncToRefresh 
+//=========================================================== 
+- (BOOL) syncToRefresh
+{
+    return mSyncToRefresh;
+}
+
+- (void) setSyncToRefresh: (BOOL) flag
+{
+    [self lockOpenGLLock];
+    {
+        mSyncToRefresh = flag;
+        // Only set it on the context, if we've been iniitialized
+        if (mOpenGLContext != nil)
+            [self updateSyncToRefreshOnContext: [self activeOpenGLContext]];
+    }
+    [self unlockOpenGLLock];
 }
 
 #pragma mark -
@@ -346,9 +368,10 @@
         {
             mFullScreenOpenGLContext =
                 [[NSOpenGLContext alloc] initWithFormat: mFullScreenPixelFormat
-                                           shareContext: mOpenGLContext];
+                                           shareContext: [self openGLContext]];
             [mFullScreenOpenGLContext makeCurrentContext];
             [self prepareOpenGL: mFullScreenOpenGLContext];
+            [self updateSyncToRefreshOnContext: mFullScreenOpenGLContext];
         }
     }
     [self unlockOpenGLLock];
@@ -603,6 +626,7 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
         mDoubleBuffered = [self isDoubleBuffered: mFullScreenPixelFormat];
 
         [mFullScreenOpenGLContext makeCurrentContext];
+        [self updateSyncToRefreshOnContext: mFullScreenOpenGLContext];
         glClear(GL_COLOR_BUFFER_BIT);
         [self flushBuffer: mFullScreenOpenGLContext];
         [mFullScreenOpenGLContext setFullScreen];
@@ -650,6 +674,7 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
             [windowContext setView: self];
         
         [windowContext makeCurrentContext];
+        [self updateSyncToRefreshOnContext: windowContext];
         glClear(GL_COLOR_BUFFER_BIT);
         [self flushBuffer: windowContext];
         
@@ -724,6 +749,12 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
                       kCGDisplayBlendNormal, 0, 0, 0, true); 
         CGReleaseDisplayFadeReservation(token); 
     }
+}
+
+- (void) updateSyncToRefreshOnContext: (NSOpenGLContext *) context;
+{
+    long swapInterval = mSyncToRefresh? 1 : 0;
+    [context setValues: &swapInterval forParameter: NSOpenGLCPSwapInterval];
 }
 
 @end

@@ -61,7 +61,6 @@
     cycles_t mFrameStartTime;
     cycles_t mFrameEndTime;
 
-    BOOL mSyncToRefresh;
     BOOL mThrottled;
     
     BOOL mUnpauseOnFullScreenTransition;
@@ -91,9 +90,6 @@
 
 - (BOOL) throttled;
 - (void) setThrottled: (BOOL) flag;
-
-- (BOOL) syncToRefresh;
-- (void) setSyncToRefresh: (BOOL) flag;
 
 - (BOOL) audioEnabled;
 - (void) setAudioEnabled: (BOOL) flag;

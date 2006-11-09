@@ -949,55 +949,55 @@
 		55BE01620AEC716900357340 /* sderby.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFDF50AEC716800357340 /* sderby.c */; };
 		55BE01630AEC716900357340 /* seattle.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFDF60AEC716800357340 /* seattle.c */; };
 		55BE01640AEC716900357340 /* segac2.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFDF70AEC716800357340 /* segac2.c */; };
-		55BE01650AEC716900357340 /* segag80r.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFDF80AEC716800357340; };
-		55BE01660AEC716900357340 /* segag80v.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFDF90AEC716800357340; };
-		55BE01670AEC716900357340 /* segahang.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFDFA0AEC716800357340; };
-		55BE01680AEC716900357340 /* segaorun.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFDFB0AEC716800357340; };
-		55BE01690AEC716900357340 /* segas16a.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFDFC0AEC716800357340; };
-		55BE016A0AEC716900357340 /* segas16b.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFDFD0AEC716800357340; };
-		55BE016B0AEC716900357340 /* segas18.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFDFE0AEC716800357340; };
-		55BE016C0AEC716900357340 /* segas32.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFDFF0AEC716800357340; };
-		55BE016D0AEC716900357340 /* segasyse.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE000AEC716800357340; };
-		55BE016E0AEC716900357340 /* segaxbd.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE010AEC716800357340; };
-		55BE016F0AEC716900357340 /* segaybd.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE020AEC716800357340; };
-		55BE01700AEC716900357340 /* seibuspi.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE030AEC716800357340; };
-		55BE01710AEC716900357340 /* seicross.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE040AEC716800357340; };
-		55BE01720AEC716900357340 /* sengokmj.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE050AEC716800357340; };
-		55BE01730AEC716900357340 /* senjyo.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE060AEC716800357340; };
-		55BE01740AEC716900357340 /* seta.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE070AEC716800357340; };
-		55BE01750AEC716900357340 /* seta2.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE080AEC716800357340; };
-		55BE01760AEC716900357340 /* sf.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE090AEC716800357340; };
+		55BE01650AEC716900357340 /* segag80r.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFDF80AEC716800357340 /* segag80r.c */; };
+		55BE01660AEC716900357340 /* segag80v.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFDF90AEC716800357340 /* segag80v.c */; };
+		55BE01670AEC716900357340 /* segahang.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFDFA0AEC716800357340 /* segahang.c */; };
+		55BE01680AEC716900357340 /* segaorun.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFDFB0AEC716800357340 /* segaorun.c */; };
+		55BE01690AEC716900357340 /* segas16a.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFDFC0AEC716800357340 /* segas16a.c */; };
+		55BE016A0AEC716900357340 /* segas16b.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFDFD0AEC716800357340 /* segas16b.c */; };
+		55BE016B0AEC716900357340 /* segas18.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFDFE0AEC716800357340 /* segas18.c */; };
+		55BE016C0AEC716900357340 /* segas32.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFDFF0AEC716800357340 /* segas32.c */; };
+		55BE016D0AEC716900357340 /* segasyse.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE000AEC716800357340 /* segasyse.c */; };
+		55BE016E0AEC716900357340 /* segaxbd.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE010AEC716800357340 /* segaxbd.c */; };
+		55BE016F0AEC716900357340 /* segaybd.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE020AEC716800357340 /* segaybd.c */; };
+		55BE01700AEC716900357340 /* seibuspi.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE030AEC716800357340 /* seibuspi.c */; };
+		55BE01710AEC716900357340 /* seicross.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE040AEC716800357340 /* seicross.c */; };
+		55BE01720AEC716900357340 /* sengokmj.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE050AEC716800357340 /* sengokmj.c */; };
+		55BE01730AEC716900357340 /* senjyo.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE060AEC716800357340 /* senjyo.c */; };
+		55BE01740AEC716900357340 /* seta.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE070AEC716800357340 /* seta.c */; };
+		55BE01750AEC716900357340 /* seta2.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE080AEC716800357340 /* seta2.c */; };
+		55BE01760AEC716900357340 /* sf.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE090AEC716800357340 /* sf.c */; };
 		55BE01770AEC716900357340 /* sfkick.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE0A0AEC716800357340 /* sfkick.c */; };
 		55BE01780AEC716900357340 /* sg1000a.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE0B0AEC716800357340 /* sg1000a.c */; };
 		55BE01790AEC716900357340 /* sgladiat.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE0C0AEC716800357340 /* sgladiat.c */; };
-		55BE017A0AEC716900357340 /* shadfrce.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE0D0AEC716800357340; };
-		55BE017B0AEC716900357340 /* shangha3.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE0E0AEC716800357340; };
+		55BE017A0AEC716900357340 /* shadfrce.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE0D0AEC716800357340 /* shadfrce.c */; };
+		55BE017B0AEC716900357340 /* shangha3.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE0E0AEC716800357340 /* shangha3.c */; };
 		55BE017C0AEC716900357340 /* shanghai.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE0F0AEC716800357340 /* shanghai.c */; };
-		55BE017D0AEC716900357340 /* shangkid.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE100AEC716800357340; };
-		55BE017E0AEC716900357340 /* shaolins.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE110AEC716800357340; };
-		55BE017F0AEC716900357340 /* shisen.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE120AEC716800357340; };
-		55BE01800AEC716900357340 /* shootout.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE130AEC716800357340; };
+		55BE017D0AEC716900357340 /* shangkid.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE100AEC716800357340 /* shangkid.c */; };
+		55BE017E0AEC716900357340 /* shaolins.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE110AEC716800357340 /* shaolins.c */; };
+		55BE017F0AEC716900357340 /* shisen.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE120AEC716800357340 /* shisen.c */; };
+		55BE01800AEC716900357340 /* shootout.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE130AEC716800357340 /* shootout.c */; };
 		55BE01810AEC716900357340 /* shougi.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE140AEC716800357340 /* shougi.c */; };
-		55BE01820AEC716900357340 /* shuuz.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE150AEC716800357340; };
-		55BE01830AEC716900357340 /* sidearms.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE160AEC716800357340; };
-		55BE01840AEC716900357340 /* sidepckt.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE170AEC716800357340; };
-		55BE01850AEC716900357340 /* silkroad.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE180AEC716800357340; };
-		55BE01860AEC716900357340 /* simpl156.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE190AEC716800357340; };
-		55BE01870AEC716900357340 /* simpsons.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE1A0AEC716800357340; };
-		55BE01880AEC716900357340 /* skullxbo.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE1B0AEC716800357340; };
+		55BE01820AEC716900357340 /* shuuz.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE150AEC716800357340 /* shuuz.c */; };
+		55BE01830AEC716900357340 /* sidearms.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE160AEC716800357340 /* sidearms.c */; };
+		55BE01840AEC716900357340 /* sidepckt.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE170AEC716800357340 /* sidepckt.c */; };
+		55BE01850AEC716900357340 /* silkroad.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE180AEC716800357340 /* silkroad.c */; };
+		55BE01860AEC716900357340 /* simpl156.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE190AEC716800357340 /* simpl156.c */; };
+		55BE01870AEC716900357340 /* simpsons.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE1A0AEC716800357340 /* simpsons.c */; };
+		55BE01880AEC716900357340 /* skullxbo.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE1B0AEC716800357340 /* skullxbo.c */; };
 		55BE01890AEC716900357340 /* skyarmy.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE1C0AEC716800357340 /* skyarmy.c */; };
-		55BE018A0AEC716900357340 /* skychut.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE1D0AEC716800357340; };
-		55BE018B0AEC716900357340 /* skydiver.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE1E0AEC716800357340; };
-		55BE018C0AEC716900357340 /* skyfox.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE1F0AEC716800357340; };
-		55BE018D0AEC716900357340 /* skykid.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE200AEC716800357340; };
-		55BE018E0AEC716900357340 /* skyraid.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE210AEC716800357340; };
-		55BE018F0AEC716900357340 /* slapfght.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE220AEC716800357340; };
-		55BE01900AEC716900357340 /* slapshot.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE230AEC716800357340; };
+		55BE018A0AEC716900357340 /* skychut.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE1D0AEC716800357340 /* skychut.c */; };
+		55BE018B0AEC716900357340 /* skydiver.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE1E0AEC716800357340 /* skydiver.c */; };
+		55BE018C0AEC716900357340 /* skyfox.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE1F0AEC716800357340 /* skyfox.c */; };
+		55BE018D0AEC716900357340 /* skykid.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE200AEC716800357340 /* skykid.c */; };
+		55BE018E0AEC716900357340 /* skyraid.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE210AEC716800357340 /* skyraid.c */; };
+		55BE018F0AEC716900357340 /* slapfght.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE220AEC716800357340 /* slapfght.c */; };
+		55BE01900AEC716900357340 /* slapshot.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE230AEC716800357340 /* slapshot.c */; };
 		55BE01910AEC716900357340 /* sliver.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE240AEC716800357340 /* sliver.c */; };
-		55BE01920AEC716900357340 /* snk.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE250AEC716800357340; };
-		55BE01930AEC716900357340 /* snk68.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE260AEC716800357340; };
-		55BE01940AEC716900357340 /* snowbros.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE270AEC716800357340; };
-		55BE01950AEC716900357340 /* solomon.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE280AEC716800357340; };
+		55BE01920AEC716900357340 /* snk.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE250AEC716800357340 /* snk.c */; };
+		55BE01930AEC716900357340 /* snk68.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE260AEC716800357340 /* snk68.c */; };
+		55BE01940AEC716900357340 /* snowbros.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE270AEC716800357340 /* snowbros.c */; };
+		55BE01950AEC716900357340 /* solomon.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE280AEC716800357340 /* solomon.c */; };
 		55BE01960AEC716900357340 /* sonson.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE290AEC716800357340 /* sonson.c */; };
 		55BE01970AEC716900357340 /* spacefb.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE2A0AEC716800357340 /* spacefb.c */; };
 		55BE01980AEC716900357340 /* spaceg.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BEFE2B0AEC716800357340 /* spaceg.c */; };
@@ -5539,55 +5539,55 @@
 		55BEFDF50AEC716800357340 /* sderby.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = sderby.c; path = drivers/sderby.c; sourceTree = "<group>"; };
 		55BEFDF60AEC716800357340 /* seattle.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = seattle.c; path = drivers/seattle.c; sourceTree = "<group>"; };
 		55BEFDF70AEC716800357340 /* segac2.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = segac2.c; path = drivers/segac2.c; sourceTree = "<group>"; };
-		55BEFDF80AEC716800357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = segag80r.c; path = drivers/segag80r.c; sourceTree = "<group>"; };
-		55BEFDF90AEC716800357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = segag80v.c; path = drivers/segag80v.c; sourceTree = "<group>"; };
-		55BEFDFA0AEC716800357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = segahang.c; path = drivers/segahang.c; sourceTree = "<group>"; };
-		55BEFDFB0AEC716800357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = segaorun.c; path = drivers/segaorun.c; sourceTree = "<group>"; };
-		55BEFDFC0AEC716800357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = segas16a.c; path = drivers/segas16a.c; sourceTree = "<group>"; };
-		55BEFDFD0AEC716800357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = segas16b.c; path = drivers/segas16b.c; sourceTree = "<group>"; };
-		55BEFDFE0AEC716800357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = segas18.c; path = drivers/segas18.c; sourceTree = "<group>"; };
-		55BEFDFF0AEC716800357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = segas32.c; path = drivers/segas32.c; sourceTree = "<group>"; };
-		55BEFE000AEC716800357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = segasyse.c; path = drivers/segasyse.c; sourceTree = "<group>"; };
-		55BEFE010AEC716800357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = segaxbd.c; path = drivers/segaxbd.c; sourceTree = "<group>"; };
-		55BEFE020AEC716800357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = segaybd.c; path = drivers/segaybd.c; sourceTree = "<group>"; };
-		55BEFE030AEC716800357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = seibuspi.c; path = drivers/seibuspi.c; sourceTree = "<group>"; };
-		55BEFE040AEC716800357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = seicross.c; path = drivers/seicross.c; sourceTree = "<group>"; };
-		55BEFE050AEC716800357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = sengokmj.c; path = drivers/sengokmj.c; sourceTree = "<group>"; };
-		55BEFE060AEC716800357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = senjyo.c; path = drivers/senjyo.c; sourceTree = "<group>"; };
-		55BEFE070AEC716800357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = seta.c; path = drivers/seta.c; sourceTree = "<group>"; };
-		55BEFE080AEC716800357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = seta2.c; path = drivers/seta2.c; sourceTree = "<group>"; };
-		55BEFE090AEC716800357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = sf.c; path = drivers/sf.c; sourceTree = "<group>"; };
+		55BEFDF80AEC716800357340 /* segag80r.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = segag80r.c; path = drivers/segag80r.c; sourceTree = "<group>"; };
+		55BEFDF90AEC716800357340 /* segag80v.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = segag80v.c; path = drivers/segag80v.c; sourceTree = "<group>"; };
+		55BEFDFA0AEC716800357340 /* segahang.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = segahang.c; path = drivers/segahang.c; sourceTree = "<group>"; };
+		55BEFDFB0AEC716800357340 /* segaorun.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = segaorun.c; path = drivers/segaorun.c; sourceTree = "<group>"; };
+		55BEFDFC0AEC716800357340 /* segas16a.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = segas16a.c; path = drivers/segas16a.c; sourceTree = "<group>"; };
+		55BEFDFD0AEC716800357340 /* segas16b.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = segas16b.c; path = drivers/segas16b.c; sourceTree = "<group>"; };
+		55BEFDFE0AEC716800357340 /* segas18.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = segas18.c; path = drivers/segas18.c; sourceTree = "<group>"; };
+		55BEFDFF0AEC716800357340 /* segas32.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = segas32.c; path = drivers/segas32.c; sourceTree = "<group>"; };
+		55BEFE000AEC716800357340 /* segasyse.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = segasyse.c; path = drivers/segasyse.c; sourceTree = "<group>"; };
+		55BEFE010AEC716800357340 /* segaxbd.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = segaxbd.c; path = drivers/segaxbd.c; sourceTree = "<group>"; };
+		55BEFE020AEC716800357340 /* segaybd.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = segaybd.c; path = drivers/segaybd.c; sourceTree = "<group>"; };
+		55BEFE030AEC716800357340 /* seibuspi.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = seibuspi.c; path = drivers/seibuspi.c; sourceTree = "<group>"; };
+		55BEFE040AEC716800357340 /* seicross.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = seicross.c; path = drivers/seicross.c; sourceTree = "<group>"; };
+		55BEFE050AEC716800357340 /* sengokmj.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = sengokmj.c; path = drivers/sengokmj.c; sourceTree = "<group>"; };
+		55BEFE060AEC716800357340 /* senjyo.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = senjyo.c; path = drivers/senjyo.c; sourceTree = "<group>"; };
+		55BEFE070AEC716800357340 /* seta.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = seta.c; path = drivers/seta.c; sourceTree = "<group>"; };
+		55BEFE080AEC716800357340 /* seta2.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = seta2.c; path = drivers/seta2.c; sourceTree = "<group>"; };
+		55BEFE090AEC716800357340 /* sf.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = sf.c; path = drivers/sf.c; sourceTree = "<group>"; };
 		55BEFE0A0AEC716800357340 /* sfkick.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = sfkick.c; path = drivers/sfkick.c; sourceTree = "<group>"; };
 		55BEFE0B0AEC716800357340 /* sg1000a.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = sg1000a.c; path = drivers/sg1000a.c; sourceTree = "<group>"; };
 		55BEFE0C0AEC716800357340 /* sgladiat.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = sgladiat.c; path = drivers/sgladiat.c; sourceTree = "<group>"; };
-		55BEFE0D0AEC716800357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = shadfrce.c; path = drivers/shadfrce.c; sourceTree = "<group>"; };
-		55BEFE0E0AEC716800357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = shangha3.c; path = drivers/shangha3.c; sourceTree = "<group>"; };
+		55BEFE0D0AEC716800357340 /* shadfrce.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = shadfrce.c; path = drivers/shadfrce.c; sourceTree = "<group>"; };
+		55BEFE0E0AEC716800357340 /* shangha3.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = shangha3.c; path = drivers/shangha3.c; sourceTree = "<group>"; };
 		55BEFE0F0AEC716800357340 /* shanghai.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = shanghai.c; path = drivers/shanghai.c; sourceTree = "<group>"; };
-		55BEFE100AEC716800357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = shangkid.c; path = drivers/shangkid.c; sourceTree = "<group>"; };
-		55BEFE110AEC716800357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = shaolins.c; path = drivers/shaolins.c; sourceTree = "<group>"; };
-		55BEFE120AEC716800357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = shisen.c; path = drivers/shisen.c; sourceTree = "<group>"; };
-		55BEFE130AEC716800357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = shootout.c; path = drivers/shootout.c; sourceTree = "<group>"; };
+		55BEFE100AEC716800357340 /* shangkid.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = shangkid.c; path = drivers/shangkid.c; sourceTree = "<group>"; };
+		55BEFE110AEC716800357340 /* shaolins.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = shaolins.c; path = drivers/shaolins.c; sourceTree = "<group>"; };
+		55BEFE120AEC716800357340 /* shisen.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = shisen.c; path = drivers/shisen.c; sourceTree = "<group>"; };
+		55BEFE130AEC716800357340 /* shootout.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = shootout.c; path = drivers/shootout.c; sourceTree = "<group>"; };
 		55BEFE140AEC716800357340 /* shougi.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = shougi.c; path = drivers/shougi.c; sourceTree = "<group>"; };
-		55BEFE150AEC716800357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = shuuz.c; path = drivers/shuuz.c; sourceTree = "<group>"; };
-		55BEFE160AEC716800357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = sidearms.c; path = drivers/sidearms.c; sourceTree = "<group>"; };
-		55BEFE170AEC716800357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = sidepckt.c; path = drivers/sidepckt.c; sourceTree = "<group>"; };
-		55BEFE180AEC716800357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = silkroad.c; path = drivers/silkroad.c; sourceTree = "<group>"; };
-		55BEFE190AEC716800357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = simpl156.c; path = drivers/simpl156.c; sourceTree = "<group>"; };
-		55BEFE1A0AEC716800357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = simpsons.c; path = drivers/simpsons.c; sourceTree = "<group>"; };
-		55BEFE1B0AEC716800357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = skullxbo.c; path = drivers/skullxbo.c; sourceTree = "<group>"; };
+		55BEFE150AEC716800357340 /* shuuz.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = shuuz.c; path = drivers/shuuz.c; sourceTree = "<group>"; };
+		55BEFE160AEC716800357340 /* sidearms.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = sidearms.c; path = drivers/sidearms.c; sourceTree = "<group>"; };
+		55BEFE170AEC716800357340 /* sidepckt.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = sidepckt.c; path = drivers/sidepckt.c; sourceTree = "<group>"; };
+		55BEFE180AEC716800357340 /* silkroad.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = silkroad.c; path = drivers/silkroad.c; sourceTree = "<group>"; };
+		55BEFE190AEC716800357340 /* simpl156.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = simpl156.c; path = drivers/simpl156.c; sourceTree = "<group>"; };
+		55BEFE1A0AEC716800357340 /* simpsons.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = simpsons.c; path = drivers/simpsons.c; sourceTree = "<group>"; };
+		55BEFE1B0AEC716800357340 /* skullxbo.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = skullxbo.c; path = drivers/skullxbo.c; sourceTree = "<group>"; };
 		55BEFE1C0AEC716800357340 /* skyarmy.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = skyarmy.c; path = drivers/skyarmy.c; sourceTree = "<group>"; };
-		55BEFE1D0AEC716800357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = skychut.c; path = drivers/skychut.c; sourceTree = "<group>"; };
-		55BEFE1E0AEC716800357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = skydiver.c; path = drivers/skydiver.c; sourceTree = "<group>"; };
-		55BEFE1F0AEC716800357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = skyfox.c; path = drivers/skyfox.c; sourceTree = "<group>"; };
-		55BEFE200AEC716800357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = skykid.c; path = drivers/skykid.c; sourceTree = "<group>"; };
-		55BEFE210AEC716800357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = skyraid.c; path = drivers/skyraid.c; sourceTree = "<group>"; };
-		55BEFE220AEC716800357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = slapfght.c; path = drivers/slapfght.c; sourceTree = "<group>"; };
-		55BEFE230AEC716800357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = slapshot.c; path = drivers/slapshot.c; sourceTree = "<group>"; };
+		55BEFE1D0AEC716800357340 /* skychut.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = skychut.c; path = drivers/skychut.c; sourceTree = "<group>"; };
+		55BEFE1E0AEC716800357340 /* skydiver.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = skydiver.c; path = drivers/skydiver.c; sourceTree = "<group>"; };
+		55BEFE1F0AEC716800357340 /* skyfox.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = skyfox.c; path = drivers/skyfox.c; sourceTree = "<group>"; };
+		55BEFE200AEC716800357340 /* skykid.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = skykid.c; path = drivers/skykid.c; sourceTree = "<group>"; };
+		55BEFE210AEC716800357340 /* skyraid.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = skyraid.c; path = drivers/skyraid.c; sourceTree = "<group>"; };
+		55BEFE220AEC716800357340 /* slapfght.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = slapfght.c; path = drivers/slapfght.c; sourceTree = "<group>"; };
+		55BEFE230AEC716800357340 /* slapshot.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = slapshot.c; path = drivers/slapshot.c; sourceTree = "<group>"; };
 		55BEFE240AEC716800357340 /* sliver.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = sliver.c; path = drivers/sliver.c; sourceTree = "<group>"; };
-		55BEFE250AEC716800357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = snk.c; path = drivers/snk.c; sourceTree = "<group>"; };
-		55BEFE260AEC716800357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = snk68.c; path = drivers/snk68.c; sourceTree = "<group>"; };
-		55BEFE270AEC716800357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = snowbros.c; path = drivers/snowbros.c; sourceTree = "<group>"; };
-		55BEFE280AEC716800357340 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = solomon.c; path = drivers/solomon.c; sourceTree = "<group>"; };
+		55BEFE250AEC716800357340 /* snk.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = snk.c; path = drivers/snk.c; sourceTree = "<group>"; };
+		55BEFE260AEC716800357340 /* snk68.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = snk68.c; path = drivers/snk68.c; sourceTree = "<group>"; };
+		55BEFE270AEC716800357340 /* snowbros.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = snowbros.c; path = drivers/snowbros.c; sourceTree = "<group>"; };
+		55BEFE280AEC716800357340 /* solomon.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = solomon.c; path = drivers/solomon.c; sourceTree = "<group>"; };
 		55BEFE290AEC716800357340 /* sonson.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = sonson.c; path = drivers/sonson.c; sourceTree = "<group>"; };
 		55BEFE2A0AEC716800357340 /* spacefb.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = spacefb.c; path = drivers/spacefb.c; sourceTree = "<group>"; };
 		55BEFE2B0AEC716800357340 /* spaceg.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = spaceg.c; path = drivers/spaceg.c; sourceTree = "<group>"; };
@@ -8200,55 +8200,55 @@
 				55BEFDF50AEC716800357340 /* sderby.c */,
 				55BEFDF60AEC716800357340 /* seattle.c */,
 				55BEFDF70AEC716800357340 /* segac2.c */,
-				55BEFDF80AEC716800357340,
-				55BEFDF90AEC716800357340,
-				55BEFDFA0AEC716800357340,
-				55BEFDFB0AEC716800357340,
-				55BEFDFC0AEC716800357340,
-				55BEFDFD0AEC716800357340,
-				55BEFDFE0AEC716800357340,
-				55BEFDFF0AEC716800357340,
-				55BEFE000AEC716800357340,
-				55BEFE010AEC716800357340,
-				55BEFE020AEC716800357340,
-				55BEFE030AEC716800357340,
-				55BEFE040AEC716800357340,
-				55BEFE050AEC716800357340,
-				55BEFE060AEC716800357340,
-				55BEFE070AEC716800357340,
-				55BEFE080AEC716800357340,
-				55BEFE090AEC716800357340,
+				55BEFDF80AEC716800357340 /* segag80r.c */,
+				55BEFDF90AEC716800357340 /* segag80v.c */,
+				55BEFDFA0AEC716800357340 /* segahang.c */,
+				55BEFDFB0AEC716800357340 /* segaorun.c */,
+				55BEFDFC0AEC716800357340 /* segas16a.c */,
+				55BEFDFD0AEC716800357340 /* segas16b.c */,
+				55BEFDFE0AEC716800357340 /* segas18.c */,
+				55BEFDFF0AEC716800357340 /* segas32.c */,
+				55BEFE000AEC716800357340 /* segasyse.c */,
+				55BEFE010AEC716800357340 /* segaxbd.c */,
+				55BEFE020AEC716800357340 /* segaybd.c */,
+				55BEFE030AEC716800357340 /* seibuspi.c */,
+				55BEFE040AEC716800357340 /* seicross.c */,
+				55BEFE050AEC716800357340 /* sengokmj.c */,
+				55BEFE060AEC716800357340 /* senjyo.c */,
+				55BEFE070AEC716800357340 /* seta.c */,
+				55BEFE080AEC716800357340 /* seta2.c */,
+				55BEFE090AEC716800357340 /* sf.c */,
 				55BEFE0A0AEC716800357340 /* sfkick.c */,
 				55BEFE0B0AEC716800357340 /* sg1000a.c */,
 				55BEFE0C0AEC716800357340 /* sgladiat.c */,
-				55BEFE0D0AEC716800357340,
-				55BEFE0E0AEC716800357340,
+				55BEFE0D0AEC716800357340 /* shadfrce.c */,
+				55BEFE0E0AEC716800357340 /* shangha3.c */,
 				55BEFE0F0AEC716800357340 /* shanghai.c */,
-				55BEFE100AEC716800357340,
-				55BEFE110AEC716800357340,
-				55BEFE120AEC716800357340,
-				55BEFE130AEC716800357340,
+				55BEFE100AEC716800357340 /* shangkid.c */,
+				55BEFE110AEC716800357340 /* shaolins.c */,
+				55BEFE120AEC716800357340 /* shisen.c */,
+				55BEFE130AEC716800357340 /* shootout.c */,
 				55BEFE140AEC716800357340 /* shougi.c */,
-				55BEFE150AEC716800357340,
-				55BEFE160AEC716800357340,
-				55BEFE170AEC716800357340,
-				55BEFE180AEC716800357340,
-				55BEFE190AEC716800357340,
-				55BEFE1A0AEC716800357340,
-				55BEFE1B0AEC716800357340,
+				55BEFE150AEC716800357340 /* shuuz.c */,
+				55BEFE160AEC716800357340 /* sidearms.c */,
+				55BEFE170AEC716800357340 /* sidepckt.c */,
+				55BEFE180AEC716800357340 /* silkroad.c */,
+				55BEFE190AEC716800357340 /* simpl156.c */,
+				55BEFE1A0AEC716800357340 /* simpsons.c */,
+				55BEFE1B0AEC716800357340 /* skullxbo.c */,
 				55BEFE1C0AEC716800357340 /* skyarmy.c */,
-				55BEFE1D0AEC716800357340,
-				55BEFE1E0AEC716800357340,
-				55BEFE1F0AEC716800357340,
-				55BEFE200AEC716800357340,
-				55BEFE210AEC716800357340,
-				55BEFE220AEC716800357340,
-				55BEFE230AEC716800357340,
+				55BEFE1D0AEC716800357340 /* skychut.c */,
+				55BEFE1E0AEC716800357340 /* skydiver.c */,
+				55BEFE1F0AEC716800357340 /* skyfox.c */,
+				55BEFE200AEC716800357340 /* skykid.c */,
+				55BEFE210AEC716800357340 /* skyraid.c */,
+				55BEFE220AEC716800357340 /* slapfght.c */,
+				55BEFE230AEC716800357340 /* slapshot.c */,
 				55BEFE240AEC716800357340 /* sliver.c */,
-				55BEFE250AEC716800357340,
-				55BEFE260AEC716800357340,
-				55BEFE270AEC716800357340,
-				55BEFE280AEC716800357340,
+				55BEFE250AEC716800357340 /* snk.c */,
+				55BEFE260AEC716800357340 /* snk68.c */,
+				55BEFE270AEC716800357340 /* snowbros.c */,
+				55BEFE280AEC716800357340 /* solomon.c */,
 				55BEFE290AEC716800357340 /* sonson.c */,
 				55BEFE2A0AEC716800357340 /* spacefb.c */,
 				55BEFE2B0AEC716800357340 /* spaceg.c */,

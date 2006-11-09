@@ -46,6 +46,7 @@
     NSTimer * mAnimationTimer;
     
     BOOL mDoubleBuffered;
+    BOOL mSyncToRefresh;
 }
 
 + (NSOpenGLPixelFormat*)defaultPixelFormat;
@@ -60,6 +61,9 @@
 - (void) setPixelFormat: (NSOpenGLPixelFormat *) aPixelFormat;
 
 - (void) prepareOpenGL: (NSOpenGLContext *) context;
+
+- (BOOL) syncToRefresh;
+- (void) setSyncToRefresh: (BOOL) flag;
 
 - (void) update;
 

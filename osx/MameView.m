@@ -429,37 +429,6 @@ NSString * MameWillStartGame = @"WillStartGame";
 }
 
 //=========================================================== 
-//  syncToRefresh 
-//=========================================================== 
-- (BOOL) syncToRefresh
-{
-    @synchronized(self)
-    {
-        return mSyncToRefresh;
-    }
-}
-
-- (void) setSyncToRefresh: (BOOL) flag
-{
-    @synchronized(self)
-    {
-#if 0
-        mSyncToRefresh = flag;
-        long swapInterval;
-        if (mSyncToRefresh)
-            swapInterval = 1;
-        else
-            swapInterval = 0;
-        
-        [mDisplayLock lock];
-        [[self openGLContext] setValues: &swapInterval
-                                forParameter: NSOpenGLCPSwapInterval];
-        [mDisplayLock unlock];
-#endif
-    }
-}
-
-//=========================================================== 
 //  audioEnabled 
 //=========================================================== 
 - (BOOL) audioEnabled
