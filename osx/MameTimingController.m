@@ -107,19 +107,22 @@
     }
     
     mame_time timeTilTarget = sub_mame_times(mThrottleEmutime, mThrottleRealtime);
-    cycles_t target = mThrottleLastCycles + timeTilTarget.subseconds / subsecsPerCycle;
+    cycles_t cyclesTilTarget = timeTilTarget.subseconds / subsecsPerCycle;
+    cycles_t target = mThrottleLastCycles + cyclesTilTarget;
     
     cycles_t curr = [self osd_cycles];
     uint64_t count = 0;
 #if 1
     if (mThrottled)
     {
+        mach_wait_until(mThrottleLastCycles + cyclesTilTarget*9/10);
         for (curr = [self osd_cycles]; curr - target < 0; curr = [self osd_cycles])
         {
             // NSLog(@"target: %qi, current %qi, diff: %qi", target, curr, curr - target);
             // Spin...
             count++;
         }
+        // NSLog(@"Throttle count: %d", count);
     }
 #endif
     
