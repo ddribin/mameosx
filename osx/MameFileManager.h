@@ -23,6 +23,8 @@
                            ofType: (int) pathtype
                           atIndex: (int) index;
 
+- (NSString *) resolveAlias: (NSString *) path;
+
 - (int) osd_get_path_count: (int) pathtype;
 
 - (int) osd_get_path_info: (int) pathtype

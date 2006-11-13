@@ -71,6 +71,59 @@ struct _osd_file
     return [path stringByAppendingPathComponent: file];
 }
 
+- (NSString *) resolveAlias: (NSString *) path
+{
+    NSString *resolvedPath = nil;
+    if ([path isAbsolutePath])
+        resolvedPath = @"/";
+        
+    //Parse the given path and if any part is an alias return the resolved path
+    CFURLRef url;
+    
+    //As the given path could contain an alias anywhere we need to parse each
+    //element of the path individually and compose the result
+    NSArray *pathElements = [path componentsSeparatedByString: @"/"];
+    NSEnumerator *pathEnum = [pathElements objectEnumerator];
+    id element;
+    
+    while (element = [pathEnum nextObject])
+    {
+        //If this is an absolute path then the first element of the array will be empty
+        if ((NSString *)[element length] > 0)
+        {
+            resolvedPath = [resolvedPath stringByAppendingPathComponent: element];
+            //NSLog(@"Trying to parse: %@", resolvedPath);
+            
+            NSString *tmpPath = nil;
+            url = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, (CFStringRef)resolvedPath, kCFURLPOSIXPathStyle, YES);
+            if (url != NULL)
+            {
+                FSRef fsRef;
+                if (CFURLGetFSRef(url, &fsRef))
+                {
+                    Boolean targetIsFolder, wasAliased;
+                    if (FSResolveAliasFile (&fsRef, true, &targetIsFolder, &wasAliased) == noErr && wasAliased)
+                    {
+                        CFURLRef resolvedUrl = CFURLCreateFromFSRef(NULL, &fsRef);
+                        if (resolvedUrl != NULL)
+                        {
+                            tmpPath = (NSString*) CFURLCopyFileSystemPath(resolvedUrl, kCFURLPOSIXPathStyle);
+                            CFRelease(resolvedUrl);
+                        }
+                    }
+                }
+                CFRelease(url);
+            }
+            if (tmpPath != nil)
+                resolvedPath = tmpPath;
+        }
+    }
+
+    if (resolvedPath == nil)    //Resolved path SHOULD always be sommething but it doesn't hurt to ensure we never return nil!
+        resolvedPath = [[NSString alloc] initWithString:path];
+    return resolvedPath;
+}
+
 - (int) osd_get_path_count: (int) pathtype;
 {
     NSArray * paths = [self pathsForType: pathtype];
@@ -87,7 +140,7 @@ struct _osd_file
     
 	struct stat stats;
     long attributes = stat([fullPath UTF8String], &stats);
-	if (attributes != 0)
+    if (attributes != 0)
 		return PATH_NOT_FOUND;
 	else if (S_ISDIR(stats.st_mode))
 		return PATH_IS_DIRECTORY;
