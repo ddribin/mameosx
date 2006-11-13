@@ -89,7 +89,9 @@ void exit_sleeper()
     
     mGameName = [[defaults stringForKey: kMameGame] retain];
     mQuitOnError = (mGameName == nil)? NO : YES;
-    NSLog(@"gameName: %@", mGameName);
+    if ([[[NSProcessInfo processInfo] arguments] count] > 1)
+        [NSApp activateIgnoringOtherApps: YES];
+
     [self willChangeValueForKey: @"previousGames"];
     mPreviousGames = [[defaults arrayForKey: kMamePreviousGames] mutableCopy];
     if (mPreviousGames == nil)
