@@ -30,6 +30,8 @@
     CIContext * mCiContext;
     CIContext * mFullScreenCiContext;
     
+    id mDelegate;
+    
     NSString * mGame;
     int mGameIndex;
 
@@ -100,7 +102,28 @@
 - (int) osd_init: (running_machine *) machine;
 - (void) mameDidExit: (running_machine *) machine;
 - (int) osd_update: (mame_time) emutime;
+- (int) osd_display_loading_rom_message: (const char *) name
+                                romdata: (rom_load_data *) romdata;
+
+- (id) delegagte;
+- (void) setDelegate: (id) delegate;
 
 @end
 
 extern NSString * MameWillStartGame;
+extern NSString * MameDidFinishGame;
+
+@interface NSObject (MameViewDelegateMethods)
+
+- (void) mameWillStartGame: (NSNotification *) notification;
+
+- (void) mameDidFinishGame: (NSNotification *) notification;
+
+- (void) mameRomLoadingMessage: (NSString *) name
+                    romsLoaded: (int) romsLoaded
+                      romCount: (int) romCount;
+
+- (void) mameRomLoadingFinishedWithErrors: (BOOL) errors
+                             errorMessage: (NSString *) errorMessage;
+
+@end

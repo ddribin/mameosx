@@ -356,15 +356,7 @@ void osd_fclose(osd_file *file)
 // return non-zero to abort loading
 int osd_display_loading_rom_message(const char *name, rom_load_data *romdata)
 {
-#if 0
-	if (name)
-		fprintf(stdout, "loading %-12s\r", name);
-	else
-		fprintf(stdout, "                    \r");
-	fflush(stdout);
-#endif
-    
-	return 0;
+	return [sController osd_display_loading_rom_message: name romdata: romdata];
 }
 
 #endif

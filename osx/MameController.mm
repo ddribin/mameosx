@@ -34,9 +34,12 @@ static const int kMameMaxGamesInHistory = 100;
 - (void) setGameLoading: (BOOL) gameLoading;
 - (void) setGameRunning: (BOOL) gameRunning;
 - (void) setViewSize: (NSSize) viewSize;
-- (void) mameWillStartGame: (NSNotification *) notification;
 - (void) setUpDefaultPaths;
 - (void) initFilters;
+- (void) logRomMessage: (NSString *) message;
+- (void) logAlertDidEnd: (NSAlert *) alert
+            returnCode: (int) returnCode
+           contextInfo: (void *) contextInfo;
 
 #pragma mark -
 #pragma mark Game Choosing
@@ -66,6 +69,12 @@ void exit_sleeper()
    
     mConfiguration = [[MameConfiguration alloc] init];
     [self initFilters];
+    
+    NSFont * monaco = [NSFont fontWithName: @"Monaco" size: 10];
+    mLogAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:
+        monaco, NSFontAttributeName,
+        [NSColor blackColor], NSForegroundColorAttributeName,
+        0];
 
     sSleepAtExit =
         [[NSUserDefaults standardUserDefaults] boolForKey: kMameSleepAtExit];
@@ -76,11 +85,7 @@ void exit_sleeper()
 
 - (void) awakeFromNib
 {
-    [[mMameView window] center];
-    [[NSNotificationCenter defaultCenter] addObserver: self
-                                             selector: @selector(mameWillStartGame:)
-                                                 name: MameWillStartGame
-                                               object: mMameView];
+    [mMameView setDelegate: self];
 
     [self setGameLoading: NO];
     [self setGameRunning: NO];
@@ -189,16 +194,8 @@ void exit_sleeper()
 
 - (IBAction) raiseOpenPanel: (id) sender;
 {
-#if 0
-    int rc = [NSApp runModalForWindow: mOpenPanel];
-    if (rc != kMameRunGame)
-    {
-        [NSApp terminate: nil];
-    }
-#else
     [mOpenPanel center];
     [mOpenPanel makeKeyAndOrderFront: nil];
-#endif
 }
 
 - (IBAction) endOpenPanel: (id) sender;
@@ -291,6 +288,68 @@ void exit_sleeper()
     return mGameRunning;
 }
 
+- (IBAction) showRomLoadingLog: (id) sender;
+{
+    [mRomLoadingLogPanel makeKeyAndOrderFront: nil];
+}
+
+- (void) mameRomLoadingMessage: (NSString *) name
+                    romsLoaded: (int) romsLoaded
+                      romCount: (int) romCount;
+{
+    [self logRomMessage: [NSString stringWithFormat: @"Loading: %@", name]];
+}
+
+- (void) mameRomLoadingFinishedWithErrors: (BOOL) errors
+                             errorMessage: (NSString *) errorMessage;
+{
+    [self logRomMessage: @"Loading: Done"];
+    if (errors)
+    {
+        [self logRomMessage: @"\nErrors:"];
+        [self logRomMessage: errorMessage];
+
+        NSAlert * alert = [[NSAlert alloc] init];
+        [alert addButtonWithTitle:@"OK"];
+        [alert setMessageText: @"ROM Loading Error"];
+        [alert setInformativeText: @"View the ROM Loading Log for details."];
+        [alert setAlertStyle: NSCriticalAlertStyle];
+
+        [alert beginSheetModalForWindow: [mMameView window]
+                          modalDelegate: self
+                         didEndSelector: @selector(logAlertDidEnd:returnCode:contextInfo:)
+                            contextInfo: nil];
+        [alert release];
+    }
+}
+
+- (void) mameWillStartGame: (NSNotification *) notification;
+{
+    /*
+     * Some how, setting game loading, before hiding panel causes the following error:
+     *
+     * Assertion failure in -[NSThemeFrame lockFocus], AppKit.subproj/NSView.m:3248
+     * lockFocus sent to a view whose window is deferred and does not yet have a
+     * corresponding platform window
+     */
+    
+    [self hideOpenPanel: nil];
+    [self setGameLoading: NO];
+    [self setGameRunning: YES];
+    
+    [self resizeToOptimalSize: nil];
+    NSWindow * window = [mMameView window];
+    [window center];
+
+    // Open the window next run loop
+    [window makeKeyAndOrderFront: nil];
+}
+
+- (void) mameDidFinishGame: (NSNotification *) notification;
+{
+    [NSApp terminate: nil];
+}
+
 @end
 
 @implementation MameController (Private)
@@ -325,26 +384,6 @@ void exit_sleeper()
     [window setFrame: newWindowFrame
              display: YES
              animate: YES];
-}
-
-- (void) mameWillStartGame: (NSNotification *) notification;
-{
-    /*
-     * Some how, setting game loading, before hiding panel causes the following error:
-     *
-     * Assertion failure in -[NSThemeFrame lockFocus], AppKit.subproj/NSView.m:3248
-     * lockFocus sent to a view whose window is deferred and does not yet have a
-     * corresponding platform window
-     */
-
-    [self hideOpenPanel: nil];
-    [self setGameLoading: NO];
-    [self setGameRunning: YES];
-
-    [self resizeToOptimalSize: nil];
-    NSWindow * window = [mMameView window];
-    [window center];
-    [window makeKeyAndOrderFront: nil];
 }
 
 - (void) setUpDefaultPaths;
@@ -492,6 +531,29 @@ void exit_sleeper()
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject: mPreviousGames forKey: kMamePreviousGames];
     [defaults synchronize];
+}
+
+- (void) logRomMessage: (NSString *) message;
+{
+    NSString * messageWithNewline = [NSString stringWithFormat: @"%@\n", message];
+    NSAttributedString * addendum =
+        [[NSAttributedString alloc] initWithString: messageWithNewline
+                                        attributes: mLogAttributes];
+    NSTextStorage * textStorage = [mRomLoadingLog textStorage];
+    [textStorage appendAttributedString: addendum];
+    NSRange endRange = NSMakeRange([textStorage length], 1);
+    [mRomLoadingLog scrollRangeToVisible: endRange];
+    [addendum release];
+}
+
+- (void) logAlertDidEnd: (NSAlert *) alert
+             returnCode: (int) returnCode
+            contextInfo: (void *) contextInfo;
+{
+    NSWindow * window = [mMameView window];
+    // Need to use delay to run outside modal loop
+    [window performSelector: @selector(performClose:) withObject: nil
+               afterDelay: 0.0f];
 }
 
 @end

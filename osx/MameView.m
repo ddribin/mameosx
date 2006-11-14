@@ -24,6 +24,12 @@
 - (void) gameFinished;
 
 #pragma mark -
+#pragma mark "Notifications and Delegates"
+
+- (void) sendMameWillStartGame;
+- (void) sendMameDidFinishGame;
+
+#pragma mark -
 #pragma mark "Frame Drawing"
 
 - (void) drawFrame;
@@ -38,7 +44,8 @@
 
 @end
 
-NSString * MameWillStartGame = @"WillStartGame";
+NSString * MameWillStartGame = @"MameWillStartGame";
+NSString * MameDidFinishGame = @"MameDidFinishGame";
 
 @implementation MameView
 
@@ -103,6 +110,16 @@ NSString * MameWillStartGame = @"WillStartGame";
     mSyncToRefresh = NO;
     mMameLock = [[NSLock alloc] init];
     mMameIsRunning = NO;
+}
+
+- (void) dealloc
+{
+    NSNotificationCenter * center = [NSNotificationCenter defaultCenter];
+    
+    if (mDelegate != nil)
+        [center removeObserver: mDelegate name: nil object: self];
+    
+    [super dealloc];
 }
 
 - (void) prepareOpenGL;
@@ -458,6 +475,60 @@ NSString * MameWillStartGame = @"WillStartGame";
     }
 }
 
+- (int) osd_display_loading_rom_message: (const char *) name
+                                romdata: (rom_load_data *) romdata;
+{
+    if (name != 0)
+    {
+        if ([mDelegate respondsToSelector: @selector(mameRomLoadingMessage:romsLoaded:romCount:)])
+        {
+            [mDelegate mameRomLoadingMessage: [NSString stringWithUTF8String: name]
+                                  romsLoaded: romdata->romsloaded
+                                    romCount: romdata->romstotal];
+        }
+                                                     
+    }
+    else
+    {
+        if ([mDelegate respondsToSelector: @selector(mameRomLoadingFinishedWithErrors:errorMessage:)])
+        {
+            BOOL errors = (romdata->errors == 0)? NO : YES;
+            NSString * errorMessage =
+                [NSString stringWithUTF8String: romdata->errorbuf];
+            [mDelegate mameRomLoadingFinishedWithErrors: errors
+                                           errorMessage: errorMessage];
+        }
+    }
+    return 0;
+}
+
+- (id) delegagte;
+{
+    return mDelegate;
+}
+
+- (void) setDelegate: (id) delegate;
+{
+    NSNotificationCenter * center = [NSNotificationCenter defaultCenter];
+
+    if (mDelegate != nil)
+        [center removeObserver: mDelegate name: nil object: self];
+        
+    mDelegate = delegate;
+    
+    // repeat  the following for each notification
+    if ([mDelegate respondsToSelector: @selector(mameWillStartGame:)])
+    {
+        [center addObserver: mDelegate selector: @selector(mameWillStartGame:)
+                       name: MameWillStartGame object: self];
+    }
+    if ([mDelegate respondsToSelector: @selector(mameDidFinishGame:)])
+    {
+        [center addObserver: mDelegate selector: @selector(mameDidFinishGame:)
+                       name: MameDidFinishGame object: self];
+    }
+}
+
 @end
 
 @implementation MameView (Private)
@@ -503,7 +574,8 @@ NSString * MameWillStartGame = @"WillStartGame";
 
 - (void) gameFinished
 {
-   [NSApp terminate: nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName: MameDidFinishGame
+                                                        object: self];
 }
 
 - (void) willEnterFullScreen;
@@ -526,6 +598,19 @@ NSString * MameWillStartGame = @"WillStartGame";
     [self pause: mUnpauseOnFullScreenTransition];
 }
 
+
+#pragma mark -
+#pragma mark "Notifications and Delegates"
+
+- (void) sendMameWillStartGame;
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName: MameWillStartGame
+                                                        object: self];
+}
+
+- (void) sendMameDidFinishGame;
+{
+}
 
 #pragma mark -
 #pragma mark "Frame Drawing"

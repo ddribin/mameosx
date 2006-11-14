@@ -30,6 +30,9 @@ extern "C" {
     IBOutlet NSDrawer * mDrawer;
     IBOutlet NSWindow * mOpenPanel;
     IBOutlet NSComboBox * mGameTextField;
+    
+    IBOutlet NSPanel * mRomLoadingLogPanel;
+    IBOutlet NSTextView * mRomLoadingLog;
 
     MameConfiguration * mConfiguration;
 
@@ -44,6 +47,8 @@ extern "C" {
     BOOL mGameLoading;
     BOOL mGameRunning;
     BOOL mQuitOnError;
+    
+    NSDictionary * mLogAttributes;
 }
 
 - (BOOL) isFiltered;
@@ -75,5 +80,18 @@ extern "C" {
 - (IBAction) resizeToActualSize: (id) sender;
 - (IBAction) resizeToDoubleSize: (id) sender;
 - (IBAction) resizeToOptimalSize: (id) sender;
+
+- (IBAction) showRomLoadingLog: (id) sender;
+
+- (void) mameWillStartGame: (NSNotification *) notification;
+
+- (void) mameDidFinishGame: (NSNotification *) notification;
+
+- (void) mameRomLoadingMessage: (NSString *) name
+                    romsLoaded: (int) romsLoaded
+                      romCount: (int) romCount;
+
+- (void) mameRomLoadingFinishedWithErrors: (BOOL) errors
+                             errorMessage: (NSString *) errorMessage;
 
 @end

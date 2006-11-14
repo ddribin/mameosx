@@ -1,5 +1,6 @@
 {
     IBClasses = (
+        {CLASS = DDCustomOpenGLView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
         {
             ACTIONS = {
@@ -12,6 +13,7 @@
                 resizeToActualSize = id; 
                 resizeToDoubleSize = id; 
                 resizeToOptimalSize = id; 
+                showRomLoadingLog = id; 
                 togglePause = id; 
             }; 
             CLASS = MameController; 
@@ -22,15 +24,18 @@
                 mGameTextField = NSComboBox; 
                 mMameView = MameView; 
                 mOpenPanel = NSWindow; 
+                mRomLoadingLog = NSTextView; 
+                mRomLoadingLogPanel = NSPanel; 
             }; 
             SUPERCLASS = NSObject; 
         }, 
         {
             CLASS = MameView; 
             LANGUAGE = ObjC; 
-            OUTLETS = {mController = MameController; }; 
-            SUPERCLASS = NSOpenGLView; 
-        }
+            OUTLETS = {mController = MameController; mDelegate = id; }; 
+            SUPERCLASS = DDCustomOpenGLView; 
+        }, 
+        {CLASS = NSObject; LANGUAGE = ObjC; }
     ); 
     IBVersion = 1; 
 }
