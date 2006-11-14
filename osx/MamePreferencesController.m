@@ -8,6 +8,14 @@
 
 #import "MamePreferencesController.h"
 
+@interface MamePreferencesController (Private)
+
+- (void) chooseRomDirectoryDidEnd: (NSOpenPanel *) panel
+                       returnCode: (int) returnCode
+                      contextInfo: (void *) contextInfo;
+
+@end
+
 @implementation MamePreferencesController
 
 - (id) init
@@ -51,16 +59,32 @@
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
 
     int result;
-    NSOpenPanel *panel = [NSOpenPanel openPanel];
+    NSOpenPanel * panel = [NSOpenPanel openPanel];
     
     [panel setTitle: @"Choose ROM Directory"];
     [panel setPrompt: @"Choose"];
     [panel setAllowsMultipleSelection: NO];
     [panel setCanChooseFiles: NO];
     [panel setCanChooseDirectories: YES];
-    result = [panel runModalForDirectory: [defaults stringForKey: @"RomPath"]
-                                    file: nil types: nil];
-    if (result == NSOKButton)
+    [panel setCanCreateDirectories: YES];
+    [panel beginSheetForDirectory: [defaults stringForKey: @"RomPath"]
+                             file: nil
+                   modalForWindow: [self window]
+                    modalDelegate: self
+                   didEndSelector: @selector(chooseRomDirectoryDidEnd:returnCode:contextInfo:)
+                      contextInfo: nil];
+}
+
+@end
+
+@implementation MamePreferencesController (Private)
+
+- (void) chooseRomDirectoryDidEnd: (NSOpenPanel *) panel
+                       returnCode: (int) returnCode
+                      contextInfo: (void *) contextInfo;
+{
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    if (returnCode == NSOKButton)
     {
         NSString * newRomPath = [panel filename];
         [defaults setValue: newRomPath forKey: @"RomPath"];
