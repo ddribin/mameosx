@@ -273,7 +273,6 @@
 		558D9F2C0AAE70E9007B2A32 /* sound_config.h in Headers */ = {isa = PBXBuildFile; fileRef = 558D9F2B0AAE70E9007B2A32 /* sound_config.h */; };
 		558D9F2E0AAE7117007B2A32 /* config.h in Headers */ = {isa = PBXBuildFile; fileRef = 558D9F2D0AAE7117007B2A32 /* config.h */; };
 		55A3A5230AA7B36400921B71 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55A3A5220AA7B36400921B71 /* QuartzCore.framework */; };
-		55BE0C820AEC8CD700357340 /* 8080bw.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE0B9C0AEC8C8F00357340 /* 8080bw.c */; };
 		55BEF9C40AEC5F2F00357340 /* libcore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 556A42D40AA4EBA200602CC5 /* libcore.a */; };
 		55BEF9C50AEC5F3500357340 /* liblocalexpat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 556A49BB0AA4F86600602CC5 /* liblocalexpat.a */; };
 		55BEF9C60AEC5F3500357340 /* liblocalzlib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 556A4A010AA4F8EC00602CC5 /* liblocalzlib.a */; };
@@ -3088,7 +3087,6 @@
 		55BB89340AB90EAB00B7933B /* MameConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MameConfiguration.m; sourceTree = "<group>"; };
 		55BE02E10AEC757100357340 /* arkanoid.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = arkanoid.h; sourceTree = "<group>"; };
 		55BE033B0AEC7EA800357340 /* mpu4.lay */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = mpu4.lay; sourceTree = "<group>"; };
-		55BE0B9C0AEC8C8F00357340 /* 8080bw.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = 8080bw.c; path = /Users/dave/work/mameosx/mameosx/mame/src/sndhrdw/8080bw.c; sourceTree = "<absolute>"; };
 		55BEF9A00AEC5E5C00357340 /* MameKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MameKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		55BEF9A10AEC5E5C00357340 /* MameKit-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = "MameKit-Info.plist"; path = "../MameKit-Info.plist"; sourceTree = "<group>"; };
 		55BEF9F00AEC618D00357340 /* libosd.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libosd.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -8819,7 +8817,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55BE0C820AEC8CD700357340 /* 8080bw.c in Sources */,
 				55E031510B08D2AC00988109 /* 4enraya.c in Sources */,
 				55E031520B08D2AC00988109 /* 4enraya.c in Sources */,
 				55E031530B08D2AC00988109 /* 40love.c in Sources */,

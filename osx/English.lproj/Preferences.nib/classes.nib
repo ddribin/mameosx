@@ -5,6 +5,7 @@
             ACTIONS = {chooseRomDirectory = id; }; 
             CLASS = MamePreferencesController; 
             LANGUAGE = ObjC; 
+            OUTLETS = {mRomDirectory = NSPopUpButton; }; 
             SUPERCLASS = NSWindowController; 
         }
     ); 

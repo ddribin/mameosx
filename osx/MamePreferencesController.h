@@ -11,7 +11,7 @@
 
 @interface MamePreferencesController : NSWindowController
 {
-
+    IBOutlet NSPopUpButton * mRomDirectory;
 }
 
 - (IBAction) chooseRomDirectory: (id) sender;
