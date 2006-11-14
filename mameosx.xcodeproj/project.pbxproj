@@ -2411,6 +2411,11 @@
 		55E038CB0B08D3A100988109 /* z80.c in Sources */ = {isa = PBXBuildFile; fileRef = 55E038AA0B08D3A100988109 /* z80.c */; };
 		55E038CC0B08D3A100988109 /* z80daisy.c in Sources */ = {isa = PBXBuildFile; fileRef = 55E038AB0B08D3A100988109 /* z80daisy.c */; };
 		55E038CD0B08D3A100988109 /* z80dasm.c in Sources */ = {isa = PBXBuildFile; fileRef = 55E038AC0B08D3A100988109 /* z80dasm.c */; };
+		55E03CF10B0A320600988109 /* MamePreferencesController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 55E03CEF0B0A320600988109 /* MamePreferencesController.h */; };
+		55E03CF20B0A320600988109 /* MamePreferencesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55E03CF00B0A320600988109 /* MamePreferencesController.m */; };
+		55E03CF30B0A320600988109 /* MamePreferencesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55E03CF00B0A320600988109 /* MamePreferencesController.m */; };
+		55E03D090B0A32EE00988109 /* Preferences.nib in Resources */ = {isa = PBXBuildFile; fileRef = 55E03D070B0A32EE00988109 /* Preferences.nib */; };
+		55E03D0A0B0A32EF00988109 /* Preferences.nib in Resources */ = {isa = PBXBuildFile; fileRef = 55E03D070B0A32EE00988109 /* Preferences.nib */; };
 		55FE26330AAD33AB00C4054A /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55FE26320AAD33AB00C4054A /* AudioUnit.framework */; };
 		55FEC76B0AEC52F7001A1CAB /* tiny.c in Sources */ = {isa = PBXBuildFile; fileRef = 55FEC76A0AEC52F7001A1CAB /* tiny.c */; };
 		55FEC7FA0AEC58F6001A1CAB /* libtiny.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55FEC7B60AEC5713001A1CAB /* libtiny.a */; };
@@ -2604,6 +2609,7 @@
 			files = (
 				55BEFB5F0AEC6E7500357340 /* MameKit.framework in CopyFiles */,
 				553A09B10AFF11B300531E1F /* CustomMameFilters.h in CopyFiles */,
+				55E03CF10B0A320600988109 /* MamePreferencesController.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5170,6 +5176,9 @@
 		55E038AA0B08D3A100988109 /* z80.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = z80.c; path = src/cpu/z80/z80.c; sourceTree = "<group>"; };
 		55E038AB0B08D3A100988109 /* z80daisy.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = z80daisy.c; path = src/cpu/z80/z80daisy.c; sourceTree = "<group>"; };
 		55E038AC0B08D3A100988109 /* z80dasm.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = z80dasm.c; path = src/cpu/z80/z80dasm.c; sourceTree = "<group>"; };
+		55E03CEF0B0A320600988109 /* MamePreferencesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MamePreferencesController.h; sourceTree = "<group>"; };
+		55E03CF00B0A320600988109 /* MamePreferencesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MamePreferencesController.m; sourceTree = "<group>"; };
+		55E03D080B0A32EE00988109 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/Preferences.nib; sourceTree = "<group>"; };
 		55FE25E60AAD2F6100C4054A /* MameAudioController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MameAudioController.h; sourceTree = "<group>"; };
 		55FE25E70AAD2F6100C4054A /* MameAudioController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MameAudioController.m; sourceTree = "<group>"; };
 		55FE26320AAD33AB00C4054A /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = /System/Library/Frameworks/AudioUnit.framework; sourceTree = "<absolute>"; };
@@ -5340,6 +5349,7 @@
 			children = (
 				556A4C2A0AA50D6200602CC5 /* Info.plist */,
 				556A4C500AA50E5800602CC5 /* MainMenu.nib */,
+				55E03D070B0A32EE00988109 /* Preferences.nib */,
 				551A61390AC24B2000AECE1E /* ui.bdf */,
 			);
 			name = Resources;
@@ -5686,6 +5696,8 @@
 			children = (
 				556A4CED0AA5117200602CC5 /* MameController.h */,
 				556A4CEE0AA5117200602CC5 /* MameController.mm */,
+				55E03CEF0B0A320600988109 /* MamePreferencesController.h */,
+				55E03CF00B0A320600988109 /* MamePreferencesController.m */,
 				553A09AE0AFF11B300531E1F /* CustomMameFilters.h */,
 				553A09AF0AFF11B300531E1F /* CustomMameFilters.m */,
 				556A4C650AA50F2800602CC5 /* main.m */,
@@ -8662,6 +8674,7 @@
 			files = (
 				556A4C520AA50E5800602CC5 /* MainMenu.nib in Resources */,
 				551A613A0AC24B2000AECE1E /* ui.bdf in Resources */,
+				55E03D090B0A32EE00988109 /* Preferences.nib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8678,6 +8691,7 @@
 			files = (
 				55BEFB440AEC6DF000357340 /* MainMenu.nib in Resources */,
 				55BEFB430AEC6DD100357340 /* ui.bdf in Resources */,
+				55E03D0A0B0A32EF00988109 /* Preferences.nib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10912,6 +10926,7 @@
 				556A4CEF0AA5117200602CC5 /* MameController.mm in Sources */,
 				55FEC76B0AEC52F7001A1CAB /* tiny.c in Sources */,
 				553A09B00AFF11B300531E1F /* CustomMameFilters.m in Sources */,
+				55E03CF30B0A320600988109 /* MamePreferencesController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11013,6 +11028,7 @@
 				55BEFB160AEC6D3F00357340 /* MameController.mm in Sources */,
 				55BEFB170AEC6D3F00357340 /* main.m in Sources */,
 				553A09B20AFF11B300531E1F /* CustomMameFilters.m in Sources */,
+				55E03CF20B0A320600988109 /* MamePreferencesController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11170,6 +11186,14 @@
 				556A4C510AA50E5800602CC5 /* English */,
 			);
 			name = MainMenu.nib;
+			sourceTree = "<group>";
+		};
+		55E03D070B0A32EE00988109 /* Preferences.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				55E03D080B0A32EE00988109 /* English */,
+			);
+			name = Preferences.nib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

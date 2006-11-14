@@ -19,6 +19,7 @@ extern "C" {
 }
 #endif
 
+@class MamePreferencesController;
 @class MameView;
 @class MameConfiguration;
 @class MameFilter;
@@ -33,6 +34,8 @@ extern "C" {
     
     IBOutlet NSPanel * mRomLoadingLogPanel;
     IBOutlet NSTextView * mRomLoadingLog;
+    
+    MamePreferencesController * mPreferencesController;
 
     MameConfiguration * mConfiguration;
 
@@ -67,6 +70,8 @@ extern "C" {
 - (BOOL) isGameRunning;
 
 - (NSArray *) previousGames;
+
+- (IBAction) showPreferencesPanel: (id) sender;
 
 - (IBAction) filterChanged: (id) sender;
 - (IBAction) togglePause: (id) sender;

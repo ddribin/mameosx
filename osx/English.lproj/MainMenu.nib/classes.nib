@@ -13,6 +13,7 @@
                 resizeToActualSize = id; 
                 resizeToDoubleSize = id; 
                 resizeToOptimalSize = id; 
+                showPreferencesPanel = id; 
                 showRomLoadingLog = id; 
                 togglePause = id; 
             }; 

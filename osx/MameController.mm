@@ -5,6 +5,7 @@
 //  Created by Dave Dribin on 8/29/06.
 //
 
+#import "MamePreferencesController.h"
 #import "MameController.h"
 #import <OpenGL/OpenGL.h>
 #import <OpenGL/gl.h>
@@ -31,6 +32,7 @@ static const int kMameMaxGamesInHistory = 100;
 
 @interface MameController (Private)
 
+- (void) syncWithUserDefaults;
 - (void) setGameLoading: (BOOL) gameLoading;
 - (void) setGameRunning: (BOOL) gameRunning;
 - (void) setViewSize: (NSSize) viewSize;
@@ -116,12 +118,7 @@ void exit_sleeper()
     
     [mConfiguration setFileManager: [mMameView fileManager]];
     [self setUpDefaultPaths];
-    [mConfiguration loadUserDefaults];
-    [mMameView setAudioEnabled: [mConfiguration soundEnabled]];
-    [self setThrottled: [mConfiguration throttled]];
-    [self setSyncToRefresh: [mConfiguration syncToRefresh]];
-    [mMameView setRenderInCoreVideoThread: [mConfiguration renderInCV]];
-    [mMameView setClearToRed: [mConfiguration clearToRed]];
+    [self syncWithUserDefaults];
     
     [self chooseGameAndStart];
 }
@@ -154,6 +151,14 @@ void exit_sleeper()
 {
     return mConfiguration;
 }
+
+- (IBAction) showPreferencesPanel: (id) sender;
+{
+    if (mPreferencesController == nil)
+        mPreferencesController = [[MamePreferencesController alloc] init];
+    
+    [mPreferencesController showWindow: self];
+}
 
 //=========================================================== 
 //  isFiltered 
@@ -354,6 +359,16 @@ void exit_sleeper()
 
 @implementation MameController (Private)
 
+- (void) syncWithUserDefaults;
+{
+    [mConfiguration loadUserDefaults];
+    [mMameView setAudioEnabled: [mConfiguration soundEnabled]];
+    [self setThrottled: [mConfiguration throttled]];
+    [self setSyncToRefresh: [mConfiguration syncToRefresh]];
+    [mMameView setRenderInCoreVideoThread: [mConfiguration renderInCV]];
+    [mMameView setClearToRed: [mConfiguration clearToRed]];
+}
+
 - (void) setGameLoading: (BOOL) gameLoading;
 {
     mGameLoading = gameLoading;
@@ -449,6 +464,8 @@ void exit_sleeper()
         return;
     }
 
+    // User defaults could change between startup and now
+    [self syncWithUserDefaults];
     if ([mMameView setGame: mGameName])
     {
         [self setGameLoading: YES];
