@@ -49,6 +49,9 @@
 - (const char *) bios;
 - (void) setBios: (const char *) newBios;
 
-
-
 @end
+
+extern NSString * MameRomPath;
+extern NSString * MameSamplePath;
+extern NSString * MameArtworkPath;
+

@@ -7,6 +7,7 @@
 //
 
 #import "MamePreferencesController.h"
+#import "MameConfiguration.h"
 
 @interface MamePreferencesController (Private)
 
@@ -38,14 +39,14 @@
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     
     mButtonsByKey = [[NSDictionary alloc] initWithObjectsAndKeys:
-        mRomDirectory, @"RomPath",
-        mSamplesDirectory, @"SamplePath",
-        mArtworkDirectory, @"ArtworkPath",
+        mRomDirectory, MameRomPath,
+        mSamplesDirectory, MameSamplePath,
+        mArtworkDirectory, MameArtworkPath,
         nil];
 
-    NSString * romPath = [defaults stringForKey: @"RomPath"];
-    NSString * samplePath = [defaults stringForKey: @"SamplePath"];
-    NSString * artworkPath = [defaults stringForKey: @"ArtworkPath"];
+    NSString * romPath = [defaults stringForKey: MameRomPath];
+    NSString * samplePath = [defaults stringForKey: MameSamplePath];
+    NSString * artworkPath = [defaults stringForKey: MameArtworkPath];
     
     [self setPopUpMenu: mRomDirectory withPath: romPath];
     [self setPopUpMenu: mSamplesDirectory withPath: samplePath];
@@ -54,19 +55,19 @@
 
 - (IBAction) chooseRomDirectory: (id) sender;
 {
-    [self chooseDirectoryForKey: @"RomPath"
+    [self chooseDirectoryForKey: MameRomPath
                       withTitle: @"Choose ROM Directory"];
 }
 
 - (IBAction) chooseSamplesDirectory: (id) sender;
 {
-    [self chooseDirectoryForKey: @"SamplePath"
+    [self chooseDirectoryForKey: MameSamplePath
                       withTitle: @"Choose Sound Samples Directory"];
 }
 
 - (IBAction) chooseArtworkDirectory: (id) sender;
 {
-    [self chooseDirectoryForKey: @"ArtworkPath"
+    [self chooseDirectoryForKey: MameArtworkPath
                       withTitle: @"Choose Artwork Directory"];
 }
 
@@ -79,23 +80,22 @@
 //
 - (void) setPopUpMenu: (NSPopUpButton *) popupButton withPath: (NSString *) path;
 {
-    NSMenuItem* placeholder = [popupButton itemAtIndex:0];
+    NSMenuItem* placeholder = [popupButton itemAtIndex: 0];
     if (!placeholder)
         return;
     
     // get the finder icon and scale it down to 16x16
     NSImage* icon = [[NSWorkspace sharedWorkspace] iconForFile: path];
-    [icon setScalesWhenResized:YES];
-    [icon setSize:NSMakeSize(16.0, 16.0)];
+    [icon setScalesWhenResized: YES];
+    [icon setSize: NSMakeSize(16.0, 16.0)];
     
     // set the title to the leaf name and the icon to what we gathered above
     [placeholder setTitle: [path lastPathComponent]];
     [placeholder setImage: icon];
     
     // ensure first item is selected
-    [popupButton selectItemAtIndex:0];
+    [popupButton selectItemAtIndex: 0];
 }
-
 
 - (void) chooseDirectoryForKey: (NSString *) userDataKey
                      withTitle: (NSString *) title;
@@ -129,10 +129,10 @@
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     if (returnCode == NSOKButton)
     {
-        NSString * newRomPath = [panel filename];
-        [defaults setValue: newRomPath forKey: key];
+        NSString * newPath = [panel filename];
+        [defaults setValue: newPath forKey: key];
         // Update menu
-        [self setPopUpMenu: button withPath: newRomPath];
+        [self setPopUpMenu: button withPath: newPath];
     }
     else
     {
