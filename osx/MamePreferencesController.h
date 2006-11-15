@@ -12,8 +12,14 @@
 @interface MamePreferencesController : NSWindowController
 {
     IBOutlet NSPopUpButton * mRomDirectory;
+    IBOutlet NSPopUpButton * mSamplesDirectory;
+    IBOutlet NSPopUpButton * mArtworkDirectory;
+
+    NSDictionary * mButtonsByKey;
 }
 
 - (IBAction) chooseRomDirectory: (id) sender;
+- (IBAction) chooseSamplesDirectory: (id) sender;
+- (IBAction) chooseArtworkDirectory: (id) sender;
 
 @end

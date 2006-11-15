@@ -2,10 +2,18 @@
     IBClasses = (
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
         {
-            ACTIONS = {chooseRomDirectory = id; }; 
+            ACTIONS = {
+                chooseArtworkDirectory = id; 
+                chooseRomDirectory = id; 
+                chooseSamplesDirectory = id; 
+            }; 
             CLASS = MamePreferencesController; 
             LANGUAGE = ObjC; 
-            OUTLETS = {mRomDirectory = NSPopUpButton; }; 
+            OUTLETS = {
+                mArtworkDirectory = NSPopUpButton; 
+                mRomDirectory = NSPopUpButton; 
+                mSamplesDirectory = NSPopUpButton; 
+            }; 
             SUPERCLASS = NSWindowController; 
         }
     ); 

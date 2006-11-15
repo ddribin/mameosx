@@ -157,6 +157,9 @@ void exit_sleeper()
     if (mPreferencesController == nil)
         mPreferencesController = [[MamePreferencesController alloc] init];
     
+    NSWindow * window = [mPreferencesController window];
+    if (![window isVisible])
+        [window center];
     [mPreferencesController showWindow: self];
 }
 
