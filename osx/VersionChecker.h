@@ -14,6 +14,14 @@
     BOOL mUpdateInProgress;
     NSString * mVersionUrl;
     BOOL mVerbose;
+    
+    // Transient values, only valid while update in progress
+    NSString * mMyVersion;
+    NSString * mMyVersionString;
+    NSString * mCurrentVersion;
+    NSString * mCurrentVersionString;
+    NSString * mDownloadUrl;
+    NSString * mInfoUrl;
 }
 
 - (NSString *) versionUrl;

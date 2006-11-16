@@ -18,6 +18,10 @@
 
 - (void) downloadVersionComplete: (NSDictionary *) versionDictionary;
 
+- (void) displayNewVersionAvailableDialog;
+
+- (void) displayUpToDateDialog;
+
 @end
 
 
@@ -129,58 +133,87 @@
 - (void) downloadVersionComplete: (NSDictionary *) versionDictionary;
 {
     [versionDictionary autorelease];
-    NSBundle *app = [NSBundle mainBundle];
-    NSString *ident = [app bundleIdentifier];
-    NSDictionary *infoDict = [app infoDictionary];
-    NSString *myVersion = (NSString *)[infoDict valueForKey:@"CFBundleVersion"];
-    NSString *myVersionString = (NSString *)[infoDict valueForKey:@"CFBundleShortVersionString"];
+    NSBundle * myBundle = [NSBundle mainBundle];
+    NSString * myId = [myBundle bundleIdentifier];
+    NSDictionary * infoDict = [myBundle infoDictionary];
+    mMyVersion = [infoDict valueForKey:@"CFBundleVersion"];
+    mMyVersionString = [infoDict valueForKey:@"CFBundleShortVersionString"];
     
-    NSDictionary * versionDict = (NSDictionary *)[versionDictionary valueForKey:ident];
-    NSString * currentVersion = (NSString *)[versionDict valueForKey:@"version"];
-    NSString * currentVersionString = (NSString *)[versionDict valueForKey:@"versionString"];
-    NSString * downloadUrl = (NSString *)[versionDict valueForKey:@"downloadUrl"];
-    NSString * infoUrl = (NSString *)[versionDict valueForKey:@"infoUrl"];
+    NSDictionary * versionDict = [versionDictionary valueForKey: myId];
+    mCurrentVersion = [versionDict valueForKey:@"version"];
+    mCurrentVersionString = [versionDict valueForKey:@"versionString"];
+    mDownloadUrl = [versionDict valueForKey:@"downloadUrl"];
+    mInfoUrl = [versionDict valueForKey:@"infoUrl"];
+
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    NSString * skippedVersion = [defaults stringForKey: @"SkippedVersion"];
     
-    NSLog([NSString stringWithFormat:@"%@: my version: %@, current version:s %@",
-        ident, myVersion, currentVersion]);
+    NSLog([NSString stringWithFormat:@"%@: my version: %@, current version: %@, skipped version: %@",
+        myId, mMyVersion, mCurrentVersion, skippedVersion]);
     
-    if (![myVersion isEqualToString:currentVersion])
+    if (![mMyVersion isEqualToString: mCurrentVersion])
     {
-        NSString * message = [NSString stringWithFormat:
-            @"MAME OS X %@ is available (you have %@).  Would you like to download it now?", currentVersionString, myVersionString];
-        NSAlert * alert = [[NSAlert alloc] init];
-        [alert setMessageText: @"A new version of MAME OS X is available."];
-        [alert setInformativeText: message];
-        [alert setAlertStyle: NSInformationalAlertStyle];
-        [alert addButtonWithTitle: @"Download..."];
-        [alert addButtonWithTitle: @"More info..."];
-        [alert addButtonWithTitle: @"Skip this version"];
-        [alert addButtonWithTitle: @"Remind later"];
-        int result = [alert runModal];
-        if (result == NSAlertFirstButtonReturn)
+        if (![skippedVersion isEqualToString: mCurrentVersion] || mVerbose)
         {
-            [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString: downloadUrl]];
+            [self displayNewVersionAvailableDialog];
         }
-        else if (result == NSAlertSecondButtonReturn)
-        {
-            [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString: infoUrl]];
-        }
-        [alert release];
     }
     else if (mVerbose)
     {
-        NSString * message = [NSString stringWithFormat:
-            @"Version %@ of MAME OS X is the most current version.",
-            currentVersionString];
-        NSAlert * alert = [[NSAlert alloc] init];
-        [alert setMessageText: @"Your version of MAME OS X is up to date."];
-        [alert setInformativeText: message];
-        [alert setAlertStyle: NSInformationalAlertStyle];
-        [alert addButtonWithTitle: @"OK"];
-        [alert runModal];
-        [alert release];
+        [self displayUpToDateDialog];
     }
     [self setUpdateInProgress: NO];
 }
+
+- (void) displayNewVersionAvailableDialog;
+{
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    NSString * message = [NSString stringWithFormat:
+        @"MAME OS X %@ is available (you have %@).  "
+        @"Would you like to download it now?",
+        mCurrentVersionString, mMyVersionString];
+    NSAlert * alert = [[NSAlert alloc] init];
+    [alert setMessageText: @"A new version of MAME OS X is available."];
+    [alert setInformativeText: message];
+    [alert setAlertStyle: NSInformationalAlertStyle];
+    [alert addButtonWithTitle: @"Download..."];
+    [alert addButtonWithTitle: @"More info..."];
+    [alert addButtonWithTitle: @"Skip this version"];
+    [alert addButtonWithTitle: @"Remind later"];
+    int result = [alert runModal];
+    if (result == NSAlertFirstButtonReturn)
+    {
+        [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString: mDownloadUrl]];
+    }
+    else if (result == NSAlertSecondButtonReturn)
+    {
+        [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString: mInfoUrl]];
+    }
+    else if (result == NSAlertThirdButtonReturn)
+    {
+        [defaults setObject: mCurrentVersion forKey: @"SkippedVersion"];
+    }
+    else if (result == NSAlertThirdButtonReturn + 1)
+    {
+        [defaults setObject: nil forKey: @"SkippedVersion"];
+    }
+    [defaults synchronize];
+    [alert release];
+}
+
+- (void) displayUpToDateDialog;
+{
+    NSString * message = [NSString stringWithFormat:
+        @"Version %@ of MAME OS X is the most current version.",
+        mCurrentVersionString];
+    NSAlert * alert = [[NSAlert alloc] init];
+    [alert setMessageText: @"Your version of MAME OS X is up to date."];
+    [alert setInformativeText: message];
+    [alert setAlertStyle: NSInformationalAlertStyle];
+    [alert addButtonWithTitle: @"OK"];
+    [alert runModal];
+    [alert release];
+}
+
 
 @end
