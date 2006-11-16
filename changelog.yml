@@ -1,0 +1,14 @@
+- version: "0.109-1"
+  date: xxx
+  changes:
+    - Resolve aliases in paths (thanks to Martin White).
+    - Add ROM Loading Log.
+    - Show an error sheet if there were any errors loading ROMs.
+    - Add simple preferences panel.
+    - Add Internet version checking.
+
+- version: "0.109"
+  date: 12 Oct 2006
+  changes:
+    - Intial release.
+  
