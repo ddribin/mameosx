@@ -1,26 +1,15 @@
 #!/usr/bin/env ruby
 
-require 'yaml'
-require 'ostruct'
+$LOAD_PATH.unshift File.dirname($0)
 
-def hashes2ostruct(collection)
-  result = collection
-  if collection.kind_of? Hash
-    collection.each do |key, value|
-      collection[key] = hashes2ostruct(value)
-    end
-    result = OpenStruct.new(collection)
-  elsif collection.kind_of? Array
-    collection.map! { |i| hashes2ostruct(i) }
-  end
-  return result
-end
+require 'yaml'
+require 'hashes2ostruct'
 
 def changelog2markdown(changelog, io)
   changelog.each do |release|
     title = "Version #{release.version} -- #{release.date}"
     io.puts title
-    io.puts "=" * title.size
+    io.puts "-" * title.size
     io.puts
     release.changes.each do |change|
       io.puts "* " + change
