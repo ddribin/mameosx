@@ -3,11 +3,13 @@
 $LOAD_PATH.unshift File.dirname($0)
 
 require 'yaml'
+require 'time'
 require 'hashes2ostruct'
 
 def changelog2markdown(changelog, io)
   changelog.each do |release|
-    title = "Version #{release.version} -- #{release.date}"
+    release_date = release.date.strftime("%d %b %Y")
+    title = "Version #{release.version} -- #{release_date}"
     io.puts title
     io.puts "-" * title.size
     io.puts
@@ -18,5 +20,14 @@ def changelog2markdown(changelog, io)
   end
 end
 
+def fix_dates(changelog)
+  changelog.each do |release|
+    if release.date.kind_of? String
+      release.date = Time.parse(release.date)
+    end
+  end
+end
+
 changelog = hashes2ostruct(YAML.load_file(ARGV[0]))
+fix_dates(changelog)
 changelog2markdown(changelog, $stdout)
