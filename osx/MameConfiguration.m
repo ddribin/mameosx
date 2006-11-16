@@ -21,6 +21,8 @@
 
 @implementation MameConfiguration
 
+NSString * MameVersionUrl = @"VersionUrl";
+
 NSString * MameRomPath = @"RomPath";
 NSString * MameSamplePath = @"SamplePath";
 NSString * MameConfigPath = @"ConfigPath";
@@ -88,6 +90,9 @@ static BOOL hasMultipleCPUs()
 + (void) initialize
 {
     NSMutableDictionary * defaultValues = [NSMutableDictionary dictionary];
+    
+    [defaultValues setObject: @"http://mameosx.sourceforge.net/version.plist"
+                      forKey: MameVersionUrl];
     
     [self initializeDefaultPaths: defaultValues];
 

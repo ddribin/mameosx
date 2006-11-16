@@ -23,6 +23,7 @@ extern "C" {
 @class MameView;
 @class MameConfiguration;
 @class MameFilter;
+@class VersionChecker;
 
 @interface MameController : NSObject
 {
@@ -31,6 +32,7 @@ extern "C" {
     IBOutlet NSDrawer * mDrawer;
     IBOutlet NSWindow * mOpenPanel;
     IBOutlet NSComboBox * mGameTextField;
+    IBOutlet VersionChecker *mVersionChecker;
     
     IBOutlet NSPanel * mRomLoadingLogPanel;
     IBOutlet NSTextView * mRomLoadingLog;

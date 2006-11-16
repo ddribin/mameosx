@@ -2415,6 +2415,9 @@
 		55E03CF30B0A320600988109 /* MamePreferencesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55E03CF00B0A320600988109 /* MamePreferencesController.m */; };
 		55E03D090B0A32EE00988109 /* Preferences.nib in Resources */ = {isa = PBXBuildFile; fileRef = 55E03D070B0A32EE00988109 /* Preferences.nib */; };
 		55E03D0A0B0A32EF00988109 /* Preferences.nib in Resources */ = {isa = PBXBuildFile; fileRef = 55E03D070B0A32EE00988109 /* Preferences.nib */; };
+		55FCC9FE0B0BD255003A5FB3 /* VersionChecker.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 55FCC9FC0B0BD255003A5FB3 /* VersionChecker.h */; };
+		55FCC9FF0B0BD255003A5FB3 /* VersionChecker.m in Sources */ = {isa = PBXBuildFile; fileRef = 55FCC9FD0B0BD255003A5FB3 /* VersionChecker.m */; };
+		55FCCA000B0BD255003A5FB3 /* VersionChecker.m in Sources */ = {isa = PBXBuildFile; fileRef = 55FCC9FD0B0BD255003A5FB3 /* VersionChecker.m */; };
 		55FE26330AAD33AB00C4054A /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55FE26320AAD33AB00C4054A /* AudioUnit.framework */; };
 		55FEC76B0AEC52F7001A1CAB /* tiny.c in Sources */ = {isa = PBXBuildFile; fileRef = 55FEC76A0AEC52F7001A1CAB /* tiny.c */; };
 		55FEC7FA0AEC58F6001A1CAB /* libtiny.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55FEC7B60AEC5713001A1CAB /* libtiny.a */; };
@@ -2609,6 +2612,7 @@
 				55BEFB5F0AEC6E7500357340 /* MameKit.framework in CopyFiles */,
 				553A09B10AFF11B300531E1F /* CustomMameFilters.h in CopyFiles */,
 				55E03CF10B0A320600988109 /* MamePreferencesController.h in CopyFiles */,
+				55FCC9FE0B0BD255003A5FB3 /* VersionChecker.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5177,6 +5181,8 @@
 		55E03CEF0B0A320600988109 /* MamePreferencesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MamePreferencesController.h; sourceTree = "<group>"; };
 		55E03CF00B0A320600988109 /* MamePreferencesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MamePreferencesController.m; sourceTree = "<group>"; };
 		55E03D080B0A32EE00988109 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/Preferences.nib; sourceTree = "<group>"; };
+		55FCC9FC0B0BD255003A5FB3 /* VersionChecker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VersionChecker.h; sourceTree = "<group>"; };
+		55FCC9FD0B0BD255003A5FB3 /* VersionChecker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VersionChecker.m; sourceTree = "<group>"; };
 		55FE25E60AAD2F6100C4054A /* MameAudioController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MameAudioController.h; sourceTree = "<group>"; };
 		55FE25E70AAD2F6100C4054A /* MameAudioController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MameAudioController.m; sourceTree = "<group>"; };
 		55FE26320AAD33AB00C4054A /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = /System/Library/Frameworks/AudioUnit.framework; sourceTree = "<absolute>"; };
@@ -5694,6 +5700,8 @@
 			children = (
 				556A4CED0AA5117200602CC5 /* MameController.h */,
 				556A4CEE0AA5117200602CC5 /* MameController.mm */,
+				55FCC9FC0B0BD255003A5FB3 /* VersionChecker.h */,
+				55FCC9FD0B0BD255003A5FB3 /* VersionChecker.m */,
 				55E03CEF0B0A320600988109 /* MamePreferencesController.h */,
 				55E03CF00B0A320600988109 /* MamePreferencesController.m */,
 				553A09AE0AFF11B300531E1F /* CustomMameFilters.h */,
@@ -10924,6 +10932,7 @@
 				55FEC76B0AEC52F7001A1CAB /* tiny.c in Sources */,
 				553A09B00AFF11B300531E1F /* CustomMameFilters.m in Sources */,
 				55E03CF30B0A320600988109 /* MamePreferencesController.m in Sources */,
+				55FCCA000B0BD255003A5FB3 /* VersionChecker.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11026,6 +11035,7 @@
 				55BEFB170AEC6D3F00357340 /* main.m in Sources */,
 				553A09B20AFF11B300531E1F /* CustomMameFilters.m in Sources */,
 				55E03CF20B0A320600988109 /* MamePreferencesController.m in Sources */,
+				55FCC9FF0B0BD255003A5FB3 /* VersionChecker.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

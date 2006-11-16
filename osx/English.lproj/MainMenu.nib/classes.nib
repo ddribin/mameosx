@@ -27,6 +27,7 @@
                 mOpenPanel = NSWindow; 
                 mRomLoadingLog = NSTextView; 
                 mRomLoadingLogPanel = NSPanel; 
+                mVersionChecker = VersionChecker; 
             }; 
             SUPERCLASS = NSObject; 
         }, 
@@ -36,7 +37,13 @@
             OUTLETS = {mController = MameController; mDelegate = id; }; 
             SUPERCLASS = DDCustomOpenGLView; 
         }, 
-        {CLASS = NSObject; LANGUAGE = ObjC; }
+        {CLASS = NSObject; LANGUAGE = ObjC; }, 
+        {
+            ACTIONS = {checkForUpdates = id; }; 
+            CLASS = VersionChecker; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSObject; 
+        }
     ); 
     IBVersion = 1; 
 }

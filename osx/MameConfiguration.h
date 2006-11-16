@@ -51,6 +51,7 @@
 
 @end
 
+extern NSString * MameVersionUrl;
 extern NSString * MameRomPath;
 extern NSString * MameSamplePath;
 extern NSString * MameArtworkPath;

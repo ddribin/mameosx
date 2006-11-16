@@ -11,6 +11,8 @@
 #import <OpenGL/gl.h>
 #import <MameKit/MameKit.h>
 #import "CustomMameFilters.h"
+#import "MameConfiguration.h"
+#import "VersionChecker.h"
 
 #include <mach/mach_time.h>
 #include <unistd.h>
@@ -104,6 +106,9 @@ void exit_sleeper()
     if (mPreviousGames == nil)
         mPreviousGames = [[NSMutableArray alloc] init];
     [self didChangeValueForKey: @"previousGames"];
+    
+    [mVersionChecker setVersionUrl: [defaults stringForKey: MameVersionUrl]];
+    [mVersionChecker checkForUpdatesInBackground];
 }
 
 - (void) applicationDidFinishLaunching: (NSNotification*) notification;
