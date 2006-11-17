@@ -6,6 +6,7 @@
     - Show an error sheet if there were any errors loading ROMs.
     - Add simple preferences panel.
     - Add Internet version checking.
+    - Sleep while throttling to avoid 100% CPU usage.
 
 - version: "0.109"
   date: 2006-11-12
