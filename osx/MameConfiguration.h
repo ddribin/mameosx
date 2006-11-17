@@ -72,4 +72,7 @@ extern NSString * MameVersionUrl;
 extern NSString * MameRomPath;
 extern NSString * MameSamplePath;
 extern NSString * MameArtworkPath;
+extern NSString * MameThrottledKey;
+extern NSString * MameSyncToRefreshKey;
+
 

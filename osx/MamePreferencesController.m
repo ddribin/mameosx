@@ -27,6 +27,8 @@
 
 @interface MamePreferencesController (Private)
 
+- (void) updatePopUpButtons;
+
 - (void) setPopUpMenu: (NSPopUpButton *) popupButton withPath: (NSString *) path;
 
 - (void) chooseDirectoryForKey: (NSString *) userDataKey
@@ -51,22 +53,14 @@
 
 
 - (void) awakeFromNib
-{
-    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-    
+{    
     mButtonsByKey = [[NSDictionary alloc] initWithObjectsAndKeys:
         mRomDirectory, MameRomPath,
         mSamplesDirectory, MameSamplePath,
         mArtworkDirectory, MameArtworkPath,
         nil];
 
-    NSString * romPath = [defaults stringForKey: MameRomPath];
-    NSString * samplePath = [defaults stringForKey: MameSamplePath];
-    NSString * artworkPath = [defaults stringForKey: MameArtworkPath];
-    
-    [self setPopUpMenu: mRomDirectory withPath: romPath];
-    [self setPopUpMenu: mSamplesDirectory withPath: samplePath];
-    [self setPopUpMenu: mArtworkDirectory withPath: artworkPath];
+    [self updatePopUpButtons];
 }
 
 - (IBAction) chooseRomDirectory: (id) sender;
@@ -87,9 +81,32 @@
                       withTitle: @"Choose Artwork Directory"];
 }
 
+- (IBAction) resetToDefaults: (id) sender;
+{
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setValue: nil forKey: MameRomPath];
+    [defaults setValue: nil forKey: MameSamplePath];
+    [defaults setValue: nil forKey: MameArtworkPath];
+    [defaults setValue: nil forKey: MameSyncToRefreshKey];
+    [defaults setValue: nil forKey: MameThrottledKey];
+    [self updatePopUpButtons];
+}
+
 @end
 
 @implementation MamePreferencesController (Private)
+
+- (void) updatePopUpButtons;
+{
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    NSString * romPath = [defaults stringForKey: MameRomPath];
+    NSString * samplePath = [defaults stringForKey: MameSamplePath];
+    NSString * artworkPath = [defaults stringForKey: MameArtworkPath];
+    
+    [self setPopUpMenu: mRomDirectory withPath: romPath];
+    [self setPopUpMenu: mSamplesDirectory withPath: samplePath];
+    [self setPopUpMenu: mArtworkDirectory withPath: artworkPath];
+}
 
 // Given a full path to a file, display the leaf name and the finder icon associated
 // with that folder in the first item of the download folder popup.

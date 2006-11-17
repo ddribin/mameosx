@@ -37,5 +37,6 @@
 - (IBAction) chooseRomDirectory: (id) sender;
 - (IBAction) chooseSamplesDirectory: (id) sender;
 - (IBAction) chooseArtworkDirectory: (id) sender;
+- (IBAction) resetToDefaults: (id) sender;
 
 @end

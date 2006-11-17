@@ -6,6 +6,7 @@
                 chooseArtworkDirectory = id; 
                 chooseRomDirectory = id; 
                 chooseSamplesDirectory = id; 
+                resetToDefaults = id; 
             }; 
             CLASS = MamePreferencesController; 
             LANGUAGE = ObjC; 
