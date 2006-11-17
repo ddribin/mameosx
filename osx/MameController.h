@@ -1,9 +1,9 @@
-//
-//  MameController.h
-//  mameosx
-//
-//  Created by Dave Dribin on 8/29/06.
-//
+/*
+ * Copyright (c) 2006 Dave Dribin <http://www.dribin.org/dave/>
+ *
+ * Some rights reserved: <http://opensource.org/licenses/mit-license.php>
+ * 
+ */
 
 #import <Cocoa/Cocoa.h>
 #import <QuartzCore/QuartzCore.h>

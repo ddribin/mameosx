@@ -1,9 +1,8 @@
 /*
- *  MameTextureConverter.h
- *  mameosx
+ * Copyright (c) 2006 Dave Dribin <http://www.dribin.org/dave/>
  *
- *  Created by Dave Dribin on 9/12/06.
- *
+ * Some rights reserved: <http://opensource.org/licenses/mit-license.php>
+ * 
  */
 
 #import <QuartzCore/QuartzCore.h>

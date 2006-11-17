@@ -1,8 +1,9 @@
-//============================================================
-//
-//	osinline.h - Win32 inline functions
-//
-//============================================================
+/*
+ * Copyright (c) 2006 Dave Dribin <http://www.dribin.org/dave/>
+ *
+ * Some rights reserved: <http://opensource.org/licenses/mit-license.php>
+ * 
+ */
 
 #ifndef __OSINLINE__
 #define __OSINLINE__

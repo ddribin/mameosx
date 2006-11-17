@@ -1,9 +1,9 @@
-//
-//  MameOpenGLTexture.h
-//  mameosx
-//
-//  Created by Dave Dribin on 9/22/06.
-//
+/*
+ * Copyright (c) 2006 Dave Dribin <http://www.dribin.org/dave/>
+ *
+ * Some rights reserved: <http://opensource.org/licenses/mit-license.php>
+ * 
+ */
 
 #import <Cocoa/Cocoa.h>
 

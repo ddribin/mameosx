@@ -1,10 +1,8 @@
 /*
- *  MameKit.h
- *  mameosx
+ * Copyright (c) 2006 Dave Dribin <http://www.dribin.org/dave/>
  *
- *  Created by Dave Dribin on 10/22/06.
- *  Copyright 2006 __MyCompanyName__. All rights reserved.
- *
+ * Some rights reserved: <http://opensource.org/licenses/mit-license.php>
+ * 
  */
 
 #import "MameAudioController.h"

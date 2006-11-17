@@ -1,10 +1,9 @@
-//
-//  CustomMameFilters.h
-//  mameosx
-//
-//  Created by Dave Dribin on 11/6/06.
-//  Copyright 2006 __MyCompanyName__. All rights reserved.
-//
+/*
+ * Copyright (c) 2006 Dave Dribin <http://www.dribin.org/dave/>
+ *
+ * Some rights reserved: <http://opensource.org/licenses/mit-license.php>
+ * 
+ */
 
 #import <MameKit/MameKit.h>
 
