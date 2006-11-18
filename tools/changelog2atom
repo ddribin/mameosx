@@ -35,7 +35,7 @@ def changelog2atom(changelog, target = $stdout)
   xml.feed :xmlns=>'http://www.w3.org/2005/Atom' do
     xml.title "MAME OS X Release Notes"
     xml.updated Time.now.iso8601
-    xml.id 'http://mameosx.sourceforge.net/'
+    xml.id 'http://mameosx.sourceforge.net/release_notes/'
 
     xml.link :rel => "self",
       :href => 'http://mameosx.sourceforge.net/release_notes/index.atom'
