@@ -8,7 +8,7 @@ class MakeVariables
   def initialize
     @vars = {}
     @pwd = Dir.pwd
-    @target = "mame"
+    @target = "mameosx"
     @my_dir = File.dirname($0)
   end
   
