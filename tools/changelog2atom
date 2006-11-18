@@ -59,7 +59,7 @@ def changelog2atom(changelog, target = $stdout)
           end
         end
         xml.link :rel => 'alternate',
-          :href => 'http://mameosx.test/release_notes/'
+          :href => 'http://mameosx.sourceforge.net/release_notes/'
         xml.link :rel => 'enclosure', :type => "application/octet-stream",
           :title => "Disk Image",
           :href => "http://prdownloads.sourceforge.net/mameosx/MAMEOSX-" +
