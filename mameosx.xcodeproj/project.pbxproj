@@ -331,6 +331,7 @@
 		55BEFB440AEC6DF000357340 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 556A4C500AA50E5800602CC5 /* MainMenu.nib */; };
 		55BEFB5F0AEC6E7500357340 /* MameKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 55BEF9A00AEC5E5C00357340 /* MameKit.framework */; };
 		55BEFB7F0AEC712900357340 /* mamedriv.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A43650AA4ECF800602CC5 /* mamedriv.c */; };
+		55D393210B0F54E10017F5F5 /* m68kmake.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D393200B0F54E10017F5F5 /* m68kmake.c */; };
 		55E028CD0B08D21F00988109 /* 34010fld.c in Sources */ = {isa = PBXBuildFile; fileRef = 55E028880B08D21F00988109 /* 34010fld.c */; };
 		55E028CE0B08D21F00988109 /* adsp2100.c in Sources */ = {isa = PBXBuildFile; fileRef = 55E028890B08D21F00988109 /* adsp2100.c */; };
 		55E028CF0B08D21F00988109 /* alph8201.c in Sources */ = {isa = PBXBuildFile; fileRef = 55E0288A0B08D21F00988109 /* alph8201.c */; };
@@ -2844,7 +2845,7 @@
 		556A4B150AA4FD5400602CC5 /* generic.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = generic.c; sourceTree = "<group>"; };
 		556A4B160AA4FD5400602CC5 /* generic.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = generic.h; sourceTree = "<group>"; };
 		556A4B780AA5011100602CC5 /* libsounds.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libsounds.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		556A4C280AA50D6200602CC5 /* MAME OS X-tiny.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = "MAME OS X-tiny.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		556A4C280AA50D6200602CC5 /* MAME OS X-tiny.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MAME OS X-tiny.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		556A4C2A0AA50D6200602CC5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Info.plist; sourceTree = "<group>"; };
 		556A4C510AA50E5800602CC5 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/MainMenu.nib; sourceTree = "<group>"; };
 		556A4C650AA50F2800602CC5 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -3099,6 +3100,7 @@
 		55CDE6E20AAC60CB0021CEA0 /* MameInputController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MameInputController.h; sourceTree = "<group>"; };
 		55CDE6E30AAC60CB0021CEA0 /* MameInputController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MameInputController.m; sourceTree = "<group>"; };
 		55CDE8D70AAC93E90021CEA0 /* osd_osx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = osd_osx.h; sourceTree = "<group>"; };
+		55D393200B0F54E10017F5F5 /* m68kmake.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = m68kmake.c; path = mame/src/cpu/m68000/m68kmake.c; sourceTree = SOURCE_ROOT; };
 		55E028880B08D21F00988109 /* 34010fld.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = 34010fld.c; path = tms34010/34010fld.c; sourceTree = "<group>"; };
 		55E028890B08D21F00988109 /* adsp2100.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = adsp2100.c; path = adsp2100/adsp2100.c; sourceTree = "<group>"; };
 		55E0288A0B08D21F00988109 /* alph8201.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = alph8201.c; path = alph8201/alph8201.c; sourceTree = "<group>"; };
@@ -5395,6 +5397,7 @@
 		555590820AF9B51A001ADC6D /* generated */ = {
 			isa = PBXGroup;
 			children = (
+				55D393200B0F54E10017F5F5 /* m68kmake.c */,
 				555590830AF9B51A001ADC6D /* m68kopac.c */,
 				555590840AF9B51A001ADC6D /* m68kopdm.c */,
 				555590850AF9B51A001ADC6D /* m68kopnz.c */,
@@ -8748,6 +8751,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55D393210B0F54E10017F5F5 /* m68kmake.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11280,7 +11284,7 @@
 				INSTALL_PATH = "$(HOME)/bin";
 				PREBINDING = NO;
 				PRODUCT_NAME = m68kmake;
-				ZERO_LINK = YES;
+				ZERO_LINK = NO;
 			};
 			name = Debug;
 		};
