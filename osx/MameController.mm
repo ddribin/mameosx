@@ -124,6 +124,9 @@ void exit_sleeper()
         mPreviousGames = [[NSMutableArray alloc] init];
     [self didChangeValueForKey: @"previousGames"];
     
+    if (NSClassFromString(@"SenTestCase") != nil)
+        return;
+
     [mVersionChecker setVersionUrl: [defaults stringForKey: MameVersionUrl]];
     [mVersionChecker checkForUpdatesInBackground];
 }
