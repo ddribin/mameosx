@@ -259,9 +259,11 @@ static MameConfiguration * sGlobalConfiguration = nil;
     [self setBios: [[defaults stringForKey: MameBiosKey] UTF8String]];
     options.bios = mBios;
     
+#if 0
     options.debug_width = [defaults integerForKey: MameDebugWidthKey];
     options.debug_height = [defaults integerForKey: MameDebugHeightKey];
     options.debug_depth = [defaults integerForKey: MameDebugDepthKey];
+#endif
 }
 
 //=========================================================== 
@@ -420,28 +422,29 @@ static MameConfiguration * sGlobalConfiguration = nil;
 {
     const struct
     {
-        int pathtype;
+        const char * pathtype;
         NSString * preference;
     }
     defaultPaths[] = {
-    { FILETYPE_ROM,         MameRomPath },
-    { FILETYPE_IMAGE,       MameRomPath },
-    { FILETYPE_IMAGE_DIFF,  MameDiffPath },
-    { FILETYPE_SAMPLE,      MameSamplePath },
-    { FILETYPE_ARTWORK,     MameArtworkPath },
-    { FILETYPE_NVRAM,       MameNvramPath },
-    { FILETYPE_HIGHSCORE,   MameHighScorePath },
-    { FILETYPE_CONFIG,      MameConfigPath },
-    { FILETYPE_INPUTLOG,    MameInputPath },
-    { FILETYPE_STATE,       MameStatePath },
-    { FILETYPE_MEMCARD,     MameMemcardPath },
-    { FILETYPE_SCREENSHOT,  MameSnapshotPath },
-    { FILETYPE_MOVIE,       MameSnapshotPath },
-    { FILETYPE_CTRLR,       MameCtrlrPath },
-    { FILETYPE_COMMENT,     MameCommentPath },
+    { OPTION_ROMPATH,         MameRomPath },
+    // { FILETYPE_IMAGE,       MameRomPath },
+    { OPTION_DIFF_DIRECTORY,  MameDiffPath },
+    { OPTION_SAMPLEPATH,      MameSamplePath },
+    { OPTION_ARTPATH,     MameArtworkPath },
+    { OPTION_NVRAM_DIRECTORY,       MameNvramPath },
+    // { FILETYPE_HIGHSCORE,   MameHighScorePath },
+    { OPTION_CFG_DIRECTORY,      MameConfigPath },
+    { OPTION_INPUT_DIRECTORY,    MameInputPath },
+    { OPTION_STATE_DIRECTORY,       MameStatePath },
+    { OPTION_MEMCARD_DIRECTORY,     MameMemcardPath },
+    { OPTION_SNAPSHOT_DIRECTORY,  MameSnapshotPath },
+    { OPTION_SNAPSHOT_DIRECTORY,       MameSnapshotPath },
+    { OPTION_CTRLRPATH,       MameCtrlrPath },
+    { OPTION_COMMENT_DIRECTORY,     MameCommentPath },
     { 0, nil }
     };
     
+#if 0
     int i;
     for (i = 0; defaultPaths[i].preference != nil; i++)
     {
@@ -451,6 +454,18 @@ static MameConfiguration * sGlobalConfiguration = nil;
         [mFileManager setPath: [mFileManager resolveAlias: defaultValue]
                       forType: defaultPaths[i].pathtype];
     }
+#else
+    int i;
+    for (i = 0; defaultPaths[i].preference != nil; i++)
+    {
+        NSString * defaultValue = [defaults stringForKey: defaultPaths[i].preference];
+        if (defaultValue == nil)
+            continue;
+        NSString * path = [mFileManager resolveAlias: defaultValue];
+        options_set_string(defaultPaths[i].pathtype, [path UTF8String]);
+    }
+    
+#endif
 }
 
 @end

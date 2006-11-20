@@ -35,12 +35,6 @@
 #include <unistd.h>
 #include "osd_osx.h"            
 
-// MAME headers
-extern "C" {
-#include "driver.h"
-#include "render.h"
-}
-
 NSString * kMamePreviousGames = @"PreviousGames";
 NSString * kMameGame = @"Game";
 NSString * kMameSleepAtExit = @"SleepAtExit";
@@ -141,6 +135,7 @@ void exit_sleeper()
     if (NSClassFromString(@"SenTestCase") != nil)
         return;
     
+    options_init(NULL);
     [mConfiguration setFileManager: [mMameView fileManager]];
     [self setUpDefaultPaths];
     [self syncWithUserDefaults];
@@ -432,7 +427,9 @@ void exit_sleeper()
 - (void) setUpDefaultPaths;
 {
     NSBundle * myBundle = [NSBundle bundleForClass: [self class]];
+#if 0 // TODO: Fix
     [[mMameView fileManager] setPath: [myBundle resourcePath] forType: FILETYPE_FONT];
+#endif
 }
 
 - (void) initFilters;
@@ -506,7 +503,8 @@ void exit_sleeper()
         int matches[5];
         driver_get_approx_matches([mGameName UTF8String], ARRAY_LENGTH(matches), matches);
         NSMutableString * message = [NSMutableString stringWithString: @"Closest matches:"];
-        for (int drvnum = 0; drvnum < ARRAY_LENGTH(matches); drvnum++)
+        int drvnum;
+        for (drvnum = 0; drvnum < ARRAY_LENGTH(matches); drvnum++)
         {
             if (matches[drvnum] != -1)
             {

@@ -265,7 +265,43 @@ void osd_set_file_manager(MameFileManager * fileManager)
     sFileManager = fileManager;
 }
 
-#if 1
+mame_file_error osd_open(const char *path, UINT32 openflags, osd_file **file,
+                         UINT64 *filesize)
+{
+    return [sFileManager osd_open: path
+                            flags: openflags
+                             file: file
+                         filesize: filesize];
+}
+
+mame_file_error osd_close(osd_file *file)
+{
+    return [sFileManager osd_close: file];
+}
+
+
+mame_file_error osd_read(osd_file *file, void *buffer, UINT64 offset,
+                         UINT32 length, UINT32 *actual)
+{
+    return [sFileManager osd_read: file
+                           buffer: buffer
+                           offset: offset
+                           length: length
+                           actual: actual];
+}
+
+mame_file_error osd_write(osd_file *file, const void *buffer, UINT64 offset,
+                          UINT32 length, UINT32 *actual)
+{
+    return [sFileManager osd_write: file
+                            buffer: buffer
+                            offset: offset
+                            length: length
+                            actual: actual];
+}
+
+
+#if 0 // TODO: Fix
 const char * osd_pathtype_string(int pathtype)
 {
     switch(pathtype)
@@ -371,6 +407,8 @@ void osd_fclose(osd_file *file)
     [sFileManager osd_fclose: file];
 }
 
+#endif
+
 //============================================================
 //	osd_display_loading_rom_message
 //============================================================
@@ -382,8 +420,6 @@ int osd_display_loading_rom_message(const char *name, rom_load_data *romdata)
 {
 	return [sController osd_display_loading_rom_message: name romdata: romdata];
 }
-
-#endif
 
 void osd_break_into_debugger(const char *message)
 {

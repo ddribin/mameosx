@@ -141,6 +141,114 @@ struct _osd_file
     return resolvedPath;
 }
 
+#pragma mark -
+#pragma mark MAME OSD API
+
+- (mame_file_error) osd_open: (const char *) path
+                       flags: (UINT32) openflags
+                        file: (osd_file **) file
+                    filesize: (UINT64 *) filesize;
+{
+    NSAssert(path != 0, @"path is NULL");
+    NSString * nsPath = [NSString stringWithUTF8String: path];
+    BOOL readFlag = (openflags & OPEN_FLAG_READ) != 0;
+    BOOL writeFlag = (openflags & OPEN_FLAG_WRITE) != 0;
+    BOOL createFlag = (openflags & OPEN_FLAG_CREATE) != 0;
+    
+    NSFileManager * fileManager = [NSFileManager defaultManager];
+    NSDictionary * fileAttributes =
+        [fileManager fileAttributesAtPath: nsPath traverseLink: YES];
+    BOOL fileExists = (fileAttributes != nil);
+
+    if (!fileExists && !createFlag)
+    {
+        return FILERR_NOT_FOUND;
+    }
+    
+    const char * mode;
+    if (readFlag)
+    {
+        mode = "rb";
+    }
+    else if (writeFlag && createFlag)
+    {
+        mode = "wb";
+    }
+    else
+    {
+        NSLog(@"osd_open: Invalid mode: 0x%08X, path: %s", openflags, path);
+        return FILERR_FAILURE;
+    }
+    
+    FILE * handle = fopen(path, mode);
+    if (handle == 0)
+    {
+        return FILERR_FAILURE;
+    }
+    
+    *file = malloc(sizeof(*file));
+    if (*file == 0)
+    {
+        fclose(handle);
+        return FILERR_OUT_OF_MEMORY;
+    }
+    
+    (*file)->fileHandle = handle;
+    if (filesize != NULL)
+        *filesize = [fileAttributes fileSize];
+    return FILERR_NONE;
+}
+
+- (mame_file_error) osd_close: (osd_file *) file;
+{
+    NSAssert(file != 0, @"file should not be null");
+    int rc = fclose(file->fileHandle);
+    free(file);
+    if (rc == 0)
+        return FILERR_NONE;
+    else
+        return FILERR_FAILURE;
+}
+
+- (mame_file_error) osd_read: (osd_file *) file
+                      buffer: (void *) buffer
+                      offset: (UINT64) offset
+                      length: (UINT32) length
+                      actual: (UINT32 *) actual;
+{
+    fseek(file->fileHandle, offset, SEEK_SET);
+    size_t rc = fread(buffer, 1, length, file->fileHandle);
+    if ((rc != length) && (ferror(file->fileHandle)))
+    {
+        clearerr(file->fileHandle);
+        NSLog(@"osd_read error");
+        return FILERR_FAILURE;
+    }
+
+    *actual = rc;
+    return FILERR_NONE;
+}
+
+- (mame_file_error) osd_write: (osd_file *) file
+                       buffer: (const void *) buffer
+                       offset: (UINT64) offset
+                       length: (UINT32) length
+                       actual: (UINT32 *) actual;
+{
+    fseek(file->fileHandle, offset, SEEK_SET);
+    size_t rc = fwrite(buffer, 1, length, file->fileHandle);
+    if ((rc != length) && (ferror(file->fileHandle)))
+    {
+        clearerr(file->fileHandle);
+        NSLog(@"osd_read error");
+        return FILERR_FAILURE;
+    }
+    
+    *actual = rc;
+    return FILERR_NONE;
+}
+
+#if 0
 - (int) osd_get_path_count: (int) pathtype;
 {
     NSArray * paths = [self pathsForType: pathtype];
@@ -235,6 +343,7 @@ struct _osd_file
 {
     return fwrite(buffer, 1, length, file->fileHandle);
 }
+#endif
 
 @end
 

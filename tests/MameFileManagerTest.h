@@ -13,6 +13,7 @@
 @interface MameFileManagerTest : SenTestCase
 {
     MameFileManager * mFileManager;
+    NSString * mResourcePath;
 }
 
 @end

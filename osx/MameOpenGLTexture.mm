@@ -22,6 +22,8 @@
  * SOFTWARE.
  */
 
+#define __FILEIO_H__ 1 // HACK for 0.110 compiler error!
+
 #import "MameOpenGLTexture.h"
 #import "MameTextureConverter.h"
 

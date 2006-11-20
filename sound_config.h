@@ -19,6 +19,7 @@
 #define HAS_ES8712 1
 #define HAS_GAELCO_CG1V 1
 #define HAS_GAELCO_GAE1 1
+#define HAS_CDP1869 1
 #define HAS_AY8910 1
 #define HAS_HC55516 1
 #define HAS_C6280 1

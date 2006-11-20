@@ -24,6 +24,7 @@
 
 #import <Cocoa/Cocoa.h>
 
+typedef int osd_file_error;
 
 @interface MameFileManager : NSObject
 {
@@ -42,6 +43,29 @@
 
 - (NSString *) resolveAlias: (NSString *) path;
 
+#pragma mark -
+#pragma mark MAME OSD API
+   
+- (mame_file_error) osd_open: (const char *) path
+                       flags: (UINT32) openflags
+                        file: (osd_file **) file
+                    filesize: (UINT64 *) filesize;
+
+- (mame_file_error) osd_close: (osd_file *) file;
+
+- (mame_file_error) osd_read: (osd_file *) file
+                      buffer: (void *) buffer
+                      offset: (UINT64) offset
+                      length: (UINT32) length
+                      actual: (UINT32 *) actual;
+
+- (mame_file_error) osd_write: (osd_file *) file
+                       buffer: (const void *) buffer
+                       offset: (UINT64) offset
+                       length: (UINT32) length
+                       actual: (UINT32 *) actual;
+
+#if 0
 - (int) osd_get_path_count: (int) pathtype;
 
 - (int) osd_get_path_info: (int) pathtype
@@ -71,6 +95,7 @@
 - (UINT32) osd_fwrite: (osd_file *) file
                buffer: (const void *) buffer
                length: (UINT32) length;
+#endif
 
 
 

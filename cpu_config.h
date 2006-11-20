@@ -16,6 +16,10 @@
 #define HAS_DSP32C 1
 #define HAS_ASAP 1
 #define HAS_JAGUAR 1
+#define HAS_CDP1802 1
+#define HAS_COP410 1
+#define HAS_COP411 0
+#define HAS_COP420 1
 #define HAS_CCPU 1
 #define HAS_T11 1
 #define HAS_G65816 1
