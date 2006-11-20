@@ -451,6 +451,7 @@ static MameConfiguration * sGlobalConfiguration = nil;
         NSString * defaultValue = [defaults stringForKey: defaultPaths[i].preference];
         if (defaultValue == nil)
             continue;
+        defaultValue = [mFileManager resolveAlias: defaultValue];
         [mFileManager setPath: [mFileManager resolveAlias: defaultValue]
                       forType: defaultPaths[i].pathtype];
     }
