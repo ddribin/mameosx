@@ -1,7 +1,4 @@
 
-* Upgrade core to 0.110.
-* Add preference to control checking for updates at startup.
-* Add graphics smoothing.
 * Change directory structure.
 * Look into default size of window.
 * Add mouse support

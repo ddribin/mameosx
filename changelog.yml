@@ -1,3 +1,10 @@
+- verseion: "0.110"
+  date: xxx
+  changes:
+    - Upgrade to 0.110 core.
+    - Add preference for checking updates at startup.
+    - Add linear filtering.
+
 - version: "0.109-1"
   date: 2006-11-18
   changes:
