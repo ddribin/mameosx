@@ -121,8 +121,12 @@ void exit_sleeper()
     if (NSClassFromString(@"SenTestCase") != nil)
         return;
 
-    [mVersionChecker setVersionUrl: [defaults stringForKey: MameVersionUrl]];
-    [mVersionChecker checkForUpdatesInBackground];
+    if ([defaults boolForKey: MameCheckUpdatesAtStartupKey])
+    {
+        [mVersionChecker setVersionUrl:
+            [defaults stringForKey: MameVersionUrlKey]];
+        [mVersionChecker checkForUpdatesInBackground];
+    }
 }
 
 - (void) applicationDidFinishLaunching: (NSNotification*) notification;

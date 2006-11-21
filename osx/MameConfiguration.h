@@ -68,7 +68,8 @@
 
 @end
 
-extern NSString * MameVersionUrl;
+extern NSString * MameVersionUrlKey;
+extern NSString * MameCheckUpdatesAtStartupKey;
 extern NSString * MameRomPath;
 extern NSString * MameSamplePath;
 extern NSString * MameArtworkPath;

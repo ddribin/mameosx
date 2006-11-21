@@ -38,7 +38,8 @@
 
 @implementation MameConfiguration
 
-NSString * MameVersionUrl = @"VersionUrl";
+NSString * MameVersionUrlKey = @"VersionUrl";
+NSString * MameCheckUpdatesAtStartupKey = @"CheckUpdatesAtStartup";
 
 NSString * MameRomPath = @"RomPath";
 NSString * MameSamplePath = @"SamplePath";
@@ -109,7 +110,10 @@ static BOOL hasMultipleCPUs()
     NSMutableDictionary * defaultValues = [NSMutableDictionary dictionary];
     
     [defaultValues setObject: @"http://mameosx.sourceforge.net/version.plist"
-                      forKey: MameVersionUrl];
+                      forKey: MameVersionUrlKey];
+
+    [defaultValues setObject: [NSNumber numberWithBool: YES]
+                      forKey: MameCheckUpdatesAtStartupKey];
     
     [self initializeDefaultPaths: defaultValues];
 
