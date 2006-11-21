@@ -36,10 +36,6 @@
 #include <unistd.h>
 #include "osd_osx.h"            
 
-NSString * kMamePreviousGames = @"PreviousGames";
-NSString * kMameGame = @"Game";
-NSString * kMameSleepAtExit = @"SleepAtExit";
-
 static const int kMameRunGame = 0;
 static const int kMameCancelGame = 1;
 static const int kMameMaxGamesInHistory = 100;
@@ -78,6 +74,11 @@ void exit_sleeper()
 
 @implementation MameController
 
++ (void) initialize
+{
+    [[MamePreferences standardPreferences] registerDefaults];
+}
+
 - (id) init
 {
     if (![super init])
@@ -93,7 +94,7 @@ void exit_sleeper()
         0];
 
     sSleepAtExit =
-        [[NSUserDefaults standardUserDefaults] boolForKey: kMameSleepAtExit];
+        [[MamePreferences standardPreferences] sleepAtExit];
     atexit(exit_sleeper);
     
     return self;
@@ -106,15 +107,15 @@ void exit_sleeper()
     [self setGameLoading: NO];
     [self setGameRunning: NO];
 
-    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    MamePreferences * preferences = [MamePreferences standardPreferences];
     
-    mGameName = [[defaults stringForKey: kMameGame] retain];
+    mGameName = [[preferences game] retain];
     mQuitOnError = (mGameName == nil)? NO : YES;
     if ([[[NSProcessInfo processInfo] arguments] count] > 1)
         [NSApp activateIgnoringOtherApps: YES];
 
     [self willChangeValueForKey: @"previousGames"];
-    mPreviousGames = [[defaults arrayForKey: kMamePreviousGames] mutableCopy];
+    mPreviousGames = [[preferences previousGames] mutableCopy];
     if (mPreviousGames == nil)
         mPreviousGames = [[NSMutableArray alloc] init];
     [self didChangeValueForKey: @"previousGames"];
@@ -122,26 +123,23 @@ void exit_sleeper()
     if (NSClassFromString(@"SenTestCase") != nil)
         return;
 
-    if ([defaults boolForKey: MameCheckUpdatesAtStartupKey])
+    if ([preferences checkUpdatesAtStartup])
     {
-        [mVersionChecker setVersionUrl:
-            [defaults stringForKey: MameVersionUrlKey]];
+        [mVersionChecker setVersionUrl: [preferences versionUrl]];
         [mVersionChecker checkForUpdatesInBackground];
     }
 }
 
 - (void) applicationDidFinishLaunching: (NSNotification*) notification;
 {
+    if (NSClassFromString(@"SenTestCase") != nil)
+        return;
+    
     // Work around for an IB issue:
     // "Why does my bottom or top drawer size itself improperly?"
     // http://developer.apple.com/documentation/DeveloperTools/Conceptual/IBTips/Articles/FreqAskedQuests.html
     [mDrawer setContentSize: NSMakeSize(20, 60)];
     
-    if (NSClassFromString(@"SenTestCase") != nil)
-        return;
-    
-    options_init(NULL);
-    [mConfiguration setFileManager: [mMameView fileManager]];
     [self setUpDefaultPaths];
     [self syncWithUserDefaults];
     
@@ -398,7 +396,7 @@ void exit_sleeper()
     [mMameView setRenderInCoreVideoThread: [preferences renderInCV]];
     [mMameView setClearToRed: [preferences clearToRed]];
     
-    [mConfiguration loadUserDefaults];
+    [preferences copyToMameConfiguration: mConfiguration];
 }
 
 - (void) setGameLoading: (BOOL) gameLoading;
@@ -583,13 +581,14 @@ void exit_sleeper()
     }
     [self didChangeValueForKey: @"previousGames"];
     
-    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject: mPreviousGames forKey: kMamePreviousGames];
-    [defaults synchronize];
+    MamePreferences * preferences = [MamePreferences standardPreferences];
+    [preferences setPreviousGames: mPreviousGames];
+    [preferences synchronize];
 }
 
 - (void) logRomMessage: (NSString *) message;
 {
+    NSLog(@"ROM message: %@", message);
     NSString * messageWithNewline = [NSString stringWithFormat: @"%@\n", message];
     NSAttributedString * addendum =
         [[NSAttributedString alloc] initWithString: messageWithNewline

@@ -29,53 +29,91 @@
 
 @interface MameConfiguration : NSObject
 {
-    MameFileManager * mFileManager;
-    BOOL mThrottled;
-    BOOL mSyncToRefresh;
-    BOOL mSoundEnabled;
-    BOOL mRenderInCV;
-    BOOL mClearToRed;
-    
     char * mSaveGame;
     char * mBios;
 }
 
-- (MameFileManager *) fileManager;
-- (void) setFileManager: (MameFileManager *) theFileManager;
+#pragma mark -
+#pragma mark Directories and paths
 
-- (void) loadUserDefaults;
+- (void) setRomPath: (NSString *) romPath;
 
-#if 0
-- (BOOL) throttled;
-- (void) setThrottled: (BOOL) flag;
+- (void) setSamplePath: (NSString *) samplePath;
 
-- (BOOL) syncToRefresh;
-- (void) setSyncToRefresh: (BOOL) flag;
+- (void) setArtworkPath: (NSString *) artworkPath;
 
-- (BOOL) renderInCV;
-- (void) setRenderInCV: (BOOL) flag;
+- (void) setDiffDirectory: (NSString *) diffDirectory;
 
-- (BOOL) clearToRed;
-- (void) setClearToRed: (BOOL) clearToRed;
+- (void) setNvramDirectory: (NSString *) nvramDirectory;
 
-- (BOOL) soundEnabled;
-- (void) setSoundEnabled: (BOOL) flag;
+- (void) setConfigDirectory: (NSString *) configDirectory;
+
+- (void) setInputDirectory: (NSString *) inputDirectory;
+
+- (void) setStateDirectory: (NSString *) stateDirectory;
+
+- (void) setMemcardDirectory: (NSString *) memcardDirectory;
+
+- (void) setSnapshotDirectory: (NSString *) snapshotDirectory;
+
+- (void) setCtrlrPath: (NSString *) ctlrPath;
+
+- (void) setCommentDirectory: (NSString *) commentDirectory;
+
+#pragma mark -
+
+#ifdef MAME_DEBUG
+- (void) setMameDebug: (BOOL) mameDebug;
 #endif
 
-- (const char *) saveGame;
-- (void) setSaveGame: (const char *) newSaveGame;
+- (void) setCheat: (BOOL) cheat;
 
-- (const char *) bios;
-- (void) setBios: (const char *) newBios;
+#pragma mark -
+#pragma mark Messages
+
+- (void) setSkipDisclaimer: (BOOL) skipDisclaimer;
+
+- (void) setSkipGameInfo: (BOOL) skipGameInfo;
+
+- (void) setSkipWarnings: (BOOL) skipWarnings;
+
+#pragma mark -
+#pragma mark Sound
+
+- (void) setSampleRate: (int) sampleRate;
+
+- (void) setUseSamples: (BOOL) useSamples;
+
+#pragma mark -
+#pragma mark Graphics
+
+- (void) setBrightness: (float) brightness;
+
+- (void) setContrast: (float) contrast;
+
+- (void) setGamma: (float) gamma;
+
+- (void) setPauseBrightness: (float) pauseBrightness;
+
+#pragma mark -
+#pragma mark Vector
+
+- (void) setBeam: (int) beam;
+
+- (void) setAntialias: (BOOL) antialias;
+
+- (void) setVectorFlicker: (BOOL) vectorFlicker;
+
+#pragma mark -
+
+- (NSString *) saveGame;
+- (void) setSaveGame: (NSString *) newSaveGame;
+
+- (void) setAutoSave: (BOOL) autoSave;
+
+- (NSString *) bios;
+- (void) setBios: (NSString *) newBios;
 
 @end
-
-extern NSString * MameVersionUrlKey;
-extern NSString * MameCheckUpdatesAtStartupKey;
-extern NSString * MameRomPath;
-extern NSString * MameSamplePath;
-extern NSString * MameArtworkPath;
-extern NSString * MameThrottledKey;
-extern NSString * MameSyncToRefreshKey;
 
 

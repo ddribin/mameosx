@@ -31,188 +31,30 @@
 
 @interface MameConfiguration (Private)
 
-+ (void) initializeDefaultPaths: (NSMutableDictionary *) defaultValues;
-- (void) loadDefaultPaths: (NSUserDefaults *) defaults;
+- (void) setStringOption: (NSString *) stringValue
+                withName: (const char *) name;
+
+- (void) setBoolOption: (BOOL) boolValue
+              withName: (const char *) name;
+
+- (void) setIntOption: (int) intValue
+             withName: (const char *) name;
+
+- (void) setFloatOption: (float) floatValue
+               withName: (const char *) name;
 
 @end
 
 @implementation MameConfiguration
-
-NSString * MameVersionUrlKey = @"VersionUrl";
-NSString * MameCheckUpdatesAtStartupKey = @"CheckUpdatesAtStartup";
-
-NSString * MameRomPath = @"RomPath";
-NSString * MameSamplePath = @"SamplePath";
-NSString * MameConfigPath = @"ConfigPath";
-NSString * MameNvramPath = @"NvramPath";
-NSString * MameMemcardPath = @"MemcardPath";
-NSString * MameInputPath = @"InputPath";
-NSString * MameHighScorePath = @"HighScorePath";
-NSString * MameStatePath = @"StatePath";
-NSString * MameArtworkPath = @"ArtworkPath";
-NSString * MameSnapshotPath = @"SnapshotPath";
-NSString * MameDiffPath = @"DiffPath";
-NSString * MameCtrlrPath = @"CtrlrPath";
-NSString * MameCommentPath = @"CommentPath";
-NSString * MameCheatPath = @"CheatPath";
-
-NSString * MameThrottledKey = @"Throttled";
-NSString * MameSyncToRefreshKey = @"SyncToRefresh";
-NSString * MameSoundEnabledKey = @"SoundEnabled";
-NSString * MameRenderInCVKey = @"RenderInCV";
-NSString * MameClearToRedKey = @"ClearToRed";
-
-#ifdef MAME_DEBUG
-NSString * MameDebugKey = @"MameDebug";
-#endif
-NSString * MameCheatKey = @"Cheat";
-NSString * MameSkipDisclaimerKey = @"SkipDisclaimer";
-NSString * MameSkipGameInfoKey = @"SkipGameInfo";
-NSString * MameSkipWarningsKey = @"SkipWarnings";
-
-NSString * MameSampleRateKey = @"SampleRate";
-NSString * MameUseSamplesKey = @"UseSamples";
-
-NSString * MameBrightnessKey = @"Brightness";
-NSString * MameContrastKey = @"Contrast";
-NSString * MameGammaKey = @"Gamma";
-NSString * MamePauseBrightnessKey = @"PauseBrightness";
-
-NSString * MameBeamWidthKey = @"BeamWidth";
-NSString * MameVectorFlickerKey = @"VectorFlicker";
-NSString * MameAntialiasBeamKey = @"AntialiasBeam";
-
-NSString * MameSaveGameKey = @"SaveGame";
-NSString * MameAutosaveKey = @"AutoSave";
-NSString * MameBiosKey = @"Bios";
-
-NSString * MameDebugWidthKey = @"DebugWidth";
-NSString * MameDebugHeightKey = @"DebugHeight";
-NSString * MameDebugDepthKey = @"DebugDepth";
-
-
-static BOOL hasMultipleCPUs()
+- (id) init
 {
-	host_basic_info_data_t hostInfo;
-	mach_msg_type_number_t infoCount;
-	
-	infoCount = HOST_BASIC_INFO_COUNT;
-	host_info(mach_host_self(), HOST_BASIC_INFO, 
-			  (host_info_t)&hostInfo, &infoCount);
-    if (hostInfo.avail_cpus > 1)
-        return YES;
-    else
-        return NO;
-}
+    self = [super init];
+    if (self == nil)
+        return nil;
 
-+ (void) initialize
-{
-    NSMutableDictionary * defaultValues = [NSMutableDictionary dictionary];
-    
-    [defaultValues setObject: @"http://mameosx.sourceforge.net/version.plist"
-                      forKey: MameVersionUrlKey];
+    options_init(NULL);
 
-    [defaultValues setObject: [NSNumber numberWithBool: YES]
-                      forKey: MameCheckUpdatesAtStartupKey];
-    
-    [self initializeDefaultPaths: defaultValues];
-
-    [defaultValues setObject: [NSNumber numberWithBool: YES]
-                      forKey: MameThrottledKey];
-    [defaultValues setObject: [NSNumber numberWithBool: YES]
-                      forKey: MameSyncToRefreshKey];
-
-    [defaultValues setObject: [NSNumber numberWithBool: YES]
-                      forKey: MameSoundEnabledKey];
-
-    if (hasMultipleCPUs())
-    {
-        [defaultValues setObject: [NSNumber numberWithBool: YES]
-                          forKey: MameRenderInCVKey];
-    }
-    else
-    {
-        [defaultValues setObject: [NSNumber numberWithBool: NO]
-                          forKey: MameRenderInCVKey];
-    }
-    
-    [defaultValues setObject: [NSNumber numberWithBool: NO]
-                      forKey: MameClearToRedKey];
-    
-#ifdef MAME_DEBUG
-    [defaultValues setObject: [NSNumber numberWithBool: NO]
-                      forKey: MameDebugKey];
-#endif
-    [defaultValues setObject: [NSNumber numberWithBool: NO]
-                      forKey: MameCheatKey];
-    [defaultValues setObject: [NSNumber numberWithBool: NO]
-                      forKey: MameSkipDisclaimerKey];
-    [defaultValues setObject: [NSNumber numberWithBool: NO]
-                      forKey: MameSkipGameInfoKey];
-    [defaultValues setObject: [NSNumber numberWithBool: NO]
-                      forKey: MameSkipWarningsKey];
-    
-    [defaultValues setObject: [NSNumber numberWithInt: 48000]
-                      forKey: MameSampleRateKey];
-    [defaultValues setObject: [NSNumber numberWithBool: YES]
-                      forKey: MameUseSamplesKey];
-    
-    [defaultValues setObject: [NSNumber numberWithFloat: 1.0f]
-                      forKey: MameBrightnessKey];
-    [defaultValues setObject: [NSNumber numberWithFloat: 1.0f]
-                      forKey: MameContrastKey];
-    [defaultValues setObject: [NSNumber numberWithFloat: 1.0f]
-                      forKey: MameGammaKey];
-    [defaultValues setObject: [NSNumber numberWithFloat: 0.65f]
-                      forKey: MamePauseBrightnessKey];
-    
-    [defaultValues setObject: [NSNumber numberWithFloat: 1.1f]
-                      forKey: MameBeamWidthKey];
-    [defaultValues setObject: [NSNumber numberWithFloat: 1.0f]
-                      forKey: MameVectorFlickerKey];
-    [defaultValues setObject: [NSNumber numberWithBool: YES]
-                      forKey: MameAntialiasBeamKey];
-    
-    [defaultValues setObject: [NSNumber numberWithBool: NO]
-                      forKey: MameAutosaveKey];
-    [defaultValues setObject: @"default"
-                      forKey: MameBiosKey];
-    
-    [defaultValues setObject: [NSNumber numberWithInt: 640]
-                      forKey: MameDebugWidthKey];
-    [defaultValues setObject: [NSNumber numberWithInt: 480]
-                      forKey: MameDebugHeightKey];
-    [defaultValues setObject: [NSNumber numberWithInt: 8]
-                      forKey: MameDebugDepthKey];
-    
-    [[NSUserDefaults standardUserDefaults]
-        registerDefaults: defaultValues];
-}
-
-static MameConfiguration * sGlobalConfiguration = nil;
-
-+ (MameConfiguration *) globalConfiguration;
-{
-    if (sGlobalConfiguration == nil)
-        sGlobalConfiguration = [[MameConfiguration alloc] init];
-    return sGlobalConfiguration;
-}
-
-//=========================================================== 
-//  fileManager 
-//=========================================================== 
-- (MameFileManager *) fileManager
-{
-    return [[mFileManager retain] autorelease]; 
-}
-
-- (void) setFileManager: (MameFileManager *) theFileManager
-{
-    if (mFileManager != theFileManager)
-    {
-        [mFileManager release];
-        mFileManager = [theFileManager retain];
-    }
+    return self;
 }
 
 - (void) dealloc
@@ -225,122 +67,166 @@ static MameConfiguration * sGlobalConfiguration = nil;
     [super dealloc];
 }
 
-- (void) loadUserDefaults;
+#pragma mark -
+#pragma mark Directories and paths
+
+- (void) setRomPath: (NSString *) romPath;
 {
-    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    [self setStringOption: romPath withName: OPTION_ROMPATH];
+}
 
-    [self loadDefaultPaths: defaults];
+- (void) setSamplePath: (NSString *) samplePath;
+{
+    [self setStringOption: samplePath withName: OPTION_SAMPLEPATH];
+}
 
-    // [self setThrottled: [defaults boolForKey: MameThrottledKey]];
-    // [self setSyncToRefresh: [defaults boolForKey: MameSyncToRefreshKey]];
-    // [self setSoundEnabled: [defaults boolForKey: MameSoundEnabled]];
-    // [self setRenderInCV: [defaults boolForKey: MameRenderInCV]];
-    // [self setClearToRed: [defaults boolForKey: MameClearToRed]];
-    
+- (void) setArtworkPath: (NSString *) artworkPath;
+{
+    [self setStringOption: artworkPath withName: OPTION_ARTPATH];
+}
+
+- (void) setDiffDirectory: (NSString *) diffDirectory;
+{
+    [self setStringOption: diffDirectory withName: OPTION_DIFF_DIRECTORY];
+}
+
+- (void) setNvramDirectory: (NSString *) nvramDirectory;
+{
+    [self setStringOption: nvramDirectory withName: OPTION_NVRAM_DIRECTORY];
+}
+
+- (void) setConfigDirectory: (NSString *) configDirectory;
+{
+    [self setStringOption: configDirectory withName: OPTION_CFG_DIRECTORY];
+}
+
+- (void) setInputDirectory: (NSString *) inputDirectory;
+{
+    [self setStringOption: inputDirectory withName: OPTION_INPUT_DIRECTORY];
+}
+
+- (void) setStateDirectory: (NSString *) stateDirectory;
+{
+    [self setStringOption: stateDirectory withName: OPTION_STATE_DIRECTORY];
+}
+
+- (void) setMemcardDirectory: (NSString *) memcardDirectory;
+{
+    [self setStringOption: memcardDirectory withName: OPTION_MEMCARD_DIRECTORY];
+}
+
+- (void) setSnapshotDirectory: (NSString *) snapshotDirectory;
+{
+    [self setStringOption: snapshotDirectory withName: OPTION_SNAPSHOT_DIRECTORY];
+}
+
+- (void) setCtrlrPath: (NSString *) ctlrPath;
+{
+    [self setStringOption: ctlrPath withName: OPTION_CTRLRPATH];
+}
+
+- (void) setCommentDirectory: (NSString *) commentDirectory;
+{
+    [self setStringOption: commentDirectory withName: OPTION_COMMENT_DIRECTORY];
+}
+
+#pragma mark -
+
 #ifdef MAME_DEBUG
-    options.mame_debug = [defaults boolForKey: MameDebugKey];
-#endif
-    options.cheat = [defaults boolForKey: MameCheatKey];
-    options.skip_disclaimer = [defaults boolForKey: MameSkipDisclaimerKey];
-    options.skip_gameinfo = [defaults boolForKey: MameSkipGameInfoKey];
-    options.skip_warnings = [defaults boolForKey: MameSkipWarningsKey];
-    
-    options.samplerate = [defaults integerForKey: MameSampleRateKey];
-    options.use_samples = [defaults boolForKey: MameUseSamplesKey];
-    
-    options.brightness = [defaults floatForKey: MameBrightnessKey];
-    options.contrast = [defaults floatForKey: MameContrastKey];
-    options.gamma = [defaults floatForKey: MameGammaKey];
-    options.pause_bright = [defaults floatForKey: MamePauseBrightnessKey];
-    
-    options.beam = (int) ([defaults floatForKey: MameBeamWidthKey] * 65536.0f);
-    options.antialias = [defaults boolForKey: MameAntialiasBeamKey];
-    options.vector_flicker = [defaults floatForKey: MameVectorFlickerKey];
-    
-    [self setSaveGame: [[defaults stringForKey: MameSaveGameKey] UTF8String]];
-    options.savegame = mSaveGame;
-    options.auto_save = [defaults boolForKey: MameAutosaveKey];
-    [self setBios: [[defaults stringForKey: MameBiosKey] UTF8String]];
-    options.bios = mBios;
-}
-
-#if 0
-//=========================================================== 
-//  throttled 
-//=========================================================== 
-- (BOOL) throttled
+- (void) setMameDebug: (BOOL) mameDebug;
 {
-    return mThrottled;
-}
-
-- (void) setThrottled: (BOOL) flag
-{
-    mThrottled = flag;
-}
-
-//=========================================================== 
-//  syncToRefresh 
-//=========================================================== 
-- (BOOL) syncToRefresh
-{
-    return mSyncToRefresh;
-}
-
-- (void) setSyncToRefresh: (BOOL) flag
-{
-    mSyncToRefresh = flag;
-}
-
-//=========================================================== 
-//  soundEnabled 
-//=========================================================== 
-- (BOOL) soundEnabled
-{
-    return mSoundEnabled;
-}
-
-- (void) setSoundEnabled: (BOOL) flag
-{
-    mSoundEnabled = flag;
-}
-
-//=========================================================== 
-//  renderInCV 
-//=========================================================== 
-- (BOOL) renderInCV
-{
-    return mRenderInCV;
-}
-
-- (void) setRenderInCV: (BOOL) flag
-{
-    mRenderInCV = flag;
-}
-
-//=========================================================== 
-//  clearToRed 
-//=========================================================== 
-- (BOOL) clearToRed;
-{
-    return mClearToRed;
-}
-
-- (void) setClearToRed: (BOOL) clearToRed;
-{
-    mClearToRed = clearToRed;
+    options.mame_debug = mameDebug;
 }
 #endif
 
+- (void) setCheat: (BOOL) cheat;
+{
+    options.cheat = cheat;
+}
+
+#pragma mark -
+#pragma mark Messages
+
+- (void) setSkipDisclaimer: (BOOL) skipDisclaimer;
+{
+    options.skip_disclaimer = skipDisclaimer;
+}
+
+- (void) setSkipGameInfo: (BOOL) skipGameInfo;
+{
+    options.skip_gameinfo = skipGameInfo;
+}
+
+- (void) setSkipWarnings: (BOOL) skipWarnings;
+{
+    options.skip_warnings = skipWarnings;
+}
+
+#pragma mark -
+#pragma mark Sound
+
+- (void) setSampleRate: (int) sampleRate;
+{
+    options.samplerate = sampleRate;
+}
+
+- (void) setUseSamples: (BOOL) useSamples;
+{
+    options.use_samples = useSamples;
+}
+
+#pragma mark -
+#pragma mark Graphics
+
+- (void) setBrightness: (float) brightness;
+{
+    options.brightness = brightness;
+}
+
+- (void) setContrast: (float) contrast;
+{
+    options.contrast = contrast;
+}
+
+- (void) setGamma: (float) gamma;
+{
+    options.gamma = gamma;
+}
+
+- (void) setPauseBrightness: (float) pauseBrightness;
+{
+    options.pause_bright = pauseBrightness;
+}
+
+#pragma mark -
+#pragma mark Vector
+
+- (void) setBeam: (int) beam;
+{
+    options.beam = beam;
+}
+
+- (void) setAntialias: (BOOL) antialias;
+{
+    options.antialias = antialias;
+}
+
+- (void) setVectorFlicker: (BOOL) vectorFlicker;
+{
+    options.vector_flicker = vectorFlicker;
+}
+
+#pragma mark -
 
 //=========================================================== 
 //  saveGame 
 //=========================================================== 
-- (char *) saveGame
+- (NSString *) saveGame
 {
-    return mSaveGame; 
+    return [NSString stringWithUTF8String: mSaveGame]; 
 }
 
-- (void) setSaveGame: (char *) newSaveGame
+- (void) setSaveGame: (NSString *) newSaveGame
 {
     if (mSaveGame != 0)
     {
@@ -350,20 +236,27 @@ static MameConfiguration * sGlobalConfiguration = nil;
     
     if (newSaveGame != 0)
     {
-        mSaveGame = malloc(strlen(newSaveGame) + 1);
-        strcpy(mSaveGame, newSaveGame);
+        const char * utf8SaveGame = [newSaveGame UTF8String];
+        mSaveGame = malloc(strlen(utf8SaveGame) + 1);
+        strcpy(mSaveGame, utf8SaveGame);
     }
+    options.savegame = mSaveGame;
+}
+
+- (void) setAutoSave: (BOOL) autoSave;
+{
+    options.auto_save = autoSave;
 }
 
 //=========================================================== 
 //  bios 
 //=========================================================== 
-- (char *) bios
+- (NSString *) bios
 {
-    return mBios; 
+    return [NSString stringWithUTF8String: mBios]; 
 }
 
-- (void) setBios: (char *) newBios
+- (void) setBios: (NSString *) newBios
 {
     if (mBios != 0)
     {
@@ -373,87 +266,42 @@ static MameConfiguration * sGlobalConfiguration = nil;
     
     if (newBios != 0)
     {
-        mBios = malloc(strlen(newBios) + 1);
-        strcpy(mBios, newBios);
+        const char * utf8Bios = [newBios UTF8String];
+        mBios = malloc(strlen(utf8Bios) + 1);
+        strcpy(mBios, utf8Bios);
     }
+    options.bios = mBios;
 }
 
 @end
 
 @implementation MameConfiguration (Private)
 
-+ (void) initializeDefaultPaths: (NSMutableDictionary *) defaultValues;
+
+- (void) setStringOption: (NSString *) stringValue
+                withName: (const char *) name;
 {
-    const struct
-    {
-        NSString * preference;
-        NSString * path;
-    }
-    defaultPaths[] = {
-    { MameRomPath,          @"ROMs" },
-    { MameSamplePath,       @"Sound Samples" },
-    { MameConfigPath,       @"Config" },
-    { MameNvramPath,        @"NVRAM" },
-    { MameMemcardPath,      @"Memcard" },
-    { MameInputPath,        @"Input" },
-    { MameHighScorePath,    @"High Scores" },
-    { MameStatePath,        @"States" },
-    { MameArtworkPath,      @"Cabinet Art" },
-    { MameSnapshotPath,     @"Screenshots" },
-    { 0, nil }
-    };
-    
-    NSArray * paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString * baseDirectory = @"";
-    if ([paths count] > 0)
-    {
-        baseDirectory = [paths objectAtIndex: 0];
-        baseDirectory = [baseDirectory stringByAppendingPathComponent: @"MacMAME User Data"];
-    }
-    
-    int i;
-    for (i = 0; defaultPaths[i].path != nil; i++)
-    {
-        NSString * path = [baseDirectory stringByAppendingPathComponent: defaultPaths[i].path];
-        [defaultValues setObject: path forKey: defaultPaths[i].preference];
-    }
+    if (stringValue == nil)
+        return;
+    options_set_string(name, [stringValue UTF8String]);
 }
 
-- (void) loadDefaultPaths: (NSUserDefaults *) defaults;
+- (void) setBoolOption: (BOOL) boolValue
+              withName: (const char *) name;
 {
-    const struct
-    {
-        const char * pathtype;
-        NSString * preference;
-    }
-    defaultPaths[] = {
-    { OPTION_ROMPATH,         MameRomPath },
-    // { FILETYPE_IMAGE,       MameRomPath },
-    { OPTION_DIFF_DIRECTORY,  MameDiffPath },
-    { OPTION_SAMPLEPATH,      MameSamplePath },
-    { OPTION_ARTPATH,     MameArtworkPath },
-    { OPTION_NVRAM_DIRECTORY,       MameNvramPath },
-    // { FILETYPE_HIGHSCORE,   MameHighScorePath },
-    { OPTION_CFG_DIRECTORY,      MameConfigPath },
-    { OPTION_INPUT_DIRECTORY,    MameInputPath },
-    { OPTION_STATE_DIRECTORY,       MameStatePath },
-    { OPTION_MEMCARD_DIRECTORY,     MameMemcardPath },
-    { OPTION_SNAPSHOT_DIRECTORY,  MameSnapshotPath },
-    { OPTION_SNAPSHOT_DIRECTORY,       MameSnapshotPath },
-    { OPTION_CTRLRPATH,       MameCtrlrPath },
-    { OPTION_COMMENT_DIRECTORY,     MameCommentPath },
-    { 0, nil }
-    };
-    
-    int i;
-    for (i = 0; defaultPaths[i].preference != nil; i++)
-    {
-        NSString * defaultValue = [defaults stringForKey: defaultPaths[i].preference];
-        if (defaultValue == nil)
-            continue;
-        NSString * path = [mFileManager resolveAlias: defaultValue];
-        options_set_string(defaultPaths[i].pathtype, [path UTF8String]);
-    }
+    options_set_bool(name, boolValue);
+}
+
+- (void) setIntOption: (int) intValue
+             withName: (const char *) name;
+{
+    options_set_int(name, intValue);
+}
+
+- (void) setFloatOption: (float) floatvalue
+               withName: (const char *) name;
+{
+    options_set_float(name, floatvalue);
 }
 
 @end

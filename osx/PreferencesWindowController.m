@@ -23,7 +23,7 @@
  */
 
 #import "PreferencesWindowController.h"
-#import "MameConfiguration.h"
+#import "MamePreferences.h"
 
 @interface PreferencesWindowController (Private)
 
