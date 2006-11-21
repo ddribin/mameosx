@@ -203,7 +203,8 @@ static void cv_assert(CVReturn cr, NSString * message)
 }
 
 - (void) renderPrimitive: (const render_primitive * ) primitive
-         centeringOffset: (NSSize) mCenteringOffset;
+         centeringOffset: (NSSize) mCenteringOffset
+            linearFilter: (BOOL) linerFilter;
 {
     MameOpenGLTexture * texture = self;
     
@@ -216,8 +217,16 @@ static void cv_assert(CVReturn cr, NSString * message)
                   CVOpenGLTextureGetName(mCVTexture));
     
     // non-screen textures will never be filtered
-    glTexParameteri(textureTarget, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexParameteri(textureTarget, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    if (linerFilter)
+    {
+        glTexParameteri(textureTarget, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(textureTarget, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    }
+    else
+    {
+        glTexParameteri(textureTarget, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+        glTexParameteri(textureTarget, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    }
     
     // texture rectangles can't wrap
     glTexParameteri(textureTarget, GL_TEXTURE_WRAP_S, GL_CLAMP);

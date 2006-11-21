@@ -304,6 +304,16 @@ void exit_sleeper()
     [mMameView setFullScreen: fullScreen];
 }
 
+- (BOOL) linearFilter;
+{
+    return [mMameView linearFilter];
+}
+
+- (void) setLinearFilter: (BOOL) linearFilter;
+{
+    [mMameView setLinearFilter: linearFilter];
+}
+
 - (NSArray *) previousGames;
 {
     return mPreviousGames;
@@ -432,6 +442,7 @@ void exit_sleeper()
 
     [self setThrottled: [preferences throttled]];
     [self setSyncToRefresh: [preferences syncToRefresh]];
+    [self setLinearFilter: [preferences linearFilter]];
 
     [mMameView setAudioEnabled: [preferences soundEnabled]];
     [mMameView setRenderInCoreVideoThread: [preferences renderInCV]];

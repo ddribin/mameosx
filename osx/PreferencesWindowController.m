@@ -89,6 +89,7 @@
     [defaults setValue: nil forKey: MameArtworkPath];
     [defaults setValue: nil forKey: MameSyncToRefreshKey];
     [defaults setValue: nil forKey: MameThrottledKey];
+    [defaults setValue: nil forKey: MameLinearFilterKey];
     [self updatePopUpButtons];
 }
 

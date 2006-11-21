@@ -32,6 +32,7 @@
 {
     MameTextureTable * mTextureTable;
     NSSize mCenteringOffset;
+    BOOL mLinearFilter;
     
     NSOpenGLContext * mGlContext;
 }
@@ -41,5 +42,8 @@
 
 - (void) renderFrame : (const render_primitive_list *) primlist
              withSize: (NSSize) size;
+
+- (BOOL) linearFilter;
+- (void) setLinearFilter: (BOOL) linearFilter;
 
 @end

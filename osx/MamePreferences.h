@@ -46,6 +46,9 @@
 - (BOOL) clearToRed;
 - (void) setClearToRed: (BOOL) clearToRed;
 
+- (BOOL) linearFilter;
+- (void) setLinearFilter: (BOOL) linearFilter;
+
 - (BOOL) checkUpdatesAtStartup;
 
 - (NSArray *) previousGames;
@@ -159,6 +162,7 @@ extern NSString * MameSyncToRefreshKey;
 extern NSString * MameSoundEnabledKey;
 extern NSString * MameRenderInCVKey;
 extern NSString * MameClearToRedKey;
+extern NSString * MameLinearFilterKey;
 
 extern NSString * MameRomPath;
 extern NSString * MameSamplePath;

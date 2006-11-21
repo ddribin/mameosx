@@ -39,6 +39,17 @@ static void cv_assert(CVReturn cr, NSString * message)
 
 @implementation MameRenderer
 
+- (id) init
+{
+    self = [super init];
+    if (self == nil)
+        return nil;
+    
+    mOpenGLRenderer = [[MameOpenGLRenderer alloc] init];
+    
+    return self;
+}
+
 - (CVOpenGLTextureRef) currentFrameTexture;
 {
     return mCurrentFrameTexture;
@@ -89,13 +100,22 @@ static void cv_assert(CVReturn cr, NSString * message)
                                          (CGLPixelFormatObj) [cachePFormat CGLPixelFormatObj], 0, &mFrameTextureCache),
               @"Could not create frame texture cache");
     
-    mOpenGLRenderer = [[MameOpenGLRenderer alloc] init];
     [mOpenGLRenderer osd_init: mGlContext format: glPixelFormat];
 }
 
 - (void) setOpenGLContext: (NSOpenGLContext *) context
               pixelFormat: (NSOpenGLPixelFormat *) pixelFormat;
 {
+}
+
+- (BOOL) linearFilter;
+{
+    return [mOpenGLRenderer linearFilter];
+}
+
+- (void) setLinearFilter: (BOOL) linearFilter;
+{
+    [mOpenGLRenderer setLinearFilter: linearFilter];
 }
 
 - (void) renderFrame: (const render_primitive_list *) primitives

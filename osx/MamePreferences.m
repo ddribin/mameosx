@@ -30,6 +30,7 @@ NSString * MameSyncToRefreshKey = @"SyncToRefresh";
 NSString * MameSoundEnabledKey = @"SoundEnabled";
 NSString * MameRenderInCVKey = @"RenderInCV";
 NSString * MameClearToRedKey = @"ClearToRed";
+NSString * MameLinearFilterKey = @"LinearFilter";
 
 NSString * MameRomPath = @"RomPath";
 NSString * MameSamplePath = @"SamplePath";
@@ -140,6 +141,9 @@ NSString * MameBiosKey = @"Bios";
     
     [defaultValues setObject: [NSNumber numberWithBool: NO]
                       forKey: MameClearToRedKey];
+
+    [defaultValues setObject: [NSNumber numberWithBool: YES]
+                      forKey: MameLinearFilterKey];
     
 #ifdef MAME_DEBUG
     [defaultValues setObject: [NSNumber numberWithBool: NO]
@@ -254,6 +258,16 @@ NSString * MameBiosKey = @"Bios";
 - (void) setClearToRed: (BOOL) clearToRed;
 {
     [mDefaults setBool: clearToRed forKey: MameClearToRedKey];
+}
+
+- (BOOL) linearFilter;
+{
+    return [mDefaults boolForKey: MameLinearFilterKey];
+}
+
+- (void) setLinearFilter: (BOOL) linearFilter;
+{
+    [mDefaults setBool: linearFilter forKey: MameLinearFilterKey];
 }
 
 - (BOOL) checkUpdatesAtStartup;

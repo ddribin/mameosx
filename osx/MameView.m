@@ -114,6 +114,8 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     mClearToRed = NO;
     mFrameStartTime = 0;
 
+    mRenderer = [[MameRenderer alloc] init];
+
     return self;
 }
 
@@ -121,7 +123,6 @@ NSString * MameExitStatusKey = @"MameExitStatus";
 {
     [self setGame: nil];
     
-    mRenderer = [[MameRenderer alloc] init];
     mInputController = [[MameInputController alloc] init];
     mAudioController = [[MameAudioController alloc] init];
     mTimingController = [[MameTimingController alloc] init];
@@ -459,6 +460,16 @@ NSString * MameExitStatusKey = @"MameExitStatus";
 - (void) setAudioEnabled: (BOOL) flag
 {
     [mAudioController setEnabled: flag];
+}
+
+- (BOOL) linearFilter;
+{
+    return [mRenderer linearFilter];
+}
+
+- (void) setLinearFilter: (BOOL) linearFilter;
+{
+    [mRenderer setLinearFilter: linearFilter];
 }
 
 //=========================================================== 

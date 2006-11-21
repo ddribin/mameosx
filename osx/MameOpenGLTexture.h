@@ -71,6 +71,7 @@ extern "C" {
        textureCache: (CVOpenGLTextureCacheRef) textureCache;
 
 - (void) renderPrimitive: (const render_primitive * ) primitive
-         centeringOffset: (NSSize) mCenteringOffset;
+         centeringOffset: (NSSize) mCenteringOffset
+            linearFilter: (BOOL) linerFilter;
 
 @end

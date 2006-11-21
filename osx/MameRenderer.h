@@ -55,4 +55,7 @@
 - (void) setOpenGLContext: (NSOpenGLContext *) context
               pixelFormat: (NSOpenGLPixelFormat *) pixelFormat;
 
+- (BOOL) linearFilter;
+- (void) setLinearFilter: (BOOL) linearFilter;
+
 @end

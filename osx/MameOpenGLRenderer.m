@@ -35,6 +35,17 @@
 
 @implementation MameOpenGLRenderer
 
+- (id) init
+{
+    self = [super init];
+    if (self == nil)
+        return nil;
+    
+    mLinearFilter = YES;
+    
+    return self;
+}
+
 - (void) osd_init: (NSOpenGLContext *) mameViewContext
            format: (NSOpenGLPixelFormat *) mameViewFormat;
 {
@@ -45,6 +56,15 @@
                                                   pixelFormat: glPixelFormat];
 }
 
+- (BOOL) linearFilter;
+{
+    return mLinearFilter;
+}
+
+- (void) setLinearFilter: (BOOL) linearFilter;
+{
+    mLinearFilter = linearFilter;
+}
 
 INLINE void set_blendmode(int blendmode)
 {
@@ -139,7 +159,8 @@ INLINE void set_blendmode(int blendmode)
                 else
                 {
                     [texture renderPrimitive: prim
-                             centeringOffset: mCenteringOffset];
+                             centeringOffset: mCenteringOffset
+                                linearFilter: mLinearFilter];
                 }
             }
                 break;

@@ -89,6 +89,9 @@ extern "C" {
 - (BOOL) fullScreen;
 - (void) setFullScreen: (BOOL) fullScreen;
 
+- (BOOL) linearFilter;
+- (void) setLinearFilter: (BOOL) linearFilter;
+
 - (BOOL) isGameLoading;
 - (BOOL) isGameRunning;
 

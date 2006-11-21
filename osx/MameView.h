@@ -113,6 +113,9 @@
 - (BOOL) audioEnabled;
 - (void) setAudioEnabled: (BOOL) flag;
 
+- (BOOL) linearFilter;
+- (void) setLinearFilter: (BOOL) linearFilter;
+
 - (MameFilter *) filter;
 - (void) setFilter: (MameFilter *) aFilter;
 
