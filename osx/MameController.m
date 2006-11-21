@@ -48,10 +48,14 @@ static const int kMameMaxGamesInHistory = 100;
 - (void) setViewSize: (NSSize) viewSize;
 - (void) setUpDefaultPaths;
 - (void) initFilters;
-- (void) logRomMessage: (NSString *) message;
-- (void) logAlertDidEnd: (NSAlert *) alert
-            returnCode: (int) returnCode
-           contextInfo: (void *) contextInfo;
+
+- (void) initLogAttributes;
+- (void) logMessage: (NSString *) message
+     withAttributes: (NSDictionary *) attributes;
+
+- (void) exitAlertDidEnd: (NSAlert *) aler
+              returnCode: (int) returnCode
+             contextInfo: (void *) contextInfo;
 
 #pragma mark -
 #pragma mark Game Choosing
@@ -87,11 +91,7 @@ void exit_sleeper()
     mConfiguration = [[MameConfiguration alloc] init];
     [self initFilters];
     
-    NSFont * monaco = [NSFont fontWithName: @"Monaco" size: 10];
-    mLogAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:
-        monaco, NSFontAttributeName,
-        [NSColor blackColor], NSForegroundColorAttributeName,
-        0];
+    [self initLogAttributes];
 
     sSleepAtExit =
         [[MamePreferences standardPreferences] sleepAtExit];
@@ -319,45 +319,46 @@ void exit_sleeper()
     return mGameRunning;
 }
 
-- (IBAction) showRomLoadingLog: (id) sender;
+- (IBAction) showMameLog: (id) sender;
 {
-    [mRomLoadingLogPanel makeKeyAndOrderFront: nil];
+    [mMameLogPanel makeKeyAndOrderFront: nil];
 }
 
-- (void) mameRomLoadingMessage: (NSString *) name
-                    romsLoaded: (int) romsLoaded
-                      romCount: (int) romCount;
+- (void) mameErrorMessage: (NSString *) message;
 {
-    [self logRomMessage: [NSString stringWithFormat: @"Loading: %@", name]];
+    NSLog(@"[E]: %@", message);
+    [self logMessage: message withAttributes: mLogErrorAttributes];
 }
 
-- (void) mameRomLoadingFinishedWithErrors: (BOOL) errors
-                             errorMessage: (NSString *) errorMessage;
+- (void) mameWarningMessage: (NSString *) message;
 {
-    [self logRomMessage: @"Loading: Done"];
-    if (errors)
-    {
-        [self logRomMessage: @"\nErrors:"];
-        [self logRomMessage: errorMessage];
+    NSLog(@"[W]: %@", message);
+    [self logMessage: message withAttributes: mLogWarningAttributes];
+}
 
-        NSAlert * alert = [[NSAlert alloc] init];
-        [alert addButtonWithTitle:@"OK"];
-        [alert setMessageText: @"ROM Loading Error"];
-        [alert setInformativeText: @"View the ROM Loading Log for details."];
-        [alert setAlertStyle: NSCriticalAlertStyle];
+- (void) mameInfoMessage: (NSString *) message;
+{
+    NSLog(@"[I]: %@", message);
+    [self logMessage: message withAttributes: mLogInfoAttributes];
+}
 
-        [alert beginSheetModalForWindow: [mMameView window]
-                          modalDelegate: self
-                         didEndSelector: @selector(logAlertDidEnd:returnCode:contextInfo:)
-                            contextInfo: nil];
-        [alert release];
-    }
+- (void) mameDebugMessage: (NSString *) message;
+{
+    NSLog(@"[D]: %@", message);
+    [self logMessage: message withAttributes: mLogDebugAttributes];
+}
+
+- (void) mameLogMessage: (NSString *) message;
+{
+    NSLog(@"[L]: %@", message);
+    [self logMessage: message withAttributes: mLogInfoAttributes];
 }
 
 - (void) mameWillStartGame: (NSNotification *) notification;
 {
     /*
-     * Some how, setting game loading, before hiding panel causes the following error:
+     * Some how, setting game loading, before hiding panel causes the following
+     * error:
      *
      * Assertion failure in -[NSThemeFrame lockFocus], AppKit.subproj/NSView.m:3248
      * lockFocus sent to a view whose window is deferred and does not yet have a
@@ -378,12 +379,52 @@ void exit_sleeper()
 
 - (void) mameDidFinishGame: (NSNotification *) notification;
 {
-    [NSApp terminate: nil];
+    NSDictionary * userInfo = [notification userInfo];
+    int exitStatus = [[userInfo objectForKey: MameExitStatusKey] intValue];
+    if (exitStatus != MameExitStatusSuccess)
+    {
+        NSAlert * alert = [[NSAlert alloc] init];
+        [alert addButtonWithTitle: @"OK"];
+        if (exitStatus == MameExitStatusFailedValidity)
+        {
+            [alert setMessageText: @"Validity Checks Failed"];
+        }
+        else if (exitStatus == MameExitStatusMissingFiles)
+        {
+            [alert setMessageText: @"Some Files Were Missing"];
+        }
+        else
+        {
+            [alert setMessageText: @"A Fatal Error Occured"];
+        }
+        [alert setInformativeText: @"View the MAME Log for details."];
+        [alert setAlertStyle: NSCriticalAlertStyle];
+        
+        [alert beginSheetModalForWindow: [mMameView window]
+                          modalDelegate: self
+                         didEndSelector: @selector(exitAlertDidEnd:returnCode:contextInfo:)
+                            contextInfo: nil];
+        [alert release];
+    }
+    else
+    {
+        [NSApp terminate: nil];
+    }
 }
 
 @end
 
 @implementation MameController (Private)
+
+- (void) exitAlertDidEnd: (NSAlert *) aler
+              returnCode: (int) returnCode
+             contextInfo: (void *) contextInfo;
+{
+    NSWindow * window = [mMameView window];
+    // Need to use delay to run outside modal loop
+    [window performSelector: @selector(performClose:) withObject: nil
+                 afterDelay: 0.0f];
+}
 
 - (void) syncWithUserDefaults;
 {
@@ -586,28 +627,44 @@ void exit_sleeper()
     [preferences synchronize];
 }
 
-- (void) logRomMessage: (NSString *) message;
+- (void) logMessage: (NSString *) message
+     withAttributes: (NSDictionary *) attributes;
 {
-    NSLog(@"ROM message: %@", message);
     NSString * messageWithNewline = [NSString stringWithFormat: @"%@\n", message];
     NSAttributedString * addendum =
         [[NSAttributedString alloc] initWithString: messageWithNewline
-                                        attributes: mLogAttributes];
-    NSTextStorage * textStorage = [mRomLoadingLog textStorage];
+                                        attributes: attributes];
+    NSTextStorage * textStorage = [mMameLogView textStorage];
     [textStorage appendAttributedString: addendum];
     NSRange endRange = NSMakeRange([textStorage length], 1);
-    [mRomLoadingLog scrollRangeToVisible: endRange];
+    [mMameLogView scrollRangeToVisible: endRange];
     [addendum release];
 }
 
-- (void) logAlertDidEnd: (NSAlert *) alert
-             returnCode: (int) returnCode
-            contextInfo: (void *) contextInfo;
+- (void) initLogAttributes;
 {
-    NSWindow * window = [mMameView window];
-    // Need to use delay to run outside modal loop
-    [window performSelector: @selector(performClose:) withObject: nil
-               afterDelay: 0.0f];
+    NSFont * monaco = [NSFont fontWithName: @"Monaco" size: 10];
+    mLogAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:
+        monaco, NSFontAttributeName,
+        [NSColor blackColor], NSForegroundColorAttributeName,
+        0];
+    
+    mLogErrorAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:
+        monaco, NSFontAttributeName,
+        [NSColor redColor], NSForegroundColorAttributeName,
+        0];
+    mLogWarningAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:
+        monaco, NSFontAttributeName,
+        [NSColor yellowColor], NSForegroundColorAttributeName,
+        0];
+    mLogInfoAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:
+        monaco, NSFontAttributeName,
+        [NSColor blackColor], NSForegroundColorAttributeName,
+        0];
+    mLogDebugAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:
+        monaco, NSFontAttributeName,
+        [NSColor blueColor], NSForegroundColorAttributeName,
+        0];
 }
 
 @end

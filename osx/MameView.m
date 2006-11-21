@@ -38,13 +38,16 @@
 - (void) detectAcceleratedCoreImage;
 
 - (void) gameThread;
-- (void) gameFinished;
+- (void) gameFinished: (NSNumber *) exitStatus;
 
 #pragma mark -
 #pragma mark "Notifications and Delegates"
 
 - (void) sendMameWillStartGame;
 - (void) sendMameDidFinishGame;
+
+- (NSString *) formatOutputMessage: (const char *) utf8Format
+                         arguments: (va_list) argptr;
 
 #pragma mark -
 #pragma mark "Frame Drawing"
@@ -63,6 +66,7 @@
 
 NSString * MameWillStartGame = @"MameWillStartGame";
 NSString * MameDidFinishGame = @"MameDidFinishGame";
+NSString * MameExitStatusKey = @"MameExitStatus";
 
 @implementation MameView
 
@@ -291,24 +295,6 @@ NSString * MameDidFinishGame = @"MameDidFinishGame";
     [self stopAnimation];
 }
 
-- (int) osd_update: (mame_time) emutime;
-{
-    // Drain the pool
-    [mMamePool release];
-    mMamePool = [[NSAutoreleasePool alloc] init];
-    
-    [self updateVideo];
-    if (mFrameStartTime == 0)
-        mFrameStartTime = [mTimingController osd_cycles];
-    [mTimingController updateThrottle: emutime];
-    
-    // Open lock briefly to allow pending MAME calls
-    [mMameLock unlock];
-    [mMameLock lock];
-    
-    return 0;
-}
-
 - (BOOL) acceptsFirstResponder
 {
     return YES;
@@ -492,32 +478,77 @@ NSString * MameDidFinishGame = @"MameDidFinishGame";
     }
 }
 
-- (int) osd_display_loading_rom_message: (const char *) name
-                                romdata: (rom_load_data *) romdata;
+#pragma mark -
+#pragma mark OS Dependent API
+
+- (int) osd_update: (mame_time) emutime;
 {
-    if (name != 0)
-    {
-        if ([mDelegate respondsToSelector: @selector(mameRomLoadingMessage:romsLoaded:romCount:)])
-        {
-            [mDelegate mameRomLoadingMessage: [NSString stringWithUTF8String: name]
-                                  romsLoaded: romdata->romsloaded
-                                    romCount: romdata->romstotal];
-        }
-                                                     
-    }
-    else
-    {
-        if ([mDelegate respondsToSelector: @selector(mameRomLoadingFinishedWithErrors:errorMessage:)])
-        {
-            BOOL errors = (romdata->errors == 0)? NO : YES;
-            NSString * errorMessage =
-                [NSString stringWithUTF8String: romdata->errorbuf];
-            [mDelegate mameRomLoadingFinishedWithErrors: errors
-                                           errorMessage: errorMessage];
-        }
-    }
+    // Drain the pool
+    [mMamePool release];
+    mMamePool = [[NSAutoreleasePool alloc] init];
+    
+    [self updateVideo];
+    if (mFrameStartTime == 0)
+        mFrameStartTime = [mTimingController osd_cycles];
+    [mTimingController updateThrottle: emutime];
+    
+    // Open lock briefly to allow pending MAME calls
+    [mMameLock unlock];
+    [mMameLock lock];
+    
     return 0;
 }
+
+- (void) osd_output_error: (const char *) utf8Format
+                arguments: (va_list) argptr;
+{
+    if ([mDelegate respondsToSelector: @selector(mameErrorMessage:)])
+    {
+        [mDelegate mameErrorMessage:
+            [self formatOutputMessage: utf8Format arguments: argptr]];
+    }
+}
+
+- (void) osd_output_warning: (const char *) utf8Format
+                  arguments: (va_list) argptr;
+{
+    if ([mDelegate respondsToSelector: @selector(mameWarningMessage:)])
+    {
+        [mDelegate mameWarningMessage:
+            [self formatOutputMessage: utf8Format arguments: argptr]];
+    }
+}
+
+- (void) osd_output_info: (const char *) utf8Format
+               arguments: (va_list) argptr;
+{
+    if ([mDelegate respondsToSelector: @selector(mameInfoMessage:)])
+    {
+        [mDelegate mameInfoMessage:
+            [self formatOutputMessage: utf8Format arguments: argptr]];
+    }
+}
+
+- (void) osd_output_debug: (const char *) utf8Format
+                arguments: (va_list) argptr;
+{
+    if ([mDelegate respondsToSelector: @selector(mameDebugMessage:)])
+    {
+        [mDelegate mameDebugMessage:
+            [self formatOutputMessage: utf8Format arguments: argptr]];
+    }
+}
+
+- (void) osd_output_log: (const char *) utf8Format
+              arguments: (va_list) argptr;
+{
+    if ([mDelegate respondsToSelector: @selector(mameLogMessage:)])
+    {
+        [mDelegate mameLogMessage:
+            [self formatOutputMessage: utf8Format arguments: argptr]];
+    }
+}
+
 
 - (id) delegagte;
 {
@@ -568,7 +599,7 @@ NSString * MameDidFinishGame = @"MameDidFinishGame";
     [mMameLock lock];
     mMamePool = [[NSAutoreleasePool alloc] init];
     mMameIsRunning = YES;
-    run_game(mGameIndex);
+    int exitStatus = run_game(mGameIndex);
     mMameIsRunning = NO;
     [mMamePool release];
     [mMameLock unlock];
@@ -582,17 +613,21 @@ NSString * MameDidFinishGame = @"MameDidFinishGame";
           mFramesRendered);
     
 
-    [self performSelectorOnMainThread: @selector(gameFinished)
-                           withObject: nil
+    [self performSelectorOnMainThread: @selector(gameFinished:)
+                           withObject: [NSNumber numberWithInt: exitStatus]
                         waitUntilDone: NO];
     
     [pool release];
 }
 
-- (void) gameFinished
+- (void) gameFinished: (NSNumber *) exitStatus;
 {
+    NSDictionary * userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+        exitStatus, MameExitStatusKey,
+        nil];
     [[NSNotificationCenter defaultCenter] postNotificationName: MameDidFinishGame
-                                                        object: self];
+                                                        object: self
+                                                      userInfo: userInfo];
 }
 
 - (void) willEnterFullScreen;
@@ -627,6 +662,14 @@ NSString * MameDidFinishGame = @"MameDidFinishGame";
 
 - (void) sendMameDidFinishGame;
 {
+}
+
+- (NSString *) formatOutputMessage: (const char *) utf8Format
+                         arguments: (va_list) argptr;
+{
+    NSString * format = [NSString stringWithUTF8String: utf8Format];
+    return [[[NSString alloc] initWithFormat: format
+                                   arguments: argptr] autorelease];
 }
 
 #pragma mark -

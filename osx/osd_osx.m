@@ -34,7 +34,12 @@
 
 
 static void mame_did_exit(running_machine * machine);
-
+static void error_callback(void *param, const char *format, va_list argptr);
+static void warning_callback(void *param, const char *format, va_list argptr);
+static void info_callback(void *param, const char *format, va_list argptr);
+static void debug_callback(void *param, const char *format, va_list argptr);
+static void log_callback(void *param, const char *format, va_list argptr);
+ 
 /******************************************************************************
 
     Core
@@ -51,6 +56,17 @@ void osd_set_controller(MameView * controller)
 int osd_init(running_machine *machine)
 {
     add_exit_callback(machine, mame_did_exit);
+    mame_set_output_channel(OUTPUT_CHANNEL_ERROR, error_callback,
+                            sController, NULL, NULL);
+    mame_set_output_channel(OUTPUT_CHANNEL_WARNING, warning_callback,
+                            sController, NULL, NULL);
+    mame_set_output_channel(OUTPUT_CHANNEL_INFO, info_callback,
+                            sController, NULL, NULL);
+    mame_set_output_channel(OUTPUT_CHANNEL_DEBUG, debug_callback,
+                            sController, NULL, NULL);
+    mame_set_output_channel(OUTPUT_CHANNEL_LOG, log_callback,
+                            sController, NULL, NULL);
+    
     return [sController osd_init: machine];
 }
 
@@ -58,6 +74,37 @@ static void mame_did_exit(running_machine * machine)
 {
     [sController mameDidExit: machine];
 }
+
+static void error_callback(void *param, const char *format, va_list argptr)
+{
+    MameView * controller = (MameView *) param;
+    [controller osd_output_error: format arguments: argptr];
+}
+
+static void warning_callback(void *param, const char *format, va_list argptr)
+{
+    MameView * controller = (MameView *) param;
+    [controller osd_output_warning: format arguments: argptr];
+}
+
+static void info_callback(void *param, const char *format, va_list argptr)
+{
+    MameView * controller = (MameView *) param;
+    [controller osd_output_info: format arguments: argptr];
+}
+
+static void debug_callback(void *param, const char *format, va_list argptr)
+{
+    MameView * controller = (MameView *) param;
+    [controller osd_output_debug: format arguments: argptr];
+}
+
+static void log_callback(void *param, const char *format, va_list argptr)
+{
+    MameView * controller = (MameView *) param;
+    [controller osd_output_log: format arguments: argptr];
+}
+
 
 /******************************************************************************
 
@@ -298,18 +345,6 @@ mame_file_error osd_write(osd_file *file, const void *buffer, UINT64 offset,
                             offset: offset
                             length: length
                             actual: actual];
-}
-
-//============================================================
-//	osd_display_loading_rom_message
-//============================================================
-
-// called while loading ROMs. It is called a last time with name == 0 to signal
-// that the ROM loading process is finished.
-// return non-zero to abort loading
-int osd_display_loading_rom_message(const char *name, rom_load_data *romdata)
-{
-	return [sController osd_display_loading_rom_message: name romdata: romdata];
 }
 
 void osd_break_into_debugger(const char *message)

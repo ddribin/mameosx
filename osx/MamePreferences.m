@@ -104,6 +104,8 @@ NSString * MameBiosKey = @"Bios";
     [super dealloc];
 }
 
+#pragma mark -
+#pragma mark User defaults
 
 - (void) registerDefaults;
 {

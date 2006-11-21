@@ -51,8 +51,8 @@ extern "C" {
     IBOutlet NSComboBox * mGameTextField;
     IBOutlet VersionChecker *mVersionChecker;
     
-    IBOutlet NSPanel * mRomLoadingLogPanel;
-    IBOutlet NSTextView * mRomLoadingLog;
+    IBOutlet NSPanel * mMameLogPanel;
+    IBOutlet NSTextView * mMameLogView;
     
     PreferencesWindowController * mPreferencesController;
 
@@ -71,6 +71,10 @@ extern "C" {
     BOOL mQuitOnError;
     
     NSDictionary * mLogAttributes;
+    NSDictionary * mLogErrorAttributes;
+    NSDictionary * mLogWarningAttributes;
+    NSDictionary * mLogInfoAttributes;
+    NSDictionary * mLogDebugAttributes;
 }
 
 - (BOOL) isFiltered;
@@ -105,17 +109,23 @@ extern "C" {
 - (IBAction) resizeToDoubleSize: (id) sender;
 - (IBAction) resizeToOptimalSize: (id) sender;
 
-- (IBAction) showRomLoadingLog: (id) sender;
+- (IBAction) showMameLog: (id) sender;
+
+#pragma mark -
+#pragma mark MameView delegates
 
 - (void) mameWillStartGame: (NSNotification *) notification;
 
 - (void) mameDidFinishGame: (NSNotification *) notification;
 
-- (void) mameRomLoadingMessage: (NSString *) name
-                    romsLoaded: (int) romsLoaded
-                      romCount: (int) romCount;
+- (void) mameErrorMessage: (NSString *) message;
 
-- (void) mameRomLoadingFinishedWithErrors: (BOOL) errors
-                             errorMessage: (NSString *) errorMessage;
+- (void) mameWarningMessage: (NSString *) message;
+
+- (void) mameInfoMessage: (NSString *) message;
+
+- (void) mameDebugMessage: (NSString *) message;
+
+- (void) mameLogMessage: (NSString *) message;
 
 @end

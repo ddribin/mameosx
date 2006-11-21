@@ -13,8 +13,8 @@
                 resizeToActualSize = id; 
                 resizeToDoubleSize = id; 
                 resizeToOptimalSize = id; 
+                showMameLog = id; 
                 showPreferencesPanel = id; 
-                showRomLoadingLog = id; 
                 togglePause = id; 
             }; 
             CLASS = MameController; 
@@ -23,10 +23,10 @@
                 mDrawer = NSDrawer; 
                 mFilterButton = NSPopUpButton; 
                 mGameTextField = NSComboBox; 
+                mMameLogPanel = NSPanel; 
+                mMameLogView = NSTextView; 
                 mMameView = MameView; 
                 mOpenPanel = NSWindow; 
-                mRomLoadingLog = NSTextView; 
-                mRomLoadingLogPanel = NSPanel; 
                 mVersionChecker = VersionChecker; 
             }; 
             SUPERCLASS = NSObject; 

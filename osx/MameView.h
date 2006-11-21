@@ -118,17 +118,31 @@
 
 - (int) osd_init: (running_machine *) machine;
 - (void) mameDidExit: (running_machine *) machine;
+
+#pragma mark -
+#pragma mark OS Dependent API
+
 - (int) osd_update: (mame_time) emutime;
-- (int) osd_display_loading_rom_message: (const char *) name
-                                romdata: (rom_load_data *) romdata;
+
+- (void) osd_output_error: (const char *) utf8Format
+                arguments: (va_list) argptr;
+
+- (void) osd_output_warning: (const char *) utf8Format
+                  arguments: (va_list) argptr;
+
+- (void) osd_output_info: (const char *) utf8Format
+               arguments: (va_list) argptr;
+
+- (void) osd_output_debug: (const char *) utf8Format
+                arguments: (va_list) argptr;
+
+- (void) osd_output_log: (const char *) utf8Format
+              arguments: (va_list) argptr;
 
 - (id) delegagte;
 - (void) setDelegate: (id) delegate;
 
 @end
-
-extern NSString * MameWillStartGame;
-extern NSString * MameDidFinishGame;
 
 @interface NSObject (MameViewDelegateMethods)
 
@@ -136,11 +150,29 @@ extern NSString * MameDidFinishGame;
 
 - (void) mameDidFinishGame: (NSNotification *) notification;
 
-- (void) mameRomLoadingMessage: (NSString *) name
-                    romsLoaded: (int) romsLoaded
-                      romCount: (int) romCount;
+- (void) mameErrorMessage: (NSString *) message;
 
-- (void) mameRomLoadingFinishedWithErrors: (BOOL) errors
-                             errorMessage: (NSString *) errorMessage;
+- (void) mameWarningMessage: (NSString *) message;
+
+- (void) mameInfoMessage: (NSString *) message;
+
+- (void) mameDebugMessage: (NSString *) message;
+
+- (void) mameLogMessage: (NSString *) message;
 
 @end
+
+extern NSString * MameWillStartGame;
+extern NSString * MameDidFinishGame;
+extern NSString * MameExitStatusKey;
+
+// These should corresponed to MAMERR_* in mame.h
+
+enum
+{
+    MameExitStatusSuccess = 0,
+    MameExitStatusFailedValidity = 1,
+    MameExitStatusMissingFiles = 2,
+    MameExitStatusFatalError = 3
+};
+

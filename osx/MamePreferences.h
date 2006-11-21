@@ -21,6 +21,9 @@
 
 - (id) initWithUserDefaults: (NSUserDefaults *) userDefaults;
 
+#pragma mark -
+#pragma mark User defaults
+
 - (void) registerDefaults;
 
 - (void) synchronize;
