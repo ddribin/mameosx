@@ -2,7 +2,7 @@
   date: xxx
   changes:
     - Upgrade to 0.110 core.
-    - Add preference for checking updates at startup.
+    - Add preference for checking updates at startup (thanks to Martin White).
     - Add linear filtering.
 
 - version: "0.109-1"
