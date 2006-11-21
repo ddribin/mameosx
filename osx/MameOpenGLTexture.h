@@ -72,6 +72,6 @@ extern "C" {
 
 - (void) renderPrimitive: (const render_primitive * ) primitive
          centeringOffset: (NSSize) mCenteringOffset
-            linearFilter: (BOOL) linerFilter;
+            linearFilter: (BOOL) linearFilter;
 
 @end

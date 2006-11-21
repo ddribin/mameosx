@@ -204,7 +204,7 @@ static void cv_assert(CVReturn cr, NSString * message)
 
 - (void) renderPrimitive: (const render_primitive * ) primitive
          centeringOffset: (NSSize) mCenteringOffset
-            linearFilter: (BOOL) linerFilter;
+            linearFilter: (BOOL) linearFilter;
 {
     MameOpenGLTexture * texture = self;
     
@@ -217,7 +217,7 @@ static void cv_assert(CVReturn cr, NSString * message)
                   CVOpenGLTextureGetName(mCVTexture));
     
     // non-screen textures will never be filtered
-    if (linerFilter)
+    if (PRIMFLAG_GET_SCREENTEX(flags) && linearFilter)
     {
         glTexParameteri(textureTarget, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTexParameteri(textureTarget, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
