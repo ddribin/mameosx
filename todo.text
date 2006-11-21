@@ -8,3 +8,5 @@
 * Add HID (joystick/gamepad) support
 * Add scanline support
 * Add auto frameskipping
+* Add advanced preferences UI to expose everything, similar to
+  FireFox's about:config.
