@@ -2678,9 +2678,6 @@
 		5548ECDE0ABCB463008D1F74 /* MameFileManagerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MameFileManagerTest.m; sourceTree = "<group>"; };
 		5548EDCA0ABE3CEF008D1F74 /* file.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = file.txt; sourceTree = "<group>"; };
 		555329F30B027FBD0092FC09 /* versions.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = versions.xcconfig; sourceTree = "<group>"; };
-		555590830AF9B51A001ADC6D /* m68kopac.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = m68kopac.c; sourceTree = "<group>"; };
-		555590840AF9B51A001ADC6D /* m68kopdm.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = m68kopdm.c; sourceTree = "<group>"; };
-		555590850AF9B51A001ADC6D /* m68kopnz.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = m68kopnz.c; sourceTree = "<group>"; };
 		555590860AF9B51A001ADC6D /* m68kops.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = m68kops.c; sourceTree = "<group>"; };
 		555590870AF9B51A001ADC6D /* m68kops.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = m68kops.h; sourceTree = "<group>"; };
 		5555908E0AF9B57A001ADC6D /* cdrom.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = cdrom.c; sourceTree = "<group>"; };
@@ -5430,9 +5427,6 @@
 			isa = PBXGroup;
 			children = (
 				55D393200B0F54E10017F5F5 /* m68kmake.c */,
-				555590830AF9B51A001ADC6D /* m68kopac.c */,
-				555590840AF9B51A001ADC6D /* m68kopdm.c */,
-				555590850AF9B51A001ADC6D /* m68kopnz.c */,
 				555590860AF9B51A001ADC6D /* m68kops.c */,
 				555590870AF9B51A001ADC6D /* m68kops.h */,
 			);

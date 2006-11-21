@@ -258,12 +258,6 @@ static MameConfiguration * sGlobalConfiguration = nil;
     options.auto_save = [defaults boolForKey: MameAutosaveKey];
     [self setBios: [[defaults stringForKey: MameBiosKey] UTF8String]];
     options.bios = mBios;
-    
-#if 0
-    options.debug_width = [defaults integerForKey: MameDebugWidthKey];
-    options.debug_height = [defaults integerForKey: MameDebugHeightKey];
-    options.debug_depth = [defaults integerForKey: MameDebugDepthKey];
-#endif
 }
 
 //=========================================================== 
@@ -444,18 +438,6 @@ static MameConfiguration * sGlobalConfiguration = nil;
     { 0, nil }
     };
     
-#if 0
-    int i;
-    for (i = 0; defaultPaths[i].preference != nil; i++)
-    {
-        NSString * defaultValue = [defaults stringForKey: defaultPaths[i].preference];
-        if (defaultValue == nil)
-            continue;
-        defaultValue = [mFileManager resolveAlias: defaultValue];
-        [mFileManager setPath: [mFileManager resolveAlias: defaultValue]
-                      forType: defaultPaths[i].pathtype];
-    }
-#else
     int i;
     for (i = 0; defaultPaths[i].preference != nil; i++)
     {
@@ -465,8 +447,6 @@ static MameConfiguration * sGlobalConfiguration = nil;
         NSString * path = [mFileManager resolveAlias: defaultValue];
         options_set_string(defaultPaths[i].pathtype, [path UTF8String]);
     }
-    
-#endif
 }
 
 @end
