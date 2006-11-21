@@ -22,10 +22,10 @@
  * SOFTWARE.
  */
 
-#import "MamePreferencesController.h"
+#import "PreferencesWindowController.h"
 #import "MameConfiguration.h"
 
-@interface MamePreferencesController (Private)
+@interface PreferencesWindowController (Private)
 
 - (void) updatePopUpButtons;
 
@@ -40,7 +40,7 @@
 
 @end
 
-@implementation MamePreferencesController
+@implementation PreferencesWindowController
 
 - (id) init
 {
@@ -94,7 +94,7 @@
 
 @end
 
-@implementation MamePreferencesController (Private)
+@implementation PreferencesWindowController (Private)
 
 - (void) updatePopUpButtons;
 {

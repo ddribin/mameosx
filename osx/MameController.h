@@ -36,7 +36,7 @@ extern "C" {
 }
 #endif
 
-@class MamePreferencesController;
+@class PreferencesWindowController;
 @class MameView;
 @class MameConfiguration;
 @class MameFilter;
@@ -54,7 +54,7 @@ extern "C" {
     IBOutlet NSPanel * mRomLoadingLogPanel;
     IBOutlet NSTextView * mRomLoadingLog;
     
-    MamePreferencesController * mPreferencesController;
+    PreferencesWindowController * mPreferencesController;
 
     MameConfiguration * mConfiguration;
 

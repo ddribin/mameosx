@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-#import "MamePreferencesController.h"
+#import "PreferencesWindowController.h"
 #import "MameController.h"
 #import <OpenGL/OpenGL.h>
 #import <OpenGL/gl.h>
@@ -175,7 +175,7 @@ void exit_sleeper()
 - (IBAction) showPreferencesPanel: (id) sender;
 {
     if (mPreferencesController == nil)
-        mPreferencesController = [[MamePreferencesController alloc] init];
+        mPreferencesController = [[PreferencesWindowController alloc] init];
     
     NSWindow * window = [mPreferencesController window];
     if (![window isVisible])

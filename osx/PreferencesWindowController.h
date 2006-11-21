@@ -25,7 +25,7 @@
 #import <Cocoa/Cocoa.h>
 
 
-@interface MamePreferencesController : NSWindowController
+@interface PreferencesWindowController : NSWindowController
 {
     IBOutlet NSPopUpButton * mRomDirectory;
     IBOutlet NSPopUpButton * mSamplesDirectory;
