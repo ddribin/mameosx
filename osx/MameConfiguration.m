@@ -58,9 +58,9 @@ NSString * MameCheatPath = @"CheatPath";
 
 NSString * MameThrottledKey = @"Throttled";
 NSString * MameSyncToRefreshKey = @"SyncToRefresh";
-NSString * MameSoundEnabled = @"SoundEnabled";
-NSString * MameRenderInCV = @"RenderInCV";
-NSString * MameClearToRed = @"ClearToRed";
+NSString * MameSoundEnabledKey = @"SoundEnabled";
+NSString * MameRenderInCVKey = @"RenderInCV";
+NSString * MameClearToRedKey = @"ClearToRed";
 
 #ifdef MAME_DEBUG
 NSString * MameDebugKey = @"MameDebug";
@@ -123,21 +123,21 @@ static BOOL hasMultipleCPUs()
                       forKey: MameSyncToRefreshKey];
 
     [defaultValues setObject: [NSNumber numberWithBool: YES]
-                      forKey: MameSoundEnabled];
+                      forKey: MameSoundEnabledKey];
 
     if (hasMultipleCPUs())
     {
         [defaultValues setObject: [NSNumber numberWithBool: YES]
-                          forKey: MameRenderInCV];
+                          forKey: MameRenderInCVKey];
     }
     else
     {
         [defaultValues setObject: [NSNumber numberWithBool: NO]
-                          forKey: MameRenderInCV];
+                          forKey: MameRenderInCVKey];
     }
     
     [defaultValues setObject: [NSNumber numberWithBool: NO]
-                      forKey: MameClearToRed];
+                      forKey: MameClearToRedKey];
     
 #ifdef MAME_DEBUG
     [defaultValues setObject: [NSNumber numberWithBool: NO]
@@ -231,11 +231,11 @@ static MameConfiguration * sGlobalConfiguration = nil;
 
     [self loadDefaultPaths: defaults];
 
-    [self setThrottled: [defaults boolForKey: MameThrottledKey]];
-    [self setSyncToRefresh: [defaults boolForKey: MameSyncToRefreshKey]];
-    [self setSoundEnabled: [defaults boolForKey: MameSoundEnabled]];
-    [self setRenderInCV: [defaults boolForKey: MameRenderInCV]];
-    [self setClearToRed: [defaults boolForKey: MameClearToRed]];
+    // [self setThrottled: [defaults boolForKey: MameThrottledKey]];
+    // [self setSyncToRefresh: [defaults boolForKey: MameSyncToRefreshKey]];
+    // [self setSoundEnabled: [defaults boolForKey: MameSoundEnabled]];
+    // [self setRenderInCV: [defaults boolForKey: MameRenderInCV]];
+    // [self setClearToRed: [defaults boolForKey: MameClearToRed]];
     
 #ifdef MAME_DEBUG
     options.mame_debug = [defaults boolForKey: MameDebugKey];
@@ -264,6 +264,7 @@ static MameConfiguration * sGlobalConfiguration = nil;
     options.bios = mBios;
 }
 
+#if 0
 //=========================================================== 
 //  throttled 
 //=========================================================== 
@@ -328,6 +329,8 @@ static MameConfiguration * sGlobalConfiguration = nil;
 {
     mClearToRed = clearToRed;
 }
+#endif
+
 
 //=========================================================== 
 //  saveGame 

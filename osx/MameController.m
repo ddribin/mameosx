@@ -22,7 +22,6 @@
  * SOFTWARE.
  */
 
-#import "PreferencesWindowController.h"
 #import "MameController.h"
 #import <OpenGL/OpenGL.h>
 #import <OpenGL/gl.h>
@@ -30,6 +29,8 @@
 #import "CustomMameFilters.h"
 #import "MameConfiguration.h"
 #import "VersionChecker.h"
+#import "PreferencesWindowController.h"
+#import "MamePreferences.h"
 
 #include <mach/mach_time.h>
 #include <unistd.h>
@@ -388,12 +389,16 @@ void exit_sleeper()
 
 - (void) syncWithUserDefaults;
 {
+    MamePreferences * preferences = [MamePreferences standardPreferences];
+
+    [self setThrottled: [preferences throttled]];
+    [self setSyncToRefresh: [preferences syncToRefresh]];
+
+    [mMameView setAudioEnabled: [preferences soundEnabled]];
+    [mMameView setRenderInCoreVideoThread: [preferences renderInCV]];
+    [mMameView setClearToRed: [preferences clearToRed]];
+    
     [mConfiguration loadUserDefaults];
-    [mMameView setAudioEnabled: [mConfiguration soundEnabled]];
-    [self setThrottled: [mConfiguration throttled]];
-    [self setSyncToRefresh: [mConfiguration syncToRefresh]];
-    [mMameView setRenderInCoreVideoThread: [mConfiguration renderInCV]];
-    [mMameView setClearToRed: [mConfiguration clearToRed]];
 }
 
 - (void) setGameLoading: (BOOL) gameLoading;

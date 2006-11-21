@@ -2391,6 +2391,9 @@
 		55BEFB7F0AEC712900357340 /* mamedriv.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A43650AA4ECF800602CC5 /* mamedriv.c */; };
 		55D282B10B12C9DD002C9199 /* MameController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D282AF0B12C9DD002C9199 /* MameController.m */; };
 		55D282B20B12C9DD002C9199 /* MameController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D282AF0B12C9DD002C9199 /* MameController.m */; };
+		55D2836E0B12D5CA002C9199 /* MamePreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D2836D0B12D5CA002C9199 /* MamePreferences.m */; };
+		55D2836F0B12D5CA002C9199 /* MamePreferences.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 55D2836C0B12D5CA002C9199 /* MamePreferences.h */; };
+		55D283700B12D5CA002C9199 /* MamePreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D2836D0B12D5CA002C9199 /* MamePreferences.m */; };
 		55D393210B0F54E10017F5F5 /* m68kmake.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D393200B0F54E10017F5F5 /* m68kmake.c */; };
 		55E038AD0B08D3A100988109 /* 2203intf.c in Sources */ = {isa = PBXBuildFile; fileRef = 55E0388C0B08D3A100988109 /* 2203intf.c */; };
 		55E038AE0B08D3A100988109 /* 6502dasm.c in Sources */ = {isa = PBXBuildFile; fileRef = 55E0388D0B08D3A100988109 /* 6502dasm.c */; };
@@ -2628,6 +2631,7 @@
 				553A09B10AFF11B300531E1F /* CustomMameFilters.h in CopyFiles */,
 				55E03CF10B0A320600988109 /* PreferencesWindowController.h in CopyFiles */,
 				55FCC9FE0B0BD255003A5FB3 /* VersionChecker.h in CopyFiles */,
+				55D2836F0B12D5CA002C9199 /* MamePreferences.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5175,6 +5179,8 @@
 		55CDE6E30AAC60CB0021CEA0 /* MameInputController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MameInputController.m; sourceTree = "<group>"; };
 		55CDE8D70AAC93E90021CEA0 /* osd_osx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = osd_osx.h; sourceTree = "<group>"; };
 		55D282AF0B12C9DD002C9199 /* MameController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MameController.m; sourceTree = "<group>"; };
+		55D2836C0B12D5CA002C9199 /* MamePreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MamePreferences.h; sourceTree = "<group>"; };
+		55D2836D0B12D5CA002C9199 /* MamePreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MamePreferences.m; sourceTree = "<group>"; };
 		55D393200B0F54E10017F5F5 /* m68kmake.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = m68kmake.c; path = mame/src/cpu/m68000/m68kmake.c; sourceTree = SOURCE_ROOT; };
 		55E0388C0B08D3A100988109 /* 2203intf.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = 2203intf.c; path = src/sound/2203intf.c; sourceTree = "<group>"; };
 		55E0388D0B08D3A100988109 /* 6502dasm.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = 6502dasm.c; path = src/cpu/m6502/6502dasm.c; sourceTree = "<group>"; };
@@ -5729,6 +5735,8 @@
 			children = (
 				556A4CED0AA5117200602CC5 /* MameController.h */,
 				55D282AF0B12C9DD002C9199 /* MameController.m */,
+				55D2836C0B12D5CA002C9199 /* MamePreferences.h */,
+				55D2836D0B12D5CA002C9199 /* MamePreferences.m */,
 				55FCC9FC0B0BD255003A5FB3 /* VersionChecker.h */,
 				55FCC9FD0B0BD255003A5FB3 /* VersionChecker.m */,
 				55E03CEF0B0A320600988109 /* PreferencesWindowController.h */,
@@ -10994,6 +11002,7 @@
 				55E03CF30B0A320600988109 /* PreferencesWindowController.m in Sources */,
 				55FCCA000B0BD255003A5FB3 /* VersionChecker.m in Sources */,
 				55D282B20B12C9DD002C9199 /* MameController.m in Sources */,
+				55D2836E0B12D5CA002C9199 /* MamePreferences.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11098,6 +11107,7 @@
 				55E03CF20B0A320600988109 /* PreferencesWindowController.m in Sources */,
 				55FCC9FF0B0BD255003A5FB3 /* VersionChecker.m in Sources */,
 				55D282B10B12C9DD002C9199 /* MameController.m in Sources */,
+				55D283700B12D5CA002C9199 /* MamePreferences.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

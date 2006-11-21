@@ -45,6 +45,7 @@
 
 - (void) loadUserDefaults;
 
+#if 0
 - (BOOL) throttled;
 - (void) setThrottled: (BOOL) flag;
 
@@ -59,6 +60,7 @@
 
 - (BOOL) soundEnabled;
 - (void) setSoundEnabled: (BOOL) flag;
+#endif
 
 - (const char *) saveGame;
 - (void) setSaveGame: (const char *) newSaveGame;
