@@ -38,7 +38,6 @@ NSString * MameConfigPath = @"ConfigPath";
 NSString * MameNvramPath = @"NvramPath";
 NSString * MameMemcardPath = @"MemcardPath";
 NSString * MameInputPath = @"InputPath";
-NSString * MameHighScorePath = @"HighScorePath";
 NSString * MameStatePath = @"StatePath";
 NSString * MameArtworkPath = @"ArtworkPath";
 NSString * MameSnapshotPath = @"SnapshotPath";
@@ -542,25 +541,30 @@ NSString * MameBiosKey = @"Bios";
     { MameNvramPath,        @"NVRAM" },
     { MameMemcardPath,      @"Memcard" },
     { MameInputPath,        @"Input" },
-    { MameHighScorePath,    @"High Scores" },
     { MameStatePath,        @"States" },
     { MameArtworkPath,      @"Cabinet Art" },
     { MameSnapshotPath,     @"Screenshots" },
     { 0, nil }
     };
-    
-    NSArray * paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString * baseDirectory = @"";
-    if ([paths count] > 0)
-    {
-        baseDirectory = [paths objectAtIndex: 0];
-        baseDirectory = [baseDirectory stringByAppendingPathComponent: @"MacMAME User Data"];
-    }
-    
+
+    NSFileManager * fileManager = [NSFileManager defaultManager];
+    NSArray * paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
+    NSAssert([paths count] > 0, @"Could not locate NSLibraryDirectory in user domain");
+
+    NSString * baseDirectory = [paths objectAtIndex: 0];
+    baseDirectory = [baseDirectory stringByAppendingPathComponent: @"Application Support"];
+    if (![fileManager fileExistsAtPath: baseDirectory])
+        [fileManager createDirectoryAtPath: baseDirectory attributes: nil];
+    baseDirectory = [baseDirectory stringByAppendingPathComponent: @"MAME OS X"];
+    if (![fileManager fileExistsAtPath: baseDirectory])
+        [fileManager createDirectoryAtPath: baseDirectory attributes: nil];
+
     int i;
     for (i = 0; defaultPaths[i].path != nil; i++)
     {
         NSString * path = [baseDirectory stringByAppendingPathComponent: defaultPaths[i].path];
+        if (![fileManager fileExistsAtPath: path])
+            [fileManager createDirectoryAtPath: path attributes: nil];
         [defaultValues setObject: path forKey: defaultPaths[i].preference];
     }
 }
