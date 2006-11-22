@@ -1,10 +1,14 @@
-- verseion: "0.110"
+- version: "0.110"
   date: xxx
   changes:
     - Upgrade to 0.110 core.
+    - Use ${HOME}/Library/Application Support/MAME OS X/ as default directory.
     - Add preference for checking updates at startup (thanks to Martin White).
     - Add linear filtering.
-    - Add lockless audio buffer for less chance of sound glitches.
+    - Use a lockless audio buffer for less chance of sound glitches.
+    - Add MAME startup messages preferences to the UI.
+    - Set window title to game description.
+    - Add loading message with game description.
 
 - version: "0.109-1"
   date: 2006-11-18
