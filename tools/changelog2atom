@@ -3,21 +3,10 @@
 $LOAD_PATH.unshift File.join(File.dirname($0), "lib")
 
 require 'yaml'
-require 'hashes2ostruct'
+require 'changelog'
 require 'bluecloth'
 require 'builder'
 require 'time'
-
-def fix_dates(changelog)
-  changelog.each do |release|
-    if release.date.kind_of? String
-      release.date = Time.parse(release.date)
-    end
-    if release.date.kind_of? Date
-      release.date = Time.parse(release.date.to_s)
-    end
-  end
-end
 
 def changes2markdown(changes)
   markdown = ""
@@ -69,6 +58,5 @@ def changelog2atom(changelog, target = $stdout)
   end
 end
 
-changelog = hashes2ostruct(YAML.load_file(ARGV[0]))
-fix_dates(changelog)
+changelog = read_changelog(ARGV[0])
 changelog2atom(changelog, $stdout)

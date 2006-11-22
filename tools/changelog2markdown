@@ -4,7 +4,7 @@ $LOAD_PATH.unshift File.join(File.dirname($0), "lib")
 
 require 'yaml'
 require 'time'
-require 'hashes2ostruct'
+require 'changelog'
 
 def changelog2markdown(changelog, io)
   separator = ""
@@ -22,14 +22,5 @@ def changelog2markdown(changelog, io)
   end
 end
 
-def fix_dates(changelog)
-  changelog.each do |release|
-    if release.date.kind_of? String
-      release.date = Time.parse(release.date)
-    end
-  end
-end
-
-changelog = hashes2ostruct(YAML.load_file(ARGV[0]))
-fix_dates(changelog)
+changelog = read_changelog(ARGV[0])
 changelog2markdown(changelog, $stdout)

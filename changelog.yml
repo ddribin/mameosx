@@ -1,4 +1,5 @@
-- version: "0.110"
+<% version = "0.110" %>
+- version: <%=version%>
   date: xxx
   changes:
     - Upgrade to 0.110 core.
@@ -9,8 +10,9 @@
     - Add MAME startup messages preferences to the UI.
     - Set window title to game description.
     - Add loading message with game description.
-
-- version: "0.109-1"
+  
+<% version = "0.109-1" %>
+- version: <%=version%>
   date: 2006-11-18
   changes:
     - Resolve aliases in paths (thanks to Martin White).
@@ -19,9 +21,20 @@
     - Add simple preferences panel.
     - Add Internet version checking.
     - Sleep while throttling to avoid 100% CPU usage.
-
-- version: "0.109"
+  files:
+    - name: MAMEOSX-<%=version%>.dmg
+      size: 23977459
+    - name: mameosx-<%=version%>.tar.gz
+      size: 306986
+  
+<% version = "0.109" %>
+- version: <%=version%>
   date: 2006-11-12
   changes:
     - Initial release.
+  files:
+    - name: MAMEOSX-<%=version%>.dmg
+      size: 23911621
+    - name: mameosx-<%=version%>.tar.gz
+      size: 312942
   
