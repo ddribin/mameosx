@@ -26,6 +26,7 @@
 #import "MameController.h"
 #import "MameConfiguration.h"
 #import "CircularBuffer.h"
+#import "VirtualRingBuffer.h"
 
 #include <CoreServices/CoreServices.h>
 #include <mach/mach.h>
@@ -34,7 +35,8 @@
 
 #include "driver.h"
 
-// #define OSX_LOG_SOUND 1
+#define OSX_LOG_SOUND 1
+#define OLD_SOUND 0
 
 // the local buffer is what the stream buffer feeds from
 // note that this needs to be large enough to buffer at frameskip 11
@@ -76,7 +78,8 @@ OSStatus static MyRenderer(void	* inRefCon,
        numberFrames: (UInt32) inNumberFrames
          bufferList: (AudioBufferList *) ioData;
 
-- (void) updateStats: (char) code;
+- (void) updateStats: (char) code
+          bufferSize: (uint32_t) bufferSize;
 
 - (void) dumpStats;
 
@@ -91,6 +94,7 @@ OSStatus static MyRenderer(void	* inRefCon,
     
     mEnabled = YES;
     mBuffer = nil;
+    mRingBuffer = nil;
     mOverflows = 0;
     mUnderflows = 0;
    
@@ -184,21 +188,28 @@ OSStatus static MyRenderer(void	* inRefCon,
 	err = AudioUnitInitialize(mOutputUnit);
 	if (err) { NSLog(@"AudioUnitInitialize=%ld", err); return; }
     
-    unsigned stream_buffer_size;
     // compute the buffer sizes
-    stream_buffer_size = ((UINT64)MAX_BUFFER_SIZE * (UINT64)Machine->sample_rate) / 44100;
-    stream_buffer_size = (stream_buffer_size * mBytesPerFrame) / 4;
-    stream_buffer_size = (stream_buffer_size * 30) / Machine->screen[0].refresh;
-    stream_buffer_size = (stream_buffer_size / 1024) * 1024;
-    stream_buffer_size *= 1;
+    mBufferSize = ((UINT64)MAX_BUFFER_SIZE * (UINT64)Machine->sample_rate) / 44100;
+    mBufferSize = (mBufferSize * mBytesPerFrame) / 4;
+    mBufferSize = (mBufferSize * 30) / Machine->screen[0].refresh;
+    mBufferSize = (mBufferSize / 1024) * 1024;
+    mBufferSize *= 1;
     
-    mBuffer = [[CircularBuffer alloc] initWithCapacity: stream_buffer_size];
+    mRingBuffer = [[VirtualRingBuffer alloc] initWithLength: mBufferSize];
+    mBufferSize = [mRingBuffer bufferLength];
+    mBuffer = [[CircularBuffer alloc] initWithCapacity: mBufferSize];
     mInitialBufferThresholdReached = NO;
+    NSLog(@"mBufferSize = %u", mBufferSize);
     
+#if 0
     int audio_latency = 1;
 	// compute the upper/lower thresholds
-	mLowWaterMarker = audio_latency * stream_buffer_size / 5;
-	mHighWaterMarker = (audio_latency + 1) * stream_buffer_size / 5;
+	mLowWaterMarker = audio_latency * mBufferSize / 10;
+	mHighWaterMarker = (audio_latency + 1) * mBufferSize / 10;
+#else
+	mLowWaterMarker = mBufferSize * 5 / 100;
+	mHighWaterMarker = mBufferSize * 10 / 100;
+#endif
     
     mConsecutiveLows = 0;
 	mConsecutiveMids = 0;
@@ -213,7 +224,8 @@ OSStatus static MyRenderer(void	* inRefCon,
     mSamplesLeftOver -= (double)mSamplesThisFrame;
     
     mCurrentAdjustment = 0;
-    
+
+    [mRingBuffer empty];
 	// Start the rendering
 	// The DefaultOutputUnit will do any format conversions to the format of the default device
     if (mEnabled)
@@ -281,17 +293,38 @@ OSStatus static MyRenderer(void	* inRefCon,
 
 - (int) osd_update_audio_stream: (INT16 *) buffer;
 {
-    if (Machine->sample_rate != 0 && mBuffer)
+    if (Machine->sample_rate != 0 && mRingBuffer)
     {
+#if OLD_SOUND
+        uint32_t bufferSize = [mBuffer size];
         [self update_sample_adjustment: [mBuffer size]];
         int input_bytes = mSamplesThisFrame * mBytesPerFrame;
         
         unsigned bytesWritten = [mBuffer writeBytes: buffer length: input_bytes];
         if (bytesWritten < input_bytes)
             mOverflows++;
+#else
+        int input_bytes = mSamplesThisFrame * mBytesPerFrame;
+        void * writePointer;
+        UInt32 bytesAvailableToWrite =
+            [mRingBuffer lengthAvailableToWriteReturningPointer: &writePointer];
+        UInt32 bufferSize = mBufferSize - bytesAvailableToWrite;
+        [self update_sample_adjustment: bufferSize];
+        UInt32 bytesToWrite = input_bytes;
+        if (input_bytes > bytesAvailableToWrite)
+        {
+            bytesToWrite = bytesAvailableToWrite;
+            mOverflows++;
+        }
+        if (bytesToWrite > 0)
+        {
+            memcpy(writePointer, buffer, bytesToWrite);
+            [mRingBuffer didWriteLength: bytesToWrite];
+        }
+#endif
 
 #if OSX_LOG_SOUND
-        [self updateStats: 'W'];
+        [self updateStats: 'W' bufferSize: bufferSize];
 #endif
     }
     
@@ -359,6 +392,7 @@ OSStatus static MyRenderer(void	* inRefCon,
        numberFrames: (UInt32) inNumberFrames
          bufferList: (AudioBufferList *) ioData;
 {
+#if OLD_SOUND
     memset(ioData->mBuffers[0].mData, 0, ioData->mBuffers[0].mDataByteSize);
     if (mame_is_paused(Machine))
         return noErr;
@@ -375,15 +409,51 @@ OSStatus static MyRenderer(void	* inRefCon,
     {
         mUnderflows++;
     }
+    uint32_t bufferSize = [mBuffer size];
+#else
+    void * readPointer;
+    UInt32 bytesAvailable =
+        [mRingBuffer lengthAvailableToReadReturningPointer: &readPointer];
+    UInt32 bufferSize = bytesAvailable;
+#if 0
+    if (!mInitialBufferThresholdReached && (bufferSize < mLowWaterMarker))
+    {
+        return noErr;
+    }
+    mInitialBufferThresholdReached = YES;
+#endif
+    
+    UInt32 bytesToRead;
+    if (bytesAvailable > ioData->mBuffers[0].mDataByteSize)
+    {
+        bytesToRead = ioData->mBuffers[0].mDataByteSize;
+    }
+    else
+    {
+        bytesToRead = bytesAvailable;
+        bzero(ioData->mBuffers[0].mData + bytesToRead,
+              ioData->mBuffers[0].mDataByteSize - bytesToRead);
+        mUnderflows++;
+    }
+    
+    if (bytesToRead > 0)
+    {
+        // Finally read from the ring buffer.
+        memcpy(ioData->mBuffers[0].mData, readPointer, bytesToRead);            
+        [mRingBuffer didReadLength: bytesToRead];
+    }
+    
+#endif
     
 #if OSX_LOG_SOUND
-    [self updateStats: 'R'];
+    [self updateStats: 'R' bufferSize: bufferSize];
 #endif
     
     return noErr;
 }
 
-- (void) updateStats: (char) code;
+- (void) updateStats: (char) code
+          bufferSize: (uint32_t) bufferSize;
 {
     @synchronized(self)
     {
@@ -392,7 +462,7 @@ OSStatus static MyRenderer(void	* inRefCon,
         MameAudioStats * stats = &sAudioStats[sAudioStatIndex];
         stats->timestamp = mach_absolute_time();
         stats->code = code;
-        stats->bufferSize = [mBuffer size];
+        stats->bufferSize = bufferSize;
         stats->underflows = mUnderflows;
         stats->overflows = mOverflows;
         stats->mSamplesThisFrame = mSamplesThisFrame;
@@ -402,7 +472,7 @@ OSStatus static MyRenderer(void	* inRefCon,
 
 - (void) dumpStats;
 {
-    FILE * file = fopen("audio_stats.txt", "w");
+    FILE * file = fopen("/tmp/audio_stats.txt", "w");
     uint32_t i;
     uint64_t start = 0;
     uint32_t capacity = [mBuffer capacity];

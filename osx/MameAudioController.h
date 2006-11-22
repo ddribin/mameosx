@@ -28,13 +28,16 @@
 
 @class MameController;
 @class CircularBuffer;
+@class VirtualRingBuffer;
 
 @interface MameAudioController : NSObject
 {
     BOOL mEnabled;
     int mAttenuation;
     AudioUnit mOutputUnit;
+    size_t mBufferSize;
     CircularBuffer * mBuffer;
+    VirtualRingBuffer * mRingBuffer;
     BOOL mInitialBufferThresholdReached;
 
     unsigned mBytesPerFrame;

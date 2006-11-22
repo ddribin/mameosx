@@ -2394,6 +2394,8 @@
 		55D2836E0B12D5CA002C9199 /* MamePreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D2836D0B12D5CA002C9199 /* MamePreferences.m */; };
 		55D2836F0B12D5CA002C9199 /* MamePreferences.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 55D2836C0B12D5CA002C9199 /* MamePreferences.h */; };
 		55D283700B12D5CA002C9199 /* MamePreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D2836D0B12D5CA002C9199 /* MamePreferences.m */; };
+		55D28E1A0B13CBB8002C9199 /* VirtualRingBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 55D28E180B13CBB8002C9199 /* VirtualRingBuffer.h */; };
+		55D28E1B0B13CBB8002C9199 /* VirtualRingBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D28E190B13CBB8002C9199 /* VirtualRingBuffer.m */; };
 		55D393210B0F54E10017F5F5 /* m68kmake.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D393200B0F54E10017F5F5 /* m68kmake.c */; };
 		55E038AD0B08D3A100988109 /* 2203intf.c in Sources */ = {isa = PBXBuildFile; fileRef = 55E0388C0B08D3A100988109 /* 2203intf.c */; };
 		55E038AE0B08D3A100988109 /* 6502dasm.c in Sources */ = {isa = PBXBuildFile; fileRef = 55E0388D0B08D3A100988109 /* 6502dasm.c */; };
@@ -5181,6 +5183,8 @@
 		55D282AF0B12C9DD002C9199 /* MameController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MameController.m; sourceTree = "<group>"; };
 		55D2836C0B12D5CA002C9199 /* MamePreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MamePreferences.h; sourceTree = "<group>"; };
 		55D2836D0B12D5CA002C9199 /* MamePreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MamePreferences.m; sourceTree = "<group>"; };
+		55D28E180B13CBB8002C9199 /* VirtualRingBuffer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = VirtualRingBuffer.h; path = vendor/VirtualRingBuffer.h; sourceTree = SOURCE_ROOT; };
+		55D28E190B13CBB8002C9199 /* VirtualRingBuffer.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = VirtualRingBuffer.m; path = vendor/VirtualRingBuffer.m; sourceTree = SOURCE_ROOT; };
 		55D393200B0F54E10017F5F5 /* m68kmake.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = m68kmake.c; path = mame/src/cpu/m68000/m68kmake.c; sourceTree = SOURCE_ROOT; };
 		55E0388C0B08D3A100988109 /* 2203intf.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = 2203intf.c; path = src/sound/2203intf.c; sourceTree = "<group>"; };
 		55E0388D0B08D3A100988109 /* 6502dasm.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = 6502dasm.c; path = src/cpu/m6502/6502dasm.c; sourceTree = "<group>"; };
@@ -8135,6 +8139,8 @@
 				5501E8440AB232B900756C9B /* CircularBuffer.m */,
 				5561495E0ACCD64F008951F8 /* ThreadSafeQueue.h */,
 				5561495F0ACCD64F008951F8 /* ThreadSafeQueue.m */,
+				55D28E180B13CBB8002C9199 /* VirtualRingBuffer.h */,
+				55D28E190B13CBB8002C9199 /* VirtualRingBuffer.m */,
 				5548EBE60ABCA30E008D1F74 /* MameFileManager.h */,
 				5548EBE70ABCA30E008D1F74 /* MameFileManager.m */,
 				55744C190AAB4FC800EC1423 /* osinline.h */,
@@ -8396,6 +8402,7 @@
 				55BEFA160AEC61E400357340 /* DDCustomOpenGLView.h in Headers */,
 				55BEFA180AEC61E400357340 /* CircularBuffer.h in Headers */,
 				553A07300AFD9E2700531E1F /* MameFilter.h in Headers */,
+				55D28E1A0B13CBB8002C9199 /* VirtualRingBuffer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11095,6 +11102,7 @@
 				55BEFA150AEC61E400357340 /* DDCustomOpenGLView.m in Sources */,
 				55BEFA170AEC61E400357340 /* CircularBuffer.m in Sources */,
 				553A07320AFDA09900531E1F /* MameFilter.m in Sources */,
+				55D28E1B0B13CBB8002C9199 /* VirtualRingBuffer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
