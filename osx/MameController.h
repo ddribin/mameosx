@@ -65,6 +65,7 @@ extern "C" {
     MameFilter * mCurrentFilter;
 
     NSString * mGameName;
+    NSString * mLoadingMessage;
     NSMutableArray * mPreviousGames;
     BOOL mGameLoading;
     BOOL mGameRunning;
@@ -94,6 +95,8 @@ extern "C" {
 
 - (BOOL) isGameLoading;
 - (BOOL) isGameRunning;
+
+- (NSString *) loadingMessage;
 
 - (NSArray *) previousGames;
 

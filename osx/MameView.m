@@ -376,6 +376,20 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     }
 }
 
+- (int) gameIndex;
+{
+    return mGameIndex;
+}
+
+- (NSString *) gameDescription;
+{
+    if (mGameIndex >= 0)
+        return [NSString stringWithUTF8String: drivers[mGameIndex]->description];
+    else
+        return @"";
+}
+
+
 - (BOOL) start;
 {
     if (mGameIndex == -1)

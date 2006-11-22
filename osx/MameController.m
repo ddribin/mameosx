@@ -329,6 +329,11 @@ void exit_sleeper()
     return mGameRunning;
 }
 
+- (NSString *) loadingMessage;
+{
+    return mLoadingMessage;
+}
+
 - (IBAction) showMameLog: (id) sender;
 {
     [mMameLogPanel makeKeyAndOrderFront: nil];
@@ -381,6 +386,8 @@ void exit_sleeper()
     
     [self resizeToOptimalSize: nil];
     NSWindow * window = [mMameView window];
+    [window setTitle: [NSString stringWithFormat: @"MAME: %@ [%@]",
+        [mMameView gameDescription], mGameName]];
     [window center];
 
     // Open the window next run loop
@@ -555,6 +562,12 @@ void exit_sleeper()
     [self syncWithUserDefaults];
     if ([mMameView setGame: mGameName])
     {
+        [self willChangeValueForKey: @"loadingMessage"];
+        [mLoadingMessage release];
+        mLoadingMessage = [[NSString alloc] initWithFormat:
+            @"Loading %@", [mMameView gameDescription]];
+        [self didChangeValueForKey: @"loadingMessage"];
+        
         [self setGameLoading: YES];
         [self updatePreviousGames: mGameName];
         
