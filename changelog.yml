@@ -4,6 +4,7 @@
     - Upgrade to 0.110 core.
     - Add preference for checking updates at startup (thanks to Martin White).
     - Add linear filtering.
+    - Add lockless audio buffer for less chance of sound glitches.
 
 - version: "0.109-1"
   date: 2006-11-18
