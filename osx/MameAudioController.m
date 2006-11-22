@@ -403,6 +403,8 @@ OSStatus static MyRenderer(void	* inRefCon,
 
     if (!mInitialBufferThresholdReached && (bytesInBuffer < mLowWaterMarker))
     {
+        bzero(ioData->mBuffers[0].mData,
+              ioData->mBuffers[0].mDataByteSize);
         return noErr;
     }
     mInitialBufferThresholdReached = YES;
