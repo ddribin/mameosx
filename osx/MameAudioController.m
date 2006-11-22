@@ -34,7 +34,7 @@
 
 #include "driver.h"
 
-#define OSX_LOG_SOUND 1
+#define OSX_LOG_SOUND 0
 
 // the local buffer is what the stream buffer feeds from
 // note that this needs to be large enough to buffer at frameskip 11

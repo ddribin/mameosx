@@ -490,7 +490,7 @@ void exit_sleeper()
     [[mMameView fileManager] setPath: [myBundle resourcePath] forType: FILETYPE_FONT];
 #else
     // TODO: Hopefully MAME core will allow us to fix this hack.
-    // [[NSFileManager defaultManager] changeCurrentDirectoryPath: [myBundle resourcePath]];
+    [[NSFileManager defaultManager] changeCurrentDirectoryPath: [myBundle resourcePath]];
 #endif
 }
 
