@@ -40,7 +40,7 @@ struct _osd_file
 
 - (NSString *) resolveAlias: (NSString *) path
 {
-    NSString *resolvedPath = nil;
+    NSString *resolvedPath = [[NSFileManager defaultManager] currentDirectoryPath];
     if ([path isAbsolutePath])
         resolvedPath = @"/";
         
@@ -101,6 +101,7 @@ struct _osd_file
 {
     NSAssert(path != 0, @"path is NULL");
     NSString * nsPath = [NSString stringWithUTF8String: path];
+    nsPath = [self resolveAlias: nsPath];
     BOOL readFlag = ((openflags & OPEN_FLAG_READ) != 0);
     BOOL writeFlag = ((openflags & OPEN_FLAG_WRITE) != 0);
     BOOL createFlag = ((openflags & OPEN_FLAG_CREATE) != 0);
@@ -126,11 +127,11 @@ struct _osd_file
     }
     else
     {
-        NSLog(@"osd_open: Invalid mode: 0x%08X, path: %s", openflags, path);
+        NSLog(@"osd_open: Invalid mode: 0x%08X, path: %@", openflags, nsPath);
         return FILERR_FAILURE;
     }
     
-    FILE * handle = fopen(path, mode);
+    FILE * handle = fopen([nsPath UTF8String], mode);
     if (handle == 0)
     {
         return FILERR_FAILURE;
