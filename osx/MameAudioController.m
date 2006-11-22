@@ -25,7 +25,6 @@
 #import "MameAudioController.h"
 #import "MameController.h"
 #import "MameConfiguration.h"
-#import "CircularBuffer.h"
 #import "VirtualRingBuffer.h"
 
 #include <CoreServices/CoreServices.h>
@@ -36,7 +35,6 @@
 #include "driver.h"
 
 #define OSX_LOG_SOUND 1
-#define OLD_SOUND 0
 
 // the local buffer is what the stream buffer feeds from
 // note that this needs to be large enough to buffer at frameskip 11
@@ -53,7 +51,7 @@ typedef struct
 {
     uint64_t timestamp;
     char code;
-    uint32_t bufferSize;
+    uint32_t bytesInBuffer;
     uint64_t underflows;
     uint64_t overflows;
     uint32_t mSamplesThisFrame;
@@ -64,6 +62,8 @@ static MameAudioStats sAudioStats[NUM_STATS];
 static uint32_t sAudioStatIndex = 0;
 
 @interface MameAudioController (Private)
+
+- (void) updateSampleAdjustment: (int) bytesInBuffer;
 
 OSStatus static MyRenderer(void	* inRefCon,
                            AudioUnitRenderActionFlags * ioActionFlags,
@@ -79,7 +79,7 @@ OSStatus static MyRenderer(void	* inRefCon,
          bufferList: (AudioBufferList *) ioData;
 
 - (void) updateStats: (char) code
-          bufferSize: (uint32_t) bufferSize;
+       bytesInBuffer: (uint32_t) bytesInBuffer;
 
 - (void) dumpStats;
 
@@ -93,7 +93,6 @@ OSStatus static MyRenderer(void	* inRefCon,
         return nil;
     
     mEnabled = YES;
-    mBuffer = nil;
     mRingBuffer = nil;
     mOverflows = 0;
     mUnderflows = 0;
@@ -197,9 +196,7 @@ OSStatus static MyRenderer(void	* inRefCon,
     
     mRingBuffer = [[VirtualRingBuffer alloc] initWithLength: mBufferSize];
     mBufferSize = [mRingBuffer bufferLength];
-    mBuffer = [[CircularBuffer alloc] initWithCapacity: mBufferSize];
     mInitialBufferThresholdReached = NO;
-    NSLog(@"mBufferSize = %u", mBufferSize);
     
 #if 0
     int audio_latency = 1;
@@ -207,8 +204,8 @@ OSStatus static MyRenderer(void	* inRefCon,
 	mLowWaterMarker = audio_latency * mBufferSize / 10;
 	mHighWaterMarker = (audio_latency + 1) * mBufferSize / 10;
 #else
-	mLowWaterMarker = mBufferSize * 5 / 100;
-	mHighWaterMarker = mBufferSize * 10 / 100;
+	mLowWaterMarker = mBufferSize * 15/100;
+	mHighWaterMarker = mBufferSize * 25/100;
 #endif
     
     mConsecutiveLows = 0;
@@ -237,81 +234,18 @@ OSStatus static MyRenderer(void	* inRefCon,
     return mSamplesPerFrame;
 }
 
-- (void) update_sample_adjustment: (int) buffered
-{
-	// if we're not throttled don't bother
-#if 0
-	if (!video_config.throttle)
-	{
-		mConsecutiveLows = 0;
-		mConsecutiveMids = 0;
-		mConsecutiveHighs = 0;
-		mCurrentAdjustment = 0;
-		return;
-	}
-#endif
-    
-	// do we have too few samples in the buffer?
-	if (buffered < mLowWaterMarker)
-	{
-		// keep track of how many consecutive times we get this condition
-		mConsecutiveLows++;
-		mConsecutiveMids = 0;
-		mConsecutiveHighs = 0;
-        
-		// adjust so that we generate more samples per frame to compensate
-		mCurrentAdjustment = (mConsecutiveLows < MAX_SAMPLE_ADJUST) ? mConsecutiveLows : MAX_SAMPLE_ADJUST;
-	}
-    
-	// do we have too many samples in the buffer?
-	else if (buffered > mHighWaterMarker)
-	{
-		// keep track of how many consecutive times we get this condition
-		mConsecutiveLows = 0;
-		mConsecutiveMids = 0;
-		mConsecutiveHighs++;
-        
-		// adjust so that we generate more samples per frame to compensate
-		mCurrentAdjustment = (mConsecutiveHighs < MAX_SAMPLE_ADJUST) ? -mConsecutiveHighs : -MAX_SAMPLE_ADJUST;
-	}
-    
-	// otherwise, we're in the sweet spot
-	else
-	{
-		// keep track of how many consecutive times we get this condition
-		mConsecutiveLows = 0;
-		mConsecutiveMids++;
-		mConsecutiveHighs = 0;
-        
-		// after 10 or so of these, revert back to no adjustment
-		if (mConsecutiveMids > 10 && mCurrentAdjustment != 0)
-		{
-			mCurrentAdjustment = 0;
-		}
-	}
-}
-
 - (int) osd_update_audio_stream: (INT16 *) buffer;
 {
     if (Machine->sample_rate != 0 && mRingBuffer)
     {
-#if OLD_SOUND
-        uint32_t bufferSize = [mBuffer size];
-        [self update_sample_adjustment: [mBuffer size]];
-        int input_bytes = mSamplesThisFrame * mBytesPerFrame;
-        
-        unsigned bytesWritten = [mBuffer writeBytes: buffer length: input_bytes];
-        if (bytesWritten < input_bytes)
-            mOverflows++;
-#else
-        int input_bytes = mSamplesThisFrame * mBytesPerFrame;
+        int inputBytes = mSamplesThisFrame * mBytesPerFrame;
         void * writePointer;
         UInt32 bytesAvailableToWrite =
             [mRingBuffer lengthAvailableToWriteReturningPointer: &writePointer];
-        UInt32 bufferSize = mBufferSize - bytesAvailableToWrite;
-        [self update_sample_adjustment: bufferSize];
-        UInt32 bytesToWrite = input_bytes;
-        if (input_bytes > bytesAvailableToWrite)
+        UInt32 bytesInBuffer = mBufferSize - bytesAvailableToWrite;
+        [self updateSampleAdjustment: bytesInBuffer];
+        UInt32 bytesToWrite = inputBytes;
+        if (inputBytes > bytesAvailableToWrite)
         {
             bytesToWrite = bytesAvailableToWrite;
             mOverflows++;
@@ -321,10 +255,9 @@ OSStatus static MyRenderer(void	* inRefCon,
             memcpy(writePointer, buffer, bytesToWrite);
             [mRingBuffer didWriteLength: bytesToWrite];
         }
-#endif
 
 #if OSX_LOG_SOUND
-        [self updateStats: 'W' bufferSize: bufferSize];
+        [self updateStats: 'W' bytesInBuffer: bytesInBuffer];
 #endif
     }
     
@@ -368,6 +301,60 @@ OSStatus static MyRenderer(void	* inRefCon,
 
 @implementation MameAudioController (Private)
 
+- (void) updateSampleAdjustment: (int) bytesInBuffer;
+{
+	// if we're not throttled don't bother
+#if 0
+	if (!video_config.throttle)
+	{
+		mConsecutiveLows = 0;
+		mConsecutiveMids = 0;
+		mConsecutiveHighs = 0;
+		mCurrentAdjustment = 0;
+		return;
+	}
+#endif
+    
+	// do we have too few samples in the buffer?
+	if (bytesInBuffer < mLowWaterMarker)
+	{
+		// keep track of how many consecutive times we get this condition
+		mConsecutiveLows++;
+		mConsecutiveMids = 0;
+		mConsecutiveHighs = 0;
+        
+		// adjust so that we generate more samples per frame to compensate
+		mCurrentAdjustment = (mConsecutiveLows < MAX_SAMPLE_ADJUST) ? mConsecutiveLows : MAX_SAMPLE_ADJUST;
+	}
+    
+	// do we have too many samples in the buffer?
+	else if (bytesInBuffer > mHighWaterMarker)
+	{
+		// keep track of how many consecutive times we get this condition
+		mConsecutiveLows = 0;
+		mConsecutiveMids = 0;
+		mConsecutiveHighs++;
+        
+		// adjust so that we generate more samples per frame to compensate
+		mCurrentAdjustment = (mConsecutiveHighs < MAX_SAMPLE_ADJUST) ? -mConsecutiveHighs : -MAX_SAMPLE_ADJUST;
+	}
+    
+	// otherwise, we're in the sweet spot
+	else
+	{
+		// keep track of how many consecutive times we get this condition
+		mConsecutiveLows = 0;
+		mConsecutiveMids++;
+		mConsecutiveHighs = 0;
+        
+		// after 10 or so of these, revert back to no adjustment
+		if (mConsecutiveMids > 10 && mCurrentAdjustment != 0)
+		{
+			mCurrentAdjustment = 0;
+		}
+	}
+}
+
 OSStatus static MyRenderer(void	* inRefCon,
                            AudioUnitRenderActionFlags * ioActionFlags,
                            const AudioTimeStamp * inTimeStamp,
@@ -392,29 +379,10 @@ OSStatus static MyRenderer(void	* inRefCon,
        numberFrames: (UInt32) inNumberFrames
          bufferList: (AudioBufferList *) ioData;
 {
-#if OLD_SOUND
-    memset(ioData->mBuffers[0].mData, 0, ioData->mBuffers[0].mDataByteSize);
-    if (mame_is_paused(Machine))
-        return noErr;
-    if (!mInitialBufferThresholdReached && ([mBuffer size] < mLowWaterMarker))
-    {
-        return noErr;
-    }
-    mInitialBufferThresholdReached = YES;
-    
-    unsigned bytesRead = [mBuffer readBytes: ioData->mBuffers[0].mData
-                                     length: ioData->mBuffers[0].mDataByteSize];
-    
-    if (bytesRead != ioData->mBuffers[0].mDataByteSize)
-    {
-        mUnderflows++;
-    }
-    uint32_t bufferSize = [mBuffer size];
-#else
     void * readPointer;
     UInt32 bytesAvailable =
         [mRingBuffer lengthAvailableToReadReturningPointer: &readPointer];
-    UInt32 bufferSize = bytesAvailable;
+    UInt32 bytesInBuffer = bytesAvailable;
 #if 0
     if (!mInitialBufferThresholdReached && (bufferSize < mLowWaterMarker))
     {
@@ -443,17 +411,15 @@ OSStatus static MyRenderer(void	* inRefCon,
         [mRingBuffer didReadLength: bytesToRead];
     }
     
-#endif
-    
 #if OSX_LOG_SOUND
-    [self updateStats: 'R' bufferSize: bufferSize];
+    [self updateStats: 'R' bytesInBuffer: bytesInBuffer];
 #endif
     
     return noErr;
 }
 
 - (void) updateStats: (char) code
-          bufferSize: (uint32_t) bufferSize;
+       bytesInBuffer: (uint32_t) bytesInBuffer;
 {
     @synchronized(self)
     {
@@ -462,7 +428,7 @@ OSStatus static MyRenderer(void	* inRefCon,
         MameAudioStats * stats = &sAudioStats[sAudioStatIndex];
         stats->timestamp = mach_absolute_time();
         stats->code = code;
-        stats->bufferSize = bufferSize;
+        stats->bytesInBuffer = bytesInBuffer;
         stats->underflows = mUnderflows;
         stats->overflows = mOverflows;
         stats->mSamplesThisFrame = mSamplesThisFrame;
@@ -475,7 +441,7 @@ OSStatus static MyRenderer(void	* inRefCon,
     FILE * file = fopen("/tmp/audio_stats.txt", "w");
     uint32_t i;
     uint64_t start = 0;
-    uint32_t capacity = [mBuffer capacity];
+    uint32_t capacity = mBufferSize;
     for (i = 0; i < sAudioStatIndex; i++)
     {
         MameAudioStats * stats = &sAudioStats[i];
@@ -489,11 +455,11 @@ OSStatus static MyRenderer(void	* inRefCon,
         uint64_t diff = (nano - start) / 1000;
         uint64_t sec = diff / 1000000;
         uint64_t msec = diff % 1000000;
-        uint32_t percent = stats->bufferSize * 100 / capacity;
+        uint32_t percent = stats->bytesInBuffer * 100 / capacity;
         
         fprintf(file, "%5u %c %4qi.%06qi %5u/%u (%3u%%) %5qi %5qi %5u\n", i, stats->code,
                 sec, msec,
-                stats->bufferSize, capacity, percent,
+                stats->bytesInBuffer, capacity, percent,
                 stats->underflows, stats->overflows, stats->mSamplesThisFrame);
     }
     fclose(file);
