@@ -22,7 +22,6 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		5501E89D0AB2764700756C9B /* CircularBufferTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5501E89C0AB2764700756C9B /* CircularBufferTest.m */; };
 		551A613A0AC24B2000AECE1E /* ui.bdf in Resources */ = {isa = PBXBuildFile; fileRef = 551A61390AC24B2000AECE1E /* ui.bdf */; };
 		551C7B6A0AFD2716008FF3C7 /* generic.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A43540AA4EC9900602CC5 /* generic.c */; };
 		551C7B6B0AFD2716008FF3C7 /* generic.h in Headers */ = {isa = PBXBuildFile; fileRef = 556A43550AA4EC9900602CC5 /* generic.h */; };
@@ -2367,8 +2366,6 @@
 		55BEFA140AEC61E400357340 /* MameAudioController.h in Headers */ = {isa = PBXBuildFile; fileRef = 55FE25E60AAD2F6100C4054A /* MameAudioController.h */; };
 		55BEFA150AEC61E400357340 /* DDCustomOpenGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5511DE5F0AE5D34600D416BF /* DDCustomOpenGLView.m */; };
 		55BEFA160AEC61E400357340 /* DDCustomOpenGLView.h in Headers */ = {isa = PBXBuildFile; fileRef = 5511DE5E0AE5D34600D416BF /* DDCustomOpenGLView.h */; };
-		55BEFA170AEC61E400357340 /* CircularBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5501E8440AB232B900756C9B /* CircularBuffer.m */; };
-		55BEFA180AEC61E400357340 /* CircularBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 5501E8430AB232B900756C9B /* CircularBuffer.h */; };
 		55BEFA2B0AEC62B300357340 /* libosd.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55BEF9F00AEC618D00357340 /* libosd.a */; };
 		55BEFA530AEC63E300357340 /* libosd.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55BEF9F00AEC618D00357340 /* libosd.a */; };
 		55BEFA590AEC63F800357340 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 556A4ACE0AA4FBA000602CC5 /* Cocoa.framework */; };
@@ -2640,12 +2637,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		5501E8430AB232B900756C9B /* CircularBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircularBuffer.h; sourceTree = "<group>"; };
-		5501E8440AB232B900756C9B /* CircularBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircularBuffer.m; sourceTree = "<group>"; };
 		5501E8910AB275F900756C9B /* UnitTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5501E8920AB275FA00756C9B /* UnitTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "UnitTests-Info.plist"; sourceTree = "<group>"; };
-		5501E89B0AB2764700756C9B /* CircularBufferTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircularBufferTest.h; sourceTree = "<group>"; };
-		5501E89C0AB2764700756C9B /* CircularBufferTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircularBufferTest.m; sourceTree = "<group>"; };
 		5503D7F30AB7B63E003F407E /* MameTextureConverter.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = MameTextureConverter.h; sourceTree = "<group>"; };
 		5511DE5E0AE5D34600D416BF /* DDCustomOpenGLView.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DDCustomOpenGLView.h; sourceTree = "<group>"; };
 		5511DE5F0AE5D34600D416BF /* DDCustomOpenGLView.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DDCustomOpenGLView.m; sourceTree = "<group>"; };
@@ -5379,8 +5372,6 @@
 		5501E89A0AB2762700756C9B /* Unit Tests */ = {
 			isa = PBXGroup;
 			children = (
-				5501E89B0AB2764700756C9B /* CircularBufferTest.h */,
-				5501E89C0AB2764700756C9B /* CircularBufferTest.m */,
 				5548ECDD0ABCB463008D1F74 /* MameFileManagerTest.h */,
 				5548ECDE0ABCB463008D1F74 /* MameFileManagerTest.m */,
 				5548EDC90ABE3CC7008D1F74 /* Resources */,
@@ -8135,8 +8126,6 @@
 				5561FBA20AC58C6900BE1BF5 /* MameTimingController.m */,
 				55BB89330AB90EAB00B7933B /* MameConfiguration.h */,
 				55BB89340AB90EAB00B7933B /* MameConfiguration.m */,
-				5501E8430AB232B900756C9B /* CircularBuffer.h */,
-				5501E8440AB232B900756C9B /* CircularBuffer.m */,
 				5561495E0ACCD64F008951F8 /* ThreadSafeQueue.h */,
 				5561495F0ACCD64F008951F8 /* ThreadSafeQueue.m */,
 				55D28E180B13CBB8002C9199 /* VirtualRingBuffer.h */,
@@ -8400,7 +8389,6 @@
 				55BEFA120AEC61E400357340 /* MameConfiguration.h in Headers */,
 				55BEFA140AEC61E400357340 /* MameAudioController.h in Headers */,
 				55BEFA160AEC61E400357340 /* DDCustomOpenGLView.h in Headers */,
-				55BEFA180AEC61E400357340 /* CircularBuffer.h in Headers */,
 				553A07300AFD9E2700531E1F /* MameFilter.h in Headers */,
 				55D28E1A0B13CBB8002C9199 /* VirtualRingBuffer.h in Headers */,
 			);
@@ -8801,7 +8789,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5501E89D0AB2764700756C9B /* CircularBufferTest.m in Sources */,
 				5548ECDF0ABCB463008D1F74 /* MameFileManagerTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -11100,7 +11087,6 @@
 				55BEFA110AEC61E400357340 /* MameConfiguration.m in Sources */,
 				55BEFA130AEC61E400357340 /* MameAudioController.m in Sources */,
 				55BEFA150AEC61E400357340 /* DDCustomOpenGLView.m in Sources */,
-				55BEFA170AEC61E400357340 /* CircularBuffer.m in Sources */,
 				553A07320AFDA09900531E1F /* MameFilter.m in Sources */,
 				55D28E1B0B13CBB8002C9199 /* VirtualRingBuffer.m in Sources */,
 			);
