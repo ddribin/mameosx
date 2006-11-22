@@ -93,6 +93,7 @@ OSStatus static MyRenderer(void	* inRefCon,
         return nil;
     
     mEnabled = YES;
+    mPaused = NO;
     mRingBuffer = nil;
     mOverflows = 0;
     mUnderflows = 0;
@@ -111,6 +112,16 @@ OSStatus static MyRenderer(void	* inRefCon,
 - (void) setEnabled: (BOOL) flag
 {
     mEnabled = flag;
+}
+
+- (BOOL) paused;
+{
+    return mPaused;
+}
+
+- (void) setPaused: (BOOL) paused;
+{
+    mPaused = paused;
 }
 
 - (void) osd_init;
@@ -236,7 +247,7 @@ OSStatus static MyRenderer(void	* inRefCon,
 
 - (int) osd_update_audio_stream: (INT16 *) buffer;
 {
-    if (Machine->sample_rate != 0 && mRingBuffer)
+    if (Machine->sample_rate != 0 && mRingBuffer && !mPaused)
     {
         int inputBytes = mSamplesThisFrame * mBytesPerFrame;
         void * writePointer;
@@ -383,13 +394,18 @@ OSStatus static MyRenderer(void	* inRefCon,
     UInt32 bytesAvailable =
         [mRingBuffer lengthAvailableToReadReturningPointer: &readPointer];
     UInt32 bytesInBuffer = bytesAvailable;
-#if 0
-    if (!mInitialBufferThresholdReached && (bufferSize < mLowWaterMarker))
+    if (mPaused)
+    {
+        bzero(ioData->mBuffers[0].mData,
+              ioData->mBuffers[0].mDataByteSize);
+        return noErr;
+    }
+
+    if (!mInitialBufferThresholdReached && (bytesInBuffer < mLowWaterMarker))
     {
         return noErr;
     }
     mInitialBufferThresholdReached = YES;
-#endif
     
     UInt32 bytesToRead;
     if (bytesAvailable > ioData->mBuffers[0].mDataByteSize)

@@ -296,6 +296,12 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     [self stopAnimation];
 }
 
+- (void) mameDidPause: (running_machine *) machine
+                puase: (int) pause; 
+{
+    [mAudioController setPaused: ((pause == 1)? YES : NO)];
+}
+
 - (BOOL) acceptsFirstResponder
 {
     return YES;

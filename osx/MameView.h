@@ -120,7 +120,11 @@
 - (void) setFilter: (MameFilter *) aFilter;
 
 - (int) osd_init: (running_machine *) machine;
+
 - (void) mameDidExit: (running_machine *) machine;
+
+- (void) mameDidPause: (running_machine *) machine
+                puase: (int) pause; 
 
 #pragma mark -
 #pragma mark OS Dependent API

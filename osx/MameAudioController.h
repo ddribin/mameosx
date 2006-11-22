@@ -32,6 +32,7 @@
 @interface MameAudioController : NSObject
 {
     BOOL mEnabled;
+    BOOL mPaused;
     int mAttenuation;
     AudioUnit mOutputUnit;
     size_t mBufferSize;
@@ -60,6 +61,9 @@
 
 - (BOOL) enabled;
 - (void) setEnabled: (BOOL) flag;
+
+- (BOOL) paused;
+- (void) setPaused: (BOOL) paused;
 
 - (void) osd_init;
 

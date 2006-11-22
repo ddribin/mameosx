@@ -34,6 +34,7 @@
 
 
 static void mame_did_exit(running_machine * machine);
+static void mame_did_pause(running_machine * machine, int pause);
 static void error_callback(void *param, const char *format, va_list argptr);
 static void warning_callback(void *param, const char *format, va_list argptr);
 static void info_callback(void *param, const char *format, va_list argptr);
@@ -56,6 +57,7 @@ void osd_set_controller(MameView * controller)
 int osd_init(running_machine *machine)
 {
     add_exit_callback(machine, mame_did_exit);
+    add_pause_callback(machine, mame_did_pause);
     mame_set_output_channel(OUTPUT_CHANNEL_ERROR, error_callback,
                             sController, NULL, NULL);
     mame_set_output_channel(OUTPUT_CHANNEL_WARNING, warning_callback,
@@ -73,6 +75,11 @@ int osd_init(running_machine *machine)
 static void mame_did_exit(running_machine * machine)
 {
     [sController mameDidExit: machine];
+}
+
+static void mame_did_pause(running_machine * machine, int pause)
+{
+    [sController mameDidPause: machine puase: pause];
 }
 
 static void error_callback(void *param, const char *format, va_list argptr)
