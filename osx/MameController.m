@@ -339,6 +339,14 @@ void exit_sleeper()
     [mMameLogPanel makeKeyAndOrderFront: nil];
 }
 
+- (IBAction) showReleaseNotes: (id) sender;
+{
+    NSBundle * myBundle = [NSBundle bundleForClass: [self class]];
+    NSString * releaseNotes = 
+        [myBundle pathForResource: @"release_notes" ofType: @"html"];
+    [[NSWorkspace sharedWorkspace] openFile: releaseNotes];
+}
+
 - (void) mameErrorMessage: (NSString *) message;
 {
     NSLog(@"[E]: %@", message);

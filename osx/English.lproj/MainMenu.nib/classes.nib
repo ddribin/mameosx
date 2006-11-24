@@ -15,6 +15,7 @@
                 resizeToOptimalSize = id; 
                 showMameLog = id; 
                 showPreferencesPanel = id; 
+                showReleaseNotes = id; 
                 togglePause = id; 
             }; 
             CLASS = MameController; 

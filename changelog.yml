@@ -1,6 +1,6 @@
 <% version = "0.110" %>
-- version: <%=version%>
-  date: xxx
+- version: "<%=version%>"
+  date: 2006-11-24
   changes:
     - Upgrade to 0.110 core.
     - Use ${HOME}/Library/Application Support/MAME OS X/ as default directory.
@@ -12,7 +12,7 @@
     - Add loading message with game description.
   
 <% version = "0.109-1" %>
-- version: <%=version%>
+- version: "<%=version%>"
   date: 2006-11-18
   changes:
     - Resolve aliases in paths (thanks to Martin White).
@@ -28,7 +28,7 @@
       size: 306986
   
 <% version = "0.109" %>
-- version: <%=version%>
+- version: "<%=version%>"
   date: 2006-11-12
   changes:
     - Initial release.

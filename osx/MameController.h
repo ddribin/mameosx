@@ -117,6 +117,8 @@ extern "C" {
 
 - (IBAction) showMameLog: (id) sender;
 
+- (IBAction) showReleaseNotes: (id) sender;
+
 #pragma mark -
 #pragma mark MameView delegates
 

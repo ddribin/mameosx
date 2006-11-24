@@ -16,3 +16,19 @@ def read_changelog(file)
   fix_dates(changelog)
   return changelog
 end
+
+def changelog2markdown(changelog, io)
+  separator = ""
+  changelog.each do |release|
+    release_date = release.date.strftime("%d %b %Y")
+    title = "Version #{release.version} -- #{release_date}"
+    io.print separator
+    io.puts title
+    io.puts "-" * title.size
+    io.puts
+    release.changes.each do |change|
+      io.puts "* " + change
+    end
+    separator = "\n\n"
+  end
+end
