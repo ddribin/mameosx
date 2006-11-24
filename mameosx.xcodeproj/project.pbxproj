@@ -2653,8 +2653,8 @@
 		5501E8910AB275F900756C9B /* UnitTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5501E8920AB275FA00756C9B /* UnitTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "UnitTests-Info.plist"; sourceTree = "<group>"; };
 		5503D7F30AB7B63E003F407E /* MameTextureConverter.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = MameTextureConverter.h; sourceTree = "<group>"; };
-		5511DE5E0AE5D34600D416BF /* DDCustomOpenGLView.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DDCustomOpenGLView.h; sourceTree = "<group>"; };
-		5511DE5F0AE5D34600D416BF /* DDCustomOpenGLView.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DDCustomOpenGLView.m; sourceTree = "<group>"; };
+		5511DE5E0AE5D34600D416BF /* DDCustomOpenGLView.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = DDCustomOpenGLView.h; path = ../vendor/DDCustomOpenGLView.h; sourceTree = "<group>"; };
+		5511DE5F0AE5D34600D416BF /* DDCustomOpenGLView.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = DDCustomOpenGLView.m; path = ../vendor/DDCustomOpenGLView.m; sourceTree = "<group>"; };
 		551A61390AC24B2000AECE1E /* ui.bdf */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = ui.bdf; sourceTree = "<group>"; };
 		552F010F0AC812A200A14DFA /* MameOpenGLRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MameOpenGLRenderer.h; sourceTree = "<group>"; };
 		552F01100AC812A200A14DFA /* MameOpenGLRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MameOpenGLRenderer.m; sourceTree = "<group>"; };
