@@ -8709,7 +8709,7 @@
 				55D292590B17567A002C9199 /* Headers */,
 				55D2925A0B17567A002C9199 /* Sources */,
 				55D2925B0B17567A002C9199 /* Frameworks */,
-				55D292EF0B175E2B002C9199 /* ShellScript */,
+				55D292EF0B175E2B002C9199 /* Generate Release Notes (Script) */,
 			);
 			buildRules = (
 			);
@@ -8838,7 +8838,7 @@
 			shellPath = /bin/sh;
 			shellScript = "mkdir -p ${SRCROOT}/mame/generated\n${TARGET_BUILD_DIR}/m68kmake ${SRCROOT}/mame/generated ${SRCROOT}/mame/src/cpu/m68000/m68k_in.c\ndate > ${SRCROOT}/mame/generated/.timestamp";
 		};
-		55D292EF0B175E2B002C9199 /* ShellScript */ = {
+		55D292EF0B175E2B002C9199 /* Generate Release Notes (Script) */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -8846,6 +8846,7 @@
 			inputPaths = (
 				"$(SRCROOT)/changelog.yml",
 			);
+			name = "Generate Release Notes (Script)";
 			outputPaths = (
 				"$(SYMROOT)/generated/release_notes.html",
 			);
