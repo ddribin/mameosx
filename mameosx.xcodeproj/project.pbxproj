@@ -19,6 +19,18 @@
 			name = All;
 			productName = All;
 		};
+		55D293B80B17774C002C9199 /* Disk Image */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 55D293BD0B17777E002C9199 /* Build configuration list for PBXAggregateTarget "Disk Image" */;
+			buildPhases = (
+				55D293BB0B177760002C9199 /* ShellScript */,
+			);
+			dependencies = (
+				55D293BA0B177758002C9199 /* PBXTargetDependency */,
+			);
+			name = "Disk Image";
+			productName = "Disk Image";
+		};
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
@@ -2622,6 +2634,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 55D2925C0B17567A002C9199 /* app */;
 			remoteInfo = app;
+		};
+		55D293B90B177758002C9199 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 556A42440AA4E9CE00602CC5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 55BEFB0C0AEC6D0C00357340 /* MAME OS X */;
+			remoteInfo = "MAME OS X";
 		};
 		55FEC7F80AEC58D8001A1CAB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -8765,6 +8784,7 @@
 				55BEF99F0AEC5E5C00357340 /* MameKit */,
 				55785CC60AFAF55D000AE388 /* layouts */,
 				553A0A300B00541E00531E1F /* m68kmake */,
+				55D293B80B17774C002C9199 /* Disk Image */,
 			);
 		};
 /* End PBXProject section */
@@ -8853,6 +8873,19 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "echo \"Building release notes\" 1>&2\nmkdir -p ${SYMROOT}/generated\n${SRCROOT}/tools/changelog2release ${SRCROOT}/changelog.yml > ${SYMROOT}/generated/release_notes.html";
+		};
+		55D293BB0B177760002C9199 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "echo \"Create Disk Image\" 1>&2\n${SRCROOT}/tools/create_dmg.sh";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -11329,6 +11362,11 @@
 			target = 55D2925C0B17567A002C9199 /* app */;
 			targetProxy = 55D292BA0B175A0A002C9199 /* PBXContainerItemProxy */;
 		};
+		55D293BA0B177758002C9199 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 55BEFB0C0AEC6D0C00357340 /* MAME OS X */;
+			targetProxy = 55D293B90B177758002C9199 /* PBXContainerItemProxy */;
+		};
 		55FEC7F90AEC58D8001A1CAB /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 55FEC7B50AEC5713001A1CAB /* tiny */;
@@ -12045,6 +12083,28 @@
 			};
 			name = Release;
 		};
+		55D293BE0B17777E002C9199 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = "Disk Image";
+			};
+			name = Debug;
+		};
+		55D293BF0B17777E002C9199 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				PRODUCT_NAME = "Disk Image";
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
 		55FEC7C10AEC5744001A1CAB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -12229,6 +12289,15 @@
 			buildConfigurations = (
 				55D292610B175699002C9199 /* Debug */,
 				55D292620B175699002C9199 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		55D293BD0B17777E002C9199 /* Build configuration list for PBXAggregateTarget "Disk Image" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				55D293BE0B17777E002C9199 /* Debug */,
+				55D293BF0B17777E002C9199 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
