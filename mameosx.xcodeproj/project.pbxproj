@@ -23,7 +23,7 @@
 			isa = PBXAggregateTarget;
 			buildConfigurationList = 55D293BD0B17777E002C9199 /* Build configuration list for PBXAggregateTarget "Disk Image" */;
 			buildPhases = (
-				55D293BB0B177760002C9199 /* ShellScript */,
+				55D293BB0B177760002C9199 /* Create Disk Image (Script) */,
 			);
 			dependencies = (
 				55D293BA0B177758002C9199 /* PBXTargetDependency */,
@@ -8872,20 +8872,21 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "echo \"Building release notes\" 1>&2\nmkdir -p ${SYMROOT}/generated\n${SRCROOT}/tools/changelog2release ${SRCROOT}/changelog.yml > ${SYMROOT}/generated/release_notes.html";
+			shellScript = "echo \"Building release notes\" 1>&2\nmkdir -p ${SYMROOT}/generated\n${MY_SCRIPT_DIR}/changelog2release ${SRCROOT}/changelog.yml > ${SYMROOT}/generated/release_notes.html";
 		};
-		55D293BB0B177760002C9199 /* ShellScript */ = {
+		55D293BB0B177760002C9199 /* Create Disk Image (Script) */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
+			name = "Create Disk Image (Script)";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "echo \"Create Disk Image\" 1>&2\n${SRCROOT}/tools/create_dmg.sh";
+			shellScript = "echo \"Create Disk Image\" 1>&2\n${MY_SCRIPT_DIR}/create_dmg.sh";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -11499,6 +11500,7 @@
 					"$(SRCROOT)/mame",
 					"$(SRCROOT)/osx",
 				);
+				MY_SCRIPT_DIR = "${SRCROOT}/tools";
 				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
 			};
 			name = Debug;
@@ -11521,6 +11523,7 @@
 					"$(SRCROOT)/mame",
 					"$(SRCROOT)/osx",
 				);
+				MY_SCRIPT_DIR = "${SRCROOT}/tools";
 				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
 			};
 			name = Release;
