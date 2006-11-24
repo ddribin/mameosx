@@ -1,8 +1,9 @@
 #!/bin/bash -v
 
-parse_make=./tools/parse_make.rb
-set_finder_comment=./tools/set_finder_comment
-append_finder_comment=./tools/append_finder_comment
+MY_DIR=`dirname $0`
+parse_make="${MY_DIR}/parse_make.rb"
+set_finder_comment="${MY_DIR}/set_finder_comment"
+append_finder_comment="${MY_DIR}/append_finder_comment"
 
 ${parse_make} --cpu-config > cpu_config.h
 ${parse_make} --sound-config > sound_config.h
