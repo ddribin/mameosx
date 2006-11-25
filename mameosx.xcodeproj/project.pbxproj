@@ -1437,42 +1437,42 @@
 		55B409700B0FC6C700EE3DB5 /* playmark.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FAEC0B0FC6BF00EE3DB5 /* playmark.c */; };
 		55B409710B0FC6C700EE3DB5 /* playmark.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FAED0B0FC6BF00EE3DB5 /* playmark.c */; };
 		55B409720B0FC6C700EE3DB5 /* pleiads.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FAEE0B0FC6BF00EE3DB5 /* pleiads.c */; };
-		55B409730B0FC6C700EE3DB5 /* plygonet.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FAEF0B0FC6BF00EE3DB5 /* plygonet.c */; };
-		55B409740B0FC6C700EE3DB5 /* plygonet.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FAF00B0FC6BF00EE3DB5 /* plygonet.c */; };
+		55B409730B0FC6C700EE3DB5 /* plygonet.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FAEF0B0FC6BF00EE3DB5; };
+		55B409740B0FC6C700EE3DB5 /* plygonet.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FAF00B0FC6BF00EE3DB5; };
 		55B409750B0FC6C700EE3DB5 /* pmpoker.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FAF10B0FC6BF00EE3DB5 /* pmpoker.c */; };
 		55B409760B0FC6C700EE3DB5 /* pntnpuzl.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FAF20B0FC6BF00EE3DB5 /* pntnpuzl.c */; };
-		55B409770B0FC6C700EE3DB5 /* pokechmp.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FAF30B0FC6BF00EE3DB5 /* pokechmp.c */; };
-		55B409780B0FC6C700EE3DB5 /* pokechmp.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FAF40B0FC6BF00EE3DB5 /* pokechmp.c */; };
-		55B409790B0FC6C700EE3DB5 /* polepos.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FAF50B0FC6BF00EE3DB5 /* polepos.c */; };
-		55B4097A0B0FC6C700EE3DB5 /* polepos.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FAF60B0FC6BF00EE3DB5 /* polepos.c */; };
-		55B4097B0B0FC6C700EE3DB5 /* polepos.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FAF70B0FC6BF00EE3DB5 /* polepos.c */; };
-		55B4097C0B0FC6C700EE3DB5 /* policetr.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FAF80B0FC6BF00EE3DB5 /* policetr.c */; };
-		55B4097D0B0FC6C700EE3DB5 /* policetr.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FAF90B0FC6BF00EE3DB5 /* policetr.c */; };
+		55B409770B0FC6C700EE3DB5 /* pokechmp.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FAF30B0FC6BF00EE3DB5; };
+		55B409780B0FC6C700EE3DB5 /* pokechmp.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FAF40B0FC6BF00EE3DB5; };
+		55B409790B0FC6C700EE3DB5 /* polepos.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FAF50B0FC6BF00EE3DB5; };
+		55B4097A0B0FC6C700EE3DB5 /* polepos.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FAF60B0FC6BF00EE3DB5; };
+		55B4097B0B0FC6C700EE3DB5 /* polepos.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FAF70B0FC6BF00EE3DB5; };
+		55B4097C0B0FC6C700EE3DB5 /* policetr.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FAF80B0FC6BF00EE3DB5; };
+		55B4097D0B0FC6C700EE3DB5 /* policetr.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FAF90B0FC6BF00EE3DB5; };
 		55B4097E0B0FC6C700EE3DB5 /* poly.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FAFA0B0FC6BF00EE3DB5 /* poly.c */; };
-		55B4097F0B0FC6C700EE3DB5 /* polyplay.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FAFB0B0FC6BF00EE3DB5 /* polyplay.c */; };
-		55B409800B0FC6C700EE3DB5 /* polyplay.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FAFC0B0FC6BF00EE3DB5 /* polyplay.c */; };
-		55B409810B0FC6C700EE3DB5 /* polyplay.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FAFD0B0FC6BF00EE3DB5 /* polyplay.c */; };
-		55B409820B0FC6C700EE3DB5 /* poolshrk.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FAFE0B0FC6BF00EE3DB5 /* poolshrk.c */; };
-		55B409830B0FC6C700EE3DB5 /* poolshrk.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FAFF0B0FC6BF00EE3DB5 /* poolshrk.c */; };
-		55B409840B0FC6C700EE3DB5 /* poolshrk.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FB000B0FC6BF00EE3DB5 /* poolshrk.c */; };
-		55B409850B0FC6C700EE3DB5 /* pooyan.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FB010B0FC6BF00EE3DB5 /* pooyan.c */; };
-		55B409860B0FC6C700EE3DB5 /* pooyan.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FB020B0FC6BF00EE3DB5 /* pooyan.c */; };
-		55B409870B0FC6C700EE3DB5 /* popeye.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FB030B0FC6BF00EE3DB5 /* popeye.c */; };
-		55B409880B0FC6C700EE3DB5 /* popeye.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FB040B0FC6BF00EE3DB5 /* popeye.c */; };
-		55B409890B0FC6C700EE3DB5 /* popper.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FB050B0FC6BF00EE3DB5 /* popper.c */; };
-		55B4098A0B0FC6C700EE3DB5 /* popper.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FB060B0FC6BF00EE3DB5 /* popper.c */; };
-		55B4098B0B0FC6C700EE3DB5 /* portrait.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FB070B0FC6BF00EE3DB5 /* portrait.c */; };
-		55B4098C0B0FC6C700EE3DB5 /* portrait.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FB080B0FC6BF00EE3DB5 /* portrait.c */; };
+		55B4097F0B0FC6C700EE3DB5 /* polyplay.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FAFB0B0FC6BF00EE3DB5; };
+		55B409800B0FC6C700EE3DB5 /* polyplay.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FAFC0B0FC6BF00EE3DB5; };
+		55B409810B0FC6C700EE3DB5 /* polyplay.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FAFD0B0FC6BF00EE3DB5; };
+		55B409820B0FC6C700EE3DB5 /* poolshrk.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FAFE0B0FC6BF00EE3DB5; };
+		55B409830B0FC6C700EE3DB5 /* poolshrk.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FAFF0B0FC6BF00EE3DB5; };
+		55B409840B0FC6C700EE3DB5 /* poolshrk.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FB000B0FC6BF00EE3DB5; };
+		55B409850B0FC6C700EE3DB5 /* pooyan.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FB010B0FC6BF00EE3DB5; };
+		55B409860B0FC6C700EE3DB5 /* pooyan.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FB020B0FC6BF00EE3DB5; };
+		55B409870B0FC6C700EE3DB5 /* popeye.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FB030B0FC6BF00EE3DB5; };
+		55B409880B0FC6C700EE3DB5 /* popeye.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FB040B0FC6BF00EE3DB5; };
+		55B409890B0FC6C700EE3DB5 /* popper.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FB050B0FC6BF00EE3DB5; };
+		55B4098A0B0FC6C700EE3DB5 /* popper.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FB060B0FC6BF00EE3DB5; };
+		55B4098B0B0FC6C700EE3DB5 /* portrait.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FB070B0FC6BF00EE3DB5; };
+		55B4098C0B0FC6C700EE3DB5 /* portrait.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FB080B0FC6BF00EE3DB5; };
 		55B4098D0B0FC6C700EE3DB5 /* powerbal.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FB090B0FC6BF00EE3DB5 /* powerbal.c */; };
-		55B4098E0B0FC6C700EE3DB5 /* powerins.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FB0A0B0FC6BF00EE3DB5 /* powerins.c */; };
-		55B4098F0B0FC6C700EE3DB5 /* powerins.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FB0B0B0FC6BF00EE3DB5 /* powerins.c */; };
+		55B4098E0B0FC6C700EE3DB5 /* powerins.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FB0A0B0FC6BF00EE3DB5; };
+		55B4098F0B0FC6C700EE3DB5 /* powerins.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FB0B0B0FC6BF00EE3DB5; };
 		55B409900B0FC6C700EE3DB5 /* ppmast93.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FB0C0B0FC6BF00EE3DB5 /* ppmast93.c */; };
 		55B409910B0FC6C700EE3DB5 /* ppu2c0x.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FB0D0B0FC6BF00EE3DB5 /* ppu2c0x.c */; };
-		55B409920B0FC6C700EE3DB5 /* prehisle.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FB0E0B0FC6BF00EE3DB5 /* prehisle.c */; };
-		55B409930B0FC6C700EE3DB5 /* prehisle.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FB0F0B0FC6BF00EE3DB5 /* prehisle.c */; };
+		55B409920B0FC6C700EE3DB5 /* prehisle.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FB0E0B0FC6BF00EE3DB5; };
+		55B409930B0FC6C700EE3DB5 /* prehisle.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FB0F0B0FC6BF00EE3DB5; };
 		55B409940B0FC6C700EE3DB5 /* progolf.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FB100B0FC6BF00EE3DB5 /* progolf.c */; };
-		55B409950B0FC6C700EE3DB5 /* psikyo.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FB110B0FC6BF00EE3DB5 /* psikyo.c */; };
-		55B409960B0FC6C700EE3DB5 /* psikyo.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FB120B0FC6BF00EE3DB5 /* psikyo.c */; };
+		55B409950B0FC6C700EE3DB5 /* psikyo.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FB110B0FC6BF00EE3DB5; };
+		55B409960B0FC6C700EE3DB5 /* psikyo.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FB120B0FC6BF00EE3DB5; };
 		55B409970B0FC6C700EE3DB5 /* psikyo4.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FB130B0FC6BF00EE3DB5 /* psikyo4.c */; };
 		55B409980B0FC6C700EE3DB5 /* psikyo4.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FB140B0FC6BF00EE3DB5 /* psikyo4.c */; };
 		55B409990B0FC6C700EE3DB5 /* psikyosh.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FB150B0FC6BF00EE3DB5 /* psikyosh.c */; };
@@ -1480,7 +1480,7 @@
 		55B4099B0B0FC6C700EE3DB5 /* psx.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FB170B0FC6BF00EE3DB5 /* psx.c */; };
 		55B4099C0B0FC6C700EE3DB5 /* psx.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FB180B0FC6BF00EE3DB5 /* psx.c */; };
 		55B4099D0B0FC6C700EE3DB5 /* psychic5.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FB190B0FC6BF00EE3DB5 /* psychic5.c */; };
-		55B4099E0B0FC6C700EE3DB5 /* psychic5.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FB1A0B0FC6BF00EE3DB5 /* psychic5.c */; };
+		55B4099E0B0FC6C700EE3DB5 /* psychic5.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FB1A0B0FC6BF00EE3DB5; };
 		55B4099F0B0FC6C700EE3DB5 /* pturn.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FB1B0B0FC6BF00EE3DB5 /* pturn.c */; };
 		55B409A00B0FC6C700EE3DB5 /* puckpkmn.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FB1C0B0FC6BF00EE3DB5 /* puckpkmn.c */; };
 		55B409A10B0FC6C700EE3DB5 /* pulsar.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4FB1D0B0FC6BF00EE3DB5 /* pulsar.c */; };
@@ -2625,21 +2625,21 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 556A42440AA4E9CE00602CC5 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 55D2925C0B17567A002C9199 /* app */;
+			remoteGlobalIDString = 55D2925C0B17567A002C9199;
 			remoteInfo = app;
 		};
 		55D292BA0B175A0A002C9199 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 556A42440AA4E9CE00602CC5 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 55D2925C0B17567A002C9199 /* app */;
+			remoteGlobalIDString = 55D2925C0B17567A002C9199;
 			remoteInfo = app;
 		};
 		55D293B90B177758002C9199 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 556A42440AA4E9CE00602CC5 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 55BEFB0C0AEC6D0C00357340 /* MAME OS X */;
+			remoteGlobalIDString = 55BEFB0C0AEC6D0C00357340;
 			remoteInfo = "MAME OS X";
 		};
 		55FEC7F80AEC58D8001A1CAB /* PBXContainerItemProxy */ = {
@@ -4494,42 +4494,42 @@
 		55B4FAEC0B0FC6BF00EE3DB5 /* playmark.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = playmark.c; path = vidhrdw/playmark.c; sourceTree = "<group>"; };
 		55B4FAED0B0FC6BF00EE3DB5 /* playmark.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = playmark.c; path = drivers/playmark.c; sourceTree = "<group>"; };
 		55B4FAEE0B0FC6BF00EE3DB5 /* pleiads.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = pleiads.c; path = sndhrdw/pleiads.c; sourceTree = "<group>"; };
-		55B4FAEF0B0FC6BF00EE3DB5 /* plygonet.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = plygonet.c; path = vidhrdw/plygonet.c; sourceTree = "<group>"; };
-		55B4FAF00B0FC6BF00EE3DB5 /* plygonet.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = plygonet.c; path = drivers/plygonet.c; sourceTree = "<group>"; };
+		55B4FAEF0B0FC6BF00EE3DB5 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = plygonet.c; path = vidhrdw/plygonet.c; sourceTree = "<group>"; };
+		55B4FAF00B0FC6BF00EE3DB5 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = plygonet.c; path = drivers/plygonet.c; sourceTree = "<group>"; };
 		55B4FAF10B0FC6BF00EE3DB5 /* pmpoker.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = pmpoker.c; path = drivers/pmpoker.c; sourceTree = "<group>"; };
 		55B4FAF20B0FC6BF00EE3DB5 /* pntnpuzl.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = pntnpuzl.c; path = drivers/pntnpuzl.c; sourceTree = "<group>"; };
-		55B4FAF30B0FC6BF00EE3DB5 /* pokechmp.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = pokechmp.c; path = vidhrdw/pokechmp.c; sourceTree = "<group>"; };
-		55B4FAF40B0FC6BF00EE3DB5 /* pokechmp.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = pokechmp.c; path = drivers/pokechmp.c; sourceTree = "<group>"; };
-		55B4FAF50B0FC6BF00EE3DB5 /* polepos.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = polepos.c; path = vidhrdw/polepos.c; sourceTree = "<group>"; };
-		55B4FAF60B0FC6BF00EE3DB5 /* polepos.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = polepos.c; path = sndhrdw/polepos.c; sourceTree = "<group>"; };
-		55B4FAF70B0FC6BF00EE3DB5 /* polepos.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = polepos.c; path = drivers/polepos.c; sourceTree = "<group>"; };
-		55B4FAF80B0FC6BF00EE3DB5 /* policetr.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = policetr.c; path = vidhrdw/policetr.c; sourceTree = "<group>"; };
-		55B4FAF90B0FC6BF00EE3DB5 /* policetr.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = policetr.c; path = drivers/policetr.c; sourceTree = "<group>"; };
+		55B4FAF30B0FC6BF00EE3DB5 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = pokechmp.c; path = vidhrdw/pokechmp.c; sourceTree = "<group>"; };
+		55B4FAF40B0FC6BF00EE3DB5 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = pokechmp.c; path = drivers/pokechmp.c; sourceTree = "<group>"; };
+		55B4FAF50B0FC6BF00EE3DB5 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = polepos.c; path = vidhrdw/polepos.c; sourceTree = "<group>"; };
+		55B4FAF60B0FC6BF00EE3DB5 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = polepos.c; path = sndhrdw/polepos.c; sourceTree = "<group>"; };
+		55B4FAF70B0FC6BF00EE3DB5 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = polepos.c; path = drivers/polepos.c; sourceTree = "<group>"; };
+		55B4FAF80B0FC6BF00EE3DB5 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = policetr.c; path = vidhrdw/policetr.c; sourceTree = "<group>"; };
+		55B4FAF90B0FC6BF00EE3DB5 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = policetr.c; path = drivers/policetr.c; sourceTree = "<group>"; };
 		55B4FAFA0B0FC6BF00EE3DB5 /* poly.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = poly.c; path = vidhrdw/poly.c; sourceTree = "<group>"; };
-		55B4FAFB0B0FC6BF00EE3DB5 /* polyplay.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = polyplay.c; path = vidhrdw/polyplay.c; sourceTree = "<group>"; };
-		55B4FAFC0B0FC6BF00EE3DB5 /* polyplay.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = polyplay.c; path = sndhrdw/polyplay.c; sourceTree = "<group>"; };
-		55B4FAFD0B0FC6BF00EE3DB5 /* polyplay.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = polyplay.c; path = drivers/polyplay.c; sourceTree = "<group>"; };
-		55B4FAFE0B0FC6BF00EE3DB5 /* poolshrk.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = poolshrk.c; path = vidhrdw/poolshrk.c; sourceTree = "<group>"; };
-		55B4FAFF0B0FC6BF00EE3DB5 /* poolshrk.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = poolshrk.c; path = sndhrdw/poolshrk.c; sourceTree = "<group>"; };
-		55B4FB000B0FC6BF00EE3DB5 /* poolshrk.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = poolshrk.c; path = drivers/poolshrk.c; sourceTree = "<group>"; };
-		55B4FB010B0FC6BF00EE3DB5 /* pooyan.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = pooyan.c; path = vidhrdw/pooyan.c; sourceTree = "<group>"; };
-		55B4FB020B0FC6BF00EE3DB5 /* pooyan.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = pooyan.c; path = drivers/pooyan.c; sourceTree = "<group>"; };
-		55B4FB030B0FC6BF00EE3DB5 /* popeye.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = popeye.c; path = vidhrdw/popeye.c; sourceTree = "<group>"; };
-		55B4FB040B0FC6BF00EE3DB5 /* popeye.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = popeye.c; path = drivers/popeye.c; sourceTree = "<group>"; };
-		55B4FB050B0FC6BF00EE3DB5 /* popper.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = popper.c; path = vidhrdw/popper.c; sourceTree = "<group>"; };
-		55B4FB060B0FC6BF00EE3DB5 /* popper.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = popper.c; path = drivers/popper.c; sourceTree = "<group>"; };
-		55B4FB070B0FC6BF00EE3DB5 /* portrait.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = portrait.c; path = vidhrdw/portrait.c; sourceTree = "<group>"; };
-		55B4FB080B0FC6BF00EE3DB5 /* portrait.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = portrait.c; path = drivers/portrait.c; sourceTree = "<group>"; };
+		55B4FAFB0B0FC6BF00EE3DB5 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = polyplay.c; path = vidhrdw/polyplay.c; sourceTree = "<group>"; };
+		55B4FAFC0B0FC6BF00EE3DB5 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = polyplay.c; path = sndhrdw/polyplay.c; sourceTree = "<group>"; };
+		55B4FAFD0B0FC6BF00EE3DB5 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = polyplay.c; path = drivers/polyplay.c; sourceTree = "<group>"; };
+		55B4FAFE0B0FC6BF00EE3DB5 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = poolshrk.c; path = vidhrdw/poolshrk.c; sourceTree = "<group>"; };
+		55B4FAFF0B0FC6BF00EE3DB5 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = poolshrk.c; path = sndhrdw/poolshrk.c; sourceTree = "<group>"; };
+		55B4FB000B0FC6BF00EE3DB5 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = poolshrk.c; path = drivers/poolshrk.c; sourceTree = "<group>"; };
+		55B4FB010B0FC6BF00EE3DB5 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = pooyan.c; path = vidhrdw/pooyan.c; sourceTree = "<group>"; };
+		55B4FB020B0FC6BF00EE3DB5 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = pooyan.c; path = drivers/pooyan.c; sourceTree = "<group>"; };
+		55B4FB030B0FC6BF00EE3DB5 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = popeye.c; path = vidhrdw/popeye.c; sourceTree = "<group>"; };
+		55B4FB040B0FC6BF00EE3DB5 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = popeye.c; path = drivers/popeye.c; sourceTree = "<group>"; };
+		55B4FB050B0FC6BF00EE3DB5 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = popper.c; path = vidhrdw/popper.c; sourceTree = "<group>"; };
+		55B4FB060B0FC6BF00EE3DB5 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = popper.c; path = drivers/popper.c; sourceTree = "<group>"; };
+		55B4FB070B0FC6BF00EE3DB5 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = portrait.c; path = vidhrdw/portrait.c; sourceTree = "<group>"; };
+		55B4FB080B0FC6BF00EE3DB5 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = portrait.c; path = drivers/portrait.c; sourceTree = "<group>"; };
 		55B4FB090B0FC6BF00EE3DB5 /* powerbal.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = powerbal.c; path = drivers/powerbal.c; sourceTree = "<group>"; };
-		55B4FB0A0B0FC6BF00EE3DB5 /* powerins.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = powerins.c; path = vidhrdw/powerins.c; sourceTree = "<group>"; };
-		55B4FB0B0B0FC6BF00EE3DB5 /* powerins.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = powerins.c; path = drivers/powerins.c; sourceTree = "<group>"; };
+		55B4FB0A0B0FC6BF00EE3DB5 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = powerins.c; path = vidhrdw/powerins.c; sourceTree = "<group>"; };
+		55B4FB0B0B0FC6BF00EE3DB5 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = powerins.c; path = drivers/powerins.c; sourceTree = "<group>"; };
 		55B4FB0C0B0FC6BF00EE3DB5 /* ppmast93.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = ppmast93.c; path = drivers/ppmast93.c; sourceTree = "<group>"; };
 		55B4FB0D0B0FC6BF00EE3DB5 /* ppu2c0x.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = ppu2c0x.c; path = vidhrdw/ppu2c0x.c; sourceTree = "<group>"; };
-		55B4FB0E0B0FC6BF00EE3DB5 /* prehisle.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = prehisle.c; path = vidhrdw/prehisle.c; sourceTree = "<group>"; };
-		55B4FB0F0B0FC6BF00EE3DB5 /* prehisle.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = prehisle.c; path = drivers/prehisle.c; sourceTree = "<group>"; };
+		55B4FB0E0B0FC6BF00EE3DB5 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = prehisle.c; path = vidhrdw/prehisle.c; sourceTree = "<group>"; };
+		55B4FB0F0B0FC6BF00EE3DB5 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = prehisle.c; path = drivers/prehisle.c; sourceTree = "<group>"; };
 		55B4FB100B0FC6BF00EE3DB5 /* progolf.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = progolf.c; path = drivers/progolf.c; sourceTree = "<group>"; };
-		55B4FB110B0FC6BF00EE3DB5 /* psikyo.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = psikyo.c; path = vidhrdw/psikyo.c; sourceTree = "<group>"; };
-		55B4FB120B0FC6BF00EE3DB5 /* psikyo.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = psikyo.c; path = drivers/psikyo.c; sourceTree = "<group>"; };
+		55B4FB110B0FC6BF00EE3DB5 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = psikyo.c; path = vidhrdw/psikyo.c; sourceTree = "<group>"; };
+		55B4FB120B0FC6BF00EE3DB5 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = psikyo.c; path = drivers/psikyo.c; sourceTree = "<group>"; };
 		55B4FB130B0FC6BF00EE3DB5 /* psikyo4.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = psikyo4.c; path = vidhrdw/psikyo4.c; sourceTree = "<group>"; };
 		55B4FB140B0FC6BF00EE3DB5 /* psikyo4.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = psikyo4.c; path = drivers/psikyo4.c; sourceTree = "<group>"; };
 		55B4FB150B0FC6BF00EE3DB5 /* psikyosh.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = psikyosh.c; path = vidhrdw/psikyosh.c; sourceTree = "<group>"; };
@@ -7442,42 +7442,42 @@
 				55B4FAEC0B0FC6BF00EE3DB5 /* playmark.c */,
 				55B4FAED0B0FC6BF00EE3DB5 /* playmark.c */,
 				55B4FAEE0B0FC6BF00EE3DB5 /* pleiads.c */,
-				55B4FAEF0B0FC6BF00EE3DB5 /* plygonet.c */,
-				55B4FAF00B0FC6BF00EE3DB5 /* plygonet.c */,
+				55B4FAEF0B0FC6BF00EE3DB5,
+				55B4FAF00B0FC6BF00EE3DB5,
 				55B4FAF10B0FC6BF00EE3DB5 /* pmpoker.c */,
 				55B4FAF20B0FC6BF00EE3DB5 /* pntnpuzl.c */,
-				55B4FAF30B0FC6BF00EE3DB5 /* pokechmp.c */,
-				55B4FAF40B0FC6BF00EE3DB5 /* pokechmp.c */,
-				55B4FAF50B0FC6BF00EE3DB5 /* polepos.c */,
-				55B4FAF60B0FC6BF00EE3DB5 /* polepos.c */,
-				55B4FAF70B0FC6BF00EE3DB5 /* polepos.c */,
-				55B4FAF80B0FC6BF00EE3DB5 /* policetr.c */,
-				55B4FAF90B0FC6BF00EE3DB5 /* policetr.c */,
+				55B4FAF30B0FC6BF00EE3DB5,
+				55B4FAF40B0FC6BF00EE3DB5,
+				55B4FAF50B0FC6BF00EE3DB5,
+				55B4FAF60B0FC6BF00EE3DB5,
+				55B4FAF70B0FC6BF00EE3DB5,
+				55B4FAF80B0FC6BF00EE3DB5,
+				55B4FAF90B0FC6BF00EE3DB5,
 				55B4FAFA0B0FC6BF00EE3DB5 /* poly.c */,
-				55B4FAFB0B0FC6BF00EE3DB5 /* polyplay.c */,
-				55B4FAFC0B0FC6BF00EE3DB5 /* polyplay.c */,
-				55B4FAFD0B0FC6BF00EE3DB5 /* polyplay.c */,
-				55B4FAFE0B0FC6BF00EE3DB5 /* poolshrk.c */,
-				55B4FAFF0B0FC6BF00EE3DB5 /* poolshrk.c */,
-				55B4FB000B0FC6BF00EE3DB5 /* poolshrk.c */,
-				55B4FB010B0FC6BF00EE3DB5 /* pooyan.c */,
-				55B4FB020B0FC6BF00EE3DB5 /* pooyan.c */,
-				55B4FB030B0FC6BF00EE3DB5 /* popeye.c */,
-				55B4FB040B0FC6BF00EE3DB5 /* popeye.c */,
-				55B4FB050B0FC6BF00EE3DB5 /* popper.c */,
-				55B4FB060B0FC6BF00EE3DB5 /* popper.c */,
-				55B4FB070B0FC6BF00EE3DB5 /* portrait.c */,
-				55B4FB080B0FC6BF00EE3DB5 /* portrait.c */,
+				55B4FAFB0B0FC6BF00EE3DB5,
+				55B4FAFC0B0FC6BF00EE3DB5,
+				55B4FAFD0B0FC6BF00EE3DB5,
+				55B4FAFE0B0FC6BF00EE3DB5,
+				55B4FAFF0B0FC6BF00EE3DB5,
+				55B4FB000B0FC6BF00EE3DB5,
+				55B4FB010B0FC6BF00EE3DB5,
+				55B4FB020B0FC6BF00EE3DB5,
+				55B4FB030B0FC6BF00EE3DB5,
+				55B4FB040B0FC6BF00EE3DB5,
+				55B4FB050B0FC6BF00EE3DB5,
+				55B4FB060B0FC6BF00EE3DB5,
+				55B4FB070B0FC6BF00EE3DB5,
+				55B4FB080B0FC6BF00EE3DB5,
 				55B4FB090B0FC6BF00EE3DB5 /* powerbal.c */,
-				55B4FB0A0B0FC6BF00EE3DB5 /* powerins.c */,
-				55B4FB0B0B0FC6BF00EE3DB5 /* powerins.c */,
+				55B4FB0A0B0FC6BF00EE3DB5,
+				55B4FB0B0B0FC6BF00EE3DB5,
 				55B4FB0C0B0FC6BF00EE3DB5 /* ppmast93.c */,
 				55B4FB0D0B0FC6BF00EE3DB5 /* ppu2c0x.c */,
-				55B4FB0E0B0FC6BF00EE3DB5 /* prehisle.c */,
-				55B4FB0F0B0FC6BF00EE3DB5 /* prehisle.c */,
+				55B4FB0E0B0FC6BF00EE3DB5,
+				55B4FB0F0B0FC6BF00EE3DB5,
 				55B4FB100B0FC6BF00EE3DB5 /* progolf.c */,
-				55B4FB110B0FC6BF00EE3DB5 /* psikyo.c */,
-				55B4FB120B0FC6BF00EE3DB5 /* psikyo.c */,
+				55B4FB110B0FC6BF00EE3DB5,
+				55B4FB120B0FC6BF00EE3DB5,
 				55B4FB130B0FC6BF00EE3DB5 /* psikyo4.c */,
 				55B4FB140B0FC6BF00EE3DB5 /* psikyo4.c */,
 				55B4FB150B0FC6BF00EE3DB5 /* psikyosh.c */,
