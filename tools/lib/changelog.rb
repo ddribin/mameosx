@@ -4,8 +4,8 @@ require 'erb'
 
 def fix_dates(changelog)
   changelog.each do |release|
-    if release.date.kind_of? String
-      release.date = Time.parse(release.date)
+    if !release.date.kind_of? Time
+      release.date = Time.parse(release.date.to_s)
     end
   end
 end
