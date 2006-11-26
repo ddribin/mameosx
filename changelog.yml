@@ -10,6 +10,7 @@
     - Add MAME startup messages preferences to the UI.
     - Set window title to game description.
     - Add loading message with game description.
+    - Increase performance on machines without Core Image acceleration.
   
 <% version = "0.109-1" %>
 - version: "<%=version%>"
