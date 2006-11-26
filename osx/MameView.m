@@ -802,7 +802,7 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     else
         destRect = [self stretchNSSize: mRenderSize withinRect: currentBounds];
 
-    if (YES) // (mCoreImageAccelerated)
+    if (mCoreImageAccelerated)
         [self drawFrameUsingCoreImage: frame inRect: destRect];
     else
         [self drawFrameUsingOpenGL: frame inRect: destRect];
