@@ -1,16 +1,18 @@
 <% version = "0.110" %>
 - version: "<%=version%>"
-  date: 2006-11-24
+  date: 2006-11-26
   changes:
     - Upgrade to 0.110 core.
     - Use ${HOME}/Library/Application Support/MAME OS X/ as default directory.
     - Add preference for checking updates at startup (thanks to Martin White).
+    - Rename ROM Loading Log to MAME Log.
     - Add linear filtering.
     - Use a lockless audio buffer for less chance of sound glitches.
     - Add MAME startup messages preferences to the UI.
     - Set window title to game description.
     - Add loading message with game description.
     - Increase performance on machines without Core Image acceleration.
+    - Add release notes item Help menu and disk image.
   
 <% version = "0.109-1" %>
 - version: "<%=version%>"
