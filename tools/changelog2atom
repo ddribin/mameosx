@@ -50,10 +50,15 @@ def changelog2atom(changelog, target = $stdout)
         end
         xml.link :rel => 'alternate',
           :href => 'http://mameosx.sourceforge.net/release_notes/'
-        xml.link :rel => 'enclosure', :type => "application/octet-stream",
-          :title => "Disk Image",
-          :href => "http://prdownloads.sourceforge.net/mameosx/MAMEOSX-" +
-            release.version + ".dmg?download"
+        
+        if (!release.files.nil?)
+          dmg_file = release.files.find { |f| f.name =~ /\.dmg$/ }
+          xml.link :rel => 'enclosure', :type => "application/octet-stream",
+            :title => "Disk Image",
+            :href => "http://prdownloads.sourceforge.net/mameosx/" +
+              dmg_file.name + "?download",
+            :length => dmg_file.size
+        end
       end
     end
   end
