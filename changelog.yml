@@ -13,6 +13,11 @@
     - Add loading message with game description.
     - Increase performance on machines without Core Image acceleration.
     - Add release notes item Help menu and disk image.
+  files:
+    - name: MAMEOSX-<%=version%>.dmg
+      size: 24068542
+    - name: mameosx-<%=version%>.tar.gz
+      size: 358511
   
 <% version = "0.109-1" %>
 - version: "<%=version%>"
