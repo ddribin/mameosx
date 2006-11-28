@@ -560,6 +560,7 @@ NSString * MameBiosKey = @"Bios";
     { MameStatePath,        @"States" },
     { MameArtworkPath,      @"Cabinet Art" },
     { MameSnapshotPath,     @"Screenshots" },
+    { MameDiffPath,         @"Diffs" },
     { 0, nil }
     };
 
