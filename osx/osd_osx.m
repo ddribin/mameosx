@@ -52,12 +52,6 @@ static MameView * sController;
 void osd_set_controller(MameView * controller)
 {
     sController = controller;
-}
-
-int osd_init(running_machine *machine)
-{
-    add_exit_callback(machine, mame_did_exit);
-    add_pause_callback(machine, mame_did_pause);
     mame_set_output_channel(OUTPUT_CHANNEL_ERROR, error_callback,
                             sController, NULL, NULL);
     mame_set_output_channel(OUTPUT_CHANNEL_WARNING, warning_callback,
@@ -68,6 +62,12 @@ int osd_init(running_machine *machine)
                             sController, NULL, NULL);
     mame_set_output_channel(OUTPUT_CHANNEL_LOG, log_callback,
                             sController, NULL, NULL);
+}
+
+int osd_init(running_machine *machine)
+{
+    add_exit_callback(machine, mame_did_exit);
+    add_pause_callback(machine, mame_did_pause);
     
     return [sController osd_init: machine];
 }

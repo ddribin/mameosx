@@ -17,6 +17,7 @@
                 showPreferencesPanel = id; 
                 showReleaseNotes = id; 
                 togglePause = id; 
+                verifyRoms = id; 
             }; 
             CLASS = MameController; 
             LANGUAGE = ObjC; 

@@ -128,6 +128,13 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     mTimingController = [[MameTimingController alloc] init];
     mFileManager = [[MameFileManager alloc] init];
 
+    // osd_set_controller(self);
+    osd_set_controller(self);
+    osd_set_input_controller(mInputController);
+    osd_set_audio_controller(mAudioController);
+    osd_set_timing_controller(mTimingController);
+    osd_set_file_manager(mFileManager);
+
     mRenderInCoreVideoThread = YES;
     mSyncToRefresh = NO;
     mMameLock = [[NSLock alloc] init];
@@ -395,13 +402,6 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     if (mGameIndex == -1)
         return NO;
     
-    // osd_set_controller(self);
-    osd_set_controller(self);
-    osd_set_input_controller(mInputController);
-    osd_set_audio_controller(mAudioController);
-    osd_set_timing_controller(mTimingController);
-    osd_set_file_manager(mFileManager);
-    
     NSLog(@"Running %@", mGame);
     [NSThread detachNewThreadSelector: @selector(gameThread)
                              toTarget: self
@@ -555,8 +555,14 @@ NSString * MameExitStatusKey = @"MameExitStatus";
 {
     if ([mDelegate respondsToSelector: @selector(mameInfoMessage:)])
     {
+#if 0
         [mDelegate mameInfoMessage:
             [self formatOutputMessage: utf8Format arguments: argptr]];
+#else
+        [mDelegate performSelectorOnMainThread: @selector(mameInfoMessage:)
+                                    withObject: [self formatOutputMessage: utf8Format arguments: argptr]
+                                 waitUntilDone: NO];
+#endif
     }
 }
 

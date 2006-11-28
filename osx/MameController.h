@@ -115,6 +115,8 @@ extern "C" {
 - (IBAction) resizeToDoubleSize: (id) sender;
 - (IBAction) resizeToOptimalSize: (id) sender;
 
+- (IBAction) verifyRoms: (id) sender;
+
 - (IBAction) showMameLog: (id) sender;
 
 - (IBAction) showReleaseNotes: (id) sender;

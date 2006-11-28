@@ -31,6 +31,7 @@
 #import "VersionChecker.h"
 #import "PreferencesWindowController.h"
 #import "MamePreferences.h"
+#import "RomAuditWindowController.h"
 
 #include <mach/mach_time.h>
 #include <unistd.h>
@@ -332,6 +333,16 @@ void exit_sleeper()
 - (NSString *) loadingMessage;
 {
     return mLoadingMessage;
+}
+
+- (IBAction) verifyRoms: (id) sender;
+{
+    RomAuditWindowController * controller =
+        [[RomAuditWindowController alloc] init];
+    
+    NSWindow * window = [controller window];
+    [window center];
+    [controller showWindow: self];
 }
 
 - (IBAction) showMameLog: (id) sender;

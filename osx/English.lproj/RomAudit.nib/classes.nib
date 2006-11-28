@@ -1,0 +1,18 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {verifyRoms = id; }; 
+            CLASS = RomAuditWindowController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                mNotesView = NSTextView; 
+                mProgress = NSProgressIndicator; 
+                mResultsController = NSArrayController; 
+                mResultsTable = NSTableView; 
+            }; 
+            SUPERCLASS = NSWindowController; 
+        }
+    ); 
+    IBVersion = 1; 
+}

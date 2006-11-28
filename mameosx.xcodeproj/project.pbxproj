@@ -277,6 +277,13 @@
 		558D9F2A0AAE70B1007B2A32 /* cpu_config.h in Headers */ = {isa = PBXBuildFile; fileRef = 558D9F290AAE70B1007B2A32 /* cpu_config.h */; };
 		558D9F2C0AAE70E9007B2A32 /* sound_config.h in Headers */ = {isa = PBXBuildFile; fileRef = 558D9F2B0AAE70E9007B2A32 /* sound_config.h */; };
 		558D9F2E0AAE7117007B2A32 /* config.h in Headers */ = {isa = PBXBuildFile; fileRef = 558D9F2D0AAE7117007B2A32 /* config.h */; };
+		5595EEF00B1AC6B200631777 /* symbols.c in Sources */ = {isa = PBXBuildFile; fileRef = 5595EEEF0B1AC6B200631777 /* symbols.c */; };
+		5595EFA30B1BC84600631777 /* RomAuditWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5595EFA10B1BC84600631777 /* RomAuditWindowController.h */; };
+		5595EFA40B1BC84600631777 /* RomAuditWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5595EFA20B1BC84600631777 /* RomAuditWindowController.m */; };
+		5595EFA90B1BC91200631777 /* RomAudit.nib in Resources */ = {isa = PBXBuildFile; fileRef = 5595EFA70B1BC91200631777 /* RomAudit.nib */; };
+		5595EFAA0B1BC91200631777 /* RomAudit.nib in Resources */ = {isa = PBXBuildFile; fileRef = 5595EFA70B1BC91200631777 /* RomAudit.nib */; };
+		5595F0C00B1BDD9B00631777 /* RomAuditSummary.h in Headers */ = {isa = PBXBuildFile; fileRef = 5595F0BE0B1BDD9B00631777 /* RomAuditSummary.h */; };
+		5595F0C10B1BDD9B00631777 /* RomAuditSummary.m in Sources */ = {isa = PBXBuildFile; fileRef = 5595F0BF0B1BDD9B00631777 /* RomAuditSummary.m */; };
 		55A3A5230AA7B36400921B71 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55A3A5220AA7B36400921B71 /* QuartzCore.framework */; };
 		55B404EC0B0FC6C700EE3DB5 /* 4enraya.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4F6680B0FC6BA00EE3DB5 /* 4enraya.c */; };
 		55B404ED0B0FC6C700EE3DB5 /* 4enraya.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4F6690B0FC6BA00EE3DB5 /* 4enraya.c */; };
@@ -3128,6 +3135,12 @@
 		558D9F290AAE70B1007B2A32 /* cpu_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cpu_config.h; sourceTree = "<group>"; };
 		558D9F2B0AAE70E9007B2A32 /* sound_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sound_config.h; sourceTree = "<group>"; };
 		558D9F2D0AAE7117007B2A32 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
+		5595EEEF0B1AC6B200631777 /* symbols.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = symbols.c; sourceTree = "<group>"; };
+		5595EFA10B1BC84600631777 /* RomAuditWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RomAuditWindowController.h; sourceTree = "<group>"; };
+		5595EFA20B1BC84600631777 /* RomAuditWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RomAuditWindowController.m; sourceTree = "<group>"; };
+		5595EFA80B1BC91200631777 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/RomAudit.nib; sourceTree = "<group>"; };
+		5595F0BE0B1BDD9B00631777 /* RomAuditSummary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RomAuditSummary.h; sourceTree = "<group>"; };
+		5595F0BF0B1BDD9B00631777 /* RomAuditSummary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RomAuditSummary.m; sourceTree = "<group>"; };
 		55A3A5220AA7B36400921B71 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = /System/Library/Frameworks/QuartzCore.framework; sourceTree = "<absolute>"; };
 		55B40C470B0FC86400EE3DB5 /* cardline.lay */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = cardline.lay; sourceTree = "<group>"; };
 		55B40C480B0FC86400EE3DB5 /* funworld.lay */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = funworld.lay; sourceTree = "<group>"; };
@@ -5430,6 +5443,7 @@
 				556A4C2A0AA50D6200602CC5 /* Info.plist */,
 				556A4C500AA50E5800602CC5 /* MainMenu.nib */,
 				55E03D070B0A32EE00988109 /* Preferences.nib */,
+				5595EFA70B1BC91200631777 /* RomAudit.nib */,
 				551A61390AC24B2000AECE1E /* ui.bdf */,
 			);
 			name = Resources;
@@ -5783,6 +5797,10 @@
 				55E03CF00B0A320600988109 /* PreferencesWindowController.m */,
 				553A09AE0AFF11B300531E1F /* CustomMameFilters.h */,
 				553A09AF0AFF11B300531E1F /* CustomMameFilters.m */,
+				5595EFA10B1BC84600631777 /* RomAuditWindowController.h */,
+				5595EFA20B1BC84600631777 /* RomAuditWindowController.m */,
+				5595F0BE0B1BDD9B00631777 /* RomAuditSummary.h */,
+				5595F0BF0B1BDD9B00631777 /* RomAuditSummary.m */,
 				556A4C650AA50F2800602CC5 /* main.m */,
 				551A621A0AC2564100AECE1E /* Resources */,
 				55BEFA220AEC624D00357340 /* osd */,
@@ -8190,6 +8208,7 @@
 			children = (
 				55BEFAEC0AEC694500357340 /* MameKit.h */,
 				55BEF9A10AEC5E5C00357340 /* MameKit-Info.plist */,
+				5595EEEF0B1AC6B200631777 /* symbols.c */,
 			);
 			name = MameKit;
 			sourceTree = "<group>";
@@ -8443,6 +8462,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5595EFA30B1BC84600631777 /* RomAuditWindowController.h in Headers */,
+				5595F0C00B1BDD9B00631777 /* RomAuditSummary.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8806,6 +8827,7 @@
 				551A613A0AC24B2000AECE1E /* ui.bdf in Resources */,
 				55E03D090B0A32EE00988109 /* Preferences.nib in Resources */,
 				55D2934E0B1762E6002C9199 /* release_notes.html in Resources */,
+				5595EFA90B1BC91200631777 /* RomAudit.nib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8824,6 +8846,7 @@
 				55BEFB430AEC6DD100357340 /* ui.bdf in Resources */,
 				55E03D0A0B0A32EF00988109 /* Preferences.nib in Resources */,
 				55D2934D0B1762E6002C9199 /* release_notes.html in Resources */,
+				5595EFAA0B1BC91200631777 /* RomAudit.nib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11168,6 +11191,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				55BEFB7F0AEC712900357340 /* mamedriv.c in Sources */,
+				5595EEF00B1AC6B200631777 /* symbols.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11210,6 +11234,8 @@
 				55D292670B1756A9002C9199 /* PreferencesWindowController.m in Sources */,
 				55D292680B1756A9002C9199 /* MamePreferences.m in Sources */,
 				55D292690B1756A9002C9199 /* MameController.m in Sources */,
+				5595EFA40B1BC84600631777 /* RomAuditWindowController.m in Sources */,
+				5595F0C10B1BDD9B00631777 /* RomAuditSummary.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11382,6 +11408,14 @@
 				556A4C510AA50E5800602CC5 /* English */,
 			);
 			name = MainMenu.nib;
+			sourceTree = "<group>";
+		};
+		5595EFA70B1BC91200631777 /* RomAudit.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5595EFA80B1BC91200631777 /* English */,
+			);
+			name = RomAudit.nib;
 			sourceTree = "<group>";
 		};
 		55E03D070B0A32EE00988109 /* Preferences.nib */ = {
