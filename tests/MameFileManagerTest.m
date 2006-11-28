@@ -79,7 +79,7 @@
     STAssertEquals(error, FILERR_NONE, nil);
 }
 
-- (void) testOpenNonExistantFile
+- (void) testOpenNonExistantFileForReading
 {
     osd_file * file = 0;
     UINT64 fileSize = 0;
@@ -143,6 +143,70 @@
     NSData * expected = [@"Hello" dataUsingEncoding: NSUTF8StringEncoding];
     NSData * actual = [NSData dataWithContentsOfFile: tempFile];
     STAssertEqualObjects(actual, expected, nil);
+}
+
+- (void) testOpenForReadAndWrite
+{
+    NSString * tempFile = @"/tmp/net.mame.mameosx.tmp";
+    NSFileManager * fileManager = [NSFileManager defaultManager];
+    [fileManager removeFileAtPath: tempFile
+                          handler: nil];
+    
+    osd_file * file = 0;
+    int flags = OPEN_FLAG_READ | OPEN_FLAG_WRITE;
+    mame_file_error error = [mFileManager osd_open: [tempFile UTF8String]
+                                             flags: flags
+                                              file: &file
+                                          filesize: NULL];
+    STAssertEquals(error, FILERR_NOT_FOUND, nil);
+
+    flags = OPEN_FLAG_READ | OPEN_FLAG_WRITE | OPEN_FLAG_CREATE;
+    error = [mFileManager osd_open: [tempFile UTF8String]
+                             flags: flags
+                              file: &file
+                          filesize: NULL];
+    STAssertEquals(error, FILERR_NONE, nil);
+    STAssertFalse(file == 0, nil);
+    
+    UINT32 actualSize;
+    uint8_t bytes[] = {'H', 'e', 'x', 'x'};
+    error = [mFileManager osd_write: file
+                             buffer: bytes
+                             offset: 0
+                             length: sizeof(bytes)
+                             actual: &actualSize];
+    STAssertEquals(error, FILERR_NONE, nil);
+    STAssertEquals(actualSize, 4U, nil);
+    
+    uint8_t bytes2[] = {'l', 'l', 'o'};
+    error = [mFileManager osd_write: file
+                             buffer: bytes2
+                             offset: 2
+                             length: sizeof(bytes2)
+                             actual: &actualSize];
+    STAssertEquals(error, FILERR_NONE, nil);
+    STAssertEquals(actualSize, 3U, nil);
+    
+    error = [mFileManager osd_close: file];
+    STAssertEquals(error, FILERR_NONE, nil);
+    NSData * expected = [@"Hello" dataUsingEncoding: NSUTF8StringEncoding];
+    NSData * actual = [NSData dataWithContentsOfFile: tempFile];
+    STAssertEqualObjects(actual, expected, nil);
+    
+    // Now try and re-open without the create flag
+    UINT64 fileSize = 0;
+    flags = OPEN_FLAG_READ | OPEN_FLAG_WRITE;
+    error = [mFileManager osd_open: [tempFile UTF8String]
+                             flags: flags
+                              file: &file
+                          filesize: &fileSize];
+    STAssertEquals(error, FILERR_NONE, nil);
+    STAssertFalse(file == 0, nil);
+
+    
+    error = [mFileManager osd_close: file];
+    STAssertEquals(error, FILERR_NONE, nil);
+    STAssertEquals(fileSize, 5ULL, nil);
 }
 
 @end

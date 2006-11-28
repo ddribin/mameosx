@@ -94,11 +94,21 @@ struct _osd_file
 #pragma mark -
 #pragma mark MAME OSD API
 
+/*
+    { OPEN_FLAG_READ | OPEN_FLAG_WRITE | OPEN_FLAG_CREATE,  "wb+" },
+    { OPEN_FLAG_READ | OPEN_FLAG_WRITE,                     "rb+" },
+    {                  OPEN_FLAG_WRITE | OPEN_FLAG_CREATE,  "wb"  },
+    {                  OPEN_FLAG_WRITE,                     "wb"  },
+    { OPEN_FLAG_READ,                                       "rb"  },
+    0, ""
+*/
+
 - (mame_file_error) osd_open: (const char *) path
                        flags: (UINT32) openflags
                         file: (osd_file **) file
                     filesize: (UINT64 *) filesize;
 {
+    // NSLog(@"osd_open: path: %s, flags: 0x%08x", path, openflags);
     NSAssert(path != 0, @"path is NULL");
     NSString * nsPath = [NSString stringWithUTF8String: path];
     nsPath = [self resolveAlias: nsPath];
@@ -113,18 +123,19 @@ struct _osd_file
 
     if (!fileExists && !createFlag)
     {
+        // NSLog(@"osd_open: not found");
         return FILERR_NOT_FOUND;
     }
     
     const char * mode;
-    if (readFlag)
-    {
+    if (readFlag && !writeFlag)
         mode = "rb";
-    }
-    else if (writeFlag && createFlag)
-    {
+    else if (readFlag && writeFlag && !createFlag)
+        mode = "rb+";
+    else if (readFlag && writeFlag && createFlag)
+        mode = "wb+";
+    else if (!readFlag && writeFlag)
         mode = "wb";
-    }
     else
     {
         NSLog(@"osd_open: Invalid mode: 0x%08X, path: %@", openflags, nsPath);
