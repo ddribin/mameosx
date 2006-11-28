@@ -94,15 +94,6 @@ struct _osd_file
 #pragma mark -
 #pragma mark MAME OSD API
 
-/*
-    { OPEN_FLAG_READ | OPEN_FLAG_WRITE | OPEN_FLAG_CREATE,  "wb+" },
-    { OPEN_FLAG_READ | OPEN_FLAG_WRITE,                     "rb+" },
-    {                  OPEN_FLAG_WRITE | OPEN_FLAG_CREATE,  "wb"  },
-    {                  OPEN_FLAG_WRITE,                     "wb"  },
-    { OPEN_FLAG_READ,                                       "rb"  },
-    0, ""
-*/
-
 - (mame_file_error) osd_open: (const char *) path
                        flags: (UINT32) openflags
                         file: (osd_file **) file
