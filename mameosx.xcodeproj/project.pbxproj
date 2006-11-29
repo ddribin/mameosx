@@ -34,6 +34,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		5511A0CC0B1CEBB4009BF71B /* osx_x86drc.c in Sources */ = {isa = PBXBuildFile; fileRef = 5511A0CB0B1CEBB4009BF71B /* osx_x86drc.c */; };
 		551A613A0AC24B2000AECE1E /* ui.bdf in Resources */ = {isa = PBXBuildFile; fileRef = 551A61390AC24B2000AECE1E /* ui.bdf */; };
 		551C7B6A0AFD2716008FF3C7 /* generic.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A43540AA4EC9900602CC5 /* generic.c */; };
 		551C7B6B0AFD2716008FF3C7 /* generic.h in Headers */ = {isa = PBXBuildFile; fileRef = 556A43550AA4EC9900602CC5 /* generic.h */; };
@@ -2190,10 +2191,8 @@
 		55B4F4B80B0FC62800EE3DB5 /* m37710o2.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4F4280B0FC62800EE3DB5 /* m37710o2.c */; };
 		55B4F4B90B0FC62800EE3DB5 /* m37710o3.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4F4290B0FC62800EE3DB5 /* m37710o3.c */; };
 		55B4F4BA0B0FC62800EE3DB5 /* mc68hc11.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4F42A0B0FC62800EE3DB5 /* mc68hc11.c */; };
-		55B4F4BB0B0FC62800EE3DB5 /* mips3.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4F42B0B0FC62800EE3DB5 /* mips3.c */; };
 		55B4F4BC0B0FC62800EE3DB5 /* nec.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4F42C0B0FC62800EE3DB5 /* nec.c */; };
 		55B4F4BD0B0FC62800EE3DB5 /* pic16c5x.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4F42D0B0FC62800EE3DB5 /* pic16c5x.c */; };
-		55B4F4BE0B0FC62800EE3DB5 /* ppc.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4F42E0B0FC62800EE3DB5 /* ppc.c */; };
 		55B4F4BF0B0FC62800EE3DB5 /* psx.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4F42F0B0FC62800EE3DB5 /* psx.c */; };
 		55B4F4C00B0FC62800EE3DB5 /* r3000.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4F4300B0FC62800EE3DB5 /* r3000.c */; };
 		55B4F4C10B0FC62800EE3DB5 /* rsp.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4F4310B0FC62800EE3DB5 /* rsp.c */; };
@@ -2416,6 +2415,8 @@
 		55D2934D0B1762E6002C9199 /* release_notes.html in Resources */ = {isa = PBXBuildFile; fileRef = 55D2934C0B1762E6002C9199 /* release_notes.html */; };
 		55D2934E0B1762E6002C9199 /* release_notes.html in Resources */ = {isa = PBXBuildFile; fileRef = 55D2934C0B1762E6002C9199 /* release_notes.html */; };
 		55D393210B0F54E10017F5F5 /* m68kmake.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D393200B0F54E10017F5F5 /* m68kmake.c */; };
+		55D5ABC60B1CEC8900457216 /* osx_ppc.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D5ABC50B1CEC8900457216 /* osx_ppc.c */; };
+		55D5ABD40B1CED3600457216 /* osx_mips3.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D5ABD30B1CED3600457216 /* osx_mips3.c */; };
 		55E038AD0B08D3A100988109 /* 2203intf.c in Sources */ = {isa = PBXBuildFile; fileRef = 55E0388C0B08D3A100988109 /* 2203intf.c */; };
 		55E038AE0B08D3A100988109 /* 6502dasm.c in Sources */ = {isa = PBXBuildFile; fileRef = 55E0388D0B08D3A100988109 /* 6502dasm.c */; };
 		55E038AF0B08D3A100988109 /* acitya.c in Sources */ = {isa = PBXBuildFile; fileRef = 55E0388E0B08D3A100988109 /* acitya.c */; };
@@ -2679,6 +2680,7 @@
 		5501E8910AB275F900756C9B /* UnitTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5501E8920AB275FA00756C9B /* UnitTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "UnitTests-Info.plist"; sourceTree = "<group>"; };
 		5503D7F30AB7B63E003F407E /* MameTextureConverter.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = MameTextureConverter.h; sourceTree = "<group>"; };
+		5511A0CB0B1CEBB4009BF71B /* osx_x86drc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = osx_x86drc.c; path = osx/osx_x86drc.c; sourceTree = SOURCE_ROOT; };
 		5511DE5E0AE5D34600D416BF /* DDCustomOpenGLView.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = DDCustomOpenGLView.h; path = ../vendor/DDCustomOpenGLView.h; sourceTree = "<group>"; };
 		5511DE5F0AE5D34600D416BF /* DDCustomOpenGLView.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = DDCustomOpenGLView.m; path = ../vendor/DDCustomOpenGLView.m; sourceTree = "<group>"; };
 		551A61390AC24B2000AECE1E /* ui.bdf */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = ui.bdf; sourceTree = "<group>"; };
@@ -5226,6 +5228,8 @@
 		55D2925D0B17567A002C9199 /* libapp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libapp.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		55D2934C0B1762E6002C9199 /* release_notes.html */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.html; name = release_notes.html; path = build/generated/release_notes.html; sourceTree = SOURCE_ROOT; };
 		55D393200B0F54E10017F5F5 /* m68kmake.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = m68kmake.c; path = mame/src/cpu/m68000/m68kmake.c; sourceTree = SOURCE_ROOT; };
+		55D5ABC50B1CEC8900457216 /* osx_ppc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = osx_ppc.c; path = osx/osx_ppc.c; sourceTree = SOURCE_ROOT; };
+		55D5ABD30B1CED3600457216 /* osx_mips3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = osx_mips3.c; path = osx/osx_mips3.c; sourceTree = SOURCE_ROOT; };
 		55E0388C0B08D3A100988109 /* 2203intf.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = 2203intf.c; path = src/sound/2203intf.c; sourceTree = "<group>"; };
 		55E0388D0B08D3A100988109 /* 6502dasm.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = 6502dasm.c; path = src/cpu/m6502/6502dasm.c; sourceTree = "<group>"; };
 		55E0388E0B08D3A100988109 /* acitya.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = acitya.c; path = src/machine/acitya.c; sourceTree = "<group>"; };
@@ -5530,6 +5534,7 @@
 		556A42590AA4E9F400602CC5 /* core */ = {
 			isa = PBXGroup;
 			children = (
+				5511A0CB0B1CEBB4009BF71B /* osx_x86drc.c */,
 				5555908E0AF9B57A001ADC6D /* cdrom.c */,
 				5555908F0AF9B57A001ADC6D /* cdrom.h */,
 				555590900AF9B57A001ADC6D /* profiler.c */,
@@ -5695,6 +5700,8 @@
 			isa = PBXGroup;
 			children = (
 				55B4F3F80B0FC5F700EE3DB5 /* auto */,
+				55D5ABC50B1CEC8900457216 /* osx_ppc.c */,
+				55D5ABD30B1CED3600457216 /* osx_mips3.c */,
 			);
 			name = cpu;
 			path = src/cpu;
@@ -8997,6 +9004,7 @@
 				555590940AF9B57A001ADC6D /* profiler.c in Sources */,
 				5522F6150AFD1FD50028E5F8 /* flt_rc.c in Sources */,
 				551C7B6A0AFD2716008FF3C7 /* generic.c in Sources */,
+				5511A0CC0B1CEBB4009BF71B /* osx_x86drc.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10916,10 +10924,8 @@
 				55B4F4B80B0FC62800EE3DB5 /* m37710o2.c in Sources */,
 				55B4F4B90B0FC62800EE3DB5 /* m37710o3.c in Sources */,
 				55B4F4BA0B0FC62800EE3DB5 /* mc68hc11.c in Sources */,
-				55B4F4BB0B0FC62800EE3DB5 /* mips3.c in Sources */,
 				55B4F4BC0B0FC62800EE3DB5 /* nec.c in Sources */,
 				55B4F4BD0B0FC62800EE3DB5 /* pic16c5x.c in Sources */,
-				55B4F4BE0B0FC62800EE3DB5 /* ppc.c in Sources */,
 				55B4F4BF0B0FC62800EE3DB5 /* psx.c in Sources */,
 				55B4F4C00B0FC62800EE3DB5 /* r3000.c in Sources */,
 				55B4F4C10B0FC62800EE3DB5 /* rsp.c in Sources */,
@@ -10997,6 +11003,8 @@
 				55B4F5770B0FC65D00EE3DB5 /* v810dasm.c in Sources */,
 				55B4F5780B0FC65D00EE3DB5 /* z80dasm.c in Sources */,
 				55B4F5790B0FC65D00EE3DB5 /* z180dasm.c in Sources */,
+				55D5ABC60B1CEC8900457216 /* osx_ppc.c in Sources */,
+				55D5ABD40B1CED3600457216 /* osx_mips3.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11544,8 +11552,8 @@
 			baseConfigurationReference = 555329F30B027FBD0092FC09 /* versions.xcconfig */;
 			buildSettings = {
 				ARCHS = (
-					ppc,
 					i386,
+					ppc,
 				);
 				COPY_PHASE_STRIP = YES;
 				GCC_OPTIMIZATION_LEVEL = s;
