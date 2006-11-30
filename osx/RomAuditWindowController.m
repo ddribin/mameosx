@@ -209,7 +209,7 @@
     mCurrentProgress = currentProgress;
 }
 
-- (IBAction) verifyRoms: (id) sender;
+- (IBAction) startAudit: (id) sender;
 {
     [mProgress setDoubleValue: 0.0];
     [NSApp beginSheet: mProgressPanel

@@ -335,7 +335,7 @@ void exit_sleeper()
     return mLoadingMessage;
 }
 
-- (IBAction) verifyRoms: (id) sender;
+- (IBAction) auditRoms: (id) sender;
 {
     RomAuditWindowController * controller =
         [[RomAuditWindowController alloc] init];

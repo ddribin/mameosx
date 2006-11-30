@@ -29,7 +29,7 @@
     BOOL mShowGood;
 }
 
-- (IBAction) verifyRoms: (id) sender;
+- (IBAction) startAudit: (id) sender;
 - (IBAction) cancel: (id) sender;
 
 - (double) currentProgress;

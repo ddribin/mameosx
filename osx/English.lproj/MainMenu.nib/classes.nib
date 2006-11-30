@@ -4,6 +4,7 @@
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
         {
             ACTIONS = {
+                auditRoms = id; 
                 cancelOpenPanel = id; 
                 endOpenPanel = id; 
                 filterChanged = id; 
@@ -17,7 +18,6 @@
                 showPreferencesPanel = id; 
                 showReleaseNotes = id; 
                 togglePause = id; 
-                verifyRoms = id; 
             }; 
             CLASS = MameController; 
             LANGUAGE = ObjC; 

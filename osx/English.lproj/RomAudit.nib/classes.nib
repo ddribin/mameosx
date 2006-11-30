@@ -2,7 +2,7 @@
     IBClasses = (
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
         {
-            ACTIONS = {cancel = id; verifyRoms = id; }; 
+            ACTIONS = {cancel = id; startAudit = id; }; 
             CLASS = RomAuditWindowController; 
             LANGUAGE = ObjC; 
             OUTLETS = {
