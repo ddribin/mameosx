@@ -6,6 +6,7 @@
             CLASS = RomAuditWindowController; 
             LANGUAGE = ObjC; 
             OUTLETS = {
+                mControllerAlias = NSObjectController; 
                 mNotesView = NSTextView; 
                 mProgress = NSProgressIndicator; 
                 mProgressPanel = NSPanel; 

@@ -339,6 +339,7 @@ void exit_sleeper()
 {
     RomAuditWindowController * controller =
         [[RomAuditWindowController alloc] init];
+    [controller autorelease];
     
     NSWindow * window = [controller window];
     [window center];

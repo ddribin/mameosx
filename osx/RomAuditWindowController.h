@@ -14,6 +14,7 @@
     IBOutlet NSProgressIndicator * mProgress;
     IBOutlet NSTableView * mResultsTable;
     IBOutlet NSTextView * mNotesView;
+    IBOutlet NSObjectController * mControllerAlias;
     IBOutlet NSArrayController * mResultsController;
     IBOutlet NSPanel * mProgressPanel;
 

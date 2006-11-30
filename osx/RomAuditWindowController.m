@@ -36,7 +36,13 @@
 
 
 - (void) awakeFromNib
-{    
+{
+    // Avoid a memory leak.  See steps here, plus "Step 4":
+    // http://theobroma.treehouseideas.com/document.page/18
+    // Or:
+    // http://www.cocoabuilder.com/archive/message/cocoa/2006/10/24/173255
+    [mControllerAlias setContent: self];
+    
     [self setStatus: @""];
     [self updatePredicate];
 }
@@ -45,8 +51,14 @@
 {
     [mGameName release];
     [mStatus release];
+    [mSearchString release];
     [mResults release];
     [super dealloc];
+}
+
+- (void) windowWillClose: (NSNotification *) notification
+{
+    [mControllerAlias setContent: nil];
 }
 
 - (NSString *) status;
@@ -130,8 +142,8 @@
 	/* now iterate over drivers */
 	for (drvindex = 0; drivers[drvindex]; drvindex++)
 	{
-		audit_record *audit;
-		int audit_records;
+		audit_record * auditRecords;
+		int recordCount;
 		int res;
         
         if (!mRunning)
@@ -144,12 +156,14 @@
         NSAutoreleasePool * loopPool = [[NSAutoreleasePool alloc] init];
 
 		/* audit the ROMs in this set */
-		audit_records = audit_images(drvindex, AUDIT_VALIDATE_FAST, &audit);
+		recordCount = audit_images(drvindex, AUDIT_VALIDATE_FAST, &auditRecords);
         RomAuditSummary * summary =
             [[RomAuditSummary alloc] initWithGameIndex: drvindex
-                                           recordCount: audit_records
-                                               records: audit];
+                                           recordCount: recordCount
+                                               records: auditRecords];
         [summary autorelease];
+        free(auditRecords);
+
         if ([summary status] != NOTFOUND)
         {
             [results addObject: summary];
@@ -157,11 +171,11 @@
         
 		checked++;
         
-        // Stollen from:
+        // Stolen from:
         // http://www.cocoabuilder.com/archive/message/cocoa/2006/8/24/170090
         double checkedf = checked;
-        int percentAsInt = (checkedf/totalf)*500.0;
-        double modifiedProgressValuef = percentAsInt/500.0;
+        int percentAsInt = (checkedf/totalf)*200.0;
+        double modifiedProgressValuef = percentAsInt/200.0;
         
         // do your work, then...
         if (modifiedProgressValuef != lastProgressValuef)
@@ -175,12 +189,12 @@
                 @"Checking %d of %d", checked, total];
             [self setStatus: status];
         }
-        
+
         [loopPool release];
 	}
     [self performSelectorOnMainThread: @selector(auditDone:)
                            withObject: results
-                        waitUntilDone: YES];
+                        waitUntilDone: NO];
 
     [pool release];
 }
