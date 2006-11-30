@@ -2,12 +2,13 @@
     IBClasses = (
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
         {
-            ACTIONS = {verifyRoms = id; }; 
+            ACTIONS = {cancel = id; verifyRoms = id; }; 
             CLASS = RomAuditWindowController; 
             LANGUAGE = ObjC; 
             OUTLETS = {
                 mNotesView = NSTextView; 
                 mProgress = NSProgressIndicator; 
+                mProgressPanel = NSPanel; 
                 mResultsController = NSArrayController; 
                 mResultsTable = NSTableView; 
             }; 

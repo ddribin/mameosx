@@ -11,6 +11,13 @@
 #include "driver.h"
 #include "audit.h"
 
+@interface RomAuditWindowController (Private)
+
+- (void) setStatus: (NSString *) status;
+- (void) updatePredicate;
+
+@end
+
 @implementation RomAuditWindowController
 
 - (id) init
@@ -19,8 +26,9 @@
     if (self == nil)
         return nil;
     
-    mGameName = nil;
+    mGameName = @"";
     mStatus = @"";
+    mShowGood = NO;
     mResults = [[NSMutableArray alloc] init];
     
     return self;
@@ -30,6 +38,7 @@
 - (void) awakeFromNib
 {    
     [self setStatus: @""];
+    [self updatePredicate];
 }
 
 - (void) dealloc
@@ -45,39 +54,57 @@
     return mStatus;
 }
 
-- (void) setStatus: (NSString *) status;
+- (NSString *) gameName;
 {
-    [status retain];
-    [mStatus release];
-    mStatus = status;
+    return mGameName;
 }
 
-- (void) startCounting
+- (void) setGameName: (NSString *) gameName;
 {
-    [mProgress setIndeterminate: YES];
-    [mProgress startAnimation: self];
+    [gameName retain];
+    [mGameName release];
+    mGameName = gameName;
 }
 
-- (void) startAudit: (NSNumber *) total;
+- (NSString *) searchString;
 {
-    [mProgress setIndeterminate: NO];
-    [mProgress setMinValue: 0.0];
-    [mProgress setMaxValue: [total intValue]];
-    [mProgress setDoubleValue: 0.0];
+    return mSearchString;
+}
+
+- (void) setSearchString: (NSString *) searchString;
+{
+    [searchString retain];
+    [mSearchString release];
+    mSearchString = searchString;
+    [self updatePredicate];
+}
+
+- (BOOL) showGood;
+{
+    return mShowGood;
+}
+
+- (void) setShowGood: (BOOL) showGood;
+{
+    mShowGood = showGood;
+    [self updatePredicate];
 }
 
 - (void) updateProgress: (NSNumber *) checked;
 {
-    [mProgress setDoubleValue: [checked intValue]];
+    [mProgress setDoubleValue: [checked doubleValue]];
 }
 
-- (void) auditDone
+- (void) auditDone: (NSMutableArray *) results
 {
-    [mProgress stopAnimation: self];
     [self setStatus: @""];
+
+    [self setResults: results];
+
+    [NSApp abortModal];
 }
 
-- (void) auditThread
+- (void) auditThread: (NSString *) gameName;
 {
     NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
     
@@ -89,26 +116,17 @@
 	int total;
 	int drvindex;
 
-    [self willChangeValueForKey: @"results"];
-    [mResults removeAllObjects];
-    [self didChangeValueForKey: @"results"];
-
-    [self performSelectorOnMainThread: @selector(startCounting)
-                           withObject: nil
-                        waitUntilDone: NO];
-
-    const char * gamename = [mGameName UTF8String];
+    const char * gameNameUtf8 = [gameName UTF8String];
 	/* first count up how many drivers match the string */
 	total = 0;
 	for (drvindex = 0; drivers[drvindex]; drvindex++)
-		if (!mame_strwildcmp(gamename, drivers[drvindex]->name))
+		if (!mame_strwildcmp(gameNameUtf8, drivers[drvindex]->name))
 			total++;
     
-    [self performSelectorOnMainThread: @selector(startAudit:)
-                           withObject: [NSNumber numberWithInt: total]
-                        waitUntilDone: NO];
-
+    NSMutableArray * results = [NSMutableArray arrayWithCapacity: total];
     
+    double totalf = total; 
+    double lastProgressValuef = 0.0;
 	/* now iterate over drivers */
 	for (drvindex = 0; drivers[drvindex]; drvindex++)
 	{
@@ -116,8 +134,11 @@
 		int audit_records;
 		int res;
         
+        if (!mRunning)
+            break;
+        
 		/* skip if we don't match */
-		if (mame_strwildcmp(gamename, drivers[drvindex]->name))
+		if (mame_strwildcmp(gameNameUtf8, drivers[drvindex]->name))
 			continue;
         
         NSAutoreleasePool * loopPool = [[NSAutoreleasePool alloc] init];
@@ -131,123 +152,77 @@
         [summary autorelease];
         if ([summary status] != NOTFOUND)
         {
-#if 1
-            [mResults performSelectorOnMainThread: @selector(addObject:)
-                                       withObject: summary
-                                    waitUntilDone: NO];
-#elif 0
-            [mResults addObject: summary];
-#elif 0
-            [mResultsController performSelectorOnMainThread: @selector(addObject:)
-                                                 withObject: summary
-                                              waitUntilDone: YES];
-                
-#endif
-#if 0
-            [mResultsTable performSelectorOnMainThread: @selector(noteNumberOfRowsChanged)
-                                            withObject: nil
-                                         waitUntilDone: NO];
-#endif
+            [results addObject: summary];
         }
-#if 0
-		res = audit_summary(drvindex, audit_records, audit, NO);
-		if (audit_records > 0)
-			free(audit);
         
-		/* if not found, count that and leave it at that */
-		if (res == NOTFOUND)
-			notfound++;
-        
-		/* else display information about what we discovered */
-		else
-		{
-			const game_driver *clone_of;
-			clone_of = driver_get_clone(drivers[drvindex]);
-            
-            if (clone_of == NULL)
-            {
-                NSString * status = [NSString stringWithFormat:
-                    @"ROM set %s...", drivers[drvindex]->name];
-                [self performSelectorOnMainThread: @selector(setStatus:)
-                                       withObject: status
-                                    waitUntilDone: NO];
-            }
-            else
-            {
-                NSString * status = [NSString stringWithFormat:
-                    @"ROM set %s [%s]...", drivers[drvindex]->name,
-                    clone_of->name];
-                [self performSelectorOnMainThread: @selector(setStatus:)
-                                       withObject: status
-                                    waitUntilDone: NO];
-            }
-            
-#if 0
-			/* output the name of the driver and its clone */
-			fprintf(output, "romset %s ", drivers[drvindex]->name);
-			if (clone_of != NULL)
-				fprintf(output, "[%s] ", clone_of->name);
-#endif
-            
-			/* switch off of the result */
-			switch (res)
-			{
-				case INCORRECT:
-					// fprintf(output, "is bad\n");
-					incorrect++;
-					break;
-                    
-				case CORRECT:
-					// fprintf(output, "is good\n");
-					correct++;
-					break;
-                    
-				case BEST_AVAILABLE:
-					// fprintf(output, "is best available\n");
-					correct++;
-					break;
-			}
-		}
-#endif
-        
-		/* update progress information on stderr */
 		checked++;
-		// fprintf(stderr, "%d%%\r", 100 * checked / total);
         
-        if ((checked % 10) == 0)
+        // Stollen from:
+        // http://www.cocoabuilder.com/archive/message/cocoa/2006/8/24/170090
+        double checkedf = checked;
+        int percentAsInt = (checkedf/totalf)*500.0;
+        double modifiedProgressValuef = percentAsInt/500.0;
+        
+        // do your work, then...
+        if (modifiedProgressValuef != lastProgressValuef)
         {
-        [self performSelectorOnMainThread: @selector(updateProgress:)
-                               withObject: [NSNumber numberWithInt: checked]
-                            waitUntilDone: NO];
-#if 1
-            [mResultsTable performSelectorOnMainThread: @selector(noteNumberOfRowsChanged)
-                                            withObject: nil
-                                         waitUntilDone: NO];
-#elif 0
-            [self willChangeValueForKey: @"results"];
-            [self didChangeValueForKey: @"results"];
-#endif
+            [self willChangeValueForKey: @"currentProgress"];
+            mCurrentProgress = modifiedProgressValuef;
+            [self didChangeValueForKey: @"currentProgress"];
+            lastProgressValuef = modifiedProgressValuef;
+
+            NSString * status = [NSString stringWithFormat:
+                @"Checking %d of %d", checked, total];
+            [self setStatus: status];
         }
         
         [loopPool release];
 	}
-        
-    [self performSelectorOnMainThread: @selector(auditDone)
-                           withObject: nil
-                        waitUntilDone: NO];
-    
-    [mGameName release];
-    mGameName = nil;
+    [self performSelectorOnMainThread: @selector(auditDone:)
+                           withObject: results
+                        waitUntilDone: YES];
 
     [pool release];
 }
 
+- (double) currentProgress;
+{
+    return mCurrentProgress;
+}
+
+- (void) setCurrentProgress: (double) currentProgress
+{
+    mCurrentProgress = currentProgress;
+}
+
 - (IBAction) verifyRoms: (id) sender;
 {
-    mGameName = [@"*" retain];
-    [NSThread detachNewThreadSelector: @selector(auditThread)
+    [mProgress setDoubleValue: 0.0];
+    [NSApp beginSheet: mProgressPanel
+       modalForWindow: [self window]
+        modalDelegate: nil
+       didEndSelector: nil
+          contextInfo: nil];
+
+    mRunning = YES;
+
+    NSString * gameName;
+    if (mGameName == nil)
+        gameName = @"*";
+    else
+        gameName = [[mGameName copy] autorelease];
+    [NSThread detachNewThreadSelector: @selector(auditThread:)
                              toTarget: self
-                           withObject: nil];
+                           withObject: gameName];
+   
+    [NSApp runModalForWindow: mProgressPanel];
+    [NSApp endSheet: mProgressPanel];
+    [mProgressPanel orderOut: self];
+}
+
+- (IBAction) cancel: (id) sender;
+{
+    mRunning = NO;
 }
 
 - (NSMutableArray *) results;
@@ -264,45 +239,47 @@
     }
 }
 
-- (id)tableView:(NSTableView *)aTableView
-    objectValueForTableColumn:(NSTableColumn *)aTableColumn
-            row:(int)rowIndex
+
+@end
+
+@implementation RomAuditWindowController (Private)
+
+
+- (void) setStatus: (NSString *) status;
 {
-    id theRecord, theValue;
-    
-    NSParameterAssert(rowIndex >= 0 && rowIndex < [mResults count]);
-    theRecord = [mResults objectAtIndex:rowIndex];
-    theValue = [theRecord valueForKey:[aTableColumn identifier]];
-    return theValue;
+    [status retain];
+    [mStatus release];
+    mStatus = status;
 }
 
-- (int)numberOfRowsInTableView:(NSTableView *)aTableView
+- (void) updatePredicate;
 {
-    return [mResults count];
-}
-
-- (void) tableView: (NSTableView *) tableView sortDescriptorsDidChange: (NSArray *) oldDescriptors
-{
-    NSArray * newDescriptors = [tableView sortDescriptors];
-    [mResults sortUsingDescriptors: newDescriptors];
-    [tableView reloadData];
-}
-
-- (void)tableViewSelectionDidChange:(NSNotification *)aNotification
-{
-    NSTextStorage * storage = [mNotesView textStorage];
-    int row = [mResultsTable selectedRow];
-    NSAttributedString * newText;
-    if (row == -1)
+    NSPredicate * predicate;
+    if (mSearchString != nil)
     {
-        newText = [[NSAttributedString alloc] initWithString: @""];
+        if (mShowGood) {
+        predicate = [NSPredicate predicateWithFormat:
+            @"gameName contains[c] %@ OR description contains[c] %@",
+            mSearchString, mSearchString];
+        }
+        else
+        {
+            predicate = [NSPredicate predicateWithFormat:
+                @"(gameName contains[c] %@ OR description contains[c] %@) and status != 0",
+                mSearchString, mSearchString];
+        }
     }
     else
     {
-        NSString * notes = [[mResults objectAtIndex: row] notes];
-        newText = [[NSAttributedString alloc] initWithString: notes];
+        if (mShowGood)
+            predicate = nil;
+        else
+        {
+            predicate = [NSPredicate predicateWithFormat: @"status != 0"];
+        }
     }
-    [storage setAttributedString: newText];
+    [mResultsController setFilterPredicate: predicate];
 }
 
 @end
+
