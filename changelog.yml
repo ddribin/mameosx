@@ -5,6 +5,7 @@
     - Add Diffs directory to default paths list (thanks to Martin White).
     - Add ROM Auditing tool.
     - Use dynamic recompiler (DRC) on Intel.
+    - Add scanline and aperature effects.
 
 <% version = "0.110" %>
 - version: "<%=version%>"
