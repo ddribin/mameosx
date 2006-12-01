@@ -48,6 +48,7 @@ static const int kMameMaxGamesInHistory = 100;
 - (void) setGameRunning: (BOOL) gameRunning;
 - (void) setViewSize: (NSSize) viewSize;
 - (void) setUpDefaultPaths;
+- (EffectFilter *) effectNamed: (NSString *) effectName;
 - (void) initFilters;
 
 - (void) initLogAttributes;
@@ -105,6 +106,9 @@ void exit_sleeper()
 {
     [mMameView setDelegate: self];
 
+    [self setIsFiltered: NO];
+    [self setCurrentFilterIndex: 0];
+   
     [self setGameLoading: NO];
     [self setGameRunning: NO];
 
@@ -199,20 +203,50 @@ void exit_sleeper()
 {
     mIsFiltered = flag;
     if (mIsFiltered)
-        [mMameView setFilter: mCurrentFilter];
+        [mMameView setFilter: [mFilters objectAtIndex: mCurrentFilterIndex]];
     else
         [mMameView setFilter: nil];
 }
 
-- (IBAction) filterChanged: (id) sender;
+- (int) currentFilterIndex;
 {
-    unsigned index = [mFilterButton indexOfSelectedItem];
-    if (index >= [mFilters count])
+    return mCurrentFilterIndex;
+}
+
+- (void) setCurrentFilterIndex: (int) currentFilterIndex;
+{
+    if (currentFilterIndex >= [mFilters count])
         return;
     
-    mCurrentFilter = [mFilters objectAtIndex: index];
+    NSMenuItem * item = [mEffectsMenu itemAtIndex: mCurrentFilterIndex];
+    [item setState: NO];
+
+    mCurrentFilterIndex = currentFilterIndex;
     if (mIsFiltered)
-        [mMameView setFilter: mCurrentFilter];
+        [mMameView setFilter: [mFilters objectAtIndex: mCurrentFilterIndex]];
+    
+    item = [mEffectsMenu itemAtIndex: mCurrentFilterIndex];
+    [item setState: YES];
+}
+
+- (IBAction) nextFilter: (id) sender;
+{
+    int nextFilter = mCurrentFilterIndex + 1;
+    if (nextFilter < [mFilters count])
+        [self setCurrentFilterIndex: nextFilter];
+}
+
+- (IBAction) previousFilter: (id) sender;
+{
+    int nextFilter = mCurrentFilterIndex - 1;
+    if (nextFilter >= 0)
+        [self setCurrentFilterIndex: nextFilter];
+}        
+
+- (IBAction) effectsMenuChanged: (id) sender;
+{
+    int filterIndex = [mEffectsMenu indexOfItem: sender];
+    [self setCurrentFilterIndex: filterIndex];
 }
 
 - (IBAction) togglePause: (id) sender;
@@ -513,18 +547,34 @@ void exit_sleeper()
 - (void) setUpDefaultPaths;
 {
     NSBundle * myBundle = [NSBundle bundleForClass: [self class]];
-#if 0 // TODO: Fix
-    [[mMameView fileManager] setPath: [myBundle resourcePath] forType: FILETYPE_FONT];
-#else
+#if 1
     // TODO: Hopefully MAME core will allow us to fix this hack.
     [[NSFileManager defaultManager] changeCurrentDirectoryPath: [myBundle resourcePath]];
 #endif
+}
+
+- (EffectFilter *) effectNamed: (NSString *) effectName;
+{
+    NSBundle * myBundle = [NSBundle bundleForClass: [self class]];
+    NSString * path = [myBundle pathForResource: effectName
+                                         ofType: @"png"
+                                    inDirectory: @"effects"];
+    return [EffectFilter effectWithPath: path];
 }
 
 - (void) initFilters;
 {
     mFilters = [[NSMutableArray alloc] init];
     
+    MameFilter * mameFilter;
+        
+    [mFilters addObject: [self effectNamed: @"scanlines32x2"]];
+    [mFilters addObject: [self effectNamed: @"aperture1x2rb"]];
+    [mFilters addObject: [self effectNamed: @"aperture1x3rb"]];
+    [mFilters addObject: [self effectNamed: @"aperture2x4rb"]];
+    [mFilters addObject: [self effectNamed: @"aperture2x4bg"]];
+    [mFilters addObject: [self effectNamed: @"aperture4x6"]];
+
     CIFilter * filter;
     
     filter = [CIFilter filterWithName: @"CIGaussianBlur"];
@@ -562,8 +612,6 @@ void exit_sleeper()
     [filter setValue: [NSNumber numberWithFloat: 5]  
               forKey: @"inputIntensity"];
     [mFilters addObject: [MameFilter filterWithFilter: filter]];
-    
-    mCurrentFilter = [mFilters objectAtIndex: 0];
 }
 
 #pragma mark -

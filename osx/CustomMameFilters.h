@@ -43,3 +43,12 @@
 + (MameBumpDistortionFilter *) filter;
 
 @end
+
+@interface EffectFilter : MameFilter
+{
+}
+
+- (id) initWithPath: (NSString *) path;
++ (EffectFilter *) effectWithPath: (NSString *) path;
+
+@end

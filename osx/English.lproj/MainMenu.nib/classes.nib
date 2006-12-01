@@ -6,10 +6,13 @@
             ACTIONS = {
                 auditRoms = id; 
                 cancelOpenPanel = id; 
+                effectsMenuChanged = id; 
                 endOpenPanel = id; 
                 filterChanged = id; 
                 hideOpenPanel = id; 
+                nextFilter = id; 
                 nullAction = id; 
+                previousFilter = id; 
                 raiseOpenPanel = id; 
                 resizeToActualSize = id; 
                 resizeToDoubleSize = id; 
@@ -23,6 +26,7 @@
             LANGUAGE = ObjC; 
             OUTLETS = {
                 mDrawer = NSDrawer; 
+                mEffectsMenu = NSMenu; 
                 mFilterButton = NSPopUpButton; 
                 mGameTextField = NSComboBox; 
                 mMameLogPanel = NSPanel; 

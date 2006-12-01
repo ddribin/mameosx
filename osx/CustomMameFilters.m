@@ -85,3 +85,28 @@
 }
 
 @end
+
+@implementation EffectFilter
+
+- (id) initWithPath: (NSString *) path;
+{
+    NSURL * url = [NSURL fileURLWithPath: path];
+    CIImage * effect = [CIImage imageWithContentsOfURL: url];
+    CIFilter * tile = [CIFilter filterWithName: @"CIAffineTile"];
+    [tile setValue: effect forKey: @"inputImage"];
+    [tile setValue: [NSAffineTransform transform] forKey: @"inputTransform"];
+    CIImage * tiledEffect = [tile valueForKey: @"outputImage"];
+    
+    CIFilter * multiply = [CIFilter filterWithName: @"CIMultiplyCompositing"];
+    [multiply setValue: tiledEffect
+                forKey: @"inputBackgroundImage"];
+    return [super initWithFilter: multiply];
+}
+
++ (EffectFilter *) effectWithPath: (NSString *) path;
+{
+    return [[[self alloc] initWithPath: path] autorelease];
+}
+
+@end
+

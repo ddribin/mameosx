@@ -286,6 +286,8 @@
 		5595F0C00B1BDD9B00631777 /* RomAuditSummary.h in Headers */ = {isa = PBXBuildFile; fileRef = 5595F0BE0B1BDD9B00631777 /* RomAuditSummary.h */; };
 		5595F0C10B1BDD9B00631777 /* RomAuditSummary.m in Sources */ = {isa = PBXBuildFile; fileRef = 5595F0BF0B1BDD9B00631777 /* RomAuditSummary.m */; };
 		55A3A5230AA7B36400921B71 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55A3A5220AA7B36400921B71 /* QuartzCore.framework */; };
+		55A99AB10B20C5D900D4E406 /* effects in Resources */ = {isa = PBXBuildFile; fileRef = 55A99AA60B20C5D900D4E406 /* effects */; };
+		55A99AB20B20C5D900D4E406 /* effects in Resources */ = {isa = PBXBuildFile; fileRef = 55A99AA60B20C5D900D4E406 /* effects */; };
 		55B404EC0B0FC6C700EE3DB5 /* 4enraya.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4F6680B0FC6BA00EE3DB5 /* 4enraya.c */; };
 		55B404ED0B0FC6C700EE3DB5 /* 4enraya.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4F6690B0FC6BA00EE3DB5 /* 4enraya.c */; };
 		55B404EE0B0FC6C700EE3DB5 /* 40love.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B4F66A0B0FC6BA00EE3DB5 /* 40love.c */; };
@@ -3144,6 +3146,7 @@
 		5595F0BE0B1BDD9B00631777 /* RomAuditSummary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RomAuditSummary.h; sourceTree = "<group>"; };
 		5595F0BF0B1BDD9B00631777 /* RomAuditSummary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RomAuditSummary.m; sourceTree = "<group>"; };
 		55A3A5220AA7B36400921B71 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = /System/Library/Frameworks/QuartzCore.framework; sourceTree = "<absolute>"; };
+		55A99AA60B20C5D900D4E406 /* effects */ = {isa = PBXFileReference; lastKnownFileType = folder; path = effects; sourceTree = "<group>"; };
 		55B40C470B0FC86400EE3DB5 /* cardline.lay */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = cardline.lay; sourceTree = "<group>"; };
 		55B40C480B0FC86400EE3DB5 /* funworld.lay */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = funworld.lay; sourceTree = "<group>"; };
 		55B4F3FE0B0FC62800EE3DB5 /* 34010fld.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = 34010fld.c; path = tms34010/34010fld.c; sourceTree = "<group>"; };
@@ -5443,6 +5446,7 @@
 		551A621A0AC2564100AECE1E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				55A99AA60B20C5D900D4E406 /* effects */,
 				55D2934C0B1762E6002C9199 /* release_notes.html */,
 				556A4C2A0AA50D6200602CC5 /* Info.plist */,
 				556A4C500AA50E5800602CC5 /* MainMenu.nib */,
@@ -8835,6 +8839,7 @@
 				55E03D090B0A32EE00988109 /* Preferences.nib in Resources */,
 				55D2934E0B1762E6002C9199 /* release_notes.html in Resources */,
 				5595EFA90B1BC91200631777 /* RomAudit.nib in Resources */,
+				55A99AB10B20C5D900D4E406 /* effects in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8854,6 +8859,7 @@
 				55E03D0A0B0A32EF00988109 /* Preferences.nib in Resources */,
 				55D2934D0B1762E6002C9199 /* release_notes.html in Resources */,
 				5595EFAA0B1BC91200631777 /* RomAudit.nib in Resources */,
+				55A99AB20B20C5D900D4E406 /* effects in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

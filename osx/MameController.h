@@ -50,6 +50,7 @@ extern "C" {
     IBOutlet NSWindow * mOpenPanel;
     IBOutlet NSComboBox * mGameTextField;
     IBOutlet VersionChecker *mVersionChecker;
+    IBOutlet NSMenu * mEffectsMenu;
     
     IBOutlet NSPanel * mMameLogPanel;
     IBOutlet NSTextView * mMameLogView;
@@ -60,9 +61,9 @@ extern "C" {
 
     BOOL mMameIsRunning;
     
-    BOOL mIsFiltered;
     NSMutableArray * mFilters;
-    MameFilter * mCurrentFilter;
+    BOOL mIsFiltered;
+    int mCurrentFilterIndex;
 
     NSString * mGameName;
     NSString * mLoadingMessage;
@@ -80,6 +81,13 @@ extern "C" {
 
 - (BOOL) isFiltered;
 - (void) setIsFiltered: (BOOL) flag;
+
+- (int) currentFilterIndex;
+- (void) setCurrentFilterIndex: (int) currentFilterIndex;
+
+- (IBAction) nextFilter: (id) sender;
+- (IBAction) previousFilter: (id) sender;
+- (IBAction) effectsMenuChanged: (id) sender;
 
 - (BOOL) throttled;
 - (void) setThrottled: (BOOL) flag;
@@ -102,7 +110,6 @@ extern "C" {
 
 - (IBAction) showPreferencesPanel: (id) sender;
 
-- (IBAction) filterChanged: (id) sender;
 - (IBAction) togglePause: (id) sender;
 - (IBAction) nullAction: (id) sender;
 
