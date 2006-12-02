@@ -356,7 +356,12 @@ mame_file_error osd_write(osd_file *file, const void *buffer, UINT64 offset,
 
 void *osd_alloc_executable(size_t size)
 {
-    return (void *)malloc(size);
+    void * ptr = (void *) malloc(size);
+#if 0
+    printf("osd_alloc_executable(%d [0x%08x]) = 0x%08x - 0x%08x\n", size, size,
+           ptr, ((uint8_t *) ptr) + size);
+#endif
+    return ptr;
 }
 
 void osd_free_executable(void *ptr, size_t size)
