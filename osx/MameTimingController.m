@@ -25,6 +25,7 @@
 #import "MameTimingController.h"
 #import "MameController.h"
 #include <mach/mach_time.h>
+#import "NXLog.h"
 
 @implementation MameTimingController
 
@@ -35,8 +36,8 @@
     
     mCyclesPerSecond = 1000000000LL *
         ((uint64_t)info.denom) / ((uint64_t)info.numer);
-    NSLog(@"cycles/second = %u/%u = %lld\n", info.denom, info.numer,
-          mCyclesPerSecond);
+    NXLogDebug(@"cycles/second = %u/%u = %lld\n", info.denom, info.numer,
+               mCyclesPerSecond);
 
     mThrottleLastCycles = 0;   
 }
@@ -101,7 +102,7 @@
     // NSLog(@"diff: %llu, last: %llu", diffCycles, mThrottleLastCycles);
     if (diffCycles > cyclesPerSecond)
     {
-        NSLog(@"More than 1 sec, diff: %qi, cps: %qi", diffCycles, cyclesPerSecond);
+        NXLogDebug(@"More than 1 sec, diff: %qi, cps: %qi", diffCycles, cyclesPerSecond);
         // Resync
         mThrottleRealtime = mThrottleEmutime = emutime;
         return;

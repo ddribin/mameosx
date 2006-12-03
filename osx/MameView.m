@@ -31,6 +31,7 @@
 #import "MameFileManager.h"
 #import "MameConfiguration.h"
 #import "MameFilter.h"
+#import "NXLog.h"
 
 
 @interface MameView (Private)
@@ -249,7 +250,7 @@ NSString * MameExitStatusKey = @"MameExitStatus";
 
 - (int) osd_init: (running_machine *) machine;
 {
-    NSLog(@"osd_init");
+    NXLogInfo(@"osd_init");
     
     mMachine = machine;
     [mInputController osd_init];
@@ -284,9 +285,9 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     [self createCIContext];
     [self detectAcceleratedCoreImage];
     
-    NSLog(@"Use Core Image: %@", mCoreImageAccelerated? @"YES" : @"NO");
-    NSLog(@"Render in Core Video thread: %@",
-          mRenderInCoreVideoThread? @"YES" : @"NO");
+    NXLogInfo(@"Use Core Image: %@", mCoreImageAccelerated? @"YES" : @"NO");
+    NXLogInfo(@"Render in Core Video thread: %@",
+              mRenderInCoreVideoThread? @"YES" : @"NO");
     
     [mRenderer osd_init: [self openGLContext]
                  format: [self pixelFormat]
@@ -402,7 +403,7 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     if (mGameIndex == -1)
         return NO;
     
-    NSLog(@"Running %@", mGame);
+    NXLogInfo(@"Running %@", mGame);
     [NSThread detachNewThreadSelector: @selector(gameThread)
                              toTarget: self
                            withObject: nil];
@@ -642,12 +643,12 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     [mMameLock unlock];
     
     cycles_t cps = [mTimingController osd_cycles_per_second];
-    NSLog(@"Average FPS displayed: %f (%qi frames)\n",
-          (double)cps / (mFrameEndTime - mFrameStartTime) * mFramesDisplayed,
-          mFramesDisplayed);
-    NSLog(@"Average FPS rendered: %f (%qi frames)\n",
-          (double)cps / (mFrameEndTime - mFrameStartTime) * mFramesRendered,
-          mFramesRendered);
+    NXLogInfo(@"Average FPS displayed: %f (%qi frames)\n",
+              (double)cps / (mFrameEndTime - mFrameStartTime) * mFramesDisplayed,
+              mFramesDisplayed);
+    NXLogInfo(@"Average FPS rendered: %f (%qi frames)\n",
+              (double)cps / (mFrameEndTime - mFrameStartTime) * mFramesRendered,
+              mFramesRendered);
     
 
     [self performSelectorOnMainThread: @selector(gameFinished:)

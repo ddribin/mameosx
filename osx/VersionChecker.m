@@ -23,6 +23,7 @@
  */
 
 #import "VersionChecker.h"
+#import "NXLog.h"
 
 @interface VersionChecker (Private)
 
@@ -85,7 +86,7 @@
 {
     if (mUpdateInProgress == YES)
     {
-        NSLog(@"Update already in progress");
+        NXLogWarn(@"Update already in progress");
         return;
     }
     
@@ -140,8 +141,8 @@
         [alert runModal];
         [alert release];
     }
-    NSLog(@"Couldn't access version info");
-    NSLog(@"versionUrl: %@", versionUrl);
+    NXLogWarn(@"Couldn't access version info");
+    NXLogWarn(@"versionUrl: %@", versionUrl);
     [self setUpdateInProgress: NO];
     return;
 }
@@ -164,8 +165,8 @@
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     NSString * skippedVersion = [defaults stringForKey: @"SkippedVersion"];
     
-    NSLog([NSString stringWithFormat:@"%@: my version: %@, current version: %@, skipped version: %@",
-        myId, mMyVersion, mCurrentVersion, skippedVersion]);
+    NXLogInfo(@"%@: my version: %@, current version: %@, skipped version: %@",
+              myId, mMyVersion, mCurrentVersion, skippedVersion);
     
     if (![mMyVersion isEqualToString: mCurrentVersion])
     {

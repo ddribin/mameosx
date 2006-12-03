@@ -24,5 +24,7 @@
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+    <key>NXLogLevel</key>
+    <string>WARN</string>
 </dict>
 </plist>

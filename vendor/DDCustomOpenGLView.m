@@ -23,6 +23,7 @@
  */
 
 #import "DDCustomOpenGLView.h"
+#import "NXLog.h"
 
 #define ANIMATE_WITH_DISPLAY_LINK 1
 
@@ -98,10 +99,10 @@
     mDisplayLink = NULL;
     mAnimationTimer = nil;
 #if ANIMATE_WITH_DISPLAY_LINK
-    NSLog(@"Animate with display link");
+    NXLogInfo(@"Animate with display link");
     [self initDisplayLink];
 #else
-    NSLog(@"Animate with timer");
+    NXLogInfo(@"Animate with timer");
 #endif
     
     return self;
@@ -524,7 +525,7 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
     error = CVDisplayLinkCreateWithCGDisplay(displayID, &mDisplayLink);
     if(error)
     {
-        NSLog(@"DisplayLink created with error:%d", error);
+        NXLogError(@"DisplayLink created with error:%d", error);
         mDisplayLink = NULL;
         return;
     }
