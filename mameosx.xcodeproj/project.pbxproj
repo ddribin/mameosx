@@ -11649,7 +11649,7 @@
 					"$(SYMROOT)/layouts",
 				);
 				INSTALL_PATH = /usr/local/lib;
-				OTHER_CFLAGS = "-mlong-branch";
+				PER_ARCH_CFLAGS_ppc = "-mlong-branch ";
 				PREBINDING = NO;
 				PRODUCT_NAME = drivers;
 				USE_HEADERMAP = "";
@@ -11669,7 +11669,7 @@
 					"$(SYMROOT)/layouts",
 				);
 				INSTALL_PATH = /usr/local/lib;
-				OTHER_CFLAGS = "-mlong-branch";
+				PER_ARCH_CFLAGS_ppc = "-mlong-branch ";
 				PREBINDING = NO;
 				PRODUCT_NAME = drivers;
 				USE_HEADERMAP = "";
@@ -11687,7 +11687,10 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INSTALL_PATH = /usr/local/lib;
-				OTHER_CFLAGS = "-fnested-functions";
+				OTHER_CFLAGS = (
+					"-fnested-functions",
+					"$(inherited)",
+				);
 				PREBINDING = NO;
 				PRODUCT_NAME = cpu;
 				ZERO_LINK = NO;
@@ -11702,7 +11705,10 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				INSTALL_PATH = /usr/local/lib;
-				OTHER_CFLAGS = "-fnested-functions";
+				OTHER_CFLAGS = (
+					"-fnested-functions",
+					"$(inherited)",
+				);
 				PREBINDING = NO;
 				PRODUCT_NAME = cpu;
 				ZERO_LINK = NO;
@@ -11820,7 +11826,6 @@
 				);
 				LIBRARY_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)/build/Debug\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_2 = "\"$(SRCROOT)/build/Debug\"";
-				OTHER_CFLAGS = "-falign-loops=16";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-framework",
@@ -11855,7 +11860,6 @@
 				);
 				LIBRARY_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)/build/Debug\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_2 = "\"$(SRCROOT)/build/Debug\"";
-				OTHER_CFLAGS = "-falign-loops=16";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-framework",
