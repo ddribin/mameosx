@@ -5,6 +5,7 @@
     - Add Diffs directory to default paths list (thanks to Martin White).
     - Add ROM Auditing tool.
     - Add scanline and aperature effects.
+    - Use NXLog for logging.
 
 <% version = "0.110" %>
 - version: "<%=version%>"
