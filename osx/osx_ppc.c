@@ -8,7 +8,7 @@
  */
 
 
-#if __i386__
+#if __i386__ && 0
 #include "src/cpu/powerpc/ppcdrc.c"
 #else
 #include "src/cpu/powerpc/ppc.c"

@@ -7,7 +7,7 @@
  *
  */
 
-#if __i386__
+#if __i386__ && 0
 #include "src/x86drc.c"
 #endif
 

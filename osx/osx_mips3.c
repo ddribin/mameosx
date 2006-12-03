@@ -7,7 +7,7 @@
  *
  */
 
-#if __i386__
+#if __i386__ && 0
 #include "src/cpu/mips/mips3drc.c"
 #else
 #include "src/cpu/mips/mips3.c"
