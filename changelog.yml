@@ -1,10 +1,9 @@
 <% version = "0.110-1" %>
 - version: "<%=version%>"
-  date: xxx
+  date: 2006-12-03
   changes:
     - Add Diffs directory to default paths list (thanks to Martin White).
     - Add ROM Auditing tool.
-    - Use dynamic recompiler (DRC) on Intel.
     - Add scanline and aperature effects.
 
 <% version = "0.110" %>
