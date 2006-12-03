@@ -35,6 +35,7 @@
 
 static MamePreferences * sInstance;
 
+NSString * MameNXLogLevelKey = @"NXLogLevel";
 NSString * MameVersionUrlKey = @"VersionUrl";
 NSString * MameCheckUpdatesAtStartupKey = @"CheckUpdatesAtStartup";
 NSString * MameGameKey = @"Game";
@@ -127,6 +128,9 @@ NSString * MameBiosKey = @"Bios";
 {
     NSMutableDictionary * defaultValues = [NSMutableDictionary dictionary];
     
+    [defaultValues setObject: @"WARN"
+                      forKey: MameNXLogLevelKey];
+    
     [defaultValues setObject: @"http://mameosx.sourceforge.net/version.plist"
                       forKey: MameVersionUrlKey];
     
@@ -209,6 +213,16 @@ NSString * MameBiosKey = @"Bios";
 
 #pragma mark -
 #pragma mark MAME OS X Options
+
+- (NSString *) nxLogLevel;
+{
+    return [mDefaults stringForKey: MameNXLogLevelKey];
+}
+
+- (void) setNxLogLevel: (NSString *) nxLogLevel;
+{
+    [mDefaults setObject: nxLogLevel forKey: MameNXLogLevelKey];
+}
 
 //=========================================================== 
 //  throttled 

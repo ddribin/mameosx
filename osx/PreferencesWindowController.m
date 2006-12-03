@@ -24,6 +24,15 @@
 
 #import "PreferencesWindowController.h"
 #import "MamePreferences.h"
+#import "NXLog.h"
+
+enum
+{
+    LogErrorIndex = 0,
+    LogWarnIndex = 1,
+    LogInfoIndex = 2,
+    LogDebugIndex = 3
+};
 
 @interface PreferencesWindowController (Private)
 
@@ -53,7 +62,9 @@
 
 
 - (void) awakeFromNib
-{    
+{
+    [mControllerAlias setContent: self];
+
     mButtonsByKey = [[NSDictionary alloc] initWithObjectsAndKeys:
         mRomDirectory, MameRomPath,
         mSamplesDirectory, MameSamplePath,
@@ -61,6 +72,61 @@
         nil];
 
     [self updatePopUpButtons];
+}
+
+- (int) logLevelIndex;
+{
+    NXLogLevel logLevel = [[self class] defaultNXLogLevel];
+    switch (logLevel)
+    {
+        case NXLogLevel_Error:
+            return LogErrorIndex;
+            
+        case NXLogLevel_Warn:
+            return LogWarnIndex;
+            
+        case NXLogLevel_Info:
+            return LogInfoIndex;
+                
+        case NXLogLevel_Debug:
+            return LogDebugIndex;
+            
+        default:
+            NXLogError(@"Unknown log level: %d", logLevel);
+            return -1;
+    }
+}
+
+- (void) setLogLevelIndex: (int) logLevelIndex;
+{
+    MamePreferences * preferences = [MamePreferences standardPreferences];
+
+    switch (logLevelIndex)
+    {
+        case LogErrorIndex:
+            [preferences setNxLogLevel: @"ERROR"];
+            [[self class] setDefaultNXLogLevel: NXLogLevel_Error];
+            break;
+            
+        case LogWarnIndex:
+            [preferences setNxLogLevel: @"WARN"];
+            [[self class] setDefaultNXLogLevel: NXLogLevel_Warn];
+            break;
+            
+        case LogInfoIndex:
+            [preferences setNxLogLevel: @"INFO"];
+            [[self class] setDefaultNXLogLevel: NXLogLevel_Info];
+            break;
+            
+        case LogDebugIndex:
+            [preferences setNxLogLevel: @"DEBUG"];
+            [[self class] setDefaultNXLogLevel: NXLogLevel_Debug];
+            break;
+            
+        default:
+            NXLogError(@"Unknown log level index: %d", logLevelIndex);
+            break;
+    }
 }
 
 - (IBAction) chooseRomDirectory: (id) sender;
@@ -83,13 +149,24 @@
 
 - (IBAction) resetToDefaults: (id) sender;
 {
+    NSArray * keys = [NSArray arrayWithObjects:
+        MameRomPath, MameSamplePath, MameArtworkPath,
+        MameCheckUpdatesAtStartupKey,
+        MameSkipDisclaimerKey, MameSkipGameInfoKey, MameSkipWarningsKey,
+        MameNXLogLevelKey,
+        MameSyncToRefreshKey, MameThrottledKey, MameLinearFilterKey,
+        nil];
+
+    [self setLogLevelIndex: LogWarnIndex];
+
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setValue: nil forKey: MameRomPath];
-    [defaults setValue: nil forKey: MameSamplePath];
-    [defaults setValue: nil forKey: MameArtworkPath];
-    [defaults setValue: nil forKey: MameSyncToRefreshKey];
-    [defaults setValue: nil forKey: MameThrottledKey];
-    [defaults setValue: nil forKey: MameLinearFilterKey];
+    NSEnumerator * e = [keys objectEnumerator];
+    NSString * key;
+    while (key = [e nextObject])
+    {
+        [defaults setValue: nil forKey: key];
+    }
+
     [self updatePopUpButtons];
 }
 

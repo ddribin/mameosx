@@ -47,6 +47,9 @@
 #pragma mark -
 #pragma mark MAME OS X Options
 
+- (NSString *) nxLogLevel;
+- (void) setNxLogLevel: (NSString *) nxLogLevel;
+
 - (BOOL) throttled;
 - (void) setThrottled: (BOOL) flag;
 
@@ -166,6 +169,7 @@
 #pragma mark -
 #pragma mark Preference Keys
 
+extern NSString * MameNXLogLevelKey;
 extern NSString * MameVersionUrlKey;
 extern NSString * MameCheckUpdatesAtStartupKey;
 extern NSString * MameGameKey;

@@ -24,9 +24,9 @@
 
 #import <Cocoa/Cocoa.h>
 
-
 @interface PreferencesWindowController : NSWindowController
 {
+    IBOutlet NSObjectController * mControllerAlias;
     IBOutlet NSPopUpButton * mRomDirectory;
     IBOutlet NSPopUpButton * mSamplesDirectory;
     IBOutlet NSPopUpButton * mArtworkDirectory;
@@ -38,5 +38,8 @@
 - (IBAction) chooseSamplesDirectory: (id) sender;
 - (IBAction) chooseArtworkDirectory: (id) sender;
 - (IBAction) resetToDefaults: (id) sender;
+
+- (int) logLevelIndex;
+- (void) setLogLevelIndex: (int) logLevelIndex;
 
 @end
