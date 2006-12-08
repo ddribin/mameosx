@@ -101,6 +101,9 @@ extern "C" {
 - (BOOL) linearFilter;
 - (void) setLinearFilter: (BOOL) linearFilter;
 
+- (BOOL) audioEffectEnabled;
+- (void) setAudioEffectEnabled: (BOOL) flag;
+
 - (BOOL) isGameLoading;
 - (BOOL) isGameRunning;
 

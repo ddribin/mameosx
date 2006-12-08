@@ -71,6 +71,9 @@
 - (BOOL) paused;
 - (void) setPaused: (BOOL) paused;
 
+- (BOOL) effectBypass;
+- (void) setEffectBypass: (BOOL) effectBypass;
+
 - (void) osd_init;
 
 - (int) osd_start_audio_stream: (int) stereo;

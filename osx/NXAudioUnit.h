@@ -23,6 +23,8 @@
 
 - (void) setBypass: (BOOL) bypass;
 
+- (BOOL) bypass;
+
 - (void) setStreamFormatWithDescription:
     (const AudioStreamBasicDescription *) streamFormat;
 

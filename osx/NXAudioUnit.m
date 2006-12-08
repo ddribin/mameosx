@@ -54,6 +54,19 @@
                                   sizeof(bypassInt)));
 }
 
+
+- (BOOL) bypass;
+{
+    UInt32 bypassInt;
+    UInt32 size = sizeof(bypassInt);
+    THROW_IF(AudioUnitGetProperty([self AudioUnit],
+                                  kAudioUnitProperty_BypassEffect, 
+                                  0,
+                                  0, 
+                                  &bypassInt, &size));
+    return (bypassInt == 0)? NO : YES;
+}
+
 - (void) setStreamFormatWithDescription:
     (const AudioStreamBasicDescription *) streamFormat;
 {

@@ -100,7 +100,39 @@ OSStatus static MyRenderer(void	* inRefCon,
     mUnderflows = 0;
     
     mGraph = [[NXAudioUnitGraph alloc] init];
-   
+    NXAudioUnitNode * outputNode;
+    outputNode = [mGraph addNodeWithType: kAudioUnitType_Output
+                                 subType: kAudioUnitSubType_DefaultOutput];
+    
+    NXAudioUnitNode * effectNode;
+#if 0
+    effectNode = [mGraph addNodeWithType: kAudioUnitType_Effect
+                                 subType: 'Phas' manufacturer: 'ExSl'];
+#elif 0
+    effectNode = [mGraph addNodeWithType: kAudioUnitType_Effect
+                                 subType: kAudioUnitSubType_NetSend];
+#elif 1
+    effectNode = [mGraph addNodeWithType: kAudioUnitType_Effect
+                                 subType: kAudioUnitSubType_MatrixReverb];
+#elif 1
+    effectNode = [mGraph addNodeWithType: kAudioUnitType_Effect
+                                 subType: kAudioUnitSubType_BandPassFilter];
+#endif
+    
+    NXAudioUnitNode * converterNode;
+    converterNode = [mGraph addNodeWithType: kAudioUnitType_FormatConverter
+                                    subType: kAudioUnitSubType_AUConverter];
+    
+    [mGraph connectNode: converterNode input: 0 toNode: effectNode input: 0];
+    [mGraph connectNode: effectNode input: 0 toNode: outputNode input: 0];
+    [mGraph open];
+    
+    mConverterUnit = [[converterNode audioUnit] retain];
+    [mConverterUnit setRenderCallback: MyRenderer context: self];
+    
+    mEffectUnit = [[effectNode audioUnit] retain];
+    [mEffectUnit setBypass: YES];
+    
     return self;
 }
 
@@ -127,40 +159,19 @@ OSStatus static MyRenderer(void	* inRefCon,
     mPaused = paused;
 }
 
+
+- (BOOL) effectBypass;
+{
+    return [mEffectUnit bypass];
+}
+
+- (void) setEffectBypass: (BOOL) effectBypass;
+{
+    [mEffectUnit setBypass: effectBypass];
+}
+
 - (void) osd_init;
 {
-    NXAudioUnitNode * outputNode;
-    outputNode = [mGraph addNodeWithType: kAudioUnitType_Output
-                                 subType: kAudioUnitSubType_DefaultOutput];
-    
-    NXAudioUnitNode * effectNode;
-#if 0
-    effectNode = [mGraph addNodeWithType: kAudioUnitType_Effect
-                                 subType: 'Phas' manufacturer: 'ExSl'];
-#elif 0
-    effectNode = [mGraph addNodeWithType: kAudioUnitType_Effect
-                                 subType: kAudioUnitSubType_NetSend];
-#elif 1
-    effectNode = [mGraph addNodeWithType: kAudioUnitType_Effect
-                                  subType: kAudioUnitSubType_MatrixReverb];
-#elif 0
-    effectNode = [mGraph addNodeWithType: kAudioUnitType_Effect
-                                 subType: kAudioUnitSubType_BandPassFilter];
-#endif
-
-    NXAudioUnitNode * converterNode;
-    converterNode = [mGraph addNodeWithType: kAudioUnitType_FormatConverter
-                                    subType: kAudioUnitSubType_AUConverter];
-
-    [mGraph connectNode: converterNode input: 0 toNode: effectNode input: 0];
-    [mGraph connectNode: effectNode input: 0 toNode: outputNode input: 0];
-    [mGraph open];
-    
-    mConverterUnit = [[converterNode audioUnit] retain];
-    [mConverterUnit setRenderCallback: MyRenderer context: self];
-
-    mEffectUnit = [[effectNode audioUnit] retain];
-    [mEffectUnit setBypass: YES];
 }
 
 - (int) osd_start_audio_stream: (int) stereo;

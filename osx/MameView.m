@@ -116,18 +116,17 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     mFrameStartTime = 0;
 
     mRenderer = [[MameRenderer alloc] init];
-
+    mInputController = [[MameInputController alloc] init];
+    mAudioController = [[MameAudioController alloc] init];
+    mTimingController = [[MameTimingController alloc] init];
+    mFileManager = [[MameFileManager alloc] init];
+    
     return self;
 }
 
 - (void) awakeFromNib
 {
     [self setGame: nil];
-    
-    mInputController = [[MameInputController alloc] init];
-    mAudioController = [[MameAudioController alloc] init];
-    mTimingController = [[MameTimingController alloc] init];
-    mFileManager = [[MameFileManager alloc] init];
 
     // osd_set_controller(self);
     osd_set_controller(self);
@@ -482,6 +481,17 @@ NSString * MameExitStatusKey = @"MameExitStatus";
 {
     [mAudioController setEnabled: flag];
 }
+
+- (BOOL) audioEffectEnabled;
+{
+    return ![mAudioController effectBypass];
+}
+
+- (void) setAudioEffectEnabled: (BOOL) flag;
+{
+    [mAudioController setEffectBypass: !flag];
+}
+
 
 - (BOOL) linearFilter;
 {

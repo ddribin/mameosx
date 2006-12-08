@@ -349,6 +349,16 @@ void exit_sleeper()
     [mMameView setLinearFilter: linearFilter];
 }
 
+- (BOOL) audioEffectEnabled;
+{
+    return [mMameView audioEffectEnabled];
+}
+
+- (void) setAudioEffectEnabled: (BOOL) flag;
+{
+    [mMameView setAudioEffectEnabled: flag];
+}
+
 - (NSArray *) previousGames;
 {
     return mPreviousGames;
