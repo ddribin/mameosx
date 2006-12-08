@@ -56,6 +56,7 @@ typedef struct
     uint64_t underflows;
     uint64_t overflows;
     uint32_t mSamplesThisFrame;
+    float cpuLoad;
 } MameAudioStats;
 
 #define NUM_STATS 10000
@@ -63,6 +64,8 @@ static MameAudioStats sAudioStats[NUM_STATS];
 static uint32_t sAudioStatIndex = 0;
 
 @interface MameAudioController (Private)
+
+- (void) addEffectNode;
 
 - (void) updateSampleAdjustment: (int) bytesInBuffer;
 
@@ -100,38 +103,31 @@ OSStatus static MyRenderer(void	* inRefCon,
     mUnderflows = 0;
     
     mGraph = [[NXAudioUnitGraph alloc] init];
-    NXAudioUnitNode * outputNode;
-    outputNode = [mGraph addNodeWithType: kAudioUnitType_Output
-                                 subType: kAudioUnitSubType_DefaultOutput];
+    mOutputNode = [mGraph addNodeWithType: kAudioUnitType_Output
+                                  subType: kAudioUnitSubType_DefaultOutput];
+    [mOutputNode retain];
     
-    NXAudioUnitNode * effectNode;
+    mEffectNode = nil;
+
+    mConverterNode = [mGraph addNodeWithType: kAudioUnitType_FormatConverter
+                                     subType: kAudioUnitSubType_AUConverter];
+    [mConverterNode retain];
+    
 #if 0
-    effectNode = [mGraph addNodeWithType: kAudioUnitType_Effect
-                                 subType: 'Phas' manufacturer: 'ExSl'];
-#elif 0
-    effectNode = [mGraph addNodeWithType: kAudioUnitType_Effect
-                                 subType: kAudioUnitSubType_NetSend];
-#elif 1
-    effectNode = [mGraph addNodeWithType: kAudioUnitType_Effect
-                                 subType: kAudioUnitSubType_MatrixReverb];
-#elif 1
-    effectNode = [mGraph addNodeWithType: kAudioUnitType_Effect
-                                 subType: kAudioUnitSubType_BandPassFilter];
-#endif
-    
-    NXAudioUnitNode * converterNode;
-    converterNode = [mGraph addNodeWithType: kAudioUnitType_FormatConverter
-                                    subType: kAudioUnitSubType_AUConverter];
-    
     [mGraph connectNode: converterNode input: 0 toNode: effectNode input: 0];
     [mGraph connectNode: effectNode input: 0 toNode: outputNode input: 0];
+#else
+    [mGraph connectNode: mConverterNode output: 0 toNode: mOutputNode input: 0];
+#endif
     [mGraph open];
     
-    mConverterUnit = [[converterNode audioUnit] retain];
+    mConverterUnit = [[mConverterNode audioUnit] retain];
     [mConverterUnit setRenderCallback: MyRenderer context: self];
     
+#if 0
     mEffectUnit = [[effectNode audioUnit] retain];
     [mEffectUnit setBypass: YES];
+#endif
     
     return self;
 }
@@ -159,15 +155,35 @@ OSStatus static MyRenderer(void	* inRefCon,
     mPaused = paused;
 }
 
-
-- (BOOL) effectBypass;
+- (BOOL) effectEnabled;
 {
-    return [mEffectUnit bypass];
+    return (mEffectNode != nil);
 }
 
-- (void) setEffectBypass: (BOOL) effectBypass;
+- (void) setEffectEnabled: (BOOL) effectEnabled;
 {
-    [mEffectUnit setBypass: effectBypass];
+    BOOL currentlyEnabled = [self effectEnabled];
+    if (currentlyEnabled && !effectEnabled)
+    {
+        [mGraph disconnectNode: mOutputNode input: 0];
+        [mGraph removeNode: mEffectNode];
+        [mGraph connectNode: mConverterNode output: 0
+                     toNode: mOutputNode input: 0];
+        [mGraph update];
+
+        [mEffectNode release];
+        mEffectNode = nil;
+    }
+    else if (!currentlyEnabled && effectEnabled)
+    {
+        [mGraph disconnectNode: mOutputNode input: 0];
+        [self addEffectNode];
+        [mGraph connectNode: mConverterNode output: 0
+                     toNode: mEffectNode input: 0];
+        [mGraph connectNode: mEffectNode output: 0
+                     toNode: mOutputNode input: 0];
+        [mGraph update];
+    }
 }
 
 - (void) osd_init;
@@ -323,6 +339,24 @@ OSStatus static MyRenderer(void	* inRefCon,
 
 @implementation MameAudioController (Private)
 
+- (void) addEffectNode;
+{
+#if 0
+    mEffectNode = [mGraph addNodeWithType: kAudioUnitType_Effect
+                                  subType: 'Phas' manufacturer: 'ExSl'];
+#elif 0
+    mEffectNode = [mGraph addNodeWithType: kAudioUnitType_Effect
+                                  subType: kAudioUnitSubType_Pitch];
+#elif 1
+    mEffectNode = [mGraph addNodeWithType: kAudioUnitType_Effect
+                                  subType: kAudioUnitSubType_MatrixReverb];
+#elif 1
+    mEffectNode = [mGraph addNodeWithType: kAudioUnitType_Effect
+                                  subType: kAudioUnitSubType_BandPassFilter];
+#endif
+    [mEffectNode retain];
+}
+
 - (void) updateSampleAdjustment: (int) bytesInBuffer;
 {
 	// if we're not throttled don't bother
@@ -461,6 +495,7 @@ OSStatus static MyRenderer(void	* inRefCon,
         stats->underflows = mUnderflows;
         stats->overflows = mOverflows;
         stats->mSamplesThisFrame = mSamplesThisFrame;
+        stats->cpuLoad = [mGraph cpuLoad];
         sAudioStatIndex++;
     }
 }
@@ -486,10 +521,12 @@ OSStatus static MyRenderer(void	* inRefCon,
         uint64_t msec = diff % 1000000;
         uint32_t percent = stats->bytesInBuffer * 100 / capacity;
         
-        fprintf(file, "%5u %c %4qi.%06qi %5u/%u (%3u%%) %5qi %5qi %5u\n", i, stats->code,
+        fprintf(file, "%5u %c %4qi.%06qi %5u/%u (%3u%%) %5qi %5qi %5u %.1f%%\n",
+                i, stats->code,
                 sec, msec,
                 stats->bytesInBuffer, capacity, percent,
-                stats->underflows, stats->overflows, stats->mSamplesThisFrame);
+                stats->underflows, stats->overflows, stats->mSamplesThisFrame,
+                stats->cpuLoad * 100);
     }
     fclose(file);
 }

@@ -14,7 +14,8 @@ void NXThrowAudioIfErr(OSStatus err)
 {
     if (err != 0)
     {
-        NSString * reason = [NSString stringWithFormat: @"%ld", err];
+        NSString * reason = [NSString stringWithFormat: @"%ld: [%s]", err,
+            GetMacOSStatusErrorString(err)];
         NSException * e = [NSException exceptionWithName: NXAudioException
                                                   reason: reason
                                                 userInfo: nil];

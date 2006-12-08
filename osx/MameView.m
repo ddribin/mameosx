@@ -484,12 +484,12 @@ NSString * MameExitStatusKey = @"MameExitStatus";
 
 - (BOOL) audioEffectEnabled;
 {
-    return ![mAudioController effectBypass];
+    return [mAudioController effectEnabled];
 }
 
 - (void) setAudioEffectEnabled: (BOOL) flag;
 {
-    [mAudioController setEffectBypass: !flag];
+    [mAudioController setEffectEnabled: flag];
 }
 
 

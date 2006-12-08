@@ -30,10 +30,15 @@
                               subType: (OSType) subType
                          manufacturer: (OSType) manufacturer;
 
+- (void) removeNode: (NXAudioUnitNode *) node;
+
 - (void) connectNode: (NXAudioUnitNode *) sourceNode
-               input: (UInt32) sourceInput
+              output: (UInt32) sourceOutput
               toNode: (NXAudioUnitNode *) destNode
                input: (UInt32) destInput;
+
+- (void) disconnectNode: (NXAudioUnitNode *) node
+                  input: (UInt32) input;
 
 - (void) open;
 
@@ -46,5 +51,7 @@
 - (void) start;
 
 - (void) stop;
+
+- (float) cpuLoad;
 
 @end

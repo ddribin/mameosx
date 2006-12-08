@@ -59,15 +59,27 @@
     return [[[NXAudioUnitNode alloc] initWithAUNode: node inGraph: self] autorelease];
 }
 
+- (void) removeNode: (NXAudioUnitNode *) node;
+{
+    THROW_IF(AUGraphRemoveNode(mGraph, [node AUNode]));
+}
 
 - (void) connectNode: (NXAudioUnitNode *) sourceNode
-               input: (UInt32) sourceInput
+              output: (UInt32) sourceOutput
               toNode: (NXAudioUnitNode *) destNode
                input: (UInt32) destInput;
 {
     THROW_IF(AUGraphConnectNodeInput(mGraph,
-                                     [sourceNode AUNode], sourceInput,
+                                     [sourceNode AUNode], sourceOutput,
                                      [destNode AUNode], destInput));
+}
+
+
+- (void) disconnectNode: (NXAudioUnitNode *) node
+                  input: (UInt32) input;
+{
+    THROW_IF(AUGraphDisconnectNodeInput(mGraph,
+                                        [node AUNode], input));
 }
 
 - (void) open;
@@ -100,5 +112,11 @@
     THROW_IF(AUGraphStop(mGraph));
 }
 
+- (float) cpuLoad;
+{
+    Float32 cpuLoad;
+    THROW_IF(AUGraphGetCPULoad(mGraph, &cpuLoad));
+    return (float) cpuLoad;
+}
 
 @end

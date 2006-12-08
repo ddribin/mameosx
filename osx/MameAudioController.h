@@ -38,6 +38,11 @@
     int mAttenuation;
 
     NXAudioUnitGraph * mGraph;
+
+    NXAudioUnitNode * mConverterNode;
+    NXAudioUnitNode * mEffectNode;
+    NXAudioUnitNode * mOutputNode;
+
     NXAudioUnit * mConverterUnit;
     NXAudioUnit * mEffectUnit;
 
@@ -71,8 +76,8 @@
 - (BOOL) paused;
 - (void) setPaused: (BOOL) paused;
 
-- (BOOL) effectBypass;
-- (void) setEffectBypass: (BOOL) effectBypass;
+- (BOOL) effectEnabled;
+- (void) setEffectEnabled: (BOOL) effectEnabled;
 
 - (void) osd_init;
 
