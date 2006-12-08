@@ -24,6 +24,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import <AudioUnit/AudioUnit.h>
+#import <AudioToolbox/AudioToolbox.h>
 #include "osdepend.h"
 
 @class MameController;
@@ -34,7 +35,15 @@
     BOOL mEnabled;
     BOOL mPaused;
     int mAttenuation;
+
+    AUGraph mGraph;
+    AUNode mOutputNode;
     AudioUnit mOutputUnit;
+    AUNode mEffectNode;
+    AudioUnit mEffectUnit;
+    AUNode mConverterNode;
+    AudioUnit mConverterUnit;
+
     size_t mBufferSize;
     VirtualRingBuffer * mRingBuffer;
     BOOL mInitialBufferThresholdReached;

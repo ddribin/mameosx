@@ -2406,6 +2406,8 @@
 		55BEFB440AEC6DF000357340 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 556A4C500AA50E5800602CC5 /* MainMenu.nib */; };
 		55BEFB5F0AEC6E7500357340 /* MameKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 55BEF9A00AEC5E5C00357340 /* MameKit.framework */; };
 		55BEFB7F0AEC712900357340 /* mamedriv.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A43650AA4ECF800602CC5 /* mamedriv.c */; };
+		55C710150B292A64001FF0BE /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55E93D5F0B29166E003CBB89 /* AudioToolbox.framework */; };
+		55C710160B292A64001FF0BE /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55FE26320AAD33AB00C4054A /* AudioUnit.framework */; };
 		55D2836F0B12D5CA002C9199 /* MamePreferences.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 55D2836C0B12D5CA002C9199 /* MamePreferences.h */; };
 		55D28E1A0B13CBB8002C9199 /* VirtualRingBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 55D28E180B13CBB8002C9199 /* VirtualRingBuffer.h */; };
 		55D28E1B0B13CBB8002C9199 /* VirtualRingBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D28E190B13CBB8002C9199 /* VirtualRingBuffer.m */; };
@@ -2457,6 +2459,7 @@
 		55E03CF10B0A320600988109 /* PreferencesWindowController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 55E03CEF0B0A320600988109 /* PreferencesWindowController.h */; };
 		55E03D090B0A32EE00988109 /* Preferences.nib in Resources */ = {isa = PBXBuildFile; fileRef = 55E03D070B0A32EE00988109 /* Preferences.nib */; };
 		55E03D0A0B0A32EF00988109 /* Preferences.nib in Resources */ = {isa = PBXBuildFile; fileRef = 55E03D070B0A32EE00988109 /* Preferences.nib */; };
+		55E93D600B29166E003CBB89 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55E93D5F0B29166E003CBB89 /* AudioToolbox.framework */; };
 		55FCC9FE0B0BD255003A5FB3 /* VersionChecker.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 55FCC9FC0B0BD255003A5FB3 /* VersionChecker.h */; };
 		55FE26330AAD33AB00C4054A /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55FE26320AAD33AB00C4054A /* AudioUnit.framework */; };
 		55FEC76B0AEC52F7001A1CAB /* tiny.c in Sources */ = {isa = PBXBuildFile; fileRef = 55FEC76A0AEC52F7001A1CAB /* tiny.c */; };
@@ -2894,7 +2897,6 @@
 		556A4A280AA4F94300602CC5 /* zutil.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = zutil.c; sourceTree = "<group>"; };
 		556A4A290AA4F94300602CC5 /* zutil.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = zutil.h; sourceTree = "<group>"; };
 		556A4AB10AA4FACB00602CC5 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
-		556A4AB50AA4FADE00602CC5 /* SDL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL.framework; path = /Library/Frameworks/SDL.framework; sourceTree = "<absolute>"; };
 		556A4ACE0AA4FBA000602CC5 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		556A4ACF0AA4FBA000602CC5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		556A4B150AA4FD5400602CC5 /* generic.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = generic.c; sourceTree = "<group>"; };
@@ -5273,6 +5275,7 @@
 		55E03CEF0B0A320600988109 /* PreferencesWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreferencesWindowController.h; sourceTree = "<group>"; };
 		55E03CF00B0A320600988109 /* PreferencesWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreferencesWindowController.m; sourceTree = "<group>"; };
 		55E03D080B0A32EE00988109 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/Preferences.nib; sourceTree = "<group>"; };
+		55E93D5F0B29166E003CBB89 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = /System/Library/Frameworks/AudioToolbox.framework; sourceTree = "<absolute>"; };
 		55FCC9FC0B0BD255003A5FB3 /* VersionChecker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VersionChecker.h; sourceTree = "<group>"; };
 		55FCC9FD0B0BD255003A5FB3 /* VersionChecker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VersionChecker.m; sourceTree = "<group>"; };
 		55FE25E60AAD2F6100C4054A /* MameAudioController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MameAudioController.h; sourceTree = "<group>"; };
@@ -5354,6 +5357,7 @@
 				556A516E0AA54F1F00602CC5 /* OpenGL.framework in Frameworks */,
 				55A3A5230AA7B36400921B71 /* QuartzCore.framework in Frameworks */,
 				55FE26330AAD33AB00C4054A /* AudioUnit.framework in Frameworks */,
+				55E93D600B29166E003CBB89 /* AudioToolbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5386,6 +5390,8 @@
 				55BEFA980AEC641800357340 /* OpenGL.framework in Frameworks */,
 				55BEFA990AEC641800357340 /* QuartzCore.framework in Frameworks */,
 				55BEFA9A0AEC641800357340 /* AudioUnit.framework in Frameworks */,
+				55C710150B292A64001FF0BE /* AudioToolbox.framework in Frameworks */,
+				55C710160B292A64001FF0BE /* AudioUnit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5783,11 +5789,11 @@
 		556A4AB00AA4FAA300602CC5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				55E93D5F0B29166E003CBB89 /* AudioToolbox.framework */,
 				55FE26320AAD33AB00C4054A /* AudioUnit.framework */,
 				55A3A5220AA7B36400921B71 /* QuartzCore.framework */,
 				556A4ACE0AA4FBA000602CC5 /* Cocoa.framework */,
 				556A4ACF0AA4FBA000602CC5 /* Foundation.framework */,
-				556A4AB50AA4FADE00602CC5 /* SDL.framework */,
 				556A4AB10AA4FACB00602CC5 /* OpenGL.framework */,
 			);
 			name = Frameworks;
