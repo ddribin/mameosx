@@ -26,6 +26,7 @@
 #import "MameController.h"
 #import "MameConfiguration.h"
 #import "VirtualRingBuffer.h"
+#import "NXCoreAudio.h"
 
 #include <CoreServices/CoreServices.h>
 #include <mach/mach.h>
@@ -98,7 +99,7 @@ OSStatus static MyRenderer(void	* inRefCon,
     mOverflows = 0;
     mUnderflows = 0;
     
-    NewAUGraph(&mGraph);
+    mGraph = [[NXAudioUnitGraph alloc] init];
    
     return self;
 }
@@ -128,72 +129,38 @@ OSStatus static MyRenderer(void	* inRefCon,
 
 - (void) osd_init;
 {
-	OSStatus err = noErr;
+    NXAudioUnitNode * outputNode;
+    outputNode = [mGraph addNodeWithType: kAudioUnitType_Output
+                                 subType: kAudioUnitSubType_DefaultOutput];
     
-	// Open the default output unit
-	ComponentDescription desc;
-	desc.componentType = kAudioUnitType_Output;
-	desc.componentSubType = kAudioUnitSubType_DefaultOutput;
-	desc.componentManufacturer = kAudioUnitManufacturer_Apple;
-	desc.componentFlags = 0;
-	desc.componentFlagsMask = 0;
-	
-    err = AUGraphNewNode(mGraph, &desc, 0, NULL, &mOutputNode);
-    
+    NXAudioUnitNode * effectNode;
 #if 0
-    desc.componentType = kAudioUnitType_Effect;
-    desc.componentSubType = 'Phas'; // kAudioUnitSubType_MatrixReverb;
-	desc.componentManufacturer = 'ExSl'; // kAudioUnitManufacturer_Apple;
+    effectNode = [mGraph addNodeWithType: kAudioUnitType_Effect
+                                 subType: 'Phas' manufacturer: 'ExSl'];
 #elif 0
-    desc.componentType = kAudioUnitType_Effect;
-    desc.componentSubType = kAudioUnitSubType_NetSend;
-	desc.componentManufacturer = kAudioUnitManufacturer_Apple;
+    effectNode = [mGraph addNodeWithType: kAudioUnitType_Effect
+                                 subType: kAudioUnitSubType_NetSend];
 #elif 1
-    desc.componentType = kAudioUnitType_Effect;
-    desc.componentSubType = kAudioUnitSubType_MatrixReverb;
-	desc.componentManufacturer = kAudioUnitManufacturer_Apple;
-#elif 1
-    desc.componentType = kAudioUnitType_Effect;
-    desc.componentSubType = kAudioUnitSubType_BandPassFilter;
-	desc.componentManufacturer = kAudioUnitManufacturer_Apple;
+    effectNode = [mGraph addNodeWithType: kAudioUnitType_Effect
+                                  subType: kAudioUnitSubType_MatrixReverb];
+#elif 0
+    effectNode = [mGraph addNodeWithType: kAudioUnitType_Effect
+                                 subType: kAudioUnitSubType_BandPassFilter];
 #endif
-    err = AUGraphNewNode(mGraph, &desc, 0, NULL, &mEffectNode);
 
-    desc.componentType = kAudioUnitType_FormatConverter;
-    desc.componentSubType = kAudioUnitSubType_AUConverter;
-	desc.componentManufacturer = kAudioUnitManufacturer_Apple;
-    err = AUGraphNewNode(mGraph, &desc, 0, NULL, &mConverterNode);
+    NXAudioUnitNode * converterNode;
+    converterNode = [mGraph addNodeWithType: kAudioUnitType_FormatConverter
+                                    subType: kAudioUnitSubType_AUConverter];
 
-    err = AUGraphConnectNodeInput (mGraph, mConverterNode, 0, mEffectNode, 0);
-    err = AUGraphConnectNodeInput (mGraph, mEffectNode, 0, mOutputNode, 0);
-	if (err) { NSLog(@"AUGraphConnectNodeInput=%ld\n", err); return; }
-
-    err = AUGraphOpen(mGraph);
-    err = AUGraphGetNodeInfo(mGraph, mOutputNode, NULL, NULL, NULL, &mOutputUnit);
-    err = AUGraphGetNodeInfo(mGraph, mEffectNode, NULL, NULL, NULL, &mEffectUnit);
-    err = AUGraphGetNodeInfo(mGraph, mConverterNode, NULL, NULL, NULL, &mConverterUnit);
-   
-	// Set up a callback function to generate output to the output unit
-    AURenderCallbackStruct input;
-	input.inputProc = MyRenderer;
-	input.inputProcRefCon = self;
+    [mGraph connectNode: converterNode input: 0 toNode: effectNode input: 0];
+    [mGraph connectNode: effectNode input: 0 toNode: outputNode input: 0];
+    [mGraph open];
     
-	err = AudioUnitSetProperty (mConverterUnit, 
-								kAudioUnitProperty_SetRenderCallback, 
-								kAudioUnitScope_Input,
-								0, 
-								&input, 
-								sizeof(input));
-	if (err) { NSLog(@"AudioUnitSetProperty-CB=%ld\n", err); return; }
+    mConverterUnit = [[converterNode audioUnit] retain];
+    [mConverterUnit setRenderCallback: MyRenderer context: self];
 
-    UInt32 bypass = 1;
-	err = AudioUnitSetProperty (mEffectUnit, 
-								kAudioUnitProperty_BypassEffect, 
-								0,
-								0, 
-								&bypass, 
-								sizeof(bypass));
-	if (err) { NSLog(@"AudioUnitSetProperty-CB=%ld\n", err); return; }
+    mEffectUnit = [[effectNode audioUnit] retain];
+    [mEffectUnit setBypass: YES];
 }
 
 - (int) osd_start_audio_stream: (int) stereo;
@@ -224,21 +191,13 @@ OSStatus static MyRenderer(void	* inRefCon,
     streamFormat.mBytesPerFrame = streamFormat.mBitsPerChannel * streamFormat.mChannelsPerFrame / 8;
     streamFormat.mBytesPerPacket = streamFormat.mBytesPerFrame * streamFormat.mFramesPerPacket;
     
-    err = AudioUnitSetProperty (mConverterUnit,
-                                kAudioUnitProperty_StreamFormat,
-                                kAudioUnitScope_Input,
-                                0,
-                                &streamFormat,
-                                sizeof(AudioStreamBasicDescription));
-	if (err) { NSLog(@"AudioUnitSetProperty-SF=%4.4s, %ld", (char*)&err, err); return 0; }
+    [mConverterUnit setStreamFormatWithDescription: &streamFormat];
     
     mBytesPerFrame = streamFormat.mBytesPerFrame;
 	
     // Initialize unit
-    AUGraphUpdate (mGraph, NULL);
-
-    err= AUGraphInitialize(mGraph);
-    if (err) { NSLog(@"AUGraphInitialize=%ld", err); return 0; }
+    [mGraph update];
+    [mGraph initialize];
     
     // compute the buffer sizes
     mBufferSize = ((UINT64)MAX_BUFFER_SIZE * (UINT64)Machine->sample_rate) / 44100;
@@ -280,8 +239,7 @@ OSStatus static MyRenderer(void	* inRefCon,
 	// The DefaultOutputUnit will do any format conversions to the format of the default device
     if (mEnabled)
     {
-        err = AUGraphStart(mGraph);
-        if (err) { NSLog(@"AUGraphStart=%ld", err); return 0; }
+        [mGraph start];
     }
     
     return mSamplesPerFrame;
@@ -327,11 +285,8 @@ OSStatus static MyRenderer(void	* inRefCon,
 
 - (void) osd_stop_audio_stream;
 {
-	OSStatus err = noErr;
-    err = AUGraphStop(mGraph);
-    if (err) { NSLog(@"AUGraphStop=%ld\n", err); return; }
-    err = AUGraphUninitialize(mGraph);
-    if (err) { NSLog(@"AUGraphUninitialize=%ld\n", err); return; }
+    [mGraph stop];
+    [mGraph uninitialize];
     
 #if OSX_LOG_SOUND
     NSLog(@"Overflows: %qi, underflows: %qi", mOverflows, mUnderflows);

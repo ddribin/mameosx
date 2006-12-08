@@ -547,7 +547,7 @@ void exit_sleeper()
 - (void) setUpDefaultPaths;
 {
     NSBundle * myBundle = [NSBundle bundleForClass: [self class]];
-#if 1
+#if 0
     // TODO: Hopefully MAME core will allow us to fix this hack.
     [[NSFileManager defaultManager] changeCurrentDirectoryPath: [myBundle resourcePath]];
 #endif

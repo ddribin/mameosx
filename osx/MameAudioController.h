@@ -23,12 +23,13 @@
  */
 
 #import <Cocoa/Cocoa.h>
-#import <AudioUnit/AudioUnit.h>
-#import <AudioToolbox/AudioToolbox.h>
 #include "osdepend.h"
 
 @class MameController;
 @class VirtualRingBuffer;
+@class NXAudioUnit;
+@class NXAudioUnitGraph;
+@class NXAudioUnitNode;
 
 @interface MameAudioController : NSObject
 {
@@ -36,13 +37,9 @@
     BOOL mPaused;
     int mAttenuation;
 
-    AUGraph mGraph;
-    AUNode mOutputNode;
-    AudioUnit mOutputUnit;
-    AUNode mEffectNode;
-    AudioUnit mEffectUnit;
-    AUNode mConverterNode;
-    AudioUnit mConverterUnit;
+    NXAudioUnitGraph * mGraph;
+    NXAudioUnit * mConverterUnit;
+    NXAudioUnit * mEffectUnit;
 
     size_t mBufferSize;
     VirtualRingBuffer * mRingBuffer;
