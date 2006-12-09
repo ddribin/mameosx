@@ -81,6 +81,8 @@
 - (BOOL) effectEnabled;
 - (void) setEffectEnabled: (BOOL) effectEnabled;
 
+- (void) changeEffect: (ComponentDescription *) description;
+
 - (NSView *) createEffectViewWithSize: (NSSize) size;
 
 - (float) cpuLoad;

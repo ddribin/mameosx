@@ -8,6 +8,7 @@
 
 #import "AudioEffectWindowController.h"
 #import "MameView.h"
+#import "NXAudioComponent.h"
 
 @interface AudioEffectWindowController (Private)
 
@@ -29,7 +30,7 @@
     return self;
 }
 
-- (void)updateCpuLoad:(NSTimer*)theTimer
+- (void) updateCpuLoad: (NSTimer*)theTimer
 {
     [self willChangeValueForKey: @"cpuLoad"];
     mCpuLoad = [mMameView audioCpuLoad] * 100.0;
@@ -58,6 +59,15 @@
                    options: (NSKeyValueObservingOptionNew |
                              NSKeyValueObservingOptionOld)
                    context: nil];
+
+    NSArray * effectComponents =
+        [NXAudioComponent componentsMatchingType: kAudioUnitType_Effect
+                                         subType: 0
+                                    manufacturer: 0];
+    
+    [self willChangeValueForKey: @"effectComponents"];
+    mEffectComponents = [effectComponents retain];
+    [self didChangeValueForKey: @"effectComponents"];
 }
 
 - (MameView *) mameView;
@@ -68,6 +78,25 @@
 - (float) cpuLoad;
 {
     return mCpuLoad;
+}
+
+- (NSArray *) effectComponents;
+{
+    return mEffectComponents;
+}
+
+- (int) currentEffectIndex;
+{
+    return mCurrentEffectIndex;
+}
+
+- (void) setCurrentEffectIndex: (int) effectIndex;
+{
+    NXAudioComponent * component = [mEffectComponents objectAtIndex: effectIndex];
+    ComponentDescription description = [component ComponentDescription];
+    [mMameView changeAudioEffect: &description];
+    NSView * view = [mMameView createAudioEffectViewWithSize: NSMakeSize(400, 300)];
+    [self setAudioUnitView: view];
 }
 
 - (IBAction) showWindow: (id) sender;

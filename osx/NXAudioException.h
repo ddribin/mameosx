@@ -27,4 +27,12 @@
 
 extern NSString * NXAudioException;
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 void NXThrowAudioIfErr(OSStatus err);
+    
+#ifdef __cplusplus
+}
+#endif

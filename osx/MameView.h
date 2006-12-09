@@ -118,6 +118,8 @@
 - (BOOL) audioEffectEnabled;
 - (void) setAudioEffectEnabled: (BOOL) flag;
 
+- (void) changeAudioEffect: (ComponentDescription *) description;
+
 - (NSView *) createAudioEffectViewWithSize: (NSSize) size;
 
 - (float) audioCpuLoad;

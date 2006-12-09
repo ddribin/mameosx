@@ -492,6 +492,11 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     [mAudioController setEffectEnabled: flag];
 }
 
+- (void) changeAudioEffect: (ComponentDescription *) description;
+{
+    [mAudioController changeEffect: description];
+}
+
 - (NSView *) createAudioEffectViewWithSize: (NSSize) size;
 {
     return [mAudioController createEffectViewWithSize: size];

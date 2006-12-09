@@ -136,7 +136,6 @@
     if (err != noErr)
         return nil;
 
-    
     unsigned numberOfClasses =
         (dataSize - sizeof(CFURLRef)) / sizeof(CFStringRef);
     if (numberOfClasses == 0)
@@ -175,7 +174,7 @@
         free(viewInfo);
     }
     
-    return [theView autorelease];
+    return theView;
 }
 
 - (AUGenericView *) createGenericView;

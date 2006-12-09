@@ -69,9 +69,14 @@
     description.componentManufacturer = manufacturer;
     description.componentFlags = 0;
     description.componentFlagsMask = 0;
-    
+    return [self addNodeWithDescription: &description];
+}
+
+- (NXAudioUnitNode *) addNodeWithDescription:
+    (ComponentDescription *) description;
+{
     AUNode node;
-    THROW_IF(AUGraphNewNode(mGraph, &description, 0, NULL, &node));
+    THROW_IF(AUGraphNewNode(mGraph, description, 0, NULL, &node));
     return [[[NXAudioUnitNode alloc] initWithAUNode: node inGraph: self] autorelease];
 }
 
@@ -96,6 +101,11 @@
 {
     THROW_IF(AUGraphDisconnectNodeInput(mGraph,
                                         [node AUNode], input));
+}
+
+- (void) disconnectAll;
+{
+    THROW_IF(AUGraphClearConnections(mGraph));
 }
 
 - (void) open;

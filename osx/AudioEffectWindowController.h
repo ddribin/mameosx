@@ -19,6 +19,8 @@
     NSView * mAudioUnitView;
     NSTimer * mCpuLoadTimer;
     float mCpuLoad;
+    NSArray * mEffectComponents;
+    int mCurrentEffectIndex;
 }
 
 - (id) initWithMameView: (MameView *) mameView;
@@ -26,5 +28,11 @@
 - (MameView *) mameView;
 
 - (float) cpuLoad;
+
+- (NSArray *) effectComponents;
+
+- (int) currentEffectIndex;
+
+- (void) setCurrentEffectIndex: (int) effectIndex;
 
 @end

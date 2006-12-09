@@ -46,6 +46,9 @@
                               subType: (OSType) subType
                          manufacturer: (OSType) manufacturer;
 
+- (NXAudioUnitNode *) addNodeWithDescription:
+    (ComponentDescription *) description;
+
 - (void) removeNode: (NXAudioUnitNode *) node;
 
 - (void) connectNode: (NXAudioUnitNode *) sourceNode
@@ -55,6 +58,8 @@
 
 - (void) disconnectNode: (NXAudioUnitNode *) node
                   input: (UInt32) input;
+
+- (void) disconnectAll;
 
 - (void) open;
 

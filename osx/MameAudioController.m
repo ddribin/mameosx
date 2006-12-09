@@ -65,6 +65,8 @@ static uint32_t sAudioStatIndex = 0;
 
 @interface MameAudioController (Private)
 
+- (void) connectNodes;
+
 - (void) addEffectNode;
 
 - (void) updateSampleAdjustment: (int) bytesInBuffer;
@@ -113,8 +115,8 @@ OSStatus static MyRenderer(void	* inRefCon,
                                      subType: kAudioUnitSubType_AUConverter];
     [mConverterNode retain];
     
-    [mGraph connectNode: mConverterNode output: 0 toNode: mOutputNode input: 0];
     mEffectEnabled = NO;
+    [self connectNodes];
 
     [mGraph open];
     
@@ -157,26 +159,29 @@ OSStatus static MyRenderer(void	* inRefCon,
 - (void) setEffectEnabled: (BOOL) effectEnabled;
 {
     BOOL currentlyEnabled = mEffectEnabled;
-    if (currentlyEnabled && !effectEnabled)
+    if (currentlyEnabled != effectEnabled)
     {
-        [mGraph disconnectNode: mOutputNode input: 0];
-        [mGraph disconnectNode: mEffectNode input: 0];
-
-        [mGraph connectNode: mConverterNode output: 0
-                     toNode: mOutputNode input: 0];
+        [mGraph disconnectAll];
+        mEffectEnabled = effectEnabled;
+        [self connectNodes];
         [mGraph update];
     }
-    else if (!currentlyEnabled && effectEnabled)
-    {
-        [mGraph disconnectNode: mOutputNode input: 0];
+}
 
-        [mGraph connectNode: mConverterNode output: 0
-                     toNode: mEffectNode input: 0];
-        [mGraph connectNode: mEffectNode output: 0
-                     toNode: mOutputNode input: 0];
-        [mGraph update];
-    }
-    mEffectEnabled = effectEnabled;
+- (void) changeEffect: (ComponentDescription *) description;
+{
+    NXAudioUnitNode * newNode = [mGraph addNodeWithDescription: description];
+    NXAudioUnit * newUnit = [newNode audioUnit];
+    
+    [mGraph disconnectAll];
+    [mGraph removeNode: mEffectNode];
+    [mEffectNode release];
+    [mEffectUnit release];
+    
+    mEffectNode = [newNode retain];
+    mEffectUnit = [newUnit retain];
+    [self connectNodes];
+    [mGraph update];
 }
 
 - (NSView *) createEffectViewWithSize: (NSSize) size;
@@ -341,6 +346,23 @@ OSStatus static MyRenderer(void	* inRefCon,
 @end
 
 @implementation MameAudioController (Private)
+
+- (void) connectNodes;
+{
+    if ([self effectEnabled])
+    {
+        [mGraph connectNode: mConverterNode output: 0
+                     toNode: mEffectNode input: 0];
+        [mGraph connectNode: mEffectNode output: 0
+                     toNode: mOutputNode input: 0];
+    }
+    else
+    {
+        [mGraph connectNode: mConverterNode output: 0
+                     toNode: mOutputNode input: 0];
+    }
+}
+
 
 - (void) addEffectNode;
 {
