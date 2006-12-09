@@ -25,6 +25,8 @@
 #import <Cocoa/Cocoa.h>
 #import <AudioUnit/AudioUnit.h>
 
+@class AUGenericView;
+
 @interface NXAudioUnit : NSObject
 {
     AudioUnit mAudioUnit;
@@ -43,5 +45,16 @@
 
 - (void) setStreamFormatWithDescription:
     (const AudioStreamBasicDescription *) streamFormat;
+
+#pragma mark -
+#pragma mark View
+
+- (NSView *) createViewWithSize: (NSSize) size;
+
+- (BOOL) hasCustomCocoaView;
+
+- (NSView *) createCustomCocoaViewWithSize: (NSSize) defaultSize;
+
+- (AUGenericView *) createGenericView;
 
 @end

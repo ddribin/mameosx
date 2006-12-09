@@ -32,6 +32,7 @@
 #import "PreferencesWindowController.h"
 #import "MamePreferences.h"
 #import "RomAuditWindowController.h"
+#import "AudioEffectWindowController.h"
 
 #include <mach/mach_time.h>
 #include <unistd.h>
@@ -175,6 +176,11 @@ void exit_sleeper()
     return YES;
 }
 
+- (MameView *) mameView;
+{
+    return mMameView;
+}
+
 - (MameConfiguration *) configuration;
 {
     return mConfiguration;
@@ -190,6 +196,16 @@ void exit_sleeper()
         [window center];
     [mPreferencesController showWindow: self];
 }
+
+- (IBAction) showAudioEffectsPanel: (id) sender;
+{
+    if (mAudioEffectsController == nil)
+        mAudioEffectsController = [[AudioEffectWindowController alloc]
+            initWithMameView: mMameView];
+    
+    NSWindow * window = [mAudioEffectsController window];
+    [mAudioEffectsController showWindow: self];
+}
 
 //=========================================================== 
 //  isFiltered 

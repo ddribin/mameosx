@@ -118,6 +118,10 @@
 - (BOOL) audioEffectEnabled;
 - (void) setAudioEffectEnabled: (BOOL) flag;
 
+- (NSView *) createAudioEffectViewWithSize: (NSSize) size;
+
+- (float) audioCpuLoad;
+
 - (BOOL) linearFilter;
 - (void) setLinearFilter: (BOOL) linearFilter;
 

@@ -24,6 +24,8 @@
 
 #import "NXAudioUnit.h"
 #import "NXAudioException.h"
+#import <AudioUnit/AUCocoaUIView.h>
+#import <CoreAudioKit/CoreAudioKit.h>
 
 #define THROW_IF NXThrowAudioIfErr
 
@@ -50,8 +52,8 @@
                    context: (void *) context;
 {
     AURenderCallbackStruct input;
-	input.inputProc = callback;
-	input.inputProcRefCon = context;
+    input.inputProc = callback;
+    input.inputProcRefCon = context;
     THROW_IF(AudioUnitSetProperty([self AudioUnit],
                                   kAudioUnitProperty_SetRenderCallback,
                                   kAudioUnitScope_Input,
@@ -94,5 +96,91 @@
                                   sizeof(AudioStreamBasicDescription)));
 }
 
+#pragma mark -
+#pragma mark View
+
+- (NSView *) createViewWithSize: (NSSize) size;
+{
+    NSView * view = nil;
+    view = [self createCustomCocoaViewWithSize: size];
+    if (view == nil)
+    {
+        view = [self createGenericView];
+    }
+    return view;
+}
+
+- (BOOL) hasCustomCocoaView;
+{
+    UInt32 dataSize   = 0;
+    Boolean isWritable = 0;
+    THROW_IF(AudioUnitGetPropertyInfo(mAudioUnit,
+                                      kAudioUnitProperty_CocoaUI,
+                                      kAudioUnitScope_Global,
+                                      0, &dataSize, &isWritable));
+    
+    return (dataSize > 0);
+}
+
+- (NSView *) createCustomCocoaViewWithSize: (NSSize) size;
+{
+    NSView * theView = nil;
+    UInt32 dataSize = 0;
+    Boolean isWritable = 0;
+    
+    OSStatus err = AudioUnitGetPropertyInfo(mAudioUnit,
+                                            kAudioUnitProperty_CocoaUI,
+                                            kAudioUnitScope_Global, 
+                                            0, &dataSize, &isWritable);
+    
+    if (err != noErr)
+        return nil;
+
+    
+    unsigned numberOfClasses =
+        (dataSize - sizeof(CFURLRef)) / sizeof(CFStringRef);
+    if (numberOfClasses == 0)
+        return nil;
+
+    // If we have the property, then allocate storage for it.
+    AudioUnitCocoaViewInfo * viewInfo =
+        (AudioUnitCocoaViewInfo*) malloc(dataSize);
+    THROW_IF(AudioUnitGetProperty(mAudioUnit, 
+                                  kAudioUnitProperty_CocoaUI,
+                                  kAudioUnitScope_Global, 0,
+                                  viewInfo, &dataSize));
+    
+    // Extract useful data.
+    NSString * viewClassName = (NSString *)(viewInfo->mCocoaAUViewClass[0]);
+    NSString * path = (NSString *)
+        (CFURLCopyPath(viewInfo->mCocoaAUViewBundleLocation));
+    NSBundle * viewBundle = [NSBundle bundleWithPath: [path autorelease]];
+    Class viewClass = [viewBundle classNamed: viewClassName];
+    
+    if ([viewClass conformsToProtocol: @protocol(AUCocoaUIBase)])
+    {
+        id<AUCocoaUIBase> factory = [[[viewClass alloc] init] autorelease];
+        theView = [factory uiViewForAudioUnit: mAudioUnit
+                                     withSize: size];
+    }
+    
+    // Delete the cocoa view info stuff.
+    if (viewInfo)
+    {
+        int i;
+        for(i = 0; i < numberOfClasses; i++)
+            CFRelease(viewInfo->mCocoaAUViewClass[i]);
+        
+        CFRelease(viewInfo->mCocoaAUViewBundleLocation);
+        free(viewInfo);
+    }
+    
+    return [theView autorelease];
+}
+
+- (AUGenericView *) createGenericView;
+{
+    return [[[AUGenericView alloc] initWithAudioUnit: mAudioUnit] autorelease];
+}
 
 @end

@@ -41,6 +41,7 @@ extern "C" {
 @class MameConfiguration;
 @class MameFilter;
 @class VersionChecker;
+@class AudioEffectWindowController;
 
 @interface MameController : NSObject
 {
@@ -56,6 +57,7 @@ extern "C" {
     IBOutlet NSTextView * mMameLogView;
     
     PreferencesWindowController * mPreferencesController;
+    AudioEffectWindowController * mAudioEffectsController;
 
     MameConfiguration * mConfiguration;
 
@@ -78,6 +80,8 @@ extern "C" {
     NSDictionary * mLogInfoAttributes;
     NSDictionary * mLogDebugAttributes;
 }
+
+- (MameView *) mameView;
 
 - (BOOL) isFiltered;
 - (void) setIsFiltered: (BOOL) flag;
@@ -103,6 +107,8 @@ extern "C" {
 
 - (BOOL) audioEffectEnabled;
 - (void) setAudioEffectEnabled: (BOOL) flag;
+
+- (IBAction) showAudioEffectsPanel: (id) sender;
 
 - (BOOL) isGameLoading;
 - (BOOL) isGameRunning;

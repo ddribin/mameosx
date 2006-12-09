@@ -43,6 +43,10 @@
     return self;
 }
 
+- (void) delloc
+{
+}
+
 - (AUNode) AUNode;
 {
     return mNode;

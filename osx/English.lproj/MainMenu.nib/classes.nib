@@ -8,7 +8,6 @@
                 cancelOpenPanel = id; 
                 effectsMenuChanged = id; 
                 endOpenPanel = id; 
-                filterChanged = id; 
                 hideOpenPanel = id; 
                 nextFilter = id; 
                 nullAction = id; 
@@ -17,6 +16,7 @@
                 resizeToActualSize = id; 
                 resizeToDoubleSize = id; 
                 resizeToOptimalSize = id; 
+                showAudioEffectsPanel = id; 
                 showMameLog = id; 
                 showPreferencesPanel = id; 
                 showReleaseNotes = id; 

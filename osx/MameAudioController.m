@@ -107,27 +107,21 @@ OSStatus static MyRenderer(void	* inRefCon,
                                   subType: kAudioUnitSubType_DefaultOutput];
     [mOutputNode retain];
     
-    mEffectNode = nil;
+    [self addEffectNode];
 
     mConverterNode = [mGraph addNodeWithType: kAudioUnitType_FormatConverter
                                      subType: kAudioUnitSubType_AUConverter];
     [mConverterNode retain];
     
-#if 0
-    [mGraph connectNode: converterNode input: 0 toNode: effectNode input: 0];
-    [mGraph connectNode: effectNode input: 0 toNode: outputNode input: 0];
-#else
     [mGraph connectNode: mConverterNode output: 0 toNode: mOutputNode input: 0];
-#endif
+    mEffectEnabled = NO;
+
     [mGraph open];
     
     mConverterUnit = [[mConverterNode audioUnit] retain];
     [mConverterUnit setRenderCallback: MyRenderer context: self];
     
-#if 0
-    mEffectUnit = [[effectNode audioUnit] retain];
-    [mEffectUnit setBypass: YES];
-#endif
+    mEffectUnit = [[mEffectNode audioUnit] retain];
     
     return self;
 }
@@ -157,33 +151,42 @@ OSStatus static MyRenderer(void	* inRefCon,
 
 - (BOOL) effectEnabled;
 {
-    return (mEffectNode != nil);
+    return mEffectEnabled;
 }
 
 - (void) setEffectEnabled: (BOOL) effectEnabled;
 {
-    BOOL currentlyEnabled = [self effectEnabled];
+    BOOL currentlyEnabled = mEffectEnabled;
     if (currentlyEnabled && !effectEnabled)
     {
         [mGraph disconnectNode: mOutputNode input: 0];
-        [mGraph removeNode: mEffectNode];
+        [mGraph disconnectNode: mEffectNode input: 0];
+
         [mGraph connectNode: mConverterNode output: 0
                      toNode: mOutputNode input: 0];
         [mGraph update];
-
-        [mEffectNode release];
-        mEffectNode = nil;
     }
     else if (!currentlyEnabled && effectEnabled)
     {
         [mGraph disconnectNode: mOutputNode input: 0];
-        [self addEffectNode];
+
         [mGraph connectNode: mConverterNode output: 0
                      toNode: mEffectNode input: 0];
         [mGraph connectNode: mEffectNode output: 0
                      toNode: mOutputNode input: 0];
         [mGraph update];
     }
+    mEffectEnabled = effectEnabled;
+}
+
+- (NSView *) createEffectViewWithSize: (NSSize) size;
+{
+    return [mEffectUnit createViewWithSize: size];
+}
+
+- (float) cpuLoad;
+{
+    return [mGraph cpuLoad];
 }
 
 - (void) osd_init;
@@ -346,7 +349,7 @@ OSStatus static MyRenderer(void	* inRefCon,
                                   subType: 'Phas' manufacturer: 'ExSl'];
 #elif 0
     mEffectNode = [mGraph addNodeWithType: kAudioUnitType_Effect
-                                  subType: kAudioUnitSubType_Pitch];
+                                  subType: kAudioUnitSubType_TimePitch];
 #elif 1
     mEffectNode = [mGraph addNodeWithType: kAudioUnitType_Effect
                                   subType: kAudioUnitSubType_MatrixReverb];

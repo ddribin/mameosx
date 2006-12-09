@@ -45,6 +45,8 @@
 
     NXAudioUnit * mConverterUnit;
     NXAudioUnit * mEffectUnit;
+    
+    BOOL mEffectEnabled;
 
     size_t mBufferSize;
     VirtualRingBuffer * mRingBuffer;
@@ -78,6 +80,10 @@
 
 - (BOOL) effectEnabled;
 - (void) setEffectEnabled: (BOOL) effectEnabled;
+
+- (NSView *) createEffectViewWithSize: (NSSize) size;
+
+- (float) cpuLoad;
 
 - (void) osd_init;
 
