@@ -2419,16 +2419,12 @@
 		55C711EE0B29D05C001FF0BE /* NXAudioUnit.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C711EC0B29D05C001FF0BE /* NXAudioUnit.m */; };
 		55C71A6E0B2AFD2E001FF0BE /* CoreAudioKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55C71A6D0B2AFD2E001FF0BE /* CoreAudioKit.framework */; };
 		55C71A6F0B2AFD2E001FF0BE /* CoreAudioKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55C71A6D0B2AFD2E001FF0BE /* CoreAudioKit.framework */; };
-		55C71AAF0B2AFFF0001FF0BE /* AudioEffectWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 55C71AAD0B2AFFF0001FF0BE /* AudioEffectWindowController.h */; };
-		55C71AB00B2AFFF0001FF0BE /* AudioEffectWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C71AAE0B2AFFF0001FF0BE /* AudioEffectWindowController.m */; };
 		55C71AB10B2AFFF0001FF0BE /* AudioEffectWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 55C71AAD0B2AFFF0001FF0BE /* AudioEffectWindowController.h */; };
 		55C71AB20B2AFFF0001FF0BE /* AudioEffectWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C71AAE0B2AFFF0001FF0BE /* AudioEffectWindowController.m */; };
 		55C71AB80B2B02FA001FF0BE /* AudioEffects.nib in Resources */ = {isa = PBXBuildFile; fileRef = 55C71AB60B2B02FA001FF0BE /* AudioEffects.nib */; };
 		55C71AB90B2B02FA001FF0BE /* AudioEffects.nib in Resources */ = {isa = PBXBuildFile; fileRef = 55C71AB60B2B02FA001FF0BE /* AudioEffects.nib */; };
-		55C71D0F0B2B31B4001FF0BE /* NXAudioComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = 55C71D0D0B2B31B4001FF0BE /* NXAudioComponent.h */; };
-		55C71D100B2B31B4001FF0BE /* NXAudioComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C71D0E0B2B31B4001FF0BE /* NXAudioComponent.m */; };
-		55C71D110B2B31B4001FF0BE /* NXAudioComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = 55C71D0D0B2B31B4001FF0BE /* NXAudioComponent.h */; };
-		55C71D120B2B31B4001FF0BE /* NXAudioComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C71D0E0B2B31B4001FF0BE /* NXAudioComponent.m */; };
+		55C71F800B2B620C001FF0BE /* NXAudioComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = 55C71D0D0B2B31B4001FF0BE /* NXAudioComponent.h */; };
+		55C71F830B2B6215001FF0BE /* NXAudioComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C71D0E0B2B31B4001FF0BE /* NXAudioComponent.m */; };
 		55D2836F0B12D5CA002C9199 /* MamePreferences.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 55D2836C0B12D5CA002C9199 /* MamePreferences.h */; };
 		55D28E1A0B13CBB8002C9199 /* VirtualRingBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 55D28E180B13CBB8002C9199 /* VirtualRingBuffer.h */; };
 		55D28E1B0B13CBB8002C9199 /* VirtualRingBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D28E190B13CBB8002C9199 /* VirtualRingBuffer.m */; };
@@ -8518,8 +8514,6 @@
 				55BEFACE0AEC68EA00357340 /* MameAudioController.h in Headers */,
 				55BEFAE30AEC691500357340 /* MameConfiguration.h in Headers */,
 				553A09BD0AFF12BA00531E1F /* MameFilter.h in Headers */,
-				55C71AAF0B2AFFF0001FF0BE /* AudioEffectWindowController.h in Headers */,
-				55C71D0F0B2B31B4001FF0BE /* NXAudioComponent.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8550,6 +8544,7 @@
 				55C7111A0B29CA82001FF0BE /* NXCoreAudio.h in Headers */,
 				55C711D50B29CFBB001FF0BE /* NXAudioException.h in Headers */,
 				55C711ED0B29D05C001FF0BE /* NXAudioUnit.h in Headers */,
+				55C71F800B2B620C001FF0BE /* NXAudioComponent.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8560,7 +8555,6 @@
 				5595EFA30B1BC84600631777 /* RomAuditWindowController.h in Headers */,
 				5595F0C00B1BDD9B00631777 /* RomAuditSummary.h in Headers */,
 				55C71AB10B2AFFF0001FF0BE /* AudioEffectWindowController.h in Headers */,
-				55C71D110B2B31B4001FF0BE /* NXAudioComponent.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11294,8 +11288,6 @@
 			files = (
 				55BEFB7F0AEC712900357340 /* mamedriv.c in Sources */,
 				5595EEF00B1AC6B200631777 /* symbols.c in Sources */,
-				55C71AB00B2AFFF0001FF0BE /* AudioEffectWindowController.m in Sources */,
-				55C71D100B2B31B4001FF0BE /* NXAudioComponent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11323,6 +11315,7 @@
 				55C711030B29C9BF001FF0BE /* NXAudioUnitNode.m in Sources */,
 				55C711D60B29CFBB001FF0BE /* NXAudioException.m in Sources */,
 				55C711EE0B29D05C001FF0BE /* NXAudioUnit.m in Sources */,
+				55C71F830B2B6215001FF0BE /* NXAudioComponent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11346,7 +11339,6 @@
 				5595EFA40B1BC84600631777 /* RomAuditWindowController.m in Sources */,
 				5595F0C10B1BDD9B00631777 /* RomAuditSummary.m in Sources */,
 				55C71AB20B2AFFF0001FF0BE /* AudioEffectWindowController.m in Sources */,
-				55C71D120B2B31B4001FF0BE /* NXAudioComponent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
