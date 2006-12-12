@@ -1,3 +1,11 @@
+<% version = "0.111" %>
+- version: <%=version%>
+  date: xxx
+  changes:
+    - Add audio effects using any available Audio Unit.
+    - Add ability to preserve game aspect ratio.
+  
+
 <% version = "0.110-1" %>
 - version: "<%=version%>"
   date: 2006-12-03
