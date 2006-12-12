@@ -323,10 +323,13 @@ CGDisplayErr GetDisplayDPI(CFDictionaryRef displayModeDict,
     CGDisplayErr err = GetDisplayDPI(CGDisplayCurrentMode(kCGDirectMainDisplay),
                                      kCGDirectMainDisplay,
                                      &horizontalDpi, &verticalDpi);
-    float aspectRatio = horizontalDpi/verticalDpi;
-    NXLogDebug(@"err: %d, horizontal DPI: %f, vertical DPI: %f, ratio: %f", err,
-               horizontalDpi, verticalDpi, aspectRatio);
-    aspectRatio = 0.0f;
+    float aspectRatio = 0.0f;
+    if (err == CGDisplayNoErr)
+    {
+        aspectRatio = horizontalDpi/verticalDpi;
+        NXLogDebug(@"horizontal DPI: %f, vertical DPI: %f, ratio: %f",
+                   horizontalDpi, verticalDpi, aspectRatio);
+    }
     INT32 visibleWidth, visibleHeight;
     render_target_compute_visible_area(mTarget, minimumWidth, minimumHeight,
                                        aspectRatio, ROT0, &visibleWidth, &visibleHeight);
