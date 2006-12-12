@@ -64,6 +64,7 @@
     NSSize mNaturalSize;
     NSSize mOptimalSize;
     NSSize mFullScreenSize;
+    BOOL mKeepAspectRatio;
     BOOL mClearToRed;
     
     MameInputController * mInputController;
@@ -97,6 +98,9 @@
 
 - (NSSize) naturalSize;
 - (NSSize) optimalSize;
+
+- (BOOL) keepAspectRatio;
+- (void) setKeepAspectRatio: (BOOL) keepAspectRatio;
 
 - (BOOL) renderInCoreVideoThread;
 - (void) setRenderInCoreVideoThread: (BOOL) flag;

@@ -74,6 +74,8 @@ NSString * MameSkipWarningsKey = @"SkipWarnings";
 NSString * MameSampleRateKey = @"SampleRate";
 NSString * MameUseSamplesKey = @"UseSamples";
 
+NSString * MameKeepAspectKey = @"KeepAspect";
+
 NSString * MameBrightnessKey = @"Brightness";
 NSString * MameContrastKey = @"Contrast";
 NSString * MameGammaKey = @"Gamma";
@@ -182,6 +184,8 @@ NSString * MameBiosKey = @"Bios";
     [defaultValues setObject: [NSNumber numberWithBool: YES]
                       forKey: MameUseSamplesKey];
     
+    [defaultValues setObject: [NSNumber numberWithBool: YES]
+                      forKey: MameKeepAspectKey];
     [defaultValues setObject: [NSNumber numberWithFloat: 1.0f]
                       forKey: MameBrightnessKey];
     [defaultValues setObject: [NSNumber numberWithFloat: 1.0f]
@@ -440,6 +444,16 @@ NSString * MameBiosKey = @"Bios";
 
 #pragma mark -
 #pragma mark Graphics
+
+- (BOOL) keepAspect;
+{
+    return [mDefaults boolForKey: MameKeepAspectKey];
+}
+
+- (void) setKeepAspect: (BOOL) keepAspect;
+{
+    [mDefaults setBool: keepAspect forKey: MameKeepAspectKey];
+}
 
 - (float) brightness;
 {

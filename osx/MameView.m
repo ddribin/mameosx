@@ -62,6 +62,7 @@
 
 - (NSRect) stretchNSSize: (NSSize) size withinRect: (NSRect) rect;
 - (NSRect) centerNSSize: (NSSize) size withinRect: (NSRect) rect;
+- (float) aspectRatioForDisplay: (CGDirectDisplayID) displayId;
 
 @end
 
@@ -112,6 +113,7 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     [self setFullScreenPixelFormat: fullScreenPixelFormat];
     [self setFadeTime: 0.25f];
     
+    mKeepAspectRatio = YES;
     mClearToRed = NO;
     mFrameStartTime = 0;
 
@@ -247,58 +249,14 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     return mOptimalSize;
 }
 
-//    Handy utility function for retrieving an int from a CFDictionaryRef
-static int GetIntFromDictionaryForKey( CFDictionaryRef desc, CFStringRef key )
+- (BOOL) keepAspectRatio;
 {
-    CFNumberRef value;
-    int num = 0;
-    if ( (value = CFDictionaryGetValue(desc, key)) == NULL
-         || CFGetTypeID(value) != CFNumberGetTypeID())
-        return 0;
-    CFNumberGetValue(value, kCFNumberIntType, &num);
-    return num;
+    return mKeepAspectRatio;
 }
 
-CGDisplayErr GetDisplayDPI(CFDictionaryRef displayModeDict,
-                           CGDirectDisplayID displayID,
-                           double *horizontalDPI, double *verticalDPI )
+- (void) setKeepAspectRatio: (BOOL) keepAspectRatio;
 {
-    CGDisplayErr err = kCGErrorFailure;
-    io_connect_t displayPort;
-    CFDictionaryRef displayDict;
-    
-    //    Grab a connection to IOKit for the requested display
-    displayPort = CGDisplayIOServicePort( displayID );
-    if ( displayPort != MACH_PORT_NULL )
-    {
-        //    Find out what IOKit knows about this display
-        displayDict = (CFDictionaryRef) IOCreateDisplayInfoDictionary(displayPort, 0);
-        if ( displayDict != NULL )
-        {
-            NSDictionary * objDisplayDict = (NSDictionary *) displayDict;
-            NSLog(@"Display dict: %@", objDisplayDict);
-            const double mmPerInch = 25.4;
-            double horizontalSizeInInches =
-                (double)GetIntFromDictionaryForKey(displayDict,
-                                                   CFSTR(kDisplayHorizontalImageSize)) / mmPerInch;
-            double verticalSizeInInches =
-                (double)GetIntFromDictionaryForKey(displayDict,
-                                                   CFSTR(kDisplayVerticalImageSize)) / mmPerInch;
-            
-            //    Make sure to release the dictionary we got from IOKit
-            CFRelease(displayDict);
-            
-            // Now we can calculate the actual DPI
-            // with information from the displayModeDict
-            *horizontalDPI =
-                (double)GetIntFromDictionaryForKey( displayModeDict, kCGDisplayWidth )
-                / horizontalSizeInInches;
-            *verticalDPI = (double)GetIntFromDictionaryForKey( displayModeDict,
-                                                               kCGDisplayHeight ) / verticalSizeInInches;
-            err = CGDisplayNoErr;
-        }
-    }
-    return err;
+    mKeepAspectRatio = keepAspectRatio;
 }
 
 - (int) osd_init: (running_machine *) machine;
@@ -319,22 +277,18 @@ CGDisplayErr GetDisplayDPI(CFDictionaryRef displayModeDict,
     INT32 minimumWidth;
     INT32 minimumHeight;
     render_target_get_minimum_size(mTarget, &minimumWidth, &minimumHeight);
-    double horizontalDpi, verticalDpi;
-    CGDisplayErr err = GetDisplayDPI(CGDisplayCurrentMode(kCGDirectMainDisplay),
-                                     kCGDirectMainDisplay,
-                                     &horizontalDpi, &verticalDpi);
-    float aspectRatio = 0.0f;
-    if (err == CGDisplayNoErr)
+    float aspectRatio = 0.0;
+    if (mKeepAspectRatio)
     {
-        aspectRatio = horizontalDpi/verticalDpi;
-        NXLogDebug(@"horizontal DPI: %f, vertical DPI: %f, ratio: %f",
-                   horizontalDpi, verticalDpi, aspectRatio);
+        aspectRatio = [self aspectRatioForDisplay: kCGDirectMainDisplay];
     }
     INT32 visibleWidth, visibleHeight;
     render_target_compute_visible_area(mTarget, minimumWidth, minimumHeight,
-                                       aspectRatio, ROT0, &visibleWidth, &visibleHeight);
-    NXLogDebug(@"Minimum size: %dx%d, visible size: %dx%d",
-               minimumWidth, minimumHeight, visibleWidth, visibleHeight);
+                                       aspectRatio, ROT0,
+                                       &visibleWidth, &visibleHeight);
+    NXLogInfo(@"Aspect ratio: %f, Minimum size: %dx%d, visible size: %dx%d",
+              aspectRatio, minimumWidth, minimumHeight, visibleWidth,
+              visibleHeight);
     mNaturalSize = NSMakeSize(visibleWidth, visibleHeight);
     
     mOptimalSize = mNaturalSize;
@@ -630,8 +584,11 @@ CGDisplayErr GetDisplayDPI(CFDictionaryRef displayModeDict,
 {
     if ([mDelegate respondsToSelector: @selector(mameErrorMessage:)])
     {
-        [mDelegate mameErrorMessage:
-            [self formatOutputMessage: utf8Format arguments: argptr]];
+        NSString * message = [self formatOutputMessage: utf8Format
+                                             arguments: argptr];
+        [mDelegate performSelectorOnMainThread: @selector(mameErrorMessage:)
+                                    withObject: message
+                                 waitUntilDone: NO];
     }
 }
 
@@ -640,8 +597,11 @@ CGDisplayErr GetDisplayDPI(CFDictionaryRef displayModeDict,
 {
     if ([mDelegate respondsToSelector: @selector(mameWarningMessage:)])
     {
-        [mDelegate mameWarningMessage:
-            [self formatOutputMessage: utf8Format arguments: argptr]];
+        NSString * message = [self formatOutputMessage: utf8Format
+                                             arguments: argptr];
+        [mDelegate performSelectorOnMainThread: @selector(mameWarningMessage:)
+                                    withObject: message
+                                 waitUntilDone: NO];
     }
 }
 
@@ -650,14 +610,11 @@ CGDisplayErr GetDisplayDPI(CFDictionaryRef displayModeDict,
 {
     if ([mDelegate respondsToSelector: @selector(mameInfoMessage:)])
     {
-#if 0
-        [mDelegate mameInfoMessage:
-            [self formatOutputMessage: utf8Format arguments: argptr]];
-#else
+        NSString * message = [self formatOutputMessage: utf8Format
+                                             arguments: argptr];
         [mDelegate performSelectorOnMainThread: @selector(mameInfoMessage:)
-                                    withObject: [self formatOutputMessage: utf8Format arguments: argptr]
+                                    withObject: message
                                  waitUntilDone: NO];
-#endif
     }
 }
 
@@ -666,8 +623,11 @@ CGDisplayErr GetDisplayDPI(CFDictionaryRef displayModeDict,
 {
     if ([mDelegate respondsToSelector: @selector(mameDebugMessage:)])
     {
-        [mDelegate mameDebugMessage:
-            [self formatOutputMessage: utf8Format arguments: argptr]];
+        NSString * message = [self formatOutputMessage: utf8Format
+                                             arguments: argptr];
+        [mDelegate performSelectorOnMainThread: @selector(mameDebugMessage:)
+                                    withObject: message
+                                 waitUntilDone: NO];
     }
 }
 
@@ -676,8 +636,11 @@ CGDisplayErr GetDisplayDPI(CFDictionaryRef displayModeDict,
 {
     if ([mDelegate respondsToSelector: @selector(mameLogMessage:)])
     {
-        [mDelegate mameLogMessage:
-            [self formatOutputMessage: utf8Format arguments: argptr]];
+        NSString * message = [self formatOutputMessage: utf8Format
+                                             arguments: argptr];
+        [mDelegate performSelectorOnMainThread: @selector(mameLogMessage:)
+                                    withObject: message
+                                 waitUntilDone: NO];
     }
 }
 
@@ -1006,6 +969,50 @@ CGDisplayErr GetDisplayDPI(CFDictionaryRef displayModeDict,
     
     if (!mame_is_paused(mMachine))
         mFramesRendered++;
+}
+
+#define NSSTR(_cString_) [NSString stringWithCString: _cString_]
+
+// See: 
+// http://developer.apple.com/qa/qa2001/qa1217.html
+- (float) aspectRatioForDisplay: (CGDirectDisplayID) displayId;
+{
+    NSDictionary * displayMode = (NSDictionary *) CGDisplayCurrentMode(displayId);
+    // Assume square pixels, if we can't determine it.
+    float aspectRatio = 1.0;
+    
+    //    Grab a connection to IOKit for the requested display
+    io_connect_t displayPort = CGDisplayIOServicePort(displayId);
+    if (displayPort != MACH_PORT_NULL)
+    {
+        //    Find out what IOKit knows about this display
+        NSDictionary * displayDict = (NSDictionary *)
+            IOCreateDisplayInfoDictionary(displayPort, 0);
+        if (displayDict != nil)
+        {
+            // These sizes are in millimeters (mm)
+            float horizontalSize =
+                [[displayDict objectForKey: NSSTR(kDisplayHorizontalImageSize)]
+                    floatValue];
+            float verticalSize =
+                [[displayDict objectForKey: NSSTR(kDisplayVerticalImageSize)]
+                    floatValue];
+            //    Make sure to release the dictionary we got from IOKit
+            [displayDict release];
+            
+            float displayWidth =
+                [[displayMode objectForKey: (NSString *) kCGDisplayWidth]
+                    floatValue];
+            float displayHeight =
+                [[displayMode objectForKey: (NSString *)  kCGDisplayHeight]
+                    floatValue];
+            
+            float horizontalPixelsPerMM = displayWidth/horizontalSize;
+            float verticalPixlesPerMM = displayHeight/verticalSize;
+            aspectRatio = horizontalPixelsPerMM/verticalPixlesPerMM;
+        }
+    }
+    return aspectRatio;
 }
 
 @end

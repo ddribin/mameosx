@@ -134,6 +134,9 @@
 #pragma mark -
 #pragma mark Graphics
 
+- (BOOL) keepAspect;
+- (void) setKeepAspect: (BOOL) keepAspect;
+
 - (float) brightness;
 
 - (float) contrast;
@@ -209,6 +212,8 @@ extern NSString * MameSkipWarningsKey;
 
 extern NSString * MameSampleRateKey;
 extern NSString * MameUseSamplesKey;
+
+extern NSString * MameKeepAspectKey;
 
 extern NSString * MameBrightnessKey;
 extern NSString * MameContrastKey;
