@@ -134,6 +134,13 @@ void exit_sleeper()
         [mVersionChecker setVersionUrl: [preferences versionUrl]];
         [mVersionChecker checkForUpdatesInBackground];
     }
+    
+    NSWindow * window = [mMameView window];
+    NSRect currentWindowFrame = [window frame];
+    NSSize currentWindowSize = currentWindowFrame.size;
+    NSSize currentViewSize = [mMameView frame].size;
+    mExtraWindowSize.width = currentWindowSize.width - currentViewSize.width;
+    mExtraWindowSize.height = currentWindowSize.height - currentViewSize.height;
 }
 
 - (void) applicationDidFinishLaunching: (NSNotification*) notification;
@@ -296,6 +303,9 @@ void exit_sleeper()
     [mOpenPanel orderOut: nil];
 }
 
+#pragma mark -
+#pragma mark Resizing
+
 - (IBAction) resizeToActualSize: (id) sender;
 {
     NSSize naturalSize = [mMameView naturalSize];
@@ -313,6 +323,38 @@ void exit_sleeper()
 - (IBAction) resizeToOptimalSize: (id) sender;
 {
     [self setViewSize: [mMameView optimalSize]];
+}
+
+- (NSSize) windowWillResize: (NSWindow *) sender toSize: (NSSize) size
+{
+    if (sender != [mMameView window])
+        return size;
+    
+    NSSize naturalSize = [mMameView naturalSize];
+    int flags = [[NSApp currentEvent] modifierFlags];
+    if (!(flags & NSControlKeyMask))
+    {
+        // constrain aspect ratio        
+        size.height -= mExtraWindowSize.height;
+        size.width  -= mExtraWindowSize.width;
+        size.width = size.height*(naturalSize.width/naturalSize.height);
+        
+        if (flags & NSAlternateKeyMask)
+        {
+            // constrain to multiples of the minsize
+            size.height = roundf(size.height/naturalSize.height)*naturalSize.height;
+            size.width = roundf(size.width /naturalSize.width)*naturalSize.width;
+        }
+        size.height += mExtraWindowSize.height;
+        size.width  += mExtraWindowSize.width;
+    }
+#if 0
+    // constrain to fit on the current screen (minus Dock etc)
+    NSSize winspace = [screen visibleFrame].size;
+    size.width  = MIN(winspace.width,  size.width);
+    size.height = MIN(winspace.height, size.height);
+#endif
+    return size;
 }
 
 
@@ -466,6 +508,12 @@ void exit_sleeper()
     
     [self resizeToOptimalSize: nil];
     NSWindow * window = [mMameView window];
+
+    NSSize minSize = [mMameView naturalSize];
+    minSize.width += mExtraWindowSize.width;
+    minSize.height += mExtraWindowSize.height;
+    [window setMinSize: minSize];
+    
     [window setTitle: [NSString stringWithFormat: @"MAME: %@ [%@]",
         [mMameView gameDescription], mGameName]];
     [window center];
@@ -534,6 +582,7 @@ void exit_sleeper()
     [mMameView setAudioEnabled: [preferences soundEnabled]];
     [mMameView setRenderInCoreVideoThread: [preferences renderInCV]];
     [mMameView setClearToRed: [preferences clearToRed]];
+    [mMameView setKeepAspectRatio: [preferences keepAspect]];
     
     [preferences copyToMameConfiguration: mConfiguration];
 }
@@ -552,14 +601,10 @@ void exit_sleeper()
 {
     NSWindow * window = [mMameView window];
     NSRect currentWindowFrame = [window frame];
-    NSSize currentWindowSize = currentWindowFrame.size;
-    NSSize currentViewSize = [mMameView frame].size;
-    float diffWidth = currentWindowSize.width - currentViewSize.width;
-    float diffHeight = currentWindowSize.height - currentViewSize.height;
 
     NSRect newWindowFrame = currentWindowFrame;
-    newWindowFrame.size.width = newViewSize.width + diffWidth;
-    newWindowFrame.size.height = newViewSize.height + diffHeight;
+    newWindowFrame.size.width = newViewSize.width + mExtraWindowSize.width;
+    newWindowFrame.size.height = newViewSize.height + mExtraWindowSize.height;
 
     // Adjust origin so title bar stays in same location
     newWindowFrame.origin.y +=

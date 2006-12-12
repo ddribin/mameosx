@@ -56,6 +56,9 @@ extern "C" {
     IBOutlet NSPanel * mMameLogPanel;
     IBOutlet NSTextView * mMameLogView;
     
+    // Size of other elements around the view
+    NSSize mExtraWindowSize;
+    
     PreferencesWindowController * mPreferencesController;
     AudioEffectWindowController * mAudioEffectsController;
 
