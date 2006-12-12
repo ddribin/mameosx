@@ -247,6 +247,60 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     return mOptimalSize;
 }
 
+//    Handy utility function for retrieving an int from a CFDictionaryRef
+static int GetIntFromDictionaryForKey( CFDictionaryRef desc, CFStringRef key )
+{
+    CFNumberRef value;
+    int num = 0;
+    if ( (value = CFDictionaryGetValue(desc, key)) == NULL
+         || CFGetTypeID(value) != CFNumberGetTypeID())
+        return 0;
+    CFNumberGetValue(value, kCFNumberIntType, &num);
+    return num;
+}
+
+CGDisplayErr GetDisplayDPI(CFDictionaryRef displayModeDict,
+                           CGDirectDisplayID displayID,
+                           double *horizontalDPI, double *verticalDPI )
+{
+    CGDisplayErr err = kCGErrorFailure;
+    io_connect_t displayPort;
+    CFDictionaryRef displayDict;
+    
+    //    Grab a connection to IOKit for the requested display
+    displayPort = CGDisplayIOServicePort( displayID );
+    if ( displayPort != MACH_PORT_NULL )
+    {
+        //    Find out what IOKit knows about this display
+        displayDict = (CFDictionaryRef) IOCreateDisplayInfoDictionary(displayPort, 0);
+        if ( displayDict != NULL )
+        {
+            NSDictionary * objDisplayDict = (NSDictionary *) displayDict;
+            NSLog(@"Display dict: %@", objDisplayDict);
+            const double mmPerInch = 25.4;
+            double horizontalSizeInInches =
+                (double)GetIntFromDictionaryForKey(displayDict,
+                                                   CFSTR(kDisplayHorizontalImageSize)) / mmPerInch;
+            double verticalSizeInInches =
+                (double)GetIntFromDictionaryForKey(displayDict,
+                                                   CFSTR(kDisplayVerticalImageSize)) / mmPerInch;
+            
+            //    Make sure to release the dictionary we got from IOKit
+            CFRelease(displayDict);
+            
+            // Now we can calculate the actual DPI
+            // with information from the displayModeDict
+            *horizontalDPI =
+                (double)GetIntFromDictionaryForKey( displayModeDict, kCGDisplayWidth )
+                / horizontalSizeInInches;
+            *verticalDPI = (double)GetIntFromDictionaryForKey( displayModeDict,
+                                                               kCGDisplayHeight ) / verticalSizeInInches;
+            err = CGDisplayNoErr;
+        }
+    }
+    return err;
+}
+
 - (int) osd_init: (running_machine *) machine;
 {
     NXLogInfo(@"osd_init");
@@ -265,7 +319,20 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     INT32 minimumWidth;
     INT32 minimumHeight;
     render_target_get_minimum_size(mTarget, &minimumWidth, &minimumHeight);
-    mNaturalSize = NSMakeSize(minimumWidth, minimumHeight);
+    double horizontalDpi, verticalDpi;
+    CGDisplayErr err = GetDisplayDPI(CGDisplayCurrentMode(kCGDirectMainDisplay),
+                                     kCGDirectMainDisplay,
+                                     &horizontalDpi, &verticalDpi);
+    float aspectRatio = horizontalDpi/verticalDpi;
+    NXLogDebug(@"err: %d, horizontal DPI: %f, vertical DPI: %f, ratio: %f", err,
+               horizontalDpi, verticalDpi, aspectRatio);
+    aspectRatio = 0.0f;
+    INT32 visibleWidth, visibleHeight;
+    render_target_compute_visible_area(mTarget, minimumWidth, minimumHeight,
+                                       aspectRatio, ROT0, &visibleWidth, &visibleHeight);
+    NXLogDebug(@"Minimum size: %dx%d, visible size: %dx%d",
+               minimumWidth, minimumHeight, visibleWidth, visibleHeight);
+    mNaturalSize = NSMakeSize(visibleWidth, visibleHeight);
     
     mOptimalSize = mNaturalSize;
     if ((mOptimalSize.width < 640) && (mOptimalSize.height < 480))

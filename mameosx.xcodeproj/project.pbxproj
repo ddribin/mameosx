@@ -2425,6 +2425,8 @@
 		55C71AB90B2B02FA001FF0BE /* AudioEffects.nib in Resources */ = {isa = PBXBuildFile; fileRef = 55C71AB60B2B02FA001FF0BE /* AudioEffects.nib */; };
 		55C71F800B2B620C001FF0BE /* NXAudioComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = 55C71D0D0B2B31B4001FF0BE /* NXAudioComponent.h */; };
 		55C71F830B2B6215001FF0BE /* NXAudioComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C71D0E0B2B31B4001FF0BE /* NXAudioComponent.m */; };
+		55D00ADA0B2E8CD500F7961F /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55D00AD90B2E8CD500F7961F /* IOKit.framework */; };
+		55D00BA20B2E8E4800F7961F /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55D00AD90B2E8CD500F7961F /* IOKit.framework */; };
 		55D2836F0B12D5CA002C9199 /* MamePreferences.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 55D2836C0B12D5CA002C9199 /* MamePreferences.h */; };
 		55D28E1A0B13CBB8002C9199 /* VirtualRingBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 55D28E180B13CBB8002C9199 /* VirtualRingBuffer.h */; };
 		55D28E1B0B13CBB8002C9199 /* VirtualRingBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D28E190B13CBB8002C9199 /* VirtualRingBuffer.m */; };
@@ -5261,6 +5263,7 @@
 		55CDE6E20AAC60CB0021CEA0 /* MameInputController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MameInputController.h; sourceTree = "<group>"; };
 		55CDE6E30AAC60CB0021CEA0 /* MameInputController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MameInputController.m; sourceTree = "<group>"; };
 		55CDE8D70AAC93E90021CEA0 /* osd_osx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = osd_osx.h; sourceTree = "<group>"; };
+		55D00AD90B2E8CD500F7961F /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
 		55D282AF0B12C9DD002C9199 /* MameController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MameController.m; sourceTree = "<group>"; };
 		55D2836C0B12D5CA002C9199 /* MamePreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MamePreferences.h; sourceTree = "<group>"; };
 		55D2836D0B12D5CA002C9199 /* MamePreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MamePreferences.m; sourceTree = "<group>"; };
@@ -5391,6 +5394,7 @@
 				55FE26330AAD33AB00C4054A /* AudioUnit.framework in Frameworks */,
 				55E93D600B29166E003CBB89 /* AudioToolbox.framework in Frameworks */,
 				55C71A6E0B2AFD2E001FF0BE /* CoreAudioKit.framework in Frameworks */,
+				55D00ADA0B2E8CD500F7961F /* IOKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5426,6 +5430,7 @@
 				55C710150B292A64001FF0BE /* AudioToolbox.framework in Frameworks */,
 				55C710160B292A64001FF0BE /* AudioUnit.framework in Frameworks */,
 				55C71A6F0B2AFD2E001FF0BE /* CoreAudioKit.framework in Frameworks */,
+				55D00BA20B2E8E4800F7961F /* IOKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5824,6 +5829,7 @@
 		556A4AB00AA4FAA300602CC5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				55D00AD90B2E8CD500F7961F /* IOKit.framework */,
 				55C71A6D0B2AFD2E001FF0BE /* CoreAudioKit.framework */,
 				55E93D5F0B29166E003CBB89 /* AudioToolbox.framework */,
 				55FE26320AAD33AB00C4054A /* AudioUnit.framework */,
