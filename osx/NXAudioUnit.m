@@ -26,8 +26,29 @@
 #import "NXAudioException.h"
 #import <AudioUnit/AUCocoaUIView.h>
 #import <CoreAudioKit/CoreAudioKit.h>
+#import "NXAudioUnitPreset.h"
 
 #define THROW_IF NXThrowAudioIfErr
+
+@interface NXAudioUnit (Private)
+
+#if 0
+- (OSStatus) getProperty: (AudioUntPropertyID) propertyId
+                   scope: (AudioUnitScope) scope
+                 element: (AudioUnitElement) element
+                    data: (void *) data
+                    size: (UInt32 *) size;
+
+- (OSStatus) setProperty: (AudioUntPropertyID) propertyId
+                   scope: (AudioUnitScope) scope
+                 element: (AudioUnitElement) element
+                    data: (void *) data
+                    size: (UInt32) size;
+#endif
+
+- (void) getFactoryPresets;
+
+@end
 
 @implementation NXAudioUnit
 
@@ -94,6 +115,66 @@
                                   0,
                                   streamFormat,
                                   sizeof(AudioStreamBasicDescription)));
+}
+
+- (NSArray *) factoryPresets;
+{
+    if (mFactoryPresets == nil)
+        [self getFactoryPresets];
+    
+    return mFactoryPresets;
+}
+
+- (unsigned) indexOfFactoryPreset: (NXAudioUnitPreset *) presetToFind;
+{
+    unsigned result = NSNotFound;
+    unsigned i;
+    for (i = 0; i < [mFactoryPresets count]; i++)
+    {
+        NXAudioUnitPreset * preset = [mFactoryPresets objectAtIndex: i];
+        if ([preset isEqualToPreset: presetToFind])
+        {
+            result = i;
+            break;
+        }
+    }
+    return result;
+}
+
+- (NXAudioUnitPreset *) presentPreset;
+{
+    AUPreset preset;
+    UInt32 size = sizeof(preset);
+    OSStatus err = AudioUnitGetProperty(mAudioUnit,
+                                        kAudioUnitProperty_PresentPreset,
+                                        0, 0, &preset, &size);
+    if (err == kAudioUnitErr_InvalidProperty)
+        return nil;
+    THROW_IF(err);
+    
+    return [[[NXAudioUnitPreset alloc] initWithAUPreset: preset] autorelease];
+}
+
+- (void) setPresentPreset: (NXAudioUnitPreset *) presentPreset;
+{
+    AUPreset preset = [presentPreset AUPreset];
+    OSStatus err = AudioUnitSetProperty(mAudioUnit,
+                                        kAudioUnitProperty_PresentPreset,
+                                        0, 0, &preset, sizeof(preset));
+    if (err == kAudioUnitErr_InvalidProperty)
+        return;
+    THROW_IF(err);
+}
+
+
+- (unsigned) presentPresetIndex;
+{
+    return [self indexOfFactoryPreset: [self presentPreset]];
+}
+
+- (void) setPresentPresetIndex: (unsigned) presentPresetIndex;
+{
+    [self setPresentPreset: [mFactoryPresets objectAtIndex: presentPresetIndex]];
 }
 
 #pragma mark -
@@ -180,6 +261,36 @@
 - (AUGenericView *) createGenericView;
 {
     return [[[AUGenericView alloc] initWithAudioUnit: mAudioUnit] autorelease];
+}
+
+@end
+
+@implementation NXAudioUnit (Private)
+
+- (void) getFactoryPresets;
+{
+    mFactoryPresets = [[NSMutableArray alloc] init];
+
+    CFArrayRef factoryPresets;
+    UInt32 size = sizeof(factoryPresets);
+    OSStatus err = AudioUnitGetProperty(mAudioUnit,
+                                        kAudioUnitProperty_FactoryPresets, 
+                                        0,
+                                        0, 
+                                        &factoryPresets, &size);
+    if (err == kAudioUnitErr_InvalidProperty)
+        return;
+    THROW_IF(err);
+    
+    CFIndex count = CFArrayGetCount(factoryPresets);
+    int i;
+    for (i = 0; i < count; i++)
+    {
+        const AUPreset * preset = CFArrayGetValueAtIndex(factoryPresets, i);
+        NXAudioUnitPreset * objcPreset = [[NXAudioUnitPreset alloc] initWithAUPreset: *preset];
+        [mFactoryPresets addObject: objcPreset];
+    }
+    CFRelease(factoryPresets);
 }
 
 @end

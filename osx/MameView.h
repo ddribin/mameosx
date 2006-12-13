@@ -116,6 +116,9 @@
 - (BOOL) throttled;
 - (void) setThrottled: (BOOL) flag;
 
+#pragma mark -
+#pragma mark Audio
+
 - (BOOL) audioEnabled;
 - (void) setAudioEnabled: (BOOL) flag;
 
@@ -126,7 +129,14 @@
 
 - (NSView *) createAudioEffectViewWithSize: (NSSize) size;
 
+- (NSArray *) audioEffectFactoryPresets;
+
+- (unsigned) indexOfPresentFactoryPreset;
+- (void) setIndexOfPresentFactoryPreset: (unsigned) index;
+
 - (float) audioCpuLoad;
+
+#pragma mark -
 
 - (BOOL) linearFilter;
 - (void) setLinearFilter: (BOOL) linearFilter;

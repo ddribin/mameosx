@@ -493,6 +493,9 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     }
 }
 
+#pragma mark -
+#pragma mark Audio
+
 //=========================================================== 
 //  audioEnabled 
 //=========================================================== 
@@ -519,6 +522,11 @@ NSString * MameExitStatusKey = @"MameExitStatus";
 - (void) changeAudioEffect: (ComponentDescription *) description;
 {
     [mAudioController changeEffect: description];
+    
+    [self willChangeValueForKey: @"audioEffectFactoryPresets"];
+    [self didChangeValueForKey: @"audioEffectFactoryPresets"];
+    [self willChangeValueForKey: @"indexOfPresentFactoryPreset"];
+    [self didChangeValueForKey: @"indexOfPresentFactoryPreset"];
 }
 
 - (NSView *) createAudioEffectViewWithSize: (NSSize) size;
@@ -526,10 +534,31 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     return [mAudioController createEffectViewWithSize: size];
 }
 
+- (NSArray *) audioEffectFactoryPresets;
+{
+    NSArray * presets = [mAudioController effectFactoryPresets];
+    if ([presets count] == 0)
+        return nil;
+    else
+        return presets;
+}
+
+- (unsigned) indexOfPresentFactoryPreset;
+{
+    return [mAudioController indexOfPresentFactoryPreset];
+}
+
+- (void) setIndexOfPresentFactoryPreset: (unsigned) index;
+{
+    [mAudioController setIndexOfPresentFactoryPreset: index];
+}
+
 - (float) audioCpuLoad;
 {
     return [mAudioController cpuLoad];
 }
+
+#pragma mark -
 
 - (BOOL) linearFilter;
 {

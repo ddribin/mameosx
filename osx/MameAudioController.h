@@ -85,6 +85,11 @@
 
 - (NSView *) createEffectViewWithSize: (NSSize) size;
 
+- (NSArray *) effectFactoryPresets;
+
+- (unsigned) indexOfPresentFactoryPreset;
+- (void) setIndexOfPresentFactoryPreset: (unsigned) presetIndex;
+
 - (float) cpuLoad;
 
 - (void) osd_init;

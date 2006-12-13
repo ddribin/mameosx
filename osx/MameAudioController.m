@@ -182,11 +182,32 @@ OSStatus static MyRenderer(void	* inRefCon,
     mEffectUnit = [newUnit retain];
     [self connectNodes];
     [mGraph update];
+    NSArray * factoryPresets = [mEffectUnit factoryPresets];
+    
+    [self willChangeValueForKey: @"effectFactoryPresets"];
+    [self didChangeValueForKey: @"effectFactoryPresets"];
+    [self willChangeValueForKey: @"indexOfPresentFactoryPreset"];
+    [self didChangeValueForKey: @"indexOfPresentFactoryPreset"];
 }
 
 - (NSView *) createEffectViewWithSize: (NSSize) size;
 {
     return [mEffectUnit createViewWithSize: size];
+}
+
+- (NSArray *) effectFactoryPresets;
+{
+    return [mEffectUnit factoryPresets];
+}
+
+- (unsigned) indexOfPresentFactoryPreset;
+{
+    return [mEffectUnit presentPresetIndex];
+}
+
+- (void) setIndexOfPresentFactoryPreset: (unsigned) presetIndex;
+{
+    return [mEffectUnit setPresentPresetIndex: presetIndex];
 }
 
 - (float) cpuLoad;

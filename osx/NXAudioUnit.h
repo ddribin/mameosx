@@ -26,10 +26,12 @@
 #import <AudioUnit/AudioUnit.h>
 
 @class AUGenericView;
+@class NXAudioUnitPreset;
 
 @interface NXAudioUnit : NSObject
 {
     AudioUnit mAudioUnit;
+    NSMutableArray * mFactoryPresets;
 }
 
 - (id) initWithAudioUnit: (AudioUnit) audioUnit;
@@ -45,6 +47,16 @@
 
 - (void) setStreamFormatWithDescription:
     (const AudioStreamBasicDescription *) streamFormat;
+
+- (NSArray *) factoryPresets;
+
+- (unsigned) indexOfFactoryPreset: (NXAudioUnitPreset *) presetToFind;
+
+- (NXAudioUnitPreset *) presentPreset;
+- (void) setPresentPreset: (NXAudioUnitPreset *) presentPreset;
+
+- (unsigned) presentPresetIndex;
+- (void) setPresentPresetIndex: (unsigned) presentPresetIndex;
 
 #pragma mark -
 #pragma mark View
