@@ -154,13 +154,13 @@ enum
     }
 }
 
-- (int) windowedZoomLevelIndex;
+- (unsigned) windowedZoomLevelIndex;
 {
     MamePreferences * preferences = [MamePreferences standardPreferences];
     return [mWindowedZoomLevels indexOfObject: [preferences windowedZoomLevel]];
 }
 
-- (void) setWindowedZoomLevelIndex: (int) windowedZoomLevelIndex;
+- (void) setWindowedZoomLevelIndex: (unsigned) windowedZoomLevelIndex;
 {
     MamePreferences * preferences = [MamePreferences standardPreferences];
     [preferences setWindowedZoomLevel:

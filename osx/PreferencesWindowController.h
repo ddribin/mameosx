@@ -43,7 +43,7 @@
 - (int) logLevelIndex;
 - (void) setLogLevelIndex: (int) logLevelIndex;
 
-- (int) windowedZoomLevelIndex;
-- (void) setWindowedZoomLevelIndex: (int) windowedZoomLevelIndex;
+- (unsigned) windowedZoomLevelIndex;
+- (void) setWindowedZoomLevelIndex: (unsigned) windowedZoomLevelIndex;
 
 @end
