@@ -100,6 +100,9 @@
 
 - (float) cpuLoad;
 
+#pragma mark -
+#pragma mark OS Dependent API
+
 - (void) osd_init;
 
 - (int) osd_start_audio_stream: (int) stereo;
