@@ -30,7 +30,8 @@
     IBOutlet NSPopUpButton * mRomDirectory;
     IBOutlet NSPopUpButton * mSamplesDirectory;
     IBOutlet NSPopUpButton * mArtworkDirectory;
-
+    
+    NSArray * mWindowedZoomLevels;
     NSDictionary * mButtonsByKey;
 }
 
@@ -41,5 +42,8 @@
 
 - (int) logLevelIndex;
 - (void) setLogLevelIndex: (int) logLevelIndex;
+
+- (int) windowedZoomLevelIndex;
+- (void) setWindowedZoomLevelIndex: (int) windowedZoomLevelIndex;
 
 @end

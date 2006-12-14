@@ -50,6 +50,12 @@
 - (NSString *) nxLogLevel;
 - (void) setNxLogLevel: (NSString *) nxLogLevel;
 
+- (NSString *) windowedZoomLevel;
+- (void) setWindowedZoomLevel: (NSString *) windowedZoomLevel;
+
+- (NSString *) fullScreenZoomLevel;
+- (void) setFullScreenZoomLevel: (NSString *) fullScreenZoomLevel;
+
 - (BOOL) throttled;
 - (void) setThrottled: (BOOL) flag;
 
@@ -179,6 +185,12 @@ extern NSString * MameGameKey;
 extern NSString * MameSleepAtExitKey;
 extern NSString * MamePreviousGamesKey;
 
+extern NSString * MameWindowedZoomLevelKey;
+extern NSString * MameFullScreenZoomLevelKey;
+extern NSString * MameZoomLevelActual;
+extern NSString * MameZoomLevelDouble;
+extern NSString * MameZoomLevelMaximumIntegral;
+extern NSString * MameZoomLevelMaximum;
 
 extern NSString * MameThrottledKey;
 extern NSString * MameSyncToRefreshKey;

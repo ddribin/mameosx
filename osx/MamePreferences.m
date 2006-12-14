@@ -42,6 +42,13 @@ NSString * MameGameKey = @"Game";
 NSString * MameSleepAtExitKey = @"SleepAtExit";
 NSString * MamePreviousGamesKey = @"PreviousGames";
 
+NSString * MameWindowedZoomLevelKey = @"WindowedZoomLevel";
+NSString * MameFullScreenZoomLevelKey = @"FullScreenZoomLevel";
+NSString * MameZoomLevelActual = @"Actual";
+NSString * MameZoomLevelDouble = @"Double";
+NSString * MameZoomLevelMaximumIntegral = @"MaximumIntegral";
+NSString * MameZoomLevelMaximum = @"Maximum";
+
 NSString * MameThrottledKey = @"Throttled";
 NSString * MameSyncToRefreshKey = @"SyncToRefresh";
 NSString * MameSoundEnabledKey = @"SoundEnabled";
@@ -139,6 +146,12 @@ NSString * MameBiosKey = @"Bios";
     [defaultValues setObject: [NSNumber numberWithBool: YES]
                       forKey: MameCheckUpdatesAtStartupKey];
     
+    [defaultValues setObject: MameZoomLevelMaximumIntegral
+                      forKey: MameWindowedZoomLevelKey];
+    
+    [defaultValues setObject: MameZoomLevelMaximumIntegral
+                      forKey: MameWindowedZoomLevelKey];
+    
     [self initializeDefaultPaths: defaultValues];
     
     [defaultValues setObject: [NSNumber numberWithBool: YES]
@@ -226,6 +239,27 @@ NSString * MameBiosKey = @"Bios";
 - (void) setNxLogLevel: (NSString *) nxLogLevel;
 {
     [mDefaults setObject: nxLogLevel forKey: MameNXLogLevelKey];
+}
+
+
+- (NSString *) windowedZoomLevel;
+{
+    return [mDefaults stringForKey: MameWindowedZoomLevelKey];
+}
+
+- (void) setWindowedZoomLevel: (NSString *) windowedZoomLevel;
+{
+    [mDefaults setObject: windowedZoomLevel forKey: MameWindowedZoomLevelKey];
+}
+
+- (NSString *) fullScreenZoomLevel;
+{
+    return [mDefaults stringForKey: MameFullScreenZoomLevelKey];
+}
+
+- (void) setFullScreenZoomLevel: (NSString *) fullScreenZoomLevel;
+{
+    [mDefaults setObject: fullScreenZoomLevel forKey: MameFullScreenZoomLevelKey];
 }
 
 //=========================================================== 

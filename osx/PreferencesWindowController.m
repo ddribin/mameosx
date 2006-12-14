@@ -51,15 +51,27 @@ enum
 
 @implementation PreferencesWindowController
 
+- (NSDictionary *) name: (NSString *) name stringValue: (NSString *) value
+{
+    return [NSDictionary dictionaryWithObjectsAndKeys:
+        name, @"name", value, @"value", nil];
+}
+
 - (id) init
 {
     self = [super initWithWindowNibName: @"Preferences"];
     if (self == nil)
         return nil;
     
+    mWindowedZoomLevels = [[NSArray alloc] initWithObjects:
+        MameZoomLevelActual,
+        MameZoomLevelDouble,
+        MameZoomLevelMaximumIntegral,
+        MameZoomLevelMaximum,
+        nil];
+    
     return self;
 }
-
 
 - (void) awakeFromNib
 {
@@ -72,6 +84,19 @@ enum
         nil];
 
     [self updatePopUpButtons];
+}
+
+//=========================================================== 
+// dealloc
+//=========================================================== 
+- (void) dealloc
+{
+    [mWindowedZoomLevels release];
+    [mButtonsByKey release];
+    
+    mWindowedZoomLevels = nil;
+    mButtonsByKey = nil;
+    [super dealloc];
 }
 
 - (int) logLevelIndex;
@@ -129,6 +154,19 @@ enum
     }
 }
 
+- (int) windowedZoomLevelIndex;
+{
+    MamePreferences * preferences = [MamePreferences standardPreferences];
+    return [mWindowedZoomLevels indexOfObject: [preferences windowedZoomLevel]];
+}
+
+- (void) setWindowedZoomLevelIndex: (int) windowedZoomLevelIndex;
+{
+    MamePreferences * preferences = [MamePreferences standardPreferences];
+    [preferences setWindowedZoomLevel:
+        [mWindowedZoomLevels objectAtIndex: windowedZoomLevelIndex]];
+}
+
 - (IBAction) chooseRomDirectory: (id) sender;
 {
     [self chooseDirectoryForKey: MameRomPath
@@ -155,10 +193,13 @@ enum
         MameSkipDisclaimerKey, MameSkipGameInfoKey, MameSkipWarningsKey,
         MameNXLogLevelKey,
         MameSyncToRefreshKey, MameThrottledKey, MameLinearFilterKey,
+        MameKeepAspectKey,
+        MameWindowedZoomLevelKey,
         nil];
 
     [self setLogLevelIndex: LogWarnIndex];
-
+    [self willChangeValueForKey: @"windowedZoomLevelIndex"];
+    
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     NSEnumerator * e = [keys objectEnumerator];
     NSString * key;
@@ -166,6 +207,8 @@ enum
     {
         [defaults setValue: nil forKey: key];
     }
+
+    [self didChangeValueForKey: @"windowedZoomLevelIndex"];
 
     [self updatePopUpButtons];
 }

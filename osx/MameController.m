@@ -48,6 +48,7 @@ static const int kMameMaxGamesInHistory = 100;
 - (void) setGameLoading: (BOOL) gameLoading;
 - (void) setGameRunning: (BOOL) gameRunning;
 - (void) setViewSize: (NSSize) viewSize;
+- (void) setSizeFromPrefereneces;
 - (void) setUpDefaultPaths;
 - (EffectFilter *) effectNamed: (NSString *) effectName;
 - (void) initFilters;
@@ -311,36 +312,52 @@ void exit_sleeper()
 
 - (IBAction) resizeToActualSize: (id) sender;
 {
-    NSSize naturalSize = [mMameView naturalSize];
-    [self setViewSize: naturalSize];
+    if (![mMameView fullScreen])
+    {
+        NSSize naturalSize = [mMameView naturalSize];
+        [self setViewSize: naturalSize];
+    }
 }
 
 - (IBAction) resizeToDoubleSize: (id) sender;
 {
-    NSSize naturalSize = [mMameView naturalSize];
-    naturalSize.width *= 2;
-    naturalSize.height *= 2;
-    [self setViewSize: naturalSize];
+    if (![mMameView fullScreen])
+    {
+        NSSize naturalSize = [mMameView naturalSize];
+        naturalSize.width *= 2;
+        naturalSize.height *= 2;
+        [self setViewSize: naturalSize];
+    }
 }
 
 - (IBAction) resizeToOptimalSize: (id) sender;
 {
-    [self setViewSize: [mMameView optimalSize]];
+    if (![mMameView fullScreen])
+    {
+        [self setViewSize: [mMameView optimalSize]];
+    }
 }
 
 - (IBAction) resizeToMaximumIntegralSize: (id) sender;
 {
-    NSSize size = [[NSScreen mainScreen] visibleFrame].size;
-    size = [self constrainFrameToIntegralNaturalSize: size];
-    size.width -= mExtraWindowSize.width;
-    size.height -= mExtraWindowSize.height;
-    [self setViewSize: size];
+    if (![mMameView fullScreen])
+    {
+        NSSize size = [[NSScreen mainScreen] visibleFrame].size;
+        size = [self constrainFrameToIntegralNaturalSize: size];
+        // Change frame size to view size
+        size.width -= mExtraWindowSize.width;
+        size.height -= mExtraWindowSize.height;
+        [self setViewSize: size];
+    }
 }
 
 - (IBAction) resizeToMaximumSize: (id) sender;
 {
-    NSSize size = [[NSScreen mainScreen] visibleFrame].size;
-    [self setViewSize: [self constrainFrameToAspectRatio: size]];
+    if (![mMameView fullScreen])
+    {
+        NSSize size = [[NSScreen mainScreen] visibleFrame].size;
+        [self setViewSize: [self constrainFrameToAspectRatio: size]];
+    }
 }
 
 - (NSSize) windowWillResize: (NSWindow *) sender toSize: (NSSize) size
@@ -511,7 +528,7 @@ void exit_sleeper()
     [self setGameLoading: NO];
     [self setGameRunning: YES];
     
-    [self resizeToOptimalSize: nil];
+    [self setSizeFromPrefereneces];
     NSWindow * window = [mMameView window];
 
     NSSize minSize = [mMameView naturalSize];
@@ -621,17 +638,30 @@ void exit_sleeper()
     newWindowFrame.origin.x = (screenSize.width - newWindowFrame.size.width) / 2;
     newWindowFrame.origin.y = (screenSize.height - newWindowFrame.size.height);
 
-#if 0
-    float maxX = NSMaxX(newWindowFrame);
-    if (maxX > screenSize.width)
-        newWindowFrame.origin.x -= (maxX - screenSize.width);
-    if (newWindowFrame.origin.y < 0.0)
-        newWindowFrame.origin.y = 0.0;
-#endif
-    
     [window setFrame: newWindowFrame
              display: YES
              animate: YES];
+}
+
+- (void) setSizeFromPrefereneces;
+{
+    NSString * zoomLevel = [[MamePreferences standardPreferences] windowedZoomLevel];
+    if ([zoomLevel isEqualToString: MameZoomLevelActual])
+    {
+        [self resizeToActualSize: nil];
+    }
+    else if ([zoomLevel isEqualToString: MameZoomLevelDouble])
+    {
+        [self resizeToDoubleSize: nil];
+    }
+    else if ([zoomLevel isEqualToString: MameZoomLevelMaximum])
+    {
+        [self resizeToMaximumSize: nil];
+    }
+    else
+    {
+        [self resizeToMaximumIntegralSize: nil];
+    }
 }
 
 - (void) setUpDefaultPaths;
