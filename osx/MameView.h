@@ -58,6 +58,7 @@
     MameRenderer * mRenderer;
     BOOL mCoreImageAccelerated;
     NSSize mRenderSize;
+    float mPixelAspectRatio;
     
     BOOL mRenderInCoreVideoThread;
     MameFilter * mFilter;

@@ -62,6 +62,8 @@
 
 - (NSRect) stretchNSSize: (NSSize) size withinRect: (NSRect) rect;
 - (NSRect) centerNSSize: (NSSize) size withinRect: (NSRect) rect;
+
+- (void) updatePixelAspectRatio;
 - (float) aspectRatioForDisplay: (CGDirectDisplayID) displayId;
 
 @end
@@ -285,17 +287,13 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     INT32 minimumWidth;
     INT32 minimumHeight;
     render_target_get_minimum_size(mTarget, &minimumWidth, &minimumHeight);
-    float aspectRatio = 0.0;
-    if (mKeepAspectRatio)
-    {
-        aspectRatio = [self aspectRatioForDisplay: kCGDirectMainDisplay];
-    }
+    [self updatePixelAspectRatio];
     INT32 visibleWidth, visibleHeight;
     render_target_compute_visible_area(mTarget, minimumWidth, minimumHeight,
-                                       aspectRatio, ROT0,
+                                       mPixelAspectRatio, ROT0,
                                        &visibleWidth, &visibleHeight);
     NXLogInfo(@"Aspect ratio: %f, Minimum size: %dx%d, visible size: %dx%d",
-              aspectRatio, minimumWidth, minimumHeight, visibleWidth,
+              mPixelAspectRatio, minimumWidth, minimumHeight, visibleWidth,
               visibleHeight);
     mNaturalSize = NSMakeSize(visibleWidth, visibleHeight);
     
@@ -365,7 +363,6 @@ NSString * MameExitStatusKey = @"MameExitStatus";
 - (void) resize
 {
     NSRect bounds = [self activeBounds];
-    
     
 	{
         float x = bounds.origin.x;
@@ -825,6 +822,7 @@ NSString * MameExitStatusKey = @"MameExitStatus";
         rect.size.width -= delta;
         rect.origin.x += delta/2;
     }
+    rect = NSIntegralRect(rect);
     return rect;
 }
 
@@ -916,18 +914,20 @@ NSString * MameExitStatusKey = @"MameExitStatus";
 - (void) drawFrameUsingCoreImage: (CVOpenGLTextureRef) frame
                           inRect: (NSRect) destRect;
 {
-    CIImage * frameIamge = [CIImage imageWithCVImageBuffer: frame];
+    CIImage * frameImage = [CIImage imageWithCVImageBuffer: frame];
     CIContext * ciContext = [self ciContext];
 
+    CGRect frameRect = [frameImage extent];
+    NSSize frameSize = NSMakeSize(frameRect.size.width, frameRect.size.height);
     if (mFilter != nil)
     {
-        frameIamge = [mFilter filterFrame: frameIamge size: destRect.size];
+        frameImage = [mFilter filterFrame: frameImage size: frameSize];
     }
-    CGRect imageRect = [frameIamge extent];
+    frameRect = [frameImage extent];
     
-    [ciContext drawImage: frameIamge
+    [ciContext drawImage: frameImage
                   inRect: *(CGRect *) &destRect
-                fromRect: imageRect];
+                fromRect: frameRect];
 }
 
 - (void) drawFrameUsingOpenGL: (CVOpenGLTextureRef) frame
@@ -984,7 +984,8 @@ NSString * MameExitStatusKey = @"MameExitStatus";
 
     if (mRenderInCoreVideoThread)
     {
-        render_target_set_bounds(mTarget, renderSize.width, renderSize.height, 0.0);
+        render_target_set_bounds(mTarget, renderSize.width, renderSize.height,
+                                 mPixelAspectRatio);
         const render_primitive_list * primitives = render_target_get_primitives(mTarget);
         @synchronized(self)
         {
@@ -996,7 +997,8 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     {
         [self lockOpenGLLock];
         
-        render_target_set_bounds(mTarget, renderSize.width, renderSize.height, 0.0);
+        render_target_set_bounds(mTarget, renderSize.width, renderSize.height,
+                                 mPixelAspectRatio);
         const render_primitive_list * primitives = render_target_get_primitives(mTarget);
         [mRenderer renderFrame: primitives
                       withSize: renderSize];
@@ -1007,6 +1009,15 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     
     if (!mame_is_paused(mMachine))
         mFramesRendered++;
+}
+
+- (void) updatePixelAspectRatio;
+{
+    mPixelAspectRatio = 0.0;
+    if (mKeepAspectRatio)
+    {
+        mPixelAspectRatio = [self aspectRatioForDisplay: kCGDirectMainDisplay];
+    }
 }
 
 #define NSSTR(_cString_) [NSString stringWithCString: _cString_]

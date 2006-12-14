@@ -338,6 +338,7 @@ void exit_sleeper()
         size.height -= mExtraWindowSize.height;
         size.width  -= mExtraWindowSize.width;
         size.width = size.height*(naturalSize.width/naturalSize.height);
+        size.width = roundf(size.width);
         
         if (flags & NSAlternateKeyMask)
         {
