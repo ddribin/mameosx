@@ -133,6 +133,8 @@ extern "C" {
 - (IBAction) resizeToActualSize: (id) sender;
 - (IBAction) resizeToDoubleSize: (id) sender;
 - (IBAction) resizeToOptimalSize: (id) sender;
+- (IBAction) resizeToMaximumIntegralSize: (id) sender;
+- (IBAction) resizeToMaximumSize: (id) sender;
 
 - (IBAction) auditRoms: (id) sender;
 

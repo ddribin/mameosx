@@ -52,6 +52,9 @@ static const int kMameMaxGamesInHistory = 100;
 - (EffectFilter *) effectNamed: (NSString *) effectName;
 - (void) initFilters;
 
+- (NSSize) constrainFrameToAspectRatio: (NSSize) size;
+- (NSSize) constrainFrameToIntegralNaturalSize: (NSSize) size;
+
 - (void) initLogAttributes;
 - (void) logMessage: (NSString *) message
      withAttributes: (NSDictionary *) attributes;
@@ -325,39 +328,40 @@ void exit_sleeper()
     [self setViewSize: [mMameView optimalSize]];
 }
 
+- (IBAction) resizeToMaximumIntegralSize: (id) sender;
+{
+    NSSize size = [[NSScreen mainScreen] visibleFrame].size;
+    size = [self constrainFrameToIntegralNaturalSize: size];
+    size.width -= mExtraWindowSize.width;
+    size.height -= mExtraWindowSize.height;
+    [self setViewSize: size];
+}
+
+- (IBAction) resizeToMaximumSize: (id) sender;
+{
+    NSSize size = [[NSScreen mainScreen] visibleFrame].size;
+    [self setViewSize: [self constrainFrameToAspectRatio: size]];
+}
+
 - (NSSize) windowWillResize: (NSWindow *) sender toSize: (NSSize) size
 {
     if (sender != [mMameView window])
         return size;
     
-    NSSize naturalSize = [mMameView naturalSize];
     int flags = [[NSApp currentEvent] modifierFlags];
     if (!(flags & NSControlKeyMask))
     {
-        // constrain aspect ratio        
-        size.height -= mExtraWindowSize.height;
-        size.width  -= mExtraWindowSize.width;
-        size.width = size.height*(naturalSize.width/naturalSize.height);
-        size.width = roundf(size.width);
-        
         if (flags & NSAlternateKeyMask)
         {
-            // constrain to multiples of the minsize
-            size.height = roundf(size.height/naturalSize.height)*naturalSize.height;
-            size.width = roundf(size.width /naturalSize.width)*naturalSize.width;
+            size = [self constrainFrameToIntegralNaturalSize: size];
         }
-        size.height += mExtraWindowSize.height;
-        size.width  += mExtraWindowSize.width;
+        else
+        {
+            size = [self constrainFrameToAspectRatio: size];
+        }
     }
-#if 0
-    // constrain to fit on the current screen (minus Dock etc)
-    NSSize winspace = [screen visibleFrame].size;
-    size.width  = MIN(winspace.width,  size.width);
-    size.height = MIN(winspace.height, size.height);
-#endif
     return size;
 }
-
 
 //=========================================================== 
 //  throttled 
@@ -611,6 +615,20 @@ void exit_sleeper()
     newWindowFrame.origin.y +=
         currentWindowFrame.size.height - newWindowFrame.size.height;
 
+    // Adjust origin to keep on screen
+    NSScreen * screen = [[mMameView window] screen];
+    NSSize screenSize = [screen visibleFrame].size;
+    newWindowFrame.origin.x = (screenSize.width - newWindowFrame.size.width) / 2;
+    newWindowFrame.origin.y = (screenSize.height - newWindowFrame.size.height);
+
+#if 0
+    float maxX = NSMaxX(newWindowFrame);
+    if (maxX > screenSize.width)
+        newWindowFrame.origin.x -= (maxX - screenSize.width);
+    if (newWindowFrame.origin.y < 0.0)
+        newWindowFrame.origin.y = 0.0;
+#endif
+    
     [window setFrame: newWindowFrame
              display: YES
              animate: YES];
@@ -684,6 +702,37 @@ void exit_sleeper()
     [filter setValue: [NSNumber numberWithFloat: 5]  
               forKey: @"inputIntensity"];
     [mFilters addObject: [MameFilter filterWithFilter: filter]];
+}
+
+- (NSSize) constrainFrameToAspectRatio: (NSSize) size;
+{
+    NSSize naturalSize = [mMameView naturalSize];
+    size.height -= mExtraWindowSize.height;
+    size.width  -= mExtraWindowSize.width;
+
+    size.width = size.height*(naturalSize.width/naturalSize.height);
+    size.width = roundf(size.width);
+
+    size.height += mExtraWindowSize.height;
+    size.width  += mExtraWindowSize.width;
+    return size;
+}
+
+- (NSSize) constrainFrameToIntegralNaturalSize: (NSSize) size;
+{
+    NSSize naturalSize = [mMameView naturalSize];
+    size.height -= mExtraWindowSize.height;
+    size.width  -= mExtraWindowSize.width;
+
+    // Constrain to aspect ratio, first
+    size.width = size.height*(naturalSize.width/naturalSize.height);
+
+    size.height = floorf(size.height/naturalSize.height)*naturalSize.height;
+    size.width = floor(size.width/naturalSize.width)*naturalSize.width;
+    
+    size.height += mExtraWindowSize.height;
+    size.width  += mExtraWindowSize.width;
+    return size;
 }
 
 #pragma mark -
