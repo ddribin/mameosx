@@ -45,7 +45,9 @@
 
     NXAudioUnit * mConverterUnit;
     NXAudioUnit * mEffectUnit;
-    
+
+    NSArray * mEffectComponents;
+    unsigned mIndexOfCurrentEffect;
     BOOL mEffectEnabled;
 
     size_t mBufferSize;
@@ -78,17 +80,23 @@
 - (BOOL) paused;
 - (void) setPaused: (BOOL) paused;
 
+#pragma mark -
+#pragma mark Effect
+
 - (BOOL) effectEnabled;
 - (void) setEffectEnabled: (BOOL) effectEnabled;
 
-- (void) changeEffect: (ComponentDescription *) description;
+- (NSArray *) effectComponents;
+
+- (unsigned) indexOfCurrentEffect;
+- (void) setIndexOfCurrentEffect: (unsigned) indexOfCurrentEffect;
 
 - (NSView *) createEffectViewWithSize: (NSSize) size;
 
 - (NSArray *) effectFactoryPresets;
 
-- (unsigned) indexOfPresentFactoryPreset;
-- (void) setIndexOfPresentFactoryPreset: (unsigned) presetIndex;
+- (unsigned) indexOfCurrentFactoryPreset;
+- (void) setIndexOfCurrentFactoryPreset: (unsigned) presetIndex;
 
 - (float) cpuLoad;
 

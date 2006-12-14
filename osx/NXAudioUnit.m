@@ -117,6 +117,9 @@
                                   sizeof(AudioStreamBasicDescription)));
 }
 
+#pragma mark -
+#pragma mark Presets
+
 - (NSArray *) factoryPresets;
 {
     if (mFactoryPresets == nil)

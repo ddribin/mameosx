@@ -125,14 +125,17 @@
 - (BOOL) audioEffectEnabled;
 - (void) setAudioEffectEnabled: (BOOL) flag;
 
-- (void) changeAudioEffect: (ComponentDescription *) description;
+- (NSArray *) audioEffectComponents;
+
+- (unsigned) indexOfCurrentEffect;
+- (void) setIndexOfCurrentEffect: (unsigned) indexOfCurrentEffect;
 
 - (NSView *) createAudioEffectViewWithSize: (NSSize) size;
 
 - (NSArray *) audioEffectFactoryPresets;
 
-- (unsigned) indexOfPresentFactoryPreset;
-- (void) setIndexOfPresentFactoryPreset: (unsigned) index;
+- (unsigned) indexOfCurrentFactoryPreset;
+- (void) setIndexOfCurrentFactoryPreset: (unsigned) index;
 
 - (float) audioCpuLoad;
 

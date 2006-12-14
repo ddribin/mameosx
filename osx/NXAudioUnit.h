@@ -48,6 +48,9 @@
 - (void) setStreamFormatWithDescription:
     (const AudioStreamBasicDescription *) streamFormat;
 
+#pragma mark -
+#pragma mark Presets
+
 - (NSArray *) factoryPresets;
 
 - (unsigned) indexOfFactoryPreset: (NXAudioUnitPreset *) presetToFind;

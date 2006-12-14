@@ -25,4 +25,6 @@
 #import "NXAudioUnit.h"
 #import "NXAudioUnitGraph.h"
 #import "NXAudioUnitNode.h"
+#import "NXAudioComponent.h"
+#import "NXAudioUnitPreset.h"
 #import "NXAudioException.h"

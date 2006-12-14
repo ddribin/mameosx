@@ -72,7 +72,15 @@ NSString * MameExitStatusKey = @"MameExitStatus";
 
 @implementation MameView
 
--(id) initWithFrame: (NSRect) frameRect
++ (void) initialize
+{
+    [self setKeys: [NSArray arrayWithObject: @"indexOfCurrentEffect"]
+          triggerChangeNotificationsForDependentKey: @"audioEffectFactoryPresets"];
+    [self setKeys: [NSArray arrayWithObject: @"indexOfCurrentEffect"]
+          triggerChangeNotificationsForDependentKey: @"indexOfCurrentFactoryPreset"];
+}
+
+- (id) initWithFrame: (NSRect) frameRect
 {
     // pixel format attributes for the view based (non-fullscreen) NSOpenGLContext
     NSOpenGLPixelFormatAttribute windowedAttributes[] =
@@ -519,14 +527,19 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     [mAudioController setEffectEnabled: flag];
 }
 
-- (void) changeAudioEffect: (ComponentDescription *) description;
+- (NSArray *) audioEffectComponents;
 {
-    [mAudioController changeEffect: description];
-    
-    [self willChangeValueForKey: @"audioEffectFactoryPresets"];
-    [self didChangeValueForKey: @"audioEffectFactoryPresets"];
-    [self willChangeValueForKey: @"indexOfPresentFactoryPreset"];
-    [self didChangeValueForKey: @"indexOfPresentFactoryPreset"];
+    return [mAudioController effectComponents];
+}
+
+- (unsigned) indexOfCurrentEffect;
+{
+    return [mAudioController indexOfCurrentEffect];
+}
+
+- (void) setIndexOfCurrentEffect: (unsigned) indexOfCurrentEffect;
+{
+    [mAudioController setIndexOfCurrentEffect: indexOfCurrentEffect];
 }
 
 - (NSView *) createAudioEffectViewWithSize: (NSSize) size;
@@ -536,21 +549,17 @@ NSString * MameExitStatusKey = @"MameExitStatus";
 
 - (NSArray *) audioEffectFactoryPresets;
 {
-    NSArray * presets = [mAudioController effectFactoryPresets];
-    if ([presets count] == 0)
-        return nil;
-    else
-        return presets;
+    return [mAudioController effectFactoryPresets];
 }
 
-- (unsigned) indexOfPresentFactoryPreset;
+- (unsigned) indexOfCurrentFactoryPreset;
 {
-    return [mAudioController indexOfPresentFactoryPreset];
+    return [mAudioController indexOfCurrentFactoryPreset];
 }
 
-- (void) setIndexOfPresentFactoryPreset: (unsigned) index;
+- (void) setIndexOfCurrentFactoryPreset: (unsigned) index;
 {
-    [mAudioController setIndexOfPresentFactoryPreset: index];
+    [mAudioController setIndexOfCurrentFactoryPreset: index];
 }
 
 - (float) audioCpuLoad;

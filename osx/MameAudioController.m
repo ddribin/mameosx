@@ -93,6 +93,14 @@ OSStatus static MyRenderer(void	* inRefCon,
 
 @implementation MameAudioController
 
++ (void) initialize
+{
+    [self setKeys: [NSArray arrayWithObject: @"indexOfCurrentEffect"]
+          triggerChangeNotificationsForDependentKey: @"effectFactoryPresets"];
+    [self setKeys: [NSArray arrayWithObject: @"indexOfCurrentEffect"]
+          triggerChangeNotificationsForDependentKey: @"indexOfCurrentFactoryPreset"];
+}
+
 - (id) init;
 {
     if ([super init] == nil)
@@ -104,12 +112,18 @@ OSStatus static MyRenderer(void	* inRefCon,
     mOverflows = 0;
     mUnderflows = 0;
     
+    mEffectComponents =
+        [NXAudioComponent componentsMatchingType: kAudioUnitType_Effect
+                                         subType: 0
+                                    manufacturer: 0];
+    [mEffectComponents retain];
+    
     mGraph = [[NXAudioUnitGraph alloc] init];
     mOutputNode = [mGraph addNodeWithType: kAudioUnitType_Output
                                   subType: kAudioUnitSubType_DefaultOutput];
     [mOutputNode retain];
     
-    [self addEffectNode];
+    mEffectNode = nil;
 
     mConverterNode = [mGraph addNodeWithType: kAudioUnitType_FormatConverter
                                      subType: kAudioUnitSubType_AUConverter];
@@ -117,6 +131,7 @@ OSStatus static MyRenderer(void	* inRefCon,
     
     mEffectEnabled = NO;
     [self connectNodes];
+    [self setIndexOfCurrentEffect: 0];
 
     [mGraph open];
     
@@ -151,6 +166,9 @@ OSStatus static MyRenderer(void	* inRefCon,
     mPaused = paused;
 }
 
+#pragma mark -
+#pragma mark Effect
+
 - (BOOL) effectEnabled;
 {
     return mEffectEnabled;
@@ -168,26 +186,42 @@ OSStatus static MyRenderer(void	* inRefCon,
     }
 }
 
-- (void) changeEffect: (ComponentDescription *) description;
+- (NSArray *) effectComponents;
 {
-    NXAudioUnitNode * newNode = [mGraph addNodeWithDescription: description];
+    return mEffectComponents;
+}
+
+- (unsigned) indexOfCurrentEffect;
+{
+    return mIndexOfCurrentEffect;
+}
+
+- (void) setIndexOfCurrentEffect: (unsigned) indexOfCurrentEffect;
+{
+    if (indexOfCurrentEffect >= [mEffectComponents count])
+    {
+        return;
+    }
+    
+    NXAudioComponent * component =
+        [mEffectComponents objectAtIndex: indexOfCurrentEffect];
+    
+    ComponentDescription description = [component ComponentDescription];
+    NXAudioUnitNode * newNode = [mGraph addNodeWithDescription: &description];
     NXAudioUnit * newUnit = [newNode audioUnit];
     
     [mGraph disconnectAll];
-    [mGraph removeNode: mEffectNode];
-    [mEffectNode release];
-    [mEffectUnit release];
+    if (mEffectNode != nil)
+    {
+        [mGraph removeNode: mEffectNode];
+        [mEffectNode release];
+        [mEffectUnit release];
+    }
     
     mEffectNode = [newNode retain];
     mEffectUnit = [newUnit retain];
     [self connectNodes];
     [mGraph update];
-    NSArray * factoryPresets = [mEffectUnit factoryPresets];
-    
-    [self willChangeValueForKey: @"effectFactoryPresets"];
-    [self didChangeValueForKey: @"effectFactoryPresets"];
-    [self willChangeValueForKey: @"indexOfPresentFactoryPreset"];
-    [self didChangeValueForKey: @"indexOfPresentFactoryPreset"];
 }
 
 - (NSView *) createEffectViewWithSize: (NSSize) size;
@@ -200,12 +234,12 @@ OSStatus static MyRenderer(void	* inRefCon,
     return [mEffectUnit factoryPresets];
 }
 
-- (unsigned) indexOfPresentFactoryPreset;
+- (unsigned) indexOfCurrentFactoryPreset;
 {
     return [mEffectUnit presentPresetIndex];
 }
 
-- (void) setIndexOfPresentFactoryPreset: (unsigned) presetIndex;
+- (void) setIndexOfCurrentFactoryPreset: (unsigned) presetIndex;
 {
     return [mEffectUnit setPresentPresetIndex: presetIndex];
 }
@@ -214,6 +248,9 @@ OSStatus static MyRenderer(void	* inRefCon,
 {
     return [mGraph cpuLoad];
 }
+
+#pragma mark -
+#pragma mark OS Dependent API
 
 - (void) osd_init;
 {

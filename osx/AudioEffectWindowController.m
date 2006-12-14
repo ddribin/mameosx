@@ -12,7 +12,11 @@
 
 @interface AudioEffectWindowController (Private)
 
+- (void) updateCpuLoad: (NSTimer*) theTimer;
+- (void) updateAudioUnitView;
+- (void) auViewDidChange: (NSNotification *) notification;
 - (void) setAudioUnitView: (NSView *) view;
+- (void) windowResizeFinished: (NSTimer*) theTimer;
 
 @end
 
@@ -30,11 +34,15 @@
     return self;
 }
 
-- (void) updateCpuLoad: (NSTimer*)theTimer
+- (void) dealloc
 {
-    [self willChangeValueForKey: @"cpuLoad"];
-    mCpuLoad = [mMameView audioCpuLoad] * 100.0;
-    [self didChangeValueForKey: @"cpuLoad"];
+    [[NSNotificationCenter defaultCenter] removeObserver: self
+                                                    name: nil
+                                                  object: mAudioUnitView];
+    [mMameView release];
+    [mAudioUnitView release];
+    [mCpuLoadTimer release];
+    [super dealloc];
 }
 
 - (void) observeValueForKeyPath: (NSString *) keyPath
@@ -42,32 +50,32 @@
                          change: (NSDictionary *) change
                         context: (void *) context;
 {
-    if ((object == mMameView) && [keyPath isEqualToString: @"audioEffectEnabled"])
+    if ((object == mMameView) &&
+        [keyPath isEqualToString: @"indexOfCurrentEffect"])
     {
-        NSView * view = [mMameView createAudioEffectViewWithSize: NSMakeSize(400, 300)];
-        [self setAudioUnitView: view];
+        [self updateAudioUnitView];
+    }
+    else if ((object == mMameView) &&
+             [keyPath isEqualToString: @"audioEffectFactoryPresets"])
+    {
+        [self willChangeValueForKey: @"effectHasFactoryPresets"];
+        [self didChangeValueForKey: @"effectHasFactoryPresets"];
     }
 }
 
 - (void) awakeFromNib;
 {
-    NSView * view = [mMameView createAudioEffectViewWithSize: NSMakeSize(400, 300)];
-    [self setAudioUnitView: view];
+    [self updateAudioUnitView];
     
     [mMameView addObserver: self
-                forKeyPath: @"audioEffectEnabled"
-                   options: (NSKeyValueObservingOptionNew |
-                             NSKeyValueObservingOptionOld)
+                forKeyPath: @"indexOfCurrentEffect"
+                   options: 0
                    context: nil];
-
-    NSArray * effectComponents =
-        [NXAudioComponent componentsMatchingType: kAudioUnitType_Effect
-                                         subType: 0
-                                    manufacturer: 0];
     
-    [self willChangeValueForKey: @"effectComponents"];
-    mEffectComponents = [effectComponents retain];
-    [self didChangeValueForKey: @"effectComponents"];
+    [mMameView addObserver: self
+                forKeyPath: @"audioEffectFactoryPresets"
+                   options: 0
+                   context: nil];
 }
 
 - (MameView *) mameView;
@@ -78,25 +86,6 @@
 - (float) cpuLoad;
 {
     return mCpuLoad;
-}
-
-- (NSArray *) effectComponents;
-{
-    return mEffectComponents;
-}
-
-- (int) currentEffectIndex;
-{
-    return mCurrentEffectIndex;
-}
-
-- (void) setCurrentEffectIndex: (int) effectIndex;
-{
-    NXAudioComponent * component = [mEffectComponents objectAtIndex: effectIndex];
-    ComponentDescription description = [component ComponentDescription];
-    [mMameView changeAudioEffect: &description];
-    NSView * view = [mMameView createAudioEffectViewWithSize: NSMakeSize(400, 300)];
-    [self setAudioUnitView: view];
 }
 
 - (IBAction) showWindow: (id) sender;
@@ -116,6 +105,11 @@
     }
 }
 
+- (BOOL) effectHasFactoryPresets;
+{
+    return ([[mMameView audioEffectFactoryPresets] count] > 0);
+}
+
 - (void) windowWillClose: (NSNotification *) notification;
 {
     if (mCpuLoadTimer != nil)
@@ -130,13 +124,20 @@
 
 @implementation AudioEffectWindowController (Private)
 
-- (void)myTimerFireMethod:(NSTimer*)theTimer
+- (void) updateCpuLoad: (NSTimer*) theTimer;
 {
-    [mContainerView addSubview: mAudioUnitView];
+    [self willChangeValueForKey: @"cpuLoad"];
+    mCpuLoad = [mMameView audioCpuLoad] * 100.0;
+    [self didChangeValueForKey: @"cpuLoad"];
 }
 
+- (void) updateAudioUnitView;
+{
+    NSView * view = [mMameView createAudioEffectViewWithSize: NSMakeSize(400, 300)];
+    [self setAudioUnitView: view];
+}
 
-- (void) auViewDidChange: (NSNotification *) notification
+- (void) auViewDidChange: (NSNotification *) notification;
 {
     NSWindow * window = [self window];
     NSSize auSize = [mAudioUnitView bounds].size;
@@ -233,7 +234,7 @@
         NSTimeInterval resizeTime = [window animationResizeTime: newFrameRect];
         [NSTimer scheduledTimerWithTimeInterval: resizeTime
                                          target: self
-                                       selector: @selector(myTimerFireMethod:)
+                                       selector: @selector(windowResizeFinished:)
                                        userInfo: nil
                                         repeats: NO];
         
@@ -244,6 +245,11 @@
         [window setFrame: newFrameRect display: YES animate: NO];
         [mContainerView addSubview: mAudioUnitView];
     }
+}
+
+- (void) windowResizeFinished: (NSTimer*) theTimer;
+{
+    [mContainerView addSubview: mAudioUnitView];
 }
 
 @end
