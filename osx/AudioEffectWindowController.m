@@ -66,6 +66,11 @@
 - (void) awakeFromNib;
 {
     [self updateAudioUnitView];
+
+    // The panel should be a utility panel, but not floating.  This cannot
+    // be set in Interface Builder.
+    NSPanel * panel = (NSPanel *) [self window];
+    [panel setFloatingPanel: NO];
     
     [mMameView addObserver: self
                 forKeyPath: @"indexOfCurrentEffect"
