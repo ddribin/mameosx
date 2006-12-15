@@ -47,6 +47,7 @@ static const int kMameMaxGamesInHistory = 100;
 - (void) syncWithUserDefaults;
 - (void) setGameLoading: (BOOL) gameLoading;
 - (void) setGameRunning: (BOOL) gameRunning;
+- (void) setFrameSize: (NSSize) newFrameSize;
 - (void) setViewSize: (NSSize) viewSize;
 - (void) setSizeFromPrefereneces;
 - (void) setUpDefaultPaths;
@@ -344,10 +345,7 @@ void exit_sleeper()
     {
         NSSize size = [[NSScreen mainScreen] visibleFrame].size;
         size = [self constrainFrameToIntegralNaturalSize: size];
-        // Change frame size to view size
-        size.width -= mExtraWindowSize.width;
-        size.height -= mExtraWindowSize.height;
-        [self setViewSize: size];
+        [self setFrameSize: size];
     }
 }
 
@@ -356,7 +354,8 @@ void exit_sleeper()
     if (![mMameView fullScreen])
     {
         NSSize size = [[NSScreen mainScreen] visibleFrame].size;
-        [self setViewSize: [self constrainFrameToAspectRatio: size]];
+        size = [self constrainFrameToAspectRatio: size];
+        [self setFrameSize: size];
     }
 }
 
@@ -619,28 +618,37 @@ void exit_sleeper()
     mGameRunning = gameRunning;
 }
 
-- (void) setViewSize: (NSSize) newViewSize;
+- (void) setFrameSize: (NSSize) newFrameSize;
 {
     NSWindow * window = [mMameView window];
     NSRect currentWindowFrame = [window frame];
-
+    
     NSRect newWindowFrame = currentWindowFrame;
-    newWindowFrame.size.width = newViewSize.width + mExtraWindowSize.width;
-    newWindowFrame.size.height = newViewSize.height + mExtraWindowSize.height;
-
+    newWindowFrame.size = newFrameSize;
+    
     // Adjust origin so title bar stays in same location
     newWindowFrame.origin.y +=
         currentWindowFrame.size.height - newWindowFrame.size.height;
-
+    
     // Adjust origin to keep on screen
     NSScreen * screen = [[mMameView window] screen];
-    NSSize screenSize = [screen visibleFrame].size;
-    newWindowFrame.origin.x = (screenSize.width - newWindowFrame.size.width) / 2;
-    newWindowFrame.origin.y = (screenSize.height - newWindowFrame.size.height);
-
+    NSRect screenFrame = [screen visibleFrame];
+    newWindowFrame.origin.x = screenFrame.origin.x +
+        (screenFrame.size.width - newWindowFrame.size.width) / 2;
+    newWindowFrame.origin.y = screenFrame.origin.y +
+        (screenFrame.size.height - newWindowFrame.size.height);
+    
     [window setFrame: newWindowFrame
              display: YES
              animate: YES];
+}
+
+- (void) setViewSize: (NSSize) newViewSize;
+{
+    // Convert view size into frame size
+    newViewSize.width += mExtraWindowSize.width;
+    newViewSize.height += mExtraWindowSize.height;
+    [self setFrameSize: newViewSize];
 }
 
 - (void) setSizeFromPrefereneces;
@@ -737,25 +745,45 @@ void exit_sleeper()
 - (NSSize) constrainFrameToAspectRatio: (NSSize) size;
 {
     NSSize naturalSize = [mMameView naturalSize];
+    float aspectRatio = naturalSize.width/naturalSize.height;
+
     size.height -= mExtraWindowSize.height;
     size.width  -= mExtraWindowSize.width;
+    float viewAspectRatio = size.width/size.height;
 
-    size.width = size.height*(naturalSize.width/naturalSize.height);
-    size.width = roundf(size.width);
-
+    if (viewAspectRatio > aspectRatio)
+    {
+        size.width = size.height*aspectRatio;
+        size.width = roundf(size.width);
+    }
+    else
+    {
+        size.height = size.width/aspectRatio;
+        size.height = roundf(size.height);
+    }
     size.height += mExtraWindowSize.height;
     size.width  += mExtraWindowSize.width;
+
     return size;
 }
 
 - (NSSize) constrainFrameToIntegralNaturalSize: (NSSize) size;
 {
     NSSize naturalSize = [mMameView naturalSize];
+    float aspectRatio = naturalSize.width/naturalSize.height;
+
     size.height -= mExtraWindowSize.height;
     size.width  -= mExtraWindowSize.width;
+    float viewAspectRatio = size.width/size.height;
 
-    // Constrain to aspect ratio, first
-    size.width = size.height*(naturalSize.width/naturalSize.height);
+    if (viewAspectRatio > aspectRatio)
+    {
+        size.width = size.height*aspectRatio;
+    }
+    else
+    {
+        size.height = size.width/aspectRatio;
+    }
 
     size.height = floorf(size.height/naturalSize.height)*naturalSize.height;
     size.width = floor(size.width/naturalSize.width)*naturalSize.width;
