@@ -74,6 +74,9 @@
 - (BOOL) linearFilter;
 - (void) setLinearFilter: (BOOL) linearFilter;
 
+- (BOOL) smoothFont;
+- (void) setSmoothFont: (BOOL) smoothFont;
+
 - (BOOL) checkUpdatesAtStartup;
 
 - (NSArray *) previousGames;
@@ -198,6 +201,7 @@ extern NSString * MameSoundEnabledKey;
 extern NSString * MameRenderInCVKey;
 extern NSString * MameClearToRedKey;
 extern NSString * MameLinearFilterKey;
+extern NSString * MameSmoothFontKey;
 
 extern NSString * MameRomPath;
 extern NSString * MameSamplePath;

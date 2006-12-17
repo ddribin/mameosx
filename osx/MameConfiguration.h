@@ -60,6 +60,8 @@
 
 - (void) setCommentDirectory: (NSString *) commentDirectory;
 
+- (void) setFontPath: (NSString *) fontPath;
+
 #pragma mark -
 
 #ifdef MAME_DEBUG

@@ -50,7 +50,6 @@ static const int kMameMaxGamesInHistory = 100;
 - (void) setFrameSize: (NSSize) newFrameSize;
 - (void) setViewSize: (NSSize) viewSize;
 - (void) setSizeFromPrefereneces;
-- (void) setUpDefaultPaths;
 - (EffectFilter *) effectNamed: (NSString *) effectName;
 - (void) initFilters;
 
@@ -158,7 +157,6 @@ void exit_sleeper()
     // http://developer.apple.com/documentation/DeveloperTools/Conceptual/IBTips/Articles/FreqAskedQuests.html
     [mDrawer setContentSize: NSMakeSize(20, 60)];
     
-    [self setUpDefaultPaths];
     [self syncWithUserDefaults];
     
     [self chooseGameAndStart];
@@ -606,6 +604,16 @@ void exit_sleeper()
     [mMameView setKeepAspectRatio: [preferences keepAspect]];
     
     [preferences copyToMameConfiguration: mConfiguration];
+    
+    if ([preferences smoothFont])
+    {
+        NSBundle * myBundle = [NSBundle bundleForClass: [self class]];
+        [mConfiguration setFontPath: [myBundle resourcePath]];
+    }
+    else
+    {
+        [mConfiguration setFontPath: @""];
+    }
 }
 
 - (void) setGameLoading: (BOOL) gameLoading;
@@ -670,15 +678,6 @@ void exit_sleeper()
     {
         [self resizeToMaximumIntegralSize: nil];
     }
-}
-
-- (void) setUpDefaultPaths;
-{
-    NSBundle * myBundle = [NSBundle bundleForClass: [self class]];
-#if 0
-    // TODO: Hopefully MAME core will allow us to fix this hack.
-    [[NSFileManager defaultManager] changeCurrentDirectoryPath: [myBundle resourcePath]];
-#endif
 }
 
 - (EffectFilter *) effectNamed: (NSString *) effectName;

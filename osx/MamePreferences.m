@@ -55,6 +55,7 @@ NSString * MameSoundEnabledKey = @"SoundEnabled";
 NSString * MameRenderInCVKey = @"RenderInCV";
 NSString * MameClearToRedKey = @"ClearToRed";
 NSString * MameLinearFilterKey = @"LinearFilter";
+NSString * MameSmoothFontKey = @"SmoothFont";
 
 NSString * MameRomPath = @"RomPath";
 NSString * MameSamplePath = @"SamplePath";
@@ -178,6 +179,9 @@ NSString * MameBiosKey = @"Bios";
 
     [defaultValues setObject: [NSNumber numberWithBool: YES]
                       forKey: MameLinearFilterKey];
+    
+    [defaultValues setObject: [NSNumber numberWithBool: YES]
+                      forKey: MameSmoothFontKey];
     
 #ifdef MAME_DEBUG
     [defaultValues setObject: [NSNumber numberWithBool: NO]
@@ -335,6 +339,16 @@ NSString * MameBiosKey = @"Bios";
 - (void) setLinearFilter: (BOOL) linearFilter;
 {
     [mDefaults setBool: linearFilter forKey: MameLinearFilterKey];
+}
+
+- (BOOL) smoothFont;
+{
+    return [mDefaults boolForKey: MameSmoothFontKey];
+}
+
+- (void) setSmoothFont: (BOOL) smoothFont;
+{
+    [mDefaults setBool: smoothFont forKey: MameSmoothFontKey];
 }
 
 - (BOOL) checkUpdatesAtStartup;

@@ -130,6 +130,11 @@
     [self setStringOption: commentDirectory withName: OPTION_COMMENT_DIRECTORY];
 }
 
+- (void) setFontPath: (NSString *) fontPath;
+{
+    [self setStringOption: fontPath withName: OPTION_FONTPATH];
+}
+
 #pragma mark -
 
 #ifdef MAME_DEBUG
