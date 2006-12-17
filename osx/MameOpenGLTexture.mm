@@ -22,7 +22,10 @@
  * SOFTWARE.
  */
 
-#define __FILEIO_H__ 1 // HACK for 0.110 compiler error!
+// HACK for 0.111 compiler error!
+#define __DRIVER_H__ 1
+#define __CHD_H__ 1
+#define __ROMLOAD_H__ 1
 
 #import "MameOpenGLTexture.h"
 #import "MameTextureConverter.h"

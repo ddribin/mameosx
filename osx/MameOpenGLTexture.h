@@ -28,8 +28,9 @@
 #if defined(__cplusplus)
 extern "C" {
 #endif
-
+    
 #include "render.h"
+#include "palette.h"
     
 #if defined(__cplusplus)
 }
