@@ -11720,6 +11720,7 @@
 					"$(SRCROOT)/osx",
 				);
 				MY_SCRIPT_DIR = "${SRCROOT}/tools";
+				PER_ARCH_CFLAGS_ppc = "-mlong-branch";
 				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
 			};
 			name = Debug;
@@ -11801,7 +11802,6 @@
 					"$(SYMROOT)/layouts",
 				);
 				INSTALL_PATH = /usr/local/lib;
-				PER_ARCH_CFLAGS_ppc = "-mlong-branch ";
 				PREBINDING = NO;
 				PRODUCT_NAME = drivers;
 				USE_HEADERMAP = "";
@@ -11821,7 +11821,6 @@
 					"$(SYMROOT)/layouts",
 				);
 				INSTALL_PATH = /usr/local/lib;
-				PER_ARCH_CFLAGS_ppc = "-mlong-branch ";
 				PREBINDING = NO;
 				PRODUCT_NAME = drivers;
 				USE_HEADERMAP = "";
