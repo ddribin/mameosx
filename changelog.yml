@@ -6,6 +6,8 @@
     - Add audio effects using any available Audio Unit.
     - Add ability to preserve game aspect ratio.
     - Add preference to disable smooth UI font.
+    - Add preference to choose how frames are rendered.
+    - Add preference to choose which thread frames are rendered in.
   
 
 <% version = "0.110-1" %>
