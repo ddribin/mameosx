@@ -8,6 +8,7 @@
     - Add preference to disable smooth UI font.
     - Add preference to choose how frames are rendered.
     - Add preference to choose which thread frames are rendered in.
+    - Add Effects menu for visual and audio effects.
   
 
 <% version = "0.110-1" %>
