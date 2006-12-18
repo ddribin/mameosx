@@ -2,8 +2,10 @@
 - version: <%=version%>
   date: xxx
   changes:
+    - Upgrade to 0.111 core.
     - Add audio effects using any available Audio Unit.
     - Add ability to preserve game aspect ratio.
+    - Add preference to disable smooth UI font.
   
 
 <% version = "0.110-1" %>
