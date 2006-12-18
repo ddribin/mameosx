@@ -27,19 +27,19 @@
 #import <AudioToolbox/AudioToolbox.h>
 
 
-@class NXAudioUnitGraph;
-@class NXAudioUnit;
+@class DDAudioUnitGraph;
+@class DDAudioUnit;
 
 @interface NXAudioUnitNode : NSObject
 {
     AUNode mNode;
-    NXAudioUnitGraph * mGraph;
+    DDAudioUnitGraph * mGraph;
 }
 
-- (id) initWithAUNode: (AUNode) node inGraph: (NXAudioUnitGraph *) graph;
+- (id) initWithAUNode: (AUNode) node inGraph: (DDAudioUnitGraph *) graph;
 
 - (AUNode) AUNode;
 
-- (NXAudioUnit *) audioUnit;
+- (DDAudioUnit *) audioUnit;
 
 @end

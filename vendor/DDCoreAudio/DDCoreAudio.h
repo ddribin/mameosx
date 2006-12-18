@@ -22,54 +22,9 @@
  * SOFTWARE.
  */
 
-#import <Cocoa/Cocoa.h>
-#import <AudioUnit/AudioUnit.h>
-
-@class AUGenericView;
-@class NXAudioUnitPreset;
-
-@interface NXAudioUnit : NSObject
-{
-    AudioUnit mAudioUnit;
-    NSMutableArray * mFactoryPresets;
-}
-
-- (id) initWithAudioUnit: (AudioUnit) audioUnit;
-
-- (AudioUnit) AudioUnit;
-
-- (void) setRenderCallback: (AURenderCallback) callback
-                   context: (void *) context;
-
-- (void) setBypass: (BOOL) bypass;
-
-- (BOOL) bypass;
-
-- (void) setStreamFormatWithDescription:
-    (const AudioStreamBasicDescription *) streamFormat;
-
-#pragma mark -
-#pragma mark Presets
-
-- (NSArray *) factoryPresets;
-
-- (unsigned) indexOfFactoryPreset: (NXAudioUnitPreset *) presetToFind;
-
-- (NXAudioUnitPreset *) presentPreset;
-- (void) setPresentPreset: (NXAudioUnitPreset *) presentPreset;
-
-- (unsigned) presentPresetIndex;
-- (void) setPresentPresetIndex: (unsigned) presentPresetIndex;
-
-#pragma mark -
-#pragma mark View
-
-- (NSView *) createViewWithSize: (NSSize) size;
-
-- (BOOL) hasCustomCocoaView;
-
-- (NSView *) createCustomCocoaViewWithSize: (NSSize) defaultSize;
-
-- (AUGenericView *) createGenericView;
-
-@end
+#import "DDAudioUnit.h"
+#import "DDAudioUnitGraph.h"
+#import "NXAudioUnitNode.h"
+#import "NXAudioComponent.h"
+#import "NXAudioUnitPreset.h"
+#import "NXAudioException.h"

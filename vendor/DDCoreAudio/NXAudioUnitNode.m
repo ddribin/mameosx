@@ -23,15 +23,15 @@
  */
 
 #import "NXAudioUnitNode.h"
-#import "NXAudioUnitGraph.h"
-#import "NXAudioUnit.h"
+#import "DDAudioUnitGraph.h"
+#import "DDAudioUnit.h"
 #import "NXAudioException.h"
 
 #define THROW_IF NXThrowAudioIfErr
 
 @implementation NXAudioUnitNode
 
-- (id) initWithAUNode: (AUNode) node inGraph: (NXAudioUnitGraph *) graph;
+- (id) initWithAUNode: (AUNode) node inGraph: (DDAudioUnitGraph *) graph;
 {
     self = [super init];
     if (self == nil)
@@ -52,13 +52,13 @@
     return mNode;
 }
 
-- (NXAudioUnit *) audioUnit;
+- (DDAudioUnit *) audioUnit;
 {
     AudioUnit audioUnit;
     THROW_IF(AUGraphGetNodeInfo([mGraph AUGraph],
                                 [self AUNode],
                                 NULL, NULL, NULL, &audioUnit));
-    return [[[NXAudioUnit alloc] initWithAudioUnit: audioUnit] autorelease];
+    return [[[DDAudioUnit alloc] initWithAudioUnit: audioUnit] autorelease];
 }
 
 @end

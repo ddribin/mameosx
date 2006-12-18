@@ -22,13 +22,13 @@
  * SOFTWARE.
  */
 
-#import "NXAudioUnitGraph.h"
+#import "DDAudioUnitGraph.h"
 #import "NXAudioUnitNode.h"
 #import "NXAudioException.h"
 
 #define THROW_IF NXThrowAudioIfErr
 
-@implementation NXAudioUnitGraph
+@implementation DDAudioUnitGraph
 
 - (id) init;
 {

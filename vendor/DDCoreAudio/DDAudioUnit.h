@@ -24,55 +24,52 @@
 
 #import <Cocoa/Cocoa.h>
 #import <AudioUnit/AudioUnit.h>
-#import <AudioToolbox/AudioToolbox.h>
 
-@class NXAudioUnitNode;
+@class AUGenericView;
+@class NXAudioUnitPreset;
 
-@interface NXAudioUnitGraph : NSObject
+@interface DDAudioUnit : NSObject
 {
-    AUGraph mGraph;
+    AudioUnit mAudioUnit;
+    NSMutableArray * mFactoryPresets;
 }
 
-- (id) init;
+- (id) initWithAudioUnit: (AudioUnit) audioUnit;
 
-- (void) dealloc;
+- (AudioUnit) AudioUnit;
 
-- (AUGraph) AUGraph;
+- (void) setRenderCallback: (AURenderCallback) callback
+                   context: (void *) context;
 
-- (NXAudioUnitNode *) addNodeWithType: (OSType) type
-                              subType: (OSType) subType;
+- (void) setBypass: (BOOL) bypass;
 
-- (NXAudioUnitNode *) addNodeWithType: (OSType) type
-                              subType: (OSType) subType
-                         manufacturer: (OSType) manufacturer;
+- (BOOL) bypass;
 
-- (NXAudioUnitNode *) addNodeWithDescription:
-    (ComponentDescription *) description;
+- (void) setStreamFormatWithDescription:
+    (const AudioStreamBasicDescription *) streamFormat;
 
-- (void) removeNode: (NXAudioUnitNode *) node;
+#pragma mark -
+#pragma mark Presets
 
-- (void) connectNode: (NXAudioUnitNode *) sourceNode
-              output: (UInt32) sourceOutput
-              toNode: (NXAudioUnitNode *) destNode
-               input: (UInt32) destInput;
+- (NSArray *) factoryPresets;
 
-- (void) disconnectNode: (NXAudioUnitNode *) node
-                  input: (UInt32) input;
+- (unsigned) indexOfFactoryPreset: (NXAudioUnitPreset *) presetToFind;
 
-- (void) disconnectAll;
+- (NXAudioUnitPreset *) presentPreset;
+- (void) setPresentPreset: (NXAudioUnitPreset *) presentPreset;
 
-- (void) open;
+- (unsigned) presentPresetIndex;
+- (void) setPresentPresetIndex: (unsigned) presentPresetIndex;
 
-- (void) update;
+#pragma mark -
+#pragma mark View
 
-- (void) initialize;
+- (NSView *) createViewWithSize: (NSSize) size;
 
-- (void) uninitialize;
+- (BOOL) hasCustomCocoaView;
 
-- (void) start;
+- (NSView *) createCustomCocoaViewWithSize: (NSSize) defaultSize;
 
-- (void) stop;
-
-- (float) cpuLoad;
+- (AUGenericView *) createGenericView;
 
 @end

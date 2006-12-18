@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-#import "NXAudioUnit.h"
+#import "DDAudioUnit.h"
 #import "NXAudioException.h"
 #import <AudioUnit/AUCocoaUIView.h>
 #import <CoreAudioKit/CoreAudioKit.h>
@@ -30,7 +30,7 @@
 
 #define THROW_IF NXThrowAudioIfErr
 
-@interface NXAudioUnit (Private)
+@interface DDAudioUnit (Private)
 
 #if 0
 - (OSStatus) getProperty: (AudioUntPropertyID) propertyId
@@ -50,7 +50,7 @@
 
 @end
 
-@implementation NXAudioUnit
+@implementation DDAudioUnit
 
 - (id) initWithAudioUnit: (AudioUnit) audioUnit;
 {
@@ -268,7 +268,7 @@
 
 @end
 
-@implementation NXAudioUnit (Private)
+@implementation DDAudioUnit (Private)
 
 - (void) getFactoryPresets;
 {

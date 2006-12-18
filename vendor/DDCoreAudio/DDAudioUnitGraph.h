@@ -22,9 +22,57 @@
  * SOFTWARE.
  */
 
-#import "NXAudioUnit.h"
-#import "NXAudioUnitGraph.h"
-#import "NXAudioUnitNode.h"
-#import "NXAudioComponent.h"
-#import "NXAudioUnitPreset.h"
-#import "NXAudioException.h"
+#import <Cocoa/Cocoa.h>
+#import <AudioUnit/AudioUnit.h>
+#import <AudioToolbox/AudioToolbox.h>
+
+@class NXAudioUnitNode;
+
+@interface DDAudioUnitGraph : NSObject
+{
+    AUGraph mGraph;
+}
+
+- (id) init;
+
+- (void) dealloc;
+
+- (AUGraph) AUGraph;
+
+- (NXAudioUnitNode *) addNodeWithType: (OSType) type
+                              subType: (OSType) subType;
+
+- (NXAudioUnitNode *) addNodeWithType: (OSType) type
+                              subType: (OSType) subType
+                         manufacturer: (OSType) manufacturer;
+
+- (NXAudioUnitNode *) addNodeWithDescription:
+    (ComponentDescription *) description;
+
+- (void) removeNode: (NXAudioUnitNode *) node;
+
+- (void) connectNode: (NXAudioUnitNode *) sourceNode
+              output: (UInt32) sourceOutput
+              toNode: (NXAudioUnitNode *) destNode
+               input: (UInt32) destInput;
+
+- (void) disconnectNode: (NXAudioUnitNode *) node
+                  input: (UInt32) input;
+
+- (void) disconnectAll;
+
+- (void) open;
+
+- (void) update;
+
+- (void) initialize;
+
+- (void) uninitialize;
+
+- (void) start;
+
+- (void) stop;
+
+- (float) cpuLoad;
+
+@end
