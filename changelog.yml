@@ -5,7 +5,7 @@
     - Upgrade to 0.111 core.
     - Add audio effects using any available Audio Unit.
     - Add preference to preserve game aspect ratio.  It's on by default.
-    - Initial window size is now maximized.  Now a preference.
+    - Add preferences for initial window size.
     - Add preference to disable smooth UI font.
     - Add preference to choose how frames are rendered.
     - Add preference to choose which thread frames are rendered in.

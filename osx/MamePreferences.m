@@ -156,7 +156,7 @@ NSString * MameBiosKey = @"Bios";
     [defaultValues setObject: [NSNumber numberWithBool: YES]
                       forKey: MameCheckUpdatesAtStartupKey];
     
-    [defaultValues setObject: MameZoomLevelMaximum
+    [defaultValues setObject: MameZoomLevelDouble
                       forKey: MameWindowedZoomLevelKey];
     
     [defaultValues setObject: MameZoomLevelMaximumIntegral
