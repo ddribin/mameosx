@@ -1,6 +1,6 @@
 <% version = "0.111" %>
-- version: <%=version%>
-  date: xxx
+- version: "<%=version%>"
+  date: 2006-12-18
   changes:
     - Upgrade to 0.111 core.
     - Add audio effects using any available Audio Unit.
