@@ -26,7 +26,7 @@
 #import "MameController.h"
 #import "MameConfiguration.h"
 #import "VirtualRingBuffer.h"
-#import "NXCoreAudio.h"
+#import "DDCoreAudio.h"
 
 #include <CoreServices/CoreServices.h>
 #include <mach/mach.h>
@@ -113,12 +113,12 @@ OSStatus static MyRenderer(void	* inRefCon,
     mUnderflows = 0;
     
     mEffectComponents =
-        [NXAudioComponent componentsMatchingType: kAudioUnitType_Effect
+        [DDAudioComponent componentsMatchingType: kAudioUnitType_Effect
                                          subType: 0
                                     manufacturer: 0];
     [mEffectComponents retain];
     
-    mGraph = [[NXAudioUnitGraph alloc] init];
+    mGraph = [[DDAudioUnitGraph alloc] init];
     mOutputNode = [mGraph addNodeWithType: kAudioUnitType_Output
                                   subType: kAudioUnitSubType_DefaultOutput];
     [mOutputNode retain];
@@ -203,12 +203,12 @@ OSStatus static MyRenderer(void	* inRefCon,
         return;
     }
     
-    NXAudioComponent * component =
+    DDAudioComponent * component =
         [mEffectComponents objectAtIndex: indexOfCurrentEffect];
     
     ComponentDescription description = [component ComponentDescription];
-    NXAudioUnitNode * newNode = [mGraph addNodeWithDescription: &description];
-    NXAudioUnit * newUnit = [newNode audioUnit];
+    DDAudioUnitNode * newNode = [mGraph addNodeWithDescription: &description];
+    DDAudioUnit * newUnit = [newNode audioUnit];
     
     [mGraph disconnectAll];
     if (mEffectNode != nil)

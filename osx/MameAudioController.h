@@ -27,9 +27,9 @@
 
 @class MameController;
 @class VirtualRingBuffer;
-@class NXAudioUnit;
-@class NXAudioUnitGraph;
-@class NXAudioUnitNode;
+@class DDAudioUnit;
+@class DDAudioUnitGraph;
+@class DDAudioUnitNode;
 
 @interface MameAudioController : NSObject
 {
@@ -37,14 +37,14 @@
     BOOL mPaused;
     int mAttenuation;
 
-    NXAudioUnitGraph * mGraph;
+    DDAudioUnitGraph * mGraph;
 
-    NXAudioUnitNode * mConverterNode;
-    NXAudioUnitNode * mEffectNode;
-    NXAudioUnitNode * mOutputNode;
+    DDAudioUnitNode * mConverterNode;
+    DDAudioUnitNode * mEffectNode;
+    DDAudioUnitNode * mOutputNode;
 
-    NXAudioUnit * mConverterUnit;
-    NXAudioUnit * mEffectUnit;
+    DDAudioUnit * mConverterUnit;
+    DDAudioUnit * mEffectUnit;
 
     NSArray * mEffectComponents;
     unsigned mIndexOfCurrentEffect;

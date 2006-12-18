@@ -8,7 +8,7 @@
 
 #import "AudioEffectWindowController.h"
 #import "MameView.h"
-#import "NXAudioComponent.h"
+#import "DDAudioComponent.h"
 
 @interface AudioEffectWindowController (Private)
 

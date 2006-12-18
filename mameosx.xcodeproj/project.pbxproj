@@ -369,19 +369,19 @@
 		55D2934D0B1762E6002C9199 /* release_notes.html in Resources */ = {isa = PBXBuildFile; fileRef = 55D2934C0B1762E6002C9199 /* release_notes.html */; };
 		55D2934E0B1762E6002C9199 /* release_notes.html in Resources */ = {isa = PBXBuildFile; fileRef = 55D2934C0B1762E6002C9199 /* release_notes.html */; };
 		55D393210B0F54E10017F5F5 /* m68kmake.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D393200B0F54E10017F5F5 /* m68kmake.c */; };
-		55D403930B3664DF00E5E613 /* NXAudioComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = 55D403860B3664DF00E5E613 /* NXAudioComponent.h */; };
-		55D403940B3664DF00E5E613 /* NXAudioComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D403870B3664DF00E5E613 /* NXAudioComponent.m */; };
-		55D403950B3664DF00E5E613 /* NXAudioException.h in Headers */ = {isa = PBXBuildFile; fileRef = 55D403880B3664DF00E5E613 /* NXAudioException.h */; };
-		55D403960B3664DF00E5E613 /* NXAudioException.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D403890B3664DF00E5E613 /* NXAudioException.m */; };
-		55D403970B3664DF00E5E613 /* NXAudioUnit.h in Headers */ = {isa = PBXBuildFile; fileRef = 55D4038A0B3664DF00E5E613 /* NXAudioUnit.h */; };
-		55D403980B3664DF00E5E613 /* NXAudioUnit.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D4038B0B3664DF00E5E613 /* NXAudioUnit.m */; };
-		55D403990B3664DF00E5E613 /* NXAudioUnitGraph.h in Headers */ = {isa = PBXBuildFile; fileRef = 55D4038C0B3664DF00E5E613 /* NXAudioUnitGraph.h */; };
-		55D4039A0B3664DF00E5E613 /* NXAudioUnitGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D4038D0B3664DF00E5E613 /* NXAudioUnitGraph.m */; };
-		55D4039B0B3664DF00E5E613 /* NXAudioUnitNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 55D4038E0B3664DF00E5E613 /* NXAudioUnitNode.h */; };
-		55D4039C0B3664DF00E5E613 /* NXAudioUnitNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D4038F0B3664DF00E5E613 /* NXAudioUnitNode.m */; };
-		55D4039D0B3664DF00E5E613 /* NXAudioUnitPreset.h in Headers */ = {isa = PBXBuildFile; fileRef = 55D403900B3664DF00E5E613 /* NXAudioUnitPreset.h */; };
-		55D4039E0B3664DF00E5E613 /* NXAudioUnitPreset.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D403910B3664DF00E5E613 /* NXAudioUnitPreset.m */; };
-		55D4039F0B3664DF00E5E613 /* NXCoreAudio.h in Headers */ = {isa = PBXBuildFile; fileRef = 55D403920B3664DF00E5E613 /* NXCoreAudio.h */; };
+		55D403930B3664DF00E5E613 /* DDAudioComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = 55D403860B3664DF00E5E613 /* DDAudioComponent.h */; };
+		55D403940B3664DF00E5E613 /* DDAudioComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D403870B3664DF00E5E613 /* DDAudioComponent.m */; };
+		55D403950B3664DF00E5E613 /* DDAudioException.h in Headers */ = {isa = PBXBuildFile; fileRef = 55D403880B3664DF00E5E613 /* DDAudioException.h */; };
+		55D403960B3664DF00E5E613 /* DDAudioException.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D403890B3664DF00E5E613 /* DDAudioException.m */; };
+		55D403970B3664DF00E5E613 /* DDAudioUnit.h in Headers */ = {isa = PBXBuildFile; fileRef = 55D4038A0B3664DF00E5E613 /* DDAudioUnit.h */; };
+		55D403980B3664DF00E5E613 /* DDAudioUnit.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D4038B0B3664DF00E5E613 /* DDAudioUnit.m */; };
+		55D403990B3664DF00E5E613 /* DDAudioUnitGraph.h in Headers */ = {isa = PBXBuildFile; fileRef = 55D4038C0B3664DF00E5E613 /* DDAudioUnitGraph.h */; };
+		55D4039A0B3664DF00E5E613 /* DDAudioUnitGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D4038D0B3664DF00E5E613 /* DDAudioUnitGraph.m */; };
+		55D4039B0B3664DF00E5E613 /* DDAudioUnitNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 55D4038E0B3664DF00E5E613 /* DDAudioUnitNode.h */; };
+		55D4039C0B3664DF00E5E613 /* DDAudioUnitNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D4038F0B3664DF00E5E613 /* DDAudioUnitNode.m */; };
+		55D4039D0B3664DF00E5E613 /* DDAudioUnitPreset.h in Headers */ = {isa = PBXBuildFile; fileRef = 55D403900B3664DF00E5E613 /* DDAudioUnitPreset.h */; };
+		55D4039E0B3664DF00E5E613 /* DDAudioUnitPreset.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D403910B3664DF00E5E613 /* DDAudioUnitPreset.m */; };
+		55D4039F0B3664DF00E5E613 /* DDCoreAudio.h in Headers */ = {isa = PBXBuildFile; fileRef = 55D403920B3664DF00E5E613 /* DDCoreAudio.h */; };
 		55D5ABC60B1CEC8900457216 /* osx_ppc.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D5ABC50B1CEC8900457216 /* osx_ppc.c */; };
 		55D5ABD40B1CED3600457216 /* osx_mips3.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D5ABD30B1CED3600457216 /* osx_mips3.c */; };
 		55E03CF10B0A320600988109 /* PreferencesWindowController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 55E03CEF0B0A320600988109 /* PreferencesWindowController.h */; };
@@ -1229,32 +1229,32 @@
 		55F8A6640B336C2200304116 /* gotya.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F89F150B336C2100304116 /* gotya.c */; };
 		55F8A6650B336C2200304116 /* gradius3.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F89F160B336C2100304116 /* gradius3.c */; };
 		55F8A6660B336C2200304116 /* gradius3.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F89F170B336C2100304116 /* gradius3.c */; };
-		55F8A6670B336C2200304116 /* grchamp.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F89F180B336C2100304116 /* grchamp.c */; };
-		55F8A6680B336C2200304116 /* grchamp.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F89F190B336C2100304116 /* grchamp.c */; };
-		55F8A6690B336C2200304116 /* grchamp.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F89F1A0B336C2100304116 /* grchamp.c */; };
-		55F8A66A0B336C2200304116 /* gridlee.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F89F1B0B336C2100304116 /* gridlee.c */; };
-		55F8A66B0B336C2200304116 /* gridlee.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F89F1C0B336C2100304116 /* gridlee.c */; };
-		55F8A66C0B336C2200304116 /* gridlee.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F89F1D0B336C2100304116 /* gridlee.c */; };
-		55F8A66D0B336C2200304116 /* groundfx.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F89F1E0B336C2100304116 /* groundfx.c */; };
-		55F8A66E0B336C2200304116 /* groundfx.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F89F1F0B336C2100304116 /* groundfx.c */; };
-		55F8A66F0B336C2200304116 /* gstriker.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F89F200B336C2100304116 /* gstriker.c */; };
-		55F8A6700B336C2200304116 /* gstriker.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F89F210B336C2100304116 /* gstriker.c */; };
-		55F8A6710B336C2200304116 /* gsword.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F89F220B336C2100304116 /* gsword.c */; };
-		55F8A6720B336C2200304116 /* gsword.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F89F230B336C2100304116 /* gsword.c */; };
+		55F8A6670B336C2200304116 /* grchamp.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F89F180B336C2100304116; };
+		55F8A6680B336C2200304116 /* grchamp.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F89F190B336C2100304116; };
+		55F8A6690B336C2200304116 /* grchamp.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F89F1A0B336C2100304116; };
+		55F8A66A0B336C2200304116 /* gridlee.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F89F1B0B336C2100304116; };
+		55F8A66B0B336C2200304116 /* gridlee.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F89F1C0B336C2100304116; };
+		55F8A66C0B336C2200304116 /* gridlee.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F89F1D0B336C2100304116; };
+		55F8A66D0B336C2200304116 /* groundfx.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F89F1E0B336C2100304116; };
+		55F8A66E0B336C2200304116 /* groundfx.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F89F1F0B336C2100304116; };
+		55F8A66F0B336C2200304116 /* gstriker.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F89F200B336C2100304116; };
+		55F8A6700B336C2200304116 /* gstriker.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F89F210B336C2100304116; };
+		55F8A6710B336C2200304116 /* gsword.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F89F220B336C2100304116; };
+		55F8A6720B336C2200304116 /* gsword.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F89F230B336C2100304116; };
 		55F8A6730B336C2200304116 /* gtia.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F89F240B336C2100304116 /* gtia.c */; };
-		55F8A6740B336C2200304116 /* gticlub.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F89F250B336C2100304116 /* gticlub.c */; };
-		55F8A6750B336C2200304116 /* gticlub.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F89F260B336C2100304116 /* gticlub.c */; };
-		55F8A6760B336C2200304116 /* gumbo.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F89F270B336C2100304116 /* gumbo.c */; };
-		55F8A6770B336C2200304116 /* gumbo.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F89F280B336C2100304116 /* gumbo.c */; };
-		55F8A6780B336C2200304116 /* gunbustr.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F89F290B336C2100304116 /* gunbustr.c */; };
-		55F8A6790B336C2200304116 /* gunbustr.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F89F2A0B336C2100304116 /* gunbustr.c */; };
-		55F8A67A0B336C2200304116 /* gundealr.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F89F2B0B336C2100304116 /* gundealr.c */; };
-		55F8A67B0B336C2200304116 /* gundealr.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F89F2C0B336C2100304116 /* gundealr.c */; };
+		55F8A6740B336C2200304116 /* gticlub.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F89F250B336C2100304116; };
+		55F8A6750B336C2200304116 /* gticlub.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F89F260B336C2100304116; };
+		55F8A6760B336C2200304116 /* gumbo.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F89F270B336C2100304116; };
+		55F8A6770B336C2200304116 /* gumbo.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F89F280B336C2100304116; };
+		55F8A6780B336C2200304116 /* gunbustr.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F89F290B336C2100304116; };
+		55F8A6790B336C2200304116 /* gunbustr.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F89F2A0B336C2100304116; };
+		55F8A67A0B336C2200304116 /* gundealr.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F89F2B0B336C2100304116; };
+		55F8A67B0B336C2200304116 /* gundealr.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F89F2C0B336C2100304116; };
 		55F8A67C0B336C2200304116 /* gunpey.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F89F2D0B336C2100304116 /* gunpey.c */; };
-		55F8A67D0B336C2200304116 /* gunsmoke.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F89F2E0B336C2100304116 /* gunsmoke.c */; };
-		55F8A67E0B336C2200304116 /* gunsmoke.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F89F2F0B336C2100304116 /* gunsmoke.c */; };
-		55F8A67F0B336C2200304116 /* gyruss.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F89F300B336C2100304116 /* gyruss.c */; };
-		55F8A6800B336C2200304116 /* gyruss.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F89F310B336C2100304116 /* gyruss.c */; };
+		55F8A67D0B336C2200304116 /* gunsmoke.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F89F2E0B336C2100304116; };
+		55F8A67E0B336C2200304116 /* gunsmoke.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F89F2F0B336C2100304116; };
+		55F8A67F0B336C2200304116 /* gyruss.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F89F300B336C2100304116; };
+		55F8A6800B336C2200304116 /* gyruss.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F89F310B336C2100304116; };
 		55F8A6810B336C2200304116 /* gyruss.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F89F320B336C2100304116 /* gyruss.c */; };
 		55F8A6820B336C2200304116 /* hal21.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F89F330B336C2100304116 /* hal21.c */; };
 		55F8A6830B336C2200304116 /* halleys.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F89F340B336C2100304116 /* halleys.c */; };
@@ -3216,19 +3216,19 @@
 		55D2925D0B17567A002C9199 /* libapp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libapp.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		55D2934C0B1762E6002C9199 /* release_notes.html */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.html; name = release_notes.html; path = build/generated/release_notes.html; sourceTree = SOURCE_ROOT; };
 		55D393200B0F54E10017F5F5 /* m68kmake.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = m68kmake.c; path = mame/src/cpu/m68000/m68kmake.c; sourceTree = SOURCE_ROOT; };
-		55D403860B3664DF00E5E613 /* NXAudioComponent.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = NXAudioComponent.h; sourceTree = "<group>"; };
-		55D403870B3664DF00E5E613 /* NXAudioComponent.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = NXAudioComponent.m; sourceTree = "<group>"; };
-		55D403880B3664DF00E5E613 /* NXAudioException.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = NXAudioException.h; sourceTree = "<group>"; };
-		55D403890B3664DF00E5E613 /* NXAudioException.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = NXAudioException.m; sourceTree = "<group>"; };
-		55D4038A0B3664DF00E5E613 /* NXAudioUnit.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = NXAudioUnit.h; sourceTree = "<group>"; };
-		55D4038B0B3664DF00E5E613 /* NXAudioUnit.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = NXAudioUnit.m; sourceTree = "<group>"; };
-		55D4038C0B3664DF00E5E613 /* NXAudioUnitGraph.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = NXAudioUnitGraph.h; sourceTree = "<group>"; };
-		55D4038D0B3664DF00E5E613 /* NXAudioUnitGraph.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = NXAudioUnitGraph.m; sourceTree = "<group>"; };
-		55D4038E0B3664DF00E5E613 /* NXAudioUnitNode.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = NXAudioUnitNode.h; sourceTree = "<group>"; };
-		55D4038F0B3664DF00E5E613 /* NXAudioUnitNode.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = NXAudioUnitNode.m; sourceTree = "<group>"; };
-		55D403900B3664DF00E5E613 /* NXAudioUnitPreset.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = NXAudioUnitPreset.h; sourceTree = "<group>"; };
-		55D403910B3664DF00E5E613 /* NXAudioUnitPreset.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = NXAudioUnitPreset.m; sourceTree = "<group>"; };
-		55D403920B3664DF00E5E613 /* NXCoreAudio.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = NXCoreAudio.h; sourceTree = "<group>"; };
+		55D403860B3664DF00E5E613 /* DDAudioComponent.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DDAudioComponent.h; sourceTree = "<group>"; };
+		55D403870B3664DF00E5E613 /* DDAudioComponent.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DDAudioComponent.m; sourceTree = "<group>"; };
+		55D403880B3664DF00E5E613 /* DDAudioException.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DDAudioException.h; sourceTree = "<group>"; };
+		55D403890B3664DF00E5E613 /* DDAudioException.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DDAudioException.m; sourceTree = "<group>"; };
+		55D4038A0B3664DF00E5E613 /* DDAudioUnit.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DDAudioUnit.h; sourceTree = "<group>"; };
+		55D4038B0B3664DF00E5E613 /* DDAudioUnit.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DDAudioUnit.m; sourceTree = "<group>"; };
+		55D4038C0B3664DF00E5E613 /* DDAudioUnitGraph.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DDAudioUnitGraph.h; sourceTree = "<group>"; };
+		55D4038D0B3664DF00E5E613 /* DDAudioUnitGraph.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DDAudioUnitGraph.m; sourceTree = "<group>"; };
+		55D4038E0B3664DF00E5E613 /* DDAudioUnitNode.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DDAudioUnitNode.h; sourceTree = "<group>"; };
+		55D4038F0B3664DF00E5E613 /* DDAudioUnitNode.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DDAudioUnitNode.m; sourceTree = "<group>"; };
+		55D403900B3664DF00E5E613 /* DDAudioUnitPreset.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DDAudioUnitPreset.h; sourceTree = "<group>"; };
+		55D403910B3664DF00E5E613 /* DDAudioUnitPreset.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DDAudioUnitPreset.m; sourceTree = "<group>"; };
+		55D403920B3664DF00E5E613 /* DDCoreAudio.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DDCoreAudio.h; sourceTree = "<group>"; };
 		55D5ABC50B1CEC8900457216 /* osx_ppc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = osx_ppc.c; path = osx/osx_ppc.c; sourceTree = SOURCE_ROOT; };
 		55D5ABD30B1CED3600457216 /* osx_mips3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = osx_mips3.c; path = osx/osx_mips3.c; sourceTree = SOURCE_ROOT; };
 		55E03CEF0B0A320600988109 /* PreferencesWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreferencesWindowController.h; sourceTree = "<group>"; };
@@ -4078,32 +4078,32 @@
 		55F89F150B336C2100304116 /* gotya.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = gotya.c; path = drivers/gotya.c; sourceTree = "<group>"; };
 		55F89F160B336C2100304116 /* gradius3.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = gradius3.c; path = vidhrdw/gradius3.c; sourceTree = "<group>"; };
 		55F89F170B336C2100304116 /* gradius3.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = gradius3.c; path = drivers/gradius3.c; sourceTree = "<group>"; };
-		55F89F180B336C2100304116 /* grchamp.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = grchamp.c; path = vidhrdw/grchamp.c; sourceTree = "<group>"; };
-		55F89F190B336C2100304116 /* grchamp.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = grchamp.c; path = sndhrdw/grchamp.c; sourceTree = "<group>"; };
-		55F89F1A0B336C2100304116 /* grchamp.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = grchamp.c; path = drivers/grchamp.c; sourceTree = "<group>"; };
-		55F89F1B0B336C2100304116 /* gridlee.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = gridlee.c; path = vidhrdw/gridlee.c; sourceTree = "<group>"; };
-		55F89F1C0B336C2100304116 /* gridlee.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = gridlee.c; path = sndhrdw/gridlee.c; sourceTree = "<group>"; };
-		55F89F1D0B336C2100304116 /* gridlee.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = gridlee.c; path = drivers/gridlee.c; sourceTree = "<group>"; };
-		55F89F1E0B336C2100304116 /* groundfx.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = groundfx.c; path = vidhrdw/groundfx.c; sourceTree = "<group>"; };
-		55F89F1F0B336C2100304116 /* groundfx.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = groundfx.c; path = drivers/groundfx.c; sourceTree = "<group>"; };
-		55F89F200B336C2100304116 /* gstriker.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = gstriker.c; path = vidhrdw/gstriker.c; sourceTree = "<group>"; };
-		55F89F210B336C2100304116 /* gstriker.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = gstriker.c; path = drivers/gstriker.c; sourceTree = "<group>"; };
-		55F89F220B336C2100304116 /* gsword.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = gsword.c; path = vidhrdw/gsword.c; sourceTree = "<group>"; };
-		55F89F230B336C2100304116 /* gsword.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = gsword.c; path = drivers/gsword.c; sourceTree = "<group>"; };
+		55F89F180B336C2100304116 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = grchamp.c; path = vidhrdw/grchamp.c; sourceTree = "<group>"; };
+		55F89F190B336C2100304116 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = grchamp.c; path = sndhrdw/grchamp.c; sourceTree = "<group>"; };
+		55F89F1A0B336C2100304116 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = grchamp.c; path = drivers/grchamp.c; sourceTree = "<group>"; };
+		55F89F1B0B336C2100304116 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = gridlee.c; path = vidhrdw/gridlee.c; sourceTree = "<group>"; };
+		55F89F1C0B336C2100304116 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = gridlee.c; path = sndhrdw/gridlee.c; sourceTree = "<group>"; };
+		55F89F1D0B336C2100304116 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = gridlee.c; path = drivers/gridlee.c; sourceTree = "<group>"; };
+		55F89F1E0B336C2100304116 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = groundfx.c; path = vidhrdw/groundfx.c; sourceTree = "<group>"; };
+		55F89F1F0B336C2100304116 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = groundfx.c; path = drivers/groundfx.c; sourceTree = "<group>"; };
+		55F89F200B336C2100304116 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = gstriker.c; path = vidhrdw/gstriker.c; sourceTree = "<group>"; };
+		55F89F210B336C2100304116 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = gstriker.c; path = drivers/gstriker.c; sourceTree = "<group>"; };
+		55F89F220B336C2100304116 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = gsword.c; path = vidhrdw/gsword.c; sourceTree = "<group>"; };
+		55F89F230B336C2100304116 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = gsword.c; path = drivers/gsword.c; sourceTree = "<group>"; };
 		55F89F240B336C2100304116 /* gtia.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = gtia.c; path = vidhrdw/gtia.c; sourceTree = "<group>"; };
-		55F89F250B336C2100304116 /* gticlub.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = gticlub.c; path = vidhrdw/gticlub.c; sourceTree = "<group>"; };
-		55F89F260B336C2100304116 /* gticlub.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = gticlub.c; path = drivers/gticlub.c; sourceTree = "<group>"; };
-		55F89F270B336C2100304116 /* gumbo.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = gumbo.c; path = vidhrdw/gumbo.c; sourceTree = "<group>"; };
-		55F89F280B336C2100304116 /* gumbo.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = gumbo.c; path = drivers/gumbo.c; sourceTree = "<group>"; };
-		55F89F290B336C2100304116 /* gunbustr.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = gunbustr.c; path = vidhrdw/gunbustr.c; sourceTree = "<group>"; };
-		55F89F2A0B336C2100304116 /* gunbustr.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = gunbustr.c; path = drivers/gunbustr.c; sourceTree = "<group>"; };
-		55F89F2B0B336C2100304116 /* gundealr.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = gundealr.c; path = vidhrdw/gundealr.c; sourceTree = "<group>"; };
-		55F89F2C0B336C2100304116 /* gundealr.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = gundealr.c; path = drivers/gundealr.c; sourceTree = "<group>"; };
+		55F89F250B336C2100304116 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = gticlub.c; path = vidhrdw/gticlub.c; sourceTree = "<group>"; };
+		55F89F260B336C2100304116 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = gticlub.c; path = drivers/gticlub.c; sourceTree = "<group>"; };
+		55F89F270B336C2100304116 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = gumbo.c; path = vidhrdw/gumbo.c; sourceTree = "<group>"; };
+		55F89F280B336C2100304116 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = gumbo.c; path = drivers/gumbo.c; sourceTree = "<group>"; };
+		55F89F290B336C2100304116 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = gunbustr.c; path = vidhrdw/gunbustr.c; sourceTree = "<group>"; };
+		55F89F2A0B336C2100304116 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = gunbustr.c; path = drivers/gunbustr.c; sourceTree = "<group>"; };
+		55F89F2B0B336C2100304116 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = gundealr.c; path = vidhrdw/gundealr.c; sourceTree = "<group>"; };
+		55F89F2C0B336C2100304116 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = gundealr.c; path = drivers/gundealr.c; sourceTree = "<group>"; };
 		55F89F2D0B336C2100304116 /* gunpey.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = gunpey.c; path = drivers/gunpey.c; sourceTree = "<group>"; };
-		55F89F2E0B336C2100304116 /* gunsmoke.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = gunsmoke.c; path = vidhrdw/gunsmoke.c; sourceTree = "<group>"; };
-		55F89F2F0B336C2100304116 /* gunsmoke.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = gunsmoke.c; path = drivers/gunsmoke.c; sourceTree = "<group>"; };
-		55F89F300B336C2100304116 /* gyruss.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = gyruss.c; path = vidhrdw/gyruss.c; sourceTree = "<group>"; };
-		55F89F310B336C2100304116 /* gyruss.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = gyruss.c; path = sndhrdw/gyruss.c; sourceTree = "<group>"; };
+		55F89F2E0B336C2100304116 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = gunsmoke.c; path = vidhrdw/gunsmoke.c; sourceTree = "<group>"; };
+		55F89F2F0B336C2100304116 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = gunsmoke.c; path = drivers/gunsmoke.c; sourceTree = "<group>"; };
+		55F89F300B336C2100304116 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = gyruss.c; path = vidhrdw/gyruss.c; sourceTree = "<group>"; };
+		55F89F310B336C2100304116 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = gyruss.c; path = sndhrdw/gyruss.c; sourceTree = "<group>"; };
 		55F89F320B336C2100304116 /* gyruss.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = gyruss.c; path = drivers/gyruss.c; sourceTree = "<group>"; };
 		55F89F330B336C2100304116 /* hal21.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = hal21.c; path = drivers/hal21.c; sourceTree = "<group>"; };
 		55F89F340B336C2100304116 /* halleys.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = halleys.c; path = drivers/halleys.c; sourceTree = "<group>"; };
@@ -6241,19 +6241,19 @@
 		55D403850B3664DF00E5E613 /* DDCoreAudio */ = {
 			isa = PBXGroup;
 			children = (
-				55D403860B3664DF00E5E613 /* NXAudioComponent.h */,
-				55D403870B3664DF00E5E613 /* NXAudioComponent.m */,
-				55D403880B3664DF00E5E613 /* NXAudioException.h */,
-				55D403890B3664DF00E5E613 /* NXAudioException.m */,
-				55D4038A0B3664DF00E5E613 /* NXAudioUnit.h */,
-				55D4038B0B3664DF00E5E613 /* NXAudioUnit.m */,
-				55D4038C0B3664DF00E5E613 /* NXAudioUnitGraph.h */,
-				55D4038D0B3664DF00E5E613 /* NXAudioUnitGraph.m */,
-				55D4038E0B3664DF00E5E613 /* NXAudioUnitNode.h */,
-				55D4038F0B3664DF00E5E613 /* NXAudioUnitNode.m */,
-				55D403900B3664DF00E5E613 /* NXAudioUnitPreset.h */,
-				55D403910B3664DF00E5E613 /* NXAudioUnitPreset.m */,
-				55D403920B3664DF00E5E613 /* NXCoreAudio.h */,
+				55D403860B3664DF00E5E613 /* DDAudioComponent.h */,
+				55D403870B3664DF00E5E613 /* DDAudioComponent.m */,
+				55D403880B3664DF00E5E613 /* DDAudioException.h */,
+				55D403890B3664DF00E5E613 /* DDAudioException.m */,
+				55D4038A0B3664DF00E5E613 /* DDAudioUnit.h */,
+				55D4038B0B3664DF00E5E613 /* DDAudioUnit.m */,
+				55D4038C0B3664DF00E5E613 /* DDAudioUnitGraph.h */,
+				55D4038D0B3664DF00E5E613 /* DDAudioUnitGraph.m */,
+				55D4038E0B3664DF00E5E613 /* DDAudioUnitNode.h */,
+				55D4038F0B3664DF00E5E613 /* DDAudioUnitNode.m */,
+				55D403900B3664DF00E5E613 /* DDAudioUnitPreset.h */,
+				55D403910B3664DF00E5E613 /* DDAudioUnitPreset.m */,
+				55D403920B3664DF00E5E613 /* DDCoreAudio.h */,
 			);
 			path = DDCoreAudio;
 			sourceTree = "<group>";
@@ -7141,32 +7141,32 @@
 				55F89F150B336C2100304116 /* gotya.c */,
 				55F89F160B336C2100304116 /* gradius3.c */,
 				55F89F170B336C2100304116 /* gradius3.c */,
-				55F89F180B336C2100304116 /* grchamp.c */,
-				55F89F190B336C2100304116 /* grchamp.c */,
-				55F89F1A0B336C2100304116 /* grchamp.c */,
-				55F89F1B0B336C2100304116 /* gridlee.c */,
-				55F89F1C0B336C2100304116 /* gridlee.c */,
-				55F89F1D0B336C2100304116 /* gridlee.c */,
-				55F89F1E0B336C2100304116 /* groundfx.c */,
-				55F89F1F0B336C2100304116 /* groundfx.c */,
-				55F89F200B336C2100304116 /* gstriker.c */,
-				55F89F210B336C2100304116 /* gstriker.c */,
-				55F89F220B336C2100304116 /* gsword.c */,
-				55F89F230B336C2100304116 /* gsword.c */,
+				55F89F180B336C2100304116,
+				55F89F190B336C2100304116,
+				55F89F1A0B336C2100304116,
+				55F89F1B0B336C2100304116,
+				55F89F1C0B336C2100304116,
+				55F89F1D0B336C2100304116,
+				55F89F1E0B336C2100304116,
+				55F89F1F0B336C2100304116,
+				55F89F200B336C2100304116,
+				55F89F210B336C2100304116,
+				55F89F220B336C2100304116,
+				55F89F230B336C2100304116,
 				55F89F240B336C2100304116 /* gtia.c */,
-				55F89F250B336C2100304116 /* gticlub.c */,
-				55F89F260B336C2100304116 /* gticlub.c */,
-				55F89F270B336C2100304116 /* gumbo.c */,
-				55F89F280B336C2100304116 /* gumbo.c */,
-				55F89F290B336C2100304116 /* gunbustr.c */,
-				55F89F2A0B336C2100304116 /* gunbustr.c */,
-				55F89F2B0B336C2100304116 /* gundealr.c */,
-				55F89F2C0B336C2100304116 /* gundealr.c */,
+				55F89F250B336C2100304116,
+				55F89F260B336C2100304116,
+				55F89F270B336C2100304116,
+				55F89F280B336C2100304116,
+				55F89F290B336C2100304116,
+				55F89F2A0B336C2100304116,
+				55F89F2B0B336C2100304116,
+				55F89F2C0B336C2100304116,
 				55F89F2D0B336C2100304116 /* gunpey.c */,
-				55F89F2E0B336C2100304116 /* gunsmoke.c */,
-				55F89F2F0B336C2100304116 /* gunsmoke.c */,
-				55F89F300B336C2100304116 /* gyruss.c */,
-				55F89F310B336C2100304116 /* gyruss.c */,
+				55F89F2E0B336C2100304116,
+				55F89F2F0B336C2100304116,
+				55F89F300B336C2100304116,
+				55F89F310B336C2100304116,
 				55F89F320B336C2100304116 /* gyruss.c */,
 				55F89F330B336C2100304116 /* hal21.c */,
 				55F89F340B336C2100304116 /* halleys.c */,
@@ -8604,13 +8604,13 @@
 				553A07300AFD9E2700531E1F /* MameFilter.h in Headers */,
 				55D28E1A0B13CBB8002C9199 /* VirtualRingBuffer.h in Headers */,
 				559873700B23104E003D1982 /* NXLog.h in Headers */,
-				55D403930B3664DF00E5E613 /* NXAudioComponent.h in Headers */,
-				55D403950B3664DF00E5E613 /* NXAudioException.h in Headers */,
-				55D403970B3664DF00E5E613 /* NXAudioUnit.h in Headers */,
-				55D403990B3664DF00E5E613 /* NXAudioUnitGraph.h in Headers */,
-				55D4039B0B3664DF00E5E613 /* NXAudioUnitNode.h in Headers */,
-				55D4039D0B3664DF00E5E613 /* NXAudioUnitPreset.h in Headers */,
-				55D4039F0B3664DF00E5E613 /* NXCoreAudio.h in Headers */,
+				55D403930B3664DF00E5E613 /* DDAudioComponent.h in Headers */,
+				55D403950B3664DF00E5E613 /* DDAudioException.h in Headers */,
+				55D403970B3664DF00E5E613 /* DDAudioUnit.h in Headers */,
+				55D403990B3664DF00E5E613 /* DDAudioUnitGraph.h in Headers */,
+				55D4039B0B3664DF00E5E613 /* DDAudioUnitNode.h in Headers */,
+				55D4039D0B3664DF00E5E613 /* DDAudioUnitPreset.h in Headers */,
+				55D4039F0B3664DF00E5E613 /* DDCoreAudio.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11392,12 +11392,12 @@
 				553A07320AFDA09900531E1F /* MameFilter.m in Sources */,
 				55D28E1B0B13CBB8002C9199 /* VirtualRingBuffer.m in Sources */,
 				559873710B23104E003D1982 /* NXLog.m in Sources */,
-				55D403940B3664DF00E5E613 /* NXAudioComponent.m in Sources */,
-				55D403960B3664DF00E5E613 /* NXAudioException.m in Sources */,
-				55D403980B3664DF00E5E613 /* NXAudioUnit.m in Sources */,
-				55D4039A0B3664DF00E5E613 /* NXAudioUnitGraph.m in Sources */,
-				55D4039C0B3664DF00E5E613 /* NXAudioUnitNode.m in Sources */,
-				55D4039E0B3664DF00E5E613 /* NXAudioUnitPreset.m in Sources */,
+				55D403940B3664DF00E5E613 /* DDAudioComponent.m in Sources */,
+				55D403960B3664DF00E5E613 /* DDAudioException.m in Sources */,
+				55D403980B3664DF00E5E613 /* DDAudioUnit.m in Sources */,
+				55D4039A0B3664DF00E5E613 /* DDAudioUnitGraph.m in Sources */,
+				55D4039C0B3664DF00E5E613 /* DDAudioUnitNode.m in Sources */,
+				55D4039E0B3664DF00E5E613 /* DDAudioUnitPreset.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
