@@ -23,12 +23,12 @@
  */
 
 #import "DDAudioUnit.h"
-#import "NXAudioException.h"
+#import "DDAudioException.h"
 #import <AudioUnit/AUCocoaUIView.h>
 #import <CoreAudioKit/CoreAudioKit.h>
-#import "NXAudioUnitPreset.h"
+#import "DDAudioUnitPreset.h"
 
-#define THROW_IF NXThrowAudioIfErr
+#define THROW_IF DDThrowAudioIfErr
 
 @interface DDAudioUnit (Private)
 
@@ -128,13 +128,13 @@
     return mFactoryPresets;
 }
 
-- (unsigned) indexOfFactoryPreset: (NXAudioUnitPreset *) presetToFind;
+- (unsigned) indexOfFactoryPreset: (DDAudioUnitPreset *) presetToFind;
 {
     unsigned result = NSNotFound;
     unsigned i;
     for (i = 0; i < [mFactoryPresets count]; i++)
     {
-        NXAudioUnitPreset * preset = [mFactoryPresets objectAtIndex: i];
+        DDAudioUnitPreset * preset = [mFactoryPresets objectAtIndex: i];
         if ([preset isEqualToPreset: presetToFind])
         {
             result = i;
@@ -144,7 +144,7 @@
     return result;
 }
 
-- (NXAudioUnitPreset *) presentPreset;
+- (DDAudioUnitPreset *) presentPreset;
 {
     AUPreset preset;
     UInt32 size = sizeof(preset);
@@ -155,10 +155,10 @@
         return nil;
     THROW_IF(err);
     
-    return [[[NXAudioUnitPreset alloc] initWithAUPreset: preset] autorelease];
+    return [[[DDAudioUnitPreset alloc] initWithAUPreset: preset] autorelease];
 }
 
-- (void) setPresentPreset: (NXAudioUnitPreset *) presentPreset;
+- (void) setPresentPreset: (DDAudioUnitPreset *) presentPreset;
 {
     AUPreset preset = [presentPreset AUPreset];
     OSStatus err = AudioUnitSetProperty(mAudioUnit,
@@ -290,7 +290,7 @@
     for (i = 0; i < count; i++)
     {
         const AUPreset * preset = CFArrayGetValueAtIndex(factoryPresets, i);
-        NXAudioUnitPreset * objcPreset = [[NXAudioUnitPreset alloc] initWithAUPreset: *preset];
+        DDAudioUnitPreset * objcPreset = [[DDAudioUnitPreset alloc] initWithAUPreset: *preset];
         [mFactoryPresets addObject: objcPreset];
     }
     CFRelease(factoryPresets);

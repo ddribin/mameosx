@@ -25,13 +25,13 @@
 #import <Cocoa/Cocoa.h>
 
 
-extern NSString * NXAudioException;
+extern NSString * DDAudioException;
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-void NXThrowAudioIfErr(OSStatus err);
+void DDThrowAudioIfErr(OSStatus err);
     
 #ifdef __cplusplus
 }

@@ -26,7 +26,7 @@
 #import <AudioUnit/AudioUnit.h>
 #import <AudioToolbox/AudioToolbox.h>
 
-@class NXAudioUnitNode;
+@class DDAudioUnitNode;
 
 @interface DDAudioUnitGraph : NSObject
 {
@@ -39,24 +39,24 @@
 
 - (AUGraph) AUGraph;
 
-- (NXAudioUnitNode *) addNodeWithType: (OSType) type
+- (DDAudioUnitNode *) addNodeWithType: (OSType) type
                               subType: (OSType) subType;
 
-- (NXAudioUnitNode *) addNodeWithType: (OSType) type
+- (DDAudioUnitNode *) addNodeWithType: (OSType) type
                               subType: (OSType) subType
                          manufacturer: (OSType) manufacturer;
 
-- (NXAudioUnitNode *) addNodeWithDescription:
+- (DDAudioUnitNode *) addNodeWithDescription:
     (ComponentDescription *) description;
 
-- (void) removeNode: (NXAudioUnitNode *) node;
+- (void) removeNode: (DDAudioUnitNode *) node;
 
-- (void) connectNode: (NXAudioUnitNode *) sourceNode
+- (void) connectNode: (DDAudioUnitNode *) sourceNode
               output: (UInt32) sourceOutput
-              toNode: (NXAudioUnitNode *) destNode
+              toNode: (DDAudioUnitNode *) destNode
                input: (UInt32) destInput;
 
-- (void) disconnectNode: (NXAudioUnitNode *) node
+- (void) disconnectNode: (DDAudioUnitNode *) node
                   input: (UInt32) input;
 
 - (void) disconnectAll;

@@ -22,14 +22,14 @@
  * SOFTWARE.
  */
 
-#import "NXAudioUnitNode.h"
+#import "DDAudioUnitNode.h"
 #import "DDAudioUnitGraph.h"
 #import "DDAudioUnit.h"
-#import "NXAudioException.h"
+#import "DDAudioException.h"
 
-#define THROW_IF NXThrowAudioIfErr
+#define THROW_IF DDThrowAudioIfErr
 
-@implementation NXAudioUnitNode
+@implementation DDAudioUnitNode
 
 - (id) initWithAUNode: (AUNode) node inGraph: (DDAudioUnitGraph *) graph;
 {

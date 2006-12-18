@@ -24,7 +24,7 @@
 
 #import "DDAudioUnit.h"
 #import "DDAudioUnitGraph.h"
-#import "NXAudioUnitNode.h"
-#import "NXAudioComponent.h"
-#import "NXAudioUnitPreset.h"
-#import "NXAudioException.h"
+#import "DDAudioUnitNode.h"
+#import "DDAudioComponent.h"
+#import "DDAudioUnitPreset.h"
+#import "DDAudioException.h"

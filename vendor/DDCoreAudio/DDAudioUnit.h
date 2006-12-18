@@ -26,7 +26,7 @@
 #import <AudioUnit/AudioUnit.h>
 
 @class AUGenericView;
-@class NXAudioUnitPreset;
+@class DDAudioUnitPreset;
 
 @interface DDAudioUnit : NSObject
 {
@@ -53,10 +53,10 @@
 
 - (NSArray *) factoryPresets;
 
-- (unsigned) indexOfFactoryPreset: (NXAudioUnitPreset *) presetToFind;
+- (unsigned) indexOfFactoryPreset: (DDAudioUnitPreset *) presetToFind;
 
-- (NXAudioUnitPreset *) presentPreset;
-- (void) setPresentPreset: (NXAudioUnitPreset *) presentPreset;
+- (DDAudioUnitPreset *) presentPreset;
+- (void) setPresentPreset: (DDAudioUnitPreset *) presentPreset;
 
 - (unsigned) presentPresetIndex;
 - (void) setPresentPresetIndex: (unsigned) presentPresetIndex;

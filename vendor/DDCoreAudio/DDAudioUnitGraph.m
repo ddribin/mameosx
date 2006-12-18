@@ -23,10 +23,10 @@
  */
 
 #import "DDAudioUnitGraph.h"
-#import "NXAudioUnitNode.h"
-#import "NXAudioException.h"
+#import "DDAudioUnitNode.h"
+#import "DDAudioException.h"
 
-#define THROW_IF NXThrowAudioIfErr
+#define THROW_IF DDThrowAudioIfErr
 
 @implementation DDAudioUnitGraph
 
@@ -51,7 +51,7 @@
     return mGraph;
 }
 
-- (NXAudioUnitNode *) addNodeWithType: (OSType) type
+- (DDAudioUnitNode *) addNodeWithType: (OSType) type
                               subType: (OSType) subType;
 {
     return [self addNodeWithType: type
@@ -59,7 +59,7 @@
                     manufacturer: kAudioUnitManufacturer_Apple];
 }
 
-- (NXAudioUnitNode *) addNodeWithType: (OSType) type
+- (DDAudioUnitNode *) addNodeWithType: (OSType) type
                               subType: (OSType) subType
                          manufacturer: (OSType) manufacturer;
 {
@@ -72,22 +72,22 @@
     return [self addNodeWithDescription: &description];
 }
 
-- (NXAudioUnitNode *) addNodeWithDescription:
+- (DDAudioUnitNode *) addNodeWithDescription:
     (ComponentDescription *) description;
 {
     AUNode node;
     THROW_IF(AUGraphNewNode(mGraph, description, 0, NULL, &node));
-    return [[[NXAudioUnitNode alloc] initWithAUNode: node inGraph: self] autorelease];
+    return [[[DDAudioUnitNode alloc] initWithAUNode: node inGraph: self] autorelease];
 }
 
-- (void) removeNode: (NXAudioUnitNode *) node;
+- (void) removeNode: (DDAudioUnitNode *) node;
 {
     THROW_IF(AUGraphRemoveNode(mGraph, [node AUNode]));
 }
 
-- (void) connectNode: (NXAudioUnitNode *) sourceNode
+- (void) connectNode: (DDAudioUnitNode *) sourceNode
               output: (UInt32) sourceOutput
-              toNode: (NXAudioUnitNode *) destNode
+              toNode: (DDAudioUnitNode *) destNode
                input: (UInt32) destInput;
 {
     THROW_IF(AUGraphConnectNodeInput(mGraph,
@@ -96,7 +96,7 @@
 }
 
 
-- (void) disconnectNode: (NXAudioUnitNode *) node
+- (void) disconnectNode: (DDAudioUnitNode *) node
                   input: (UInt32) input;
 {
     THROW_IF(AUGraphDisconnectNodeInput(mGraph,

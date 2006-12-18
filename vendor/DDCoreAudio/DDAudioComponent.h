@@ -1,5 +1,5 @@
 //
-//  NXAudioComponent.h
+//  DDAudioComponent.h
 //  mameosx
 //
 //  Created by Dave Dribin on 12/9/06.
@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import <AudioUnit/AudioUnit.h>
 
-@interface NXAudioComponent : NSObject
+@interface DDAudioComponent : NSObject
 {
     Component mComponent;
     ComponentDescription mDescription;

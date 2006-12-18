@@ -22,19 +22,24 @@
  * SOFTWARE.
  */
 
-#import "NXAudioException.h"
+#import <Cocoa/Cocoa.h>
+#import <AudioUnit/AudioUnit.h>
+#import <AudioToolbox/AudioToolbox.h>
 
-NSString * NXAudioException = @"AudioException";
 
-void NXThrowAudioIfErr(OSStatus err)
+@class DDAudioUnitGraph;
+@class DDAudioUnit;
+
+@interface DDAudioUnitNode : NSObject
 {
-    if (err != 0)
-    {
-        NSString * reason = [NSString stringWithFormat: @"%ld: [%s]", err,
-            GetMacOSStatusErrorString(err)];
-        NSException * e = [NSException exceptionWithName: NXAudioException
-                                                  reason: reason
-                                                userInfo: nil];
-        @throw e;
-    }
+    AUNode mNode;
+    DDAudioUnitGraph * mGraph;
 }
+
+- (id) initWithAUNode: (AUNode) node inGraph: (DDAudioUnitGraph *) graph;
+
+- (AUNode) AUNode;
+
+- (DDAudioUnit *) audioUnit;
+
+@end

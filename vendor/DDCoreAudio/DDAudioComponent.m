@@ -1,17 +1,17 @@
 //
-//  NXAudioComponent.m
+//  DDAudioComponent.m
 //  mameosx
 //
 //  Created by Dave Dribin on 12/9/06.
 //  Copyright 2006 __MyCompanyName__. All rights reserved.
 //
 
-#import "NXAudioComponent.h"
-#import "NXAudioException.h"
+#import "DDAudioComponent.h"
+#import "DDAudioException.h"
 
-#define THROW_IF NXThrowAudioIfErr
+#define THROW_IF DDThrowAudioIfErr
 
-@implementation NXAudioComponent
+@implementation DDAudioComponent
 
 + (NSArray *) componentsMatchingType: (OSType) type
                              subType: (OSType) subType
@@ -40,8 +40,8 @@
         current = FindNextComponent(current, description);
         if (current != 0)
         {
-            NXAudioComponent * component =
-            [[NXAudioComponent alloc] initWithComponent: current];
+            DDAudioComponent * component =
+            [[DDAudioComponent alloc] initWithComponent: current];
             [components addObject: component];
             [component release];
         }
@@ -59,7 +59,7 @@
     NSLog(@"component count: %d", [components count]);
     
     NSEnumerator * e = [components objectEnumerator];
-    NXAudioComponent * component;
+    DDAudioComponent * component;
     while (component = [e nextObject])
     {
         ComponentDescription description = [component ComponentDescription];

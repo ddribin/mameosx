@@ -1,15 +1,15 @@
 //
-//  NXAudioUnitPreset.m
+//  DDAudioUnitPreset.m
 //  mameosx
 //
 //  Created by Dave Dribin on 12/12/06.
 //  Copyright 2006 __MyCompanyName__. All rights reserved.
 //
 
-#import "NXAudioUnitPreset.h"
+#import "DDAudioUnitPreset.h"
 
 
-@implementation NXAudioUnitPreset
+@implementation DDAudioUnitPreset
 
 - (id) initWithAUPreset: (AUPreset) preset;
 {
@@ -37,7 +37,7 @@
     return (NSString *) mPreset.presetName;
 }
 
-- (BOOL) isEqualToPreset: (NXAudioUnitPreset *) preset;
+- (BOOL) isEqualToPreset: (DDAudioUnitPreset *) preset;
 {
     if (preset == nil)
         return NO;
