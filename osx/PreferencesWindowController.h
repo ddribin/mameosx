@@ -32,6 +32,8 @@
     IBOutlet NSPopUpButton * mArtworkDirectory;
     
     NSArray * mWindowedZoomLevels;
+    NSArray * mFrameRenderingValues;
+    NSArray * mRenderingThreadValues;
     NSDictionary * mButtonsByKey;
 }
 
@@ -45,5 +47,11 @@
 
 - (unsigned) windowedZoomLevelIndex;
 - (void) setWindowedZoomLevelIndex: (unsigned) windowedZoomLevelIndex;
+
+- (unsigned) frameRenderingIndex;
+- (void) setFrameRenderingIndex: (unsigned) frameRenderingIndex;
+
+- (unsigned) renderingThreadIndex;
+- (void) setRenderingThreadIndex: (unsigned) renderingThreadIndex;
 
 @end

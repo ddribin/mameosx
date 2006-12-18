@@ -49,10 +49,19 @@ NSString * MameZoomLevelDouble = @"Double";
 NSString * MameZoomLevelMaximumIntegral = @"MaximumIntegral";
 NSString * MameZoomLevelMaximum = @"Maximum";
 
+NSString * MameFrameRenderingKey = @"FrameRendering";
+NSString * MameRenderFrameInOpenGLValue = @"OpenGL";
+NSString * MameRenderFrameInCoreImageValue = @"CoreImage";
+NSString * MameFrameRenderingDefaultValue = @"Auto";
+
+NSString * MameRenderingThreadKey = @"RenderingThread";
+NSString * MameRenderInCoreVideoThreadValue = @"CoreVideo";
+NSString * MameRenderInMameThreadValue = @"MameThread";
+NSString * MameRenderingThreadDefaultValue = @"Auto";
+
 NSString * MameThrottledKey = @"Throttled";
 NSString * MameSyncToRefreshKey = @"SyncToRefresh";
 NSString * MameSoundEnabledKey = @"SoundEnabled";
-NSString * MameRenderInCVKey = @"RenderInCV";
 NSString * MameClearToRedKey = @"ClearToRed";
 NSString * MameLinearFilterKey = @"LinearFilter";
 NSString * MameSmoothFontKey = @"SmoothFont";
@@ -163,17 +172,13 @@ NSString * MameBiosKey = @"Bios";
     [defaultValues setObject: [NSNumber numberWithBool: YES]
                       forKey: MameSoundEnabledKey];
     
-    if ([self hasMultipleCPUs])
-    {
-        [defaultValues setObject: [NSNumber numberWithBool: YES]
-                          forKey: MameRenderInCVKey];
-    }
-    else
-    {
-        [defaultValues setObject: [NSNumber numberWithBool: NO]
-                          forKey: MameRenderInCVKey];
-    }
+
+    [defaultValues setObject: MameFrameRenderingDefaultValue
+                      forKey: MameFrameRenderingKey];
     
+    [defaultValues setObject: MameRenderingThreadDefaultValue
+                      forKey: MameRenderingThreadKey];
+        
     [defaultValues setObject: [NSNumber numberWithBool: NO]
                       forKey: MameClearToRedKey];
 
@@ -305,17 +310,25 @@ NSString * MameBiosKey = @"Bios";
     [mDefaults setBool: flag forKey: MameSoundEnabledKey];
 }
 
-//=========================================================== 
-//  renderInCV 
-//=========================================================== 
-- (BOOL) renderInCV
+
+- (NSString *) frameRendering;
 {
-    return [mDefaults boolForKey: MameRenderInCVKey];
+    return [mDefaults stringForKey: MameFrameRenderingKey];
 }
 
-- (void) setRenderInCV: (BOOL) flag
+- (void) setFrameRendering: (NSString *) frameRendering;
 {
-    [mDefaults setBool: flag forKey: MameRenderInCVKey];
+    [mDefaults setObject: frameRendering forKey: MameFrameRenderingKey];
+}
+
+- (NSString *) renderingThread;
+{
+    return [mDefaults stringForKey: MameRenderingThreadKey];
+}
+
+- (void) setRenderingThread: (NSString *) renderingThread;
+{
+    [mDefaults setObject: renderingThread forKey: MameRenderingThreadKey];
 }
 
 //=========================================================== 

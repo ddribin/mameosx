@@ -599,7 +599,24 @@ void exit_sleeper()
     [self setLinearFilter: [preferences linearFilter]];
 
     [mMameView setAudioEnabled: [preferences soundEnabled]];
-    [mMameView setRenderInCoreVideoThread: [preferences renderInCV]];
+    
+    NSString * frameRendering = [preferences frameRendering];
+    MameFrameRenderingOption frameRenderingOption = 
+        [mMameView frameRenderingOptionDefault];
+    if ([frameRendering isEqualToString: MameRenderFrameInOpenGLValue])
+        frameRenderingOption = MameRenderFrameInOpenGL;
+    else if ([frameRendering isEqualToString: MameRenderFrameInCoreImageValue])
+        frameRenderingOption = MameRenderFrameInCoreImage;
+    [mMameView setFrameRenderingOption: frameRenderingOption];
+    
+    NSString * renderingThread = [preferences renderingThread];
+    BOOL renderInCoreVideo = [mMameView renderInCoreVideoThreadDefault];
+    if ([renderingThread isEqualToString: MameRenderInCoreVideoThreadValue])
+        renderInCoreVideo = YES;
+    else if ([renderingThread isEqualToString: MameRenderInMameThreadValue])
+        renderInCoreVideo = NO;
+    [mMameView setRenderInCoreVideoThread: renderInCoreVideo];
+
     [mMameView setClearToRed: [preferences clearToRed]];
     [mMameView setKeepAspectRatio: [preferences keepAspect]];
     

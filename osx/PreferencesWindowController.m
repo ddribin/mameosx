@@ -69,6 +69,18 @@ enum
         MameZoomLevelMaximumIntegral,
         MameZoomLevelMaximum,
         nil];
+   
+    mFrameRenderingValues = [[NSArray alloc] initWithObjects:
+        MameFrameRenderingDefaultValue,
+        MameRenderFrameInOpenGLValue,
+        MameRenderFrameInCoreImageValue,
+        nil];
+
+    mRenderingThreadValues = [[NSArray alloc] initWithObjects:
+        MameRenderingThreadDefaultValue,
+        MameRenderInCoreVideoThreadValue,
+        MameRenderInMameThreadValue,
+        nil];
     
     return self;
 }
@@ -92,12 +104,17 @@ enum
 - (void) dealloc
 {
     [mWindowedZoomLevels release];
+    [mFrameRenderingValues release];
+    [mRenderingThreadValues release];
     [mButtonsByKey release];
     
     mWindowedZoomLevels = nil;
+    mFrameRenderingValues = nil;
+    mRenderingThreadValues = nil;
     mButtonsByKey = nil;
     [super dealloc];
 }
+
 
 - (int) logLevelIndex;
 {
@@ -167,6 +184,33 @@ enum
         [mWindowedZoomLevels objectAtIndex: windowedZoomLevelIndex]];
 }
 
+- (unsigned) frameRenderingIndex;
+{
+    MamePreferences * preferences = [MamePreferences standardPreferences];
+    return [mFrameRenderingValues indexOfObject: [preferences frameRendering]];
+}
+
+- (void) setFrameRenderingIndex: (unsigned) frameRenderingIndex;
+{
+    MamePreferences * preferences = [MamePreferences standardPreferences];
+    [preferences setFrameRendering:
+        [mFrameRenderingValues objectAtIndex: frameRenderingIndex]];
+}
+
+- (unsigned) renderingThreadIndex;
+{
+    MamePreferences * preferences = [MamePreferences standardPreferences];
+    return [mRenderingThreadValues indexOfObject:
+        [preferences renderingThread]];
+}
+
+- (void) setRenderingThreadIndex: (unsigned) renderingThreadIndex;
+{
+    MamePreferences * preferences = [MamePreferences standardPreferences];
+    [preferences setRenderingThread:
+        [mRenderingThreadValues objectAtIndex: renderingThreadIndex]];
+}
+
 - (IBAction) chooseRomDirectory: (id) sender;
 {
     [self chooseDirectoryForKey: MameRomPath
@@ -195,10 +239,15 @@ enum
         MameSyncToRefreshKey, MameThrottledKey, MameLinearFilterKey,
         MameKeepAspectKey,
         MameWindowedZoomLevelKey,
+        MameFrameRenderingKey,
+        MameRenderingThreadKey,
+        MameSmoothFontKey,
         nil];
 
     [self setLogLevelIndex: LogWarnIndex];
     [self willChangeValueForKey: @"windowedZoomLevelIndex"];
+    [self willChangeValueForKey: @"frameRenderingIndex"];
+    [self willChangeValueForKey: @"renderingThreadIndex"];
     
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     NSEnumerator * e = [keys objectEnumerator];
@@ -209,6 +258,8 @@ enum
     }
 
     [self didChangeValueForKey: @"windowedZoomLevelIndex"];
+    [self didChangeValueForKey: @"frameRenderingIndex"];
+    [self didChangeValueForKey: @"renderingThreadIndex"];
 
     [self updatePopUpButtons];
 }

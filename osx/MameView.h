@@ -41,6 +41,13 @@
 @class MameConfiguration;
 @class MameFilter;
 
+typedef enum _MameFrameRenderingOption
+{
+    MameRenderFrameInOpenGL,
+    MameRenderFrameInCoreImage,
+    // MameRenderFrameInQCComposition,
+} MameFrameRenderingOption;
+
 @interface MameView : DDCustomOpenGLView
 {
     IBOutlet MameController * mController;
@@ -56,7 +63,7 @@
     render_target * mTarget;
     const render_primitive_list * mPrimitives;
     MameRenderer * mRenderer;
-    BOOL mCoreImageAccelerated;
+    MameFrameRenderingOption mFrameRenderingOption;
     NSSize mRenderSize;
     float mPixelAspectRatio;
     
@@ -103,8 +110,14 @@
 - (BOOL) keepAspectRatio;
 - (void) setKeepAspectRatio: (BOOL) keepAspectRatio;
 
+- (MameFrameRenderingOption) frameRenderingOption;
+- (void) setFrameRenderingOption:
+    (MameFrameRenderingOption) frameRenderingOption;
+- (MameFrameRenderingOption) frameRenderingOptionDefault;
+
 - (BOOL) renderInCoreVideoThread;
 - (void) setRenderInCoreVideoThread: (BOOL) flag;
+- (BOOL) renderInCoreVideoThreadDefault;
 
 - (BOOL) clearToRed;
 - (void) setClearToRed: (BOOL) clearToRed;

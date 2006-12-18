@@ -65,8 +65,11 @@
 - (BOOL) soundEnabled;
 - (void) setSoundEnabled: (BOOL) flag;
 
-- (BOOL) renderInCV;
-- (void) setRenderInCV: (BOOL) flag;
+- (NSString *) frameRendering;
+- (void) setFrameRendering: (NSString *) frameRendering;
+
+- (NSString *) renderingThread;
+- (void) setRenderingThread: (NSString *) renderingThread;
 
 - (BOOL) clearToRed;
 - (void) setClearToRed: (BOOL) clearToRed;
@@ -195,10 +198,19 @@ extern NSString * MameZoomLevelDouble;
 extern NSString * MameZoomLevelMaximumIntegral;
 extern NSString * MameZoomLevelMaximum;
 
+extern NSString * MameFrameRenderingKey;
+extern NSString * MameRenderFrameInOpenGLValue;
+extern NSString * MameRenderFrameInCoreImageValue;
+extern NSString * MameFrameRenderingDefaultValue;
+
+extern NSString * MameRenderingThreadKey;
+extern NSString * MameRenderInCoreVideoThreadValue;
+extern NSString * MameRenderInMameThreadValue;
+extern NSString * MameRenderingThreadDefaultValue;
+
 extern NSString * MameThrottledKey;
 extern NSString * MameSyncToRefreshKey;
 extern NSString * MameSoundEnabledKey;
-extern NSString * MameRenderInCVKey;
 extern NSString * MameClearToRedKey;
 extern NSString * MameLinearFilterKey;
 extern NSString * MameSmoothFontKey;

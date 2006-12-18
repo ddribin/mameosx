@@ -36,7 +36,8 @@
 
 @interface MameView (Private)
 
-- (void) detectAcceleratedCoreImage;
+- (BOOL) isCoreImageAccelerated;
+- (BOOL) hasMultipleCPUs;
 
 - (void) gameThread;
 - (void) gameFinished: (NSNumber *) exitStatus;
@@ -126,7 +127,9 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     mKeepAspectRatio = YES;
     mClearToRed = NO;
     mFrameStartTime = 0;
-
+    [self setFrameRenderingOption: [self frameRenderingOptionDefault]];
+    [self setRenderInCoreVideoThread: [self renderInCoreVideoThreadDefault]];
+    
     mRenderer = [[MameRenderer alloc] init];
     mInputController = [[MameInputController alloc] init];
     mAudioController = [[MameAudioController alloc] init];
@@ -147,7 +150,6 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     osd_set_timing_controller(mTimingController);
     osd_set_file_manager(mFileManager);
 
-    mRenderInCoreVideoThread = YES;
     mSyncToRefresh = NO;
     mMameLock = [[NSLock alloc] init];
     mMameIsRunning = NO;
@@ -223,6 +225,25 @@ NSString * MameExitStatusKey = @"MameExitStatus";
         return mCiContext;
 }
 
+- (MameFrameRenderingOption) frameRenderingOption;
+{
+    return mFrameRenderingOption;
+}
+
+- (void) setFrameRenderingOption:
+    (MameFrameRenderingOption) frameRenderingOption;
+{
+    mFrameRenderingOption = frameRenderingOption;
+}
+
+- (MameFrameRenderingOption) frameRenderingOptionDefault;
+{
+    if ([self isCoreImageAccelerated])
+        return MameRenderFrameInCoreImage;
+    else
+        return MameRenderFrameInOpenGL;
+}
+
 //=========================================================== 
 //  renderInCoreVideoThread 
 //=========================================================== 
@@ -234,6 +255,14 @@ NSString * MameExitStatusKey = @"MameExitStatus";
 - (void) setRenderInCoreVideoThread: (BOOL) flag
 {
     mRenderInCoreVideoThread = flag;
+}
+
+- (BOOL) renderInCoreVideoThreadDefault;
+{
+    if ([self hasMultipleCPUs])
+        return YES;
+    else
+        return NO;
 }
 
 //=========================================================== 
@@ -312,9 +341,22 @@ NSString * MameExitStatusKey = @"MameExitStatus";
                                                         object: self];
         
     [self createCIContext];
-    [self detectAcceleratedCoreImage];
     
-    NXLogInfo(@"Use Core Image: %@", mCoreImageAccelerated? @"YES" : @"NO");
+    NSString * frameRendering;
+    switch (mFrameRenderingOption)
+    {
+        case MameRenderFrameInOpenGL:
+            frameRendering = @"OpenGL";
+            break;
+            
+        case MameRenderFrameInCoreImage:
+            frameRendering = @"Core Image";
+            break;
+            
+        default:
+            frameRendering = @"Unknown";
+    }
+    NXLogInfo(@"Render frames in: %@", frameRendering);
     NXLogInfo(@"Render in Core Video thread: %@",
               mRenderInCoreVideoThread? @"YES" : @"NO");
     
@@ -711,7 +753,7 @@ NSString * MameExitStatusKey = @"MameExitStatus";
 
 @implementation MameView (Private)
 
-- (void) detectAcceleratedCoreImage;
+- (BOOL) isCoreImageAccelerated;
 {
     
     // This code fragment is from the VideoViewer sample code
@@ -719,7 +761,21 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     // CoreImage might be too slow if the current renderer doesn't support GL_ARB_fragment_program
     const GLubyte * glExtensions = glGetString(GL_EXTENSIONS);
     const GLubyte * extension = (const GLubyte *)"GL_ARB_fragment_program";
-    mCoreImageAccelerated = gluCheckExtension(extension, glExtensions);
+    return gluCheckExtension(extension, glExtensions);
+}
+
+- (BOOL) hasMultipleCPUs;
+{
+	host_basic_info_data_t hostInfo;
+	mach_msg_type_number_t infoCount;
+	
+	infoCount = HOST_BASIC_INFO_COUNT;
+	host_info(mach_host_self(), HOST_BASIC_INFO, 
+			  (host_info_t)&hostInfo, &infoCount);
+    if (hostInfo.avail_cpus > 1)
+        return YES;
+    else
+        return NO;
 }
 
 - (void) gameThread
@@ -892,17 +948,11 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     if ([self fullScreen])
     {
         destRect = [self centerNSSize: mRenderSize withinRect: currentBounds];
-#if 0
-        NSLog(@"currentBounds: %@, renderSize: %@, destRect: %@",
-              NSStringFromRect(currentBounds),
-              NSStringFromSize(mRenderSize),
-              NSStringFromRect(destRect));
-#endif
     }
     else
         destRect = [self stretchNSSize: mRenderSize withinRect: currentBounds];
 
-    if (mCoreImageAccelerated)
+    if (mFrameRenderingOption == MameRenderFrameInCoreImage)
         [self drawFrameUsingCoreImage: frame inRect: destRect];
     else
         [self drawFrameUsingOpenGL: frame inRect: destRect];
