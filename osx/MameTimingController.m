@@ -27,6 +27,35 @@
 #include <mach/mach_time.h>
 #import "NXLog.h"
 
+#define OSX_LOG_TIMING 0
+
+#if OSX_LOG_TIMING
+typedef struct
+{
+    char code;
+    mame_time emutime;
+    mame_time start_realtime;
+    mame_time end_realtime;
+    double game_speed_percent;
+    double frames_per_second;
+} MameTimingStats;
+
+#define NUM_STATS 10000
+static MameTimingStats sTimingStats[NUM_STATS];
+static uint32_t sTimingStatsIndex = 0;
+
+static void update_stats(char code, mame_time emutime, mame_time start_realtime,
+                         mame_time end_realtime);
+static void dump_stats(void);
+
+#endif
+
+// For in-class use, so there is no Obj-C message passing overhead
+static inline cycles_t osd_cycles_internal()
+{
+    return mach_absolute_time();
+}
+
 @implementation MameTimingController
 
 - (void) osd_init;
@@ -44,7 +73,7 @@
 
 - (cycles_t) osd_cycles;
 {
-    return mach_absolute_time();
+    return osd_cycles_internal();
 }
 
 - (cycles_t) osd_cycles_per_second;
@@ -75,6 +104,11 @@
 
 - (void) updateThrottle: (mame_time) emutime;
 {
+#if OSX_LOG_TIMING
+    char code = 'U';
+    mame_time start_realtime = mThrottleRealtime;
+#endif
+
 #if 0
     NSLog(@"emutime: %i, %qi", emutime.seconds, emutime.subseconds);
 #endif
@@ -84,28 +118,34 @@
 #if 0        
         mThrottleRealtime = mThrottleEmutime = sub_subseconds_from_mame_time(emutime, MAX_SUBSECONDS / PAUSED_REFRESH_RATE);
 #else
-        mThrottleRealtime = mThrottleEmutime = emutime;
-        return;
+#if OSX_LOG_TIMING
+        code = 'P';
+#endif
+        goto resync;
 #endif
     }
     
     // if time moved backwards (reset), or if it's been more than 1 second in emulated time, resync
     if (compare_mame_times(emutime, mThrottleEmutime) < 0 || sub_mame_times(emutime, mThrottleEmutime).seconds > 0)
     {
-        mThrottleRealtime = mThrottleEmutime = emutime;
-        return;
+#if OSX_LOG_TIMING
+        code = 'B';
+#endif
+        goto resync;
     }
     
-    cycles_t cyclesPerSecond = [self osd_cycles_per_second];
-    cycles_t diffCycles = [self osd_cycles] - mThrottleLastCycles;
+    cycles_t cyclesPerSecond = mCyclesPerSecond;
+    cycles_t diffCycles = osd_cycles_internal() - mThrottleLastCycles;
     mThrottleLastCycles += diffCycles;
     // NSLog(@"diff: %llu, last: %llu", diffCycles, mThrottleLastCycles);
     if (diffCycles > cyclesPerSecond)
     {
         NXLogDebug(@"More than 1 sec, diff: %qi, cps: %qi", diffCycles, cyclesPerSecond);
         // Resync
-        mThrottleRealtime = mThrottleEmutime = emutime;
-        return;
+#if OSX_LOG_TIMING
+        code = '1';
+#endif
+        goto resync;
     }
     
     subseconds_t subsecsPerCycle = MAX_SUBSECONDS / cyclesPerSecond;
@@ -119,21 +159,23 @@
     // if we're behind, just sync
     if (compare_mame_times(mThrottleEmutime, mThrottleRealtime) <= 0)
     {
-        mThrottleRealtime = mThrottleEmutime = emutime;
-        return;
+#if OSX_LOG_TIMING
+        code = 'S';
+#endif
+        goto resync;
     }
     
     mame_time timeTilTarget = sub_mame_times(mThrottleEmutime, mThrottleRealtime);
     cycles_t cyclesTilTarget = timeTilTarget.subseconds / subsecsPerCycle;
     cycles_t target = mThrottleLastCycles + cyclesTilTarget;
     
-    cycles_t curr = [self osd_cycles];
+    cycles_t curr = osd_cycles_internal();
     uint64_t count = 0;
 #if 1
     if (mThrottled)
     {
         mach_wait_until(mThrottleLastCycles + cyclesTilTarget*9/10);
-        for (curr = [self osd_cycles]; curr - target < 0; curr = [self osd_cycles])
+        for (curr = osd_cycles_internal(); curr - target < 0; curr = osd_cycles_internal())
         {
             // NSLog(@"target: %qi, current %qi, diff: %qi", target, curr, curr - target);
             // Spin...
@@ -144,11 +186,67 @@
 #endif
     
     // update realtime
-    diffCycles = [self osd_cycles] - mThrottleLastCycles;
+    diffCycles = osd_cycles_internal() - mThrottleLastCycles;
     mThrottleLastCycles += diffCycles;
     mThrottleRealtime = add_subseconds_to_mame_time(mThrottleRealtime, diffCycles * subsecsPerCycle);
+#if OSX_LOG_TIMING
+    update_stats(code, emutime, start_realtime, mThrottleRealtime);
+#endif
     
     return;
+    
+resync:
+        mThrottleRealtime = mThrottleEmutime = emutime;
+#if OSX_LOG_TIMING
+        update_stats(code, emutime, start_realtime, mThrottleRealtime);
+#endif
+    return;
 }
+
+- (void) gameFinished;
+{
+#if OSX_LOG_TIMING
+    dump_stats();
+#endif
+}
+
+#if OSX_LOG_TIMING
+
+static void update_stats(char code, mame_time emutime, mame_time start_realtime,
+                         mame_time end_realtime)
+{
+    if (sTimingStatsIndex >= NUM_STATS)
+        return;
+    
+    const performance_info * performance = mame_get_performance_info();
+    MameTimingStats * stats = &sTimingStats[sTimingStatsIndex];
+    stats->code = code;
+    stats->emutime = emutime;
+    stats->start_realtime = start_realtime;
+    stats->end_realtime = end_realtime;
+    stats->game_speed_percent = performance->game_speed_percent;
+    stats->frames_per_second = performance->frames_per_second;
+    sTimingStatsIndex++;
+}
+
+static void dump_stats(void)
+{
+    FILE * file = fopen("/tmp/timing_stats.txt", "w");
+    uint32_t i;
+    for (i = 0; i < sTimingStatsIndex; i++)
+    {
+        MameTimingStats * stats = &sTimingStats[i];
+        /* subseconds are tracked in attosecond (10^-18) increments */
+        fprintf(file, "%5u %c %d.%018lld %d.%018lld %d.%018lld %5.1f%% %4.1f\n",
+                i, stats->code,
+                stats->emutime.seconds, stats->emutime.subseconds,
+                stats->start_realtime.seconds, stats->start_realtime.subseconds,
+                stats->end_realtime.seconds, stats->end_realtime.subseconds,
+                stats->game_speed_percent, stats->frames_per_second);
+    }
+    fclose(file);
+}
+
+#endif
 
 @end

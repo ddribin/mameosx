@@ -52,4 +52,6 @@
 
 - (void) updateThrottle: (mame_time) emutime;
 
+- (void) gameFinished;
+
 @end

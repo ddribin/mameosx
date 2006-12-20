@@ -797,7 +797,7 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     NXLogInfo(@"Average FPS rendered: %f (%qi frames)\n",
               (double)cps / (mFrameEndTime - mFrameStartTime) * mFramesRendered,
               mFramesRendered);
-    
+    [mTimingController gameFinished];
 
     [self performSelectorOnMainThread: @selector(gameFinished:)
                            withObject: [NSNumber numberWithInt: exitStatus]
