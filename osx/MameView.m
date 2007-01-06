@@ -381,6 +381,7 @@ NSString * MameExitStatusKey = @"MameExitStatus";
 - (void) mameDidPause: (running_machine *) machine
                 puase: (int) pause; 
 {
+    NXLogDebug(@"mameDidPause: %d", pause);
     [mAudioController setPaused: ((pause == 1)? YES : NO)];
 }
 
@@ -493,24 +494,44 @@ NSString * MameExitStatusKey = @"MameExitStatus";
 
 - (void) togglePause;
 {
+    NXLogDebug(@"togglePause");
     if (!mMameIsRunning)
         return;
     [mMameLock lock];
-    if (mame_is_paused(mMachine))
-        mame_pause(mMachine, FALSE);
-    else
-        mame_pause(mMachine, TRUE);
+    {
+        int phase = mame_get_phase(mMachine);
+        if (phase == MAME_PHASE_RUNNING)
+        {
+            if (mame_is_paused(mMachine))
+                mame_pause(mMachine, FALSE);
+            else
+                mame_pause(mMachine, TRUE);
+        }
+    }
     [mMameLock unlock];
 }
 
 - (BOOL) pause: (BOOL) pause
 {
     if (!mMameIsRunning)
-        return;
+    {
+        return YES;
+    }
+
+    int phase;
+    BOOL isPaused = NO;
     [mMameLock lock];
-    BOOL isPaused = mame_is_paused(mMachine);
-    mame_pause(mMachine, pause);
+    {
+        phase = mame_get_phase(mMachine);
+        if (phase == MAME_PHASE_RUNNING)
+        {
+            isPaused = mame_is_paused(mMachine);
+            mame_pause(mMachine, pause);
+        }
+    }
     [mMameLock unlock];
+
+    NXLogDebug(@"pause(%d) = %d, phase: %d", pause, isPaused, phase);
     return isPaused;
 }
 
