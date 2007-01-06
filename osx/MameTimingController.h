@@ -28,6 +28,7 @@
 @interface MameTimingController : NSObject
 {
     BOOL mThrottled;
+    BOOL mAutoFrameSkip;
     
     cycles_t mCyclesPerSecond;
 
@@ -59,6 +60,9 @@
 
 - (BOOL) throttled;
 - (void) setThrottled: (BOOL) flag;
+
+- (BOOL) autoFrameSkip;
+- (void) setAutoFrameSkip: (BOOL) autoFrameSkip;
 
 - (void) updateThrottle: (mame_time) emutime;
 

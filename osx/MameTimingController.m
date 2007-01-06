@@ -85,9 +85,23 @@ static inline cycles_t osd_cycles_internal()
 
 - (void) updateFps: (mame_time) emutime;
 
+- (void) checkOsdInputs;
+
 @end
 
 @implementation MameTimingController
+
+- (id) init
+{
+    self = [super init];
+    if (self == nil)
+        return nil;
+    
+    mThrottled = YES;
+    mAutoFrameSkip = YES;
+    
+    return self;
+}
 
 - (void) osd_init;
 {
@@ -126,7 +140,7 @@ static inline cycles_t osd_cycles_internal()
 {
     static char buffer[1024];
     sprintf(buffer, "%s%2d%4d%%%4d/%d fps",
-            "fskp", mFrameSkipLevel,
+            mAutoFrameSkip ? "auto" : "fskp", mFrameSkipLevel,
             (int)(performance->game_speed_percent + 0.5),
             (int)(performance->frames_per_second + 0.5),
             (int)(Machine->screen[0].refresh + 0.5));
@@ -138,6 +152,7 @@ static inline cycles_t osd_cycles_internal()
     [self updateThrottle: emutime];
     [self updateFps: emutime];
     [self updateAutoFrameSkip];
+    [self checkOsdInputs];
     return [self skipFrame];
 }
 
@@ -152,6 +167,16 @@ static inline cycles_t osd_cycles_internal()
 - (void) setThrottled: (BOOL) flag
 {
     mThrottled = flag;
+}
+
+- (BOOL) autoFrameSkip;
+{
+    return mAutoFrameSkip;
+}
+
+- (void) setAutoFrameSkip: (BOOL) autoFrameSkip;
+{
+    mAutoFrameSkip = autoFrameSkip;
 }
 
 - (void) updateThrottle: (mame_time) emutime;
@@ -249,7 +274,7 @@ resync:
 	mFrameSkipCounter = (mFrameSkipCounter + 1) % FRAMESKIP_LEVELS;
 
     // Only update at begining of sequence
-    if (frameSkipCounter != 0)
+    if (!mAutoFrameSkip || (frameSkipCounter != 0))
         return;
     
 	// skip if paused
@@ -363,6 +388,77 @@ resync:
     else
     {
         mFrameEndTime = currentCycles;
+    }
+}
+
+- (void) checkOsdInputs;
+{
+    BOOL resetFrameCounters = NO;
+
+	// increment frameskip?
+	if (input_ui_pressed(IPT_UI_FRAMESKIP_INC))
+	{
+		// if autoframeskip, disable auto and go to 0
+		if (mAutoFrameSkip)
+		{
+			mAutoFrameSkip = NO;
+			mFrameSkipLevel = 0;
+		}
+        
+		// wrap from maximum to auto
+		else if (mFrameSkipLevel == FRAMESKIP_LEVELS - 1)
+		{
+			mFrameSkipLevel = 0;
+			mAutoFrameSkip = YES;
+		}
+        
+		// else just increment
+		else
+			mFrameSkipLevel++;
+        
+		// display the FPS counter for 2 seconds
+		ui_show_fps_temp(2.0);
+        
+        resetFrameCounters = YES;
+	}
+
+	// decrement frameskip?
+	if (input_ui_pressed(IPT_UI_FRAMESKIP_DEC))
+	{
+		// if autoframeskip, disable auto and go to max
+		if (mAutoFrameSkip)
+		{
+			mAutoFrameSkip = NO;
+			mFrameSkipLevel = FRAMESKIP_LEVELS-1;
+		}
+        
+		// wrap from 0 to auto
+		else if (mFrameSkipLevel == 0)
+			mAutoFrameSkip = YES;
+        
+		// else just decrement
+		else
+			mFrameSkipLevel--;
+        
+		// display the FPS counter for 2 seconds
+		ui_show_fps_temp(2.0);
+        
+        resetFrameCounters = YES;
+	}
+
+	// toggle throttle?
+	if (input_ui_pressed(IPT_UI_THROTTLE))
+	{
+		[self setThrottled: !mThrottled];
+        
+        resetFrameCounters = YES;
+    }
+    
+    if (resetFrameCounters)
+    {
+        mFrameStartTime = 0;
+        mFramesDisplayed = 0;
+        mFramesRendered = 0;
     }
 }
 

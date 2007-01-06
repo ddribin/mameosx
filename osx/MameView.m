@@ -135,6 +135,10 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     mTimingController = [[MameTimingController alloc] init];
     mFileManager = [[MameFileManager alloc] init];
     
+    [mTimingController addObserver: self
+                        forKeyPath: @"throttled"
+                           options: 0
+                           context: nil];
     return self;
 }
 
@@ -749,6 +753,20 @@ NSString * MameExitStatusKey = @"MameExitStatus";
 @end
 
 @implementation MameView (Private)
+
+- (void) observeValueForKeyPath: (NSString *) keyPath
+                       ofObject: (id) object 
+                         change: (NSDictionary *) change
+                        context: (void *) context;
+{
+    NXLogDebug(@"observeValueForKeyPath: %@ ofObject: %@", keyPath, object);
+    if ((object == mTimingController) &&
+        [keyPath isEqualToString: @"throttled"])
+    {
+        [self willChangeValueForKey: @"throttled"];
+        [self didChangeValueForKey: @"throttled"];
+    }
+}
 
 - (BOOL) isCoreImageAccelerated;
 {
