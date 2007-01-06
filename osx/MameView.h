@@ -84,11 +84,6 @@ typedef enum _MameFrameRenderingOption
     NSLock * mMameLock;
     NSAutoreleasePool * mMamePool;
 
-    uint64_t mFramesDisplayed;
-    uint64_t mFramesRendered;
-    cycles_t mFrameStartTime;
-    cycles_t mFrameEndTime;
-
     BOOL mThrottled;
     
     BOOL mUnpauseOnFullScreenTransition;

@@ -80,6 +80,12 @@ static inline cycles_t osd_cycles_internal()
     return mach_absolute_time();
 }
 
+@interface MameTimingController (Private)
+
+- (void) updateFps: (mame_time) emutime;
+
+@end
+
 @implementation MameTimingController
 
 - (void) osd_init;
@@ -95,6 +101,9 @@ static inline cycles_t osd_cycles_internal()
     mThrottleLastCycles = 0;
     mFrameSkipCounter = 0;
     mFrameSkipLevel = 0;
+    mFramesDisplayed = 0;
+    mFramesRendered = 0;
+    mFrameStartTime = 0;
 }
 
 - (cycles_t) osd_cycles;
@@ -121,6 +130,14 @@ static inline cycles_t osd_cycles_internal()
             (int)(performance->frames_per_second + 0.5),
             (int)(Machine->screen[0].refresh + 0.5));
     return buffer;
+}
+
+- (int) osd_update: (mame_time) emutime;
+{
+    [self updateThrottle: emutime];
+    [self updateFps: emutime];
+    [self updateAutoFrameSkip];
+    return [self skipFrame];
 }
 
 //=========================================================== 
@@ -309,6 +326,64 @@ resync:
 #endif
 }
 
+- (cycles_t) fpsCycles;
+{
+    return mFrameEndTime - mFrameStartTime;
+}
+
+- (uint64_t) framesDisplayed;
+{
+    return mFramesDisplayed;
+}
+
+- (uint64_t) framesRendered;
+{
+    return mFramesRendered;
+}
+
+- (void) frameWasDisplayed;
+{
+    if (mFrameStartTime != 0)
+        mFramesDisplayed++;
+}
+
+- (void) frameWasRendered;
+{
+    if (mFrameStartTime != 0)
+        mFramesRendered++;
+}
+
+- (double) fpsDisplayed;
+{
+    return (double) mCyclesPerSecond / [self fpsCycles] * mFramesDisplayed;
+}
+
+- (double) fpsRendered;
+{
+    return (double) mCyclesPerSecond / [self fpsCycles] * mFramesRendered;
+}
+
+@end
+
+@implementation MameTimingController (Private)
+
+- (void) updateFps: (mame_time) emutime;
+{
+    cycles_t currentCycles = osd_cycles_internal();
+    if (mFrameStartTime == 0)
+    {
+		// start the timer going 1 second into the game
+		if (emutime.seconds > 1)
+            mFrameStartTime = currentCycles;
+    }
+    else
+    {
+        mFrameEndTime = currentCycles;
+    }
+}
+
+@end;
+
 #if OSX_LOG_TIMING
 
 static void update_stats(char code, mame_time emutime, mame_time start_realtime,
@@ -357,4 +432,3 @@ static void dump_stats(void)
 
 #endif
 
-@end

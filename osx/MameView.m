@@ -126,7 +126,6 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     
     mKeepAspectRatio = YES;
     mClearToRed = NO;
-    mFrameStartTime = 0;
     [self setFrameRenderingOption: [self frameRenderingOptionDefault]];
     [self setRenderInCoreVideoThread: [self renderInCoreVideoThreadDefault]];
     
@@ -645,16 +644,13 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     mMamePool = [[NSAutoreleasePool alloc] init];
     
     [self updateVideo];
-    if (mFrameStartTime == 0)
-        mFrameStartTime = [mTimingController osd_cycles];
-    [mTimingController updateThrottle: emutime];
-    [mTimingController updateAutoFrameSkip];
+    int skipNextFrame = [mTimingController osd_update: emutime];
     
     // Open lock briefly to allow pending MAME calls
     [mMameLock unlock];
     [mMameLock lock];
     
-    return [mTimingController skipFrame];
+    return skipNextFrame;
 }
 
 - (void) osd_output_error: (const char *) utf8Format
@@ -791,13 +787,12 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     [mMamePool release];
     [mMameLock unlock];
     
-    cycles_t cps = [mTimingController osd_cycles_per_second];
     NXLogInfo(@"Average FPS displayed: %f (%qi frames)\n",
-              (double)cps / (mFrameEndTime - mFrameStartTime) * mFramesDisplayed,
-              mFramesDisplayed);
+              [mTimingController fpsDisplayed],
+              [mTimingController framesDisplayed]);
     NXLogInfo(@"Average FPS rendered: %f (%qi frames)\n",
-              (double)cps / (mFrameEndTime - mFrameStartTime) * mFramesRendered,
-              mFramesRendered);
+              [mTimingController fpsRendered],
+              [mTimingController framesRendered]);
     [mTimingController gameFinished];
 
     [self performSelectorOnMainThread: @selector(gameFinished:)
@@ -958,8 +953,7 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     else
         [self drawFrameUsingOpenGL: frame inRect: destRect];
     
-    mFramesDisplayed++;
-    mFrameEndTime = [mTimingController osd_cycles];
+    [mTimingController frameWasDisplayed];
 }
 
 - (void) drawFrameUsingCoreImage: (CVOpenGLTextureRef) frame
@@ -1058,8 +1052,7 @@ NSString * MameExitStatusKey = @"MameExitStatus";
         [self unlockOpenGLLock];
     }
     
-    if (!mame_is_paused(mMachine))
-        mFramesRendered++;
+    [mTimingController frameWasRendered];
 }
 
 - (void) updatePixelAspectRatio;

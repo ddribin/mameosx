@@ -38,6 +38,11 @@
     int mFrameSkipCounter;
     int mFrameSkipLevel;
     int mFrameSkipAdjustment;
+
+    uint64_t mFramesDisplayed;
+    uint64_t mFramesRendered;
+    cycles_t mFrameStartTime;
+    cycles_t mFrameEndTime;
 }
 
 - (void) osd_init;
@@ -50,6 +55,8 @@
 
 - (const char *) osd_get_fps_text: (const performance_info *) performance;
 
+- (int) osd_update: (mame_time) emutime;
+
 - (BOOL) throttled;
 - (void) setThrottled: (BOOL) flag;
 
@@ -60,5 +67,19 @@
 - (int) skipFrame;
 
 - (void) gameFinished;
+
+- (cycles_t) fpsCycles;
+
+- (uint64_t) framesDisplayed;
+
+- (uint64_t) framesRendered;
+
+- (void) frameWasDisplayed;
+
+- (void) frameWasRendered;
+
+- (double) fpsDisplayed;
+
+- (double) fpsRendered;
 
 @end

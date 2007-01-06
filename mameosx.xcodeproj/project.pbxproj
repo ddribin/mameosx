@@ -2560,7 +2560,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 556A42440AA4E9CE00602CC5 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 553BF5680B4F94B90067EA3B /* cpudebug */;
+			remoteGlobalIDString = 553BF5680B4F94B90067EA3B;
 			remoteInfo = cpudebug;
 		};
 		556A4D8F0AA5156800602CC5 /* PBXContainerItemProxy */ = {
