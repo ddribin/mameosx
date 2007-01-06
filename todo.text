@@ -2,10 +2,8 @@
 * Look into default size of window.
 * Add mouse support
 * Add HID (joystick/gamepad) support
-* Add auto frameskipping
 * Don't quit on game exit, but show game dialog agin.
 * Add advanced preferences UI to expose everything, similar to
   FireFox's about:config.
 * Fullscreen at startup.
-* Throttle to 60fps during pause.
 * Handle multipe screens (ninjaw).
