@@ -237,6 +237,7 @@ enum
         MameSkipDisclaimerKey, MameSkipGameInfoKey, MameSkipWarningsKey,
         MameNXLogLevelKey,
         MameSyncToRefreshKey, MameThrottledKey, MameLinearFilterKey,
+        MameFullScreenKey,
         MameKeepAspectKey,
         MameWindowedZoomLevelKey,
         MameFrameRenderingKey,
