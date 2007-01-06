@@ -33,6 +33,7 @@
 #import "MamePreferences.h"
 #import "RomAuditWindowController.h"
 #import "AudioEffectWindowController.h"
+#import "NXLog.h"
 
 #include <mach/mach_time.h>
 #include <unistd.h>
@@ -537,7 +538,12 @@ void exit_sleeper()
         [mMameView gameDescription], mGameName]];
     [window center];
 
-    // Open the window next run loop
+    
+    if ([[MamePreferences standardPreferences] fullScreen])
+        [mMameView setFullScreen: YES];
+    
+    // Open the window next run loop.  Need to do this, even in full screen
+    // mode, so that the view gets focus.
     [window makeKeyAndOrderFront: nil];
 }
 
@@ -547,28 +553,42 @@ void exit_sleeper()
     int exitStatus = [[userInfo objectForKey: MameExitStatusKey] intValue];
     if (exitStatus != MameExitStatusSuccess)
     {
-        NSAlert * alert = [[NSAlert alloc] init];
-        [alert addButtonWithTitle: @"OK"];
+        NSString * message;
         if (exitStatus == MameExitStatusFailedValidity)
         {
-            [alert setMessageText: @"Validity Checks Failed"];
+            message = @"Validity Checks Failed";
         }
         else if (exitStatus == MameExitStatusMissingFiles)
         {
-            [alert setMessageText: @"Some Files Were Missing"];
+            message = @"Some Files Were Missing";
         }
         else
         {
-            [alert setMessageText: @"A Fatal Error Occured"];
+            message = @"A Fatal Error Occured";
         }
-        [alert setInformativeText: @"View the MAME Log for details."];
-        [alert setAlertStyle: NSCriticalAlertStyle];
         
-        [alert beginSheetModalForWindow: [mMameView window]
-                          modalDelegate: self
-                         didEndSelector: @selector(exitAlertDidEnd:returnCode:contextInfo:)
-                            contextInfo: nil];
-        [alert release];
+        if (mQuitOnError)
+        {
+            NXLogError(@"MAME finished with error: %@ (%d)", message,
+                       exitStatus);
+            [NSApp terminate: nil];
+        }
+        else
+        {
+            [mMameView setFullScreen: false];
+            
+            NSAlert * alert = [[NSAlert alloc] init];
+            [alert addButtonWithTitle: @"OK"];
+            [alert setMessageText: message];
+            [alert setInformativeText: @"View the MAME Log for details."];
+            [alert setAlertStyle: NSCriticalAlertStyle];
+            
+            [alert beginSheetModalForWindow: [mMameView window]
+                              modalDelegate: self
+                             didEndSelector: @selector(exitAlertDidEnd:returnCode:contextInfo:)
+                                contextInfo: nil];
+            [alert release];
+        }
     }
     else
     {
@@ -859,17 +879,17 @@ void exit_sleeper()
         }
         else
         {
-        NSAlert * alert = [[[NSAlert alloc] init] autorelease];
-        [alert addButtonWithTitle: @"Try Again"];
-        // [alert addButtonWithTitle: @"Quit"];
-        [alert setMessageText:
-            [NSString stringWithFormat: @"Game not found: %@", mGameName]];
-        [alert setInformativeText: message];
-        [alert setAlertStyle: NSWarningAlertStyle];
-        [alert beginSheetModalForWindow: mOpenPanel
-                          modalDelegate: self
-                         didEndSelector: @selector(alertDidEnd:returnCode:contextInfo:)
-                            contextInfo: nil];
+            NSAlert * alert = [[[NSAlert alloc] init] autorelease];
+            [alert addButtonWithTitle: @"Try Again"];
+            // [alert addButtonWithTitle: @"Quit"];
+            [alert setMessageText:
+                [NSString stringWithFormat: @"Game not found: %@", mGameName]];
+            [alert setInformativeText: message];
+            [alert setAlertStyle: NSWarningAlertStyle];
+            [alert beginSheetModalForWindow: mOpenPanel
+                              modalDelegate: self
+                             didEndSelector: @selector(alertDidEnd:returnCode:contextInfo:)
+                                contextInfo: nil];
 
         }
     }

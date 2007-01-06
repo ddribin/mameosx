@@ -50,6 +50,9 @@
 - (NSString *) nxLogLevel;
 - (void) setNxLogLevel: (NSString *) nxLogLevel;
 
+- (BOOL) fullScreen;
+- (void) setFullScreen: (BOOL) fullScreen;
+
 - (NSString *) windowedZoomLevel;
 - (void) setWindowedZoomLevel: (NSString *) windowedZoomLevel;
 
@@ -193,12 +196,14 @@ extern NSString * MameGameKey;
 extern NSString * MameSleepAtExitKey;
 extern NSString * MamePreviousGamesKey;
 
+extern NSString * MameFullScreenKey;
 extern NSString * MameWindowedZoomLevelKey;
 extern NSString * MameFullScreenZoomLevelKey;
 extern NSString * MameZoomLevelActual;
 extern NSString * MameZoomLevelDouble;
 extern NSString * MameZoomLevelMaximumIntegral;
 extern NSString * MameZoomLevelMaximum;
+
 
 extern NSString * MameFrameRenderingKey;
 extern NSString * MameRenderFrameInOpenGLValue;

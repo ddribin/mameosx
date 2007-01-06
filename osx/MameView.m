@@ -340,8 +340,9 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     mFullScreenSize = NSMakeSize([self fullScreenWidth], 
                                  [self fullScreenHeight]);
 
-    [[NSNotificationCenter defaultCenter] postNotificationName: MameWillStartGame
-                                                        object: self];
+    [self performSelectorOnMainThread: @selector(sendMameWillStartGame)
+                           withObject: nil
+                        waitUntilDone: NO];
         
     [self createCIContext];
     
