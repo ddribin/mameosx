@@ -27,7 +27,7 @@
 #include <mach/mach_time.h>
 #import "NXLog.h"
 
-#define OSX_LOG_TIMING 0
+#define OSX_LOG_TIMING 1
 
 #if OSX_LOG_TIMING
 typedef struct
@@ -153,9 +153,6 @@ static inline cycles_t osd_cycles_internal()
     mThrottled = flag;
 }
 
-// refresh rate while paused
-#define PAUSED_REFRESH_RATE         30
-
 - (void) updateThrottle: (mame_time) emutime;
 {
 #if OSX_LOG_TIMING
@@ -163,18 +160,15 @@ static inline cycles_t osd_cycles_internal()
     mame_time start_realtime = mThrottleRealtime;
 #endif
 
-#if 0
-    NSLog(@"emutime: %i, %qi", emutime.seconds, emutime.subseconds);
-#endif
     int paused = mame_is_paused(Machine);
     if (paused)
     {
-#if 0        
-        mThrottleRealtime = mThrottleEmutime = sub_subseconds_from_mame_time(emutime, MAX_SUBSECONDS / PAUSED_REFRESH_RATE);
-#else
 #if OSX_LOG_TIMING
         code = 'P';
 #endif
+#if 1
+        mThrottleRealtime = mThrottleEmutime = sub_subseconds_from_mame_time(emutime, MAX_SUBSECONDS / Machine->screen[0].refresh);
+#else
         goto resync;
 #endif
     }
@@ -203,10 +197,6 @@ static inline cycles_t osd_cycles_internal()
     }
     
     subseconds_t subsecsPerCycle = MAX_SUBSECONDS / cyclesPerSecond;
-#if 1
-    // NSLog(@"max: %qi, sspc: %qi, add_subsecs: %qi, diff: %qi", MAX_SUBSECONDS, subsecsPerCycle, diffCycles * subsecsPerCycle, diffCycles);
-    // NSLog(@"realtime: %i, %qi", mThrottleRealtime.seconds, mThrottleRealtime.subseconds);
-#endif
     mThrottleRealtime = add_subseconds_to_mame_time(mThrottleRealtime, diffCycles * subsecsPerCycle);
     mThrottleEmutime = emutime;
     
