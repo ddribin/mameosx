@@ -27,7 +27,7 @@
 #include <mach/mach_time.h>
 #import "NXLog.h"
 
-#define OSX_LOG_TIMING 1
+#define OSX_LOG_TIMING 0
 
 #if OSX_LOG_TIMING
 typedef struct
@@ -167,11 +167,7 @@ static inline cycles_t osd_cycles_internal()
 #if OSX_LOG_TIMING
         code = 'P';
 #endif
-#if 1
         mThrottleRealtime = mThrottleEmutime = sub_subseconds_from_mame_time(emutime, MAX_SUBSECONDS / Machine->screen[0].refresh);
-#else
-        goto resync;
-#endif
     }
     
     // if time moved backwards (reset), or if it's been more than 1 second in emulated time, resync
