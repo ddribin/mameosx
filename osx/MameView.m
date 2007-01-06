@@ -648,12 +648,13 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     if (mFrameStartTime == 0)
         mFrameStartTime = [mTimingController osd_cycles];
     [mTimingController updateThrottle: emutime];
+    [mTimingController updateAutoFrameSkip];
     
     // Open lock briefly to allow pending MAME calls
     [mMameLock unlock];
     [mMameLock lock];
     
-    return 0;
+    return [mTimingController skipFrame];
 }
 
 - (void) osd_output_error: (const char *) utf8Format
@@ -1089,6 +1090,7 @@ NSString * MameExitStatusKey = @"MameExitStatus";
             IOCreateDisplayInfoDictionary(displayPort, 0);
         if (displayDict != nil)
         {
+            NXLogDebug(@"displayDict: %@", displayDict);
             // These sizes are in millimeters (mm)
             float horizontalSize =
                 [[displayDict objectForKey: NSSTR(kDisplayHorizontalImageSize)]

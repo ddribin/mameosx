@@ -123,7 +123,9 @@
 
 #pragma mark -
 
+#ifdef MAME_DEBUG
 - (BOOL) mameDebug;
+#endif
 
 - (BOOL) cheat;
 

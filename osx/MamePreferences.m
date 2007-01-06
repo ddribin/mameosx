@@ -462,10 +462,12 @@ NSString * MameBiosKey = @"Bios";
 
 #pragma mark -
 
+#ifdef MAME_DEBUG
 - (BOOL) mameDebug;
 {
     return [mDefaults boolForKey: MameDebugKey];
 }
+#endif
 
 - (BOOL) cheat;
 {

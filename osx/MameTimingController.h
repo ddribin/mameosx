@@ -25,11 +25,8 @@
 #import <Cocoa/Cocoa.h>
 #include "osdepend.h"
 
-@class MameController;
-
 @interface MameTimingController : NSObject
 {
-    MameController * mController;
     BOOL mThrottled;
     
     cycles_t mCyclesPerSecond;
@@ -37,6 +34,10 @@
     cycles_t mThrottleLastCycles;
     mame_time mThrottleRealtime;
     mame_time mThrottleEmutime;
+    
+    int mFrameSkipCounter;
+    int mFrameSkipLevel;
+    int mFrameSkipAdjustment;
 }
 
 - (void) osd_init;
@@ -47,10 +48,16 @@
 
 - (cycles_t) osd_profiling_ticks;
 
+- (const char *) osd_get_fps_text: (const performance_info *) performance;
+
 - (BOOL) throttled;
 - (void) setThrottled: (BOOL) flag;
 
 - (void) updateThrottle: (mame_time) emutime;
+
+- (void) updateAutoFrameSkip;
+
+- (int) skipFrame;
 
 - (void) gameFinished;
 
