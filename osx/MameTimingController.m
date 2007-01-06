@@ -36,6 +36,7 @@ typedef struct
     mame_time emutime;
     mame_time start_realtime;
     mame_time end_realtime;
+    int throttle_count;
     double game_speed_percent;
     double frames_per_second;
     int frame_skip_level;
@@ -48,7 +49,7 @@ static MameTimingStats sTimingStats[NUM_STATS];
 static uint32_t sTimingStatsIndex = 0;
 
 static void update_stats(char code, mame_time emutime, mame_time start_realtime,
-                         mame_time end_realtime,
+                         mame_time end_realtime, int throttleCount,
                          int frameSkipLevel, int frameSkipCounter,
                          int frameSkipAdjust);
 static void dump_stats(void);
@@ -214,18 +215,15 @@ static inline cycles_t osd_cycles_internal()
     cycles_t target = mThrottleLastCycles + cyclesTilTarget;
     
     cycles_t curr = osd_cycles_internal();
-    uint64_t count = 0;
+    int count = 0;
 #if 1
     if (mThrottled)
     {
-        mach_wait_until(mThrottleLastCycles + cyclesTilTarget*9/10);
+        mach_wait_until(mThrottleLastCycles + cyclesTilTarget*95/100);
         for (curr = osd_cycles_internal(); curr - target < 0; curr = osd_cycles_internal())
         {
-            // NSLog(@"target: %qi, current %qi, diff: %qi", target, curr, curr - target);
-            // Spin...
             count++;
         }
-        // NSLog(@"Throttle count: %d", count);
     }
 #endif
     
@@ -234,7 +232,7 @@ static inline cycles_t osd_cycles_internal()
     mThrottleLastCycles += diffCycles;
     mThrottleRealtime = add_subseconds_to_mame_time(mThrottleRealtime, diffCycles * subsecsPerCycle);
 #if OSX_LOG_TIMING
-    update_stats(code, emutime, start_realtime, mThrottleRealtime,
+    update_stats(code, emutime, start_realtime, mThrottleRealtime, count,
                  mFrameSkipLevel, mFrameSkipCounter, mFrameSkipAdjustment);
 #endif
     
@@ -243,7 +241,7 @@ static inline cycles_t osd_cycles_internal()
 resync:
         mThrottleRealtime = mThrottleEmutime = emutime;
 #if OSX_LOG_TIMING
-        update_stats(code, emutime, start_realtime, mThrottleRealtime,
+        update_stats(code, emutime, start_realtime, mThrottleRealtime, -1,
                      mFrameSkipLevel, mFrameSkipCounter, mFrameSkipAdjustment);
 #endif
     return;
@@ -377,7 +375,7 @@ resync:
 #if OSX_LOG_TIMING
 
 static void update_stats(char code, mame_time emutime, mame_time start_realtime,
-                         mame_time end_realtime,
+                         mame_time end_realtime, int throttle_count,
                          int frameSkipLevel, int frameSkipCounter,
                          int frameSkipAdjust)
 {
@@ -390,6 +388,7 @@ static void update_stats(char code, mame_time emutime, mame_time start_realtime,
     stats->emutime = emutime;
     stats->start_realtime = start_realtime;
     stats->end_realtime = end_realtime;
+    stats->throttle_count = throttle_count;
     stats->game_speed_percent = performance->game_speed_percent;
     stats->frames_per_second = performance->frames_per_second;
     stats->frame_skip_level = frameSkipLevel;
@@ -406,12 +405,14 @@ static void dump_stats(void)
     {
         MameTimingStats * stats = &sTimingStats[i];
         /* subseconds are tracked in attosecond (10^-18) increments */
-        fprintf(file, "%5u %c %d.%018lld %d.%018lld %d.%018lld %5.1f%% %4.1f "
+        fprintf(file, "%5u %c %d.%018lld %d.%018lld %d.%018lld %5ld "
+                "%5.1f%% %4.1f "
                 "Skip: %2d, %2d = %d %d\n",
                 i, stats->code,
                 stats->emutime.seconds, stats->emutime.subseconds,
                 stats->start_realtime.seconds, stats->start_realtime.subseconds,
                 stats->end_realtime.seconds, stats->end_realtime.subseconds,
+                stats->throttle_count,
                 stats->game_speed_percent, stats->frames_per_second,
                 stats->frame_skip_level, stats->frame_skip_counter,
                 sSkipTable[stats->frame_skip_level][stats->frame_skip_counter],
