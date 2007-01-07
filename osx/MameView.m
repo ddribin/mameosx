@@ -336,13 +336,20 @@ NSString * MameExitStatusKey = @"MameExitStatus";
         mOptimalSize.height *= 2;
     }
     
+#if 0
     [self setFullScreenWidth: mOptimalSize.width height: mOptimalSize.height];
     mFullScreenSize = NSMakeSize([self fullScreenWidth], 
                                  [self fullScreenHeight]);
+#else
+    [self setSwitchModesForFullScreen: NO];
+    [self setFadeTime: 0.0];
+#endif
 
+    [mMameLock unlock];
     [self performSelectorOnMainThread: @selector(sendMameWillStartGame)
                            withObject: nil
-                        waitUntilDone: NO];
+                        waitUntilDone: YES];
+    [mMameLock lock];
         
     [self createCIContext];
     
@@ -862,8 +869,37 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     mUnpauseOnFullScreenTransition = [self pause: YES];
 }
 
-- (void) didEnterFullScreen;
+- (void) didEnterFullScreen: (NSSize) fullScreenSize;
 {
+    float aspectRatio = mNaturalSize.width/mNaturalSize.height; 
+    
+    NSSize size = fullScreenSize;
+    float viewAspectRatio = size.width/size.height;
+    
+#if 1
+    if (viewAspectRatio > aspectRatio)
+    {
+        size.width = size.height*aspectRatio;
+    }
+    else
+    {
+        size.height = size.width/aspectRatio;
+    }
+#endif
+    
+#if 0
+    size.height = floorf(size.height/mNaturalSize.height)*mNaturalSize.height;
+    size.width = floorf(size.width/mNaturalSize.width)*mNaturalSize.width;
+#endif
+    mFullScreenSize = size;
+
+#if 0
+    mFullScreenSize.width = mNaturalSize.width*2;
+    mFullScreenSize.height = mNaturalSize.height*2;
+#endif
+    
+    NXLogInfo(@"Full screen size: %@", NSStringFromSize(mFullScreenSize));
+ 
     [self pause: mUnpauseOnFullScreenTransition];
 }
 
@@ -1058,8 +1094,7 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     NSSize renderSize;
     if ([self fullScreen])
     {
-        renderSize = [self centerNSSize: mFullScreenSize
-                             withinRect: [self activeBounds]].size;
+        renderSize = mFullScreenSize;
     }
     else
     {
