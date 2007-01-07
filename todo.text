@@ -5,5 +5,4 @@
 * Don't quit on game exit, but show game dialog agin.
 * Add advanced preferences UI to expose everything, similar to
   FireFox's about:config.
-* Fullscreen at startup.
 * Handle multipe screens (ninjaw).

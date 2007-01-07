@@ -4,6 +4,7 @@
   changes:
     - Implement auto frame skipping.
     - Implement standard F8, F9, F10 key bindings.
+    - Add preference to startup in full screen mode.
 
 <% version = "0.111" %>
 - version: "<%=version%>"
