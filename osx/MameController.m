@@ -780,23 +780,11 @@ void exit_sleeper()
 
 - (NSSize) constrainFrameToAspectRatio: (NSSize) size;
 {
-    NSSize naturalSize = [mMameView naturalSize];
-    float aspectRatio = naturalSize.width/naturalSize.height;
-
     size.height -= mExtraWindowSize.height;
     size.width  -= mExtraWindowSize.width;
-    float viewAspectRatio = size.width/size.height;
+    
+    size = [mMameView stretchedSize: size];
 
-    if (viewAspectRatio > aspectRatio)
-    {
-        size.width = size.height*aspectRatio;
-        size.width = roundf(size.width);
-    }
-    else
-    {
-        size.height = size.width/aspectRatio;
-        size.height = roundf(size.height);
-    }
     size.height += mExtraWindowSize.height;
     size.width  += mExtraWindowSize.width;
 
@@ -805,24 +793,10 @@ void exit_sleeper()
 
 - (NSSize) constrainFrameToIntegralNaturalSize: (NSSize) size;
 {
-    NSSize naturalSize = [mMameView naturalSize];
-    float aspectRatio = naturalSize.width/naturalSize.height;
-
     size.height -= mExtraWindowSize.height;
     size.width  -= mExtraWindowSize.width;
-    float viewAspectRatio = size.width/size.height;
 
-    if (viewAspectRatio > aspectRatio)
-    {
-        size.width = size.height*aspectRatio;
-    }
-    else
-    {
-        size.height = size.width/aspectRatio;
-    }
-
-    size.height = floorf(size.height/naturalSize.height)*naturalSize.height;
-    size.width = floor(size.width/naturalSize.width)*naturalSize.width;
+    size = [mMameView integralStretchedSize: size];
     
     size.height += mExtraWindowSize.height;
     size.width  += mExtraWindowSize.width;

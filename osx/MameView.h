@@ -99,11 +99,21 @@ typedef enum _MameFrameRenderingOption
 - (void) togglePause;
 - (BOOL) isRunning;
 
+#pragma mark -
+#pragma mark Sizing
+
 - (NSSize) naturalSize;
 - (NSSize) optimalSize;
 
 - (BOOL) keepAspectRatio;
 - (void) setKeepAspectRatio: (BOOL) keepAspectRatio;
+
+- (NSSize) stretchedSize: (NSSize) boundingSize;
+- (NSSize) integralStretchedSize: (NSSize) boundingSize;
+- (NSSize) independentIntegralStretchedSize: (NSSize) boundingSize;
+
+#pragma mark -
+#pragma mark Rendering
 
 - (MameFrameRenderingOption) frameRenderingOption;
 - (void) setFrameRenderingOption:

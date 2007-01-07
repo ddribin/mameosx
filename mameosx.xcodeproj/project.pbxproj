@@ -2956,7 +2956,7 @@
 		556A4B150AA4FD5400602CC5 /* generic.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = generic.c; sourceTree = "<group>"; };
 		556A4B160AA4FD5400602CC5 /* generic.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = generic.h; sourceTree = "<group>"; };
 		556A4B780AA5011100602CC5 /* libsound.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libsound.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		556A4C280AA50D6200602CC5 /* MAME OS X-tiny.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = "MAME OS X-tiny.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		556A4C280AA50D6200602CC5 /* MAME OS X-tiny.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MAME OS X-tiny.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		556A4C2A0AA50D6200602CC5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Info.plist; sourceTree = "<group>"; };
 		556A4C510AA50E5800602CC5 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/MainMenu.nib; sourceTree = "<group>"; };
 		556A4C650AA50F2800602CC5 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };

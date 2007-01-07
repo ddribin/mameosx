@@ -61,7 +61,6 @@
                        inRect: (NSRect) destRect;
 - (void) updateVideo;
 
-- (NSRect) stretchNSSize: (NSSize) size withinRect: (NSRect) rect;
 - (NSRect) centerNSSize: (NSSize) size withinRect: (NSRect) rect;
 
 - (void) updatePixelAspectRatio;
@@ -281,6 +280,9 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     mClearToRed = clearToRed;
 }
 
+#pragma mark -
+#pragma mark Sizing
+
 - (NSSize) naturalSize;
 {
     return mNaturalSize;
@@ -300,6 +302,46 @@ NSString * MameExitStatusKey = @"MameExitStatus";
 {
     mKeepAspectRatio = keepAspectRatio;
 }
+
+- (NSSize) stretchedSize: (NSSize) boundingSize;
+{
+    float aspectRatio = mNaturalSize.width/mNaturalSize.height; 
+    float boundingAspectRatio = boundingSize.width/boundingSize.height;
+    
+    NSSize size;
+    if (boundingAspectRatio > aspectRatio)
+    {
+        size.width = roundf(boundingSize.height*aspectRatio);
+        size.height = boundingSize.height;
+    }
+    else
+    {
+        size.width = boundingSize.width;
+        size.height = roundf(boundingSize.width/aspectRatio);
+    }
+    return size;
+}
+
+- (NSSize) integralStretchedSize: (NSSize) boundingSize;
+{
+    NSSize size = [self stretchedSize: boundingSize];
+    
+    size.height = floorf(size.height/mNaturalSize.height)*mNaturalSize.height;
+    size.width = floorf(size.width/mNaturalSize.width)*mNaturalSize.width;
+    return size;
+}
+
+- (NSSize) independentIntegralStretchedSize: (NSSize) boundingSize;
+{
+    // Fully stretch in both directions
+    NSSize size = boundingSize;
+    // Round to nearest integral multiple
+    size.height = floorf(size.height/mNaturalSize.height)*mNaturalSize.height;
+    size.width = floorf(size.width/mNaturalSize.width)*mNaturalSize.width;
+    return size;
+}
+
+#pragma mark -
 
 - (int) osd_init: (running_machine *) machine;
 {
@@ -871,33 +913,11 @@ NSString * MameExitStatusKey = @"MameExitStatus";
 
 - (void) didEnterFullScreen: (NSSize) fullScreenSize;
 {
-    float aspectRatio = mNaturalSize.width/mNaturalSize.height; 
-    
-    NSSize size = fullScreenSize;
-    float viewAspectRatio = size.width/size.height;
-    
-#if 1
-    if (viewAspectRatio > aspectRatio)
-    {
-        size.width = size.height*aspectRatio;
-    }
-    else
-    {
-        size.height = size.width/aspectRatio;
-    }
-#endif
-    
-#if 0
-    size.height = floorf(size.height/mNaturalSize.height)*mNaturalSize.height;
-    size.width = floorf(size.width/mNaturalSize.width)*mNaturalSize.width;
-#endif
-    mFullScreenSize = size;
+    mFullScreenSize = [self stretchedSize: fullScreenSize];
+    // mFullScreenSize = [self integralStretchedSize: fullScreenSize];
+    // mFullScreenSize = [self independentIntegralStretchedSize: fullScreenSize];
+    // mFullScreenSize = fullScreenSize;
 
-#if 0
-    mFullScreenSize.width = mNaturalSize.width*2;
-    mFullScreenSize.height = mNaturalSize.height*2;
-#endif
-    
     NXLogInfo(@"Full screen size: %@", NSStringFromSize(mFullScreenSize));
  
     [self pause: mUnpauseOnFullScreenTransition];
@@ -933,33 +953,12 @@ NSString * MameExitStatusKey = @"MameExitStatus";
 #pragma mark -
 #pragma mark "Frame Drawing"
 
-- (NSRect) stretchNSSize: (NSSize) size withinRect: (NSRect) rect;
-{
-    float delta;
-    if( NSHeight(rect) / NSWidth(rect) > size.height / size.width )
-    {
-        // rect is taller: fit width
-        delta = rect.size.height - size.height * NSWidth(rect) / size.width;
-        rect.size.height -= delta;
-        rect.origin.y += delta/2;
-    }
-    else
-    {
-        // rect is wider: fit height
-        delta = rect.size.width - size.width * NSHeight(rect) / size.height;
-        rect.size.width -= delta;
-        rect.origin.x += delta/2;
-    }
-    rect = NSIntegralRect(rect);
-    return rect;
-}
-
 - (NSRect) centerNSSize: (NSSize) size withinRect: (NSRect) rect;
 {
     rect.origin.x = (rect.size.width - size.width) / 2;
     rect.origin.y = (rect.size.height - size.height) / 2;
     rect.size = size;
-    return rect;
+    return NSIntegralRect(rect);
 }
 
 - (void) drawFrame;
@@ -1016,14 +1015,20 @@ NSString * MameExitStatusKey = @"MameExitStatus";
         return;
     
     NSRect currentBounds = [self activeBounds];
-    NSRect destRect;
+    NSSize destSize;
     if ([self fullScreen])
     {
-        destRect = [self centerNSSize: mRenderSize withinRect: currentBounds];
+        destSize = mRenderSize;
     }
     else
-        destRect = [self stretchNSSize: mRenderSize withinRect: currentBounds];
-
+    {
+        // Stretch again, since the render size could be slightly different
+        // than the current size, if we're in the middle of a resize.
+        // Turn on "clear to read" and comment out this line to see why.
+        destSize = [self stretchedSize: currentBounds.size];
+    }
+    NSRect destRect = [self centerNSSize: destSize withinRect: currentBounds];
+    
     if (mFrameRenderingOption == MameRenderFrameInCoreImage)
         [self drawFrameUsingCoreImage: frame inRect: destRect];
     else
@@ -1092,15 +1097,18 @@ NSString * MameExitStatusKey = @"MameExitStatus";
 - (void) updateVideo;
 {
     NSSize renderSize;
+    char code;
     if ([self fullScreen])
     {
         renderSize = mFullScreenSize;
+        code = 'F';
     }
     else
     {
-        renderSize = [self stretchNSSize: mNaturalSize
-                              withinRect: [self activeBounds]].size;
+        renderSize = [self stretchedSize: [self activeBounds].size];
+        code = 'W';
     }
+    // NSLog(@"renderSize (%c): %@", code, NSStringFromSize(renderSize));
 
     if (mRenderInCoreVideoThread)
     {
