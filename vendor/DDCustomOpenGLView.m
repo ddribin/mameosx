@@ -43,10 +43,10 @@
 - (void) enterFullScreen;
 - (void) exitFullScreen;
 - (void) fullscreenEventLoop;
-- (CGDisplayErr) setFullScreenParametersForDisplay: (CGDirectDisplayID) display
-                                             width: (size_t) width 
-                                            height: (size_t) height
-                                           refresh: (CGRefreshRate) fps;
+- (CGDisplayErr) switchToDisplayMode: (CGDirectDisplayID) display
+                               width: (size_t) width 
+                              height: (size_t) height
+                         refreshRate: (CGRefreshRate) refreshRate;
 - (CGDisplayFadeReservationToken) displayFadeOut;
 - (void) displayFadeIn: (CGDisplayFadeReservationToken) token;
 
@@ -503,6 +503,22 @@
 {
 }
 
+
+- (CFDictionaryRef) findBestDisplayMode: (CGDirectDisplayID) display
+                                  width: (size_t) width 
+                                 height: (size_t) height
+                            refreshRate: (CGRefreshRate) refreshRate;
+{
+    return CGDisplayBestModeForParametersAndRefreshRateWithProperty(
+        display,
+        CGDisplayBitsPerPixel(display),     
+        width,                              
+        height,                             
+        refreshRate,                                
+        kCGDisplayModeIsSafeForHardware,
+        NULL);
+}
+
 @end
 
 #pragma mark -
@@ -624,10 +640,10 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
         // change the display device resolution
         if (mSwitchModesForFullScreen)
         {
-            [self setFullScreenParametersForDisplay: kCGDirectMainDisplay
-                                              width: mFullScreenWidth
-                                             height: mFullScreenHeight
-                                            refresh: mFullScreenRefreshRate];
+            [self switchToDisplayMode: kCGDirectMainDisplay
+                                width: mFullScreenWidth
+                               height: mFullScreenHeight
+                          refreshRate: mFullScreenRefreshRate];
         }
         
         // find out the new device bounds
@@ -725,20 +741,16 @@ CVReturn static myCVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink,
     }
 }
 
-- (CGDisplayErr) setFullScreenParametersForDisplay: (CGDirectDisplayID) display
-                                             width: (size_t) width 
-                                            height: (size_t) height
-                                           refresh: (CGRefreshRate) refreshRate;
+- (CGDisplayErr) switchToDisplayMode: (CGDirectDisplayID) display
+                               width: (size_t) width 
+                              height: (size_t) height
+                         refreshRate: (CGRefreshRate) refreshRate;
 {
     CFDictionaryRef displayMode =
-        CGDisplayBestModeForParametersAndRefreshRateWithProperty(
-            display,
-            CGDisplayBitsPerPixel(display),     
-            width,                              
-            height,                             
-            refreshRate,                                
-            kCGDisplayModeIsSafeForHardware,
-            NULL);
+        [self findBestDisplayMode: display
+                            width: width
+                           height: height
+                      refreshRate: refreshRate];
     return CGDisplaySwitchToMode(display, displayMode);
 }
 

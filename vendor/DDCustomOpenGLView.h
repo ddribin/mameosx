@@ -119,4 +119,9 @@
 - (void) didEnterFullScreen: (NSSize) fullScreenSize;
 - (void) didExitFullScreen;
 
+- (CFDictionaryRef) findBestDisplayMode: (CGDirectDisplayID) display
+                                  width: (size_t) width 
+                                 height: (size_t) height
+                            refreshRate: (CGRefreshRate) refreshRate;
+
 @end
