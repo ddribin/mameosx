@@ -48,6 +48,14 @@ typedef enum _MameFrameRenderingOption
     // MameRenderFrameInQCComposition,
 } MameFrameRenderingOption;
 
+typedef enum _MameFullScreenZoom
+{
+    MameFullScreenMaximum,
+    MameFullScreenIntegral,
+    MameFullScreenIndependentIntegral,
+    MameFullScreenStretch,
+} MameFullScreenZoom;
+
 @interface MameView : DDCustomOpenGLView
 {
     IBOutlet MameController * mController;
@@ -74,6 +82,7 @@ typedef enum _MameFrameRenderingOption
     NSSize mFullScreenSize;
     BOOL mKeepAspectRatio;
     BOOL mClearToRed;
+    MameFullScreenZoom mFullScreenZoom;
     
     MameInputController * mInputController;
     MameAudioController * mAudioController;
@@ -111,6 +120,9 @@ typedef enum _MameFrameRenderingOption
 - (NSSize) stretchedSize: (NSSize) boundingSize;
 - (NSSize) integralStretchedSize: (NSSize) boundingSize;
 - (NSSize) independentIntegralStretchedSize: (NSSize) boundingSize;
+
+- (MameFullScreenZoom) fullScreenZoom;
+- (void) setFullScreenZoom: (MameFullScreenZoom) fullScreenZoom;
 
 #pragma mark -
 #pragma mark Rendering

@@ -82,6 +82,13 @@ enum
         MameRenderInMameThreadValue,
         nil];
     
+    mFullScreenZoomValues = [[NSArray alloc] initWithObjects:
+        MameFullScreenMaximumValue,
+        MameFullScreenIntegralValue,
+        MameFullScreenIndependentIntegralValue,
+        MameFullScreenStretchValue,
+        nil];
+    
     return self;
 }
 
@@ -106,11 +113,13 @@ enum
     [mWindowedZoomLevels release];
     [mFrameRenderingValues release];
     [mRenderingThreadValues release];
+    [mFullScreenZoomValues release];
     [mButtonsByKey release];
     
     mWindowedZoomLevels = nil;
     mFrameRenderingValues = nil;
     mRenderingThreadValues = nil;
+    mFullScreenZoomValues = nil;
     mButtonsByKey = nil;
     [super dealloc];
 }
@@ -184,6 +193,21 @@ enum
         [mWindowedZoomLevels objectAtIndex: windowedZoomLevelIndex]];
 }
 
+- (unsigned) fullScreenZoomLevelIndex;
+{
+    MamePreferences * preferences = [MamePreferences standardPreferences];
+    NSString * zoomLevel = [preferences fullScreenZoomLevel];
+    return [mFullScreenZoomValues indexOfObject: zoomLevel];
+}
+
+- (void) setFullScreenZoomLevelIndex: (unsigned) fullScreenZoomLevelIndex;
+{
+    NSString * zoomLevel =
+        [mFullScreenZoomValues objectAtIndex: fullScreenZoomLevelIndex];
+    MamePreferences * preferences = [MamePreferences standardPreferences];
+    [preferences setFullScreenZoomLevel: zoomLevel];
+}
+
 - (unsigned) frameRenderingIndex;
 {
     MamePreferences * preferences = [MamePreferences standardPreferences];
@@ -238,6 +262,8 @@ enum
         MameNXLogLevelKey,
         MameSyncToRefreshKey, MameThrottledKey, MameLinearFilterKey,
         MameFullScreenKey,
+        MameSwitchResolutionsKey,
+        MameFullScreenZoomLevelKey,
         MameKeepAspectKey,
         MameWindowedZoomLevelKey,
         MameFrameRenderingKey,
@@ -249,6 +275,7 @@ enum
     [self willChangeValueForKey: @"windowedZoomLevelIndex"];
     [self willChangeValueForKey: @"frameRenderingIndex"];
     [self willChangeValueForKey: @"renderingThreadIndex"];
+    [self willChangeValueForKey: @"fullScreenZoomLevelIndex"];
     
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     NSEnumerator * e = [keys objectEnumerator];
@@ -261,6 +288,7 @@ enum
     [self didChangeValueForKey: @"windowedZoomLevelIndex"];
     [self didChangeValueForKey: @"frameRenderingIndex"];
     [self didChangeValueForKey: @"renderingThreadIndex"];
+    [self didChangeValueForKey: @"fullScreenZoomLevelIndex"];
 
     [self updatePopUpButtons];
 }

@@ -127,6 +127,7 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     mClearToRed = NO;
     [self setFrameRenderingOption: [self frameRenderingOptionDefault]];
     [self setRenderInCoreVideoThread: [self renderInCoreVideoThreadDefault]];
+    [self setFullScreenZoom: MameFullScreenMaximum];
     
     mRenderer = [[MameRenderer alloc] init];
     mInputController = [[MameInputController alloc] init];
@@ -341,6 +342,107 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     return size;
 }
 
+- (MameFullScreenZoom) fullScreenZoom;
+{
+    return mFullScreenZoom;
+}
+
+- (void) setFullScreenZoom: (MameFullScreenZoom) fullScreenZoom;
+{
+    mFullScreenZoom = fullScreenZoom;
+}
+
+- (CFDictionaryRef) findBestDisplayMode: (CGDirectDisplayID) display
+                                  width: (size_t) width 
+                                 height: (size_t) height
+                            refreshRate: (CGRefreshRate) refreshRate;
+{
+    CFDictionaryRef bestMode = 0;
+    NXLogDebug(@"Find best mode for: %dx%d@%.1f",
+               width, height, refreshRate);
+
+    int bitDepth = CGDisplayBitsPerPixel(display);
+    float bestScore = 0.0;
+    CFArrayRef modeList = CGDisplayAvailableModes(display);
+    CFIndex count = CFArrayGetCount(modeList);
+    CFIndex index;
+    for (index = 0; index < count; index++)
+    {
+        CFDictionaryRef mode = CFArrayGetValueAtIndex(modeList, index);
+        NSNumber * number = (NSNumber *)
+            CFDictionaryGetValue(mode, kCGDisplayBitsPerPixel);
+        int modeBitDepth = [number intValue];
+        
+        if (modeBitDepth != bitDepth)
+            continue;
+        
+        number = (NSNumber *)
+            CFDictionaryGetValue(mode, kCGDisplayModeIsSafeForHardware);
+        BOOL isSafeForHardware = [number boolValue];
+        if (!isSafeForHardware)
+            continue;
+       
+        number = (NSNumber *) CFDictionaryGetValue(mode, kCGDisplayWidth);
+        size_t modeWidth = [number intValue];
+        number = (NSNumber *) CFDictionaryGetValue(mode, kCGDisplayHeight);
+        size_t modeHeight = [number intValue];
+
+        // compute initial score based on difference between target and current
+        float sizeScore = 1.0f /
+            (1.0f + fabs(modeWidth - width) + fabs(modeHeight - height));
+        
+        // if the mode is too small, give a big penalty
+        if (modeWidth < mNaturalSize.width || modeHeight < mNaturalSize.height)
+            sizeScore *= 0.01f;
+        
+        // if mode is smaller than we'd like, it only scores up to 0.1
+        if (modeWidth < width || modeHeight < height)
+            sizeScore *= 0.1f;
+        
+        // if we're looking for a particular mode, that's a winner
+        if (modeWidth == width && modeHeight == width)
+            sizeScore = 2.0f;
+        
+        number = (NSNumber *) CFDictionaryGetValue(mode, kCGDisplayRefreshRate);
+        float modeRefreshRate = [number floatValue];
+
+        // compute refresh score
+        float refreshScore = 1.0f / (1.0f + fabs(modeRefreshRate - refreshRate));
+        
+        // if refresh is smaller than we'd like, it only scores up to 0.1
+        if (modeRefreshRate < refreshRate)
+            refreshScore *= 0.1;
+        
+        // if we're looking for a particular refresh, make sure it matches
+        if (modeRefreshRate == refreshRate)
+            refreshScore = 2.0f;
+       
+        number = (NSNumber *)
+            CFDictionaryGetValue(mode, kCGDisplayModeIsStretched);
+        BOOL isStretched = [number boolValue];
+        float stretchedScore = isStretched? 0.1f : 2.0f;
+        
+        float finalScore = sizeScore + refreshScore + stretchedScore;
+        BOOL foundBest = finalScore > bestScore;
+        
+        NXLogDebug(@"Mode: %dx%d@%.1f%s = %f + %f + %f = %f > %f",
+                   modeWidth, modeHeight, modeRefreshRate,
+                   (isStretched? " (S)" : "    "), 
+                   sizeScore, refreshScore, stretchedScore, finalScore,
+                   bestScore);
+        
+        if (foundBest)
+        {
+            bestScore = finalScore;
+            bestMode = mode;
+        }
+
+    }
+   
+    NXLogInfo(@"Best display mode: %@", (NSDictionary *) bestMode);
+    return bestMode;
+}
+
 #pragma mark -
 
 - (int) osd_init: (running_machine *) machine;
@@ -378,14 +480,8 @@ NSString * MameExitStatusKey = @"MameExitStatus";
         mOptimalSize.height *= 2;
     }
     
-#if 0
-    [self setFullScreenWidth: mOptimalSize.width height: mOptimalSize.height];
-    mFullScreenSize = NSMakeSize([self fullScreenWidth], 
-                                 [self fullScreenHeight]);
-#else
-    [self setSwitchModesForFullScreen: NO];
-    [self setFadeTime: 0.0];
-#endif
+    [self setFullScreenWidth: mNaturalSize.width height: mNaturalSize.height];
+    [self setFullScreenRefreshRate: mMachine->screen[0].refresh];
 
     [mMameLock unlock];
     [self performSelectorOnMainThread: @selector(sendMameWillStartGame)
@@ -420,6 +516,16 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     [self startAnimation];
     
     return 0;
+}
+
+- (void) setSwitchModesForFullScreen: (BOOL) switchModesForFullScreen;
+{
+    // Turn off fading, if not switching resolutions
+    if (!switchModesForFullScreen)
+        [self setFadeTime: 0.0];
+    else
+        [self setFadeTime: 0.25];
+    [super setSwitchModesForFullScreen: switchModesForFullScreen];
 }
 
 - (void) mameDidExit: (running_machine *) machine;
@@ -913,12 +1019,29 @@ NSString * MameExitStatusKey = @"MameExitStatus";
 
 - (void) didEnterFullScreen: (NSSize) fullScreenSize;
 {
-    mFullScreenSize = [self stretchedSize: fullScreenSize];
-    // mFullScreenSize = [self integralStretchedSize: fullScreenSize];
-    // mFullScreenSize = [self independentIntegralStretchedSize: fullScreenSize];
-    // mFullScreenSize = fullScreenSize;
+    switch (mFullScreenZoom)
+    {
+        case MameFullScreenIntegral:
+            mFullScreenSize = [self integralStretchedSize: fullScreenSize];
+            break;
+            
+        case MameFullScreenIndependentIntegral:
+            mFullScreenSize =
+                [self independentIntegralStretchedSize: fullScreenSize];
+            break;
+            
+        case MameFullScreenStretch:
+            mFullScreenSize = fullScreenSize;
+            break;
+            
+        case MameFullScreenMaximum:
+        default:
+            mFullScreenSize = [self stretchedSize: fullScreenSize];
+            break;
+    }
 
-    NXLogInfo(@"Full screen size: %@", NSStringFromSize(mFullScreenSize));
+    NXLogInfo(@"Full screen size: %@ of %@", NSStringFromSize(mFullScreenSize),
+              NSStringFromSize(fullScreenSize));
  
     [self pause: mUnpauseOnFullScreenTransition];
 }

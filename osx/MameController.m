@@ -610,6 +610,39 @@ void exit_sleeper()
                  afterDelay: 0.0f];
 }
 
+- (MameFrameRenderingOption) frameRenderingOption: (NSString *) frameRendering;
+{
+    MameFrameRenderingOption frameRenderingOption = 
+        [mMameView frameRenderingOptionDefault];
+    if ([frameRendering isEqualToString: MameRenderFrameInOpenGLValue])
+        frameRenderingOption = MameRenderFrameInOpenGL;
+    else if ([frameRendering isEqualToString: MameRenderFrameInCoreImageValue])
+        frameRenderingOption = MameRenderFrameInCoreImage;
+    return frameRenderingOption;
+}
+
+- (BOOL) renderInCoreVideo: (NSString *) renderingThread;
+{
+    BOOL renderInCoreVideo = [mMameView renderInCoreVideoThreadDefault];
+    if ([renderingThread isEqualToString: MameRenderInCoreVideoThreadValue])
+        renderInCoreVideo = YES;
+    else if ([renderingThread isEqualToString: MameRenderInMameThreadValue])
+        renderInCoreVideo = NO;
+    return renderInCoreVideo;
+}
+
+- (MameFullScreenZoom) fullScreenZoom: (NSString *) fullScreenZoomLevel;
+{
+    MameFullScreenZoom fullScreenZoom = MameFullScreenMaximum;
+    if ([fullScreenZoomLevel isEqualToString: MameFullScreenIntegralValue])
+        fullScreenZoom = MameFullScreenIntegral;
+    else if ([fullScreenZoomLevel isEqualToString: MameFullScreenIndependentIntegralValue])
+        fullScreenZoom = MameFullScreenIndependentIntegral;
+    else if ([fullScreenZoomLevel isEqualToString: MameFullScreenStretchValue])
+        fullScreenZoom = MameFullScreenStretch;
+    return fullScreenZoom;
+}
+
 - (void) syncWithUserDefaults;
 {
     MamePreferences * preferences = [MamePreferences standardPreferences];
@@ -621,24 +654,20 @@ void exit_sleeper()
     [mMameView setAudioEnabled: [preferences soundEnabled]];
     
     NSString * frameRendering = [preferences frameRendering];
-    MameFrameRenderingOption frameRenderingOption = 
-        [mMameView frameRenderingOptionDefault];
-    if ([frameRendering isEqualToString: MameRenderFrameInOpenGLValue])
-        frameRenderingOption = MameRenderFrameInOpenGL;
-    else if ([frameRendering isEqualToString: MameRenderFrameInCoreImageValue])
-        frameRenderingOption = MameRenderFrameInCoreImage;
-    [mMameView setFrameRenderingOption: frameRenderingOption];
+    [mMameView setFrameRenderingOption:
+        [self frameRenderingOption: frameRendering]];
     
     NSString * renderingThread = [preferences renderingThread];
-    BOOL renderInCoreVideo = [mMameView renderInCoreVideoThreadDefault];
-    if ([renderingThread isEqualToString: MameRenderInCoreVideoThreadValue])
-        renderInCoreVideo = YES;
-    else if ([renderingThread isEqualToString: MameRenderInMameThreadValue])
-        renderInCoreVideo = NO;
-    [mMameView setRenderInCoreVideoThread: renderInCoreVideo];
+    [mMameView setRenderInCoreVideoThread:
+        [self renderInCoreVideo: renderingThread]];
+    
+    NSString * fullScreenZoomLevel = [preferences fullScreenZoomLevel];
+    [mMameView setFullScreenZoom:
+        [self fullScreenZoom: fullScreenZoomLevel]];
 
     [mMameView setClearToRed: [preferences clearToRed]];
     [mMameView setKeepAspectRatio: [preferences keepAspect]];
+    [mMameView setSwitchModesForFullScreen: [preferences switchResolutions]];
     
     [preferences copyToMameConfiguration: mConfiguration];
     

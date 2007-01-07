@@ -34,6 +34,7 @@
     NSArray * mWindowedZoomLevels;
     NSArray * mFrameRenderingValues;
     NSArray * mRenderingThreadValues;
+    NSArray * mFullScreenZoomValues;
     NSDictionary * mButtonsByKey;
 }
 
@@ -47,6 +48,9 @@
 
 - (unsigned) windowedZoomLevelIndex;
 - (void) setWindowedZoomLevelIndex: (unsigned) windowedZoomLevelIndex;
+
+- (unsigned) fullScreenZoomLevelIndex;
+- (void) setFullScreenZoomLevelIndex: (unsigned) fullScreenZoomLevelIndex;
 
 - (unsigned) frameRenderingIndex;
 - (void) setFrameRenderingIndex: (unsigned) frameRenderingIndex;
