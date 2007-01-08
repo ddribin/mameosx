@@ -321,6 +321,7 @@
 		558D9F2A0AAE70B1007B2A32 /* cpu_config.h in Headers */ = {isa = PBXBuildFile; fileRef = 558D9F290AAE70B1007B2A32 /* cpu_config.h */; };
 		558D9F2C0AAE70E9007B2A32 /* sound_config.h in Headers */ = {isa = PBXBuildFile; fileRef = 558D9F2B0AAE70E9007B2A32 /* sound_config.h */; };
 		558D9F2E0AAE7117007B2A32 /* config.h in Headers */ = {isa = PBXBuildFile; fileRef = 558D9F2D0AAE7117007B2A32 /* config.h */; };
+		55917B090B52787C005308AC /* mameosx.pch in Headers */ = {isa = PBXBuildFile; fileRef = 55917B080B52787C005308AC /* mameosx.pch */; };
 		5595EEF00B1AC6B200631777 /* symbols.c in Sources */ = {isa = PBXBuildFile; fileRef = 5595EEEF0B1AC6B200631777 /* symbols.c */; };
 		5595EFA30B1BC84600631777 /* RomAuditWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5595EFA10B1BC84600631777 /* RomAuditWindowController.h */; };
 		5595EFA40B1BC84600631777 /* RomAuditWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5595EFA20B1BC84600631777 /* RomAuditWindowController.m */; };
@@ -2467,8 +2468,8 @@
 		55F8AB6D0B336C5400304116 /* 2203intf.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F8AB4C0B336C5400304116 /* 2203intf.c */; };
 		55F8AB6E0B336C5400304116 /* 6502dasm.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F8AB4D0B336C5400304116 /* 6502dasm.c */; };
 		55F8AB6F0B336C5400304116 /* acitya.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F8AB4E0B336C5400304116 /* acitya.c */; };
-		55F8AB700B336C5400304116 /* argus.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F8AB4F0B336C5400304116 /* argus.c */; };
-		55F8AB710B336C5400304116 /* argus.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F8AB500B336C5400304116 /* argus.c */; };
+		55F8AB700B336C5400304116 /* argus.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F8AB4F0B336C5400304116; };
+		55F8AB710B336C5400304116 /* argus.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F8AB500B336C5400304116; };
 		55F8AB720B336C5400304116 /* ay8910.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F8AB510B336C5400304116 /* ay8910.c */; };
 		55F8AB730B336C5400304116 /* crystal.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F8AB520B336C5400304116 /* crystal.c */; };
 		55F8AB740B336C5400304116 /* dac.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F8AB530B336C5400304116 /* dac.c */; };
@@ -2480,8 +2481,8 @@
 		55F8AB7A0B336C5400304116 /* mspacman.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F8AB590B336C5400304116 /* mspacman.c */; };
 		55F8AB7B0B336C5400304116 /* namco.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F8AB5A0B336C5400304116 /* namco.c */; };
 		55F8AB7C0B336C5400304116 /* nes_apu.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F8AB5B0B336C5400304116 /* nes_apu.c */; };
-		55F8AB7D0B336C5400304116 /* pacman.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F8AB5C0B336C5400304116 /* pacman.c */; };
-		55F8AB7E0B336C5400304116 /* pacman.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F8AB5D0B336C5400304116 /* pacman.c */; };
+		55F8AB7D0B336C5400304116 /* pacman.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F8AB5C0B336C5400304116; };
+		55F8AB7E0B336C5400304116 /* pacman.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F8AB5D0B336C5400304116; };
 		55F8AB7F0B336C5400304116 /* pacplus.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F8AB5E0B336C5400304116 /* pacplus.c */; };
 		55F8AB800B336C5400304116 /* pengo.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F8AB5F0B336C5400304116 /* pengo.c */; };
 		55F8AB810B336C5400304116 /* ppu2c0x.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F8AB600B336C5400304116 /* ppu2c0x.c */; };
@@ -3197,6 +3198,7 @@
 		558D9F290AAE70B1007B2A32 /* cpu_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cpu_config.h; sourceTree = "<group>"; };
 		558D9F2B0AAE70E9007B2A32 /* sound_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sound_config.h; sourceTree = "<group>"; };
 		558D9F2D0AAE7117007B2A32 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
+		55917B080B52787C005308AC /* mameosx.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mameosx.pch; sourceTree = "<group>"; };
 		5595EEEF0B1AC6B200631777 /* symbols.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = symbols.c; sourceTree = "<group>"; };
 		5595EFA10B1BC84600631777 /* RomAuditWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RomAuditWindowController.h; sourceTree = "<group>"; };
 		5595EFA20B1BC84600631777 /* RomAuditWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RomAuditWindowController.m; sourceTree = "<group>"; };
@@ -5332,8 +5334,8 @@
 		55F8AB4C0B336C5400304116 /* 2203intf.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = 2203intf.c; path = src/sound/2203intf.c; sourceTree = "<group>"; };
 		55F8AB4D0B336C5400304116 /* 6502dasm.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = 6502dasm.c; path = src/cpu/m6502/6502dasm.c; sourceTree = "<group>"; };
 		55F8AB4E0B336C5400304116 /* acitya.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = acitya.c; path = src/machine/acitya.c; sourceTree = "<group>"; };
-		55F8AB4F0B336C5400304116 /* argus.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = argus.c; path = src/vidhrdw/argus.c; sourceTree = "<group>"; };
-		55F8AB500B336C5400304116 /* argus.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = argus.c; path = src/drivers/argus.c; sourceTree = "<group>"; };
+		55F8AB4F0B336C5400304116 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = argus.c; path = src/vidhrdw/argus.c; sourceTree = "<group>"; };
+		55F8AB500B336C5400304116 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = argus.c; path = src/drivers/argus.c; sourceTree = "<group>"; };
 		55F8AB510B336C5400304116 /* ay8910.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = ay8910.c; path = src/sound/ay8910.c; sourceTree = "<group>"; };
 		55F8AB520B336C5400304116 /* crystal.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = crystal.c; path = src/drivers/crystal.c; sourceTree = "<group>"; };
 		55F8AB530B336C5400304116 /* dac.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = dac.c; path = src/sound/dac.c; sourceTree = "<group>"; };
@@ -5345,8 +5347,8 @@
 		55F8AB590B336C5400304116 /* mspacman.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = mspacman.c; path = src/machine/mspacman.c; sourceTree = "<group>"; };
 		55F8AB5A0B336C5400304116 /* namco.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = namco.c; path = src/sound/namco.c; sourceTree = "<group>"; };
 		55F8AB5B0B336C5400304116 /* nes_apu.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = nes_apu.c; path = src/sound/nes_apu.c; sourceTree = "<group>"; };
-		55F8AB5C0B336C5400304116 /* pacman.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = pacman.c; path = src/vidhrdw/pacman.c; sourceTree = "<group>"; };
-		55F8AB5D0B336C5400304116 /* pacman.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = pacman.c; path = src/drivers/pacman.c; sourceTree = "<group>"; };
+		55F8AB5C0B336C5400304116 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = pacman.c; path = src/vidhrdw/pacman.c; sourceTree = "<group>"; };
+		55F8AB5D0B336C5400304116 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = pacman.c; path = src/drivers/pacman.c; sourceTree = "<group>"; };
 		55F8AB5E0B336C5400304116 /* pacplus.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = pacplus.c; path = src/machine/pacplus.c; sourceTree = "<group>"; };
 		55F8AB5F0B336C5400304116 /* pengo.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = pengo.c; path = src/drivers/pengo.c; sourceTree = "<group>"; };
 		55F8AB600B336C5400304116 /* ppu2c0x.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = ppu2c0x.c; path = src/vidhrdw/ppu2c0x.c; sourceTree = "<group>"; };
@@ -5547,6 +5549,7 @@
 				558D9F2B0AAE70E9007B2A32 /* sound_config.h */,
 				55FEC7680AEC51DA001A1CAB /* tinymame.pch */,
 				555329F30B027FBD0092FC09 /* versions.xcconfig */,
+				55917B080B52787C005308AC /* mameosx.pch */,
 			);
 			name = config;
 			sourceTree = "<group>";
@@ -8421,8 +8424,8 @@
 				55F8AB4C0B336C5400304116 /* 2203intf.c */,
 				55F8AB4D0B336C5400304116 /* 6502dasm.c */,
 				55F8AB4E0B336C5400304116 /* acitya.c */,
-				55F8AB4F0B336C5400304116 /* argus.c */,
-				55F8AB500B336C5400304116 /* argus.c */,
+				55F8AB4F0B336C5400304116,
+				55F8AB500B336C5400304116,
 				55F8AB510B336C5400304116 /* ay8910.c */,
 				55F8AB520B336C5400304116 /* crystal.c */,
 				55F8AB530B336C5400304116 /* dac.c */,
@@ -8434,8 +8437,8 @@
 				55F8AB590B336C5400304116 /* mspacman.c */,
 				55F8AB5A0B336C5400304116 /* namco.c */,
 				55F8AB5B0B336C5400304116 /* nes_apu.c */,
-				55F8AB5C0B336C5400304116 /* pacman.c */,
-				55F8AB5D0B336C5400304116 /* pacman.c */,
+				55F8AB5C0B336C5400304116,
+				55F8AB5D0B336C5400304116,
 				55F8AB5E0B336C5400304116 /* pacplus.c */,
 				55F8AB5F0B336C5400304116 /* pengo.c */,
 				55F8AB600B336C5400304116 /* ppu2c0x.c */,
@@ -8649,6 +8652,7 @@
 				55D4039B0B3664DF00E5E613 /* DDAudioUnitNode.h in Headers */,
 				55D4039D0B3664DF00E5E613 /* DDAudioUnitPreset.h in Headers */,
 				55D4039F0B3664DF00E5E613 /* DDCoreAudio.h in Headers */,
+				55917B090B52787C005308AC /* mameosx.pch in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9036,6 +9040,7 @@
 				55BEF9830AEC5C7200357340 /* All */,
 				556A4C270AA50D6200602CC5 /* MAME OS X (tiny) */,
 				55BEFB0C0AEC6D0C00357340 /* MAME OS X */,
+				55BEF99F0AEC5E5C00357340 /* MameKit */,
 				55D2925C0B17567A002C9199 /* app */,
 				55BEF9EF0AEC618D00357340 /* osd */,
 				556A42D30AA4EBA200602CC5 /* core */,
@@ -9049,7 +9054,6 @@
 				556A4A000AA4F8EC00602CC5 /* localzlib */,
 				557449DF0AAB35D800EC1423 /* file2str */,
 				5501E8900AB275F900756C9B /* UnitTests */,
-				55BEF99F0AEC5E5C00357340 /* MameKit */,
 				55785CC60AFAF55D000AE388 /* layouts */,
 				553A0A300B00541E00531E1F /* m68kmake */,
 				55D293B80B17774C002C9199 /* Disk Image */,
@@ -12335,7 +12339,7 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = config.h;
+				GCC_PREFIX_HEADER = mameosx.pch;
 				INSTALL_PATH = /usr/local/lib;
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -12358,7 +12362,7 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = config.h;
+				GCC_PREFIX_HEADER = mameosx.pch;
 				INSTALL_PATH = /usr/local/lib;
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -12382,7 +12386,7 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = config.h;
+				GCC_PREFIX_HEADER = mameosx.pch;
 				INFOPLIST_FILE = osx/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
@@ -12407,7 +12411,7 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = config.h;
+				GCC_PREFIX_HEADER = mameosx.pch;
 				INFOPLIST_FILE = osx/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
@@ -12465,7 +12469,7 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = config.h;
+				GCC_PREFIX_HEADER = mameosx.pch;
 				INSTALL_PATH = /usr/local/lib;
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -12487,7 +12491,7 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = config.h;
+				GCC_PREFIX_HEADER = mameosx.pch;
 				INSTALL_PATH = /usr/local/lib;
 				OTHER_LDFLAGS = (
 					"-framework",
