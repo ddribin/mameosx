@@ -47,8 +47,8 @@
 #pragma mark -
 #pragma mark MAME OS X Options
 
-- (NSString *) nxLogLevel;
-- (void) setNxLogLevel: (NSString *) nxLogLevel;
+- (NSString *) jrLogLevel;
+- (void) setJrLogLevel: (NSString *) jrLogLevel;
 
 - (NSString *) windowedZoomLevel;
 - (void) setWindowedZoomLevel: (NSString *) windowedZoomLevel;
@@ -192,7 +192,7 @@
 #pragma mark -
 #pragma mark Preference Keys
 
-extern NSString * MameNXLogLevelKey;
+extern NSString * MameJRLogLevelKey;
 extern NSString * MameVersionUrlKey;
 extern NSString * MameCheckUpdatesAtStartupKey;
 extern NSString * MameGameKey;

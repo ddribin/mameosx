@@ -25,7 +25,7 @@
 #import "MameTimingController.h"
 #import "MameController.h"
 #include <mach/mach_time.h>
-#import "NXLog.h"
+#import "JRLog.h"
 
 #define OSX_LOG_TIMING 0
 
@@ -110,7 +110,7 @@ static inline cycles_t osd_cycles_internal()
     
     mCyclesPerSecond = 1000000000LL *
         ((uint64_t)info.denom) / ((uint64_t)info.numer);
-    NXLogDebug(@"cycles/second = %u/%u = %lld\n", info.denom, info.numer,
+    JRLogDebug(@"cycles/second = %u/%u = %lld\n", info.denom, info.numer,
                mCyclesPerSecond);
 
     mThrottleLastCycles = 0;
@@ -210,7 +210,7 @@ static inline cycles_t osd_cycles_internal()
     // NSLog(@"diff: %llu, last: %llu", diffCycles, mThrottleLastCycles);
     if (diffCycles > cyclesPerSecond)
     {
-        NXLogDebug(@"More than 1 sec, diff: %qi, cps: %qi", diffCycles, cyclesPerSecond);
+        JRLogDebug(@"More than 1 sec, diff: %qi, cps: %qi", diffCycles, cyclesPerSecond);
         // Resync
 #if OSX_LOG_TIMING
         code = '1';

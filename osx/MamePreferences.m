@@ -35,7 +35,7 @@
 
 static MamePreferences * sInstance;
 
-NSString * MameNXLogLevelKey = @"NXLogLevel";
+NSString * MameJRLogLevelKey = @"JRLogLevel";
 NSString * MameVersionUrlKey = @"VersionUrl";
 NSString * MameCheckUpdatesAtStartupKey = @"CheckUpdatesAtStartup";
 NSString * MameGameKey = @"Game";
@@ -155,7 +155,7 @@ NSString * MameBiosKey = @"Bios";
     NSMutableDictionary * defaultValues = [NSMutableDictionary dictionary];
     
     [defaultValues setObject: @"WARN"
-                      forKey: MameNXLogLevelKey];
+                      forKey: MameJRLogLevelKey];
     
     [defaultValues setObject: @"http://mameosx.sourceforge.net/version.plist"
                       forKey: MameVersionUrlKey];
@@ -256,14 +256,14 @@ NSString * MameBiosKey = @"Bios";
 #pragma mark -
 #pragma mark MAME OS X Options
 
-- (NSString *) nxLogLevel;
+- (NSString *) jrLogLevel;
 {
-    return [mDefaults stringForKey: MameNXLogLevelKey];
+    return [mDefaults stringForKey: MameJRLogLevelKey];
 }
 
-- (void) setNxLogLevel: (NSString *) nxLogLevel;
+- (void) setJrLogLevel: (NSString *) jrLogLevel;
 {
-    [mDefaults setObject: nxLogLevel forKey: MameNXLogLevelKey];
+    [mDefaults setObject: jrLogLevel forKey: MameJRLogLevelKey];
 }
 
 - (NSString *) windowedZoomLevel;

@@ -31,7 +31,7 @@
 #import "MameFileManager.h"
 #import "MameConfiguration.h"
 #import "MameFilter.h"
-#import "NXLog.h"
+#import "JRLog.h"
 
 
 @interface MameView (Private)
@@ -358,7 +358,7 @@ NSString * MameExitStatusKey = @"MameExitStatus";
                             refreshRate: (CGRefreshRate) refreshRate;
 {
     CFDictionaryRef bestMode = 0;
-    NXLogDebug(@"Find best mode for: %dx%d@%.3f",
+    JRLogDebug(@"Find best mode for: %dx%d@%.3f",
                width, height, refreshRate);
 
     int bitDepth = CGDisplayBitsPerPixel(display);
@@ -433,7 +433,7 @@ NSString * MameExitStatusKey = @"MameExitStatus";
         float finalScore = sizeScore + refreshScore + stretchedScore;
         BOOL foundBest = finalScore > bestScore;
         
-        NXLogDebug(@"Mode: %4dx%4d@%7.3f%s = %f + %f + %f = %f > %f",
+        JRLogDebug(@"Mode: %4dx%4d@%7.3f%s = %f + %f + %f = %f > %f",
                    modeWidth, modeHeight, modeRefreshRate,
                    (isStretched? " (S)" : "    "), 
                    sizeScore, refreshScore, stretchedScore, finalScore,
@@ -447,7 +447,7 @@ NSString * MameExitStatusKey = @"MameExitStatus";
 
     }
    
-    NXLogInfo(@"Best display mode: %@", (NSDictionary *) bestMode);
+    JRLogInfo(@"Best display mode: %@", (NSDictionary *) bestMode);
     return bestMode;
 }
 
@@ -455,7 +455,7 @@ NSString * MameExitStatusKey = @"MameExitStatus";
 
 - (int) osd_init: (running_machine *) machine;
 {
-    NXLogInfo(@"osd_init");
+    JRLogInfo(@"osd_init");
     
     mMachine = machine;
     [mInputController osd_init];
@@ -476,7 +476,7 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     render_target_compute_visible_area(mTarget, minimumWidth, minimumHeight,
                                        mPixelAspectRatio, ROT0,
                                        &visibleWidth, &visibleHeight);
-    NXLogInfo(@"Aspect ratio: %f, Minimum size: %dx%d, visible size: %dx%d",
+    JRLogInfo(@"Aspect ratio: %f, Minimum size: %dx%d, visible size: %dx%d",
               mPixelAspectRatio, minimumWidth, minimumHeight, visibleWidth,
               visibleHeight);
     mNaturalSize = NSMakeSize(visibleWidth, visibleHeight);
@@ -513,8 +513,8 @@ NSString * MameExitStatusKey = @"MameExitStatus";
         default:
             frameRendering = @"Unknown";
     }
-    NXLogInfo(@"Render frames in: %@", frameRendering);
-    NXLogInfo(@"Render in Core Video thread: %@",
+    JRLogInfo(@"Render frames in: %@", frameRendering);
+    JRLogInfo(@"Render in Core Video thread: %@",
               mRenderInCoreVideoThread? @"YES" : @"NO");
     
     [mRenderer osd_init: [self openGLContext]
@@ -545,7 +545,7 @@ NSString * MameExitStatusKey = @"MameExitStatus";
 - (void) mameDidPause: (running_machine *) machine
                 puase: (int) pause; 
 {
-    NXLogDebug(@"mameDidPause: %d", pause);
+    JRLogDebug(@"mameDidPause: %d", pause);
     [mAudioController setPaused: ((pause == 1)? YES : NO)];
 }
 
@@ -641,7 +641,7 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     if (mGameIndex == -1)
         return NO;
     
-    NXLogInfo(@"Running %@", mGame);
+    JRLogInfo(@"Running %@", mGame);
     [NSThread detachNewThreadSelector: @selector(gameThread)
                              toTarget: self
                            withObject: nil];
@@ -658,7 +658,7 @@ NSString * MameExitStatusKey = @"MameExitStatus";
 
 - (void) togglePause;
 {
-    NXLogDebug(@"togglePause");
+    JRLogDebug(@"togglePause");
     if (!mMameIsRunning)
         return;
     [mMameLock lock];
@@ -695,7 +695,7 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     }
     [mMameLock unlock];
 
-    NXLogDebug(@"pause(%d) = %d, phase: %d", pause, isPaused, phase);
+    JRLogDebug(@"pause(%d) = %d, phase: %d", pause, isPaused, phase);
     return isPaused;
 }
 
@@ -944,7 +944,7 @@ NSString * MameExitStatusKey = @"MameExitStatus";
                          change: (NSDictionary *) change
                         context: (void *) context;
 {
-    NXLogDebug(@"observeValueForKeyPath: %@ ofObject: %@", keyPath, object);
+    JRLogDebug(@"observeValueForKeyPath: %@ ofObject: %@", keyPath, object);
     if ((object == mTimingController) &&
         [keyPath isEqualToString: @"throttled"])
     {
@@ -990,10 +990,10 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     [mMamePool release];
     [mMameLock unlock];
     
-    NXLogInfo(@"Average FPS displayed: %f (%qi frames)\n",
+    JRLogInfo(@"Average FPS displayed: %f (%qi frames)\n",
               [mTimingController fpsDisplayed],
               [mTimingController framesDisplayed]);
-    NXLogInfo(@"Average FPS rendered: %f (%qi frames)\n",
+    JRLogInfo(@"Average FPS rendered: %f (%qi frames)\n",
               [mTimingController fpsRendered],
               [mTimingController framesRendered]);
     [mTimingController gameFinished];
@@ -1048,7 +1048,7 @@ NSString * MameExitStatusKey = @"MameExitStatus";
             break;
     }
 
-    NXLogInfo(@"Full screen size: %@ of %@", NSStringFromSize(mFullScreenSize),
+    JRLogInfo(@"Full screen size: %@ of %@", NSStringFromSize(mFullScreenSize),
               NSStringFromSize(fullScreenSize));
  
     [self pause: mUnpauseOnFullScreenTransition];
@@ -1297,7 +1297,7 @@ NSString * MameExitStatusKey = @"MameExitStatus";
             IOCreateDisplayInfoDictionary(displayPort, 0);
         if (displayDict != nil)
         {
-            NXLogDebug(@"displayDict: %@", displayDict);
+            JRLogDebug(@"displayDict: %@", displayDict);
             // These sizes are in millimeters (mm)
             float horizontalSize =
                 [[displayDict objectForKey: NSSTR(kDisplayHorizontalImageSize)]

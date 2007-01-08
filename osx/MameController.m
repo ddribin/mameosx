@@ -33,7 +33,7 @@
 #import "MamePreferences.h"
 #import "RomAuditWindowController.h"
 #import "AudioEffectWindowController.h"
-#import "NXLog.h"
+#import "JRLog.h"
 
 #include <mach/mach_time.h>
 #include <unistd.h>
@@ -569,7 +569,7 @@ void exit_sleeper()
         
         if (mQuitOnError)
         {
-            NXLogError(@"MAME finished with error: %@ (%d)", message,
+            JRLogError(@"MAME finished with error: %@ (%d)", message,
                        exitStatus);
             [NSApp terminate: nil];
         }

@@ -8,6 +8,7 @@
     - Add preference to startup in full screen mode.
     - Add preference to switch full screen resolutions (off by default).
     - Add preference to control full screen zoom level.
+    - Upgrade NXLog to JRLog.
 
 <% version = "0.111" %>
 - version: "<%=version%>"

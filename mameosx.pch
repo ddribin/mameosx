@@ -9,3 +9,4 @@
 
 #include "config.h"
 #import <Cocoa/Cocoa.h>
+#import "JRLog.h"

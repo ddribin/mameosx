@@ -24,7 +24,7 @@
 
 #import "PreferencesWindowController.h"
 #import "MamePreferences.h"
-#import "NXLog.h"
+#import "JRLog.h"
 
 enum
 {
@@ -127,23 +127,23 @@ enum
 
 - (int) logLevelIndex;
 {
-    NXLogLevel logLevel = [[self class] defaultNXLogLevel];
+    JRLogLevel logLevel = [[self class] defaultJRLogLevel];
     switch (logLevel)
     {
-        case NXLogLevel_Error:
+        case JRLogLevel_Error:
             return LogErrorIndex;
             
-        case NXLogLevel_Warn:
+        case JRLogLevel_Warn:
             return LogWarnIndex;
             
-        case NXLogLevel_Info:
+        case JRLogLevel_Info:
             return LogInfoIndex;
                 
-        case NXLogLevel_Debug:
+        case JRLogLevel_Debug:
             return LogDebugIndex;
             
         default:
-            NXLogError(@"Unknown log level: %d", logLevel);
+            JRLogError(@"Unknown log level: %d", logLevel);
             return -1;
     }
 }
@@ -155,27 +155,27 @@ enum
     switch (logLevelIndex)
     {
         case LogErrorIndex:
-            [preferences setNxLogLevel: @"ERROR"];
-            [[self class] setDefaultNXLogLevel: NXLogLevel_Error];
+            [preferences setJrLogLevel: @"ERROR"];
+            [[self class] setDefaultJRLogLevel: JRLogLevel_Error];
             break;
             
         case LogWarnIndex:
-            [preferences setNxLogLevel: @"WARN"];
-            [[self class] setDefaultNXLogLevel: NXLogLevel_Warn];
+            [preferences setJrLogLevel: @"WARN"];
+            [[self class] setDefaultJRLogLevel: JRLogLevel_Warn];
             break;
             
         case LogInfoIndex:
-            [preferences setNxLogLevel: @"INFO"];
-            [[self class] setDefaultNXLogLevel: NXLogLevel_Info];
+            [preferences setJrLogLevel: @"INFO"];
+            [[self class] setDefaultJRLogLevel: JRLogLevel_Info];
             break;
             
         case LogDebugIndex:
-            [preferences setNxLogLevel: @"DEBUG"];
-            [[self class] setDefaultNXLogLevel: NXLogLevel_Debug];
+            [preferences setJrLogLevel: @"DEBUG"];
+            [[self class] setDefaultJRLogLevel: JRLogLevel_Debug];
             break;
             
         default:
-            NXLogError(@"Unknown log level index: %d", logLevelIndex);
+            JRLogError(@"Unknown log level index: %d", logLevelIndex);
             break;
     }
 }
@@ -259,7 +259,7 @@ enum
         MameRomPath, MameSamplePath, MameArtworkPath,
         MameCheckUpdatesAtStartupKey,
         MameSkipDisclaimerKey, MameSkipGameInfoKey, MameSkipWarningsKey,
-        MameNXLogLevelKey,
+        MameJRLogLevelKey,
         MameSyncToRefreshKey, MameThrottledKey, MameLinearFilterKey,
         MameFullScreenKey,
         MameSwitchResolutionsKey,

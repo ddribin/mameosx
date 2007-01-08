@@ -26,7 +26,7 @@
 #include <sys/stat.h>
 #import "osdepend.h"
 #import "MameFileManager.h"
-#import "NXLog.h"
+#import "JRLog.h"
 
 struct _osd_file
 {
@@ -100,7 +100,7 @@ struct _osd_file
                         file: (osd_file **) file
                     filesize: (UINT64 *) filesize;
 {
-    NXLogDebug(@"osd_open: path: %s, flags: 0x%08x", path, openflags);
+    JRLogDebug(@"osd_open: path: %s, flags: 0x%08x", path, openflags);
     NSAssert(path != 0, @"path is NULL");
     NSString * nsPath = [NSString stringWithUTF8String: path];
     nsPath = [self resolveAlias: nsPath];
@@ -115,7 +115,7 @@ struct _osd_file
 
     if (!fileExists && !createFlag)
     {
-        NXLogDebug(@"osd_open: not found");
+        JRLogDebug(@"osd_open: not found");
         return FILERR_NOT_FOUND;
     }
     
@@ -130,7 +130,7 @@ struct _osd_file
         mode = "wb";
     else
     {
-        NXLogError(@"osd_open: Invalid mode: 0x%08X, path: %@", openflags, nsPath);
+        JRLogError(@"osd_open: Invalid mode: 0x%08X, path: %@", openflags, nsPath);
         return FILERR_FAILURE;
     }
     
@@ -150,7 +150,7 @@ struct _osd_file
     (*file)->fileHandle = handle;
     if (filesize != NULL)
         *filesize = [fileAttributes fileSize];
-    NXLogDebug(@"osd_open success, path: %@, mode: %s", nsPath, mode);
+    JRLogDebug(@"osd_open success, path: %@, mode: %s", nsPath, mode);
     return FILERR_NONE;
 }
 
