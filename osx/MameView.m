@@ -358,7 +358,7 @@ NSString * MameExitStatusKey = @"MameExitStatus";
                             refreshRate: (CGRefreshRate) refreshRate;
 {
     CFDictionaryRef bestMode = 0;
-    NXLogDebug(@"Find best mode for: %dx%d@%.1f",
+    NXLogDebug(@"Find best mode for: %dx%d@%.3f",
                width, height, refreshRate);
 
     int bitDepth = CGDisplayBitsPerPixel(display);
@@ -399,8 +399,16 @@ NSString * MameExitStatusKey = @"MameExitStatus";
         if (modeWidth < width || modeHeight < height)
             sizeScore *= 0.1f;
         
-        // if we're looking for a particular mode, that's a winner
-        if (modeWidth == width && modeHeight == width)
+        // A multiple of either height or width is the third best choice
+        if (((modeWidth % width) == 0) || ((modeHeight % height) == 0))
+            sizeScore = 0.5f;
+
+        // A multiple height *and* width is the second best choice
+        if (((modeWidth % width) == 0) && ((modeHeight % height) == 0))
+            sizeScore = 1.0f;
+       
+        // An exact match, is the best
+        if (modeWidth == width && modeHeight == height)
             sizeScore = 2.0f;
         
         number = (NSNumber *) CFDictionaryGetValue(mode, kCGDisplayRefreshRate);
@@ -425,7 +433,7 @@ NSString * MameExitStatusKey = @"MameExitStatus";
         float finalScore = sizeScore + refreshScore + stretchedScore;
         BOOL foundBest = finalScore > bestScore;
         
-        NXLogDebug(@"Mode: %dx%d@%.1f%s = %f + %f + %f = %f > %f",
+        NXLogDebug(@"Mode: %4dx%4d@%7.3f%s = %f + %f + %f = %f > %f",
                    modeWidth, modeHeight, modeRefreshRate,
                    (isStretched? " (S)" : "    "), 
                    sizeScore, refreshScore, stretchedScore, finalScore,

@@ -97,8 +97,8 @@
     [tile setValue: [NSAffineTransform transform] forKey: @"inputTransform"];
     CIImage * tiledEffect = [tile valueForKey: @"outputImage"];
     
-    CIFilter * multiply = [CIFilter filterWithName: @"CIMultiplyCompositing"];
-    [multiply setValue: tiledEffect
+    CIFilter * multiply = [CIFilter filterWithName: @"CIMultiplyBlendMode"];
+    [multiply setValue: effect
                 forKey: @"inputBackgroundImage"];
     return [super initWithFilter: multiply];
 }
