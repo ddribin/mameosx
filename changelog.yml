@@ -4,6 +4,7 @@
   changes:
     - Implement auto frame skipping.
     - Implement standard F8, F9, F10 key bindings.
+    - Menu works better when game is paused.
     - Add preference to startup in full screen mode.
     - Add preference to switch full screen resolutions (off by default).
     - Add preference to control full screen zoom level.
