@@ -83,7 +83,7 @@
     mFullScreen = NO;
     mFullScreenWidth = 800;
     mFullScreenHeight = 600;
-    mFullScreenRefreshRate = 60;
+    mFullScreenRefreshRate = 60.0;
     mFadeTime = 0.5f;
     mSwitchModesForFullScreen = YES;
     
@@ -429,12 +429,12 @@
     return mFullScreenHeight;
 }
 
-- (void) setFullScreenRefreshRate: (int) fullScreenRefreshRate;
+- (void) setFullScreenRefreshRate: (double) fullScreenRefreshRate;
 {
     mFullScreenRefreshRate = fullScreenRefreshRate;
 }
 
-- (int) fullScreenRefreshRate;
+- (double) fullScreenRefreshRate;
 {
     return mFullScreenRefreshRate;
 }

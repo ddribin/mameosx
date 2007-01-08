@@ -37,7 +37,7 @@
     BOOL mFullScreen;
     int mFullScreenWidth;
     int mFullScreenHeight;
-    int mFullScreenRefreshRate;
+    double mFullScreenRefreshRate;
     NSRect mFullScreenRect;
     float mFullScreenMouseOffset;
     float mFadeTime;
@@ -101,8 +101,8 @@
 - (int) fullScreenWidth;
 - (int) fullScreenHeight;
 
-- (void) setFullScreenRefreshRate: (int) fullScreenRefreshRate;
-- (int) fullScreenRefreshRate;
+- (void) setFullScreenRefreshRate: (double) fullScreenRefreshRate;
+- (double) fullScreenRefreshRate;
 
 - (void) setFadeTime: (float) fadeTime;
 - (float) fadeTime;
