@@ -9,6 +9,11 @@
     - Add preference to switch full screen resolutions (off by default).
     - Add preference to control full screen zoom level.
     - Upgrade NXLog to JRLog.
+  files:
+    - name: MAMEOSX-<%=version%>.dmg
+      size: 23187795
+    - name: mameosx-<%=version%>.tar.gz
+      size: 418141
 
 <% version = "0.111" %>
 - version: "<%=version%>"
@@ -22,7 +27,11 @@
     - Add preference to choose how frames are rendered.
     - Add preference to choose which thread frames are rendered in.
     - Add Effects menu for visual and audio effects.
-  
+  files:
+    - name: MAMEOSX-<%=version%>.dmg
+      size: 24017249
+    - name: mameosx-<%=version%>.tar.gz
+      size: 406823
 
 <% version = "0.110-1" %>
 - version: "<%=version%>"
