@@ -1,6 +1,6 @@
-<% version = "0.112" %>
+<% version = "0.111-1" %>
 - version: "<%=version%>"
-  date: xxx
+  date: 2007-01-10
   changes:
     - Implement auto frame skipping.
     - Implement standard F8, F9, F10 key bindings.
