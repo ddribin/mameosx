@@ -6,3 +6,4 @@
 * Add advanced preferences UI to expose everything, similar to
   FireFox's about:config.
 * Handle multipe screens (ninjaw).
+* Handle controller configuration files, (i.e. -ctrlr option)
