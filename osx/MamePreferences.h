@@ -105,6 +105,8 @@
 
 - (NSString *) romPath;
 
+- (NSString *) hardDiskPath;
+
 - (NSString *) samplePath;
 
 - (NSString *) artworkPath;
@@ -232,6 +234,7 @@ extern NSString * MameLinearFilterKey;
 extern NSString * MameSmoothFontKey;
 
 extern NSString * MameRomPath;
+extern NSString * MameChdPath;
 extern NSString * MameSamplePath;
 extern NSString * MameConfigPath;
 extern NSString * MameNvramPath;

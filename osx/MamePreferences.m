@@ -74,6 +74,7 @@ NSString * MameLinearFilterKey = @"LinearFilter";
 NSString * MameSmoothFontKey = @"SmoothFont";
 
 NSString * MameRomPath = @"RomPath";
+NSString * MameHardDiskPath = @"MameHardDiskPath";
 NSString * MameSamplePath = @"SamplePath";
 NSString * MameConfigPath = @"ConfigPath";
 NSString * MameNvramPath = @"NvramPath";
@@ -440,6 +441,11 @@ NSString * MameBiosKey = @"Bios";
     return [mDefaults stringForKey: MameRomPath];
 }
 
+- (NSString *) hardDiskPath;
+{
+    return [mDefaults stringForKey: MameHardDiskPath];
+}
+
 - (NSString *) samplePath;
 {
     return [mDefaults stringForKey: MameSamplePath];
@@ -613,7 +619,9 @@ NSString * MameBiosKey = @"Bios";
 
 - (void) copyToMameConfiguration: (MameConfiguration *) configuration;
 {
-    [configuration setRomPath: [self romPath]];
+    NSArray * romPaths = [NSArray arrayWithObjects:
+        [self romPath], [self hardDiskPath], nil];
+    [configuration setRomPath: [romPaths componentsJoinedByString: @";"]];
     [configuration setSamplePath: [self samplePath]];
     [configuration setArtworkPath: [self artworkPath]];
     [configuration setDiffDirectory: [self diffDirectory]];
@@ -678,6 +686,7 @@ NSString * MameBiosKey = @"Bios";
     }
     defaultPaths[] = {
     { MameRomPath,          @"ROMs" },
+    { MameHardDiskPath,     @"Hard Disk Images" },
     { MameSamplePath,       @"Sound Samples" },
     { MameConfigPath,       @"Config" },
     { MameNvramPath,        @"NVRAM" },
