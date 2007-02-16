@@ -400,3 +400,8 @@ int osd_uchar_from_osdchar(unicode_char *uchar, const char *osdchar, size_t coun
     
     return count;
 }
+
+static void link_functions(void)
+{
+    osd_work_queue_items(0);
+}
