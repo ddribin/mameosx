@@ -4,6 +4,7 @@
         {
             ACTIONS = {
                 chooseArtworkDirectory = id; 
+                chooseDiskImageDirectory = id; 
                 chooseRomDirectory = id; 
                 chooseSamplesDirectory = id; 
                 resetToDefaults = id; 
@@ -13,6 +14,7 @@
             OUTLETS = {
                 mArtworkDirectory = NSPopUpButton; 
                 mControllerAlias = NSObjectController; 
+                mDiskImageDirectory = NSPopUpButton; 
                 mRomDirectory = NSPopUpButton; 
                 mSamplesDirectory = NSPopUpButton; 
             }; 

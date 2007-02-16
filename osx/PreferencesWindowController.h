@@ -28,6 +28,7 @@
 {
     IBOutlet NSObjectController * mControllerAlias;
     IBOutlet NSPopUpButton * mRomDirectory;
+    IBOutlet NSPopUpButton * mDiskImageDirectory;
     IBOutlet NSPopUpButton * mSamplesDirectory;
     IBOutlet NSPopUpButton * mArtworkDirectory;
     
@@ -39,6 +40,7 @@
 }
 
 - (IBAction) chooseRomDirectory: (id) sender;
+- (IBAction) chooseDiskImageDirectory: (id) sender;
 - (IBAction) chooseSamplesDirectory: (id) sender;
 - (IBAction) chooseArtworkDirectory: (id) sender;
 - (IBAction) resetToDefaults: (id) sender;

@@ -98,6 +98,7 @@ enum
 
     mButtonsByKey = [[NSDictionary alloc] initWithObjectsAndKeys:
         mRomDirectory, MameRomPath,
+        mDiskImageDirectory, MameDiskImagePath,
         mSamplesDirectory, MameSamplePath,
         mArtworkDirectory, MameArtworkPath,
         nil];
@@ -241,6 +242,12 @@ enum
                       withTitle: @"Choose ROM Directory"];
 }
 
+- (IBAction) chooseDiskImageDirectory: (id) sender;
+{
+    [self chooseDirectoryForKey: MameDiskImagePath
+                      withTitle: @"Choose Disk Image Directory"];
+}
+
 - (IBAction) chooseSamplesDirectory: (id) sender;
 {
     [self chooseDirectoryForKey: MameSamplePath
@@ -256,7 +263,7 @@ enum
 - (IBAction) resetToDefaults: (id) sender;
 {
     NSArray * keys = [NSArray arrayWithObjects:
-        MameRomPath, MameSamplePath, MameArtworkPath,
+        MameRomPath, MameDiskImagePath, MameSamplePath, MameArtworkPath,
         MameCheckUpdatesAtStartupKey,
         MameSkipDisclaimerKey, MameSkipGameInfoKey, MameSkipWarningsKey,
         MameJRLogLevelKey,
@@ -301,10 +308,12 @@ enum
 {
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     NSString * romPath = [defaults stringForKey: MameRomPath];
+    NSString * diskImagePath = [defaults stringForKey: MameDiskImagePath];
     NSString * samplePath = [defaults stringForKey: MameSamplePath];
     NSString * artworkPath = [defaults stringForKey: MameArtworkPath];
     
     [self setPopUpMenu: mRomDirectory withPath: romPath];
+    [self setPopUpMenu: mDiskImageDirectory withPath: diskImagePath];
     [self setPopUpMenu: mSamplesDirectory withPath: samplePath];
     [self setPopUpMenu: mArtworkDirectory withPath: artworkPath];
 }
