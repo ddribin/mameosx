@@ -13,6 +13,7 @@
 #define HAS_ADSP2115 1
 #define HAS_ADSP2181 1
 #define HAS_ADSP21062 1
+#define HAS_APEXC 0
 #define HAS_DSP32C 1
 #define HAS_ASAP 1
 #define HAS_JAGUAR 1
@@ -20,8 +21,10 @@
 #define HAS_COP410 1
 #define HAS_COP411 0
 #define HAS_COP420 1
+#define HAS_CP1610 0
 #define HAS_CCPU 1
 #define HAS_T11 1
+#define HAS_F8 0
 #define HAS_G65816 1
 #define HAS_HD6309 1
 #define HAS_H83002 1
@@ -58,11 +61,12 @@
 #define HAS_I188 0
 #define HAS_I286 0
 #define HAS_I386 1
-#define HAS_I486 0
+#define HAS_I486 1
 #define HAS_PENTIUM 1
 #define HAS_MEDIAGX 1
 #define HAS_I960 1
 #define HAS_KONAMI 1
+#define HAS_LH5801 0
 #define HAS_PIC16C54 0
 #define HAS_PIC16C55 1
 #define HAS_PIC16C56 0
@@ -109,6 +113,7 @@
 #define HAS_M68020 1
 #define HAS_M68040 1
 #define HAS_DSP56156 1
+#define HAS_PDP1 0
 #define HAS_PPC403 1
 #define HAS_PPC602 1
 #define HAS_PPC603 1
@@ -121,9 +126,14 @@
 #define HAS_UPD7810 1
 #define HAS_UPD7807 1
 #define HAS_RSP 1
+#define HAS_SATURN 0
 #define HAS_S2650 1
+#define HAS_SC61860 0
+#define HAS_SM8500 0
 #define HAS_SPC700 1
 #define HAS_PSXCPU 1
+#define HAS_TMS7000 0
+#define HAS_TMS7000_EXL 0
 #define HAS_TMS9900 0
 #define HAS_TMS9940 0
 #define HAS_TMS9980 1
@@ -141,8 +151,13 @@
 #define HAS_TMS32026 1
 #define HAS_TMS32031 1
 #define HAS_TMS32051 1
+#define HAS_TLCS90 1
+#define HAS_TX0_64KW 0
+#define HAS_TX0_8KW 0
+#define HAS_V30MZ 0
 #define HAS_Z80 1
 #define HAS_Z180 1
 #define HAS_Z8000 1
+#define HAS_Z80GB 0
 
 #endif

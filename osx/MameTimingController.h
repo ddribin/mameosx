@@ -25,6 +25,9 @@
 #import <Cocoa/Cocoa.h>
 #include "osdepend.h"
 
+// DLD Hack
+typedef osd_ticks_t cycles_t;
+
 @interface MameTimingController : NSObject
 {
     BOOL mThrottled;
@@ -48,11 +51,11 @@
 
 - (void) osd_init;
 
-- (cycles_t) osd_cycles;
+- (osd_ticks_t) osd_ticks;
 
-- (cycles_t) osd_cycles_per_second;
+- (osd_ticks_t) osd_ticks_per_second;
 
-- (cycles_t) osd_profiling_ticks;
+- (osd_ticks_t) osd_profiling_ticks;
 
 - (const char *) osd_get_fps_text: (const performance_info *) performance;
 

@@ -121,17 +121,17 @@ static inline cycles_t osd_cycles_internal()
     mFrameStartTime = 0;
 }
 
-- (cycles_t) osd_cycles;
+- (osd_ticks_t) osd_ticks;
 {
     return osd_cycles_internal();
 }
 
-- (cycles_t) osd_cycles_per_second;
+- (osd_ticks_t) osd_ticks_per_second;
 {
     return mCyclesPerSecond;
 }
 
-- (cycles_t) osd_profiling_ticks;
+- (osd_ticks_t) osd_profiling_ticks;
 {
     return mach_absolute_time();
 }

@@ -6,6 +6,7 @@
 #define HAS_DAC 1
 #define HAS_DMADAC 1
 #define HAS_SPEAKER 1
+#define HAS_BEEP 1
 #define HAS_CDDA 1
 #define HAS_DISCRETE 1
 #define HAS_POKEY 1
@@ -53,8 +54,12 @@
 #define HAS_SCSP 1
 #define HAS_ST0016 1
 #define HAS_X1_010 1
+#define HAS_SID6581 0
+#define HAS_SID8580 0
 #define HAS_PSXSPU 1
+#define HAS_SP0256 0
 #define HAS_SP0250 1
+#define HAS_S14001A 1
 #define HAS_SN76477 1
 #define HAS_SN76496 1
 #define HAS_TMS36XX 1
@@ -64,6 +69,7 @@
 #define HAS_VLM5030 1
 #define HAS_VOTRAX 0
 #define HAS_VRENDER0 1
+#define HAS_WAVE 0
 #define HAS_YM2151 1
 #define HAS_YM2203 1
 #define HAS_YM2413 1

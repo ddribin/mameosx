@@ -8,5 +8,7 @@
  */
 
 #include "config.h"
-#import <Cocoa/Cocoa.h>
-#import "JRLog.h"
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+    #import "JRLog.h"
+#endif

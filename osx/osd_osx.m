@@ -24,6 +24,7 @@
 
 #include "osdepend.h"
 #include "render.h"
+#include "unicode.h"
 #import "MameView.h"
 #import "MameInputController.h"
 #import "MameAudioController.h"
@@ -207,17 +208,17 @@ void osd_set_timing_controller(MameTimingController * timingController)
     sTimingController = timingController;
 }
 
-cycles_t osd_cycles(void)
+osd_ticks_t osd_ticks(void)
 {
-    return [sTimingController osd_cycles];
+    return [sTimingController osd_ticks];
 }
 
-cycles_t osd_cycles_per_second(void)
+osd_ticks_t osd_ticks_per_second(void)
 {
-    return [sTimingController osd_cycles_per_second];
+    return [sTimingController osd_ticks_per_second];
 }
 
-cycles_t osd_profiling_ticks(void)
+osd_ticks_t osd_profiling_ticks(void)
 {
     return [sTimingController osd_profiling_ticks];
 }
@@ -349,6 +350,17 @@ mame_file_error osd_write(osd_file *file, const void *buffer, UINT64 offset,
                             actual: actual];
 }
 
+mame_file_error osd_rmfile(const char *filename)
+{
+    return [sFileManager osd_rmfile: filename];
+}
+
+
+int osd_is_absolute_path(const char *path)
+{
+    return [sFileManager osd_is_absolute_path: path];
+}
+
 void *osd_alloc_executable(size_t size)
 {
     void * ptr = (void *) malloc(size);
@@ -370,4 +382,21 @@ void osd_break_into_debugger(const char *message)
 
 void osd_wait_for_debugger(void)
 {
+}
+
+//============================================================
+//  osd_uchar_from_osdchar
+//============================================================
+
+int osd_uchar_from_osdchar(unicode_char *uchar, const char *osdchar, size_t count)
+{
+    wchar_t wch;
+    
+    count = mbstowcs(&wch, (char *)osdchar, 1);
+    if (count != -1)
+        *uchar = wch;
+    else
+        *uchar = 0;
+    
+    return count;
 }

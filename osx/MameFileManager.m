@@ -203,5 +203,27 @@ struct _osd_file
     return FILERR_NONE;
 }
 
+- (mame_file_error) osd_rmfile: (const char *) filename;
+{
+    JRLogDebug(@"osd_rmfile: filename: %s", filename);
+    NSAssert(filename != 0, @"path is NULL");
+    NSString * nsPath = [NSString stringWithUTF8String: filename];
+    BOOL succeeded =
+        [[NSFileManager defaultManager] removeFileAtPath: nsPath handler: nil];
+    if (!succeeded)
+        return FILERR_FAILURE;
+    else
+        return FILERR_NONE;
+}
+
+- (int) osd_is_absolute_path: (const char *) path;
+{
+    JRLogDebug(@"osd_is_absolute_path: path: %s", path);
+    NSAssert(path != 0, @"path is NULL");
+    NSString * nsPath = [NSString stringWithUTF8String: path];
+    return [nsPath isAbsolutePath];
+}
+
+
 @end
 

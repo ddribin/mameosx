@@ -66,4 +66,9 @@ typedef int osd_file_error;
                        length: (UINT32) length
                        actual: (UINT32 *) actual;
 
+- (mame_file_error) osd_rmfile: (const char *) filename;
+
+- (int) osd_is_absolute_path: (const char *) path;
+
+
 @end
