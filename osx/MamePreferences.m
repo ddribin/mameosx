@@ -689,6 +689,7 @@ NSString * MameBiosKey = @"Bios";
     { MameDiskImagePath,    @"Hard Disk Images" },
     { MameSamplePath,       @"Sound Samples" },
     { MameConfigPath,       @"Config" },
+    { MameCtrlrPath,        @"Control Panels" },
     { MameNvramPath,        @"NVRAM" },
     { MameMemcardPath,      @"Memcard" },
     { MameInputPath,        @"Input" },
