@@ -6,6 +6,7 @@
             ACTIONS = {
                 auditRoms = id; 
                 cancelOpenPanel = id; 
+                clearLogWindow = id; 
                 effectsMenuChanged = id; 
                 endOpenPanel = id; 
                 hideOpenPanel = id; 
@@ -19,7 +20,7 @@
                 resizeToMaximumSize = id; 
                 resizeToOptimalSize = id; 
                 showAudioEffectsPanel = id; 
-                showMameLog = id; 
+                showLogWindow = id; 
                 showPreferencesPanel = id; 
                 showReleaseNotes = id; 
                 togglePause = id; 
@@ -35,6 +36,7 @@
                 mMameLogView = NSTextView; 
                 mMameView = MameView; 
                 mOpenPanel = NSWindow; 
+                mOriginalLogger = id; 
                 mVersionChecker = VersionChecker; 
             }; 
             SUPERCLASS = NSObject; 

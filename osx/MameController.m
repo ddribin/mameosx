@@ -95,6 +95,9 @@ void exit_sleeper()
 {
     if (![super init])
         return nil;
+    
+    mOriginalLogger = [[self class] JRLogLogger];
+    [[self class] setJRLogLogger: self];
    
     mConfiguration = [[MameConfiguration alloc] init];
     [self initFilters];
@@ -468,9 +471,16 @@ void exit_sleeper()
     [controller showWindow: self];
 }
 
-- (IBAction) showMameLog: (id) sender;
+- (IBAction) showLogWindow: (id) sender;
 {
     [mMameLogPanel makeKeyAndOrderFront: nil];
+}
+
+- (IBAction) clearLogWindow: (id) sender;
+{
+    NSTextStorage * textStorage = [mMameLogView textStorage];
+    NSRange fullRange = NSMakeRange(0, [textStorage length]);
+    [textStorage deleteCharactersInRange: fullRange];
 }
 
 - (IBAction) showReleaseNotes: (id) sender;
@@ -479,6 +489,47 @@ void exit_sleeper()
     NSString * releaseNotes = 
         [myBundle pathForResource: @"release_notes" ofType: @"html"];
     [[NSWorkspace sharedWorkspace] openFile: releaseNotes];
+}
+
+- (void) logWithLevel: (JRLogLevel) callerLevel
+             instance: (NSString*) instance
+                 file: (const char*) file
+                 line: (unsigned) line
+             function: (const char*) function
+              message: (NSString*) message;
+{
+    NSDictionary * logAttributes;
+    switch (callerLevel)
+    {
+        case JRLogLevel_Debug:
+            logAttributes = mLogDebugAttributes;
+            break;
+            
+        case JRLogLevel_Info:
+            logAttributes = mLogInfoAttributes;
+            break;
+            
+        case JRLogLevel_Warn:
+            logAttributes = mLogWarningAttributes;
+            break;
+            
+        case JRLogLevel_Error:
+        case JRLogLevel_Fatal:
+            logAttributes = mLogErrorAttributes;
+            break;
+            
+        default:
+            logAttributes = mLogInfoAttributes;
+    }
+    
+    [self logMessage: message withAttributes: logAttributes];
+    
+    [mOriginalLogger logWithLevel: callerLevel
+                         instance: instance
+                             file: file
+                             line: line
+                         function: function
+                          message: message];
 }
 
 - (void) mameErrorMessage: (NSString *) message;

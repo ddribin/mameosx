@@ -24,6 +24,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import <QuartzCore/QuartzCore.h>
+#import "JRLog.h"
 
 #if defined(__cplusplus)
 extern "C" {
@@ -43,7 +44,7 @@ extern "C" {
 @class VersionChecker;
 @class AudioEffectWindowController;
 
-@interface MameController : NSObject
+@interface MameController : NSObject <JRLogLogger>
 {
     IBOutlet MameView * mMameView;
     IBOutlet NSPopUpButton * mFilterButton;
@@ -82,6 +83,7 @@ extern "C" {
     NSDictionary * mLogWarningAttributes;
     NSDictionary * mLogInfoAttributes;
     NSDictionary * mLogDebugAttributes;
+    id<JRLogLogger> mOriginalLogger;
 }
 
 - (MameView *) mameView;
@@ -138,9 +140,18 @@ extern "C" {
 
 - (IBAction) auditRoms: (id) sender;
 
-- (IBAction) showMameLog: (id) sender;
+- (IBAction) showLogWindow: (id) sender;
+
+- (IBAction) clearLogWindow: (id) sender;
 
 - (IBAction) showReleaseNotes: (id) sender;
+
+- (void) logWithLevel: (JRLogLevel) callerLevel
+             instance: (NSString*) instance
+                 file: (const char*) file
+                 line: (unsigned) line
+             function: (const char*) function
+              message: (NSString*) message;
 
 #pragma mark -
 #pragma mark MameView delegates
