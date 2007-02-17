@@ -1,7 +1,7 @@
 MAME OS X User's Guide
 ======================
 
-MAME OS X is a port dude of [MAME][] to [Mac OS X][osx].  MAME OS X allows you to play arcade games as they were originally written.  It is able to do this because it uses the original game software, and it emulates the hardware, such as microprocessor, graphics, and sound chips.
+MAME OS X is a port of [MAME][] to [Mac OS X][osx].  MAME OS X allows you to play arcade games as they were originally written.  It is able to do this because it uses the original game software, and it emulates the hardware, such as microprocessor, graphics, and sound chips.
 
 Running MAME OS X
 -----------------
