@@ -2537,6 +2537,8 @@
 		55E03D090B0A32EE00988109 /* Preferences.nib in Resources */ = {isa = PBXBuildFile; fileRef = 55E03D070B0A32EE00988109 /* Preferences.nib */; };
 		55E03D0A0B0A32EF00988109 /* Preferences.nib in Resources */ = {isa = PBXBuildFile; fileRef = 55E03D070B0A32EE00988109 /* Preferences.nib */; };
 		55E93D600B29166E003CBB89 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55E93D5F0B29166E003CBB89 /* AudioToolbox.framework */; };
+		55F4D7400B86B937001EED08 /* APPL.icns in Resources */ = {isa = PBXBuildFile; fileRef = 55F4D73F0B86B937001EED08 /* APPL.icns */; };
+		55F4D7410B86B937001EED08 /* APPL.icns in Resources */ = {isa = PBXBuildFile; fileRef = 55F4D73F0B86B937001EED08 /* APPL.icns */; };
 		55F8ABA50B336D7600304116 /* dlair.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55F8ABA10B336D5F00304116 /* dlair.lay */; };
 		55F8ABA60B336D7600304116 /* firebeat.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55F8ABA20B336D5F00304116 /* firebeat.lay */; };
 		55FCC9FE0B0BD255003A5FB3 /* VersionChecker.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 55FCC9FC0B0BD255003A5FB3 /* VersionChecker.h */; };
@@ -5442,6 +5444,7 @@
 		55E03CF00B0A320600988109 /* PreferencesWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreferencesWindowController.m; sourceTree = "<group>"; };
 		55E03D080B0A32EE00988109 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/Preferences.nib; sourceTree = "<group>"; };
 		55E93D5F0B29166E003CBB89 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = /System/Library/Frameworks/AudioToolbox.framework; sourceTree = "<absolute>"; };
+		55F4D73F0B86B937001EED08 /* APPL.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = APPL.icns; sourceTree = "<group>"; };
 		55F8ABA10B336D5F00304116 /* dlair.lay */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = dlair.lay; sourceTree = "<group>"; };
 		55F8ABA20B336D5F00304116 /* firebeat.lay */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = firebeat.lay; sourceTree = "<group>"; };
 		55FCC9FC0B0BD255003A5FB3 /* VersionChecker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VersionChecker.h; sourceTree = "<group>"; };
@@ -5726,6 +5729,7 @@
 		551A621A0AC2564100AECE1E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				55F4D73F0B86B937001EED08 /* APPL.icns */,
 				55A99AA60B20C5D900D4E406 /* effects */,
 				55D2934C0B1762E6002C9199 /* release_notes.html */,
 				556A4C2A0AA50D6200602CC5 /* Info.plist */,
@@ -9208,6 +9212,7 @@
 				5595EFA90B1BC91200631777 /* RomAudit.nib in Resources */,
 				55A99AB10B20C5D900D4E406 /* effects in Resources */,
 				55C71AB80B2B02FA001FF0BE /* AudioEffects.nib in Resources */,
+				55F4D7410B86B937001EED08 /* APPL.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9229,6 +9234,7 @@
 				5595EFAA0B1BC91200631777 /* RomAudit.nib in Resources */,
 				55A99AB20B20C5D900D4E406 /* effects in Resources */,
 				55C71AB90B2B02FA001FF0BE /* AudioEffects.nib in Resources */,
+				55F4D7400B86B937001EED08 /* APPL.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -6,6 +6,8 @@
 	<string>English</string>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
+	<key>CFBundleIconFile</key>
+	<string>APPL</string>
 	<key>CFBundleIdentifier</key>
 	<string>net.mame.mameosx</string>
 	<key>CFBundleInfoDictionaryVersion</key>
@@ -14,12 +16,12 @@
 	<string>${PRODUCT_NAME}</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>${CURRENT_MARKETING_VERSION}</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-    <string>${CURRENT_PROJECT_VERSION}</string>
-    <key>CFBundleShortVersionString</key>
-	<string>${CURRENT_MARKETING_VERSION}</string>
+	<string>${CURRENT_PROJECT_VERSION}</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>

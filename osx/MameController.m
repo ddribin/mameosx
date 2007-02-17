@@ -631,7 +631,7 @@ void exit_sleeper()
             NSAlert * alert = [[NSAlert alloc] init];
             [alert addButtonWithTitle: @"OK"];
             [alert setMessageText: message];
-            [alert setInformativeText: @"View the MAME Log for details."];
+            [alert setInformativeText: @"View the Log Window for details."];
             [alert setAlertStyle: NSCriticalAlertStyle];
             
             [alert beginSheetModalForWindow: [mMameView window]
