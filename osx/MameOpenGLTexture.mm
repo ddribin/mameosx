@@ -22,11 +22,6 @@
  * SOFTWARE.
  */
 
-// HACK for 0.111 compiler error!
-#define __DRIVER_H__ 1
-#define __CHD_H__ 1
-#define __ROMLOAD_H__ 1
-
 #import "MameOpenGLTexture.h"
 #import "MameTextureConverter.h"
 
