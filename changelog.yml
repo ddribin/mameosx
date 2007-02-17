@@ -5,6 +5,7 @@
     - Upgrade to 0.112 core.
     - Add separate directory for hard disk images.
     - Add directory for controller configuration.
+    - Fix bug preventing screenshot directories from being created.
 
 
 <% version = "0.111-1" %>

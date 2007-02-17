@@ -35,6 +35,9 @@ struct _osd_file
 
 @interface MameFileManager (Private)
 
+- (void) createDirectoriesForComponents: (NSMutableArray *) components
+                       currentDirectory: (NSString *) currentDirectory;
+
 @end
 
 @implementation MameFileManager
@@ -107,6 +110,15 @@ struct _osd_file
     BOOL readFlag = ((openflags & OPEN_FLAG_READ) != 0);
     BOOL writeFlag = ((openflags & OPEN_FLAG_WRITE) != 0);
     BOOL createFlag = ((openflags & OPEN_FLAG_CREATE) != 0);
+    BOOL createPathsFlag = ((openflags & OPEN_FLAG_CREATE_PATHS) != 0);
+    
+    if (createPathsFlag)
+    {
+        NSString * directory = [nsPath stringByDeletingLastPathComponent];
+        NSMutableArray * components = [[directory pathComponents] mutableCopy];
+        [self createDirectoriesForComponents: components
+                            currentDirectory: @""];
+    }
     
     NSFileManager * fileManager = [NSFileManager defaultManager];
     NSDictionary * fileAttributes =
@@ -224,6 +236,44 @@ struct _osd_file
     return [nsPath isAbsolutePath];
 }
 
+@end
+
+@implementation MameFileManager (Private)
+
+- (void) createDirectoriesForComponents: (NSMutableArray *) components
+                       currentDirectory: (NSString *) currentDirectory;
+{
+    if ([components count] == 0)
+        return;
+    
+    NSString * nextComponent = [components objectAtIndex: 0];
+    [components removeObjectAtIndex: 0];
+    NSString * nextDirectory =
+        [currentDirectory stringByAppendingPathComponent: nextComponent];
+    NSFileManager * fm = [NSFileManager defaultManager];
+    BOOL isDirectory;
+    if ([fm fileExistsAtPath: nextDirectory isDirectory: &isDirectory])
+    {
+        if (!isDirectory)
+        {
+            JRLogWarn(@"Path is not a directory: %@", nextDirectory);
+            return;
+        }
+    }
+    else
+    {
+        BOOL success = [fm createDirectoryAtPath: nextDirectory
+                                      attributes: nil];
+        if (!success)
+        {
+            JRLogWarn(@"Could not create directory: %@", nextDirectory);
+            return;
+        }
+    }
+    [self createDirectoriesForComponents: components
+                        currentDirectory: nextDirectory];
+}
 
 @end
+
 
