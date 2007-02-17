@@ -2539,6 +2539,8 @@
 		55E93D600B29166E003CBB89 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55E93D5F0B29166E003CBB89 /* AudioToolbox.framework */; };
 		55F4D7400B86B937001EED08 /* APPL.icns in Resources */ = {isa = PBXBuildFile; fileRef = 55F4D73F0B86B937001EED08 /* APPL.icns */; };
 		55F4D7410B86B937001EED08 /* APPL.icns in Resources */ = {isa = PBXBuildFile; fileRef = 55F4D73F0B86B937001EED08 /* APPL.icns */; };
+		55F4D7C20B86DAFC001EED08 /* manual in Resources */ = {isa = PBXBuildFile; fileRef = 55F4D7BD0B86DAFC001EED08 /* manual */; };
+		55F4D7C30B86DAFC001EED08 /* manual in Resources */ = {isa = PBXBuildFile; fileRef = 55F4D7BD0B86DAFC001EED08 /* manual */; };
 		55F8ABA50B336D7600304116 /* dlair.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55F8ABA10B336D5F00304116 /* dlair.lay */; };
 		55F8ABA60B336D7600304116 /* firebeat.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55F8ABA20B336D5F00304116 /* firebeat.lay */; };
 		55FCC9FE0B0BD255003A5FB3 /* VersionChecker.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 55FCC9FC0B0BD255003A5FB3 /* VersionChecker.h */; };
@@ -5445,6 +5447,7 @@
 		55E03D080B0A32EE00988109 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/Preferences.nib; sourceTree = "<group>"; };
 		55E93D5F0B29166E003CBB89 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = /System/Library/Frameworks/AudioToolbox.framework; sourceTree = "<absolute>"; };
 		55F4D73F0B86B937001EED08 /* APPL.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = APPL.icns; sourceTree = "<group>"; };
+		55F4D7BE0B86DAFC001EED08 /* English */ = {isa = PBXFileReference; lastKnownFileType = folder; name = English; path = English.lproj/manual; sourceTree = "<group>"; };
 		55F8ABA10B336D5F00304116 /* dlair.lay */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = dlair.lay; sourceTree = "<group>"; };
 		55F8ABA20B336D5F00304116 /* firebeat.lay */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = firebeat.lay; sourceTree = "<group>"; };
 		55FCC9FC0B0BD255003A5FB3 /* VersionChecker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VersionChecker.h; sourceTree = "<group>"; };
@@ -5731,6 +5734,7 @@
 			children = (
 				55F4D73F0B86B937001EED08 /* APPL.icns */,
 				55A99AA60B20C5D900D4E406 /* effects */,
+				55F4D7BD0B86DAFC001EED08 /* manual */,
 				55D2934C0B1762E6002C9199 /* release_notes.html */,
 				556A4C2A0AA50D6200602CC5 /* Info.plist */,
 				551A61390AC24B2000AECE1E /* ui.bdf */,
@@ -8992,6 +8996,7 @@
 				556A4C240AA50D6200602CC5 /* Resources */,
 				556A4C250AA50D6200602CC5 /* Sources */,
 				556A4C260AA50D6200602CC5 /* Frameworks */,
+				55F4D7D70B86DBAA001EED08 /* Generate help */,
 			);
 			buildRules = (
 			);
@@ -9093,6 +9098,7 @@
 				55BEFB0A0AEC6D0C00357340 /* Sources */,
 				55BEFB0B0AEC6D0C00357340 /* Frameworks */,
 				55BEFB5A0AEC6E4A00357340 /* CopyFiles */,
+				55F4D8440B86E2F2001EED08 /* Generate help */,
 			);
 			buildRules = (
 			);
@@ -9213,6 +9219,7 @@
 				55A99AB10B20C5D900D4E406 /* effects in Resources */,
 				55C71AB80B2B02FA001FF0BE /* AudioEffects.nib in Resources */,
 				55F4D7410B86B937001EED08 /* APPL.icns in Resources */,
+				55F4D7C30B86DAFC001EED08 /* manual in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9235,6 +9242,7 @@
 				55A99AB20B20C5D900D4E406 /* effects in Resources */,
 				55C71AB90B2B02FA001FF0BE /* AudioEffects.nib in Resources */,
 				55F4D7400B86B937001EED08 /* APPL.icns in Resources */,
+				55F4D7C20B86DAFC001EED08 /* manual in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9298,6 +9306,40 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "echo \"Create Disk Image\" 1>&2\n${MY_SCRIPT_DIR}/create_dmg.sh";
+		};
+		55F4D7D70B86DBAA001EED08 /* Generate help */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/doc/manual.text",
+				"$(SRCROOT)/osx/English.lproj/manual/manual.html",
+			);
+			name = "Generate help";
+			outputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/English.lproj/manual/manual.html",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "${MY_SCRIPT_DIR}/xcode_manual";
+		};
+		55F4D8440B86E2F2001EED08 /* Generate help */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/doc/manual.text",
+				"$(SRCROOT)/osx/English.lproj/manual/manual.html",
+			);
+			name = "Generate help";
+			outputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/English.lproj/manual/manual.html",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "${MY_SCRIPT_DIR}/xcode_manual";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -11906,6 +11948,14 @@
 				55E03D080B0A32EE00988109 /* English */,
 			);
 			name = Preferences.nib;
+			sourceTree = "<group>";
+		};
+		55F4D7BD0B86DAFC001EED08 /* manual */ = {
+			isa = PBXVariantGroup;
+			children = (
+				55F4D7BE0B86DAFC001EED08 /* English */,
+			);
+			name = manual;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

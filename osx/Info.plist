@@ -10,7 +10,11 @@
 	<string>APPL</string>
 	<key>CFBundleIdentifier</key>
 	<string>net.mame.mameosx</string>
-	<key>CFBundleInfoDictionaryVersion</key>
+    <key>CFBundleHelpBookFolder</key>
+    <string>manual</string>
+    <key>CFBundleHelpBookName</key>
+    <string>MAME OS X Help</string>
+    <key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>${PRODUCT_NAME}</string>

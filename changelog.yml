@@ -4,10 +4,12 @@
   changes:
     - Upgrade to 0.112 core.
     - Add separate directory for hard disk images.
-    - Add directory for controller configuration.
+    - Add directory for controller (ctrlr) configurations.
     - Fix bug preventing screenshot directories from being created.
     - Route JRLog output to log window, as well as console.
     - New application icon from Jason Moore.
+    - Fix PNG-based effects, thanks to Didier Arenzana.
+    - Create basic manual for standard application help.
 
 <% version = "0.111-1" %>
 - version: "<%=version%>"
