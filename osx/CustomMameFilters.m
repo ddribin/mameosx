@@ -93,12 +93,13 @@
     NSURL * url = [NSURL fileURLWithPath: path];
     CIImage * effect = [CIImage imageWithContentsOfURL: url];
     CIFilter * tile = [CIFilter filterWithName: @"CIAffineTile"];
+    [tile setDefaults];
     [tile setValue: effect forKey: @"inputImage"];
     [tile setValue: [NSAffineTransform transform] forKey: @"inputTransform"];
     CIImage * tiledEffect = [tile valueForKey: @"outputImage"];
     
     CIFilter * multiply = [CIFilter filterWithName: @"CIMultiplyBlendMode"];
-    [multiply setValue: effect
+    [multiply setValue: tiledEffect
                 forKey: @"inputBackgroundImage"];
     return [super initWithFilter: multiply];
 }
