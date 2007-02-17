@@ -155,11 +155,11 @@ A [web forum][forum] for MAME OS X is available for any questions not covered by
 MAME OS X Directories
 ---------------------
 
-MAME OS X creates and uses varies directories in:
+MAME OS X creates and uses various directories in:
 
     ${HOME}/Application Support/MAME OS X
     
-Here is a description of all these directories:
+Here is a description of these directories:
 
 <table width="100%" border="1" cellspacing="0" cellpadding="5">
   <tr>
