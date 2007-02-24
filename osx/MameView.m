@@ -714,10 +714,12 @@ NSString * MameExitStatusKey = @"MameExitStatus";
 //=========================================================== 
 - (BOOL) throttled
 {
+    BOOL value;
     @synchronized(self)
     {
-        return [mTimingController throttled];
+        value = [mTimingController throttled];
     }
+    return value;
 }
 
 - (void) setThrottled: (BOOL) flag
