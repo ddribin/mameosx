@@ -10,6 +10,11 @@
     - New application icon from Jason Moore.
     - Fix PNG-based effects, thanks to Didier Arenzana.
     - Create basic manual for standard application help.
+  files:
+    - name: MAMEOSX-<%=version%>.dmg
+      size: 21238349
+    - name: mameosx-<%=version%>.tar.gz
+      size: 14012775
 
 <% version = "0.111-1" %>
 - version: "<%=version%>"
