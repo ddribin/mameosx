@@ -25,10 +25,11 @@
 #import <Cocoa/Cocoa.h>
 #include "osdepend.h"
 
+@class MameInputControllerPrivate;
 
 @interface MameInputController : NSObject
 {
-    INT32 * mKeyStates;
+    MameInputControllerPrivate * p;
 }
 
 - (void) osd_init;
