@@ -38,8 +38,6 @@
 #pragma mark -
 #pragma mark mStickElements - indexed accessors
 
-- (BOOL) isEmpty;
-
 - (unsigned int) countOfStickElements;
 - (DDHidElement *) objectInStickElementsAtIndex: (unsigned int)index;
 
@@ -89,8 +87,8 @@
 
 @end
 
-#define DDHID_JOYSTICK_MIN -32768
-#define DDHID_JOYSTICK_MAX 32768
+#define DDHID_JOYSTICK_VALUE_MIN -32768
+#define DDHID_JOYSTICK_VALUE_MAX 32768
 
 @interface NSObject (DDHidJoystickDelegate)
 
