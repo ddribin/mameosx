@@ -108,6 +108,8 @@ typedef enum _MameFullScreenZoom
 - (void) togglePause;
 - (BOOL) isRunning;
 
+- (void) setInputEnabled: (BOOL) inputEnabled;
+
 #pragma mark -
 #pragma mark Sizing
 

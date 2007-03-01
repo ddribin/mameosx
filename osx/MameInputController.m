@@ -483,6 +483,7 @@ static int joy_trans_table[][2] =
     INT32 mKeyStates[MAME_OSX_NUM_KEYSTATES];
     NSMutableArray * mJoystickNames;
     NSMutableArray * mJoysticks;
+    BOOL mEnabled;
 }
 
 - (id) init;
@@ -547,6 +548,7 @@ static int joy_trans_table[][2] =
         return nil;
     
     p = [[MameInputControllerPrivate alloc] init];
+    p->mEnabled = NO;
     
     return self;
 }
@@ -615,8 +617,8 @@ static float a2d_deadzone = 0.3;
 		case CODETYPE_AXIS_NEG:
         {
 			int val = joystick_state[joynum].axes[joyindex];
-			int top = ANALOG_VALUE_MAX;
-			int bottom = ANALOG_VALUE_MIN;
+			int top = DDHID_JOYSTICK_VALUE_MAX;
+			int bottom = DDHID_JOYSTICK_VALUE_MIN;
 			int middle = 0;
             
 			// watch for movement greater "a2d_deadzone" along either axis
@@ -643,8 +645,22 @@ static float a2d_deadzone = 0.3;
     return value;
 }
 
+
+- (BOOL) enabled;
+{
+    return p->mEnabled;
+}
+
+- (void) setEnabled: (BOOL) enabled;
+{
+    p->mEnabled = enabled;
+}
+
 - (INT32) osd_get_code_value: (os_code) code;
 {
+    if (!p->mEnabled)
+        return 0;
+    
     INT32 value;
     @synchronized(self)
     {

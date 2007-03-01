@@ -41,5 +41,8 @@
 - (void) keyUp: (NSEvent *) event;
 - (void) flagsChanged: (NSEvent *) event;
 
+- (BOOL) enabled;
+- (void) setEnabled: (BOOL) enabled;
+
 
 @end

@@ -709,6 +709,12 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     return mMameIsRunning;
 }
 
+
+- (void) setInputEnabled: (BOOL) inputEnabled;
+{
+    [mInputController setEnabled: inputEnabled];
+}
+
 //=========================================================== 
 //  throttled 
 //=========================================================== 

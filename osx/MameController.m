@@ -184,6 +184,16 @@ void exit_sleeper()
     [mMameView setFullScreen: false];
 }
 
+- (void) applicationDidBecomeActive: (NSNotification *) notification;
+{
+    [mMameView setInputEnabled: YES];
+}
+
+- (void) applicationDidResignActive: (NSNotification *) notification;
+{
+    [mMameView setInputEnabled: NO];
+}
+
 - (BOOL)windowShouldClose: (id) sender;
 {
     [NSApp terminate: nil];
