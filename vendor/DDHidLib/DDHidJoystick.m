@@ -173,6 +173,8 @@
     NSEnumerator * e = [elements objectEnumerator];
     DDHidElement * element;
     DDHidJoystickStick * currentStick = [[[DDHidJoystickStick alloc] init] autorelease];
+    BOOL stickHasElements = NO;
+
     while (element = [e nextObject])
     {
         unsigned usagePage = [[element usage] usagePage];
@@ -188,31 +190,17 @@
         {
             [self addStick: subElements];
         }
-        else if ((usagePage == kHIDPage_GenericDesktop) &&
-            (usageId == kHIDUsage_GD_X))
+        else if ([currentStick addElement: element])
         {
-            [currentStick addElement: element];
+            stickHasElements = YES;
         }
-        else if ((usagePage == kHIDPage_GenericDesktop) &&
-                 (usageId == kHIDUsage_GD_Y))
-        {
-            [currentStick addElement: element];
-        }
-#if 0
-        else if ((usagePage == kHIDPage_GenericDesktop) &&
-                 (usageId == kHIDUsage_GD_Wheel))
-        {
-            mWheelElement = [element retain];
-        }
-        else
-#endif
         else if ((usagePage == kHIDPage_Button) &&
                  (usageId > 0))
         {
             [mButtonElements addObject: element];
         }
     }
-    if (![currentStick isEmpty])
+    if (stickHasElements)
     {
         [mSticks addObject: currentStick];
     }
@@ -287,14 +275,11 @@
 - (int) normalizeValue: (int) value
             forElement: (DDHidElement *) element;
 {
-    static const int normalizedMin = -32768;
-    static const int normalizedMax = 32768;
-    
-    int normalizedUnits = normalizedMax - normalizedMin;
+    int normalizedUnits = DDHID_JOYSTICK_MAX - DDHID_JOYSTICK_MIN;
     int elementUnits = [element maxValue] - [element minValue];
     
     int normalizedValue = (((value - [element minValue]) * normalizedUnits) /
-                           elementUnits) + normalizedMin;
+                           elementUnits) + DDHID_JOYSTICK_MIN;
     return normalizedValue;
 }
 
@@ -407,9 +392,41 @@
     [super dealloc];
 }
 
--  (void) addElement: (DDHidElement *) element;
+-  (BOOL) addElement: (DDHidElement *) element;
 {
     DDHidUsage * usage = [element usage];
+    if ([usage usagePage] != kHIDPage_GenericDesktop)
+        return NO;
+    
+    BOOL elementAdded = YES;
+    switch ([usage usageId])
+    {
+        case kHIDUsage_GD_X:
+            if (mXAxisElement == nil)
+                mXAxisElement = [element retain];
+            else
+                [mStickElements addObject: element];
+            break;
+            
+        case kHIDUsage_GD_Y:
+            if (mYAxisElement == nil)
+                mYAxisElement = [element retain];
+            else
+                [mStickElements addObject: element];
+            break;
+            
+        case kHIDUsage_GD_Z:
+            [mStickElements addObject: element];
+            break;
+            
+        default:
+            elementAdded = NO;
+            
+    }
+    
+    return elementAdded;
+#if 0
+    
     BOOL isXAxis = [usage isEqualToUsagePage: kHIDPage_GenericDesktop
                                      usageId: kHIDUsage_GD_X];
     BOOL isYAxis = [usage isEqualToUsagePage: kHIDPage_GenericDesktop
@@ -420,6 +437,7 @@
         mYAxisElement = [element retain];
     else
         [mStickElements addObject: element];
+#endif
 }
 
 - (NSArray *) allElements;

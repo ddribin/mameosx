@@ -49,7 +49,7 @@
 
 - (NSArray *) allElements;
 
--  (void) addElement: (DDHidElement *) element;
+-  (BOOL) addElement: (DDHidElement *) element;
 
 @end
 
@@ -88,6 +88,9 @@
 - (void) addElementsToDefaultQueue;
 
 @end
+
+#define DDHID_JOYSTICK_MIN -32768
+#define DDHID_JOYSTICK_MAX 32768
 
 @interface NSObject (DDHidJoystickDelegate)
 
