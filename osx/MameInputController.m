@@ -30,10 +30,18 @@
 
 #include "MameInputTables.h"
 
-typedef struct {
+typedef struct
+{
 	int axes[MAX_AXES];
 	int buttons[MAX_BUTTONS];
 } JoystickState;
+
+typedef struct
+{
+    int x;
+    int y;
+    int buttons[MAX_BUTTONS];
+} MouseState;
 
 static float a2d_deadzone = 0.3;
 
@@ -51,6 +59,7 @@ static NSString * format(NSString * format, ...);
     NSMutableArray * mJoysticks;
     BOOL mEnabled;
     JoystickState mJoystickStates[MAX_JOYSTICKS];
+    MouseState mMiceStates[MAX_MICE];
 }
 
 - (id) init;
@@ -92,6 +101,8 @@ static NSString * format(NSString * format, ...);
 
 - (void) initJoyCodes;
 
+- (void) initMouseCodes;
+
 @end
 
 @interface MameInputController (DDHidJoystickDelegate)
@@ -108,6 +119,17 @@ static NSString * format(NSString * format, ...);
             buttonUp: (unsigned) buttonNumber;
 
 @end
+
+@interface MameInputController (DDHidMouseDelegate)
+
+- (void) hidMouse: (DDHidMouse *) mouse xChanged: (SInt32) deltaX;
+- (void) hidMouse: (DDHidMouse *) mouse yChanged: (SInt32) deltaY;
+- (void) hidMouse: (DDHidMouse *) mouse wheelChanged: (SInt32) deltaWheel;
+- (void) hidMouse: (DDHidMouse *) mouse buttonDown: (unsigned) buttonNumber;
+- (void) hidMouse: (DDHidMouse *) mouse buttonUp: (unsigned) buttonNumber;
+
+@end
+
 
 @implementation MameInputController
 
@@ -135,6 +157,7 @@ static NSString * format(NSString * format, ...);
 
     [self initKeyCodes];
     [self initJoyCodes];
+    [self initMouseCodes];
 
     // terminate array
 	memset(&p->mCodelist[p->mTotalCodes], 0, sizeof(p->mCodelist[0]));
@@ -169,12 +192,13 @@ static NSString * format(NSString * format, ...);
 	switch (codetype)
 	{
 		case CODETYPE_BUTTON:
-			return p->mJoystickStates[joynum].buttons[joyindex];
+			value = p->mJoystickStates[joynum].buttons[joyindex];
+            break;
 
 		case CODETYPE_AXIS_POS:
 		case CODETYPE_AXIS_NEG:
         {
-			int val = p->mJoystickStates[joynum].axes[joyindex];
+			value = p->mJoystickStates[joynum].axes[joyindex];
 			int top = DDHID_JOYSTICK_VALUE_MAX;
 			int bottom = DDHID_JOYSTICK_VALUE_MIN;
 			int middle = 0;
@@ -183,21 +207,34 @@ static NSString * format(NSString * format, ...);
 			// FIXME in the two-axis joystick case, we need to find out
 			// the angle. Anything else is unprecise.
 			if (codetype == CODETYPE_AXIS_POS)
-				return (val > middle + ((top - middle) * a2d_deadzone));
+				value = (value > middle + ((top - middle) * a2d_deadzone));
 			else
-				return (val < middle - ((middle - bottom) * a2d_deadzone));
+				value = (value < middle - ((middle - bottom) * a2d_deadzone));
+            break;
         }
 
         // analog joystick axis
 		case CODETYPE_JOYAXIS:
-		{
-			int val = ((int *)&p->mJoystickStates[joynum].axes)[joyindex];
+			value = ((int *)&p->mJoystickStates[joynum].axes)[joyindex];
             
-            if (val < ANALOG_VALUE_MIN) val = ANALOG_VALUE_MIN;
-			if (val > ANALOG_VALUE_MAX) val = ANALOG_VALUE_MAX;
-			return val;
-		}
-
+            if (value < ANALOG_VALUE_MIN)
+                value = ANALOG_VALUE_MIN;
+			if (value > ANALOG_VALUE_MAX)
+                value = ANALOG_VALUE_MAX;
+            break;
+            
+        case CODETYPE_MOUSEAXIS:
+            if (joyindex == 0)
+            {
+                value = p->mMiceStates[joynum].x * 512;
+                p->mMiceStates[joynum].x = 0;
+            }
+            if (joyindex == 1)
+            {
+                value = p->mMiceStates[joynum].y * 512;
+                p->mMiceStates[joynum].y = 0;
+            }
+            break;
     }
 
     return value;
@@ -393,6 +430,40 @@ static NSString * format(NSString * format, ...);
     }
 }
 
+- (void) initMouseCodes;
+{
+    NSArray * mice = [DDHidMouse allMice];
+    int mouseCount = MIN([mice count], MAX_MICE);
+    int mouseNumber;
+    for (mouseNumber = 0; mouseNumber < mouseCount; mouseNumber++)
+    {
+        DDHidMouse * mouse = [mice objectAtIndex: mouseNumber];
+        [p->mJoysticks addObject: mouse];
+        
+        NSArray * buttons = [mouse buttonElements];
+        JRLogInfo(@"Found mouse: %@, %d button(s)",
+                  [mouse productName], [buttons count]);
+        
+        [mouse setDelegate: self];
+        [mouse startListening];
+
+        DDHidElement * axis;
+        NSString * name;
+
+        axis = [mouse xElement];
+        name = format(@"M%d X-Axis", mouseNumber+1);
+        [self add_joylist_entry: name
+                           code: JOYCODE(mouseNumber, CODETYPE_MOUSEAXIS, 0)
+                     input_code: CODE_OTHER_DIGITAL];
+        
+        axis = [mouse xElement];
+        name = format(@"M%d Y-Axis", mouseNumber+1);
+        [self add_joylist_entry: name
+                           code: JOYCODE(mouseNumber, CODETYPE_MOUSEAXIS, 1)
+                     input_code: CODE_OTHER_DIGITAL];
+    }
+}
+
 @end
 
 @implementation MameInputController (DDHidJoystickDelegate)
@@ -425,6 +496,36 @@ static NSString * format(NSString * format, ...);
 }
 
 @end
+
+
+@implementation MameInputController (DDHidMouseDelegate)
+
+- (void) hidMouse: (DDHidMouse *) mouse xChanged: (SInt32) deltaX;
+{
+    p->mMiceStates[0].x += deltaX;
+}
+
+- (void) hidMouse: (DDHidMouse *) mouse yChanged: (SInt32) deltaY;
+{
+    p->mMiceStates[0].y += deltaY;
+}
+
+- (void) hidMouse: (DDHidMouse *) mouse wheelChanged: (SInt32) deltaWheel;
+{
+}
+
+- (void) hidMouse: (DDHidMouse *) mouse buttonDown: (unsigned) buttonNumber;
+{
+    NSLog(@"Mouse button %d down", buttonNumber);
+}
+
+- (void) hidMouse: (DDHidMouse *) mouse buttonUp: (unsigned) buttonNumber;
+{
+    NSLog(@"Mouse button %d up", buttonNumber);
+}
+
+@end
+
 
 static NSMutableData * utf8Data(NSString * string)
 {
