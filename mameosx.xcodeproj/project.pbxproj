@@ -84,6 +84,7 @@
 		553BF5CD0B4F960A0067EA3B /* libcpudebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 553BF5690B4F94B90067EA3B /* libcpudebug.a */; };
 		5548ECDF0ABCB463008D1F74 /* MameFileManagerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5548ECDE0ABCB463008D1F74 /* MameFileManagerTest.m */; };
 		5548EDCB0ABE3CEF008D1F74 /* file.txt in Resources */ = {isa = PBXBuildFile; fileRef = 5548EDCA0ABE3CEF008D1F74 /* file.txt */; };
+		554933B40B993F1F000EF4A3 /* MameInputTables.h in Headers */ = {isa = PBXBuildFile; fileRef = 554933B30B993F1E000EF4A3 /* MameInputTables.h */; };
 		5555902F0AF9B117001ADC6D /* mcr.h in Headers */ = {isa = PBXBuildFile; fileRef = 556A4EE50AA51CA300602CC5 /* mcr.h */; };
 		5555908B0AF9B51A001ADC6D /* m68kops.c in Sources */ = {isa = PBXBuildFile; fileRef = 555590860AF9B51A001ADC6D /* m68kops.c */; };
 		5555908C0AF9B51A001ADC6D /* m68kops.h in Headers */ = {isa = PBXBuildFile; fileRef = 555590870AF9B51A001ADC6D /* m68kops.h */; };
@@ -679,7 +680,7 @@
 		55CC3E170B8575F300979214 /* asic65.c in Sources */ = {isa = PBXBuildFile; fileRef = 55CC36B10B8575F100979214 /* asic65.c */; };
 		55CC3E180B8575F300979214 /* asterix.c in Sources */ = {isa = PBXBuildFile; fileRef = 55CC36B20B8575F100979214 /* asterix.c */; };
 		55CC3E190B8575F300979214 /* asterix.c in Sources */ = {isa = PBXBuildFile; fileRef = 55CC36B30B8575F100979214 /* asterix.c */; };
-		55CC3E1A0B8575F300979214 /* asteroid.c in Sources */ = {isa = PBXBuildFile; fileRef = 55CC36B40B8575F100979214; };
+		55CC3E1A0B8575F300979214 /* asteroid.c in Sources */ = {isa = PBXBuildFile; fileRef = 55CC36B40B8575F100979214 /* asteroid.c */; };
 		55CC3E1B0B8575F300979214 /* asteroid.c in Sources */ = {isa = PBXBuildFile; fileRef = 55CC36B50B8575F100979214 /* asteroid.c */; };
 		55CC3E1C0B8575F300979214 /* asteroid.c in Sources */ = {isa = PBXBuildFile; fileRef = 55CC36B60B8575F100979214 /* asteroid.c */; };
 		55CC3E1D0B8575F300979214 /* astinvad.c in Sources */ = {isa = PBXBuildFile; fileRef = 55CC36B70B8575F100979214 /* astinvad.c */; };
@@ -2868,6 +2869,7 @@
 		5548ECDD0ABCB463008D1F74 /* MameFileManagerTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MameFileManagerTest.h; sourceTree = "<group>"; };
 		5548ECDE0ABCB463008D1F74 /* MameFileManagerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MameFileManagerTest.m; sourceTree = "<group>"; };
 		5548EDCA0ABE3CEF008D1F74 /* file.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = file.txt; sourceTree = "<group>"; };
+		554933B30B993F1E000EF4A3 /* MameInputTables.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MameInputTables.h; sourceTree = "<group>"; };
 		555329F30B027FBD0092FC09 /* versions.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = versions.xcconfig; sourceTree = "<group>"; };
 		555590860AF9B51A001ADC6D /* m68kops.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = m68kops.c; sourceTree = "<group>"; };
 		555590870AF9B51A001ADC6D /* m68kops.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = m68kops.h; sourceTree = "<group>"; };
@@ -3614,7 +3616,7 @@
 		55CC36B10B8575F100979214 /* asic65.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = asic65.c; path = machine/asic65.c; sourceTree = "<group>"; };
 		55CC36B20B8575F100979214 /* asterix.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = asterix.c; path = vidhrdw/asterix.c; sourceTree = "<group>"; };
 		55CC36B30B8575F100979214 /* asterix.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = asterix.c; path = drivers/asterix.c; sourceTree = "<group>"; };
-		55CC36B40B8575F100979214 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = asteroid.c; path = sndhrdw/asteroid.c; sourceTree = "<group>"; };
+		55CC36B40B8575F100979214 /* asteroid.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = asteroid.c; path = sndhrdw/asteroid.c; sourceTree = "<group>"; };
 		55CC36B50B8575F100979214 /* asteroid.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = asteroid.c; path = machine/asteroid.c; sourceTree = "<group>"; };
 		55CC36B60B8575F100979214 /* asteroid.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = asteroid.c; path = drivers/asteroid.c; sourceTree = "<group>"; };
 		55CC36B70B8575F100979214 /* astinvad.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = astinvad.c; path = vidhrdw/astinvad.c; sourceTree = "<group>"; };
@@ -6520,6 +6522,7 @@
 				5503D7F30AB7B63E003F407E /* MameTextureConverter.h */,
 				55CDE6E20AAC60CB0021CEA0 /* MameInputController.h */,
 				55CDE6E30AAC60CB0021CEA0 /* MameInputController.m */,
+				554933B30B993F1E000EF4A3 /* MameInputTables.h */,
 				55FE25E60AAD2F6100C4054A /* MameAudioController.h */,
 				55FE25E70AAD2F6100C4054A /* MameAudioController.m */,
 				5561FBA10AC58C6900BE1BF5 /* MameTimingController.h */,
@@ -6795,7 +6798,7 @@
 				55CC36B10B8575F100979214 /* asic65.c */,
 				55CC36B20B8575F100979214 /* asterix.c */,
 				55CC36B30B8575F100979214 /* asterix.c */,
-				55CC36B40B8575F100979214,
+				55CC36B40B8575F100979214 /* asteroid.c */,
 				55CC36B50B8575F100979214 /* asteroid.c */,
 				55CC36B60B8575F100979214 /* asteroid.c */,
 				55CC36B70B8575F100979214 /* astinvad.c */,
@@ -8885,6 +8888,7 @@
 				55193F5F0B93F5DC004C0C98 /* DDHidUsageTables.h in Headers */,
 				55193F610B93F5DC004C0C98 /* NSDictionary+DDHidExtras.h in Headers */,
 				55193F660B93F5EC004C0C98 /* NSXReturnThrowError.h in Headers */,
+				554933B40B993F1F000EF4A3 /* MameInputTables.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12200,15 +12204,11 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = mame.pch;
 				HEADER_SEARCH_PATHS = (
-					"$(HEADER_SEARCH_PATHS_QUOTED_1)",
-					"$(HEADER_SEARCH_PATHS_QUOTED_2)",
-					"$(HEADER_SEARCH_PATHS_QUOTED_3)",
-					"$(HEADER_SEARCH_PATHS_QUOTED_4)",
+					"$(SRCROOT)/mame/src/includes",
+					"$(SRCROOT)/mame/src",
+					"$(SRCROOT)/mame",
+					"$(SRCROOT)/osx",
 				);
-				HEADER_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)/mame/src/includes\"";
-				HEADER_SEARCH_PATHS_QUOTED_2 = "\"$(SRCROOT)/mame/src\"";
-				HEADER_SEARCH_PATHS_QUOTED_3 = "\"$(SRCROOT)/mame\"";
-				HEADER_SEARCH_PATHS_QUOTED_4 = "\"$(SRCROOT)/osx\"";
 				MY_SCRIPT_DIR = "${SRCROOT}/tools";
 				OTHER_CFLAGS = (
 					"$(inherited)",
@@ -12232,15 +12232,11 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = mame.pch;
 				HEADER_SEARCH_PATHS = (
-					"$(HEADER_SEARCH_PATHS_QUOTED_1)",
-					"$(HEADER_SEARCH_PATHS_QUOTED_2)",
-					"$(HEADER_SEARCH_PATHS_QUOTED_3)",
-					"$(HEADER_SEARCH_PATHS_QUOTED_4)",
+					"$(SRCROOT)/mame/src/includes",
+					"$(SRCROOT)/mame/src",
+					"$(SRCROOT)/mame",
+					"$(SRCROOT)/osx",
 				);
-				HEADER_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)/mame/src/includes\"";
-				HEADER_SEARCH_PATHS_QUOTED_2 = "\"$(SRCROOT)/mame/src\"";
-				HEADER_SEARCH_PATHS_QUOTED_3 = "\"$(SRCROOT)/mame\"";
-				HEADER_SEARCH_PATHS_QUOTED_4 = "\"$(SRCROOT)/osx\"";
 				MY_SCRIPT_DIR = "${SRCROOT}/tools";
 				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
 			};
@@ -12257,9 +12253,8 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				HEADER_SEARCH_PATHS = (
 					"$(HEADER_SEARCH_PATHS)",
-					"$(HEADER_SEARCH_PATHS_QUOTED_1)",
+					"$(SYMROOT)/layouts",
 				);
-				HEADER_SEARCH_PATHS_QUOTED_1 = "\"$(SYMROOT)/layouts\"";
 				INSTALL_PATH = /usr/local/lib;
 				PREBINDING = NO;
 				PRODUCT_NAME = core;
@@ -12277,9 +12272,8 @@
 				GCC_MODEL_TUNING = G5;
 				HEADER_SEARCH_PATHS = (
 					"$(HEADER_SEARCH_PATHS)",
-					"$(HEADER_SEARCH_PATHS_QUOTED_1)",
+					"$(SYMROOT)/layouts",
 				);
-				HEADER_SEARCH_PATHS_QUOTED_1 = "\"$(SYMROOT)/layouts\"";
 				INSTALL_PATH = /usr/local/lib;
 				PREBINDING = NO;
 				PRODUCT_NAME = core;
@@ -12299,9 +12293,8 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(HEADER_SEARCH_PATHS_QUOTED_1)",
+					"$(SYMROOT)/layouts",
 				);
-				HEADER_SEARCH_PATHS_QUOTED_1 = "\"$(SYMROOT)/layouts\"";
 				INSTALL_PATH = /usr/local/lib;
 				PREBINDING = NO;
 				PRODUCT_NAME = drivers;
@@ -12319,9 +12312,8 @@
 				GCC_MODEL_TUNING = G5;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(HEADER_SEARCH_PATHS_QUOTED_1)",
+					"$(SYMROOT)/layouts",
 				);
-				HEADER_SEARCH_PATHS_QUOTED_1 = "\"$(SYMROOT)/layouts\"";
 				INSTALL_PATH = /usr/local/lib;
 				PREBINDING = NO;
 				PRODUCT_NAME = drivers;

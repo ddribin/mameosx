@@ -847,6 +847,10 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     [mMameLock unlock];
     [mMameLock lock];
     
+    // Poll the run loop
+    [[NSRunLoop currentRunLoop] acceptInputForMode: NSDefaultRunLoopMode
+                                        beforeDate: 0];
+    
     return skipNextFrame;
 }
 
@@ -1005,6 +1009,7 @@ NSString * MameExitStatusKey = @"MameExitStatus";
               [mTimingController fpsRendered],
               [mTimingController framesRendered]);
     [mTimingController gameFinished];
+    [mInputController gameFinished];
 
     [self performSelectorOnMainThread: @selector(gameFinished:)
                            withObject: [NSNumber numberWithInt: exitStatus]
