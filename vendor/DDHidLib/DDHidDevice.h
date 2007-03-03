@@ -44,6 +44,7 @@
     NSMutableDictionary * mElementsByCookie;
     BOOL mListenInExclusiveMode;
     DDHidQueue * mDefaultQueue;
+    int mTag;
 }
 
 - (id) initWithDevice: (io_object_t) device error: (NSError **) error_;
@@ -111,6 +112,9 @@
 - (NSArray *) usages;
 
 - (NSComparisonResult) compareByLocationId: (DDHidDevice *) device;
+
+- (int) tag;
+- (void) setTag: (int) theTag;
 
 @end
 

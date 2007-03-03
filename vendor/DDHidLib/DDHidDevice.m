@@ -60,6 +60,7 @@
     
     mListenInExclusiveMode = NO;
     mDefaultQueue = nil;
+    mTag = 0;
     
     return self;
 }
@@ -382,6 +383,19 @@
         return NSOrderedDescending;
     else
         return NSOrderedSame;
+}
+
+//=========================================================== 
+//  tag 
+//=========================================================== 
+- (int) tag
+{
+    return mTag;
+}
+
+- (void) setTag: (int) theTag
+{
+    mTag = theTag;
 }
 
 @end
