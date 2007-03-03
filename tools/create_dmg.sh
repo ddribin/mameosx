@@ -3,9 +3,9 @@
 BUILT_PRODUCTS_DIR=${BUILT_PRODUCTS_DIR:-${SYMROOT}/Release}
 CURRENT_MARKETING_VERSION=${CURRENT_MARKETING_VERSION:-x.x.x}
 
-MY_DIR=`dirname $0`
+MY_DIR=`dirname "$0"`
 BUILD_DIR="${BUILT_PRODUCTS_DIR}/dmg"
-MNT_DIR=""${BUILD_DIR}/mnt""
+MNT_DIR="${BUILD_DIR}/mnt"
 
 mkdir -p "$BUILD_DIR"
 mkdir -p "$MNT_DIR"
@@ -15,6 +15,7 @@ DISK_IMAGE="${BUILD_DIR}/MAMEOSX-${CURRENT_MARKETING_VERSION}.dmg"
 MOUNTED_VOLUME="${MNT_DIR}/MAME OS X"
 APP="MAME OS X.app"
 
+echo "${MY_DIR}"
 cp "${MY_DIR}/mameosx-template.sparseimage.bz2" "$BUILD_DIR"
 bunzip2 -f "${TEMPLATE_IMAGE}.bz2"
 

@@ -679,7 +679,7 @@
 		55CC3E170B8575F300979214 /* asic65.c in Sources */ = {isa = PBXBuildFile; fileRef = 55CC36B10B8575F100979214 /* asic65.c */; };
 		55CC3E180B8575F300979214 /* asterix.c in Sources */ = {isa = PBXBuildFile; fileRef = 55CC36B20B8575F100979214 /* asterix.c */; };
 		55CC3E190B8575F300979214 /* asterix.c in Sources */ = {isa = PBXBuildFile; fileRef = 55CC36B30B8575F100979214 /* asterix.c */; };
-		55CC3E1A0B8575F300979214 /* asteroid.c in Sources */ = {isa = PBXBuildFile; fileRef = 55CC36B40B8575F100979214 /* asteroid.c */; };
+		55CC3E1A0B8575F300979214 /* asteroid.c in Sources */ = {isa = PBXBuildFile; fileRef = 55CC36B40B8575F100979214; };
 		55CC3E1B0B8575F300979214 /* asteroid.c in Sources */ = {isa = PBXBuildFile; fileRef = 55CC36B50B8575F100979214 /* asteroid.c */; };
 		55CC3E1C0B8575F300979214 /* asteroid.c in Sources */ = {isa = PBXBuildFile; fileRef = 55CC36B60B8575F100979214 /* asteroid.c */; };
 		55CC3E1D0B8575F300979214 /* astinvad.c in Sources */ = {isa = PBXBuildFile; fileRef = 55CC36B70B8575F100979214 /* astinvad.c */; };
@@ -2593,7 +2593,7 @@
 			outputFiles = (
 				"$(SYMROOT)/layouts/$(INPUT_FILE_BASE).lh",
 			);
-			script = "${TARGET_BUILD_DIR}/file2str ${INPUT_FILE_PATH} ${SYMROOT}/layouts/${INPUT_FILE_BASE}.lh layout_${INPUT_FILE_BASE}";
+			script = "\"${TARGET_BUILD_DIR}/file2str\" \"${INPUT_FILE_PATH}\" \"${SYMROOT}/layouts/${INPUT_FILE_BASE}.lh\" \"layout_${INPUT_FILE_BASE}\"";
 		};
 		55BE02B00AEC72EB00357340 /* PBXBuildRule */ = {
 			isa = PBXBuildRule;
@@ -3614,7 +3614,7 @@
 		55CC36B10B8575F100979214 /* asic65.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = asic65.c; path = machine/asic65.c; sourceTree = "<group>"; };
 		55CC36B20B8575F100979214 /* asterix.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = asterix.c; path = vidhrdw/asterix.c; sourceTree = "<group>"; };
 		55CC36B30B8575F100979214 /* asterix.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = asterix.c; path = drivers/asterix.c; sourceTree = "<group>"; };
-		55CC36B40B8575F100979214 /* asteroid.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = asteroid.c; path = sndhrdw/asteroid.c; sourceTree = "<group>"; };
+		55CC36B40B8575F100979214 = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = asteroid.c; path = sndhrdw/asteroid.c; sourceTree = "<group>"; };
 		55CC36B50B8575F100979214 /* asteroid.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = asteroid.c; path = machine/asteroid.c; sourceTree = "<group>"; };
 		55CC36B60B8575F100979214 /* asteroid.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = asteroid.c; path = drivers/asteroid.c; sourceTree = "<group>"; };
 		55CC36B70B8575F100979214 /* astinvad.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = astinvad.c; path = vidhrdw/astinvad.c; sourceTree = "<group>"; };
@@ -6795,7 +6795,7 @@
 				55CC36B10B8575F100979214 /* asic65.c */,
 				55CC36B20B8575F100979214 /* asterix.c */,
 				55CC36B30B8575F100979214 /* asterix.c */,
-				55CC36B40B8575F100979214 /* asteroid.c */,
+				55CC36B40B8575F100979214,
 				55CC36B50B8575F100979214 /* asteroid.c */,
 				55CC36B60B8575F100979214 /* asteroid.c */,
 				55CC36B70B8575F100979214 /* astinvad.c */,
@@ -9372,7 +9372,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "mkdir -p ${SRCROOT}/mame/generated\n${TARGET_BUILD_DIR}/m68kmake ${SRCROOT}/mame/generated ${SRCROOT}/mame/src/cpu/m68000/m68k_in.c\ndate > ${SRCROOT}/mame/generated/.timestamp";
+			shellScript = "mkdir -p \"${SRCROOT}/mame/generated\"\n\"${TARGET_BUILD_DIR}/m68kmake\" \"${SRCROOT}/mame/generated\" \"${SRCROOT}/mame/src/cpu/m68000/m68k_in.c\"\ndate > \"${SRCROOT}/mame/generated/.timestamp\"";
 		};
 		55D292EF0B175E2B002C9199 /* Generate Release Notes (Script) */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -9388,7 +9388,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "echo \"Building release notes\" 1>&2\nmkdir -p ${SYMROOT}/generated\n${MY_SCRIPT_DIR}/changelog2release ${SRCROOT}/changelog.yml > ${SYMROOT}/generated/release_notes.html";
+			shellScript = "echo \"Building release notes\" 1>&2\nmkdir -p \"${SYMROOT}/generated\"\n\"${MY_SCRIPT_DIR}/changelog2release\" \"${SRCROOT}/changelog.yml\" > \"${SYMROOT}/generated/release_notes.html\"";
 		};
 		55D293BB0B177760002C9199 /* Create Disk Image (Script) */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -9402,7 +9402,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "echo \"Create Disk Image\" 1>&2\n${MY_SCRIPT_DIR}/create_dmg.sh";
+			shellScript = "echo \"Create Disk Image\" 1>&2\n\"${MY_SCRIPT_DIR}/create_dmg.sh\"";
 		};
 		55F4D7D70B86DBAA001EED08 /* Generate help */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -9419,7 +9419,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "${MY_SCRIPT_DIR}/xcode_manual";
+			shellScript = "\"${MY_SCRIPT_DIR}/xcode_manual\"";
 		};
 		55F4D8440B86E2F2001EED08 /* Generate help */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -9436,7 +9436,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "${MY_SCRIPT_DIR}/xcode_manual";
+			shellScript = "\"${MY_SCRIPT_DIR}/xcode_manual\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -12200,11 +12200,15 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = mame.pch;
 				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/mame/src/includes",
-					"$(SRCROOT)/mame/src",
-					"$(SRCROOT)/mame",
-					"$(SRCROOT)/osx",
+					"$(HEADER_SEARCH_PATHS_QUOTED_1)",
+					"$(HEADER_SEARCH_PATHS_QUOTED_2)",
+					"$(HEADER_SEARCH_PATHS_QUOTED_3)",
+					"$(HEADER_SEARCH_PATHS_QUOTED_4)",
 				);
+				HEADER_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)/mame/src/includes\"";
+				HEADER_SEARCH_PATHS_QUOTED_2 = "\"$(SRCROOT)/mame/src\"";
+				HEADER_SEARCH_PATHS_QUOTED_3 = "\"$(SRCROOT)/mame\"";
+				HEADER_SEARCH_PATHS_QUOTED_4 = "\"$(SRCROOT)/osx\"";
 				MY_SCRIPT_DIR = "${SRCROOT}/tools";
 				OTHER_CFLAGS = (
 					"$(inherited)",
@@ -12228,11 +12232,15 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = mame.pch;
 				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/mame/src/includes",
-					"$(SRCROOT)/mame/src",
-					"$(SRCROOT)/mame",
-					"$(SRCROOT)/osx",
+					"$(HEADER_SEARCH_PATHS_QUOTED_1)",
+					"$(HEADER_SEARCH_PATHS_QUOTED_2)",
+					"$(HEADER_SEARCH_PATHS_QUOTED_3)",
+					"$(HEADER_SEARCH_PATHS_QUOTED_4)",
 				);
+				HEADER_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)/mame/src/includes\"";
+				HEADER_SEARCH_PATHS_QUOTED_2 = "\"$(SRCROOT)/mame/src\"";
+				HEADER_SEARCH_PATHS_QUOTED_3 = "\"$(SRCROOT)/mame\"";
+				HEADER_SEARCH_PATHS_QUOTED_4 = "\"$(SRCROOT)/osx\"";
 				MY_SCRIPT_DIR = "${SRCROOT}/tools";
 				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
 			};
@@ -12249,8 +12257,9 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				HEADER_SEARCH_PATHS = (
 					"$(HEADER_SEARCH_PATHS)",
-					"$(SYMROOT)/layouts",
+					"$(HEADER_SEARCH_PATHS_QUOTED_1)",
 				);
+				HEADER_SEARCH_PATHS_QUOTED_1 = "\"$(SYMROOT)/layouts\"";
 				INSTALL_PATH = /usr/local/lib;
 				PREBINDING = NO;
 				PRODUCT_NAME = core;
@@ -12268,8 +12277,9 @@
 				GCC_MODEL_TUNING = G5;
 				HEADER_SEARCH_PATHS = (
 					"$(HEADER_SEARCH_PATHS)",
-					"$(SYMROOT)/layouts",
+					"$(HEADER_SEARCH_PATHS_QUOTED_1)",
 				);
+				HEADER_SEARCH_PATHS_QUOTED_1 = "\"$(SYMROOT)/layouts\"";
 				INSTALL_PATH = /usr/local/lib;
 				PREBINDING = NO;
 				PRODUCT_NAME = core;
@@ -12289,8 +12299,9 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SYMROOT)/layouts",
+					"$(HEADER_SEARCH_PATHS_QUOTED_1)",
 				);
+				HEADER_SEARCH_PATHS_QUOTED_1 = "\"$(SYMROOT)/layouts\"";
 				INSTALL_PATH = /usr/local/lib;
 				PREBINDING = NO;
 				PRODUCT_NAME = drivers;
@@ -12308,8 +12319,9 @@
 				GCC_MODEL_TUNING = G5;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SYMROOT)/layouts",
+					"$(HEADER_SEARCH_PATHS_QUOTED_1)",
 				);
+				HEADER_SEARCH_PATHS_QUOTED_1 = "\"$(SYMROOT)/layouts\"";
 				INSTALL_PATH = /usr/local/lib;
 				PREBINDING = NO;
 				PRODUCT_NAME = drivers;
