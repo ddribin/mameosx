@@ -42,6 +42,10 @@
 - (void) gameThread;
 - (void) gameFinished: (NSNumber *) exitStatus;
 
+- (void) updateMouseCursor;
+- (void) hideMouseCursor;
+- (void) showMouseCursor;
+
 #pragma mark -
 #pragma mark "Notifications and Delegates"
 
@@ -156,6 +160,8 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     mSyncToRefresh = NO;
     mMameLock = [[NSLock alloc] init];
     mMameIsRunning = NO;
+    mMameIsPaused = NO;
+    mMouseCursorIsHidden = NO;
 }
 
 - (void) dealloc
@@ -522,6 +528,7 @@ NSString * MameExitStatusKey = @"MameExitStatus";
                    size: NSIntegralRect([self bounds]).size];
     
     [self startAnimation];
+    [self updateMouseCursor];
     
     return 0;
 }
@@ -543,10 +550,12 @@ NSString * MameExitStatusKey = @"MameExitStatus";
 }
 
 - (void) mameDidPause: (running_machine *) machine
-                puase: (int) pause; 
+                pause: (int) pause; 
 {
     JRLogDebug(@"mameDidPause: %d", pause);
-    [mAudioController setPaused: ((pause == 1)? YES : NO)];
+    mMameIsPaused = (pause == 1)? YES : NO;
+    [mAudioController setPaused: mMameIsPaused];
+    [self updateMouseCursor];
 }
 
 - (BOOL) acceptsFirstResponder
@@ -556,7 +565,7 @@ NSString * MameExitStatusKey = @"MameExitStatus";
 
 - (void) keyDown: (NSEvent *) event
 {
-    [NSCursor setHiddenUntilMouseMoves: YES];
+    // [NSCursor setHiddenUntilMouseMoves: YES];
     [mInputController keyDown: event];
 }
 
@@ -848,8 +857,13 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     [mMameLock lock];
     
     // Poll the run loop
+#if 0
     [[NSRunLoop currentRunLoop] acceptInputForMode: NSDefaultRunLoopMode
                                         beforeDate: 0];
+#else
+    [[NSRunLoop currentRunLoop] runMode: NSDefaultRunLoopMode
+                             beforeDate: [NSDate date]];
+#endif
     
     return skipNextFrame;
 }
@@ -997,8 +1011,12 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     [mMameLock lock];
     mMamePool = [[NSAutoreleasePool alloc] init];
     mMameIsRunning = YES;
+    mMameIsPaused = NO;
+    // [self updateMouseCursor];
     int exitStatus = run_game(mGameIndex);
     mMameIsRunning = NO;
+    mMameIsPaused = NO;
+    [self updateMouseCursor];
     [mMamePool release];
     [mMameLock unlock];
     
@@ -1072,6 +1090,66 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     [self pause: mUnpauseOnFullScreenTransition];
 }
 
+- (void) updateMouseCursor;
+{
+    BOOL hideCursor = (mMameIsRunning && !mMameIsPaused);
+    SEL selector;
+    if (hideCursor)
+        selector = @selector(hideMouseCursor);
+    else
+        selector = @selector(showMouseCursor);
+    
+    [self performSelectorOnMainThread: selector
+                           withObject: nil
+                        waitUntilDone: NO];
+}
+
+- (void) hideMouseCursor;
+{
+    if (mMouseCursorIsHidden)
+        return;
+    
+    [NSCursor hide];
+    CGAssociateMouseAndMouseCursorPosition(NO);
+    
+    // Even though the mouse cursor is hidden, and it won't move, mouse clicks
+    // still register.  If cursor is not over our window, it will bring
+    // another app to the foreground.  So, this code moves the cursor
+    // to the cener of our view, so mouse clicks have no side effects.
+    NSRect bounds = [self bounds];
+    NSPoint midpoint = NSMakePoint(bounds.origin.x + bounds.size.width/2,
+                                   bounds.origin.y + bounds.size.height/2);
+    NSPoint midpointInWindowCoordinates =
+        [self convertPoint: midpoint toView: nil];
+    NSWindow * window = [self window];
+    NSPoint midpointInScreenCoordinates =
+        [window convertBaseToScreen: midpointInWindowCoordinates];
+    
+    // Cocoa screen coordinates have (0,0) in the lower left.  Core Graphics
+    // screen coordinates have (0,0) in the upper left.  This translates the
+    // Y-coordinate from Cocoa to CG screen coordinates.
+    NSScreen * screen = [window screen];
+    CGDirectDisplayID display =
+        [[[screen deviceDescription] objectForKey: @"NSScreenNumber"] pointerValue];
+    
+    size_t height = CGDisplayPixelsHigh(display);
+    CGPoint midpointInDisplayCoordinates =
+        CGPointMake(midpointInScreenCoordinates.x,
+                    height - midpointInScreenCoordinates.y);
+
+    CGDisplayMoveCursorToPoint(display, midpointInDisplayCoordinates);
+    mMouseCursorIsHidden = YES;
+}
+
+- (void) showMouseCursor;
+{
+    if (!mMouseCursorIsHidden)
+        return;
+    
+    [NSCursor unhide];
+    CGAssociateMouseAndMouseCursorPosition(YES);
+    mMouseCursorIsHidden = NO;
+}
 
 #pragma mark -
 #pragma mark "Notifications and Delegates"

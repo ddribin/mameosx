@@ -90,6 +90,8 @@ typedef enum _MameFullScreenZoom
     MameFileManager * mFileManager;
 
     BOOL mMameIsRunning;
+    BOOL mMameIsPaused;
+    BOOL mMouseCursorIsHidden;
     NSLock * mMameLock;
     NSAutoreleasePool * mMamePool;
 
@@ -185,7 +187,7 @@ typedef enum _MameFullScreenZoom
 - (void) mameDidExit: (running_machine *) machine;
 
 - (void) mameDidPause: (running_machine *) machine
-                puase: (int) pause; 
+                pause: (int) pause; 
 
 #pragma mark -
 #pragma mark OS Dependent API
