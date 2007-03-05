@@ -26,7 +26,7 @@
 extern "C" {
 #endif
 
-@class MameController;
+@class MameView;
 @class MameInputController;
 @class MameAudioController;
 @class MameTimingController;
