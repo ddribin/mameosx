@@ -25,6 +25,7 @@
 #include "osdepend.h"
 #include "render.h"
 #include "unicode.h"
+#import "osd_osx.h"
 #import "MameView.h"
 #import "MameInputController.h"
 #import "MameAudioController.h"
@@ -80,7 +81,7 @@ static void mame_did_exit(running_machine * machine)
 
 static void mame_did_pause(running_machine * machine, int pause)
 {
-    [sController mameDidPause: machine puase: pause];
+    [sController mameDidPause: machine pause: pause];
 }
 
 static void error_callback(void *param, const char *format, va_list argptr)
