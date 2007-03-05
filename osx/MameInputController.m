@@ -124,7 +124,6 @@ static NSString * format(NSString * format, ...);
 
 - (void) hidMouse: (DDHidMouse *) mouse xChanged: (SInt32) deltaX;
 - (void) hidMouse: (DDHidMouse *) mouse yChanged: (SInt32) deltaY;
-- (void) hidMouse: (DDHidMouse *) mouse wheelChanged: (SInt32) deltaWheel;
 - (void) hidMouse: (DDHidMouse *) mouse buttonDown: (unsigned) buttonNumber;
 - (void) hidMouse: (DDHidMouse *) mouse buttonUp: (unsigned) buttonNumber;
 
@@ -234,6 +233,10 @@ static NSString * format(NSString * format, ...);
                 value = p->mMiceStates[joynum].y * 512;
                 p->mMiceStates[joynum].y = 0;
             }
+            break;
+            
+        case CODETYPE_MOUSEBUTTON:
+            value = p->mMiceStates[joynum].buttons[joyindex];
             break;
     }
 
@@ -461,6 +464,18 @@ static NSString * format(NSString * format, ...);
         [self add_joylist_entry: name
                            code: JOYCODE(mouseNumber, CODETYPE_MOUSEAXIS, 1)
                      input_code: CODE_OTHER_DIGITAL];
+        
+        int buttonCount = MIN([buttons count], MAX_BUTTONS);
+        int i;
+        for (i = 0; i < buttonCount; i++)
+        {
+            DDHidElement * button = [buttons objectAtIndex: i];
+            
+            NSString * name = format(@"M%d Button %d", mouseNumber+1, i+1);
+            [self add_joylist_entry: name
+                               code: JOYCODE(mouseNumber, CODETYPE_MOUSEBUTTON, i)
+                         input_code: CODE_OTHER_DIGITAL];
+        }
     }
 }
 
@@ -510,18 +525,14 @@ static NSString * format(NSString * format, ...);
     p->mMiceStates[0].y += deltaY;
 }
 
-- (void) hidMouse: (DDHidMouse *) mouse wheelChanged: (SInt32) deltaWheel;
-{
-}
-
 - (void) hidMouse: (DDHidMouse *) mouse buttonDown: (unsigned) buttonNumber;
 {
-    NSLog(@"Mouse button %d down", buttonNumber);
+    p->mMiceStates[0].buttons[buttonNumber] = 1;
 }
 
 - (void) hidMouse: (DDHidMouse *) mouse buttonUp: (unsigned) buttonNumber;
 {
-    NSLog(@"Mouse button %d up", buttonNumber);
+    p->mMiceStates[0].buttons[buttonNumber] = 0;
 }
 
 @end
