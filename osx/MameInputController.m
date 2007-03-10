@@ -442,6 +442,7 @@ static NSString * format(NSString * format, ...);
     {
         DDHidMouse * mouse = [mice objectAtIndex: mouseNumber];
         [p->mJoysticks addObject: mouse];
+        [mouse setTag: mouseNumber];
         
         NSArray * buttons = [mouse buttonElements];
         JRLogInfo(@"Found mouse: %@, %d button(s)",
@@ -517,22 +518,22 @@ static NSString * format(NSString * format, ...);
 
 - (void) hidMouse: (DDHidMouse *) mouse xChanged: (SInt32) deltaX;
 {
-    p->mMiceStates[0].x += deltaX;
+    p->mMiceStates[[mouse tag]].x += deltaX;
 }
 
 - (void) hidMouse: (DDHidMouse *) mouse yChanged: (SInt32) deltaY;
 {
-    p->mMiceStates[0].y += deltaY;
+    p->mMiceStates[[mouse tag]].y += deltaY;
 }
 
 - (void) hidMouse: (DDHidMouse *) mouse buttonDown: (unsigned) buttonNumber;
 {
-    p->mMiceStates[0].buttons[buttonNumber] = 1;
+    p->mMiceStates[[mouse tag]].buttons[buttonNumber] = 1;
 }
 
 - (void) hidMouse: (DDHidMouse *) mouse buttonUp: (unsigned) buttonNumber;
 {
-    p->mMiceStates[0].buttons[buttonNumber] = 0;
+    p->mMiceStates[[mouse tag]].buttons[buttonNumber] = 0;
 }
 
 @end
