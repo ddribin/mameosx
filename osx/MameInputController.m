@@ -55,8 +55,10 @@ static NSString * format(NSString * format, ...);
     os_code_info mCodelist[MAX_KEYS+MAX_JOY];
     int mTotalCodes;
     INT32 mKeyStates[MAME_OSX_NUM_KEYSTATES];
+    INT32 mKeyStates2[256];
     NSMutableArray * mJoystickNames;
     NSMutableArray * mJoysticks;
+    int mNumberOfKeyboards;
     BOOL mEnabled;
     JoystickState mJoystickStates[MAX_JOYSTICKS];
     MouseState mMiceStates[MAX_MICE];
@@ -153,6 +155,8 @@ static NSString * format(NSString * format, ...);
 - (void) osd_init;
 {
     p->mTotalCodes = 0;
+    [p->mJoysticks removeAllObjects];
+    [p->mJoystickNames removeAllObjects];
 
     [self initKeyCodes];
     [self initJoyCodes];
@@ -263,7 +267,9 @@ static NSString * format(NSString * format, ...);
     @synchronized(self)
     {
         if (IS_KEYBOARD_CODE(code))
-            value = p->mKeyStates[code];
+        {
+            value = p->mKeyStates2[code] > 0? 1 : 0;
+        }
         else
             return [self getJoyCodeValue: code];
     }
@@ -322,11 +328,26 @@ static NSString * format(NSString * format, ...);
 - (void) initKeyCodes;
 {
     int i= 0;
-    while (codelist[i].name != 0)
+    while (key_trans_table[i].name != 0)
     {
-        p->mCodelist[p->mTotalCodes] = codelist[i];
+        p->mCodelist[p->mTotalCodes] = key_trans_table[i];
         p->mTotalCodes++;
         i++;
+    }
+    
+    p->mNumberOfKeyboards = 0;
+    NSArray * keyboards = [DDHidKeyboard allKeyboards];
+    int keyboardCount = MIN([keyboards count], MAX_KEYBOARDS);
+    int keyboardNumber;
+    for (keyboardNumber = 0; keyboardNumber < keyboardCount; keyboardNumber++)
+    {
+        DDHidKeyboard * keyboard = [keyboards objectAtIndex: keyboardNumber];
+        
+        [p->mJoysticks addObject: keyboard];
+        p->mNumberOfKeyboards++;
+        [keyboard setTag: keyboardNumber];
+        [keyboard setDelegate: self];
+        [keyboard startListening];
     }
 }
 
@@ -361,8 +382,6 @@ static NSString * format(NSString * format, ...);
 
 - (void) initJoyCodes;
 {
-    [p->mJoystickNames removeAllObjects];
-    [p->mJoysticks removeAllObjects];
     NSArray * joysticks = [DDHidJoystick allJoysticks];
     int joystickCount = MIN([joysticks count], MAX_JOYSTICKS);
     int joystickNumber;
@@ -478,6 +497,26 @@ static NSString * format(NSString * format, ...);
                          input_code: CODE_OTHER_DIGITAL];
         }
     }
+}
+
+@end
+
+@implementation MameInputController (DDHidKeyboardDelegate)
+
+- (void) ddhidKeyboard: (DDHidKeyboard *) keyboard
+               keyDown: (unsigned) usageId;
+{
+    p->mKeyStates2[usageId]++;
+    if (p->mKeyStates2[usageId] > p->mNumberOfKeyboards)
+        p->mKeyStates2[usageId] == p->mNumberOfKeyboards;
+}
+
+- (void) ddhidKeyboard: (DDHidKeyboard *) keyboard
+                 keyUp: (unsigned) usageId;
+{
+    p->mKeyStates2[usageId]--;
+    if (p->mKeyStates2[usageId] < 0)
+        p->mKeyStates2[usageId] = 0;
 }
 
 @end

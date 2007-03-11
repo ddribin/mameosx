@@ -382,6 +382,7 @@
 		55C71AB20B2AFFF0001FF0BE /* AudioEffectWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C71AAE0B2AFFF0001FF0BE /* AudioEffectWindowController.m */; };
 		55C71AB80B2B02FA001FF0BE /* AudioEffects.nib in Resources */ = {isa = PBXBuildFile; fileRef = 55C71AB60B2B02FA001FF0BE /* AudioEffects.nib */; };
 		55C71AB90B2B02FA001FF0BE /* AudioEffects.nib in Resources */ = {isa = PBXBuildFile; fileRef = 55C71AB60B2B02FA001FF0BE /* AudioEffects.nib */; };
+		55CA69090BA3CF390012CF7B /* DDHidKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 55CA69080BA3CF390012CF7B /* DDHidKeyboard.m */; };
 		55CC34DB0B85750500979214 /* 34010fld.c in Sources */ = {isa = PBXBuildFile; fileRef = 55CC34920B85750300979214 /* 34010fld.c */; };
 		55CC34DC0B85750700979214 /* adsp2100.c in Sources */ = {isa = PBXBuildFile; fileRef = 55CC34930B85750300979214 /* adsp2100.c */; };
 		55CC34DD0B85750700979214 /* alph8201.c in Sources */ = {isa = PBXBuildFile; fileRef = 55CC34940B85750300979214 /* alph8201.c */; };
@@ -3316,6 +3317,7 @@
 		55C71AAD0B2AFFF0001FF0BE /* AudioEffectWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioEffectWindowController.h; sourceTree = "<group>"; };
 		55C71AAE0B2AFFF0001FF0BE /* AudioEffectWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioEffectWindowController.m; sourceTree = "<group>"; };
 		55C71AB70B2B02FA001FF0BE /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/AudioEffects.nib; sourceTree = "<group>"; };
+		55CA69080BA3CF390012CF7B /* DDHidKeyboard.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DDHidKeyboard.m; sourceTree = "<group>"; };
 		55CC34920B85750300979214 /* 34010fld.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = 34010fld.c; path = tms34010/34010fld.c; sourceTree = "<group>"; };
 		55CC34930B85750300979214 /* adsp2100.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = adsp2100.c; path = adsp2100/adsp2100.c; sourceTree = "<group>"; };
 		55CC34940B85750300979214 /* alph8201.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = alph8201.c; path = alph8201/alph8201.c; sourceTree = "<group>"; };
@@ -5780,6 +5782,7 @@
 		55193F380B93F5DC004C0C98 /* DDHidLib */ = {
 			isa = PBXGroup;
 			children = (
+				55CA69080BA3CF390012CF7B /* DDHidKeyboard.m */,
 				55193F390B93F5DC004C0C98 /* DDHidAppleRemote.h */,
 				55193F3A0B93F5DC004C0C98 /* DDHidAppleRemote.m */,
 				55193F3B0B93F5DC004C0C98 /* DDHidDevice.h */,
@@ -11817,6 +11820,7 @@
 				55193F600B93F5DC004C0C98 /* DDHidUsageTables.m in Sources */,
 				55193F620B93F5DC004C0C98 /* NSDictionary+DDHidExtras.m in Sources */,
 				55193F670B93F5EC004C0C98 /* NSXReturnThrowError.m in Sources */,
+				55CA69090BA3CF390012CF7B /* DDHidKeyboard.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

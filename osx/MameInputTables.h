@@ -7,10 +7,12 @@
  *
  */
 
+#include <IOKit/hid/IOHIDUsageTables.h>
+
 #define MAX_KEYS 256
 #define MAX_JOY 256
 
-#define MAX_KEYBOARDS		1
+#define MAX_KEYBOARDS		4
 #define MAX_MICE			8
 #define MAX_JOYSTICKS		8
 #define MAX_LIGHTGUNS		2
@@ -167,6 +169,120 @@ static os_code_info codelist[] = {
     {"Option",  MAME_OSX_OPTION,    KEYCODE_LALT},
     {"Command", MAME_OSX_COMMAND,   KEYCODE_LWIN},
     {"Shift",   MAME_OSX_SHIFT,     KEYCODE_LSHIFT},
+    
+    {0,         0,      0}
+};
+
+static os_code_info key_trans_table[] =
+{
+    {"1",       kHIDUsage_Keyboard1,    KEYCODE_1},
+    {"2",       kHIDUsage_Keyboard2,    KEYCODE_2},
+    {"3",       kHIDUsage_Keyboard3,    KEYCODE_3},
+    {"4",       kHIDUsage_Keyboard4,    KEYCODE_4},
+    {"5",       kHIDUsage_Keyboard5,    KEYCODE_5},
+    {"6",       kHIDUsage_Keyboard6,    KEYCODE_6},
+    {"7",       kHIDUsage_Keyboard7,    KEYCODE_7},
+    {"8",       kHIDUsage_Keyboard8,    KEYCODE_8},
+    {"9",       kHIDUsage_Keyboard9,    KEYCODE_9},
+	
+    {"A",       kHIDUsage_KeyboardA,    KEYCODE_A},
+    {"B",       kHIDUsage_KeyboardB,    KEYCODE_B},
+    {"C",       kHIDUsage_KeyboardC,    KEYCODE_C},
+    {"D",       kHIDUsage_KeyboardD,    KEYCODE_D},
+    {"E",       kHIDUsage_KeyboardE,    KEYCODE_E},
+    {"F",       kHIDUsage_KeyboardF,    KEYCODE_F},
+    {"G",       kHIDUsage_KeyboardG,    KEYCODE_G},
+    {"H",       kHIDUsage_KeyboardH,    KEYCODE_H},
+    {"I",       kHIDUsage_KeyboardI,    KEYCODE_I},
+    {"J",       kHIDUsage_KeyboardJ,    KEYCODE_J},
+    {"K",       kHIDUsage_KeyboardK,    KEYCODE_K},
+    {"L",       kHIDUsage_KeyboardL,    KEYCODE_L},
+    {"M",       kHIDUsage_KeyboardM,    KEYCODE_M},
+    {"N",       kHIDUsage_KeyboardN,    KEYCODE_N},
+    {"O",       kHIDUsage_KeyboardO,    KEYCODE_O},
+    {"P",       kHIDUsage_KeyboardP,    KEYCODE_P},
+    {"Q",       kHIDUsage_KeyboardQ,    KEYCODE_Q},
+    {"R",       kHIDUsage_KeyboardR,    KEYCODE_R},
+    {"S",       kHIDUsage_KeyboardS,    KEYCODE_S},
+    {"T",       kHIDUsage_KeyboardT,    KEYCODE_T},
+    {"U",       kHIDUsage_KeyboardU,    KEYCODE_U},
+    {"V",       kHIDUsage_KeyboardV,    KEYCODE_V},
+    {"W",       kHIDUsage_KeyboardW,    KEYCODE_W},
+    {"X",       kHIDUsage_KeyboardX,    KEYCODE_X},
+    {"Y",       kHIDUsage_KeyboardY,    KEYCODE_Y},
+    {"Z",       kHIDUsage_KeyboardZ,    KEYCODE_Z},
+	
+    {"ESC",     kHIDUsage_KeyboardEscape,       KEYCODE_ESC},
+    {"~",       kHIDUsage_KeyboardGraveAccentAndTilde,
+                                                KEYCODE_TILDE},
+    {"-",       kHIDUsage_KeyboardHyphen,       KEYCODE_MINUS},
+    {"=",       kHIDUsage_KeyboardEqualSign,    KEYCODE_EQUALS},
+    {"Backspace", kHIDUsage_KeyboardDeleteOrBackspace,
+                                                KEYCODE_BACKSPACE},
+    {"Tab",     kHIDUsage_KeyboardTab,          KEYCODE_TAB},
+    {"{",       kHIDUsage_KeyboardOpenBracket,  KEYCODE_OPENBRACE},
+    {"}",       kHIDUsage_KeyboardCloseBracket, KEYCODE_CLOSEBRACE},
+    {"Return",  kHIDUsage_KeyboardReturnOrEnter, KEYCODE_ENTER},
+    {":",       kHIDUsage_KeyboardSemicolon,    KEYCODE_COLON},
+    {"'",       kHIDUsage_KeyboardQuote,        KEYCODE_QUOTE},
+    {"\\",      kHIDUsage_KeyboardBackslash,    KEYCODE_BACKSLASH},
+    // KEYCODE_BACKSLASH2
+    {",",       kHIDUsage_KeyboardComma,        KEYCODE_COMMA},
+    {"Stop",    kHIDUsage_KeyboardStop,         KEYCODE_STOP},
+    {"/",       kHIDUsage_KeyboardSlash,        KEYCODE_SLASH},
+    {"Space",   kHIDUsage_KeyboardSpacebar,     KEYCODE_SPACE},
+    
+    {"Up",      kHIDUsage_KeyboardUpArrow,      KEYCODE_UP},
+    {"Down",    kHIDUsage_KeyboardDownArrow,    KEYCODE_DOWN},
+    {"Left",    kHIDUsage_KeyboardLeftArrow,    KEYCODE_LEFT},
+    {"Right",   kHIDUsage_KeyboardRightArrow,   KEYCODE_RIGHT},
+    
+    {"F1",      kHIDUsage_KeyboardF1,   KEYCODE_F1},
+    {"F2",      kHIDUsage_KeyboardF2,   KEYCODE_F2},
+    {"F3",      kHIDUsage_KeyboardF3,   KEYCODE_F3},
+    {"F4",      kHIDUsage_KeyboardF4,   KEYCODE_F4},
+    {"F5",      kHIDUsage_KeyboardF5,   KEYCODE_F5},
+    {"F6",		kHIDUsage_KeyboardF6,   KEYCODE_F6},
+    {"F7",		kHIDUsage_KeyboardF7,   KEYCODE_F7},
+    {"F8",		kHIDUsage_KeyboardF8,   KEYCODE_F8},
+    {"F9",		kHIDUsage_KeyboardF9,   KEYCODE_F9},
+    {"F10",		kHIDUsage_KeyboardF10,  KEYCODE_F10},
+    {"F11",		kHIDUsage_KeyboardF11,  KEYCODE_F11},
+    {"F12",		kHIDUsage_KeyboardF12,  KEYCODE_F12},
+    {"F13",		kHIDUsage_KeyboardF13,  KEYCODE_F13},
+    {"F14",		kHIDUsage_KeyboardF14,  KEYCODE_F14},
+    {"F15",		kHIDUsage_KeyboardF15,  KEYCODE_F15},
+	
+    {"Keypad 0",    kHIDUsage_Keypad0,  KEYCODE_0_PAD},
+    {"Keypad 1",    kHIDUsage_Keypad1,  KEYCODE_1_PAD},
+    {"Keypad 2",    kHIDUsage_Keypad2,  KEYCODE_2_PAD},
+    {"Keypad 3",    kHIDUsage_Keypad3,  KEYCODE_3_PAD},
+    {"Keypad 4",    kHIDUsage_Keypad4,  KEYCODE_4_PAD},
+    {"Keypad 5",    kHIDUsage_Keypad5,  KEYCODE_5_PAD},
+    {"Keypad 6",    kHIDUsage_Keypad6,  KEYCODE_6_PAD},
+    {"Keypad 7",    kHIDUsage_Keypad7,  KEYCODE_7_PAD},
+    {"Keypad 8",    kHIDUsage_Keypad8,  KEYCODE_8_PAD},
+    {"Keypad 9",    kHIDUsage_Keypad9,  KEYCODE_9_PAD},
+
+    {"Keypad /",    kHIDUsage_KeypadSlash,      KEYCODE_SLASH_PAD},
+    {"Keypad *",    kHIDUsage_KeypadAsterisk,   KEYCODE_ASTERISK},
+    {"Keypad -",    kHIDUsage_KeypadHyphen,     KEYCODE_MINUS_PAD},
+    {"Keypad +",    kHIDUsage_KeypadPlus,       KEYCODE_PLUS_PAD},
+    {"Keypad DEL",  kHIDUsage_KeypadNumLock,    KEYCODE_DEL_PAD},
+    {"Keypad Enter", kHIDUsage_KeypadEnter,     KEYCODE_ENTER_PAD},
+
+    {"PRTSCR",      kHIDUsage_KeyboardPrintScreen,  KEYCODE_PRTSCR},
+    {"Pause",       kHIDUsage_KeyboardPause,        KEYCODE_PAUSE},
+
+    {"L. Control",  kHIDUsage_KeyboardLeftControl,  KEYCODE_LCONTROL},
+    {"L. Option",   kHIDUsage_KeyboardLeftAlt,      KEYCODE_LALT},
+    {"L. Command",  kHIDUsage_KeyboardLeftGUI,      KEYCODE_LWIN},
+    {"L. Shift",    kHIDUsage_KeyboardLeftShift,    KEYCODE_LSHIFT},
+
+    {"R. Control",  kHIDUsage_KeyboardRightControl, KEYCODE_RCONTROL},
+    {"R. Option",   kHIDUsage_KeyboardRightAlt,     KEYCODE_RALT},
+    {"R. Command",  kHIDUsage_KeyboardRightGUI,     KEYCODE_RWIN},
+    {"R. Shift",    kHIDUsage_KeyboardRightShift,   KEYCODE_RSHIFT},
     
     {0,         0,      0}
 };
