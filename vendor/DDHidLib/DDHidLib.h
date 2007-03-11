@@ -30,4 +30,5 @@
 #import "DDHidUsageTables.h"
 #import "DDHidMouse.h"
 #import "DDHidJoystick.h"
+#import "DDHidKeyboard.h"
 #import "DDHidAppleRemote.h"

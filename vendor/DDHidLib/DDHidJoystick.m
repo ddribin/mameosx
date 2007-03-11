@@ -236,16 +236,6 @@
             int normalizedValue = [self normalizeValue: value forElement: element];
             [self hidJoystick: self stick: stick yChanged: normalizedValue];
         }
-#if 0
-        else if (cookie == [[self wheelElement] cookie])
-        {
-            if ((value != 0) &&
-                [mDelegate respondsToSelector: @selector(hidMouse:wheelChanged:)])
-            {
-                [mDelegate hidMouse: self wheelChanged: value];
-            }
-        }
-#endif
         else
         {
             unsigned i = 0;

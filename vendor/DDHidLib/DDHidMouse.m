@@ -66,6 +66,7 @@
     if (self == nil)
         return nil;
     
+    mXElement = mYElement = mWheelElement = nil;
     mButtonElements = [[NSMutableArray alloc] init];
     [self initMouseElements: [self elements]];
     
