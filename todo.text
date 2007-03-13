@@ -1,4 +1,5 @@
 
+* Fix tiny release build.
 * Look into default size of window.
 * Add mouse support
 * Add HID (joystick/gamepad) support
@@ -6,4 +7,3 @@
 * Add advanced preferences UI to expose everything, similar to
   FireFox's about:config.
 * Handle multipe screens (ninjaw).
-* Handle controller configuration files, (i.e. -ctrlr option)
