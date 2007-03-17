@@ -59,5 +59,6 @@
 - (long) maxValue;
 - (long) minValue;
 
+- (NSComparisonResult) compareByUsage: (DDHidElement *) device;
 
 @end

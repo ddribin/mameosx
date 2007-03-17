@@ -91,6 +91,7 @@
     mButtonElements = [[NSMutableArray alloc] init];
     mSticks = [[NSMutableArray alloc] init];
     [self initJoystickElements: [self elements]];
+    [mButtonElements sortUsingSelector: @selector(compareByUsage:)];
     mDelegate = nil;
     
     return self;
@@ -268,7 +269,7 @@
     int normalizedUnits = DDHID_JOYSTICK_VALUE_MAX - DDHID_JOYSTICK_VALUE_MIN;
     int elementUnits = [element maxValue] - [element minValue];
     
-    int normalizedValue = (((value - [element minValue]) * normalizedUnits) /
+    int normalizedValue = (((int64_t)(value - [element minValue]) * normalizedUnits) /
                            elementUnits) + DDHID_JOYSTICK_VALUE_MIN;
     return normalizedValue;
 }

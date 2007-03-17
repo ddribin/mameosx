@@ -138,5 +138,25 @@
     return [mProperties ddhid_longForString: kIOHIDElementMinKey];
 }
 
+- (NSComparisonResult) compareByUsage: (DDHidElement *) device;
+{
+    unsigned myUsagePage = [[self usage] usagePage];
+    unsigned myUsageId = [[self usage] usageId];
+
+    unsigned otherUsagePage = [[device usage] usagePage];
+    unsigned otherUsageId = [[device usage] usageId];
+
+    if (myUsagePage < otherUsagePage)
+        return NSOrderedAscending;
+    else if (myUsagePage > otherUsagePage)
+        return NSOrderedDescending;
+    
+    if (myUsageId < otherUsageId)
+        return NSOrderedAscending;
+    else if (myUsageId > otherUsageId)
+        return NSOrderedDescending;
+
+    return NSOrderedSame;
+}
 
 @end
