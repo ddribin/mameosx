@@ -201,7 +201,7 @@ static NSString * format(NSString * format, ...);
 		case CODETYPE_AXIS_POS:
 		case CODETYPE_AXIS_NEG:
         {
-			value = p->mJoystickStates[joynum].axes[joyindex];
+			int rawValue = p->mJoystickStates[joynum].axes[joyindex];
 			int top = DDHID_JOYSTICK_VALUE_MAX;
 			int bottom = DDHID_JOYSTICK_VALUE_MIN;
 			int middle = 0;
@@ -210,22 +210,22 @@ static NSString * format(NSString * format, ...);
 			// FIXME in the two-axis joystick case, we need to find out
 			// the angle. Anything else is unprecise.
 			if (codetype == CODETYPE_AXIS_POS)
-				value = (value > middle + ((top - middle) * a2d_deadzone));
+				value = (rawValue > middle + ((top - middle) * a2d_deadzone));
 			else
-				value = (value < middle - ((middle - bottom) * a2d_deadzone));
+				value = (rawValue < middle - ((middle - bottom) * a2d_deadzone));
             break;
         }
-
+            
         // analog joystick axis
 		case CODETYPE_JOYAXIS:
-			value = ((int *)&p->mJoystickStates[joynum].axes)[joyindex];
+			value = ((int *)&p->mJoystickStates[joynum].axes)[joyindex]*2;
             
             if (value < ANALOG_VALUE_MIN)
                 value = ANALOG_VALUE_MIN;
 			if (value > ANALOG_VALUE_MAX)
                 value = ANALOG_VALUE_MAX;
             break;
-            
+
         case CODETYPE_MOUSEAXIS:
             if (joyindex == 0)
             {
@@ -328,9 +328,11 @@ static NSString * format(NSString * format, ...);
 - (void) initKeyCodes;
 {
     int i= 0;
-    while (key_trans_table[i].name != 0)
+    os_code_info * keyTable = key_trans_table;
+    // os_code_info * keyTable = codelist;
+    while (keyTable[i].name != 0)
     {
-        p->mCodelist[p->mTotalCodes] = key_trans_table[i];
+        p->mCodelist[p->mTotalCodes] = keyTable[i];
         p->mTotalCodes++;
         i++;
     }
@@ -527,7 +529,7 @@ static NSString * format(NSString * format, ...);
                stick: (unsigned) stick
             xChanged: (int) value;
 {
-    p->mJoystickStates[[joystick tag]].axes[0] = value*2;
+    p->mJoystickStates[[joystick tag]].axes[0] = value;
 }
 
 - (void) hidJoystick: (DDHidJoystick *)  joystick
@@ -535,7 +537,7 @@ static NSString * format(NSString * format, ...);
             yChanged: (int) value;
 
 {
-    p->mJoystickStates[[joystick tag]].axes[1] = value*2;
+    p->mJoystickStates[[joystick tag]].axes[1] = value;
 }
 
 - (void) hidJoystick: (DDHidJoystick *) joystick
