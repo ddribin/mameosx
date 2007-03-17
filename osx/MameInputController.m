@@ -260,7 +260,10 @@ static NSString * format(NSString * format, ...);
 
 - (INT32) osd_get_code_value: (os_code) code;
 {
-    if (!p->mEnabled)
+    BOOL commandIsDown = ((p->mKeyStates2[kHIDUsage_KeyboardLeftGUI] != 0) ||
+                          (p->mKeyStates2[kHIDUsage_KeyboardRightGUI] != 0));
+
+    if (!p->mEnabled || commandIsDown)
         return 0;
     
     INT32 value;
@@ -508,17 +511,15 @@ static NSString * format(NSString * format, ...);
 - (void) ddhidKeyboard: (DDHidKeyboard *) keyboard
                keyDown: (unsigned) usageId;
 {
-    p->mKeyStates2[usageId]++;
-    if (p->mKeyStates2[usageId] > p->mNumberOfKeyboards)
-        p->mKeyStates2[usageId] == p->mNumberOfKeyboards;
+    uint32_t keyboardBit = 1 << [keyboard tag];
+    p->mKeyStates2[usageId] |= keyboardBit;
 }
 
 - (void) ddhidKeyboard: (DDHidKeyboard *) keyboard
                  keyUp: (unsigned) usageId;
 {
-    p->mKeyStates2[usageId]--;
-    if (p->mKeyStates2[usageId] < 0)
-        p->mKeyStates2[usageId] = 0;
+    uint32_t keyboardBit = 1 << [keyboard tag];
+    p->mKeyStates2[usageId] &= ~keyboardBit;
 }
 
 @end
