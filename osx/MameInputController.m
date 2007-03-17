@@ -32,8 +32,8 @@
 
 typedef struct
 {
-	int axes[MAX_AXES];
-	int buttons[MAX_BUTTONS];
+    int axes[MAX_AXES];
+    int buttons[MAX_BUTTONS];
 } JoystickState;
 
 typedef struct
@@ -163,7 +163,7 @@ static NSString * format(NSString * format, ...);
     [self initMouseCodes];
 
     // terminate array
-	memset(&p->mCodelist[p->mTotalCodes], 0, sizeof(p->mCodelist[0]));
+    memset(&p->mCodelist[p->mTotalCodes], 0, sizeof(p->mCodelist[0]));
 
     
     int i;
@@ -187,42 +187,42 @@ static NSString * format(NSString * format, ...);
 
 - (INT32) getJoyCodeValue: (os_code) joycode;
 {
-	int joyindex = JOYINDEX(joycode);
-	int codetype = CODETYPE(joycode);
-	int joynum = JOYNUM(joycode);
+    int joyindex = JOYINDEX(joycode);
+    int codetype = CODETYPE(joycode);
+    int joynum = JOYNUM(joycode);
     INT32 value = 0;
 
-	switch (codetype)
-	{
-		case CODETYPE_BUTTON:
-			value = p->mJoystickStates[joynum].buttons[joyindex];
+    switch (codetype)
+    {
+        case CODETYPE_BUTTON:
+            value = p->mJoystickStates[joynum].buttons[joyindex];
             break;
 
-		case CODETYPE_AXIS_POS:
-		case CODETYPE_AXIS_NEG:
+        case CODETYPE_AXIS_POS:
+        case CODETYPE_AXIS_NEG:
         {
-			int rawValue = p->mJoystickStates[joynum].axes[joyindex];
-			int top = DDHID_JOYSTICK_VALUE_MAX;
-			int bottom = DDHID_JOYSTICK_VALUE_MIN;
-			int middle = 0;
+            int rawValue = p->mJoystickStates[joynum].axes[joyindex];
+            int top = DDHID_JOYSTICK_VALUE_MAX;
+            int bottom = DDHID_JOYSTICK_VALUE_MIN;
+            int middle = 0;
             
-			// watch for movement greater "a2d_deadzone" along either axis
-			// FIXME in the two-axis joystick case, we need to find out
-			// the angle. Anything else is unprecise.
-			if (codetype == CODETYPE_AXIS_POS)
-				value = (rawValue > middle + ((top - middle) * a2d_deadzone));
-			else
-				value = (rawValue < middle - ((middle - bottom) * a2d_deadzone));
+            // watch for movement greater "a2d_deadzone" along either axis
+            // FIXME in the two-axis joystick case, we need to find out
+            // the angle. Anything else is unprecise.
+            if (codetype == CODETYPE_AXIS_POS)
+                value = (rawValue > middle + ((top - middle) * a2d_deadzone));
+            else
+                value = (rawValue < middle - ((middle - bottom) * a2d_deadzone));
             break;
         }
             
         // analog joystick axis
-		case CODETYPE_JOYAXIS:
-			value = ((int *)&p->mJoystickStates[joynum].axes)[joyindex]*2;
+        case CODETYPE_JOYAXIS:
+            value = ((int *)&p->mJoystickStates[joynum].axes)[joyindex]*2;
             
             if (value < ANALOG_VALUE_MIN)
                 value = ANALOG_VALUE_MIN;
-			if (value > ANALOG_VALUE_MAX)
+            if (value > ANALOG_VALUE_MAX)
                 value = ANALOG_VALUE_MAX;
             break;
 
