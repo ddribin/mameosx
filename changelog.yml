@@ -2,9 +2,10 @@
 - version: "<%=version%>"
   date: xxx
   changes:
-    - Add joystick/gamepad support, via HID
-    - Add mouse support, via HID
-    - Move keyboard support over to HID
+    - Add joystick/gamepad support, via HID.
+    - Add mouse support, via HID.
+    - Move keyboard support over to HID.
+    - Add Fonts directory in Application Support to support font caching.
   files:
 
 <% version = "0.112" %>
