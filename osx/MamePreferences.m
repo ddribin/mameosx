@@ -86,7 +86,7 @@ NSString * MameSnapshotPath = @"SnapshotPath";
 NSString * MameDiffPath = @"DiffPath";
 NSString * MameCtrlrPath = @"CtrlrPath";
 NSString * MameCommentPath = @"CommentPath";
-NSString * MameCheatPath = @"CheatPath";
+NSString * MameFontPath = @"FontPath";
 
 #ifdef MAME_DEBUG
 NSString * MameDebugKey = @"MameDebug";
@@ -501,6 +501,11 @@ NSString * MameBiosKey = @"Bios";
     return [mDefaults stringForKey: MameCommentPath];
 }
 
+- (NSString *) fontPath;
+{
+    return [mDefaults stringForKey: MameFontPath];
+}
+
 #pragma mark -
 
 #ifdef MAME_DEBUG
@@ -633,6 +638,7 @@ NSString * MameBiosKey = @"Bios";
     [configuration setSnapshotDirectory: [self snapshotDirectory]];
     [configuration setCtrlrPath: [self ctrlrPath]];
     [configuration setCommentDirectory: [self commentDirectory]];
+    [configuration setFontPath: [self fontPath]];
     
 #ifdef MAME_DEBUG
     [configuration setMameDebug: [self mameDebug]];
@@ -697,6 +703,7 @@ NSString * MameBiosKey = @"Bios";
     { MameArtworkPath,      @"Cabinet Art" },
     { MameSnapshotPath,     @"Screenshots" },
     { MameDiffPath,         @"Diffs" },
+    { MameFontPath,         @"Fonts" },
     { 0, nil }
     };
 

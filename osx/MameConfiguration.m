@@ -34,6 +34,8 @@
 - (void) setStringOption: (NSString *) stringValue
                 withName: (const char *) name;
 
+- (NSString *) getStringOption: (const char *) name;
+
 - (void) setBoolOption: (BOOL) boolValue
               withName: (const char *) name;
 
@@ -133,6 +135,11 @@
 - (void) setFontPath: (NSString *) fontPath;
 {
     [self setStringOption: fontPath withName: OPTION_FONTPATH];
+}
+
+- (NSString *) fontPath;
+{
+    return [self getStringOption: OPTION_FONTPATH];
 }
 
 #pragma mark -
@@ -289,6 +296,12 @@
     if (stringValue == nil)
         return;
     options_set_string(name, [stringValue UTF8String]);
+}
+
+- (NSString *) getStringOption: (const char *) name;
+{
+    const char * value = options_get_string(name);
+    return [NSString stringWithUTF8String: value];
 }
 
 - (void) setBoolOption: (BOOL) boolValue

@@ -62,6 +62,8 @@
 
 - (void) setFontPath: (NSString *) fontPath;
 
+- (NSString *) fontPath;
+
 #pragma mark -
 
 #ifdef MAME_DEBUG

@@ -735,11 +735,9 @@ void exit_sleeper()
     if ([preferences smoothFont])
     {
         NSBundle * myBundle = [NSBundle bundleForClass: [self class]];
-        [mConfiguration setFontPath: [myBundle resourcePath]];
-    }
-    else
-    {
-        [mConfiguration setFontPath: @""];
+        NSArray * fontPath = [NSArray arrayWithObjects:
+            [mConfiguration fontPath], [myBundle resourcePath], nil];
+        [mConfiguration setFontPath: [fontPath componentsJoinedByString: @";"]];
     }
 }
 

@@ -129,6 +129,8 @@
 
 - (NSString *) commentDirectory;
 
+- (NSString *) fontPath;
+
 #pragma mark -
 
 #ifdef MAME_DEBUG
@@ -247,7 +249,7 @@ extern NSString * MameSnapshotPath;
 extern NSString * MameDiffPath;
 extern NSString * MameCtrlrPath;
 extern NSString * MameCommentPath;
-extern NSString * MameCheatPath;
+extern NSString * MameFontPath;
 
 #ifdef MAME_DEBUG
 extern NSString * MameDebugKey;
