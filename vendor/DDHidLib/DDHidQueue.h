@@ -63,6 +63,6 @@
 
 @interface NSObject (DDHidQueueDelegate)
 
-- (void) hidQueueHasEvents: (DDHidQueue *) hidQueue;
+- (void) ddhidQueueHasEvents: (DDHidQueue *) hidQueue;
 
 @end

@@ -107,27 +107,39 @@ static NSString * format(NSString * format, ...);
 
 @end
 
+@interface MameInputController (DDHidKeyboardDelegate)
+
+- (void) ddhidKeyboard: (DDHidKeyboard *) keyboard
+               keyDown: (unsigned) usageId;
+
+- (void) ddhidKeyboard: (DDHidKeyboard *) keyboard
+                 keyUp: (unsigned) usageId;
+@end
+
 @interface MameInputController (DDHidJoystickDelegate)
 
-- (void) hidJoystick: (DDHidJoystick *)  joystick
-               stick: (unsigned) stick
-            xChanged: (int) value;
-- (void) hidJoystick: (DDHidJoystick *)  joystick
-               stick: (unsigned) stick
-            yChanged: (int) value;
-- (void) hidJoystick: (DDHidJoystick *) joystick
-          buttonDown: (unsigned) buttonNumber;
-- (void) hidJoystick: (DDHidJoystick *) joystick
-            buttonUp: (unsigned) buttonNumber;
+- (void) ddhidJoystick: (DDHidJoystick *)  joystick
+                 stick: (unsigned) stick
+              xChanged: (int) value;
+
+- (void) ddhidJoystick: (DDHidJoystick *)  joystick
+                 stick: (unsigned) stick
+              yChanged: (int) value;
+
+- (void) ddhidJoystick: (DDHidJoystick *) joystick
+            buttonDown: (unsigned) buttonNumber;
+
+- (void) ddhidJoystick: (DDHidJoystick *) joystick
+              buttonUp: (unsigned) buttonNumber;
 
 @end
 
 @interface MameInputController (DDHidMouseDelegate)
 
-- (void) hidMouse: (DDHidMouse *) mouse xChanged: (SInt32) deltaX;
-- (void) hidMouse: (DDHidMouse *) mouse yChanged: (SInt32) deltaY;
-- (void) hidMouse: (DDHidMouse *) mouse buttonDown: (unsigned) buttonNumber;
-- (void) hidMouse: (DDHidMouse *) mouse buttonUp: (unsigned) buttonNumber;
+- (void) ddhidMouse: (DDHidMouse *) mouse xChanged: (SInt32) deltaX;
+- (void) ddhidMouse: (DDHidMouse *) mouse yChanged: (SInt32) deltaY;
+- (void) ddhidMouse: (DDHidMouse *) mouse buttonDown: (unsigned) buttonNumber;
+- (void) ddhidMouse: (DDHidMouse *) mouse buttonUp: (unsigned) buttonNumber;
 
 @end
 
@@ -526,29 +538,29 @@ static NSString * format(NSString * format, ...);
 
 @implementation MameInputController (DDHidJoystickDelegate)
 
-- (void) hidJoystick: (DDHidJoystick *)  joystick
-               stick: (unsigned) stick
-            xChanged: (int) value;
+- (void) ddhidJoystick: (DDHidJoystick *)  joystick
+                 stick: (unsigned) stick
+              xChanged: (int) value;
 {
     p->mJoystickStates[[joystick tag]].axes[0] = value;
 }
 
-- (void) hidJoystick: (DDHidJoystick *)  joystick
-               stick: (unsigned) stick
-            yChanged: (int) value;
+- (void) ddhidJoystick: (DDHidJoystick *)  joystick
+                 stick: (unsigned) stick
+              yChanged: (int) value;
 
 {
     p->mJoystickStates[[joystick tag]].axes[1] = value;
 }
 
-- (void) hidJoystick: (DDHidJoystick *) joystick
-          buttonDown: (unsigned) buttonNumber;
+- (void) ddhidJoystick: (DDHidJoystick *) joystick
+            buttonDown: (unsigned) buttonNumber;
 {
     p->mJoystickStates[[joystick tag]].buttons[buttonNumber] = 1;
 }
 
-- (void) hidJoystick: (DDHidJoystick *) joystick
-            buttonUp: (unsigned) buttonNumber;
+- (void) ddhidJoystick: (DDHidJoystick *) joystick
+              buttonUp: (unsigned) buttonNumber;
 {
     p->mJoystickStates[[joystick tag]].buttons[buttonNumber] = 0;
 }
@@ -558,22 +570,22 @@ static NSString * format(NSString * format, ...);
 
 @implementation MameInputController (DDHidMouseDelegate)
 
-- (void) hidMouse: (DDHidMouse *) mouse xChanged: (SInt32) deltaX;
+- (void) ddhidMouse: (DDHidMouse *) mouse xChanged: (SInt32) deltaX;
 {
     p->mMiceStates[[mouse tag]].x += deltaX;
 }
 
-- (void) hidMouse: (DDHidMouse *) mouse yChanged: (SInt32) deltaY;
+- (void) ddhidMouse: (DDHidMouse *) mouse yChanged: (SInt32) deltaY;
 {
     p->mMiceStates[[mouse tag]].y += deltaY;
 }
 
-- (void) hidMouse: (DDHidMouse *) mouse buttonDown: (unsigned) buttonNumber;
+- (void) ddhidMouse: (DDHidMouse *) mouse buttonDown: (unsigned) buttonNumber;
 {
     p->mMiceStates[[mouse tag]].buttons[buttonNumber] = 1;
 }
 
-- (void) hidMouse: (DDHidMouse *) mouse buttonUp: (unsigned) buttonNumber;
+- (void) ddhidMouse: (DDHidMouse *) mouse buttonUp: (unsigned) buttonNumber;
 {
     p->mMiceStates[[mouse tag]].buttons[buttonNumber] = 0;
 }

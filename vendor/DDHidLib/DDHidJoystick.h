@@ -92,15 +92,23 @@
 
 @interface NSObject (DDHidJoystickDelegate)
 
-- (void) hidJoystick: (DDHidJoystick *)  joystick
-               stick: (unsigned) stick
-            xChanged: (int) value;
-- (void) hidJoystick: (DDHidJoystick *)  joystick
-               stick: (unsigned) stick
-            yChanged: (int) value;
-- (void) hidJoystick: (DDHidJoystick *) joystick
-          buttonDown: (unsigned) buttonNumber;
-- (void) hidJoystick: (DDHidJoystick *) joystick
-            buttonUp: (unsigned) buttonNumber;
+- (void) ddhidJoystick: (DDHidJoystick *) joystick
+                 stick: (unsigned) stick
+              xChanged: (int) value;
+
+- (void) ddhidJoystick: (DDHidJoystick *) joystick
+                 stick: (unsigned) stick
+              yChanged: (int) value;
+
+- (void) ddhidJoystick: (DDHidJoystick *) joystick
+                 stick: (unsigned) stick
+             otherAxis: (unsigned) otherAxis
+          valueChanged: (int) value;
+
+- (void) ddhidJoystick: (DDHidJoystick *) joystick
+            buttonDown: (unsigned) buttonNumber;
+
+- (void) ddhidJoystick: (DDHidJoystick *) joystick
+              buttonUp: (unsigned) buttonNumber;
 
 @end

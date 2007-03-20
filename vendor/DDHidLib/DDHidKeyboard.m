@@ -42,7 +42,7 @@
 @interface DDHidKeyboard (Private)
 
 - (void) initKeyboardElements: (NSArray *) elements;
-- (void) hidQueueHasEvents: (DDHidQueue *) hidQueue;
+- (void) ddhidQueueHasEvents: (DDHidQueue *) hidQueue;
 
 @end
 
@@ -155,7 +155,7 @@
     }
 }
 
-- (void) hidQueueHasEvents: (DDHidQueue *) hidQueue;
+- (void) ddhidQueueHasEvents: (DDHidQueue *) hidQueue;
 {
     DDHidEvent * event;
     while (event = [hidQueue nextEvent])

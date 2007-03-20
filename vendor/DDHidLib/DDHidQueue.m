@@ -146,9 +146,9 @@ static void queueCallbackFunction(void* target,  IOReturn result, void* refcon,
 
 - (void) handleQueueCallback;
 {
-    if ([mDelegate respondsToSelector: @selector(hidQueueHasEvents:)])
+    if ([mDelegate respondsToSelector: @selector(ddhidQueueHasEvents:)])
     {
-        [mDelegate hidQueueHasEvents: self];
+        [mDelegate ddhidQueueHasEvents: self];
     }
 }
 

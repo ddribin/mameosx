@@ -27,16 +27,24 @@
 
 @interface DDHidJoystick (DDHidJoystickDelegate)
 
-- (void) hidJoystick: (DDHidJoystick *)  joystick
-               stick: (unsigned) stick
-            xChanged: (int) value;
-- (void) hidJoystick: (DDHidJoystick *)  joystick
-               stick: (unsigned) stick
-            yChanged: (int) value;
-- (void) hidJoystick: (DDHidJoystick *) joystick
-          buttonDown: (unsigned) buttonNumber;
-- (void) hidJoystick: (DDHidJoystick *) joystick
-            buttonUp: (unsigned) buttonNumber;
+- (void) ddhidJoystick: (DDHidJoystick *)  joystick
+                 stick: (unsigned) stick
+              xChanged: (int) value;
+
+- (void) ddhidJoystick: (DDHidJoystick *)  joystick
+                 stick: (unsigned) stick
+              yChanged: (int) value;
+
+- (void) ddhidJoystick: (DDHidJoystick *) joystick
+                 stick: (unsigned) stick
+             otherAxis: (unsigned) otherAxis
+          valueChanged: (int) value;
+
+- (void) ddhidJoystick: (DDHidJoystick *) joystick
+            buttonDown: (unsigned) buttonNumber;
+
+- (void) ddhidJoystick: (DDHidJoystick *) joystick
+              buttonUp: (unsigned) buttonNumber;
 
 @end
 
@@ -44,7 +52,7 @@
 
 - (void) initJoystickElements: (NSArray *) elements;
 - (void) addStick: (NSArray *) stickElements;
-- (void) hidQueueHasEvents: (DDHidQueue *) hidQueue;
+- (void) ddhidQueueHasEvents: (DDHidQueue *) hidQueue;
 
 - (int) normalizeValue: (int) value
             forElement: (DDHidElement *) element;
@@ -52,12 +60,15 @@
 - (BOOL) findStick: (unsigned *) stick
            element: (DDHidElement **) elementOut
    withXAxisCookie: (IOHIDElementCookie) cookie;
+
 - (BOOL) findStick: (unsigned *) stick
            element: (DDHidElement **) elementOut
    withYAxisCookie: (IOHIDElementCookie) cookie;
-- (BOOL) findOtherAxis: (unsigned *) otherAxis
-                 stick: (unsigned *) stick
-            withCookie: (IOHIDElementCookie) cookie;
+
+- (BOOL) findStick: (unsigned *) stickOut
+         otherAxis: (unsigned *) axisOut
+           element: (DDHidElement **) elementOut
+        withCookie: (IOHIDElementCookie) cookie;
 
 @end
 
@@ -217,7 +228,7 @@
     }
 }
 
-- (void) hidQueueHasEvents: (DDHidQueue *) hidQueue;
+- (void) ddhidQueueHasEvents: (DDHidQueue *) hidQueue;
 {
     DDHidEvent * event;
     while (event = [hidQueue nextEvent])
@@ -226,16 +237,23 @@
         SInt32 value = [event value];
         DDHidElement * element;
         unsigned stick;
-        // unsigned otherAxis;
+        unsigned otherAxis;
         if ([self findStick: &stick element: &element withXAxisCookie: cookie])
         {
             int normalizedValue = [self normalizeValue: value forElement: element];
-            [self hidJoystick: self stick: stick xChanged: normalizedValue];
+            [self ddhidJoystick: self stick: stick xChanged: normalizedValue];
         }
         else if ([self findStick: &stick element: &element withYAxisCookie: cookie])
         {
             int normalizedValue = [self normalizeValue: value forElement: element];
-            [self hidJoystick: self stick: stick yChanged: normalizedValue];
+            [self ddhidJoystick: self stick: stick yChanged: normalizedValue];
+        }
+        else if ([self findStick: &stick otherAxis: &otherAxis element: &element
+                      withCookie: cookie])
+        {
+            int normalizedValue = [self normalizeValue: value forElement: element];
+            [self ddhidJoystick: self stick: stick
+                      otherAxis: otherAxis valueChanged: normalizedValue];
         }
         else
         {
@@ -248,11 +266,11 @@
             
             if (value == 1)
             {
-                [self hidJoystick: self buttonDown: i];
+                [self ddhidJoystick: self buttonDown: i];
             }
             else if (value == 0)
             {
-                [self hidJoystick: self buttonUp: i];
+                [self ddhidJoystick: self buttonUp: i];
             }
             else
             {
@@ -310,10 +328,28 @@
     return NO;
 }
 
-- (BOOL) findOtherAxis: (unsigned *) otherAxis
-                 stick: (unsigned *) stick
-            withCookie: (IOHIDElementCookie) cookie;
+- (BOOL) findStick: (unsigned *) stickOut
+         otherAxis: (unsigned *) axisOut
+           element: (DDHidElement **) elementOut
+        withCookie: (IOHIDElementCookie) cookie;
 {
+    unsigned i;
+    for (i = 0; i < [mSticks count]; i++)
+    {
+        DDHidJoystickStick * stick = [mSticks objectAtIndex: i];
+        unsigned j;
+        for (j = 0; j < [stick countOfStickElements]; j++)
+        {
+            DDHidElement * element = [stick objectInStickElementsAtIndex: j];
+            if ((element != nil) && ([element cookie] == cookie))
+            {
+                *stickOut = i;
+                *axisOut = j;
+                *elementOut = element;
+                return YES;
+            }
+        }
+    }
     return NO;
 }
 
@@ -321,34 +357,44 @@
 
 @implementation DDHidJoystick (DDHidJoystickDelegate)
 
-- (void) hidJoystick: (DDHidJoystick *)  joystick
-               stick: (unsigned) stick
-            xChanged: (int) value;
+- (void) ddhidJoystick: (DDHidJoystick *)  joystick
+                 stick: (unsigned) stick
+              xChanged: (int) value;
 {
     if ([mDelegate respondsToSelector: _cmd])
-        [mDelegate hidJoystick: joystick stick: stick xChanged: value];
+        [mDelegate ddhidJoystick: joystick stick: stick xChanged: value];
 }
 
-- (void) hidJoystick: (DDHidJoystick *)  joystick
-               stick: (unsigned) stick
-            yChanged: (int) value;
+- (void) ddhidJoystick: (DDHidJoystick *)  joystick
+                 stick: (unsigned) stick
+              yChanged: (int) value;
 {
     if ([mDelegate respondsToSelector: _cmd])
-        [mDelegate hidJoystick: joystick stick: stick yChanged: value];
+        [mDelegate ddhidJoystick: joystick stick: stick yChanged: value];
 }
 
-- (void) hidJoystick: (DDHidJoystick *) joystick
-          buttonDown: (unsigned) buttonNumber;
+- (void) ddhidJoystick: (DDHidJoystick *) joystick
+                 stick: (unsigned) stick
+             otherAxis: (unsigned) otherAxis
+          valueChanged: (int) value;
 {
     if ([mDelegate respondsToSelector: _cmd])
-        [mDelegate hidJoystick: joystick buttonDown: buttonNumber];
+        [mDelegate ddhidJoystick: joystick stick: stick otherAxis: otherAxis
+                    valueChanged: value];
 }
 
-- (void) hidJoystick: (DDHidJoystick *) joystick
-            buttonUp: (unsigned) buttonNumber;  
+- (void) ddhidJoystick: (DDHidJoystick *) joystick
+            buttonDown: (unsigned) buttonNumber;
 {
     if ([mDelegate respondsToSelector: _cmd])
-        [mDelegate hidJoystick: joystick buttonUp: buttonNumber];
+        [mDelegate ddhidJoystick: joystick buttonDown: buttonNumber];
+}
+
+- (void) ddhidJoystick: (DDHidJoystick *) joystick
+              buttonUp: (unsigned) buttonNumber;  
+{
+    if ([mDelegate respondsToSelector: _cmd])
+        [mDelegate ddhidJoystick: joystick buttonUp: buttonNumber];
 }
 
 @end
@@ -407,6 +453,9 @@
             break;
             
         case kHIDUsage_GD_Z:
+        case kHIDUsage_GD_Rx:
+        case kHIDUsage_GD_Ry:
+        case kHIDUsage_GD_Rz:
             [mStickElements addObject: element];
             break;
             
@@ -416,19 +465,6 @@
     }
     
     return elementAdded;
-#if 0
-    
-    BOOL isXAxis = [usage isEqualToUsagePage: kHIDPage_GenericDesktop
-                                     usageId: kHIDUsage_GD_X];
-    BOOL isYAxis = [usage isEqualToUsagePage: kHIDPage_GenericDesktop
-                                     usageId: kHIDUsage_GD_Y];
-    if (isXAxis && (mXAxisElement == nil))
-        mXAxisElement = [element retain];
-    else if (isYAxis && (mYAxisElement == nil))
-        mYAxisElement = [element retain];
-    else
-        [mStickElements addObject: element];
-#endif
 }
 
 - (NSArray *) allElements;

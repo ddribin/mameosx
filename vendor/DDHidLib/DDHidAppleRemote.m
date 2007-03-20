@@ -36,7 +36,7 @@
 
 - (void) initRemoteElements: (NSArray *) elements;
 
-- (void) hidQueueHasEvents: (DDHidQueue *) hidQueue;
+- (void) ddhidQueueHasEvents: (DDHidQueue *) hidQueue;
 
 - (void) handleEventWithCookieString: (NSString*) cookieString
                          sumOfValues: (SInt32) sumOfValues;
@@ -169,7 +169,7 @@
     }
 }
 
-- (void) hidQueueHasEvents: (DDHidQueue *) hidQueue;
+- (void) ddhidQueueHasEvents: (DDHidQueue *) hidQueue;
 {
 	NSMutableString * cookieString = [NSMutableString string];
 	SInt32 sumOfValues = 0;

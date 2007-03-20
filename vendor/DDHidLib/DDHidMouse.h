@@ -68,11 +68,11 @@
 
 @interface NSObject (DDHidMouseDelegate)
 
-- (void) hidMouse: (DDHidMouse *) mouse xChanged: (SInt32) deltaX;
-- (void) hidMouse: (DDHidMouse *) mouse yChanged: (SInt32) deltaY;
-- (void) hidMouse: (DDHidMouse *) mouse wheelChanged: (SInt32) deltaWheel;
-- (void) hidMouse: (DDHidMouse *) mouse buttonDown: (unsigned) buttonNumber;
-- (void) hidMouse: (DDHidMouse *) mouse buttonUp: (unsigned) buttonNumber;
+- (void) ddhidMouse: (DDHidMouse *) mouse xChanged: (SInt32) deltaX;
+- (void) ddhidMouse: (DDHidMouse *) mouse yChanged: (SInt32) deltaY;
+- (void) ddhidMouse: (DDHidMouse *) mouse wheelChanged: (SInt32) deltaWheel;
+- (void) ddhidMouse: (DDHidMouse *) mouse buttonDown: (unsigned) buttonNumber;
+- (void) ddhidMouse: (DDHidMouse *) mouse buttonUp: (unsigned) buttonNumber;
 
 @end
 

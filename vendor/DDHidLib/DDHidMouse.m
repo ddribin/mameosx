@@ -34,18 +34,18 @@
 
 @interface DDHidMouse (DDHidMouseDelegate)
 
-- (void) hidMouse: (DDHidMouse *) mouse xChanged: (SInt32) deltaX;
-- (void) hidMouse: (DDHidMouse *) mouse yChanged: (SInt32) deltaY;
-- (void) hidMouse: (DDHidMouse *) mouse wheelChanged: (SInt32) deltaWheel;
-- (void) hidMouse: (DDHidMouse *) mouse buttonDown: (unsigned) buttonNumber;
-- (void) hidMouse: (DDHidMouse *) mouse buttonUp: (unsigned) buttonNumber;
+- (void) ddhidMouse: (DDHidMouse *) mouse xChanged: (SInt32) deltaX;
+- (void) ddhidMouse: (DDHidMouse *) mouse yChanged: (SInt32) deltaY;
+- (void) ddhidMouse: (DDHidMouse *) mouse wheelChanged: (SInt32) deltaWheel;
+- (void) ddhidMouse: (DDHidMouse *) mouse buttonDown: (unsigned) buttonNumber;
+- (void) ddhidMouse: (DDHidMouse *) mouse buttonUp: (unsigned) buttonNumber;
 
 @end
 
 @interface DDHidMouse (Private)
 
 - (void) initMouseElements: (NSArray *) elements;
-- (void) hidQueueHasEvents: (DDHidQueue *) hidQueue;
+- (void) ddhidQueueHasEvents: (DDHidQueue *) hidQueue;
 
 @end
 
@@ -153,34 +153,34 @@
 
 @implementation DDHidMouse (DDHidMouseDelegate)
 
-- (void) hidMouse: (DDHidMouse *) mouse xChanged: (SInt32) deltaX;
+- (void) ddhidMouse: (DDHidMouse *) mouse xChanged: (SInt32) deltaX;
 {
     if ([mDelegate respondsToSelector: _cmd])
-        [mDelegate hidMouse: mouse xChanged: deltaX];
+        [mDelegate ddhidMouse: mouse xChanged: deltaX];
 }
 
-- (void) hidMouse: (DDHidMouse *) mouse yChanged: (SInt32) deltaY;
+- (void) ddhidMouse: (DDHidMouse *) mouse yChanged: (SInt32) deltaY;
 {
     if ([mDelegate respondsToSelector: _cmd])
-        [mDelegate hidMouse: mouse yChanged: deltaY];
+        [mDelegate ddhidMouse: mouse yChanged: deltaY];
 }
 
-- (void) hidMouse: (DDHidMouse *) mouse wheelChanged: (SInt32) deltaWheel;
+- (void) ddhidMouse: (DDHidMouse *) mouse wheelChanged: (SInt32) deltaWheel;
 {
     if ([mDelegate respondsToSelector: _cmd])
-        [mDelegate hidMouse: mouse wheelChanged: deltaWheel];
+        [mDelegate ddhidMouse: mouse wheelChanged: deltaWheel];
 }
 
-- (void) hidMouse: (DDHidMouse *) mouse buttonDown: (unsigned) buttonNumber;
+- (void) ddhidMouse: (DDHidMouse *) mouse buttonDown: (unsigned) buttonNumber;
 {
     if ([mDelegate respondsToSelector: _cmd])
-        [mDelegate hidMouse: mouse buttonDown: buttonNumber];
+        [mDelegate ddhidMouse: mouse buttonDown: buttonNumber];
 }
 
-- (void) hidMouse: (DDHidMouse *) mouse buttonUp: (unsigned) buttonNumber;
+- (void) ddhidMouse: (DDHidMouse *) mouse buttonUp: (unsigned) buttonNumber;
 {
     if ([mDelegate respondsToSelector: _cmd])
-        [mDelegate hidMouse: mouse buttonUp: buttonNumber];
+        [mDelegate ddhidMouse: mouse buttonUp: buttonNumber];
 }
 
 @end
@@ -221,7 +221,7 @@
     }
 }
 
-- (void) hidQueueHasEvents: (DDHidQueue *) hidQueue;
+- (void) ddhidQueueHasEvents: (DDHidQueue *) hidQueue;
 {
     DDHidEvent * event;
     while (event = [hidQueue nextEvent])
@@ -232,21 +232,21 @@
         {
             if (value != 0)
             {
-                [self hidMouse: self xChanged: value];
+                [self ddhidMouse: self xChanged: value];
             }
         }
         else if (cookie == [[self yElement] cookie])
         {
             if (value != 0)
             {
-                [self hidMouse: self yChanged: value];
+                [self ddhidMouse: self yChanged: value];
             }
         }
         else if (cookie == [[self wheelElement] cookie])
         {
             if (value != 0)
             {
-                [self hidMouse: self wheelChanged: value];
+                [self ddhidMouse: self wheelChanged: value];
             }
         }
         else
@@ -260,11 +260,11 @@
             
             if (value == 1)
             {
-                [self hidMouse: self buttonDown: i];
+                [self ddhidMouse: self buttonDown: i];
             }
             else if (value == 0)
             {
-                [self hidMouse: self buttonUp: i];
+                [self ddhidMouse: self buttonUp: i];
             }
             else
             {
