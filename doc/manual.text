@@ -146,6 +146,16 @@ Button 1 usually represents a game's primary action, like "Fire" or "Jump." Butt
 
 Games which use two joysticks simultaneously, such as Karate Champ, Robotron, Crazy Climber, or Battle Zone, default to using the E/S/D/F keys for the left joystick and the I/J/K/L keys for the right joystick
 
+Mouse
+-----
+
+The mouse may be used for games that used trackballs.  Because of this, the mouse is hidden during game play.  Pausing the game unlocked and visible.  Resuming the game hides the mouse again.  If you have multiple mice, they should map to different player's controls in MAME.
+
+Joysticks and Gamepads
+----------------------
+
+USB joysticks and gamepads should be detected when the game starts up.  MAME OS X does its best to map joystick buttons and inputs to MAME inputs.  The player mappings should be based on which USB port the joystick is plugged into.  If you have multiple joysticks, and they player order is incorrect, try swapping the USB ports.
+
 Where To Get Help
 -----------------
 
