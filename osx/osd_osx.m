@@ -254,11 +254,6 @@ INT32 osd_get_code_value(os_code code)
     return rc;
 }
 
-int osd_readkey_unicode(int flush)
-{
-    return 0;
-}
-
 void osd_customize_inputport_list(input_port_default_entry *defaults)
 {
 }
