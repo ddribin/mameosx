@@ -7,6 +7,10 @@
     - Move keyboard support over to HID.
     - Add Fonts directory in Application Support to support font caching.
   files:
+    - name: MAMEOSX-<%=version%>.dmg
+      size: 21294545
+    - name: mameosx-<%=version%>.tar.gz
+      size: 14035263
 
 <% version = "0.112" %>
 - version: "<%=version%>"
