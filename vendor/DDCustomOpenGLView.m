@@ -23,6 +23,7 @@
  */
 
 #import "DDCustomOpenGLView.h"
+#import "JRLog.h"
 
 #define ANIMATE_WITH_DISPLAY_LINK 1
 
@@ -99,7 +100,7 @@
     mDisplayLink = NULL;
     mAnimationTimer = nil;
 #if ANIMATE_WITH_DISPLAY_LINK
-    NSLog(@"Animate with display link");
+    JRLogInfo(@"Animate with display link");
     [self initDisplayLink];
 #else
     NSLog(@"Animate with timer");
