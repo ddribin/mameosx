@@ -1,6 +1,6 @@
 <% version = "0.112-1" %>
 - version: "<%=version%>"
-  date: xxx
+  date: 2007-03-22
   changes:
     - Add joystick/gamepad support, via HID.
     - Add mouse support, via HID.
