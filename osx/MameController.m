@@ -74,6 +74,9 @@ static const int kMameMaxGamesInHistory = 100;
          contextInfo: (void *) contextInfo;
 - (void) updatePreviousGames: (NSString *) gameName;
 
+- (void) registerForUrls;
+- (void) getUrl: (NSAppleEventDescriptor *) event
+ withReplyEvent: (NSAppleEventDescriptor *) replyEvent;
 
 @end
 
@@ -98,6 +101,7 @@ void exit_sleeper()
     
     mOriginalLogger = [[self class] JRLogLogger];
     [[self class] setJRLogLogger: self];
+    [self registerForUrls];
    
     mConfiguration = [[MameConfiguration alloc] init];
     [self initFilters];
@@ -1034,6 +1038,22 @@ void exit_sleeper()
         monaco, NSFontAttributeName,
         [NSColor blueColor], NSForegroundColorAttributeName,
         0];
+}
+
+- (void) registerForUrls;
+{
+	[[NSAppleEventManager sharedAppleEventManager] setEventHandler:self andSelector:@selector(getUrl:withReplyEvent:) forEventClass:kInternetEventClass andEventID:kAEGetURL];
+}
+
+- (void) getUrl: (NSAppleEventDescriptor *) event
+ withReplyEvent: (NSAppleEventDescriptor *) replyEvent;
+{
+	NSString *urlString = [[event paramDescriptorForKeyword:keyDirectObject] stringValue];
+	// now you can create an NSURL and grab the necessary parts
+    JRLogInfo(@"Handle URL: %@", urlString);
+    NSURL * url = [NSURL URLWithString: urlString];
+    mGameName = [[url host] retain];
+    mQuitOnError = (mGameName == nil)? NO : YES;
 }
 
 @end
