@@ -82,7 +82,7 @@ static const int kMameMaxGamesInHistory = 100;
 
 static BOOL sSleepAtExit = NO;
 
-void exit_sleeper()
+static void exit_sleeper()
 {
     while (sSleepAtExit) sleep(60);
 }
