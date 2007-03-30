@@ -48,25 +48,16 @@
 @end
 
 @implementation MameConfiguration
+
 - (id) init
 {
     self = [super init];
     if (self == nil)
         return nil;
 
-    options_init(NULL);
+    mame_options_init(NULL);
 
     return self;
-}
-
-- (void) dealloc
-{
-    if (mSaveGame != 0)
-        free(mSaveGame);
-    if (mBios != 0)
-        free(mBios);
-    
-    [super dealloc];
 }
 
 #pragma mark -
@@ -147,13 +138,13 @@
 #ifdef MAME_DEBUG
 - (void) setMameDebug: (BOOL) mameDebug;
 {
-    options.mame_debug = mameDebug;
+    [self setBoolOption: mameDebug withName: OPTION_DEBUG];
 }
 #endif
 
 - (void) setCheat: (BOOL) cheat;
 {
-    options.cheat = cheat;
+    [self setBoolOption: cheat withName: OPTION_CHEAT];
 }
 
 #pragma mark -
@@ -161,17 +152,21 @@
 
 - (void) setSkipDisclaimer: (BOOL) skipDisclaimer;
 {
+#if 0 // Todo: Fix
     options.skip_disclaimer = skipDisclaimer;
+#endif
 }
 
 - (void) setSkipGameInfo: (BOOL) skipGameInfo;
 {
-    options.skip_gameinfo = skipGameInfo;
+    [self setBoolOption: skipGameInfo withName: OPTION_SKIP_GAMEINFO];
 }
 
 - (void) setSkipWarnings: (BOOL) skipWarnings;
 {
+#if 0 // Todo: fix
     options.skip_warnings = skipWarnings;
+#endif
 }
 
 #pragma mark -
@@ -179,12 +174,12 @@
 
 - (void) setSampleRate: (int) sampleRate;
 {
-    options.samplerate = sampleRate;
+    [self setIntOption: sampleRate withName: OPTION_SAMPLERATE];
 }
 
 - (void) setUseSamples: (BOOL) useSamples;
 {
-    options.use_samples = useSamples;
+    [self setBoolOption: useSamples withName: OPTION_SAMPLES];
 }
 
 #pragma mark -
@@ -192,22 +187,22 @@
 
 - (void) setBrightness: (float) brightness;
 {
-    options.brightness = brightness;
+    [self setFloatOption: brightness withName: OPTION_BRIGHTNESS];
 }
 
 - (void) setContrast: (float) contrast;
 {
-    options.contrast = contrast;
+    [self setFloatOption: contrast withName: OPTION_CONTRAST];
 }
 
 - (void) setGamma: (float) gamma;
 {
-    options.gamma = gamma;
+    [self setFloatOption: gamma withName: OPTION_GAMMA];
 }
 
 - (void) setPauseBrightness: (float) pauseBrightness;
 {
-    options.pause_bright = pauseBrightness;
+    [self setFloatOption: pauseBrightness withName: OPTION_PAUSE_BRIGHTNESS];
 }
 
 #pragma mark -
@@ -215,17 +210,30 @@
 
 - (void) setBeam: (int) beam;
 {
-    options.beam = beam;
+    [self setIntOption: beam withName: OPTION_BEAM];
 }
 
 - (void) setAntialias: (BOOL) antialias;
 {
-    options.antialias = antialias;
+    [self setBoolOption: antialias withName: OPTION_ANTIALIAS];
 }
 
 - (void) setVectorFlicker: (BOOL) vectorFlicker;
 {
-    options.vector_flicker = vectorFlicker;
+    [self setBoolOption: vectorFlicker withName: OPTION_FLICKER];
+}
+
+#pragma mark -
+#pragma mark Performance
+
+- (void) setAutoFrameSkip: (BOOL) autoFrameSkip;
+{
+    [self setBoolOption: autoFrameSkip withName: OPTION_AUTOFRAMESKIP];
+}
+
+- (void) setThrottle: (BOOL) throttle;
+{
+    [self setBoolOption: throttle withName: OPTION_THROTTLE];
 }
 
 #pragma mark -
@@ -235,29 +243,17 @@
 //=========================================================== 
 - (NSString *) saveGame
 {
-    return [NSString stringWithUTF8String: mSaveGame]; 
+    return [self getStringOption: OPTION_STATE];
 }
 
 - (void) setSaveGame: (NSString *) newSaveGame
 {
-    if (mSaveGame != 0)
-    {
-        free(mSaveGame);
-        mSaveGame = 0;
-    }
-    
-    if (newSaveGame != 0)
-    {
-        const char * utf8SaveGame = [newSaveGame UTF8String];
-        mSaveGame = malloc(strlen(utf8SaveGame) + 1);
-        strcpy(mSaveGame, utf8SaveGame);
-    }
-    options.savegame = mSaveGame;
+    [self setStringOption: newSaveGame withName: OPTION_STATE];
 }
 
 - (void) setAutoSave: (BOOL) autoSave;
 {
-    options.auto_save = autoSave;
+    [self setBoolOption: autoSave withName: OPTION_AUTOSAVE];
 }
 
 //=========================================================== 
@@ -265,24 +261,12 @@
 //=========================================================== 
 - (NSString *) bios
 {
-    return [NSString stringWithUTF8String: mBios]; 
+    return [self getStringOption: OPTION_BIOS];
 }
 
 - (void) setBios: (NSString *) newBios
 {
-    if (mBios != 0)
-    {
-        free(mBios);
-        mBios = 0;
-    }
-    
-    if (newBios != 0)
-    {
-        const char * utf8Bios = [newBios UTF8String];
-        mBios = malloc(strlen(utf8Bios) + 1);
-        strcpy(mBios, utf8Bios);
-    }
-    options.bios = mBios;
+    [self setStringOption: newBios withName: OPTION_BIOS];
 }
 
 @end
@@ -295,31 +279,31 @@
 {
     if (stringValue == nil)
         return;
-    options_set_string(name, [stringValue UTF8String]);
+    options_set_string(mame_options(), name, [stringValue UTF8String]);
 }
 
 - (NSString *) getStringOption: (const char *) name;
 {
-    const char * value = options_get_string(name);
+    const char * value = options_get_string(mame_options(), name);
     return [NSString stringWithUTF8String: value];
 }
 
 - (void) setBoolOption: (BOOL) boolValue
               withName: (const char *) name;
 {
-    options_set_bool(name, boolValue);
+    options_set_bool(mame_options(), name, boolValue);
 }
 
 - (void) setIntOption: (int) intValue
              withName: (const char *) name;
 {
-    options_set_int(name, intValue);
+    options_set_int(mame_options(), name, intValue);
 }
 
 - (void) setFloatOption: (float) floatvalue
                withName: (const char *) name;
 {
-    options_set_float(name, floatvalue);
+    options_set_float(mame_options(), name, floatvalue);
 }
 
 @end

@@ -66,7 +66,6 @@ NSString * MameRenderInCoreVideoThreadValue = @"CoreVideo";
 NSString * MameRenderInMameThreadValue = @"MameThread";
 NSString * MameRenderingThreadDefaultValue = @"Auto";
 
-NSString * MameThrottledKey = @"Throttled";
 NSString * MameSyncToRefreshKey = @"SyncToRefresh";
 NSString * MameSoundEnabledKey = @"SoundEnabled";
 NSString * MameClearToRedKey = @"ClearToRed";
@@ -109,6 +108,9 @@ NSString * MamePauseBrightnessKey = @"PauseBrightness";
 NSString * MameBeamWidthKey = @"BeamWidth";
 NSString * MameVectorFlickerKey = @"VectorFlicker";
 NSString * MameAntialiasBeamKey = @"AntialiasBeam";
+
+NSString * MameThrottledKey = @"Throttled";
+NSString * MameAutoFrameSkipKey = @"AutoFrameSkip";
 
 NSString * MameSaveGameKey = @"SaveGame";
 NSString * MameAutosaveKey = @"AutoSave";
@@ -182,8 +184,6 @@ NSString * MameBiosKey = @"Bios";
     [self initializeDefaultPaths: defaultValues];
     
     [defaultValues setObject: [NSNumber numberWithBool: YES]
-                      forKey: MameThrottledKey];
-    [defaultValues setObject: [NSNumber numberWithBool: YES]
                       forKey: MameSyncToRefreshKey];
     
     [defaultValues setObject: [NSNumber numberWithBool: YES]
@@ -241,6 +241,11 @@ NSString * MameBiosKey = @"Bios";
     [defaultValues setObject: [NSNumber numberWithBool: YES]
                       forKey: MameAntialiasBeamKey];
     
+    [defaultValues setObject: [NSNumber numberWithBool: YES]
+                      forKey: MameThrottledKey];
+    [defaultValues setObject: [NSNumber numberWithBool: YES]
+                      forKey: MameAutoFrameSkipKey];
+
     [defaultValues setObject: [NSNumber numberWithBool: NO]
                       forKey: MameAutosaveKey];
     [defaultValues setObject: @"default"
@@ -305,19 +310,6 @@ NSString * MameBiosKey = @"Bios";
 - (void) setFullScreenZoomLevel: (NSString *) fullScreenZoomLevel;
 {
     [mDefaults setObject: fullScreenZoomLevel forKey: MameFullScreenZoomLevelKey];
-}
-
-//=========================================================== 
-//  throttled 
-//=========================================================== 
-- (BOOL) throttled
-{
-    return [mDefaults boolForKey: MameThrottledKey];
-}
-
-- (void) setThrottled: (BOOL) flag
-{
-    [mDefaults setBool: flag forKey:MameThrottledKey];
 }
 
 //=========================================================== 
@@ -585,6 +577,32 @@ NSString * MameBiosKey = @"Bios";
 }
 
 #pragma mark -
+#pragma mark Performance
+
+//=========================================================== 
+//  throttled 
+//=========================================================== 
+- (BOOL) throttled
+{
+    return [mDefaults boolForKey: MameThrottledKey];
+}
+
+- (void) setThrottled: (BOOL) flag
+{
+    [mDefaults setBool: flag forKey:MameThrottledKey];
+}
+
+- (BOOL) autoFrameSkip;
+{
+    return [mDefaults boolForKey: MameAutoFrameSkipKey];
+}
+
+- (void) setAutoFrameSkip: (BOOL) flag;
+{
+    [mDefaults setBool: flag forKey: MameAutoFrameSkipKey];
+}
+
+#pragma mark -
 #pragma mark Vector
 
 - (float) beamWidth;
@@ -659,6 +677,9 @@ NSString * MameBiosKey = @"Bios";
     [configuration setBeam: (int) ([self beamWidth] * 65536.0f)];
     [configuration setAntialias: [self antialiasBeam]];
     [configuration setVectorFlicker: [self vectorFlicker]];
+    
+    [configuration setThrottle: [self throttled]];
+    [configuration setAutoFrameSkip: [self autoFrameSkip]];
     
     [configuration setSaveGame: [self saveGame]];
     [configuration setAutoSave: [self autoSave]];

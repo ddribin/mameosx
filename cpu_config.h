@@ -67,6 +67,9 @@
 #define HAS_I960 1
 #define HAS_KONAMI 1
 #define HAS_LH5801 0
+#define HAS_MB8843 0
+#define HAS_MB8844 1
+#define HAS_MB86233 1
 #define HAS_PIC16C54 0
 #define HAS_PIC16C55 1
 #define HAS_PIC16C56 0
@@ -117,8 +120,10 @@
 #define HAS_PPC403 1
 #define HAS_PPC602 1
 #define HAS_PPC603 1
+#define HAS_MPC8240 0
 #define HAS_V20 1
 #define HAS_V30 1
+#define HAS_V30MZ 0
 #define HAS_V33 1
 #define HAS_V60 1
 #define HAS_V70 1
@@ -132,6 +137,7 @@
 #define HAS_SM8500 0
 #define HAS_SPC700 1
 #define HAS_PSXCPU 1
+#define HAS_SSP1610 0
 #define HAS_TMS7000 0
 #define HAS_TMS7000_EXL 0
 #define HAS_TMS9900 0
@@ -154,7 +160,6 @@
 #define HAS_TLCS90 1
 #define HAS_TX0_64KW 0
 #define HAS_TX0_8KW 0
-#define HAS_V30MZ 0
 #define HAS_Z80 1
 #define HAS_Z180 1
 #define HAS_Z8000 1

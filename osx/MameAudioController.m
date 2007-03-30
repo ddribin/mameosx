@@ -69,7 +69,6 @@ static uint32_t sAudioStatIndex = 0;
 
 - (void) addEffectNode;
 
-- (void) updateSampleAdjustment: (int) bytesInBuffer;
 
 OSStatus static MyRenderer(void	* inRefCon,
                            AudioUnitRenderActionFlags * ioActionFlags,
@@ -254,11 +253,6 @@ OSStatus static MyRenderer(void	* inRefCon,
 
 - (void) osd_init;
 {
-}
-
-- (int) osd_start_audio_stream: (int) stereo;
-{
-    int channels = stereo ? 2 : 1;
 	OSStatus err = noErr;
     
     UInt32 formatFlags = 0
@@ -276,7 +270,7 @@ OSStatus static MyRenderer(void	* inRefCon,
 	AudioStreamBasicDescription streamFormat;
     streamFormat.mFormatID = kAudioFormatLinearPCM;
     streamFormat.mSampleRate = Machine->sample_rate;
-    streamFormat.mChannelsPerFrame = channels;
+    streamFormat.mChannelsPerFrame = 2;
     streamFormat.mFormatFlags = formatFlags;
 
     streamFormat.mBitsPerChannel = 16;	
@@ -293,40 +287,14 @@ OSStatus static MyRenderer(void	* inRefCon,
     [mGraph initialize];
     
     // compute the buffer sizes
-    mBufferSize = ((UINT64)MAX_BUFFER_SIZE * (UINT64)Machine->sample_rate) / 44100;
-    mBufferSize = (mBufferSize * mBytesPerFrame) / 4;
-    mBufferSize = (mBufferSize * 30) / Machine->screen[0].refresh;
-    mBufferSize = (mBufferSize / 1024) * 1024;
-    mBufferSize *= 1;
+    mBufferSize = streamFormat.mSampleRate * streamFormat.mBytesPerFrame;
     
     mRingBuffer = [[VirtualRingBuffer alloc] initWithLength: mBufferSize];
     mBufferSize = [mRingBuffer bufferLength];
     mInitialBufferThresholdReached = NO;
     
-#if 0
-    int audio_latency = 1;
-	// compute the upper/lower thresholds
-	mLowWaterMarker = audio_latency * mBufferSize / 10;
-	mHighWaterMarker = (audio_latency + 1) * mBufferSize / 10;
-#else
-	mLowWaterMarker = mBufferSize * 15/100;
-	mHighWaterMarker = mBufferSize * 25/100;
-#endif
+    mLowWaterMarker = mBufferSize * 15/100;
     
-    mConsecutiveLows = 0;
-	mConsecutiveMids = 0;
-	mConsecutiveHighs = 0;
-
-    // determine the number of samples per frame
-    mSamplesPerFrame = (double)Machine->sample_rate / (double)Machine->screen[0].refresh;
-
-    // compute how many samples to generate the first frame
-    mSamplesLeftOver = mSamplesPerFrame;
-    mSamplesThisFrame = (UINT32)mSamplesLeftOver;
-    mSamplesLeftOver -= (double)mSamplesThisFrame;
-    
-    mCurrentAdjustment = 0;
-
     [mRingBuffer empty];
 	// Start the rendering
 	// The DefaultOutputUnit will do any format conversions to the format of the default device
@@ -334,20 +302,19 @@ OSStatus static MyRenderer(void	* inRefCon,
     {
         [mGraph start];
     }
-    
-    return mSamplesPerFrame;
 }
 
-- (int) osd_update_audio_stream: (INT16 *) buffer;
+- (void) osd_update_audio_stream: (INT16 *) buffer
+              samples_this_frame: (int) samples_this_frame;
 {
+    mSamplesThisFrame = samples_this_frame;
     if (Machine->sample_rate != 0 && mRingBuffer && !mPaused)
     {
-        int inputBytes = mSamplesThisFrame * mBytesPerFrame;
+        int inputBytes = samples_this_frame * mBytesPerFrame;
         void * writePointer;
         UInt32 bytesAvailableToWrite =
             [mRingBuffer lengthAvailableToWriteReturningPointer: &writePointer];
         UInt32 bytesInBuffer = mBufferSize - bytesAvailableToWrite;
-        [self updateSampleAdjustment: bytesInBuffer];
         UInt32 bytesToWrite = inputBytes;
         if (inputBytes > bytesAvailableToWrite)
         {
@@ -364,16 +331,6 @@ OSStatus static MyRenderer(void	* inRefCon,
         [self updateStats: 'W' bytesInBuffer: bytesInBuffer];
 #endif
     }
-    
-    // compute how many samples to generate next frame
-    mSamplesLeftOver += mSamplesPerFrame;
-    mSamplesThisFrame = (UINT32)mSamplesLeftOver;
-    mSamplesLeftOver -= (double)mSamplesThisFrame;
-    
-    mSamplesThisFrame += mCurrentAdjustment;
-    
-    // return the samples to play this next frame
-    return mSamplesThisFrame;
 }
 
 - (void) osd_stop_audio_stream;
@@ -390,15 +347,6 @@ OSStatus static MyRenderer(void	* inRefCon,
 - (void) osd_set_mastervolume: (int) attenuation;
 {
     mAttenuation = attenuation;
-}
-
-- (int) osd_get_mastervolume;
-{
-    return mAttenuation;
-}
-
-- (void) osd_sound_enable: (int) enable;
-{
 }
 
 @end
@@ -438,60 +386,6 @@ OSStatus static MyRenderer(void	* inRefCon,
                                   subType: kAudioUnitSubType_BandPassFilter];
 #endif
     [mEffectNode retain];
-}
-
-- (void) updateSampleAdjustment: (int) bytesInBuffer;
-{
-	// if we're not throttled don't bother
-#if 0
-	if (!video_config.throttle)
-	{
-		mConsecutiveLows = 0;
-		mConsecutiveMids = 0;
-		mConsecutiveHighs = 0;
-		mCurrentAdjustment = 0;
-		return;
-	}
-#endif
-    
-	// do we have too few samples in the buffer?
-	if (bytesInBuffer < mLowWaterMarker)
-	{
-		// keep track of how many consecutive times we get this condition
-		mConsecutiveLows++;
-		mConsecutiveMids = 0;
-		mConsecutiveHighs = 0;
-        
-		// adjust so that we generate more samples per frame to compensate
-		mCurrentAdjustment = (mConsecutiveLows < MAX_SAMPLE_ADJUST) ? mConsecutiveLows : MAX_SAMPLE_ADJUST;
-	}
-    
-	// do we have too many samples in the buffer?
-	else if (bytesInBuffer > mHighWaterMarker)
-	{
-		// keep track of how many consecutive times we get this condition
-		mConsecutiveLows = 0;
-		mConsecutiveMids = 0;
-		mConsecutiveHighs++;
-        
-		// adjust so that we generate more samples per frame to compensate
-		mCurrentAdjustment = (mConsecutiveHighs < MAX_SAMPLE_ADJUST) ? -mConsecutiveHighs : -MAX_SAMPLE_ADJUST;
-	}
-    
-	// otherwise, we're in the sweet spot
-	else
-	{
-		// keep track of how many consecutive times we get this condition
-		mConsecutiveLows = 0;
-		mConsecutiveMids++;
-		mConsecutiveHighs = 0;
-        
-		// after 10 or so of these, revert back to no adjustment
-		if (mConsecutiveMids > 10 && mCurrentAdjustment != 0)
-		{
-			mCurrentAdjustment = 0;
-		}
-	}
 }
 
 OSStatus static MyRenderer(void	* inRefCon,

@@ -24,49 +24,37 @@
 
 #import <Cocoa/Cocoa.h>
 
-typedef int osd_file_error;
-
 @interface MameFileManager : NSObject
 {
 }
 
-#if 0
-- (void) setPaths: (NSArray *) paths forType: (int) pathtype;
-
-- (void) setPath: (NSString *) path forType: (int) pathtype;
-
-- (NSArray *) pathsForType: (int) pathtype;
-
-- (NSString *) composePathForFile: (const char *) utf8File
-                           ofType: (int) pathtype
-                          atIndex: (int) index;
-#endif
++ (MameFileManager *) defaultFileManager;
 
 - (NSString *) resolveAlias: (NSString *) path;
 
 #pragma mark -
 #pragma mark MAME OSD API
    
-- (mame_file_error) osd_open: (const char *) path
-                       flags: (UINT32) openflags
-                        file: (osd_file **) file
-                    filesize: (UINT64 *) filesize;
+- (file_error) osd_open: (const char *) path
+                  flags: (UINT32) openflags
+                   file: (osd_file **) file
+               filesize: (UINT64 *) filesize;
 
-- (mame_file_error) osd_close: (osd_file *) file;
+- (file_error) osd_close: (osd_file *) file;
 
-- (mame_file_error) osd_read: (osd_file *) file
-                      buffer: (void *) buffer
-                      offset: (UINT64) offset
-                      length: (UINT32) length
-                      actual: (UINT32 *) actual;
+- (file_error) osd_read: (osd_file *) file
+                 buffer: (void *) buffer
+                 offset: (UINT64) offset
+                 length: (UINT32) length
+                 actual: (UINT32 *) actual;
 
-- (mame_file_error) osd_write: (osd_file *) file
-                       buffer: (const void *) buffer
-                       offset: (UINT64) offset
-                       length: (UINT32) length
-                       actual: (UINT32 *) actual;
+- (file_error) osd_write: (osd_file *) file
+                  buffer: (const void *) buffer
+                  offset: (UINT64) offset
+                  length: (UINT32) length
+                  actual: (UINT32 *) actual;
 
-- (mame_file_error) osd_rmfile: (const char *) filename;
+- (file_error) osd_rmfile: (const char *) filename;
 
 - (int) osd_is_absolute_path: (const char *) path;
 

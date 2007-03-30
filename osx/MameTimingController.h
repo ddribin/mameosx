@@ -57,8 +57,6 @@ typedef osd_ticks_t cycles_t;
 
 - (osd_ticks_t) osd_profiling_ticks;
 
-- (const char *) osd_get_fps_text: (const performance_info *) performance;
-
 - (int) osd_update: (mame_time) emutime;
 
 - (BOOL) throttled;

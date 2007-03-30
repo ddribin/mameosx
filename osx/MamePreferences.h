@@ -62,9 +62,6 @@
 - (NSString *) fullScreenZoomLevel;
 - (void) setFullScreenZoomLevel: (NSString *) fullScreenZoomLevel;
 
-- (BOOL) throttled;
-- (void) setThrottled: (BOOL) flag;
-
 - (BOOL) syncToRefresh;
 - (void) setSyncToRefresh: (BOOL) flag;
 
@@ -170,6 +167,15 @@
 - (float) pauseBrightness;
 
 #pragma mark -
+#pragma mark Performance
+
+- (BOOL) throttled;
+- (void) setThrottled: (BOOL) flag;
+
+- (BOOL) autoFrameSkip;
+- (void) setAutoFrameSkip: (BOOL) flag;
+
+#pragma mark -
 #pragma mark Vector
 
 - (float) beamWidth;
@@ -228,7 +234,6 @@ extern NSString * MameRenderInCoreVideoThreadValue;
 extern NSString * MameRenderInMameThreadValue;
 extern NSString * MameRenderingThreadDefaultValue;
 
-extern NSString * MameThrottledKey;
 extern NSString * MameSyncToRefreshKey;
 extern NSString * MameSoundEnabledKey;
 extern NSString * MameClearToRedKey;
@@ -272,6 +277,9 @@ extern NSString * MamePauseBrightnessKey;
 extern NSString * MameBeamWidthKey;
 extern NSString * MameVectorFlickerKey;
 extern NSString * MameAntialiasBeamKey;
+
+extern NSString * MameThrottledKey;
+extern NSString * MameAutoFrameSkipKey;
 
 extern NSString * MameSaveGameKey;
 extern NSString * MameAutosaveKey;

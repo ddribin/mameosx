@@ -29,8 +29,6 @@
 
 @interface MameConfiguration : NSObject
 {
-    char * mSaveGame;
-    char * mBios;
 }
 
 #pragma mark -
@@ -107,6 +105,13 @@
 - (void) setAntialias: (BOOL) antialias;
 
 - (void) setVectorFlicker: (BOOL) vectorFlicker;
+
+#pragma mark -
+#pragma mark Performance
+
+- (void) setAutoFrameSkip: (BOOL) autoFrameSkip;
+
+- (void) setThrottle: (BOOL) throttle;
 
 #pragma mark -
 

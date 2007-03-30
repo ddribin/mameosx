@@ -11,6 +11,22 @@
 ###########################################################################
 
 
+MAMESRC = $(SRC)/mame
+MAMEOBJ = $(OBJ)/mame
+
+AUDIO = $(MAMEOBJ)/audio
+DRIVERS = $(MAMEOBJ)/drivers
+LAYOUT = $(MAMEOBJ)/layout
+MACHINE = $(MAMEOBJ)/machine
+VIDEO = $(MAMEOBJ)/video
+
+OBJDIRS += \
+        $(AUDIO) \
+        $(DRIVERS) \
+        $(LAYOUT) \
+        $(MACHINE) \
+        $(VIDEO) \
+
 #-------------------------------------------------
 # tiny.c contains the list of drivers
 #-------------------------------------------------
@@ -71,21 +87,21 @@ SOUNDS += VRENDER0
 #-------------------------------------------------
 
 DRVLIBS = \
-  $(OBJ)/vidhrdw/vsnes.o \
-  $(OBJ)/vidhrdw/vrender0.o \
-  $(OBJ)/vidhrdw/argus.o \
-  $(OBJ)/vidhrdw/ppu2c0x.o \
-  $(OBJ)/vidhrdw/pacman.o \
-  $(OBJ)/machine/pacplus.o \
-  $(OBJ)/machine/vsnes.o \
-  $(OBJ)/machine/acitya.o \
-  $(OBJ)/machine/theglobp.o \
-  $(OBJ)/machine/ds1302.o \
-  $(OBJ)/machine/mspacman.o \
-  $(OBJ)/machine/jumpshot.o \
-	$(OBJ)/drivers/pacman.o \
-	$(OBJ)/drivers/jrpacman.o \
-	$(OBJ)/drivers/pengo.o \
-	$(OBJ)/drivers/vsnes.o \
-	$(OBJ)/drivers/crystal.o \
-	$(OBJ)/drivers/argus.o
+  $(VIDEO)/vsnes.o \
+  $(VIDEO)/vrender0.o \
+  $(VIDEO)/argus.o \
+  $(VIDEO)/ppu2c0x.o \
+  $(VIDEO)/pacman.o \
+  $(MACHINE)/pacplus.o \
+  $(MACHINE)/vsnes.o \
+  $(MACHINE)/acitya.o \
+  $(MACHINE)/theglobp.o \
+  $(MACHINE)/ds1302.o \
+  $(MACHINE)/mspacman.o \
+  $(MACHINE)/jumpshot.o \
+  $(DRIVERS)/pacman.o \
+  $(DRIVERS)/jrpacman.o \
+  $(DRIVERS)/pengo.o \
+  $(DRIVERS)/vsnes.o \
+  $(DRIVERS)/crystal.o \
+  $(DRIVERS)/argus.o

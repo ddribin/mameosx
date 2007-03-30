@@ -24,7 +24,7 @@
 
 
 #if __i386__ && 0
-#include "src/cpu/powerpc/ppcdrc.c"
+#include "src/emu/cpu/powerpc/ppcdrc.c"
 #else
-#include "src/cpu/powerpc/ppc.c"
+#include "src/emu/cpu/powerpc/ppc.c"
 #endif

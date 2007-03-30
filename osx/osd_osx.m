@@ -128,100 +128,15 @@ void osd_set_audio_controller(MameAudioController * audioController)
     sAudioController = audioController;
 }
 
-int osd_start_audio_stream(int stereo)
+void osd_update_audio_stream(INT16 *buffer, int samples_this_frame)
 {
-    return [sAudioController osd_start_audio_stream: stereo];
-}
-
-int osd_update_audio_stream(INT16 *buffer)
-{
-     return [sAudioController osd_update_audio_stream: buffer];
-}
-
-void osd_stop_audio_stream(void)
-{
-    [sAudioController osd_stop_audio_stream];
+    [sAudioController osd_update_audio_stream: buffer
+                           samples_this_frame: samples_this_frame];
 }
 
 void osd_set_mastervolume(int attenuation)
 {
     [sAudioController osd_set_mastervolume: attenuation];
-}
-
-int osd_get_mastervolume(void)
-{
-    return [sAudioController osd_get_mastervolume];
-}
-
-void osd_sound_enable(int enable)
-{
-    [sAudioController osd_sound_enable: enable];
-}
-
-
-/******************************************************************************
-
-    Locking
-
-******************************************************************************/
-
-osd_lock * osd_lock_alloc(void)
-{
-    NSRecursiveLock * lock = [[NSRecursiveLock alloc] init];;
-    return (osd_lock *) lock;
-}
-
-void osd_lock_acquire(osd_lock * mame_lock)
-{
-    NSRecursiveLock * lock = (NSRecursiveLock *) mame_lock;
-    [lock lock];
-}
-
-int osd_lock_try(osd_lock * mame_lock)
-{
-    NSRecursiveLock * lock = (NSRecursiveLock *) mame_lock;
-    return [lock tryLock];
-}
-
-void osd_lock_release(osd_lock * mame_lock)
-{
-    NSRecursiveLock * lock = (NSRecursiveLock *) mame_lock;
-    [lock unlock];
-}
-
-void osd_lock_free(osd_lock * mame_lock)
-{
-    NSRecursiveLock * lock = (NSRecursiveLock *) mame_lock;
-    [lock release];
-}
-
-
-/******************************************************************************
-
-    Timing
-
-******************************************************************************/
-
-static MameTimingController * sTimingController;
-
-void osd_set_timing_controller(MameTimingController * timingController)
-{
-    sTimingController = timingController;
-}
-
-osd_ticks_t osd_ticks(void)
-{
-    return [sTimingController osd_ticks];
-}
-
-osd_ticks_t osd_ticks_per_second(void)
-{
-    return [sTimingController osd_ticks_per_second];
-}
-
-osd_ticks_t osd_profiling_ticks(void)
-{
-    return [sTimingController osd_profiling_ticks];
 }
 
 
@@ -258,28 +173,6 @@ void osd_customize_inputport_list(input_port_default_entry *defaults)
 {
 }
 
-int osd_joystick_needs_calibration(void)
-{
-    return 0;
-}
-
-void osd_joystick_start_calibration(void)
-{
-}
-
-const char *osd_joystick_calibrate_next(void)
-{
-    return 0;
-}
-
-void osd_joystick_calibrate(void)
-{
-}
-
-void osd_joystick_end_calibration(void)
-{
-}
-
 
 /******************************************************************************
 
@@ -287,114 +180,13 @@ void osd_joystick_end_calibration(void)
 
 ******************************************************************************/
 
-int osd_update(mame_time emutime)
+void osd_update(int skip_redraw)
 {
-    return [sController osd_update: emutime];
-}
-
-const char *osd_get_fps_text(const performance_info *performance)
-{
-    return [sTimingController osd_get_fps_text: performance];
-}
-
-
-/******************************************************************************
-
-    File I/O
-
-******************************************************************************/
-
-static MameFileManager * sFileManager = nil;
-
-void osd_set_file_manager(MameFileManager * fileManager)
-{
-    sFileManager = fileManager;
-}
-
-mame_file_error osd_open(const char *path, UINT32 openflags, osd_file **file,
-                         UINT64 *filesize)
-{
-    return [sFileManager osd_open: path
-                            flags: openflags
-                             file: file
-                         filesize: filesize];
-}
-
-mame_file_error osd_close(osd_file *file)
-{
-    return [sFileManager osd_close: file];
-}
-
-
-mame_file_error osd_read(osd_file *file, void *buffer, UINT64 offset,
-                         UINT32 length, UINT32 *actual)
-{
-    return [sFileManager osd_read: file
-                           buffer: buffer
-                           offset: offset
-                           length: length
-                           actual: actual];
-}
-
-mame_file_error osd_write(osd_file *file, const void *buffer, UINT64 offset,
-                          UINT32 length, UINT32 *actual)
-{
-    return [sFileManager osd_write: file
-                            buffer: buffer
-                            offset: offset
-                            length: length
-                            actual: actual];
-}
-
-mame_file_error osd_rmfile(const char *filename)
-{
-    return [sFileManager osd_rmfile: filename];
-}
-
-
-int osd_is_absolute_path(const char *path)
-{
-    return [sFileManager osd_is_absolute_path: path];
-}
-
-void *osd_alloc_executable(size_t size)
-{
-    void * ptr = (void *) malloc(size);
-#if 0
-    printf("osd_alloc_executable(%d [0x%08x]) = 0x%08x - 0x%08x\n", size, size,
-           ptr, ((uint8_t *) ptr) + size);
-#endif
-    return ptr;
-}
-
-void osd_free_executable(void *ptr, size_t size)
-{
-    free(ptr);
-}
-
-void osd_break_into_debugger(const char *message)
-{
+    [sController osd_update: skip_redraw];
 }
 
 void osd_wait_for_debugger(void)
 {
-}
-
-//============================================================
-//  osd_uchar_from_osdchar
-//============================================================
-
-int osd_uchar_from_osdchar(unicode_char *uchar, const char *osdchar, size_t count)
-{
-    wchar_t wch;
-    
-    count = mbstowcs(&wch, (char *)osdchar, 1);
-    if (count != -1)
-        *uchar = wch;
-    else
-        *uchar = 0;
-    
-    return count;
 }
 
 static void link_functions(void)

@@ -35,7 +35,6 @@
 #define HAS_NAMCO_15XX 1
 #define HAS_NAMCO_CUS30 1
 #define HAS_NAMCO_52XX 1
-#define HAS_NAMCO_54XX 1
 #define HAS_NAMCO_63701X 1
 #define HAS_NAMCONA 1
 #define HAS_C140 1

@@ -37,7 +37,9 @@ void osd_set_input_controller(MameInputController * inputController);
 void osd_set_audio_controller(MameAudioController * audioController);
 void osd_set_timing_controller(MameTimingController * timingController);
 void osd_set_file_manager(MameFileManager * fileManager);
-const char * osd_pathtype_string(int pathtype);
+
+void osx_osd_core_init(void);
+void osx_osd_set_use_autorelease(BOOL use_autorelease);
 
 #if defined(__cplusplus)
 }

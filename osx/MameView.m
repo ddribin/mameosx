@@ -32,6 +32,7 @@
 #import "MameConfiguration.h"
 #import "MameFilter.h"
 #import "JRLog.h"
+#import "MameChud.h"
 
 
 @interface MameView (Private)
@@ -150,6 +151,7 @@ NSString * MameExitStatusKey = @"MameExitStatus";
 {
     [self setGame: nil];
 
+    osx_osd_set_use_autorelease(NO);
     // osd_set_controller(self);
     osd_set_controller(self);
     osd_set_input_controller(mInputController);
@@ -547,6 +549,7 @@ NSString * MameExitStatusKey = @"MameExitStatus";
 {
     mPrimitives = 0;
     [self stopAnimation];
+    [mAudioController osd_stop_audio_stream];
 }
 
 - (void) mameDidPause: (running_machine *) machine
@@ -843,14 +846,14 @@ NSString * MameExitStatusKey = @"MameExitStatus";
 #pragma mark -
 #pragma mark OS Dependent API
 
-- (int) osd_update: (mame_time) emutime;
+- (void) osd_update: (int) skip_redraw;
 {
     // Drain the pool
     [mMamePool release];
     mMamePool = [[NSAutoreleasePool alloc] init];
     
-    [self updateVideo];
-    int skipNextFrame = [mTimingController osd_update: emutime];
+    if (!skip_redraw)
+        [self updateVideo];
     
     // Open lock briefly to allow pending MAME calls
     [mMameLock unlock];
@@ -864,8 +867,6 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     [[NSRunLoop currentRunLoop] runMode: NSDefaultRunLoopMode
                              beforeDate: [NSDate date]];
 #endif
-    
-    return skipNextFrame;
 }
 
 - (void) osd_output_error: (const char *) utf8Format
@@ -1006,6 +1007,14 @@ NSString * MameExitStatusKey = @"MameExitStatus";
 
 - (void) gameThread
 {
+#if DEBUG_INSTRUMENTED
+    chudInitialize();	  
+    chudMarkPID(getpid(), 1);
+    chudAcquireRemoteAccess();
+    chudStartRemotePerfMonitor("MAME OS X gameThread");
+    chudRecordSignPost(MameGameStart, chudPointSignPost, 0, 0, 0, 0);
+#endif
+    
     NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
     
     [mMameLock lock];
@@ -1034,6 +1043,13 @@ NSString * MameExitStatusKey = @"MameExitStatus";
                         waitUntilDone: NO];
     
     [pool release];
+
+#ifdef DEBUG_INSTRUMENTED
+	chudRecordSignPost(MameGameEnd, chudPointSignPost, 0, 0, 0, 0);
+    chudStopRemotePerfMonitor();
+    chudReleaseRemoteAccess();
+	chudCleanup();
+#endif
 }
 
 - (void) gameFinished: (NSNumber *) exitStatus;
@@ -1198,6 +1214,7 @@ NSString * MameExitStatusKey = @"MameExitStatus";
         {
             primitives = mPrimitives;
             renderSize = mRenderSize;
+            mPrimitives = 0;
         }
         
         if (primitives == 0)
@@ -1209,21 +1226,25 @@ NSString * MameExitStatusKey = @"MameExitStatus";
             osd_lock_acquire(primitives->lock);
             if (primitives->head == NULL)
             {
+#ifdef DEBUG_INSTRUMENTED
+                chudRecordSignPost(MameSkipFrame, chudPointSignPost, primitives->head, 0, 0, 0);
+#endif
                 skipFrame = YES;
             }
             else
             {
                 [mRenderer renderFrame: primitives
                               withSize: renderSize];
+#ifdef DEBUG_INSTRUMENTED
+                chudRecordSignPost(MameRenderFrame, chudPointSignPost, primitives->head, 0, 0, 0);
+#endif
                 skipFrame = NO;
             }
             osd_lock_release(primitives->lock);
         }
         
         if (skipFrame)
-        {
             return;
-        }
     }
     
     [currentContext makeCurrentContext];
@@ -1257,6 +1278,7 @@ NSString * MameExitStatusKey = @"MameExitStatus";
         [self drawFrameUsingOpenGL: frame inRect: destRect];
     
     [mTimingController frameWasDisplayed];
+    return;
 }
 
 - (void) drawFrameUsingCoreImage: (CVOpenGLTextureRef) frame
@@ -1330,15 +1352,21 @@ NSString * MameExitStatusKey = @"MameExitStatus";
         renderSize = [self stretchedSize: [self activeBounds].size];
         code = 'W';
     }
-    // NSLog(@"renderSize (%c): %@", code, NSStringFromSize(renderSize));
 
     if (mRenderInCoreVideoThread)
     {
         render_target_set_bounds(mTarget, renderSize.width, renderSize.height,
                                  mPixelAspectRatio);
         const render_primitive_list * primitives = render_target_get_primitives(mTarget);
+#ifdef DEBUG_INSTRUMENTED
+        chudRecordSignPost(MameGetPrimitives, chudPointSignPost, primitives->head, 0, 0, 0);
+#endif
         @synchronized(self)
         {
+#if 0
+            if (mPrimitives != 0)
+                osd_lock_release(mPrimitives->lock);
+#endif
             mRenderSize = renderSize;
             mPrimitives = primitives;
         }
@@ -1350,8 +1378,14 @@ NSString * MameExitStatusKey = @"MameExitStatus";
         render_target_set_bounds(mTarget, renderSize.width, renderSize.height,
                                  mPixelAspectRatio);
         const render_primitive_list * primitives = render_target_get_primitives(mTarget);
+#ifdef DEBUG_INSTRUMENTED
+        chudRecordSignPost(MameGetPrimitives, chudPointSignPost, primitives->head, 0, 0, 0);
+#endif
         [mRenderer renderFrame: primitives
                       withSize: renderSize];
+#ifdef DEBUG_INSTRUMENTED
+        chudRecordSignPost(MameRenderFrame, chudPointSignPost, primitives->head, 0, 0, 0);
+#endif
         mRenderSize = renderSize;
         
         [self unlockOpenGLLock];

@@ -136,17 +136,6 @@ static inline cycles_t osd_cycles_internal()
     return mach_absolute_time();
 }
 
-- (const char *) osd_get_fps_text: (const performance_info *) performance;
-{
-    static char buffer[1024];
-    sprintf(buffer, "%s%2d%4d%%%4d/%d fps",
-            mAutoFrameSkip ? "auto" : "fskp", mFrameSkipLevel,
-            (int)(performance->game_speed_percent + 0.5),
-            (int)(performance->frames_per_second + 0.5),
-            (int)(Machine->screen[0].refresh + 0.5));
-    return buffer;
-}
-
 - (int) osd_update: (mame_time) emutime;
 {
     [self updateThrottle: emutime];
@@ -270,6 +259,7 @@ resync:
 
 - (void) updateAutoFrameSkip;
 {
+#if 0
     int frameSkipCounter = mFrameSkipCounter;
 	mFrameSkipCounter = (mFrameSkipCounter + 1) % FRAMESKIP_LEVELS;
 
@@ -321,6 +311,7 @@ resync:
 			}
 		}
 	}
+#endif
 }
 
 - (int) skipFrame;

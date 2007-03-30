@@ -33,6 +33,8 @@ struct _osd_file
     FILE * fileHandle;
 };
 
+static MameFileManager * sInstance = nil;
+
 @interface MameFileManager (Private)
 
 - (void) createDirectoriesForComponents: (NSMutableArray *) components
@@ -41,6 +43,18 @@ struct _osd_file
 @end
 
 @implementation MameFileManager
+
++ (void) initialize;
+{
+    osx_osd_core_init();
+}
+
++ (MameFileManager *) defaultFileManager;
+{
+    if (sInstance == nil)
+        sInstance = [[MameFileManager alloc] init];
+    return sInstance;
+}
 
 - (NSString *) resolveAlias: (NSString *) path
 {
@@ -98,10 +112,10 @@ struct _osd_file
 #pragma mark -
 #pragma mark MAME OSD API
 
-- (mame_file_error) osd_open: (const char *) path
-                       flags: (UINT32) openflags
-                        file: (osd_file **) file
-                    filesize: (UINT64 *) filesize;
+- (file_error) osd_open: (const char *) path
+                  flags: (UINT32) openflags
+                   file: (osd_file **) file
+               filesize: (UINT64 *) filesize;
 {
     JRLogDebug(@"osd_open: path: %s, flags: 0x%08x", path, openflags);
     NSAssert(path != 0, @"path is NULL");
@@ -166,7 +180,7 @@ struct _osd_file
     return FILERR_NONE;
 }
 
-- (mame_file_error) osd_close: (osd_file *) file;
+- (file_error) osd_close: (osd_file *) file;
 {
     NSAssert(file != 0, @"file should not be null");
     int rc = fclose(file->fileHandle);
@@ -177,11 +191,11 @@ struct _osd_file
         return FILERR_FAILURE;
 }
 
-- (mame_file_error) osd_read: (osd_file *) file
-                      buffer: (void *) buffer
-                      offset: (UINT64) offset
-                      length: (UINT32) length
-                      actual: (UINT32 *) actual;
+- (file_error) osd_read: (osd_file *) file
+                 buffer: (void *) buffer
+                 offset: (UINT64) offset
+                 length: (UINT32) length
+                 actual: (UINT32 *) actual;
 {
     fseek(file->fileHandle, offset, SEEK_SET);
     size_t rc = fread(buffer, 1, length, file->fileHandle);
@@ -196,11 +210,11 @@ struct _osd_file
     return FILERR_NONE;
 }
 
-- (mame_file_error) osd_write: (osd_file *) file
-                       buffer: (const void *) buffer
-                       offset: (UINT64) offset
-                       length: (UINT32) length
-                       actual: (UINT32 *) actual;
+- (file_error) osd_write: (osd_file *) file
+                  buffer: (const void *) buffer
+                  offset: (UINT64) offset
+                  length: (UINT32) length
+                  actual: (UINT32 *) actual;
 {
     fseek(file->fileHandle, offset, SEEK_SET);
     size_t rc = fwrite(buffer, 1, length, file->fileHandle);
@@ -215,7 +229,7 @@ struct _osd_file
     return FILERR_NONE;
 }
 
-- (mame_file_error) osd_rmfile: (const char *) filename;
+- (file_error) osd_rmfile: (const char *) filename;
 {
     JRLogDebug(@"osd_rmfile: filename: %s", filename);
     NSAssert(filename != 0, @"path is NULL");

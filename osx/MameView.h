@@ -192,7 +192,7 @@ typedef enum _MameFullScreenZoom
 #pragma mark -
 #pragma mark OS Dependent API
 
-- (int) osd_update: (mame_time) emutime;
+- (void) osd_update: (int) skip_redraw;
 
 - (void) osd_output_error: (const char *) utf8Format
                 arguments: (va_list) argptr;
