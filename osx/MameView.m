@@ -1234,7 +1234,7 @@ NSString * MameExitStatusKey = @"MameExitStatus";
         
         if (primitives == 0)
         {
-            skipFrame = YES;
+            skipFrame = NO;
         }
         else
         {
@@ -1244,7 +1244,7 @@ NSString * MameExitStatusKey = @"MameExitStatus";
 #ifdef DEBUG_INSTRUMENTED
                 chudRecordSignPost(MameSkipFrame, chudPointSignPost, primitives->head, 0, 0, 0);
 #endif
-                skipFrame = YES;
+                skipFrame = NO;
             }
             else
             {
