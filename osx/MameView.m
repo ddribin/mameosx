@@ -34,6 +34,14 @@
 #import "JRLog.h"
 #import "MameChud.h"
 
+#define MAME_EXPORT_MOVIE 0
+
+#if MAME_EXPORT_MOVIE
+#import <QuickTime/QuickTime.h>
+#import "FrameReader.h"
+#import "FrameCompressor.h"
+#import "FrameMovieExporter.h"
+#endif
 
 @interface MameView (Private)
 
@@ -70,6 +78,12 @@
 
 - (void) updatePixelAspectRatio;
 - (float) aspectRatioForDisplay: (CGDirectDisplayID) displayId;
+
+#if MAME_EXPORT_MOVIE
+- (void) createMovieExporter;
+- (void) exportMovieFrame;
+- (void) freeMovieExporter;
+#endif
 
 @end
 
@@ -529,6 +543,12 @@ NSString * MameExitStatusKey = @"MameExitStatus";
                  format: [self pixelFormat]
                    size: NSIntegralRect([self bounds]).size];
     
+#if MAME_EXPORT_MOVIE
+    [self performSelectorOnMainThread: @selector(createMovieExporter)
+                           withObject: nil
+                        waitUntilDone: YES];
+#endif
+    
     [self startAnimation];
     [self updateMouseCursor];
     
@@ -548,6 +568,10 @@ NSString * MameExitStatusKey = @"MameExitStatus";
 - (void) mameDidExit: (running_machine *) machine;
 {
     mPrimitives = 0;
+#if MAME_EXPORT_MOVIE
+    [self freeMovieExporter];
+#endif
+    
     [self stopAnimation];
     [mAudioController osd_stop_audio_stream];
 }
@@ -1234,6 +1258,7 @@ NSString * MameExitStatusKey = @"MameExitStatus";
         if (primitives != 0)
         {
             osd_lock_acquire(primitives->lock);
+            // NSLog(@"primitives [D]: %p", primitives);
             if (primitives->head != NULL)
             {
                 [mRenderer renderFrame: primitives
@@ -1278,6 +1303,11 @@ NSString * MameExitStatusKey = @"MameExitStatus";
         [self drawFrameUsingCoreImage: frame inRect: destRect];
     else
         [self drawFrameUsingOpenGL: frame inRect: destRect];
+    
+    
+#if MAME_EXPORT_MOVIE
+    [self exportMovieFrame];
+#endif
     
     [mTimingController frameWasDisplayed];
     return;
@@ -1363,12 +1393,9 @@ NSString * MameExitStatusKey = @"MameExitStatus";
 #ifdef DEBUG_INSTRUMENTED
         chudRecordSignPost(MameGetPrimitives, chudPointSignPost, primitives->head, 0, 0, 0);
 #endif
+        // NSLog(@"primitives [U]: %p", primitives);
         @synchronized(self)
         {
-#if 0
-            if (mPrimitives != 0)
-                osd_lock_release(mPrimitives->lock);
-#endif
             mRenderSize = renderSize;
             mPrimitives = primitives;
         }
@@ -1449,6 +1476,72 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     }
     return aspectRatio;
 }
+
+#if MAME_EXPORT_MOVIE
+
+static FrameMovieExporter * _exporter = nil;
+static FrameReader * _reader = nil;
+
+- (void) createMovieExporter;
+{
+    NSSize size = NSIntegralRect([self bounds]).size;
+    
+    
+    NSSavePanel* savePanel = [NSSavePanel savePanel];
+	double							framerate = 60.0;
+	CodecType						codec;
+	ICMCompressionSessionOptionsRef options;
+    
+    [savePanel setRequiredFileType:@"mov"];
+    [savePanel setCanCreateDirectories:YES];
+    [savePanel setCanSelectHiddenExtension:YES];
+    if(([savePanel runModalForDirectory:[@"~/Desktop" stringByExpandingTildeInPath]
+                                   file: mGame] == NSOKButton) &&
+       (options = [FrameCompressor userOptions:&codec frameRate:&framerate autosaveName:@"CompressionDialogSettings"]))
+        //        (options = [FrameCompressor defaultOptions]))
+    {
+        _reader = [[FrameReader alloc] initWithOpenGLContext: [self openGLContext] pixelsWide:size.width pixelsHigh:size.height asynchronousFetching:YES];
+        _exporter = [[FrameMovieExporter alloc] initWithPath:[savePanel filename] codec:codec pixelsWide:size.width pixelsHigh:size.height options:options];
+        if(_exporter == nil) {
+            [_reader release];
+            _reader = nil;
+        }
+    }
+    if(_exporter == nil) {
+        NSBeep();
+    }
+}
+
+- (void) exportMovieFrame;
+{
+    if(_exporter)
+    {
+        static NSTimeInterval _startTime = 0.0;
+        NSTimeInterval time = [NSDate timeIntervalSinceReferenceDate];
+        if(_startTime == 0.0)
+            _startTime = time;
+        time = time - _startTime;
+        
+        CVPixelBufferRef frame;
+        frame = [_reader readFrame];
+		if(frame)
+            [_exporter exportFrame: frame timeStamp: time];
+    }
+}
+
+- (void) freeMovieExporter;
+{
+	if(_exporter)
+    {
+        FrameMovieExporter * exporter = _exporter;
+        _exporter = 0;
+		[exporter release];
+        [_reader release];
+        _reader = nil;
+    }
+}
+
+#endif
 
 @end
 

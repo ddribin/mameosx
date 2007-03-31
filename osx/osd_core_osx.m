@@ -71,6 +71,7 @@ void osx_osd_core_init(void)
 
 typedef NSRecursiveLock MameLock;
 // typedef NSLock MameLock;
+#undef DEBUG_INSTRUMENTED
 
 osd_lock * osd_lock_alloc(void)
 {

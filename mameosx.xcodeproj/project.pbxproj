@@ -69,6 +69,13 @@
 		5530FE110ACA42270083BB04 /* express.h in Headers */ = {isa = PBXBuildFile; fileRef = 5530FE000ACA42270083BB04 /* express.h */; };
 		5530FE120ACA42270083BB04 /* textbuf.c in Sources */ = {isa = PBXBuildFile; fileRef = 5530FE010ACA42270083BB04 /* textbuf.c */; };
 		5530FE130ACA42270083BB04 /* textbuf.h in Headers */ = {isa = PBXBuildFile; fileRef = 5530FE020ACA42270083BB04 /* textbuf.h */; };
+		5537EF490BBEACC2001A390F /* FrameMovieExporter.h in Headers */ = {isa = PBXBuildFile; fileRef = 5537EF470BBEACC2001A390F /* FrameMovieExporter.h */; };
+		5537EF4A0BBEACC2001A390F /* FrameMovieExporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5537EF480BBEACC2001A390F /* FrameMovieExporter.m */; };
+		5537EF660BBEAD6C001A390F /* FrameCompressor.h in Headers */ = {isa = PBXBuildFile; fileRef = 5537EF640BBEAD6C001A390F /* FrameCompressor.h */; };
+		5537EF670BBEAD6C001A390F /* FrameCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = 5537EF650BBEAD6C001A390F /* FrameCompressor.m */; };
+		5537EFDB0BBEAE37001A390F /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5537EF890BBEAE14001A390F /* QuickTime.framework */; };
+		5537F0F40BBEB35E001A390F /* FrameReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 5537F0F20BBEB35E001A390F /* FrameReader.h */; };
+		5537F0F50BBEB35E001A390F /* FrameReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 5537F0F30BBEB35E001A390F /* FrameReader.m */; };
 		553A07300AFD9E2700531E1F /* MameFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = 553A072E0AFD9E2700531E1F /* MameFilter.h */; };
 		553A07320AFDA09900531E1F /* MameFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 553A07310AFDA09900531E1F /* MameFilter.m */; };
 		553A09B10AFF11B300531E1F /* CustomMameFilters.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 553A09AE0AFF11B300531E1F /* CustomMameFilters.h */; };
@@ -3068,6 +3075,13 @@
 		5530FE000ACA42270083BB04 /* express.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = express.h; sourceTree = "<group>"; };
 		5530FE010ACA42270083BB04 /* textbuf.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = textbuf.c; sourceTree = "<group>"; };
 		5530FE020ACA42270083BB04 /* textbuf.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = textbuf.h; sourceTree = "<group>"; };
+		5537EF470BBEACC2001A390F /* FrameMovieExporter.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = FrameMovieExporter.h; sourceTree = "<group>"; };
+		5537EF480BBEACC2001A390F /* FrameMovieExporter.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = FrameMovieExporter.m; sourceTree = "<group>"; };
+		5537EF640BBEAD6C001A390F /* FrameCompressor.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = FrameCompressor.h; sourceTree = "<group>"; };
+		5537EF650BBEAD6C001A390F /* FrameCompressor.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = FrameCompressor.m; sourceTree = "<group>"; };
+		5537EF890BBEAE14001A390F /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = /System/Library/Frameworks/QuickTime.framework; sourceTree = "<absolute>"; };
+		5537F0F20BBEB35E001A390F /* FrameReader.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = FrameReader.h; sourceTree = "<group>"; };
+		5537F0F30BBEB35E001A390F /* FrameReader.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = FrameReader.m; sourceTree = "<group>"; };
 		553A072E0AFD9E2700531E1F /* MameFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MameFilter.h; sourceTree = "<group>"; };
 		553A07310AFDA09900531E1F /* MameFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MameFilter.m; sourceTree = "<group>"; };
 		553A09AE0AFF11B300531E1F /* CustomMameFilters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomMameFilters.h; sourceTree = "<group>"; };
@@ -5893,6 +5907,7 @@
 				5567B4C20BBB34A000EA2072 /* libutil.a in Frameworks */,
 				556A4DA10AA5158400602CC5 /* liblocalexpat.a in Frameworks */,
 				556A4DA20AA5158400602CC5 /* liblocalzlib.a in Frameworks */,
+				5537EFDB0BBEAE37001A390F /* QuickTime.framework in Frameworks */,
 				556A4C6E0AA50F4D00602CC5 /* Cocoa.framework in Frameworks */,
 				556A516E0AA54F1F00602CC5 /* OpenGL.framework in Frameworks */,
 				55A3A5230AA7B36400921B71 /* QuartzCore.framework in Frameworks */,
@@ -6084,6 +6099,19 @@
 				5530FE020ACA42270083BB04 /* textbuf.h */,
 			);
 			path = debug;
+			sourceTree = "<group>";
+		};
+		5537F2BD0BBED584001A390F /* exporter */ = {
+			isa = PBXGroup;
+			children = (
+				5537F0F20BBEB35E001A390F /* FrameReader.h */,
+				5537F0F30BBEB35E001A390F /* FrameReader.m */,
+				5537EF640BBEAD6C001A390F /* FrameCompressor.h */,
+				5537EF650BBEAD6C001A390F /* FrameCompressor.m */,
+				5537EF470BBEACC2001A390F /* FrameMovieExporter.h */,
+				5537EF480BBEACC2001A390F /* FrameMovieExporter.m */,
+			);
+			path = exporter;
 			sourceTree = "<group>";
 		};
 		5548EDC90ABE3CC7008D1F74 /* Resources */ = {
@@ -8588,6 +8616,7 @@
 		556A4AB00AA4FAA300602CC5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5537EF890BBEAE14001A390F /* QuickTime.framework */,
 				5528612E0BBC5D0800EB3460 /* CHUD.framework */,
 				5567B3EA0BBA3BE100EA2072 /* Carbon.framework */,
 				55D00AD90B2E8CD500F7961F /* IOKit.framework */,
@@ -8968,6 +8997,7 @@
 				556A4D890AA514C300602CC5 /* osd_osx.m */,
 				5567B2E30BBA336A00EA2072 /* osd_core_osx.m */,
 				55CC45A40B857AB800979214 /* sdlwork.c */,
+				5537F2BD0BBED584001A390F /* exporter */,
 			);
 			name = osd;
 			path = osx;
@@ -9317,6 +9347,9 @@
 				55193F610B93F5DC004C0C98 /* NSDictionary+DDHidExtras.h in Headers */,
 				55193F660B93F5EC004C0C98 /* NSXReturnThrowError.h in Headers */,
 				554933B40B993F1F000EF4A3 /* MameInputTables.h in Headers */,
+				5537EF490BBEACC2001A390F /* FrameMovieExporter.h in Headers */,
+				5537EF660BBEAD6C001A390F /* FrameCompressor.h in Headers */,
+				5537F0F40BBEB35E001A390F /* FrameReader.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12443,6 +12476,9 @@
 				55193F670B93F5EC004C0C98 /* NSXReturnThrowError.m in Sources */,
 				55CA69090BA3CF390012CF7B /* DDHidKeyboard.m in Sources */,
 				5567B2E40BBA336A00EA2072 /* osd_core_osx.m in Sources */,
+				5537EF4A0BBEACC2001A390F /* FrameMovieExporter.m in Sources */,
+				5537EF670BBEAD6C001A390F /* FrameCompressor.m in Sources */,
+				5537F0F50BBEB35E001A390F /* FrameReader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12853,6 +12889,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks\"";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
@@ -12869,6 +12910,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks\"";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
@@ -13356,6 +13402,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks\"";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
