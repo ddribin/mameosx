@@ -1258,7 +1258,6 @@ NSString * MameExitStatusKey = @"MameExitStatus";
         if (primitives != 0)
         {
             osd_lock_acquire(primitives->lock);
-            // NSLog(@"primitives [D]: %p", primitives);
             if (primitives->head != NULL)
             {
                 [mRenderer renderFrame: primitives
@@ -1393,7 +1392,6 @@ NSString * MameExitStatusKey = @"MameExitStatus";
 #ifdef DEBUG_INSTRUMENTED
         chudRecordSignPost(MameGetPrimitives, chudPointSignPost, primitives->head, 0, 0, 0);
 #endif
-        // NSLog(@"primitives [U]: %p", primitives);
         @synchronized(self)
         {
             mRenderSize = renderSize;
