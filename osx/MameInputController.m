@@ -291,6 +291,26 @@ static NSString * format(NSString * format, ...);
     return value;
 }
 
+- (void) osd_customize_inputport_list: (input_port_default_entry *) defaults;
+{
+    input_port_default_entry *idef = defaults;
+    
+    // loop over all the defaults
+    while (idef->type != IPT_END)
+    {
+        switch (idef->type)
+        {
+            case IPT_OSD_3:
+                idef->token = "FAST_FORWARD";
+                idef->name = "Fast Forward";
+                seq_set_1(&idef->defaultseq, KEYCODE_PGDN);
+                break;
+        }
+        
+        idef++;
+    }
+}
+
 - (void) keyDown: (NSEvent *) event;
 {
     @synchronized(self)

@@ -76,6 +76,7 @@
 		5537EFDB0BBEAE37001A390F /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5537EF890BBEAE14001A390F /* QuickTime.framework */; };
 		5537F0F40BBEB35E001A390F /* FrameReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 5537F0F20BBEB35E001A390F /* FrameReader.h */; };
 		5537F0F50BBEB35E001A390F /* FrameReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 5537F0F30BBEB35E001A390F /* FrameReader.m */; };
+		5537F2FB0BBEE15D001A390F /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5537EF890BBEAE14001A390F /* QuickTime.framework */; };
 		553A07300AFD9E2700531E1F /* MameFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = 553A072E0AFD9E2700531E1F /* MameFilter.h */; };
 		553A07320AFDA09900531E1F /* MameFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 553A07310AFDA09900531E1F /* MameFilter.m */; };
 		553A09B10AFF11B300531E1F /* CustomMameFilters.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 553A09AE0AFF11B300531E1F /* CustomMameFilters.h */; };
@@ -5952,6 +5953,7 @@
 				55C710160B292A64001FF0BE /* AudioUnit.framework in Frameworks */,
 				55C71A6F0B2AFD2E001FF0BE /* CoreAudioKit.framework in Frameworks */,
 				55D00BA20B2E8E4800F7961F /* IOKit.framework in Frameworks */,
+				5537F2FB0BBEE15D001A390F /* QuickTime.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8616,7 +8618,6 @@
 		556A4AB00AA4FAA300602CC5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				5537EF890BBEAE14001A390F /* QuickTime.framework */,
 				5528612E0BBC5D0800EB3460 /* CHUD.framework */,
 				5567B3EA0BBA3BE100EA2072 /* Carbon.framework */,
 				55D00AD90B2E8CD500F7961F /* IOKit.framework */,
@@ -8627,6 +8628,7 @@
 				556A4ACE0AA4FBA000602CC5 /* Cocoa.framework */,
 				556A4ACF0AA4FBA000602CC5 /* Foundation.framework */,
 				556A4AB10AA4FACB00602CC5 /* OpenGL.framework */,
+				5537EF890BBEAE14001A390F /* QuickTime.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

@@ -231,6 +231,13 @@ static os_code_info key_trans_table[] =
     {"Stop",    kHIDUsage_KeyboardStop,         KEYCODE_STOP},
     {"/",       kHIDUsage_KeyboardSlash,        KEYCODE_SLASH},
     {"Space",   kHIDUsage_KeyboardSpacebar,     KEYCODE_SPACE},
+
+    {"Insert",  kHIDUsage_KeyboardInsert,       KEYCODE_INSERT},
+    {"Delete",  kHIDUsage_KeyboardDeleteForward, KEYCODE_DEL},
+    {"Home",    kHIDUsage_KeyboardHome,         KEYCODE_HOME},
+    {"End",     kHIDUsage_KeyboardEnd,          KEYCODE_END},
+    {"Page Up", kHIDUsage_KeyboardPageUp,       KEYCODE_PGUP},
+    {"Page Down", kHIDUsage_KeyboardPageDown,   KEYCODE_PGDN},
     
     {"Up",      kHIDUsage_KeyboardUpArrow,      KEYCODE_UP},
     {"Down",    kHIDUsage_KeyboardDownArrow,    KEYCODE_DOWN},

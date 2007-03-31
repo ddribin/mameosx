@@ -37,6 +37,7 @@
 
 - (const os_code_info *) osd_get_code_list;
 - (INT32) osd_get_code_value: (os_code) code;
+- (void) osd_customize_inputport_list: (input_port_default_entry *) defaults;
 
 - (void) keyDown: (NSEvent *) event;
 - (void) keyUp: (NSEvent *) event;
