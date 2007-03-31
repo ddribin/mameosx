@@ -71,6 +71,7 @@ NSString * MameSoundEnabledKey = @"SoundEnabled";
 NSString * MameClearToRedKey = @"ClearToRed";
 NSString * MameLinearFilterKey = @"LinearFilter";
 NSString * MameSmoothFontKey = @"SmoothFont";
+NSString * MameGrabMouseKey = @"GrabMouse";
 
 NSString * MameRomPath = @"RomPath";
 NSString * MameDiskImagePath = @"DiskImagePath";
@@ -204,6 +205,9 @@ NSString * MameBiosKey = @"Bios";
     
     [defaultValues setObject: [NSNumber numberWithBool: YES]
                       forKey: MameSmoothFontKey];
+    
+    [defaultValues setObject: [NSNumber numberWithBool: NO]
+                      forKey: MameGrabMouseKey];
     
 #ifdef MAME_DEBUG
     [defaultValues setObject: [NSNumber numberWithBool: NO]
@@ -397,6 +401,19 @@ NSString * MameBiosKey = @"Bios";
     return [mDefaults boolForKey: MameCheckUpdatesAtStartupKey];
 }
 
+- (BOOL) grabMouse;
+{
+    return [mDefaults boolForKey: MameGrabMouseKey];
+}
+
+- (void) setGrabMouse: (BOOL) grabMouse;
+{
+    [mDefaults setBool: grabMouse forKey: MameGrabMouseKey];
+}
+
+#pragma mark -
+#pragma mark Private MAME OS X Options
+
 - (NSArray *) previousGames;
 {
     return [mDefaults arrayForKey: MamePreviousGamesKey];
@@ -406,9 +423,6 @@ NSString * MameBiosKey = @"Bios";
 {
     [mDefaults setObject: previousGames forKey: MamePreviousGamesKey];
 }
-
-#pragma mark -
-#pragma mark Private MAME OS X Options
 
 - (NSString *) versionUrl;
 {

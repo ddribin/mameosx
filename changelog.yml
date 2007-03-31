@@ -1,3 +1,12 @@
+<% version = "0.114" %>
+- version: "<%=version%>"
+  date: xxx
+  changes:
+    - Upgrade to 0.114 core.
+    - Mouse is no longer grabbed at startup.
+    - Add preference to grab mouse at startup.
+    - Add keyboard shortcut to grab/ungrab mouse during game.
+
 <% version = "0.112-1" %>
 - version: "<%=version%>"
   date: 2007-03-22

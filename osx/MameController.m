@@ -733,6 +733,7 @@ static void exit_sleeper()
     [mMameView setClearToRed: [preferences clearToRed]];
     [mMameView setKeepAspectRatio: [preferences keepAspect]];
     [mMameView setSwitchModesForFullScreen: [preferences switchResolutions]];
+    [mMameView setShouldHideMouseCursor: [preferences grabMouse]];
     
     [preferences copyToMameConfiguration: mConfiguration];
     

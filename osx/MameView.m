@@ -530,7 +530,7 @@ NSString * MameExitStatusKey = @"MameExitStatus";
                    size: NSIntegralRect([self bounds]).size];
     
     [self startAnimation];
-    [self setShouldHideMouseCursor: NO];
+    [self updateMouseCursor];
     
     return 0;
 }

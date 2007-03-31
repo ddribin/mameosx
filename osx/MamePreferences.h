@@ -85,11 +85,14 @@
 
 - (BOOL) checkUpdatesAtStartup;
 
-- (NSArray *) previousGames;
-- (void) setPreviousGames: (NSArray *) previousGames;
+- (BOOL) grabMouse;
+- (void) setGrabMouse: (BOOL) grabMouse;
 
 #pragma mark -
 #pragma mark Private MAME OS X Options
+
+- (NSArray *) previousGames;
+- (void) setPreviousGames: (NSArray *) previousGames;
 
 - (NSString *) versionUrl;
 
@@ -239,6 +242,7 @@ extern NSString * MameSoundEnabledKey;
 extern NSString * MameClearToRedKey;
 extern NSString * MameLinearFilterKey;
 extern NSString * MameSmoothFontKey;
+extern NSString * MameGrabMouseKey;
 
 extern NSString * MameRomPath;
 extern NSString * MameDiskImagePath;
