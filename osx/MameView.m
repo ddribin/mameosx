@@ -1224,7 +1224,6 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     {
         const render_primitive_list * primitives = 0;
         NSSize renderSize;
-        BOOL skipFrame = NO;
         @synchronized(self)
         {
             primitives = mPrimitives;
@@ -1232,34 +1231,19 @@ NSString * MameExitStatusKey = @"MameExitStatus";
             mPrimitives = 0;
         }
         
-        if (primitives == 0)
-        {
-            skipFrame = NO;
-        }
-        else
+        if (primitives != 0)
         {
             osd_lock_acquire(primitives->lock);
-            if (primitives->head == NULL)
-            {
-#ifdef DEBUG_INSTRUMENTED
-                chudRecordSignPost(MameSkipFrame, chudPointSignPost, primitives->head, 0, 0, 0);
-#endif
-                skipFrame = NO;
-            }
-            else
+            if (primitives->head != NULL)
             {
                 [mRenderer renderFrame: primitives
                               withSize: renderSize];
 #ifdef DEBUG_INSTRUMENTED
                 chudRecordSignPost(MameRenderFrame, chudPointSignPost, primitives->head, 0, 0, 0);
 #endif
-                skipFrame = NO;
             }
             osd_lock_release(primitives->lock);
         }
-        
-        if (skipFrame)
-            return;
     }
     
     [currentContext makeCurrentContext];
@@ -1270,7 +1254,10 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     
     CVOpenGLTextureRef frame = [mRenderer currentFrameTexture];
     if (frame == NULL)
+    {
+        JRLogDebug(@"Null frame");
         return;
+    }
     
     NSRect currentBounds = [self activeBounds];
     NSSize destSize;
@@ -1282,7 +1269,7 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     {
         // Stretch again, since the render size could be slightly different
         // than the current size, if we're in the middle of a resize.
-        // Turn on "clear to read" and comment out this line to see why.
+        // Turn on "clear to read" and use mRenderSize to see why.
         destSize = [self stretchedSize: currentBounds.size];
     }
     NSRect destRect = [self centerNSSize: destSize withinRect: currentBounds];
