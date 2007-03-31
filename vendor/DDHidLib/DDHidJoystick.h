@@ -30,20 +30,28 @@
 
 @interface DDHidJoystickStick : NSObject
 {
-    NSMutableArray * mStickElements;
     DDHidElement * mXAxisElement;
     DDHidElement * mYAxisElement;
+    NSMutableArray * mStickElements;
+    // Point of view elements (i.e. hat switches)
+    NSMutableArray * mPovElements;
 }
-
-#pragma mark -
-#pragma mark mStickElements - indexed accessors
-
-- (unsigned int) countOfStickElements;
-- (DDHidElement *) objectInStickElementsAtIndex: (unsigned int)index;
 
 - (DDHidElement *) xAxisElement;
 
 - (DDHidElement *) yAxisElement;
+
+#pragma mark -
+#pragma mark StickElements - indexed accessors
+
+- (unsigned int) countOfStickElements;
+- (DDHidElement *) objectInStickElementsAtIndex: (unsigned int)index;
+
+#pragma mark -
+#pragma mark PovElements - indexed accessors
+
+- (unsigned int) countOfPovElements;
+- (DDHidElement *) objectInPovElementsAtIndex: (unsigned int)index;
 
 - (NSArray *) allElements;
 
@@ -103,6 +111,11 @@
 - (void) ddhidJoystick: (DDHidJoystick *) joystick
                  stick: (unsigned) stick
              otherAxis: (unsigned) otherAxis
+          valueChanged: (int) value;
+
+- (void) ddhidJoystick: (DDHidJoystick *) joystick
+                 stick: (unsigned) stick
+            povElement: (unsigned) povElement
           valueChanged: (int) value;
 
 - (void) ddhidJoystick: (DDHidJoystick *) joystick

@@ -62,7 +62,27 @@
     mUsage = [[DDHidUsage alloc] initWithUsagePage: usagePage
                                            usageId: usageId];
     
+    NSArray * elementsProperties =
+        [mProperties ddhid_objectForString: kIOHIDElementKey];
+    mElements = [[DDHidElement elementsWithPropertiesArray: elementsProperties]
+        retain];
+
     return self;
+}
+
+//=========================================================== 
+// dealloc
+//=========================================================== 
+- (void) dealloc
+{
+    [mProperties release];
+    [mUsage release];
+    [mElements release];
+    
+    mProperties = nil;
+    mUsage = nil;
+    mElements = nil;
+    [super dealloc];
 }
 
 - (NSDictionary *) properties;
@@ -98,9 +118,12 @@
 
 - (NSArray *) elements;
 {
-    NSArray * elementsProperties =
-    [mProperties ddhid_objectForString: kIOHIDElementKey];
-    return [DDHidElement elementsWithPropertiesArray: elementsProperties];
+    return mElements;
+}
+
+- (NSString *) name;
+{
+    return [mProperties ddhid_objectForString: kIOHIDElementNameKey];
 }
 
 - (BOOL) hasNullState;

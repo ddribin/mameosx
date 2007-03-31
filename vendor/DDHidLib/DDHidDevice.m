@@ -81,6 +81,7 @@
     [mUsages release];
     [mPrimaryUsage release];
     [mProperties release];
+    IOObjectRelease(mHidDevice);
     
     mProperties = nil;
     mDeviceInterface = NULL;
@@ -95,7 +96,7 @@
 	// Set up a matching dictionary to search the I/O Registry by class
 	// name for all HID class devices
 	CFMutableDictionaryRef hidMatchDictionary =
-    IOServiceMatching(kIOHIDDeviceKey);
+        IOServiceMatching(kIOHIDDeviceKey);
     return [self allDevicesMatchingCFDictionary: hidMatchDictionary
                                       withClass: [DDHidDevice class]
                               skipZeroLocations: NO];
@@ -109,7 +110,7 @@
 	// Set up a matching dictionary to search the I/O Registry by class
 	// name for all HID class devices
 	CFMutableDictionaryRef hidMatchDictionary =
-    IOServiceMatching(kIOHIDDeviceKey);
+        IOServiceMatching(kIOHIDDeviceKey);
     NSMutableDictionary * objcMatchDictionary =
         (NSMutableDictionary *) hidMatchDictionary;
     [objcMatchDictionary ddhid_setObject: [NSNumber numberWithUnsignedInt: usagePage]
@@ -409,7 +410,7 @@
 
 - (void) addElementsToDefaultQueue;
 {
-    [mDefaultQueue addElements: [self elements]];
+    [mDefaultQueue addElements: [self elements] recursively: YES];
 }
 
 @end
@@ -506,8 +507,10 @@ done:
     result = YES;
     
 done:
-        if (plugInInterface != NULL)
-            (*plugInInterface)->Release(plugInInterface);
+    if (plugInInterface != NULL)
+    {
+        (*plugInInterface)->Release(plugInInterface);
+    }
     if (error_)
         *error_ = error;
 	return result;

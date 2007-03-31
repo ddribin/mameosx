@@ -41,6 +41,11 @@
           valueChanged: (int) value;
 
 - (void) ddhidJoystick: (DDHidJoystick *) joystick
+                 stick: (unsigned) stick
+            povElement: (unsigned) povElement
+          valueChanged: (int) value;
+
+- (void) ddhidJoystick: (DDHidJoystick *) joystick
             buttonDown: (unsigned) buttonNumber;
 
 - (void) ddhidJoystick: (DDHidJoystick *) joystick
@@ -57,6 +62,9 @@
 - (int) normalizeValue: (int) value
             forElement: (DDHidElement *) element;
 
+- (int) povValue: (int) value
+      forElement: (DDHidElement *) element;
+
 - (BOOL) findStick: (unsigned *) stick
            element: (DDHidElement **) elementOut
    withXAxisCookie: (IOHIDElementCookie) cookie;
@@ -67,6 +75,11 @@
 
 - (BOOL) findStick: (unsigned *) stickOut
          otherAxis: (unsigned *) axisOut
+           element: (DDHidElement **) elementOut
+        withCookie: (IOHIDElementCookie) cookie;
+
+- (BOOL) findStick: (unsigned *) stickOut
+        povElement: (unsigned *) povElement
            element: (DDHidElement **) elementOut
         withCookie: (IOHIDElementCookie) cookie;
 
@@ -238,6 +251,7 @@
         DDHidElement * element;
         unsigned stick;
         unsigned otherAxis;
+        unsigned povElement;
         if ([self findStick: &stick element: &element withXAxisCookie: cookie])
         {
             int normalizedValue = [self normalizeValue: value forElement: element];
@@ -254,6 +268,13 @@
             int normalizedValue = [self normalizeValue: value forElement: element];
             [self ddhidJoystick: self stick: stick
                       otherAxis: otherAxis valueChanged: normalizedValue];
+        }
+        else if ([self findStick: &stick povElement: &povElement element: &element
+                      withCookie: cookie])
+        {
+            int povValue = [self povValue: value forElement: element];
+            [self ddhidJoystick: self stick: stick
+                     povElement: povElement valueChanged: povValue];
         }
         else
         {
@@ -290,6 +311,24 @@
     int normalizedValue = (((int64_t)(value - [element minValue]) * normalizedUnits) /
                            elementUnits) + DDHID_JOYSTICK_VALUE_MIN;
     return normalizedValue;
+}
+
+- (int) povValue: (int) value
+      forElement: (DDHidElement *) element;
+{
+    long max = [element maxValue];
+    long min = [element minValue];
+    
+    // If the value is outside the min/max range, it's probably in a
+    // centered/NULL state.
+    if ((value < min) || (value > max))
+    {
+        return -1;
+    }
+    
+    // Do like DirectInput and express the hatswitch value in hundredths of a
+	// degree, clockwise from north.
+	return 36000 / (max - min + 1) * (value - min);
 }
 
 - (BOOL) findStick: (unsigned *) stick
@@ -353,6 +392,31 @@
     return NO;
 }
 
+- (BOOL) findStick: (unsigned *) stickOut
+        povElement: (unsigned *) povElement
+           element: (DDHidElement **) elementOut
+        withCookie: (IOHIDElementCookie) cookie;
+{
+    unsigned i;
+    for (i = 0; i < [mSticks count]; i++)
+    {
+        DDHidJoystickStick * stick = [mSticks objectAtIndex: i];
+        unsigned j;
+        for (j = 0; j < [stick countOfPovElements]; j++)
+        {
+            DDHidElement * element = [stick objectInPovElementsAtIndex: j];
+            if ((element != nil) && ([element cookie] == cookie))
+            {
+                *stickOut = i;
+                *povElement = j;
+                *elementOut = element;
+                return YES;
+            }
+        }
+    }
+    return NO;
+}
+
 @end
 
 @implementation DDHidJoystick (DDHidJoystickDelegate)
@@ -384,6 +448,16 @@
 }
 
 - (void) ddhidJoystick: (DDHidJoystick *) joystick
+                 stick: (unsigned) stick
+            povElement: (unsigned) povElement
+          valueChanged: (int) value;
+{
+    if ([mDelegate respondsToSelector: _cmd])
+        [mDelegate ddhidJoystick: joystick stick: stick povElement: povElement
+                    valueChanged: value];
+}
+
+- (void) ddhidJoystick: (DDHidJoystick *) joystick
             buttonDown: (unsigned) buttonNumber;
 {
     if ([mDelegate respondsToSelector: _cmd])
@@ -407,9 +481,10 @@
     if (self == nil)
         return nil;
     
-    mStickElements = [[NSMutableArray alloc] init];
     mXAxisElement = nil;
     mYAxisElement = nil;
+    mStickElements = [[NSMutableArray alloc] init];
+    mPovElements = [[NSMutableArray alloc] init];
     
     return self;
 }
@@ -419,13 +494,15 @@
 //=========================================================== 
 - (void) dealloc
 {
-    [mStickElements release];
     [mXAxisElement release];
     [mYAxisElement release];
+    [mStickElements release];
+    [mPovElements release];
     
-    mStickElements = nil;
     mXAxisElement = nil;
     mYAxisElement = nil;
+    mStickElements = nil;
+    mPovElements = nil;
     [super dealloc];
 }
 
@@ -459,6 +536,10 @@
             [mStickElements addObject: element];
             break;
             
+        case kHIDUsage_GD_Hatswitch:
+            [mPovElements addObject: element];
+            break;
+            
         default:
             elementAdded = NO;
             
@@ -475,7 +556,18 @@
     if (mYAxisElement != nil)
         [elements addObject: mYAxisElement];
     [elements addObjectsFromArray: mStickElements];
+    [elements addObjectsFromArray: mPovElements];
     return elements;
+}
+
+- (DDHidElement *) xAxisElement;
+{
+    return mXAxisElement;
+}
+
+- (DDHidElement *) yAxisElement;
+{
+    return mYAxisElement;
 }
 
 #pragma mark -
@@ -491,14 +583,17 @@
     return [mStickElements objectAtIndex: index];
 }
 
-- (DDHidElement *) xAxisElement;
+#pragma mark -
+#pragma mark PovElements - indexed accessors
+
+- (unsigned int) countOfPovElements;
 {
-    return mXAxisElement;
+    return [mPovElements count];
 }
 
-- (DDHidElement *) yAxisElement;
+- (DDHidElement *) objectInPovElementsAtIndex: (unsigned int)index;
 {
-    return mYAxisElement;
+    return [mPovElements objectAtIndex: index];
 }
 
 - (NSString *) description;

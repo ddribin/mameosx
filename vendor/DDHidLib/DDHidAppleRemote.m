@@ -47,8 +47,8 @@
 
 + (NSArray *) allRemotes;
 {
-    CFMutableDictionaryRef hidMatchDictionary = NULL;
-	hidMatchDictionary = IOServiceMatching("AppleIRController");
+    CFMutableDictionaryRef hidMatchDictionary =
+        IOServiceMatching("AppleIRController");
     
     return
         [DDHidDevice allDevicesMatchingCFDictionary: hidMatchDictionary

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007 Dave Dribin
+ * Copyright (c) 2007 Dave Dribin, Lucas Newman
  * 
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -23,48 +23,52 @@
  */
 
 #import <Cocoa/Cocoa.h>
-#include <IOKit/hid/IOHIDLib.h>
+#import "DDHidDevice.h"
 
 @class DDHidElement;
-@class DDHidEvent;
+@class DDHidQueue;
 
-@interface DDHidQueue : NSObject
+@interface DDHidKeyboardBarcodeScanner : DDHidDevice
 {
-    IOHIDQueueInterface ** mQueue;
-    NSRunLoop * mRunLoop;
-    BOOL mStarted;
+    NSMutableArray * mKeyElements;
+    
+    NSMutableString * mAccumulatedDigits;
+    NSTimer *mBarcodeInputTimer;
+    BOOL mIsLikelyKeyboardBarcodeScanner;
     
     id mDelegate;
-    CFRunLoopSourceRef mEventSource;
 }
 
-- (id) initWithHIDQueue: (IOHIDQueueInterface **) queue
-                   size: (unsigned) size;
++ (NSArray *) allPossibleKeyboardBarcodeScanners;
 
-- (void) addElement: (DDHidElement *) element;
+- (id) initWithDevice: (io_object_t) device error: (NSError **) error_;
 
-- (void) addElements: (NSArray *) elements;
+#pragma mark -
+#pragma mark Keyboard Elements
 
-- (void) addElements: (NSArray *) elements recursively: (BOOL) recursively;
+- (NSArray *) keyElements;
+
+- (unsigned) numberOfKeys;
+
+- (void) addElementsToQueue: (DDHidQueue *) queue;
+
+#pragma mark -
+#pragma mark Asynchronous Notification
 
 - (void) setDelegate: (id) delegate;
 
-- (void) startOnCurrentRunLoop;
+- (void) addElementsToDefaultQueue;
 
-- (void) startOnRunLoop: (NSRunLoop *) runLoop;
+#pragma mark -
+#pragma mark Properties
 
-- (void) stop;
-
-- (BOOL) isStarted;
-
-- (BOOL) getNextEvent: (IOHIDEventStruct *) event;
-
-- (DDHidEvent *) nextEvent;
+- (BOOL) isLikelyKeyboardBarcodeScanner;
 
 @end
 
-@interface NSObject (DDHidQueueDelegate)
+@interface NSObject (DDHidKeyboardBarcodeScannerDelegate)
 
-- (void) ddhidQueueHasEvents: (DDHidQueue *) hidQueue;
+- (void) ddhidKeyboardBarcodeScanner: (DDHidKeyboardBarcodeScanner *) keyboardBarcodeScanner
+                          gotBarcode: (NSString *) barcode;
 
 @end

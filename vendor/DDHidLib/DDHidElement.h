@@ -31,7 +31,7 @@
 {
     NSDictionary * mProperties;
     DDHidUsage * mUsage;
-    DDHidElement * mChildren;
+    NSArray * mElements;
 }
 
 + (NSArray *) elementsWithPropertiesArray: (NSArray *) propertiesArray;
@@ -51,6 +51,7 @@
 
 - (NSArray *) elements;
 - (DDHidUsage *) usage;
+- (NSString *) name;
 - (BOOL) hasNullState;
 - (BOOL) hasPreferredState;
 - (BOOL) isArray;

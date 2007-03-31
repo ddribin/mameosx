@@ -72,11 +72,18 @@ static void queueCallbackFunction(void* target,  IOReturn result, void* refcon,
 
 - (void) addElements: (NSArray *) elements;
 {
+    return [self addElements: elements recursively: NO];
+}
+
+- (void) addElements: (NSArray *) elements recursively: (BOOL) recursively;
+{
     NSEnumerator * e = [elements objectEnumerator];
     DDHidElement * element;
     while (element = [e nextObject])
     {
         [self addElement: element];
+        if (recursively)
+            [self addElements: [element elements]];
     }
 }
 

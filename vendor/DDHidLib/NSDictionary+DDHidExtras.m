@@ -35,7 +35,7 @@
 
 - (id) ddhid_objectForString: (const char *) key;
 {
-    NSString * objcKey = [NSString stringWithCString: key];
+    NSString * objcKey = [NSString stringWithUTF8String: key];
     return [self objectForKey: objcKey];
 }
 
@@ -68,7 +68,7 @@
 
 - (void) ddhid_setObject: (id) object forString: (const char *) key;
 {
-    NSString * objcKey = [NSString stringWithCString: key];
+    NSString * objcKey = [NSString stringWithUTF8String: key];
     [self setObject: object forKey: objcKey];
 }
 
