@@ -1139,6 +1139,7 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     if (mMouseCursorIsHidden)
         return;
     
+    [[self window] makeKeyAndOrderFront: self];
     [NSCursor hide];
     CGAssociateMouseAndMouseCursorPosition(NO);
     
