@@ -99,6 +99,7 @@ DRVLIBS = \
   $(MACHINE)/ds1302.o \
   $(MACHINE)/mspacman.o \
   $(MACHINE)/jumpshot.o \
+  $(MACHINE)//segacrpt.o \
   $(DRIVERS)/pacman.o \
   $(DRIVERS)/jrpacman.o \
   $(DRIVERS)/pengo.o \

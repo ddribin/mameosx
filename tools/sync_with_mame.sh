@@ -14,5 +14,5 @@ ${parse_make} --debug-cpu-sources | xargs ${set_finder_comment} osx-debug-cpu
 ${parse_make} --sound-sources | xargs ${set_finder_comment} osx-sound
 ${parse_make} --driver-sources | xargs ${set_finder_comment} osx-driver
 
- ${parse_make} --tiny --cpu-sources --debug-cpu-sources --sound-sources --driver-sources \
+${parse_make} --tiny --cpu-sources --sound-sources --driver-sources \
 	| xargs ${append_finder_comment} osx-tiny
