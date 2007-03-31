@@ -6,6 +6,8 @@
     - Mouse is no longer grabbed at startup.
     - Add preference to grab mouse at startup.
     - Add keyboard shortcut to grab/ungrab mouse during game.
+    - Map Page Down to Fast Forward.
+    - Support for other joysticks axes and point of view hat switches.
 
 <% version = "0.112-1" %>
 - version: "<%=version%>"

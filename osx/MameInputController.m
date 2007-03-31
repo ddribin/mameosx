@@ -34,6 +34,7 @@ typedef struct
 {
     int axes[MAX_AXES];
     int buttons[MAX_BUTTONS];
+    int povs[MAX_POV];
 } JoystickState;
 
 typedef struct
@@ -237,7 +238,27 @@ static NSString * format(NSString * format, ...);
             if (value > ANALOG_VALUE_MAX)
                 value = ANALOG_VALUE_MAX;
             break;
-
+            
+        // anywhere from 0-45 (315) deg to 0+45 (45) deg
+        case CODETYPE_POV_UP:
+            value = p->mJoystickStates[joynum].povs[joyindex];
+            return (value != -1 && (value >= 31500 || value <= 4500));
+            
+        // anywhere from 90-45 (45) deg to 90+45 (135) deg
+        case CODETYPE_POV_RIGHT:
+            value = p->mJoystickStates[joynum].povs[joyindex];
+            return (value != -1 && (value >= 4500 && value <= 13500));
+            
+        // anywhere from 180-45 (135) deg to 180+45 (225) deg
+        case CODETYPE_POV_DOWN:
+            value = p->mJoystickStates[joynum].povs[joyindex];
+            return (value != -1 && (value >= 13500 && value <= 22500));
+            
+        // anywhere from 270-45 (225) deg to 270+45 (315) deg
+        case CODETYPE_POV_LEFT:
+            value = p->mJoystickStates[joynum].povs[joyindex];
+            return (value != -1 && (value >= 22500 && value <= 31500));
+            
         case CODETYPE_MOUSEAXIS:
             if (joyindex == 0)
             {
@@ -474,6 +495,48 @@ static NSString * format(NSString * format, ...);
             [self add_joylist_entry: name
                                code: JOYCODE(joystickNumber, CODETYPE_JOYAXIS, 1)
                          input_code: CODE_OTHER_ANALOG_ABSOLUTE];
+            
+            int j;
+            for (j = 0; j < [stick countOfStickElements]; j++)
+            {
+                int axisNumber = j+2;
+                axis = [stick objectInStickElementsAtIndex: j];
+                name = format(@"J%d Axis %d -", joystickNumber+1, axisNumber+1);
+                [self add_joylist_entry: name
+                                   code: JOYCODE(joystickNumber, CODETYPE_AXIS_NEG, axisNumber)
+                             input_code: CODE_OTHER_DIGITAL];
+                name = format(@"J%d Axis %d +", joystickNumber+1, axisNumber+1);
+                [self add_joylist_entry: name
+                                   code: JOYCODE(joystickNumber, CODETYPE_AXIS_POS, axisNumber)
+
+                             input_code: CODE_OTHER_DIGITAL];
+                name = format(@"J%d Axis %d", joystickNumber+1, axisNumber+1);
+                [self add_joylist_entry: name
+                                   code: JOYCODE(joystickNumber, CODETYPE_JOYAXIS, axisNumber)
+                             input_code: CODE_OTHER_ANALOG_ABSOLUTE];
+            }
+            
+            for (j = 0; j < [stick countOfPovElements]; j++)
+            {
+                DDHidElement * pov = [stick objectInPovElementsAtIndex: j];
+                name = format(@"J%d Hat Switch U", joystickNumber+1);
+                [self add_joylist_entry: name
+                                   code: JOYCODE(joystickNumber, CODETYPE_POV_UP, j)
+                             input_code: CODE_OTHER_DIGITAL];
+                name = format(@"J%d Hat Switch D", joystickNumber+1);
+                [self add_joylist_entry: name
+                                   code: JOYCODE(joystickNumber, CODETYPE_POV_DOWN, j)
+                    
+                             input_code: CODE_OTHER_DIGITAL];
+                name = format(@"J%d Hat Switch L", joystickNumber+1);
+                [self add_joylist_entry: name
+                                   code: JOYCODE(joystickNumber, CODETYPE_POV_LEFT, j)
+                             input_code: CODE_OTHER_DIGITAL];
+                name = format(@"J%d Hat Switch R", joystickNumber+1);
+                [self add_joylist_entry: name
+                                   code: JOYCODE(joystickNumber, CODETYPE_POV_RIGHT, j)
+                             input_code: CODE_OTHER_DIGITAL];
+            }
         }
         
         int buttonCount = MIN([buttons count], MAX_BUTTONS);
@@ -571,6 +634,24 @@ static NSString * format(NSString * format, ...);
 
 {
     p->mJoystickStates[[joystick tag]].axes[1] = value;
+}
+
+- (void) ddhidJoystick: (DDHidJoystick *) joystick
+                 stick: (unsigned) stick
+             otherAxis: (unsigned) otherAxis
+          valueChanged: (int) value;
+{
+    int axisNumber = otherAxis+2;
+    p->mJoystickStates[[joystick tag]].axes[axisNumber] = value;
+}
+
+
+- (void) ddhidJoystick: (DDHidJoystick *) joystick
+                 stick: (unsigned) stick
+            povElement: (unsigned) povElement
+          valueChanged: (int) value;
+{
+    p->mJoystickStates[[joystick tag]].povs[povElement] = value;
 }
 
 - (void) ddhidJoystick: (DDHidJoystick *) joystick
