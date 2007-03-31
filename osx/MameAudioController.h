@@ -55,7 +55,7 @@
     BOOL mInitialBufferThresholdReached;
 
     unsigned mBytesPerFrame;
-    int mLowWaterMarker;
+    int mInitialBufferThreshold;
     int mSamplesThisFrame;
 
     uint64_t mOverflows;

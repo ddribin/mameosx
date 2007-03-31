@@ -288,12 +288,13 @@ OSStatus static MyRenderer(void	* inRefCon,
     
     // compute the buffer sizes
     mBufferSize = streamFormat.mSampleRate * streamFormat.mBytesPerFrame;
+    mBufferSize = mBufferSize * 1/10;
     
     mRingBuffer = [[VirtualRingBuffer alloc] initWithLength: mBufferSize];
     mBufferSize = [mRingBuffer bufferLength];
     mInitialBufferThresholdReached = NO;
     
-    mLowWaterMarker = mBufferSize * 15/100;
+    mInitialBufferThreshold = mBufferSize / 4;
     
     [mRingBuffer empty];
 	// Start the rendering
@@ -423,7 +424,7 @@ OSStatus static MyRenderer(void	* inRefCon,
         return noErr;
     }
 
-    if (!mInitialBufferThresholdReached && (bytesInBuffer < mLowWaterMarker))
+    if (!mInitialBufferThresholdReached && (bytesInBuffer < mInitialBufferThreshold))
     {
         bzero(ioData->mBuffers[0].mData,
               ioData->mBuffers[0].mDataByteSize);
