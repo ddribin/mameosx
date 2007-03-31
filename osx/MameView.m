@@ -530,7 +530,7 @@ NSString * MameExitStatusKey = @"MameExitStatus";
                    size: NSIntegralRect([self bounds]).size];
     
     [self startAnimation];
-    [self updateMouseCursor];
+    [self setShouldHideMouseCursor: NO];
     
     return 0;
 }
@@ -746,6 +746,20 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     {
         [mTimingController setThrottled: flag];
     }
+}
+
+//=========================================================== 
+//  shouldHideMouseCursor 
+//=========================================================== 
+- (BOOL) shouldHideMouseCursor
+{
+    return mShouldHideMouseCursor;
+}
+
+- (void) setShouldHideMouseCursor: (BOOL) flag
+{
+    mShouldHideMouseCursor = flag;
+    [self updateMouseCursor];
 }
 
 #pragma mark -
@@ -1108,7 +1122,7 @@ NSString * MameExitStatusKey = @"MameExitStatus";
 
 - (void) updateMouseCursor;
 {
-    BOOL hideCursor = (mMameIsRunning && !mMameIsPaused);
+    BOOL hideCursor = (mMameIsRunning && !mMameIsPaused && mShouldHideMouseCursor);
     SEL selector;
     if (hideCursor)
         selector = @selector(hideMouseCursor);

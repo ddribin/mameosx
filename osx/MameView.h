@@ -92,6 +92,7 @@ typedef enum _MameFullScreenZoom
     BOOL mMameIsRunning;
     BOOL mMameIsPaused;
     BOOL mMouseCursorIsHidden;
+    BOOL mShouldHideMouseCursor;
     NSLock * mMameLock;
     NSAutoreleasePool * mMamePool;
 
@@ -150,6 +151,9 @@ typedef enum _MameFullScreenZoom
 
 - (BOOL) throttled;
 - (void) setThrottled: (BOOL) flag;
+
+- (BOOL) shouldHideMouseCursor;
+- (void) setShouldHideMouseCursor: (BOOL) flag;
 
 #pragma mark -
 #pragma mark Audio
