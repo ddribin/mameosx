@@ -73,7 +73,6 @@
 		553A07320AFDA09900531E1F /* MameFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 553A07310AFDA09900531E1F /* MameFilter.m */; };
 		553A09B10AFF11B300531E1F /* CustomMameFilters.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 553A09AE0AFF11B300531E1F /* CustomMameFilters.h */; };
 		553A09BD0AFF12BA00531E1F /* MameFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = 553A072E0AFD9E2700531E1F /* MameFilter.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		553BF54D0B4F933C0067EA3B /* libcoredebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55C60C660B4F8B3500BF103D /* libcoredebug.a */; };
 		5548ECDF0ABCB463008D1F74 /* MameFileManagerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5548ECDE0ABCB463008D1F74 /* MameFileManagerTest.m */; };
 		5548EDCB0ABE3CEF008D1F74 /* file.txt in Resources */ = {isa = PBXBuildFile; fileRef = 5548EDCA0ABE3CEF008D1F74 /* file.txt */; };
 		554933B40B993F1F000EF4A3 /* MameInputTables.h in Headers */ = {isa = PBXBuildFile; fileRef = 554933B30B993F1E000EF4A3 /* MameInputTables.h */; };
@@ -5926,7 +5925,6 @@
 				55BEF9E80AEC612600357340 /* libsound.a in Frameworks */,
 				55BEF9C40AEC5F2F00357340 /* libcore.a in Frameworks */,
 				55BEF9E90AEC612600357340 /* libcpu.a in Frameworks */,
-				553BF54D0B4F933C0067EA3B /* libcoredebug.a in Frameworks */,
 				55BEFA530AEC63E300357340 /* libosd.a in Frameworks */,
 				5567B80E0BBB6E0600EA2072 /* libutil.a in Frameworks */,
 				55BEF9C50AEC5F3500357340 /* liblocalexpat.a in Frameworks */,
