@@ -45,13 +45,21 @@ static inline void releasePool(NSAutoreleasePool * pool)
     [pool release];
 }
 
+static BOOL sInApp = NO;
 static BOOL sInitialized = NO;
+
+void osx_osd_core_set_in_app(BOOL in_app)
+{
+    sInApp = in_app;
+}
 
 void osx_osd_core_init(void)
 {
     if (!sInitialized)
     {
-        [NSObject setDefaultJRLogLevel: JRLogLevel_Error];
+        // There's no bundle/Info.plist to set the default log level
+        if (!sInApp)
+            [NSObject setDefaultJRLogLevel: JRLogLevel_Error];
         sInitialized = YES;
     }
 }

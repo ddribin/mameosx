@@ -23,8 +23,10 @@
  */
 
 #import <Cocoa/Cocoa.h>
+#import "osd_osx.h"
 
 int main(int argc, char *argv[])
 {
+    osx_osd_core_set_in_app(YES);
     return NSApplicationMain(argc,  (const char **) argv);
 }

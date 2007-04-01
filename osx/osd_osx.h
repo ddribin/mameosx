@@ -38,6 +38,7 @@ void osd_set_audio_controller(MameAudioController * audioController);
 void osd_set_timing_controller(MameTimingController * timingController);
 void osd_set_file_manager(MameFileManager * fileManager);
 
+void osx_osd_core_set_in_app(BOOL in_app);
 void osx_osd_core_init(void);
 void osx_osd_set_use_autorelease(BOOL use_autorelease);
 
