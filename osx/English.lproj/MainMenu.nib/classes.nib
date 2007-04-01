@@ -30,7 +30,6 @@
             OUTLETS = {
                 mDrawer = NSDrawer; 
                 mEffectsMenu = NSMenu; 
-                mFilterButton = NSPopUpButton; 
                 mGameTextField = NSComboBox; 
                 mMameLogPanel = NSPanel; 
                 mMameLogView = NSTextView; 

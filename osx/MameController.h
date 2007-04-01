@@ -46,7 +46,6 @@ extern "C" {
 @interface MameController : NSObject <JRLogLogger>
 {
     IBOutlet MameView * mMameView;
-    IBOutlet NSPopUpButton * mFilterButton;
     IBOutlet NSDrawer * mDrawer;
     IBOutlet NSWindow * mOpenPanel;
     IBOutlet NSComboBox * mGameTextField;
@@ -68,7 +67,7 @@ extern "C" {
     
     NSMutableArray * mEffectNames;
     NSMutableDictionary * mEffectPathsByName;
-    BOOL mIsFiltered;
+    BOOL mVisualEffectEnabled;
     int mCurrentEffectIndex;
 
     NSString * mGameName;
@@ -88,8 +87,8 @@ extern "C" {
 
 - (MameView *) mameView;
 
-- (BOOL) isFiltered;
-- (void) setIsFiltered: (BOOL) flag;
+- (BOOL) visualEffectEnabled;
+- (void) setVisualEffectEnabled: (BOOL) flag;
 
 - (int) currentEffectIndex;
 - (void) setCurrentEffectIndex: (int) currentEffectIndex;

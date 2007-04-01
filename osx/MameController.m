@@ -119,7 +119,7 @@ static void exit_sleeper()
     [mMameView setDelegate: self];
 
     [self initVisualEffectsMenu];
-    [self setIsFiltered: NO];
+    [self setVisualEffectEnabled: NO];
     [self setCurrentEffectIndex: 0];
    
     [self setGameLoading: NO];
@@ -237,7 +237,7 @@ static void exit_sleeper()
 
 - (void) updateEffect;
 {
-    if (!mIsFiltered)
+    if (!mVisualEffectEnabled)
     {
         [mMameView setQuartzComposerFile: nil];
         return;
@@ -258,16 +258,19 @@ static void exit_sleeper()
 }
 
 //=========================================================== 
-//  isFiltered 
+// - visualEffectEnabled
 //=========================================================== 
-- (BOOL) isFiltered
+- (BOOL) visualEffectEnabled
 {
-    return mIsFiltered;
+    return mVisualEffectEnabled;
 }
 
-- (void) setIsFiltered: (BOOL) flag
+//=========================================================== 
+// - setVisualEffectEnabled:
+//=========================================================== 
+- (void) setVisualEffectEnabled: (BOOL) flag
 {
-    mIsFiltered = flag;
+    mVisualEffectEnabled = flag;
     [self updateEffect];
 }
 
