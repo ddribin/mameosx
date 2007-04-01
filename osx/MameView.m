@@ -1300,10 +1300,10 @@ NSString * MameExitStatusKey = @"MameExitStatus";
 
 - (NSRect) centerNSSize: (NSSize) size withinRect: (NSRect) rect;
 {
-    rect.origin.x = (rect.size.width - size.width) / 2;
-    rect.origin.y = (rect.size.height - size.height) / 2;
+    rect.origin.x = roundf((rect.size.width - size.width) / 2);
+    rect.origin.y = roundf((rect.size.height - size.height) / 2);
     rect.size = size;
-    return NSIntegralRect(rect);
+    return rect;
 }
 
 - (void) drawFrame;
