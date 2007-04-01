@@ -7,12 +7,11 @@
                 auditRoms = id; 
                 cancelOpenPanel = id; 
                 clearLogWindow = id; 
-                effectsMenuChanged = id; 
                 endOpenPanel = id; 
                 hideOpenPanel = id; 
-                nextFilter = id; 
+                nextVisualEffect = id; 
                 nullAction = id; 
-                previousFilter = id; 
+                previousVisualEffects = id; 
                 raiseOpenPanel = id; 
                 resizeToActualSize = id; 
                 resizeToDoubleSize = id; 
@@ -24,6 +23,7 @@
                 showPreferencesPanel = id; 
                 showReleaseNotes = id; 
                 togglePause = id; 
+                visualEffectsMenuChanged = id; 
             }; 
             CLASS = MameController; 
             LANGUAGE = ObjC; 

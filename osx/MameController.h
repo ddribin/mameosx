@@ -40,7 +40,6 @@ extern "C" {
 @class PreferencesWindowController;
 @class MameView;
 @class MameConfiguration;
-@class MameFilter;
 @class VersionChecker;
 @class AudioEffectWindowController;
 
@@ -67,10 +66,10 @@ extern "C" {
 
     BOOL mMameIsRunning;
     
-    NSMutableArray * mFilters;
+    NSMutableArray * mEffectNames;
+    NSMutableDictionary * mEffectPathsByName;
     BOOL mIsFiltered;
-    int mCurrentFilterIndex;
-    NSMutableDictionary * mEffects;
+    int mCurrentEffectIndex;
 
     NSString * mGameName;
     NSString * mLoadingMessage;
@@ -92,14 +91,14 @@ extern "C" {
 - (BOOL) isFiltered;
 - (void) setIsFiltered: (BOOL) flag;
 
-- (int) currentFilterIndex;
-- (void) setCurrentFilterIndex: (int) currentFilterIndex;
+- (int) currentEffectIndex;
+- (void) setCurrentEffectIndex: (int) currentEffectIndex;
 
-- (NSArray *) effects;
+- (NSArray *) visualEffectNames;
 
-- (IBAction) nextFilter: (id) sender;
-- (IBAction) previousFilter: (id) sender;
-- (IBAction) effectsMenuChanged: (id) sender;
+- (IBAction) nextVisualEffect: (id) sender;
+- (IBAction) previousVisualEffects: (id) sender;
+- (IBAction) visualEffectsMenuChanged: (id) sender;
 
 - (BOOL) throttled;
 - (void) setThrottled: (BOOL) flag;

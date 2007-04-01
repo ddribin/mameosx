@@ -26,7 +26,6 @@
 #import <OpenGL/OpenGL.h>
 #import <OpenGL/gl.h>
 #import <MameKit/MameKit.h>
-#import "CustomMameFilters.h"
 #import "MameConfiguration.h"
 #import "VersionChecker.h"
 #import "PreferencesWindowController.h"
@@ -51,8 +50,8 @@ static const int kMameMaxGamesInHistory = 100;
 - (void) setFrameSize: (NSSize) newFrameSize;
 - (void) setViewSize: (NSSize) viewSize;
 - (void) setSizeFromPrefereneces;
-- (EffectFilter *) effectNamed: (NSString *) effectName;
-- (void) initFilters;
+- (void) initVisualEffects;
+- (void) initVisualEffectsMenu;
 
 - (NSSize) constrainFrameToAspectRatio: (NSSize) size;
 - (NSSize) constrainFrameToIntegralNaturalSize: (NSSize) size;
@@ -104,7 +103,7 @@ static void exit_sleeper()
     [self registerForUrls];
    
     mConfiguration = [[MameConfiguration alloc] init];
-    [self initFilters];
+    [self initVisualEffects];
     
     [self initLogAttributes];
 
@@ -119,8 +118,9 @@ static void exit_sleeper()
 {
     [mMameView setDelegate: self];
 
+    [self initVisualEffectsMenu];
     [self setIsFiltered: NO];
-    [self setCurrentFilterIndex: 0];
+    [self setCurrentEffectIndex: 0];
    
     [self setGameLoading: NO];
     [self setGameRunning: NO];
@@ -243,8 +243,8 @@ static void exit_sleeper()
         return;
     }
     
-    NSString * effectName = [mFilters objectAtIndex: mCurrentFilterIndex];
-    NSString * effectPath = [mEffects objectForKey: effectName];
+    NSString * effectName = [mEffectNames objectAtIndex: mCurrentEffectIndex];
+    NSString * effectPath = [mEffectPathsByName objectForKey: effectName];
     if (effectPath != nil)
     {
         if ([[effectPath pathExtension] isEqualToString: @"qtz"])
@@ -268,59 +268,52 @@ static void exit_sleeper()
 - (void) setIsFiltered: (BOOL) flag
 {
     mIsFiltered = flag;
-#if 0
-    if (mIsFiltered)
-        [mMameView setFilter: [mFilters objectAtIndex: mCurrentFilterIndex]];
-    else
-        [mMameView setFilter: nil];
-#else
     [self updateEffect];
-#endif
 }
 
-- (NSArray *) effects;
+- (NSArray *) visualEffectNames;
 {
-    return mFilters;
+    return mEffectNames;
 }
 
-- (int) currentFilterIndex;
+- (int) currentEffectIndex;
 {
-    return mCurrentFilterIndex;
+    return mCurrentEffectIndex;
 }
 
-- (void) setCurrentFilterIndex: (int) currentFilterIndex;
+- (void) setCurrentEffectIndex: (int) currentEffectIndex;
 {
-    if (currentFilterIndex >= [mFilters count])
+    if (currentEffectIndex >= [mEffectNames count])
         return;
     
-    NSMenuItem * item = [mEffectsMenu itemAtIndex: mCurrentFilterIndex];
+    NSMenuItem * item = [mEffectsMenu itemAtIndex: mCurrentEffectIndex];
     [item setState: NO];
 
-    mCurrentFilterIndex = currentFilterIndex;
+    mCurrentEffectIndex = currentEffectIndex;
     [self updateEffect];
     
-    item = [mEffectsMenu itemAtIndex: mCurrentFilterIndex];
+    item = [mEffectsMenu itemAtIndex: mCurrentEffectIndex];
     [item setState: YES];
 }
 
-- (IBAction) nextFilter: (id) sender;
+- (IBAction) nextVisualEffect: (id) sender;
 {
-    int nextFilter = mCurrentFilterIndex + 1;
-    if (nextFilter < [mFilters count])
-        [self setCurrentFilterIndex: nextFilter];
+    int nextEffect = mCurrentEffectIndex + 1;
+    if (nextEffect < [mEffectNames count])
+        [self setCurrentEffectIndex: nextEffect];
 }
 
-- (IBAction) previousFilter: (id) sender;
+- (IBAction) previousVisualEffects: (id) sender;
 {
-    int nextFilter = mCurrentFilterIndex - 1;
-    if (nextFilter >= 0)
-        [self setCurrentFilterIndex: nextFilter];
+    int nextEffect = mCurrentEffectIndex - 1;
+    if (nextEffect >= 0)
+        [self setCurrentEffectIndex: nextEffect];
 }        
 
-- (IBAction) effectsMenuChanged: (id) sender;
+- (IBAction) visualEffectsMenuChanged: (id) sender;
 {
-    int filterIndex = [mEffectsMenu indexOfItem: sender];
-    [self setCurrentFilterIndex: filterIndex];
+    int effectIndex = [mEffectsMenu indexOfItem: sender];
+    [self setCurrentEffectIndex: effectIndex];
 }
 
 - (IBAction) togglePause: (id) sender;
@@ -839,70 +832,10 @@ static void exit_sleeper()
         [self resizeToMaximumIntegralSize: nil];
     }
 }
-
-- (EffectFilter *) effectNamed: (NSString *) effectName;
+- (void) initVisualEffects;
 {
-    NSBundle * myBundle = [NSBundle bundleForClass: [self class]];
-    NSString * path = [myBundle pathForResource: effectName
-                                         ofType: @"png"
-                                    inDirectory: @"effects"];
-    return [EffectFilter effectWithPath: path];
-}
-
-- (void) initFilters;
-{
-    mFilters = [[NSMutableArray alloc] init];
+    mEffectPathsByName = [[NSMutableDictionary alloc] init];
     
-    MameFilter * mameFilter;
-        
-    [mFilters addObject: [self effectNamed: @"scanlines32x2"]];
-    [mFilters addObject: [self effectNamed: @"aperture1x2rb"]];
-    [mFilters addObject: [self effectNamed: @"aperture1x3rb"]];
-    [mFilters addObject: [self effectNamed: @"aperture2x4rb"]];
-    [mFilters addObject: [self effectNamed: @"aperture2x4bg"]];
-    [mFilters addObject: [self effectNamed: @"aperture4x6"]];
-
-    CIFilter * filter;
-    
-    filter = [CIFilter filterWithName: @"CIGaussianBlur"];
-    [filter setDefaults];
-    [filter setValue: [NSNumber numberWithFloat: 3]  
-              forKey: @"inputRadius"];
-    [mFilters addObject: [MameFilter filterWithFilter: filter]];
-    
-    filter = [CIFilter filterWithName: @"CIZoomBlur"];
-    [filter setDefaults];
-    [filter setValue: [NSNumber numberWithFloat: 10]
-              forKey: @"inputAmount"];
-    [mFilters addObject: [MameInputCenterFilter filterWithFilter: filter]];
-
-    [mFilters addObject: [MameBumpDistortionFilter filter]];
-
-    filter = [CIFilter filterWithName:@"CICrystallize"];
-    [filter setDefaults];
-    [filter setValue: [NSNumber numberWithFloat: 3]
-             forKey: @"inputRadius"];
-    [mFilters addObject: [MameInputCenterFilter filterWithFilter: filter]];
-
-    filter = [CIFilter filterWithName:@"CIPerspectiveTile"];
-    [filter setDefaults];
-    [mFilters addObject: [MameFilter filterWithFilter: filter]];
-    
-    filter = [CIFilter filterWithName:@"CIBloom"];
-    [filter setDefaults];
-    [filter setValue: [NSNumber numberWithFloat: 1.5f]
-              forKey: @"inputIntensity"];
-    [mFilters addObject: [MameFilter filterWithFilter: filter]];
-    
-    filter = [CIFilter filterWithName:@"CIEdges"];
-    [filter setDefaults];
-    [filter setValue: [NSNumber numberWithFloat: 5]  
-              forKey: @"inputIntensity"];
-    [mFilters addObject: [MameFilter filterWithFilter: filter]];
-    
-    [mFilters release];
-    
-    mEffects = [[NSMutableDictionary alloc] init];
     NSBundle * myBundle = [NSBundle mainBundle];
     NSString * bundleEffects = [[myBundle resourcePath]
         stringByAppendingPathComponent: @"Effects"];
@@ -915,20 +848,33 @@ static void exit_sleeper()
     while (path = [e nextObject])
     {
         NSArray * paths = [fileManager directoryContentsAtPath: path];
-        NSArray * effects = [paths pathsMatchingExtensions: [NSArray arrayWithObjects: @"png", @"qtz", nil]];
+        NSArray * extensions = [NSArray arrayWithObjects: @"png", @"qtz", nil];
+        NSArray * effects = [paths pathsMatchingExtensions: extensions];
         NSEnumerator * f = [effects objectEnumerator];
         NSString * effect;
         while (effect = [f nextObject])
         {
             NSString * name = [effect stringByDeletingPathExtension];
             NSString * fullPath = [path stringByAppendingPathComponent: effect];
-            [mEffects setValue: fullPath forKey: name];
+            [mEffectPathsByName setValue: fullPath forKey: name];
         }
     }
     
-    NSArray * names = [mEffects allKeys];
+    NSArray * names = [mEffectPathsByName allKeys];
     names = [names sortedArrayUsingSelector: @selector(caseInsensitiveCompare:)];
-    mFilters = [names retain];
+    mEffectNames = [names retain];
+}
+
+- (void) initVisualEffectsMenu;
+{
+    NSEnumerator * e = [mEffectNames objectEnumerator];
+    NSString * name;
+    while (name = [e nextObject])
+    {
+        [mEffectsMenu addItemWithTitle: name
+                                action: @selector(visualEffectsMenuChanged:)
+                         keyEquivalent: @""];
+    }
 }
 
 - (NSSize) constrainFrameToAspectRatio: (NSSize) size;
