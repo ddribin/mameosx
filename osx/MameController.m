@@ -217,7 +217,10 @@ static void exit_sleeper()
 - (IBAction) showPreferencesPanel: (id) sender;
 {
     if (mPreferencesController == nil)
-        mPreferencesController = [[PreferencesWindowController alloc] init];
+    {
+        mPreferencesController = [[PreferencesWindowController alloc]
+            initWithMameController: self];
+    }
     
     NSWindow * window = [mPreferencesController window];
     if (![window isVisible])
@@ -297,6 +300,18 @@ static void exit_sleeper()
     
     item = [mEffectsMenu itemAtIndex: mCurrentEffectIndex];
     [item setState: YES];
+}
+
+- (void) setCurrentVisualEffectName: (NSString *) effectName;
+{
+    unsigned index = [mEffectNames indexOfObject: effectName];
+    if (index != NSNotFound)
+    {
+        [self setCurrentEffectIndex: index];
+        [self setVisualEffectEnabled: YES];
+    }
+    else
+        [self setVisualEffectEnabled: NO];
 }
 
 - (IBAction) nextVisualEffect: (id) sender;
@@ -741,6 +756,7 @@ static void exit_sleeper()
     [self setThrottled: [preferences throttled]];
     [self setSyncToRefresh: [preferences syncToRefresh]];
     [self setLinearFilter: [preferences linearFilter]];
+    [self setCurrentVisualEffectName: [preferences visualEffect]];
 
     [mMameView setAudioEnabled: [preferences soundEnabled]];
     

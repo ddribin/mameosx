@@ -93,6 +93,8 @@ extern "C" {
 - (int) currentEffectIndex;
 - (void) setCurrentEffectIndex: (int) currentEffectIndex;
 
+- (void) setCurrentVisualEffectName: (NSString *) effectName;
+
 - (NSArray *) visualEffectNames;
 
 - (IBAction) nextVisualEffect: (id) sender;

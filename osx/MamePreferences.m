@@ -70,6 +70,7 @@ NSString * MameSyncToRefreshKey = @"SyncToRefresh";
 NSString * MameSoundEnabledKey = @"SoundEnabled";
 NSString * MameClearToRedKey = @"ClearToRed";
 NSString * MameLinearFilterKey = @"LinearFilter";
+NSString * MameVisualEffectKey = @"VisualEffect";
 NSString * MameSmoothFontKey = @"SmoothFont";
 NSString * MameGrabMouseKey = @"GrabMouse";
 
@@ -385,6 +386,16 @@ NSString * MameBiosKey = @"Bios";
 - (void) setLinearFilter: (BOOL) linearFilter;
 {
     [mDefaults setBool: linearFilter forKey: MameLinearFilterKey];
+}
+
+- (NSString *) visualEffect;
+{
+    return [mDefaults stringForKey: MameVisualEffectKey];
+}
+
+- (void) seVisualEffect: (NSString *) visualEffect;
+{
+    [mDefaults setObject: visualEffect forKey: MameVisualEffectKey];
 }
 
 - (BOOL) smoothFont;

@@ -24,6 +24,8 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class MameController;
+
 @interface PreferencesWindowController : NSWindowController
 {
     IBOutlet NSObjectController * mControllerAlias;
@@ -37,7 +39,10 @@
     NSArray * mRenderingThreadValues;
     NSArray * mFullScreenZoomValues;
     NSDictionary * mButtonsByKey;
+    MameController * mMameController;
 }
+
+- (id) initWithMameController: (MameController *) mameController;
 
 - (IBAction) chooseRomDirectory: (id) sender;
 - (IBAction) chooseDiskImageDirectory: (id) sender;
@@ -59,5 +64,7 @@
 
 - (unsigned) renderingThreadIndex;
 - (void) setRenderingThreadIndex: (unsigned) renderingThreadIndex;
+
+- (MameController *) mameController;
 
 @end

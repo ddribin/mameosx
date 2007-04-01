@@ -80,6 +80,9 @@
 - (BOOL) linearFilter;
 - (void) setLinearFilter: (BOOL) linearFilter;
 
+- (NSString *) visualEffect;
+- (void) seVisualEffect: (NSString *) visualEffect;
+
 - (BOOL) smoothFont;
 - (void) setSmoothFont: (BOOL) smoothFont;
 
@@ -243,6 +246,8 @@ extern NSString * MameSyncToRefreshKey;
 extern NSString * MameSoundEnabledKey;
 extern NSString * MameClearToRedKey;
 extern NSString * MameLinearFilterKey;
+extern NSString * MamVisualEffectEnabledKey;
+extern NSString * MameVisualEffectKey;
 extern NSString * MameSmoothFontKey;
 extern NSString * MameGrabMouseKey;
 

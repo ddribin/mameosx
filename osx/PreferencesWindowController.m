@@ -51,18 +51,15 @@ enum
 
 @implementation PreferencesWindowController
 
-- (NSDictionary *) name: (NSString *) name stringValue: (NSString *) value
-{
-    return [NSDictionary dictionaryWithObjectsAndKeys:
-        name, @"name", value, @"value", nil];
-}
-
-- (id) init
+- (id) initWithMameController: (MameController *) mameController;
 {
     self = [super initWithWindowNibName: @"Preferences"];
     if (self == nil)
         return nil;
     
+        // Don't retain to avoid a circular reference count
+    mMameController = mameController;
+
     mWindowedZoomLevels = [[NSArray alloc] initWithObjects:
         MameZoomLevelActual,
         MameZoomLevelDouble,
@@ -125,6 +122,11 @@ enum
     [super dealloc];
 }
 
+- (NSDictionary *) name: (NSString *) name stringValue: (NSString *) value
+{
+    return [NSDictionary dictionaryWithObjectsAndKeys:
+        name, @"name", value, @"value", nil];
+}
 
 - (int) logLevelIndex;
 {
@@ -298,6 +300,14 @@ enum
     [self didChangeValueForKey: @"fullScreenZoomLevelIndex"];
 
     [self updatePopUpButtons];
+}
+
+//=========================================================== 
+// - mameController
+//=========================================================== 
+- (MameController *) mameController
+{
+    return mMameController; 
 }
 
 @end
