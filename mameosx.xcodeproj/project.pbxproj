@@ -2687,6 +2687,8 @@
 		55F15B740BC01B6400366C65 /* MameEffectFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = 55F15B720BC01B6400366C65 /* MameEffectFilter.h */; };
 		55F15B750BC01B6400366C65 /* MameEffectFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F15B730BC01B6400366C65 /* MameEffectFilter.m */; };
 		55F15B850BC01D4D00366C65 /* MameEffect.cikernel in Resources */ = {isa = PBXBuildFile; fileRef = 55F15B840BC01D4D00366C65 /* MameEffect.cikernel */; };
+		55F15F9E0BC0556000366C65 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55F1582C0BBF955600366C65 /* Quartz.framework */; };
+		55F15FEE0BC0584C00366C65 /* MameEffect.cikernel in Resources */ = {isa = PBXBuildFile; fileRef = 55F15B840BC01D4D00366C65 /* MameEffect.cikernel */; };
 		55F4D7400B86B937001EED08 /* APPL.icns in Resources */ = {isa = PBXBuildFile; fileRef = 55F4D73F0B86B937001EED08 /* APPL.icns */; };
 		55F4D7410B86B937001EED08 /* APPL.icns in Resources */ = {isa = PBXBuildFile; fileRef = 55F4D73F0B86B937001EED08 /* APPL.icns */; };
 		55F4D7C20B86DAFC001EED08 /* manual in Resources */ = {isa = PBXBuildFile; fileRef = 55F4D7BD0B86DAFC001EED08 /* manual */; };
@@ -5963,6 +5965,7 @@
 				55C71A6F0B2AFD2E001FF0BE /* CoreAudioKit.framework in Frameworks */,
 				55D00BA20B2E8E4800F7961F /* IOKit.framework in Frameworks */,
 				5537F2FB0BBEE15D001A390F /* QuickTime.framework in Frameworks */,
+				55F15F9E0BC0556000366C65 /* Quartz.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9889,6 +9892,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55F15FEE0BC0584C00366C65 /* MameEffect.cikernel in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

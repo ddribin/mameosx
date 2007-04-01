@@ -106,6 +106,8 @@ NSString * MameExitStatusKey = @"MameExitStatus";
           triggerChangeNotificationsForDependentKey: @"audioEffectFactoryPresets"];
     [self setKeys: [NSArray arrayWithObject: @"indexOfCurrentEffect"]
           triggerChangeNotificationsForDependentKey: @"indexOfCurrentFactoryPreset"];
+    // Ensure our custom filter registers with the system
+    [MameEffectFilter class];
 }
 
 - (id) initWithFrame: (NSRect) frameRect
@@ -860,7 +862,6 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     if (theImageEffect != nil)
     {
         [self setQuartzComposerFile: nil clearImageEffect: NO];
-        [MameEffectFilter class];
         mFilter = [[CIFilter filterWithName: @"MameEffectFilter"] retain];
 
         NSURL * url = [NSURL fileURLWithPath: mImageEffect];
