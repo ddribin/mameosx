@@ -40,9 +40,9 @@
 
 #if MAME_EXPORT_MOVIE
 #import <QuickTime/QuickTime.h>
-#import "FrameReader.h"
-#import "FrameCompressor.h"
-#import "FrameMovieExporter.h"
+#import "exporter/FrameReader.h"
+#import "exporter/FrameCompressor.h"
+#import "exporter/FrameMovieExporter.h"
 #endif
 
 @interface MameView (Private)
