@@ -87,6 +87,7 @@ NSString * MameDiffPath = @"DiffPath";
 NSString * MameCtrlrPath = @"CtrlrPath";
 NSString * MameCommentPath = @"CommentPath";
 NSString * MameFontPath = @"FontPath";
+NSString * MameEffectPath = @"EffectPath";
 
 #ifdef MAME_DEBUG
 NSString * MameDebugKey = @"MameDebug";
@@ -512,6 +513,11 @@ NSString * MameBiosKey = @"Bios";
     return [mDefaults stringForKey: MameFontPath];
 }
 
+- (NSString *) effectPath;
+{
+    return [mDefaults stringForKey: MameEffectPath];
+}
+
 #pragma mark -
 
 #ifdef MAME_DEBUG
@@ -739,15 +745,15 @@ NSString * MameBiosKey = @"Bios";
     { MameSnapshotPath,     @"Screenshots" },
     { MameDiffPath,         @"Diffs" },
     { MameFontPath,         @"Fonts" },
+    { MameEffectPath,       @"Effects" },
     { 0, nil }
     };
 
     NSFileManager * fileManager = [NSFileManager defaultManager];
-    NSArray * paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
+    NSArray * paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
     NSAssert([paths count] > 0, @"Could not locate NSLibraryDirectory in user domain");
 
     NSString * baseDirectory = [paths objectAtIndex: 0];
-    baseDirectory = [baseDirectory stringByAppendingPathComponent: @"Application Support"];
     if (![fileManager fileExistsAtPath: baseDirectory])
         [fileManager createDirectoryAtPath: baseDirectory attributes: nil];
     baseDirectory = [baseDirectory stringByAppendingPathComponent: @"MAME OS X"];

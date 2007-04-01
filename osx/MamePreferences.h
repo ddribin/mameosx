@@ -131,6 +131,8 @@
 
 - (NSString *) fontPath;
 
+- (NSString *) effectPath;
+
 #pragma mark -
 
 #ifdef MAME_DEBUG
@@ -259,6 +261,7 @@ extern NSString * MameDiffPath;
 extern NSString * MameCtrlrPath;
 extern NSString * MameCommentPath;
 extern NSString * MameFontPath;
+extern NSString * MameEffectPath;
 
 #ifdef MAME_DEBUG
 extern NSString * MameDebugKey;

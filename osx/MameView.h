@@ -40,12 +40,13 @@
 @class MameFileManager;
 @class MameConfiguration;
 @class MameFilter;
+@class QCRenderer;
 
 typedef enum _MameFrameRenderingOption
 {
     MameRenderFrameInOpenGL,
     MameRenderFrameInCoreImage,
-    // MameRenderFrameInQCComposition,
+    MameRenderFrameInQCComposition,
 } MameFrameRenderingOption;
 
 typedef enum _MameFullScreenZoom
@@ -83,6 +84,9 @@ typedef enum _MameFullScreenZoom
     BOOL mKeepAspectRatio;
     BOOL mClearToRed;
     MameFullScreenZoom mFullScreenZoom;
+    QCRenderer * mWindowedQCRenderer;
+    QCRenderer * mFullScreenQCRenderer;
+    NSString * mQuartzComposerFile;
     
     MameInputController * mInputController;
     MameAudioController * mAudioController;
@@ -154,6 +158,10 @@ typedef enum _MameFullScreenZoom
 
 - (BOOL) shouldHideMouseCursor;
 - (void) setShouldHideMouseCursor: (BOOL) flag;
+
+- (NSString *) quartzComposerFile;
+- (void) setQuartzComposerFile: (NSString *) theQuartzComposerFile;
+
 
 #pragma mark -
 #pragma mark Audio

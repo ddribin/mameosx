@@ -33,6 +33,7 @@
 #import "MameFilter.h"
 #import "JRLog.h"
 #import "MameChud.h"
+#import <Quartz/Quartz.h>
 
 #define MAME_EXPORT_MOVIE 0
 
@@ -70,6 +71,11 @@
 - (void) drawFrame;
 - (void) drawFrameUsingCoreImage: (CVOpenGLTextureRef) frame
                           inRect: (NSRect) destRect;
+
+- (QCRenderer *) activeQCRenderer;
+- (void) drawFrameUsingQCRenderer: (CVOpenGLTextureRef) frame
+                           inRect: (NSRect) destRect;
+
 - (void) drawFrameUsingOpenGL: (CVOpenGLTextureRef) frame
                        inRect: (NSRect) destRect;
 - (void) updateVideo;
@@ -264,7 +270,7 @@ NSString * MameExitStatusKey = @"MameExitStatus";
 - (MameFrameRenderingOption) frameRenderingOptionDefault;
 {
     if ([self isCoreImageAccelerated])
-        return MameRenderFrameInCoreImage;
+        return MameRenderFrameInQCComposition;
     else
         return MameRenderFrameInOpenGL;
 }
@@ -532,6 +538,10 @@ NSString * MameExitStatusKey = @"MameExitStatus";
             frameRendering = @"Core Image";
             break;
             
+        case MameRenderFrameInQCComposition:
+            frameRendering = @"Quartz Composer Composition";
+            break;
+            
         default:
             frameRendering = @"Unknown";
     }
@@ -784,6 +794,34 @@ NSString * MameExitStatusKey = @"MameExitStatus";
 {
     mShouldHideMouseCursor = flag;
     [self updateMouseCursor];
+}
+
+//=========================================================== 
+// - quartzComposerFile
+//=========================================================== 
+- (NSString *) quartzComposerFile
+{
+    return mQuartzComposerFile; 
+}
+
+//=========================================================== 
+// - setQuartzComposerFile:
+//=========================================================== 
+- (void) setQuartzComposerFile: (NSString *) theQuartzComposerFile
+{
+    if (mQuartzComposerFile != theQuartzComposerFile)
+    {
+        [mQuartzComposerFile release];
+        mQuartzComposerFile = [theQuartzComposerFile retain];
+    }
+    
+    // Force renderer to reload
+    [self lockOpenGLLock];
+    [mWindowedQCRenderer release];
+    [mFullScreenQCRenderer release];
+    mWindowedQCRenderer = nil;
+    mFullScreenQCRenderer = nil;
+    [self unlockOpenGLLock];
 }
 
 #pragma mark -
@@ -1300,6 +1338,8 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     
     if (mFrameRenderingOption == MameRenderFrameInCoreImage)
         [self drawFrameUsingCoreImage: frame inRect: destRect];
+    else if (mFrameRenderingOption == MameRenderFrameInQCComposition)
+        [self drawFrameUsingQCRenderer: frame inRect: destRect];
     else
         [self drawFrameUsingOpenGL: frame inRect: destRect];
     
@@ -1329,6 +1369,67 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     [ciContext drawImage: frameImage
                   inRect: *(CGRect *) &destRect
                 fromRect: frameRect];
+}
+
+- (QCRenderer *) createRenderer;
+{
+    if (mQuartzComposerFile == nil)
+        return nil;
+    return [[QCRenderer alloc] initWithOpenGLContext: [self activeOpenGLContext]
+                                         pixelFormat: [self activePixelFormat]
+                                                file: mQuartzComposerFile];
+}
+
+- (QCRenderer *) activeQCRenderer;
+{
+    [self lockOpenGLLock];
+    QCRenderer * renderer = nil;
+    if ([self fullScreen])
+    {
+        if (mFullScreenQCRenderer == nil)
+            mFullScreenQCRenderer = [self createRenderer];
+        renderer = mFullScreenQCRenderer;
+    }
+    else
+    {
+        if (mWindowedQCRenderer == nil)
+            mWindowedQCRenderer = [self createRenderer];
+        renderer = mWindowedQCRenderer;
+    }
+    [self unlockOpenGLLock];
+    JRLogDebug(@"Attributes: %@", [renderer attributes]);
+    return renderer;
+}
+
+- (void) drawFrameUsingQCRenderer: (CVOpenGLTextureRef) frame
+                           inRect: (NSRect) destRect;
+{
+    
+    QCRenderer * renderer = [self activeQCRenderer];
+    if (renderer == nil)
+    {
+        [self drawFrameUsingCoreImage: frame inRect: destRect];
+        return;
+    }
+
+    static NSTimeInterval mStartTime = 0.0;
+    NSTimeInterval time = [NSDate timeIntervalSinceReferenceDate];
+
+    if(mStartTime == 0)
+    {
+        mStartTime = time;
+        time = 0;
+    }
+    else
+        time -= mStartTime;
+
+    NSRect currentBounds = [self activeBounds];
+    float width = destRect.size.width/currentBounds.size.width * 2.0;
+    
+    [renderer setValue: (id) frame forInputKey: @"Frame"];
+    [renderer setValue: [NSNumber numberWithFloat: width] forInputKey: @"Width"];
+    if (![renderer renderAtTime: time arguments: [NSDictionary dictionary]])
+        JRLogError(@"Rendering failed at time %.3fs", time);
 }
 
 - (void) drawFrameUsingOpenGL: (CVOpenGLTextureRef) frame

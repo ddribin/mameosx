@@ -235,6 +235,28 @@ static void exit_sleeper()
     [mAudioEffectsController showWindow: self];
 }
 
+- (void) updateEffect;
+{
+    if (!mIsFiltered)
+    {
+        [mMameView setQuartzComposerFile: nil];
+        return;
+    }
+    
+    NSString * effectName = [mFilters objectAtIndex: mCurrentFilterIndex];
+    NSString * effectPath = [mEffects objectForKey: effectName];
+    if (effectPath != nil)
+    {
+        if ([[effectPath pathExtension] isEqualToString: @"qtz"])
+        {
+            [mMameView setQuartzComposerFile: effectPath];
+            return;
+        }
+    }
+    
+    [mMameView setQuartzComposerFile: nil];
+}
+
 //=========================================================== 
 //  isFiltered 
 //=========================================================== 
@@ -246,10 +268,19 @@ static void exit_sleeper()
 - (void) setIsFiltered: (BOOL) flag
 {
     mIsFiltered = flag;
+#if 0
     if (mIsFiltered)
         [mMameView setFilter: [mFilters objectAtIndex: mCurrentFilterIndex]];
     else
         [mMameView setFilter: nil];
+#else
+    [self updateEffect];
+#endif
+}
+
+- (NSArray *) effects;
+{
+    return mFilters;
 }
 
 - (int) currentFilterIndex;
@@ -266,8 +297,7 @@ static void exit_sleeper()
     [item setState: NO];
 
     mCurrentFilterIndex = currentFilterIndex;
-    if (mIsFiltered)
-        [mMameView setFilter: [mFilters objectAtIndex: mCurrentFilterIndex]];
+    [self updateEffect];
     
     item = [mEffectsMenu itemAtIndex: mCurrentFilterIndex];
     [item setState: YES];
@@ -869,6 +899,36 @@ static void exit_sleeper()
     [filter setValue: [NSNumber numberWithFloat: 5]  
               forKey: @"inputIntensity"];
     [mFilters addObject: [MameFilter filterWithFilter: filter]];
+    
+    [mFilters release];
+    
+    mEffects = [[NSMutableDictionary alloc] init];
+    NSBundle * myBundle = [NSBundle mainBundle];
+    NSString * bundleEffects = [[myBundle resourcePath]
+        stringByAppendingPathComponent: @"Effects"];
+    MamePreferences * preferences = [MamePreferences standardPreferences];
+    NSArray * effectPaths = [NSArray arrayWithObjects:
+        bundleEffects, [preferences effectPath], nil];
+    NSEnumerator * e = [effectPaths objectEnumerator];
+    NSString * path;
+    NSFileManager * fileManager = [NSFileManager defaultManager];
+    while (path = [e nextObject])
+    {
+        NSArray * paths = [fileManager directoryContentsAtPath: path];
+        NSArray * effects = [paths pathsMatchingExtensions: [NSArray arrayWithObjects: @"png", @"qtz", nil]];
+        NSEnumerator * f = [effects objectEnumerator];
+        NSString * effect;
+        while (effect = [f nextObject])
+        {
+            NSString * name = [effect stringByDeletingPathExtension];
+            NSString * fullPath = [path stringByAppendingPathComponent: effect];
+            [mEffects setValue: fullPath forKey: name];
+        }
+    }
+    
+    NSArray * names = [mEffects allKeys];
+    names = [names sortedArrayUsingSelector: @selector(caseInsensitiveCompare:)];
+    mFilters = [names retain];
 }
 
 - (NSSize) constrainFrameToAspectRatio: (NSSize) size;

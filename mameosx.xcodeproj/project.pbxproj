@@ -2683,6 +2683,7 @@
 		55E03D0A0B0A32EF00988109 /* Preferences.nib in Resources */ = {isa = PBXBuildFile; fileRef = 55E03D070B0A32EE00988109 /* Preferences.nib */; };
 		55E93D600B29166E003CBB89 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55E93D5F0B29166E003CBB89 /* AudioToolbox.framework */; };
 		55F156310BBDF80F00366C65 /* uismall.png in Sources */ = {isa = PBXBuildFile; fileRef = 55F156300BBDF80500366C65 /* uismall.png */; };
+		55F1582D0BBF955600366C65 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55F1582C0BBF955600366C65 /* Quartz.framework */; };
 		55F4D7400B86B937001EED08 /* APPL.icns in Resources */ = {isa = PBXBuildFile; fileRef = 55F4D73F0B86B937001EED08 /* APPL.icns */; };
 		55F4D7410B86B937001EED08 /* APPL.icns in Resources */ = {isa = PBXBuildFile; fileRef = 55F4D73F0B86B937001EED08 /* APPL.icns */; };
 		55F4D7C20B86DAFC001EED08 /* manual in Resources */ = {isa = PBXBuildFile; fileRef = 55F4D7BD0B86DAFC001EED08 /* manual */; };
@@ -5743,6 +5744,7 @@
 		55E03D080B0A32EE00988109 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/Preferences.nib; sourceTree = "<group>"; };
 		55E93D5F0B29166E003CBB89 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = /System/Library/Frameworks/AudioToolbox.framework; sourceTree = "<absolute>"; };
 		55F156300BBDF80500366C65 /* uismall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = uismall.png; path = emu/uismall.png; sourceTree = "<group>"; };
+		55F1582C0BBF955600366C65 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = /System/Library/Frameworks/Quartz.framework; sourceTree = "<absolute>"; };
 		55F4D73F0B86B937001EED08 /* APPL.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = APPL.icns; sourceTree = "<group>"; };
 		55F4D7BE0B86DAFC001EED08 /* English */ = {isa = PBXFileReference; lastKnownFileType = folder; name = English; path = English.lproj/manual; sourceTree = "<group>"; };
 		55FCA08E0BB8D53E0095FC7B /* dualhovu.lay */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = dualhovu.lay; sourceTree = "<group>"; };
@@ -5917,6 +5919,7 @@
 				55C71A6E0B2AFD2E001FF0BE /* CoreAudioKit.framework in Frameworks */,
 				55D00ADA0B2E8CD500F7961F /* IOKit.framework in Frameworks */,
 				5528612F0BBC5D0800EB3460 /* CHUD.framework in Frameworks */,
+				55F1582D0BBF955600366C65 /* Quartz.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8618,6 +8621,7 @@
 		556A4AB00AA4FAA300602CC5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				55F1582C0BBF955600366C65 /* Quartz.framework */,
 				5528612E0BBC5D0800EB3460 /* CHUD.framework */,
 				5567B3EA0BBA3BE100EA2072 /* Carbon.framework */,
 				55D00AD90B2E8CD500F7961F /* IOKit.framework */,

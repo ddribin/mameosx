@@ -70,6 +70,7 @@ extern "C" {
     NSMutableArray * mFilters;
     BOOL mIsFiltered;
     int mCurrentFilterIndex;
+    NSMutableDictionary * mEffects;
 
     NSString * mGameName;
     NSString * mLoadingMessage;
@@ -93,6 +94,8 @@ extern "C" {
 
 - (int) currentFilterIndex;
 - (void) setCurrentFilterIndex: (int) currentFilterIndex;
+
+- (NSArray *) effects;
 
 - (IBAction) nextFilter: (id) sender;
 - (IBAction) previousFilter: (id) sender;
