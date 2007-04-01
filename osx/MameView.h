@@ -60,8 +60,10 @@ typedef enum _MameFullScreenZoom
 @interface MameView : DDCustomOpenGLView
 {
     IBOutlet MameController * mController;
-    CIContext * mCiContext;
+    CIContext * mWindowedCiContext;
     CIContext * mFullScreenCiContext;
+    QCRenderer * mWindowedQCRenderer;
+    QCRenderer * mFullScreenQCRenderer;
     
     id mDelegate;
     
@@ -77,16 +79,15 @@ typedef enum _MameFullScreenZoom
     float mPixelAspectRatio;
     
     BOOL mRenderInCoreVideoThread;
-    MameFilter * mFilter;
+    CIFilter * mFilter;
     NSSize mNaturalSize;
     NSSize mOptimalSize;
     NSSize mFullScreenSize;
     BOOL mKeepAspectRatio;
     BOOL mClearToRed;
     MameFullScreenZoom mFullScreenZoom;
-    QCRenderer * mWindowedQCRenderer;
-    QCRenderer * mFullScreenQCRenderer;
     NSString * mQuartzComposerFile;
+    NSString * mImageEffect;
     
     MameInputController * mInputController;
     MameAudioController * mAudioController;
@@ -162,6 +163,11 @@ typedef enum _MameFullScreenZoom
 - (NSString *) quartzComposerFile;
 - (void) setQuartzComposerFile: (NSString *) theQuartzComposerFile;
 
+- (void) setQuartzComposerFile: (NSString *) theQuartzComposerFile
+              clearImageEffect: (BOOL) clearImageEffect;
+
+- (NSString *) imageEffect;
+- (void) setImageEffect: (NSString *) theImageEffect;
 
 #pragma mark -
 #pragma mark Audio
@@ -190,9 +196,6 @@ typedef enum _MameFullScreenZoom
 
 - (BOOL) linearFilter;
 - (void) setLinearFilter: (BOOL) linearFilter;
-
-- (MameFilter *) filter;
-- (void) setFilter: (MameFilter *) aFilter;
 
 - (int) osd_init: (running_machine *) machine;
 

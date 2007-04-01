@@ -248,10 +248,10 @@ static void exit_sleeper()
     if (effectPath != nil)
     {
         if ([[effectPath pathExtension] isEqualToString: @"qtz"])
-        {
             [mMameView setQuartzComposerFile: effectPath];
-            return;
-        }
+        else
+            [mMameView setImageEffect: effectPath];
+        return;
     }
     
     [mMameView setQuartzComposerFile: nil];

@@ -2684,6 +2684,9 @@
 		55E93D600B29166E003CBB89 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55E93D5F0B29166E003CBB89 /* AudioToolbox.framework */; };
 		55F156310BBDF80F00366C65 /* uismall.png in Sources */ = {isa = PBXBuildFile; fileRef = 55F156300BBDF80500366C65 /* uismall.png */; };
 		55F1582D0BBF955600366C65 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55F1582C0BBF955600366C65 /* Quartz.framework */; };
+		55F15B740BC01B6400366C65 /* MameEffectFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = 55F15B720BC01B6400366C65 /* MameEffectFilter.h */; };
+		55F15B750BC01B6400366C65 /* MameEffectFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F15B730BC01B6400366C65 /* MameEffectFilter.m */; };
+		55F15B850BC01D4D00366C65 /* MameEffect.cikernel in Resources */ = {isa = PBXBuildFile; fileRef = 55F15B840BC01D4D00366C65 /* MameEffect.cikernel */; };
 		55F4D7400B86B937001EED08 /* APPL.icns in Resources */ = {isa = PBXBuildFile; fileRef = 55F4D73F0B86B937001EED08 /* APPL.icns */; };
 		55F4D7410B86B937001EED08 /* APPL.icns in Resources */ = {isa = PBXBuildFile; fileRef = 55F4D73F0B86B937001EED08 /* APPL.icns */; };
 		55F4D7C20B86DAFC001EED08 /* manual in Resources */ = {isa = PBXBuildFile; fileRef = 55F4D7BD0B86DAFC001EED08 /* manual */; };
@@ -5745,6 +5748,9 @@
 		55E93D5F0B29166E003CBB89 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = /System/Library/Frameworks/AudioToolbox.framework; sourceTree = "<absolute>"; };
 		55F156300BBDF80500366C65 /* uismall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = uismall.png; path = emu/uismall.png; sourceTree = "<group>"; };
 		55F1582C0BBF955600366C65 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = /System/Library/Frameworks/Quartz.framework; sourceTree = "<absolute>"; };
+		55F15B720BC01B6400366C65 /* MameEffectFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MameEffectFilter.h; sourceTree = "<group>"; };
+		55F15B730BC01B6400366C65 /* MameEffectFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MameEffectFilter.m; sourceTree = "<group>"; };
+		55F15B840BC01D4D00366C65 /* MameEffect.cikernel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MameEffect.cikernel; sourceTree = "<group>"; };
 		55F4D73F0B86B937001EED08 /* APPL.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = APPL.icns; sourceTree = "<group>"; };
 		55F4D7BE0B86DAFC001EED08 /* English */ = {isa = PBXFileReference; lastKnownFileType = folder; name = English; path = English.lproj/manual; sourceTree = "<group>"; };
 		55FCA08E0BB8D53E0095FC7B /* dualhovu.lay */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = dualhovu.lay; sourceTree = "<group>"; };
@@ -6079,6 +6085,7 @@
 				55E03D070B0A32EE00988109 /* Preferences.nib */,
 				5595EFA70B1BC91200631777 /* RomAudit.nib */,
 				55C71AB60B2B02FA001FF0BE /* AudioEffects.nib */,
+				55F15B840BC01D4D00366C65 /* MameEffect.cikernel */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -8973,6 +8980,8 @@
 			children = (
 				556A51150AA54C4600602CC5 /* MameView.h */,
 				556A51160AA54C4600602CC5 /* MameView.m */,
+				55F15B720BC01B6400366C65 /* MameEffectFilter.h */,
+				55F15B730BC01B6400366C65 /* MameEffectFilter.m */,
 				553A072E0AFD9E2700531E1F /* MameFilter.h */,
 				553A07310AFDA09900531E1F /* MameFilter.m */,
 				5561FF220AC62C4700BE1BF5 /* MameRenderer.h */,
@@ -9356,6 +9365,7 @@
 				5537EF490BBEACC2001A390F /* FrameMovieExporter.h in Headers */,
 				5537EF660BBEAD6C001A390F /* FrameCompressor.h in Headers */,
 				5537F0F40BBEB35E001A390F /* FrameReader.h in Headers */,
+				55F15B740BC01B6400366C65 /* MameEffectFilter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9871,6 +9881,7 @@
 				55C71AB80B2B02FA001FF0BE /* AudioEffects.nib in Resources */,
 				55F4D7410B86B937001EED08 /* APPL.icns in Resources */,
 				55F4D7C30B86DAFC001EED08 /* manual in Resources */,
+				55F15B850BC01D4D00366C65 /* MameEffect.cikernel in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12485,6 +12496,7 @@
 				5537EF4A0BBEACC2001A390F /* FrameMovieExporter.m in Sources */,
 				5537EF670BBEAD6C001A390F /* FrameCompressor.m in Sources */,
 				5537F0F50BBEB35E001A390F /* FrameReader.m in Sources */,
+				55F15B750BC01B6400366C65 /* MameEffectFilter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

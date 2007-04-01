@@ -33,6 +33,7 @@
 #import "MameFilter.h"
 #import "JRLog.h"
 #import "MameChud.h"
+#import "MameEffectFilter.h"
 #import <Quartz/Quartz.h>
 
 #define MAME_EXPORT_MOVIE 0
@@ -229,7 +230,7 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
     
     /* Create CIContext */
-    mCiContext = [[CIContext contextWithCGLContext:
+    mWindowedCiContext = [[CIContext contextWithCGLContext:
         (CGLContextObj)[[self openGLContext] CGLContextObj]
                                        pixelFormat:(CGLPixelFormatObj)
         [[self pixelFormat] CGLPixelFormatObj]
@@ -253,7 +254,7 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     if ([self fullScreen])
         return mFullScreenCiContext;
     else
-        return mCiContext;
+        return mWindowedCiContext;
 }
 
 - (MameFrameRenderingOption) frameRenderingOption;
@@ -809,18 +810,63 @@ NSString * MameExitStatusKey = @"MameExitStatus";
 //=========================================================== 
 - (void) setQuartzComposerFile: (NSString *) theQuartzComposerFile
 {
+    [self lockOpenGLLock];
+    [self setQuartzComposerFile: theQuartzComposerFile clearImageEffect: YES];
+    [self unlockOpenGLLock];
+}
+
+- (void) setQuartzComposerFile: (NSString *) theQuartzComposerFile
+              clearImageEffect: (BOOL) clearImageEffect;
+{
     if (mQuartzComposerFile != theQuartzComposerFile)
     {
         [mQuartzComposerFile release];
         mQuartzComposerFile = [theQuartzComposerFile retain];
     }
     
+    if (clearImageEffect)
+        [self setImageEffect: nil];
+    
     // Force renderer to reload
-    [self lockOpenGLLock];
     [mWindowedQCRenderer release];
     [mFullScreenQCRenderer release];
     mWindowedQCRenderer = nil;
     mFullScreenQCRenderer = nil;
+}
+
+//=========================================================== 
+// - imageEffect
+//=========================================================== 
+- (NSString *) imageEffect
+{
+    return mImageEffect; 
+}
+
+//=========================================================== 
+// - setImageEffect:
+//=========================================================== 
+- (void) setImageEffect: (NSString *) theImageEffect
+{
+    [self lockOpenGLLock];
+    if (mImageEffect != theImageEffect)
+    {
+        [mImageEffect release];
+        mImageEffect = [theImageEffect retain];
+    }
+    
+    [mFilter release];
+    mFilter = nil;
+
+    if (theImageEffect != nil)
+    {
+        [self setQuartzComposerFile: nil clearImageEffect: NO];
+        [MameEffectFilter class];
+        mFilter = [[CIFilter filterWithName: @"MameEffectFilter"] retain];
+
+        NSURL * url = [NSURL fileURLWithPath: mImageEffect];
+        CIImage * effectImage = [CIImage imageWithContentsOfURL: url];
+        [mFilter setValue: effectImage forKey: @"effectImage"];
+    }
     [self unlockOpenGLLock];
 }
 
@@ -900,23 +946,6 @@ NSString * MameExitStatusKey = @"MameExitStatus";
 - (void) setLinearFilter: (BOOL) linearFilter;
 {
     [mRenderer setLinearFilter: linearFilter];
-}
-
-//=========================================================== 
-//  filter 
-//=========================================================== 
-- (MameFilter *) filter
-{
-    return [[mFilter retain] autorelease]; 
-}
-
-- (void) setFilter: (MameFilter *) aFilter
-{
-    if (mFilter != aFilter)
-    {
-        [mFilter release];
-        mFilter = [aFilter retain];
-    }
 }
 
 #pragma mark -
@@ -1362,7 +1391,8 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     NSSize frameSize = NSMakeSize(frameRect.size.width, frameRect.size.height);
     if (mFilter != nil)
     {
-        frameImage = [mFilter filterFrame: frameImage size: frameSize];
+        [mFilter setValue: frameImage forKey: @"inputImage"];
+        frameImage = [mFilter valueForKey: @"outputImage"];
     }
     frameRect = [frameImage extent];
     
@@ -1371,7 +1401,7 @@ NSString * MameExitStatusKey = @"MameExitStatus";
                 fromRect: frameRect];
 }
 
-- (QCRenderer *) createRenderer;
+- (QCRenderer *) createQCRenderer;
 {
     if (mQuartzComposerFile == nil)
         return nil;
@@ -1387,17 +1417,16 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     if ([self fullScreen])
     {
         if (mFullScreenQCRenderer == nil)
-            mFullScreenQCRenderer = [self createRenderer];
+            mFullScreenQCRenderer = [self createQCRenderer];
         renderer = mFullScreenQCRenderer;
     }
     else
     {
         if (mWindowedQCRenderer == nil)
-            mWindowedQCRenderer = [self createRenderer];
+            mWindowedQCRenderer = [self createQCRenderer];
         renderer = mWindowedQCRenderer;
     }
     [self unlockOpenGLLock];
-    JRLogDebug(@"Attributes: %@", [renderer attributes]);
     return renderer;
 }
 
@@ -1428,6 +1457,12 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     
     [renderer setValue: (id) frame forInputKey: @"Frame"];
     [renderer setValue: [NSNumber numberWithFloat: width] forInputKey: @"Width"];
+    if (mImageEffect != nil)
+    {
+        NSURL * url = [NSURL fileURLWithPath: mImageEffect];
+        CIImage * effectImage = [CIImage imageWithContentsOfURL: url];
+        [renderer setValue: effectImage forInputKey: @"Effect"];
+    }
     if (![renderer renderAtTime: time arguments: [NSDictionary dictionary]])
         JRLogError(@"Rendering failed at time %.3fs", time);
 }
