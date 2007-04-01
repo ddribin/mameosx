@@ -1417,12 +1417,16 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     QCRenderer * renderer = nil;
     if ([self fullScreen])
     {
+        [mWindowedQCRenderer release];
+        mWindowedQCRenderer = nil;
         if (mFullScreenQCRenderer == nil)
             mFullScreenQCRenderer = [self createQCRenderer];
         renderer = mFullScreenQCRenderer;
     }
     else
     {
+        [mFullScreenQCRenderer release];
+        mFullScreenQCRenderer = nil;
         if (mWindowedQCRenderer == nil)
             mWindowedQCRenderer = [self createQCRenderer];
         renderer = mWindowedQCRenderer;
