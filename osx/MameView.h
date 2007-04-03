@@ -88,6 +88,7 @@ typedef enum _MameFullScreenZoom
     MameFullScreenZoom mFullScreenZoom;
     NSString * mQuartzComposerFile;
     NSString * mImageEffect;
+    NSTimeInterval mStartTime;
     
     MameInputController * mInputController;
     MameAudioController * mAudioController;

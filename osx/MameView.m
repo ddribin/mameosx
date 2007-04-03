@@ -555,6 +555,7 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     [mRenderer osd_init: [self openGLContext]
                  format: [self pixelFormat]
                    size: NSIntegralRect([self bounds]).size];
+    mStartTime = 0.0;
     
 #if MAME_EXPORT_MOVIE
     [self performSelectorOnMainThread: @selector(createMovieExporter)
@@ -1446,7 +1447,6 @@ NSString * MameExitStatusKey = @"MameExitStatus";
         return;
     }
 
-    static NSTimeInterval mStartTime = 0.0;
     NSTimeInterval time = [NSDate timeIntervalSinceReferenceDate];
 
     if(mStartTime == 0)
