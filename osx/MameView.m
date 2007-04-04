@@ -1407,9 +1407,14 @@ NSString * MameExitStatusKey = @"MameExitStatus";
 {
     if (mQuartzComposerFile == nil)
         return nil;
-    return [[QCRenderer alloc] initWithOpenGLContext: [self activeOpenGLContext]
-                                         pixelFormat: [self activePixelFormat]
-                                                file: mQuartzComposerFile];
+    QCRenderer * renderer =
+        [[QCRenderer alloc] initWithOpenGLContext: [self activeOpenGLContext]
+                                     pixelFormat: [self activePixelFormat]
+                                            file: mQuartzComposerFile];
+    NSArray * inputKeys = [renderer inputKeys];
+    mRendererHasWidth = [inputKeys containsObject: @"Width"];
+    mRendererHasHeight = [inputKeys containsObject: @"Height"];
+    return renderer;
 }
 
 - (QCRenderer *) activeQCRenderer;
@@ -1439,7 +1444,6 @@ NSString * MameExitStatusKey = @"MameExitStatus";
 - (void) drawFrameUsingQCRenderer: (CVOpenGLTextureRef) frame
                            inRect: (NSRect) destRect;
 {
-    
     QCRenderer * renderer = [self activeQCRenderer];
     if (renderer == nil)
     {
@@ -1458,16 +1462,21 @@ NSString * MameExitStatusKey = @"MameExitStatus";
         time -= mStartTime;
 
     NSRect currentBounds = [self activeBounds];
-    float width = destRect.size.width/currentBounds.size.width * 2.0;
-    
-    [renderer setValue: (id) frame forInputKey: @"Frame"];
-    [renderer setValue: [NSNumber numberWithFloat: width] forInputKey: @"Width"];
-    if (mImageEffect != nil)
+    if (mRendererHasWidth)
     {
-        NSURL * url = [NSURL fileURLWithPath: mImageEffect];
-        CIImage * effectImage = [CIImage imageWithContentsOfURL: url];
-        [renderer setValue: effectImage forInputKey: @"Effect"];
+        float width = destRect.size.width/currentBounds.size.width * 2.0;
+        [renderer setValue: [NSNumber numberWithFloat: width] forInputKey: @"Width"];
     }
+    
+    if (mRendererHasHeight)
+    {
+        // Max height = 2 / aspect ratio
+        //            = currentBounds.size.height/currentBounds.size.width * 2.0;
+        float height = destRect.size.height/currentBounds.size.width * 2.0;
+        [renderer setValue: [NSNumber numberWithFloat: height] forInputKey: @"Height"];
+    }
+
+    [renderer setValue: (id) frame forInputKey: @"Frame"];
     if (![renderer renderAtTime: time arguments: [NSDictionary dictionary]])
         JRLogError(@"Rendering failed at time %.3fs", time);
 }

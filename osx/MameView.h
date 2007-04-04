@@ -62,8 +62,11 @@ typedef enum _MameFullScreenZoom
     IBOutlet MameController * mController;
     CIContext * mWindowedCiContext;
     CIContext * mFullScreenCiContext;
+
     QCRenderer * mWindowedQCRenderer;
     QCRenderer * mFullScreenQCRenderer;
+    BOOL mRendererHasWidth;
+    BOOL mRendererHasHeight;
     
     id mDelegate;
     
