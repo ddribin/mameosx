@@ -115,7 +115,7 @@
 
 - (void) ddhidJoystick: (DDHidJoystick *) joystick
                  stick: (unsigned) stick
-            povElement: (unsigned) povElement
+             povNumber: (unsigned) povNumber
           valueChanged: (int) value;
 
 - (void) ddhidJoystick: (DDHidJoystick *) joystick

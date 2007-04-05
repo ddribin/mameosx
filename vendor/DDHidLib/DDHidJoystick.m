@@ -42,7 +42,7 @@
 
 - (void) ddhidJoystick: (DDHidJoystick *) joystick
                  stick: (unsigned) stick
-            povElement: (unsigned) povElement
+             povNumber: (unsigned) povNumber
           valueChanged: (int) value;
 
 - (void) ddhidJoystick: (DDHidJoystick *) joystick
@@ -79,7 +79,7 @@
         withCookie: (IOHIDElementCookie) cookie;
 
 - (BOOL) findStick: (unsigned *) stickOut
-        povElement: (unsigned *) povElement
+         povNumber: (unsigned *) povNumber
            element: (DDHidElement **) elementOut
         withCookie: (IOHIDElementCookie) cookie;
 
@@ -251,7 +251,7 @@
         DDHidElement * element;
         unsigned stick;
         unsigned otherAxis;
-        unsigned povElement;
+        unsigned povNumber;
         if ([self findStick: &stick element: &element withXAxisCookie: cookie])
         {
             int normalizedValue = [self normalizeValue: value forElement: element];
@@ -269,12 +269,12 @@
             [self ddhidJoystick: self stick: stick
                       otherAxis: otherAxis valueChanged: normalizedValue];
         }
-        else if ([self findStick: &stick povElement: &povElement element: &element
+        else if ([self findStick: &stick povNumber: &povNumber element: &element
                       withCookie: cookie])
         {
             int povValue = [self povValue: value forElement: element];
             [self ddhidJoystick: self stick: stick
-                     povElement: povElement valueChanged: povValue];
+                      povNumber: povNumber valueChanged: povValue];
         }
         else
         {
@@ -393,7 +393,7 @@
 }
 
 - (BOOL) findStick: (unsigned *) stickOut
-        povElement: (unsigned *) povElement
+         povNumber: (unsigned *) povNumber
            element: (DDHidElement **) elementOut
         withCookie: (IOHIDElementCookie) cookie;
 {
@@ -408,7 +408,7 @@
             if ((element != nil) && ([element cookie] == cookie))
             {
                 *stickOut = i;
-                *povElement = j;
+                *povNumber = j;
                 *elementOut = element;
                 return YES;
             }
@@ -449,11 +449,11 @@
 
 - (void) ddhidJoystick: (DDHidJoystick *) joystick
                  stick: (unsigned) stick
-            povElement: (unsigned) povElement
+             povNumber: (unsigned) povNumber
           valueChanged: (int) value;
 {
     if ([mDelegate respondsToSelector: _cmd])
-        [mDelegate ddhidJoystick: joystick stick: stick povElement: povElement
+        [mDelegate ddhidJoystick: joystick stick: stick povNumber: povNumber
                     valueChanged: value];
 }
 

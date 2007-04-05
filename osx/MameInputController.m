@@ -648,10 +648,10 @@ static NSString * format(NSString * format, ...);
 
 - (void) ddhidJoystick: (DDHidJoystick *) joystick
                  stick: (unsigned) stick
-            povElement: (unsigned) povElement
+             povNumber: (unsigned) povNumber
           valueChanged: (int) value;
 {
-    p->mJoystickStates[[joystick tag]].povs[povElement] = value;
+    p->mJoystickStates[[joystick tag]].povs[povNumber] = value;
 }
 
 - (void) ddhidJoystick: (DDHidJoystick *) joystick
