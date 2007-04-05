@@ -1416,6 +1416,13 @@ NSString * MameExitStatusKey = @"MameExitStatus";
                                      pixelFormat: [self activePixelFormat]
                                             file: mQuartzComposerFile];
     NSArray * inputKeys = [renderer inputKeys];
+    if (![inputKeys containsObject: @"Frame"])
+    {
+        JRLogError(@"QC composition is missing the Frame published input: %@",
+                   mQuartzComposerFile);
+        [renderer release];
+        return nil;
+    }
     mRendererHasWidth = [inputKeys containsObject: @"Width"];
     mRendererHasHeight = [inputKeys containsObject: @"Height"];
     return renderer;
