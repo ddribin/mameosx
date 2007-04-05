@@ -1,6 +1,6 @@
 <% version = "0.114" %>
 - version: "<%=version%>"
-  date: xxx
+  date: 2007-04-04
   changes:
     - Upgrade to 0.114 core.
     - Mouse is no longer grabbed at startup.
@@ -10,7 +10,7 @@
     - Support for other joysticks axes and point of view hat switches.
     - Preference for default visual effect.
     - Visual effects are implemented using Quartz Composer.
-    - Custom Core Image filter for PNG-based effects.
+    - Custom Core Image filter for PNG-based overlay effects.
 
 <% version = "0.112-1" %>
 - version: "<%=version%>"
