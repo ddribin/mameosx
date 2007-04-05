@@ -11,6 +11,11 @@
     - Preference for default visual effect.
     - Visual effects are implemented using Quartz Composer.
     - Custom Core Image filter for PNG-based overlay effects.
+  files:
+    - name: MAMEOSX-<%=version%>.dmg
+      size: 22301201
+    - name: mameosx-<%=version%>.tgz
+      size: 13951821
 
 <% version = "0.112-1" %>
 - version: "<%=version%>"
@@ -23,7 +28,7 @@
   files:
     - name: MAMEOSX-<%=version%>.dmg
       size: 21294545
-    - name: mameosx-<%=version%>.tar.gz
+    - name: mameosx-<%=version%>.tgz
       size: 14035263
 
 <% version = "0.112" %>
@@ -41,7 +46,7 @@
   files:
     - name: MAMEOSX-<%=version%>.dmg
       size: 21238349
-    - name: mameosx-<%=version%>.tar.gz
+    - name: mameosx-<%=version%>.tgz
       size: 14012775
 
 <% version = "0.111-1" %>
@@ -58,7 +63,7 @@
   files:
     - name: MAMEOSX-<%=version%>.dmg
       size: 23187795
-    - name: mameosx-<%=version%>.tar.gz
+    - name: mameosx-<%=version%>.tgz
       size: 418141
 
 <% version = "0.111" %>
@@ -76,7 +81,7 @@
   files:
     - name: MAMEOSX-<%=version%>.dmg
       size: 24017249
-    - name: mameosx-<%=version%>.tar.gz
+    - name: mameosx-<%=version%>.tgz
       size: 406823
 
 <% version = "0.110-1" %>
@@ -90,7 +95,7 @@
   files:
     - name: MAMEOSX-<%=version%>.dmg
       size: 24102522
-    - name: mameosx-<%=version%>.tar.gz
+    - name: mameosx-<%=version%>.tgz
       size: 381839
   
 <% version = "0.110" %>
@@ -111,7 +116,7 @@
   files:
     - name: MAMEOSX-<%=version%>.dmg
       size: 24068542
-    - name: mameosx-<%=version%>.tar.gz
+    - name: mameosx-<%=version%>.tgz
       size: 358511
   
 <% version = "0.109-1" %>
