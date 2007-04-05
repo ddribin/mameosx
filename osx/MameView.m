@@ -288,7 +288,11 @@ NSString * MameExitStatusKey = @"MameExitStatus";
 
 - (void) setRenderInCoreVideoThread: (BOOL) flag
 {
+#if 0  // Until triple buffering?
     mRenderInCoreVideoThread = flag;
+#else
+    mRenderInCoreVideoThread = NO;
+#endif
 }
 
 - (BOOL) renderInCoreVideoThreadDefault;
