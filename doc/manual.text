@@ -149,12 +149,17 @@ Games which use two joysticks simultaneously, such as Karate Champ, Robotron, Cr
 Mouse
 -----
 
-The mouse may be used for games that used trackballs.  Because of this, the mouse is hidden during game play.  Pausing the game unlocked and visible.  Resuming the game hides the mouse again.  If you have multiple mice, they should map to different player's controls in MAME.
+The mouse may be used for games that used trackballs.  In order to prevent mouse clicks from registering with other applications and activating them, the mouse may be grabbed during play using the View > Grab Mouse menu.  There is a preference to always grab the mouse at startup.  Pausing the game also ungrabs the mouse.  If you have multiple mice, they should map to different player's controls in MAME.
 
 Joysticks and Gamepads
 ----------------------
 
 USB joysticks and gamepads should be detected when the game starts up.  MAME OS X does its best to map joystick buttons and inputs to MAME inputs.  The player mappings should be based on which USB port the joystick is plugged into.  If you have multiple joysticks, and they player order is incorrect, try swapping the USB ports.
+
+Quartz Composer Effects
+-----------------------
+
+[Quartz Composer][] compositions may be used to create visual effects.  The frame is passed as a published input named "Frame" to the composition, which may then display the frame however it wishes.  As a convenience, you may also create published inputs with the names "Width" or "Height" that are the dimensions of the frame in Quartz Composer coordinates.  These are useful if you want to render the frame in a Billboard or Sprite patch.  Place the compositions in `${HOME}/Application Support/MAME OS X/Effects` directory, and you may select it from the Visual Effects menu.  Please keep in mind that a complicated composition will take away CPU time from MAME, so you may see decreased frame rates while using them.
 
 Where To Get Help
 -----------------
@@ -198,6 +203,12 @@ Here is a description of these directories:
     <td>Diffs</td>
     <td>
       This directory stores modifications to hard disk images.  Since hard disk images are quite large, it is more efficient to only store the differences, hence the name "Diffs".
+    </td>
+  </tr>
+  <tr>
+    <td>Effects</td>
+    <td>
+      This directory stores visual effects.  A visual effect can be a PNG image that is used as an overlay or a Quartz Composer composition.  See the section Quartz Composer Effects for more information.
     </td>
   </tr>
   <tr>
@@ -264,3 +275,4 @@ Thanks to the [MAME development team][mamedev] for providing a fantastic code ba
 [mamedev]: http://mamedev.org/
 [dave dribin]: http://www.dribin.org/dave/
 [jason moore]: http://www.midnightoilproductions.com/
+[quartz composer]: http://developer.apple.com/graphicsimaging/quartz/quartzcomposer.html
