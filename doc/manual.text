@@ -8,7 +8,7 @@ Running MAME OS X
 
 MAME OS X does not come with the game software.  To play the games you must obtain the game software, called ROMs, because the are images from the ROM chips of the original machine. Keep in mind that most ROMs are still covered by the manufacturer's copyright.  Please respect this and only use ROMs that you actually own hardware for.  MAME OS X looks for ROMs in:
 
-    ${HOME}/Application Support/MAME OS X/ROMs
+    ${HOME}/Library/Application Support/MAME OS X/ROMs
 
 Once you have ROMs, you can run the game by entering the game name in the dialog box.  Game names are short, 8 characters or less.  To see a list of possible game names, run the ROM Audit tool from the "Tools > ROM Audit" menu.
 
@@ -159,7 +159,11 @@ USB joysticks and gamepads should be detected when the game starts up.  MAME OS 
 Quartz Composer Effects
 -----------------------
 
-[Quartz Composer][] compositions may be used to create visual effects.  The frame is passed as a published input named "Frame" to the composition, which may then display the frame however it wishes.  As a convenience, you may also create published inputs with the names "Width" or "Height" that are the dimensions of the frame in Quartz Composer coordinates.  These are useful if you want to render the frame in a Billboard or Sprite patch.  Place the compositions in `${HOME}/Application Support/MAME OS X/Effects` directory, and you may select it from the Visual Effects menu.  Please keep in mind that a complicated composition will take away CPU time from MAME, so you may see decreased frame rates while using them.
+[Quartz Composer][] compositions may be used to create visual effects.  The frame is passed as a published input named "Frame" to the composition, which may then display the frame however it wishes.  As a convenience, you may also create published inputs with the names "Width" or "Height" that are the dimensions of the frame in Quartz Composer coordinates.  These are useful if you want to render the frame in a Billboard or Sprite patch.  Place the compositions in:
+
+    ${HOME}/Library/Application Support/MAME OS X/Effects
+  
+You may then select one from the Visual Effects menu.  Please keep in mind that a complicated composition will take away CPU time from MAME, so you may see decreased frame rates while using them.
 
 Where To Get Help
 -----------------
@@ -172,7 +176,7 @@ MAME OS X Directories
 
 MAME OS X creates and uses various directories in:
 
-    ${HOME}/Application Support/MAME OS X
+    ${HOME}/Library/Application Support/MAME OS X
     
 Here is a description of these directories:
 
