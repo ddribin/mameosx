@@ -204,9 +204,7 @@ OSStatus static MyRenderer(void	* inRefCon,
     
     DDAudioComponent * component =
         [mEffectComponents objectAtIndex: indexOfCurrentEffect];
-    
-    ComponentDescription description = [component ComponentDescription];
-    DDAudioUnitNode * newNode = [mGraph addNodeWithDescription: &description];
+    DDAudioUnitNode * newNode = [mGraph addNodeWithComponent: component];
     DDAudioUnit * newUnit = [newNode audioUnit];
     
     [mGraph disconnectAll];

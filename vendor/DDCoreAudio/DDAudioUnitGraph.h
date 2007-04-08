@@ -27,6 +27,7 @@
 #import <AudioToolbox/AudioToolbox.h>
 
 @class DDAudioUnitNode;
+@class DDAudioComponent;
 
 @interface DDAudioUnitGraph : NSObject
 {
@@ -48,6 +49,8 @@
 
 - (DDAudioUnitNode *) addNodeWithDescription:
     (ComponentDescription *) description;
+
+- (DDAudioUnitNode *) addNodeWithComponent: (DDAudioComponent *) component;
 
 - (void) removeNode: (DDAudioUnitNode *) node;
 

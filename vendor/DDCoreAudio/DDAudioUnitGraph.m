@@ -25,6 +25,7 @@
 #import "DDAudioUnitGraph.h"
 #import "DDAudioUnitNode.h"
 #import "DDAudioException.h"
+#import "DDAudioComponent.h"
 
 #define THROW_IF DDThrowAudioIfErr
 
@@ -78,6 +79,12 @@
     AUNode node;
     THROW_IF(AUGraphNewNode(mGraph, description, 0, NULL, &node));
     return [[[DDAudioUnitNode alloc] initWithAUNode: node inGraph: self] autorelease];
+}
+
+- (DDAudioUnitNode *) addNodeWithComponent: (DDAudioComponent *) component;
+{
+    ComponentDescription description = [component ComponentDescription];
+    return [self addNodeWithDescription: &description];
 }
 
 - (void) removeNode: (DDAudioUnitNode *) node;
