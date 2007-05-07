@@ -1593,6 +1593,22 @@ NSString * MameExitStatusKey = @"MameExitStatus";
 
 #define NSSTR(_cString_) [NSString stringWithCString: _cString_]
 
+#define kIOFBTransformKey               "IOFBTransform"
+enum {
+    // transforms
+    kIOFBRotateFlags                    = 0x0000000f,
+    
+    kIOFBSwapAxes                       = 0x00000001,
+    kIOFBInvertX                        = 0x00000002,
+    kIOFBInvertY                        = 0x00000004,
+    
+    kIOFBRotate0                        = 0x00000000,
+    kIOFBRotate90                       = kIOFBSwapAxes | kIOFBInvertX,
+    kIOFBRotate180                      = kIOFBInvertX  | kIOFBInvertY,
+    kIOFBRotate270                      = kIOFBSwapAxes | kIOFBInvertY
+};
+
+
 // See: 
 // http://developer.apple.com/qa/qa2001/qa1217.html
 - (float) aspectRatioForDisplay: (CGDirectDisplayID) displayId;
@@ -1618,6 +1634,10 @@ NSString * MameExitStatusKey = @"MameExitStatus";
             float verticalSize =
                 [[displayDict objectForKey: NSSTR(kDisplayVerticalImageSize)]
                     floatValue];
+            uint32_t rotation =
+                [[displayDict objectForKey: NSSTR(kIOFBTransformKey)]
+                    unsignedIntValue];
+
             //    Make sure to release the dictionary we got from IOKit
             [displayDict release];
             
@@ -1628,8 +1648,18 @@ NSString * MameExitStatusKey = @"MameExitStatus";
                 [[displayMode objectForKey: (NSString *)  kCGDisplayHeight]
                     floatValue];
             
-            float horizontalPixelsPerMM = displayWidth/horizontalSize;
-            float verticalPixlesPerMM = displayHeight/verticalSize;
+            float horizontalPixelsPerMM;
+            float verticalPixlesPerMM;
+            if ((rotation == kIOFBRotate90) || (rotation == kIOFBRotate270))
+            {
+                horizontalPixelsPerMM = displayHeight/horizontalSize;
+                verticalPixlesPerMM = displayWidth/verticalSize;
+            }
+            else
+            {
+                horizontalPixelsPerMM = displayWidth/horizontalSize;
+                verticalPixlesPerMM = displayHeight/verticalSize;
+            }
             aspectRatio = horizontalPixelsPerMM/verticalPixlesPerMM;
         }
     }

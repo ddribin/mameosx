@@ -1,3 +1,11 @@
+<% version = "0.115" %>
+- version: "<%=version%>"
+  date: 2007-05-xx
+  changes:
+    - Upgrade to 0.115 core.
+    - Fix aspect ratio for rotated displays.
+
+
 <% version = "0.114" %>
 - version: "<%=version%>"
   date: 2007-04-04
