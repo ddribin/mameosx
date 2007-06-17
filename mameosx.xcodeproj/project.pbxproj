@@ -5727,7 +5727,7 @@
 		55D28E180B13CBB8002C9199 /* VirtualRingBuffer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = VirtualRingBuffer.h; path = vendor/VirtualRingBuffer.h; sourceTree = SOURCE_ROOT; };
 		55D28E190B13CBB8002C9199 /* VirtualRingBuffer.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = VirtualRingBuffer.m; path = vendor/VirtualRingBuffer.m; sourceTree = SOURCE_ROOT; };
 		55D2925D0B17567A002C9199 /* libapp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libapp.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		55D2934C0B1762E6002C9199 /* release_notes.html */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.html; name = release_notes.html; path = build/generated/release_notes.html; sourceTree = SOURCE_ROOT; };
+		55D2934C0B1762E6002C9199 /* release_notes.html */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.html; name = release_notes.html; path = ../generated/release_notes.html; sourceTree = BUILT_PRODUCTS_DIR; };
 		55D393200B0F54E10017F5F5 /* m68kmake.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = m68kmake.c; path = mame/src/emu/cpu/m68000/m68kmake.c; sourceTree = SOURCE_ROOT; };
 		55D403860B3664DF00E5E613 /* DDAudioComponent.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DDAudioComponent.h; sourceTree = "<group>"; };
 		55D403870B3664DF00E5E613 /* DDAudioComponent.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DDAudioComponent.m; sourceTree = "<group>"; };
