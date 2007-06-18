@@ -26,7 +26,7 @@
 #include "audit.h"
 
 
-@interface RomAuditSummary : NSObject {
+@interface RomAuditSummary : NSObject <NSCoding> {
     NSString * mGameName;
     NSString * mCloneName;
     NSString * mDescription;
@@ -52,4 +52,6 @@
 
 - (NSString *) notes;
 
+- (void)encodeWithCoder:(NSCoder *)aCoder;
+- (id)initWithCoder:(NSCoder *)aDecoder;
 @end

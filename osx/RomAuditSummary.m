@@ -205,4 +205,36 @@
     return mNotes;
 }
 
+static NSString *keysToEncode[] = {@"mGameName", @"mCloneName", @"mDescription", @"mStatus", @"mNotes", nil};
+
+- (void)encodeWithCoder:(NSCoder *)aCoder;
+{
+    int i;
+    BOOL useKeyBasedArchival = [aCoder allowsKeyedCoding];
+    for(i=0; keysToEncode[i]; i++) {
+        NSString *key = keysToEncode[i];
+        id value = [self valueForKey: key];
+        if (useKeyBasedArchival)
+            [aCoder encodeObject: value forKey: key];
+        else
+            [aCoder encodeObject: value];
+    }
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder;
+{
+    int i;
+    BOOL useKeyBasedArchival = [aDecoder allowsKeyedCoding];
+    for(i=0; keysToEncode[i]; i++) {
+        NSString *key = keysToEncode[i];
+        id value;
+        if (useKeyBasedArchival)
+            value = [aDecoder decodeObjectForKey: key];
+        else
+            value = [aDecoder decodeObject];
+        [self setValue: value forKey: key];
+    }
+    
+    return self;
+}
 @end

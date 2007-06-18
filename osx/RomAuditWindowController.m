@@ -32,9 +32,17 @@
 - (void) setStatus: (NSString *) status;
 - (void) updatePredicate;
 
+- (void) saveResults;
+- (void) loadResults;
+
 @end
 
 @implementation RomAuditWindowController
++ (void) initialize
+{
+    [self setKeys:[NSArray arrayWithObjects: @"results", @"mAuditDate", @"mTotalDriverCount", nil]
+             triggerChangeNotificationsForDependentKey: @"auditStatusSummaryText"];
+}
 
 - (id) init
 {
@@ -42,14 +50,14 @@
     if (self == nil)
         return nil;
     
-    mGameName = @"";
     mStatus = @"";
     mShowGood = NO;
     mResults = [[NSMutableArray alloc] init];
+    mTotalDriverCount = 0;
+    mAuditDateTime = nil;
     
     return self;
 }
-
 
 - (void) awakeFromNib
 {
@@ -58,6 +66,8 @@
     // Or:
     // http://www.cocoabuilder.com/archive/message/cocoa/2006/10/24/173255
     [mControllerAlias setContent: self];
+
+    [self loadResults];
     
     [self setStatus: @""];
     [self updatePredicate];
@@ -65,10 +75,13 @@
 
 - (void) dealloc
 {
-    [mGameName release];
     [mStatus release];
     [mSearchString release];
     [mResults release];
+    [mAuditDateTime release];
+    [mUpdateTimer release];
+    [mResultsAccumulator release];
+    
     [super dealloc];
 }
 
@@ -80,18 +93,6 @@
 - (NSString *) status;
 {
     return mStatus;
-}
-
-- (NSString *) gameName;
-{
-    return mGameName;
-}
-
-- (void) setGameName: (NSString *) gameName;
-{
-    [gameName retain];
-    [mGameName release];
-    mGameName = gameName;
 }
 
 - (NSString *) searchString;
@@ -118,111 +119,90 @@
     [self updatePredicate];
 }
 
-- (void) updateProgress: (NSNumber *) checked;
+- (void) auditDone: sender
 {
-    [mProgress setDoubleValue: [checked doubleValue]];
-}
+    [mUpdateTimer invalidate];
+    [mUpdateTimer release];
+    mUpdateTimer = nil;
 
-- (void) auditDone: (NSMutableArray *) results
-{
+    [self willChangeValueForKey: @"auditStatusSummaryText"];
     [self setStatus: @""];
+    [self setResults: mResultsAccumulator];
+    
+    [mResultsAccumulator release];
+    mResultsAccumulator = nil;
 
-    [self setResults: results];
+    [mAuditDateTime release];
+    mAuditDateTime = [[NSCalendarDate calendarDate] retain];
+    
+    [self saveResults];
+    [self didChangeValueForKey: @"auditStatusSummaryText"];    
 
     [NSApp abortModal];
 }
 
-- (void) auditThread: (NSString *) gameName;
+- (void) updateAuditStatusAndProgress: sender
+{
+    NSString *statusString;
+    @synchronized(mResultsAccumulator) {
+        statusString = [NSString stringWithFormat: @"%d of %d audited (%@ last audited).", mCurrentAuditIndex, mTotalDriverCount, [mResultsAccumulator lastObject]];
+    }
+    [self setStatus: statusString];
+    [mProgress setDoubleValue: ((double)mCurrentAuditIndex) / ((double) mTotalDriverCount)];
+}
+
+- (void) auditThread: sender; // designed to run on a thread
 {
     NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
     
     FILE * output = stdout;
 	int correct = 0;
 	int incorrect = 0;
-	int checked = 0;
 	int notfound = 0;
 	int total;
-	int drvindex;
-
-    const char * gameNameUtf8 = [gameName UTF8String];
-	/* first count up how many drivers match the string */
-	total = 0;
-	for (drvindex = 0; drivers[drvindex]; drvindex++)
-		if (!mame_strwildcmp(gameNameUtf8, drivers[drvindex]->name))
-			total++;
     
-    NSMutableArray * results = [NSMutableArray arrayWithCapacity: total];
+	mTotalDriverCount = 0; // count drivers
+	for (mCurrentAuditIndex = 0; drivers[mCurrentAuditIndex]; mCurrentAuditIndex++)
+        mTotalDriverCount++;
     
-    double totalf = total; 
-    double lastProgressValuef = 0.0;
+    [self performSelectorOnMainThread: @selector(setStatus:)
+                           withObject: [NSString stringWithFormat: @"Auditing %d drivers..", mTotalDriverCount]
+                        waitUntilDone: NO];    
+    
+    double totalf = mTotalDriverCount; 
 	/* now iterate over drivers */
-	for (drvindex = 0; drivers[drvindex]; drvindex++)
+	for (mCurrentAuditIndex = 0; drivers[mCurrentAuditIndex]; mCurrentAuditIndex++)
 	{
 		audit_record * auditRecords;
 		int recordCount;
 		int res;
         
-        if (!mRunning)
+        if (!mRunning) {
             break;
-        
-		/* skip if we don't match */
-		if (mame_strwildcmp(gameNameUtf8, drivers[drvindex]->name))
-			continue;
-        
+        }
+                
         NSAutoreleasePool * loopPool = [[NSAutoreleasePool alloc] init];
 
 		/* audit the ROMs in this set */
-		recordCount = audit_images(drvindex, AUDIT_VALIDATE_FAST, &auditRecords);
+		recordCount = audit_images(mCurrentAuditIndex, AUDIT_VALIDATE_FAST, &auditRecords);
         RomAuditSummary * summary =
-            [[RomAuditSummary alloc] initWithGameIndex: drvindex
+            [[RomAuditSummary alloc] initWithGameIndex: mCurrentAuditIndex
                                            recordCount: recordCount
                                                records: auditRecords];
-        [summary autorelease];
         free(auditRecords);
 
-        if ([summary status] != NOTFOUND)
-        {
-            [results addObject: summary];
+        @synchronized(mResultsAccumulator) {
+            [mResultsAccumulator addObject: summary];
         }
-        
-		checked++;
-        
-        // Stolen from:
-        // http://www.cocoabuilder.com/archive/message/cocoa/2006/8/24/170090
-        double checkedf = checked;
-        int percentAsInt = (checkedf/totalf)*200.0;
-        double modifiedProgressValuef = percentAsInt/200.0;
-        
-        // do your work, then...
-        if (modifiedProgressValuef != lastProgressValuef)
-        {
-            [self willChangeValueForKey: @"currentProgress"];
-            mCurrentProgress = modifiedProgressValuef;
-            [self didChangeValueForKey: @"currentProgress"];
-            lastProgressValuef = modifiedProgressValuef;
-
-            NSString * status = [NSString stringWithFormat:
-                @"Checking %d of %d", checked, total];
-            [self setStatus: status];
-        }
+        [summary release];
 
         [loopPool release];
 	}
     [self performSelectorOnMainThread: @selector(auditDone:)
-                           withObject: results
+                           withObject: nil
                         waitUntilDone: NO];
 
     [pool release];
-}
-
-- (double) currentProgress;
-{
-    return mCurrentProgress;
-}
-
-- (void) setCurrentProgress: (double) currentProgress
-{
-    mCurrentProgress = currentProgress;
 }
 
 - (IBAction) startAudit: (id) sender;
@@ -235,19 +215,20 @@
           contextInfo: nil];
 
     mRunning = YES;
+    
+    mResultsAccumulator = [[NSMutableArray alloc] init];
 
-    NSString * gameName;
-    if (mGameName == nil)
-        gameName = @"*";
-    else
-        gameName = [[mGameName copy] autorelease];
     [NSThread detachNewThreadSelector: @selector(auditThread:)
                              toTarget: self
-                           withObject: gameName];
+                           withObject: nil];
+    
+    mUpdateTimer = [[NSTimer timerWithTimeInterval:0.5 target:self selector:@selector(updateAuditStatusAndProgress:) userInfo:nil repeats:YES] retain];
+    [[NSRunLoop currentRunLoop] addTimer:mUpdateTimer forMode:NSModalPanelRunLoopMode];
    
     [NSApp runModalForWindow: mProgressPanel];
     [NSApp endSheet: mProgressPanel];
     [mProgressPanel orderOut: self];
+    
 }
 
 - (IBAction) cancel: (id) sender;
@@ -269,7 +250,18 @@
     }
 }
 
-
+- (NSString *) auditStatusSummaryText;
+{
+    if (!mAuditDateTime)
+        return @"Audit data needs updating.";
+    
+    BOOL complete = (mTotalDriverCount == [[self results] count]);
+    
+    if (complete)
+        return [NSString stringWithFormat: @"Complete audit (%d drivers) as of %@.", mTotalDriverCount, mAuditDateTime];
+    else
+        return [NSString stringWithFormat: @"Incomplete audit (%d/%d drivers) as of %@", [[self results] count], mTotalDriverCount, mAuditDateTime];
+}
 @end
 
 @implementation RomAuditWindowController (Private)
@@ -311,5 +303,47 @@
     [mResultsController setFilterPredicate: predicate];
 }
 
+
+- (NSString *) auditFilePath
+{
+    static NSString *auditFilePath = nil;
+    if (!auditFilePath) {
+        NSArray * paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
+        NSAssert([paths count] > 0, @"Could not locate NSLibraryDirectory in user domain");
+        
+        NSString * baseDirectory = [paths objectAtIndex: 0];
+        baseDirectory = [baseDirectory stringByAppendingPathComponent: @"MAME OS X"];
+        
+        NSAssert([[NSFileManager defaultManager] fileExistsAtPath: baseDirectory], @"Application Support directory should have already been created.");
+        
+        auditFilePath = [[baseDirectory stringByAppendingPathComponent: @"Last ROM Audit.nscoderspew"] retain];
+    }
+    
+    return auditFilePath;
+}
+
+- (void) saveResults;
+{
+    NSString *auditFilePath = [self auditFilePath];
+    NSMutableDictionary *savedState = [NSMutableDictionary dictionary];
+    [savedState setObject: [self valueForKey: @"results"] forKey: @"audit list"];
+    [savedState setObject: [self valueForKey: @"mAuditDateTime"] forKey: @"audit date"];
+    [savedState setObject: [self valueForKey: @"mTotalDriverCount"] forKey: @"total driver count"];    
+    
+    [NSKeyedArchiver archiveRootObject: savedState toFile: auditFilePath];
+}
+
+- (void) loadResults;
+{
+    NSString *auditFilePath = [self auditFilePath];
+    if ([[NSFileManager defaultManager] fileExistsAtPath: auditFilePath]) {
+        NSDictionary *savedState = [NSKeyedUnarchiver unarchiveObjectWithFile: auditFilePath];
+        [self willChangeValueForKey: @"auditStatusSummaryText"];
+        [self setValue: [savedState objectForKey: @"audit list"] forKey: @"results"];
+        [self setValue: [savedState objectForKey: @"audit date"] forKey: @"mAuditDateTime"];
+        [self setValue: [savedState objectForKey: @"total driver count"] forKey: @"mTotalDriverCount"];
+        [self didChangeValueForKey: @"auditStatusSummaryText"];
+    }
+}
 @end
 

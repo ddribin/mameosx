@@ -9835,6 +9835,7 @@
 			mainGroup = 556A42420AA4E9CE00602CC5;
 			productRefGroup = 556A42510AA4E9E500602CC5 /* Products */;
 			projectDirPath = "";
+			projectRoot = "";
 			targets = (
 				55BEF9830AEC5C7200357340 /* All */,
 				556A4C270AA50D6200602CC5 /* MAME OS X (tiny) */,
@@ -12789,6 +12790,10 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/MAME OS X-tiny.app/Contents/MacOS/MAME OS X-tiny";
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR_QUOTED)",
+				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -12821,6 +12826,10 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/MAME OS X-tiny.app/Contents/MacOS/MAME OS X-tiny";
 				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR_QUOTED)",
+				);
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
@@ -13191,6 +13200,10 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/MAME OS X-tiny.app/Contents/MacOS/MAME OS X-tiny";
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR_QUOTED)",
+				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -13446,6 +13459,7 @@
 			baseConfigurationReference = 555329F30B027FBD0092FC09 /* versions.xcconfig */;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = mame.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = DEBUG_INSTRUMENTED;
@@ -13474,6 +13488,7 @@
 			baseConfigurationReference = 555329F30B027FBD0092FC09 /* versions.xcconfig */;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = mame.pch;
 				HEADER_SEARCH_PATHS = (
@@ -13506,6 +13521,7 @@
 					ppc,
 				);
 				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = mame.pch;

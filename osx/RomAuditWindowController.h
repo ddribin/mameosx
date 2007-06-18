@@ -33,27 +33,26 @@
     IBOutlet NSObjectController * mControllerAlias;
     IBOutlet NSArrayController * mResultsController;
     IBOutlet NSPanel * mProgressPanel;
+    IBOutlet NSTextField * mAuditStatusField;
 
-    NSString * mGameName;
     NSString * mStatus;
     NSString * mSearchString;
     NSMutableArray * mResults;
     BOOL mRunning;
-    int mTotalRoms;
-    int mCheckedRoms;
-    double mCurrentProgress;
     BOOL mShowGood;
+    NSCalendarDate *mAuditDateTime;
+    unsigned int mTotalDriverCount;
+    
+    // only set during audit
+    unsigned int mCurrentAuditIndex;
+    NSTimer *mUpdateTimer;
+    NSMutableArray *mResultsAccumulator;
 }
 
 - (IBAction) startAudit: (id) sender;
 - (IBAction) cancel: (id) sender;
 
-- (double) currentProgress;
-
 - (NSString *) status;
-
-- (NSString *) gameName;
-- (void) setGameName: (NSString *) gameName;
 
 - (NSString *) searchString;
 - (void) setSearchString: (NSString *) searchString;
@@ -64,4 +63,5 @@
 - (NSMutableArray *) results;
 -  (void) setResults: (NSMutableArray *) results;
 
+- (NSString *) auditStatusSummaryText;
 @end
