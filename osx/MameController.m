@@ -577,7 +577,19 @@ static void exit_sleeper()
             logAttributes = mLogInfoAttributes;
     }
     
-    [self logMessage: message withAttributes: logAttributes];
+    // Use NSInvocation to perform the following on the main thread:
+    // [self logMessage: message withAttributes: logAttributes];
+    
+    SEL selector = @selector(logMessage:withAttributes:);
+    NSInvocation * invocation = [NSInvocation invocationWithMethodSignature:
+        [self methodSignatureForSelector: selector]];
+    [invocation setTarget: self];
+    [invocation setSelector: selector];
+    [invocation setArgument: &message atIndex: 2];
+    [invocation setArgument: &logAttributes atIndex: 3];
+    [invocation performSelectorOnMainThread: @selector(invoke)
+                                 withObject: nil
+                              waitUntilDone: YES];
     
     [mOriginalLogger logWithLevel: callerLevel
                          instance: instance
