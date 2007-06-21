@@ -663,28 +663,23 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     
     if (mGame != nil)
     {
-        mGameIndex = driver_get_index([mGame UTF8String]);
-        if (mGameIndex != -1)
+        mGameDriver = driver_get_name([mGame UTF8String]);
+        if (mGameDriver != NULL)
             return YES;
         else
             return NO;
     }
     else
     {
-        mGameIndex = -1;
+        mGameDriver == NULL;
         return NO;
     }
 }
 
-- (int) gameIndex;
-{
-    return mGameIndex;
-}
-
 - (NSString *) gameDescription;
 {
-    if (mGameIndex >= 0)
-        return [NSString stringWithUTF8String: drivers[mGameIndex]->description];
+    if (mGameDriver != NULL)
+        return [NSString stringWithUTF8String: mGameDriver->description];
     else
         return @"";
 }
@@ -692,7 +687,7 @@ NSString * MameExitStatusKey = @"MameExitStatus";
 
 - (BOOL) start;
 {
-    if (mGameIndex == -1)
+    if (mGameDriver == NULL)
         return NO;
     
     JRLogInfo(@"Running %@", mGame);
@@ -1133,7 +1128,7 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     mMameIsRunning = YES;
     mMameIsPaused = NO;
     // [self updateMouseCursor];
-    int exitStatus = run_game(mGameIndex);
+    int exitStatus = run_game(mGameDriver);
     mMameIsRunning = NO;
     mMameIsPaused = NO;
     [self updateMouseCursor];

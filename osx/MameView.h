@@ -71,7 +71,7 @@ typedef enum _MameFullScreenZoom
     id mDelegate;
     
     NSString * mGame;
-    int mGameIndex;
+    const game_driver * mGameDriver;
 
     running_machine * mMachine;
     render_target * mTarget;
@@ -112,7 +112,6 @@ typedef enum _MameFullScreenZoom
 
 - (NSString *) game;
 - (BOOL) setGame: (NSString *) theGame;
-- (int) gameIndex;
 - (NSString *) gameDescription;
 
 - (BOOL) start;

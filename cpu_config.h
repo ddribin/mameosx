@@ -29,6 +29,7 @@
 #define HAS_HD6309 1
 #define HAS_H83002 1
 #define HAS_SH2 1
+#define HAS_SH4 1
 #define HAS_H6280 1
 #define HAS_E116T 1
 #define HAS_E116XT 1
@@ -67,6 +68,8 @@
 #define HAS_I960 1
 #define HAS_KONAMI 1
 #define HAS_LH5801 1
+#define HAS_MB8841 1
+#define HAS_MB8842 1
 #define HAS_MB8843 1
 #define HAS_MB8844 1
 #define HAS_MB86233 1
@@ -164,5 +167,6 @@
 #define HAS_Z180 1
 #define HAS_Z8000 1
 #define HAS_Z80GB 1
+#define HAS_MINX 0
 
 #endif

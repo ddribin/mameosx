@@ -962,17 +962,17 @@ static void exit_sleeper()
     }
     else
     {
-        int matches[5];
+        const game_driver * matches[5];
         driver_get_approx_matches([mGameName UTF8String], ARRAY_LENGTH(matches), matches);
         NSMutableString * message = [NSMutableString stringWithString: @"Closest matches:"];
         int drvnum;
         for (drvnum = 0; drvnum < ARRAY_LENGTH(matches); drvnum++)
         {
-            if (matches[drvnum] != -1)
+            if (matches[drvnum] != NULL)
             {
                 [message appendFormat: @"\n%s [%s]",
-                    drivers[matches[drvnum]]->name,
-                    drivers[matches[drvnum]]->description];
+                    matches[drvnum]->name,
+                    matches[drvnum]->description];
             }
         }
         

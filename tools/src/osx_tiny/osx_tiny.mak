@@ -92,6 +92,7 @@ DRVLIBS = \
   $(VIDEO)/argus.o \
   $(VIDEO)/ppu2c0x.o \
   $(VIDEO)/pacman.o \
+  $(VIDEO)/res_net.o \
   $(MACHINE)/pacplus.o \
   $(MACHINE)/vsnes.o \
   $(MACHINE)/acitya.o \
