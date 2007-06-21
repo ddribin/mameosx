@@ -7,7 +7,7 @@ require 'tempfile'
 $VERBOSE = true
 
 def fix_file(file)
-  $stderr.puts "Fixing #{file}"
+  puts "Fixing #{file}"
   Tempfile.open("temp") do |temp|
     path = temp.path()
     #temp.unlink
@@ -38,15 +38,16 @@ Find.find(ARGV[0]) do |file|
   should_exclude = excludes.include?(extension)
   if FileTest.directory?(file)
     if should_exclude
-      $stderr.puts "Pruning #{file}"
+      puts "Pruning #{file}"
       Find.prune
     else
       next
     end
   end
   
-  if should_exclude
-    $stderr.puts "Skipping #{file}"
+  is_dot_file = File.basename(file)[0] == ?.
+  if should_exclude || is_dot_file
+    puts "Skipping #{file}"
     next
   end
 
