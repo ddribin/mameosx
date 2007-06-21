@@ -1,7 +1,7 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#define SDLMAME_MACOSX 1
+#define SDLMAME_DARWIN 1
 
 #if __ppc__
 # define PPC_ASM 1

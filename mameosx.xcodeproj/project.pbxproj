@@ -2574,6 +2574,9 @@
 		55B8C61E0C2A56CA00B1CD96 /* pottnpkr.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55B8C6190C2A56A300B1CD96 /* pottnpkr.lay */; };
 		55B8C61F0C2A56CA00B1CD96 /* tenpindx.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55B8C61A0C2A56A300B1CD96 /* tenpindx.lay */; };
 		55B8C6690C2AAE0E00B1CD96 /* osx_x86drc.c in Sources */ = {isa = PBXBuildFile; fileRef = 5511A0CB0B1CEBB4009BF71B /* osx_x86drc.c */; };
+		55B8C6F60C2ADB3C00B1CD96 /* osxutils.h in Headers */ = {isa = PBXBuildFile; fileRef = 55B8C6F30C2ADB3C00B1CD96 /* osxutils.h */; };
+		55B8C6F70C2ADB3C00B1CD96 /* osxutils.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B8C6F40C2ADB3C00B1CD96 /* osxutils.m */; };
+		55B8C6F80C2ADB3C00B1CD96 /* sdlwork.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B8C6F50C2ADB3C00B1CD96 /* sdlwork.c */; };
 		55BEF9C40AEC5F2F00357340 /* libcore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 556A42D40AA4EBA200602CC5 /* libcore.a */; };
 		55BEF9C50AEC5F3500357340 /* liblocalexpat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 556A49BB0AA4F86600602CC5 /* liblocalexpat.a */; };
 		55BEF9C60AEC5F3500357340 /* liblocalzlib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 556A4A010AA4F8EC00602CC5 /* liblocalzlib.a */; };
@@ -2649,7 +2652,6 @@
 		55C71AB80B2B02FA001FF0BE /* AudioEffects.nib in Resources */ = {isa = PBXBuildFile; fileRef = 55C71AB60B2B02FA001FF0BE /* AudioEffects.nib */; };
 		55C71AB90B2B02FA001FF0BE /* AudioEffects.nib in Resources */ = {isa = PBXBuildFile; fileRef = 55C71AB60B2B02FA001FF0BE /* AudioEffects.nib */; };
 		55CA69090BA3CF390012CF7B /* DDHidKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 55CA69080BA3CF390012CF7B /* DDHidKeyboard.m */; };
-		55CC45A50B857AB800979214 /* sdlwork.c in Sources */ = {isa = PBXBuildFile; fileRef = 55CC45A40B857AB800979214 /* sdlwork.c */; };
 		55D00ADA0B2E8CD500F7961F /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55D00AD90B2E8CD500F7961F /* IOKit.framework */; };
 		55D00BA20B2E8E4800F7961F /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55D00AD90B2E8CD500F7961F /* IOKit.framework */; };
 		55D2836F0B12D5CA002C9199 /* MamePreferences.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 55D2836C0B12D5CA002C9199 /* MamePreferences.h */; };
@@ -5669,6 +5671,9 @@
 		55B8C6180C2A56A300B1CD96 /* pmpoker.lay */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = pmpoker.lay; sourceTree = "<group>"; };
 		55B8C6190C2A56A300B1CD96 /* pottnpkr.lay */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = pottnpkr.lay; sourceTree = "<group>"; };
 		55B8C61A0C2A56A300B1CD96 /* tenpindx.lay */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = tenpindx.lay; sourceTree = "<group>"; };
+		55B8C6F30C2ADB3C00B1CD96 /* osxutils.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = osxutils.h; sourceTree = "<group>"; };
+		55B8C6F40C2ADB3C00B1CD96 /* osxutils.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = osxutils.m; sourceTree = "<group>"; };
+		55B8C6F50C2ADB3C00B1CD96 /* sdlwork.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = sdlwork.c; sourceTree = "<group>"; };
 		55BB74A50BB5D4ED00B857B3 /* avcomp.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = avcomp.c; sourceTree = "<group>"; };
 		55BB74A60BB5D4ED00B857B3 /* avcomp.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = avcomp.h; sourceTree = "<group>"; };
 		55BB74A70BB5D4ED00B857B3 /* aviio.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = aviio.c; sourceTree = "<group>"; };
@@ -5721,7 +5726,6 @@
 		55C71AAE0B2AFFF0001FF0BE /* AudioEffectWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioEffectWindowController.m; sourceTree = "<group>"; };
 		55C71AB70B2B02FA001FF0BE /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/AudioEffects.nib; sourceTree = "<group>"; };
 		55CA69080BA3CF390012CF7B /* DDHidKeyboard.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DDHidKeyboard.m; sourceTree = "<group>"; };
-		55CC45A40B857AB800979214 /* sdlwork.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = sdlwork.c; sourceTree = "<group>"; };
 		55CDE6E20AAC60CB0021CEA0 /* MameInputController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MameInputController.h; sourceTree = "<group>"; };
 		55CDE6E30AAC60CB0021CEA0 /* MameInputController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MameInputController.m; sourceTree = "<group>"; };
 		55CDE8D70AAC93E90021CEA0 /* osd_osx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = osd_osx.h; sourceTree = "<group>"; };
@@ -6703,6 +6707,7 @@
 		559873590B230F99003D1982 /* vendor */ = {
 			isa = PBXGroup;
 			children = (
+				55B8C6F20C2ADB3C00B1CD96 /* sdlmame */,
 				55193F630B93F5EC004C0C98 /* NSXReturnThrowError */,
 				55193F380B93F5DC004C0C98 /* DDHidLib */,
 				55801E780B530D4F00BB9851 /* JRLog */,
@@ -8936,6 +8941,16 @@
 			name = auto;
 			sourceTree = "<group>";
 		};
+		55B8C6F20C2ADB3C00B1CD96 /* sdlmame */ = {
+			isa = PBXGroup;
+			children = (
+				55B8C6F30C2ADB3C00B1CD96 /* osxutils.h */,
+				55B8C6F40C2ADB3C00B1CD96 /* osxutils.m */,
+				55B8C6F50C2ADB3C00B1CD96 /* sdlwork.c */,
+			);
+			path = sdlmame;
+			sourceTree = "<group>";
+		};
 		55BB74A40BB5D4ED00B857B3 /* util */ = {
 			isa = PBXGroup;
 			children = (
@@ -9018,7 +9033,6 @@
 				55CDE8D70AAC93E90021CEA0 /* osd_osx.h */,
 				556A4D890AA514C300602CC5 /* osd_osx.m */,
 				5567B2E30BBA336A00EA2072 /* osd_core_osx.m */,
-				55CC45A40B857AB800979214 /* sdlwork.c */,
 				5537F2BD0BBED584001A390F /* exporter */,
 			);
 			name = osd;
@@ -9377,6 +9391,7 @@
 				5537EF660BBEAD6C001A390F /* FrameCompressor.h in Headers */,
 				5537F0F40BBEB35E001A390F /* FrameReader.h in Headers */,
 				55F15B740BC01B6400366C65 /* MameEffectFilter.h in Headers */,
+				55B8C6F60C2ADB3C00B1CD96 /* osxutils.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12495,7 +12510,6 @@
 				55D4039C0B3664DF00E5E613 /* DDAudioUnitNode.m in Sources */,
 				55D4039E0B3664DF00E5E613 /* DDAudioUnitPreset.m in Sources */,
 				55801E7C0B530D4F00BB9851 /* JRLog.m in Sources */,
-				55CC45A50B857AB800979214 /* sdlwork.c in Sources */,
 				55193F4F0B93F5DC004C0C98 /* DDHidAppleRemote.m in Sources */,
 				55193F510B93F5DC004C0C98 /* DDHidDevice.m in Sources */,
 				55193F530B93F5DC004C0C98 /* DDHidElement.m in Sources */,
@@ -12513,6 +12527,8 @@
 				5537EF670BBEAD6C001A390F /* FrameCompressor.m in Sources */,
 				5537F0F50BBEB35E001A390F /* FrameReader.m in Sources */,
 				55F15B750BC01B6400366C65 /* MameEffectFilter.m in Sources */,
+				55B8C6F70C2ADB3C00B1CD96 /* osxutils.m in Sources */,
+				55B8C6F80C2ADB3C00B1CD96 /* sdlwork.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
