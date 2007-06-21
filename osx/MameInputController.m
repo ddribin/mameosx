@@ -400,6 +400,8 @@ static NSString * format(NSString * format, ...);
     for (keyboardNumber = 0; keyboardNumber < keyboardCount; keyboardNumber++)
     {
         DDHidKeyboard * keyboard = [keyboards objectAtIndex: keyboardNumber];
+        JRLogInfo(@"Found keyboard: %@ (%@)",
+                  [keyboard productName], [keyboard manufacturer]);
         
         [p->mJoysticks addObject: keyboard];
         p->mNumberOfKeyboards++;
@@ -453,9 +455,9 @@ static NSString * format(NSString * format, ...);
         [joystick startListening];
 
         NSArray * buttons = [joystick buttonElements];
-        JRLogInfo(@"Found joystick: %@, %d stick(s), %d button(s)",
-                  [joystick productName], [joystick countOfSticks],
-                  [buttons count]);
+        JRLogInfo(@"Found joystick: %@ (%@), %d stick(s), %d button(s)",
+                  [joystick productName], [joystick manufacturer],
+                  [joystick countOfSticks], [buttons count]);
         unsigned i;
         // TODO: Handle more sticks.
         // for (i = 0; i < [joystick countOfSticks]; i++)
@@ -564,8 +566,8 @@ static NSString * format(NSString * format, ...);
         [mouse setTag: mouseNumber];
         
         NSArray * buttons = [mouse buttonElements];
-        JRLogInfo(@"Found mouse: %@, %d button(s)",
-                  [mouse productName], [buttons count]);
+        JRLogInfo(@"Found mouse: %@ (%@), %d button(s)",
+                  [mouse productName], [mouse manufacturer], [buttons count]);
         
         [mouse setDelegate: self];
         [mouse startListening];
