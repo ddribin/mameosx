@@ -1,0 +1,12 @@
+How To Compile
+==============
+
+Download MAME core source, if it does not already exist. Run the following set
+of commands:
+
+    % mkdir mame
+    % cd mame
+    % unzip ../mame.zip
+    % ../tools/fix_eol.rb .
+    % patch -p1 < ../mame.patch
+
