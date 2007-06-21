@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-#if __i386__ && 0
-#include "src/x86drc.c"
+#if __i386__
+#include "src/emu/cpu/x86drc.c"
 #endif
 

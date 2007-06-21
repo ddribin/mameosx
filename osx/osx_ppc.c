@@ -23,7 +23,7 @@
  */
 
 
-#if __i386__ && 0
+#if __i386__
 #include "src/emu/cpu/powerpc/ppcdrc.c"
 #else
 #include "src/emu/cpu/powerpc/ppc.c"

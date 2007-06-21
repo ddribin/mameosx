@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-#if __i386__ && 0
+#if __i386__
 #include "src/emu/cpu/mips/mips3drc.c"
 #else
 #include "src/emu/cpu/mips/mips3.c"
