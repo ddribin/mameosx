@@ -3,6 +3,7 @@
 require 'find'
 require 'set'
 require 'tempfile'
+require 'ftools'
 
 $VERBOSE = true
 
@@ -19,7 +20,11 @@ def fix_file(file)
       end
     end
     
-    File.rename(path, file)
+    temp.flush()
+    temp.close()
+    
+    File.syscopy(path, file)
+    File.delete(path)
   end
 end
 
