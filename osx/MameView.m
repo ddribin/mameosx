@@ -772,7 +772,7 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     BOOL value;
     @synchronized(self)
     {
-        value = [mTimingController throttled];
+        value = video_get_throttle();
     }
     return value;
 }
@@ -781,7 +781,7 @@ NSString * MameExitStatusKey = @"MameExitStatus";
 {
     @synchronized(self)
     {
-        [mTimingController setThrottled: flag];
+        video_set_throttle(flag? 1 : 0);
     }
 }
 
