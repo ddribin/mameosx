@@ -159,6 +159,7 @@ typedef enum _MameFullScreenZoom
 
 - (BOOL) throttled;
 - (void) setThrottled: (BOOL) flag;
+- (void) toggleThrottled;
 
 - (BOOL) shouldHideMouseCursor;
 - (void) setShouldHideMouseCursor: (BOOL) flag;

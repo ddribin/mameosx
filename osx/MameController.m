@@ -436,17 +436,9 @@ static void exit_sleeper()
     return size;
 }
 
-//=========================================================== 
-//  throttled 
-//=========================================================== 
-- (BOOL) throttled
+- (IBAction) toggleThrottled: (id) sender;
 {
-    return [mMameView throttled];
-}
-
-- (void) setThrottled: (BOOL) flag
-{
-    [mMameView setThrottled: flag];
+    [mMameView toggleThrottled];
 }
 
 //=========================================================== 
@@ -773,11 +765,11 @@ static void exit_sleeper()
 {
     MamePreferences * preferences = [MamePreferences standardPreferences];
 
-    [self setThrottled: [preferences throttled]];
     [self setSyncToRefresh: [preferences syncToRefresh]];
     [self setLinearFilter: [preferences linearFilter]];
     [self setCurrentVisualEffectName: [preferences visualEffect]];
 
+    [mMameView setThrottled: [preferences throttled]];
     [mMameView setAudioEnabled: [preferences soundEnabled]];
     
     NSString * frameRendering = [preferences frameRendering];

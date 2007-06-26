@@ -24,6 +24,7 @@
                 showReleaseNotes = id; 
                 showWhatsNew = id; 
                 togglePause = id; 
+                toggleThrottled = id; 
                 visualEffectsMenuChanged = id; 
             }; 
             CLASS = MameController; 

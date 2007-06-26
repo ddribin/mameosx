@@ -100,9 +100,7 @@ extern "C" {
 - (IBAction) nextVisualEffect: (id) sender;
 - (IBAction) previousVisualEffects: (id) sender;
 - (IBAction) visualEffectsMenuChanged: (id) sender;
-
-- (BOOL) throttled;
-- (void) setThrottled: (BOOL) flag;
+- (IBAction) toggleThrottled: (id) sender;
 
 - (BOOL) syncToRefresh;
 - (void) setSyncToRefresh: (BOOL) flag;
