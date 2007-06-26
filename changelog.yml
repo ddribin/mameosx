@@ -5,7 +5,8 @@
     - Upgrade to 0.116 core.
     - Fix aspect ratio for rotated displays.
     - Save and restore audit results (Thanks to b.bum)
-    - Enable dynamic recompiler (DRC)
+    - Enable dynamic recompiler (DRC) on Intel
+    - Ignore HID devices that could not be open.  Should fix Wacom tablet issues.
 
 <% version = "0.114" %>
 - version: "<%=version%>"
