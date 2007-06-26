@@ -10,6 +10,11 @@
     - Assume square pixels if display size cannot be determined, i.e. a TV.
     - Add Help menu item to show core whatsnew.txt.
     - Fix Command-T throttle so it works, again.
+  files:
+    - name: MAMEOSX-<%=version%>.dmg
+      size: 23488265
+    - name: mameosx-<%=version%>.tgz
+      size: 14084789
   
 <% version = "0.114" %>
 - version: "<%=version%>"
