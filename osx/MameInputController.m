@@ -57,9 +57,8 @@ static NSString * format(NSString * format, ...);
     int mTotalCodes;
     INT32 mKeyStates[MAME_OSX_NUM_KEYSTATES];
     INT32 mKeyStates2[256];
-    NSMutableArray * mJoystickNames;
-    NSMutableArray * mJoysticks;
-    int mNumberOfKeyboards;
+    NSMutableArray * mDeviceNames;
+    NSMutableArray * mDevices;
     BOOL mEnabled;
     JoystickState mJoystickStates[MAX_JOYSTICKS];
     MouseState mMiceStates[MAX_MICE];
@@ -77,8 +76,8 @@ static NSString * format(NSString * format, ...);
     if (self == nil)
         return nil;
     
-    mJoystickNames = [[NSMutableArray alloc] init];
-    mJoysticks = [[NSMutableArray alloc] init];
+    mDeviceNames = [[NSMutableArray alloc] init];
+    mDevices = [[NSMutableArray alloc] init];
     
     return self;
 }
@@ -88,17 +87,19 @@ static NSString * format(NSString * format, ...);
 //=========================================================== 
 - (void) dealloc
 {
-    [mJoystickNames release];
-    [mJoysticks release];
+    [mDeviceNames release];
+    [mDevices release];
     
-    mJoystickNames = nil;
-    mJoysticks = nil;
+    mDeviceNames = nil;
+    mDevices = nil;
     [super dealloc];
 }
 
 @end
 
 @interface MameInputController (Private)
+
+- (BOOL) addDevice: (DDHidDevice *) device tag: (int) tag;
 
 - (void) initKeyCodes;
 
@@ -168,8 +169,8 @@ static NSString * format(NSString * format, ...);
 - (void) osd_init;
 {
     p->mTotalCodes = 0;
-    [p->mJoysticks removeAllObjects];
-    [p->mJoystickNames removeAllObjects];
+    [p->mDevices removeAllObjects];
+    [p->mDeviceNames removeAllObjects];
 
     [self initKeyCodes];
     [self initJoyCodes];
@@ -188,9 +189,9 @@ static NSString * format(NSString * format, ...);
 
 - (void) gameFinished;
 {
-    [p->mJoysticks makeObjectsPerformSelector: @selector(stopListening)];
-    [p->mJoysticks removeAllObjects];
-    [p->mJoystickNames removeAllObjects];
+    [p->mDevices makeObjectsPerformSelector: @selector(stopListening)];
+    [p->mDevices removeAllObjects];
+    [p->mDeviceNames removeAllObjects];
 }
 
 - (const os_code_info *) osd_get_code_list;
@@ -381,6 +382,27 @@ static NSString * format(NSString * format, ...);
 
 @implementation MameInputController (Private)
 
+- (BOOL) addDevice: (DDHidDevice *) device tag: (int) tag;
+{
+    BOOL success = NO;
+    @try
+    {
+        [device setTag: tag];
+        [device startListening];
+        
+        // Make sure to add the object last, to ensure it was able to start
+        // listening
+        [p->mDevices addObject: device];
+        success = YES;
+    }
+    @catch (id e)
+    {
+        JRLogInfo(@"addDevice exception: %@", e);
+        success = NO;
+    }
+    return success;
+}
+
 - (void) initKeyCodes;
 {
     int i= 0;
@@ -393,7 +415,7 @@ static NSString * format(NSString * format, ...);
         i++;
     }
     
-    p->mNumberOfKeyboards = 0;
+    int keyboardTag = 0;
     NSArray * keyboards = [DDHidKeyboard allKeyboards];
     int keyboardCount = MIN([keyboards count], MAX_KEYBOARDS);
     int keyboardNumber;
@@ -402,12 +424,13 @@ static NSString * format(NSString * format, ...);
         DDHidKeyboard * keyboard = [keyboards objectAtIndex: keyboardNumber];
         JRLogInfo(@"Found keyboard: %@ (%@)",
                   [keyboard productName], [keyboard manufacturer]);
-        
-        [p->mJoysticks addObject: keyboard];
-        p->mNumberOfKeyboards++;
-        [keyboard setTag: keyboardNumber];
+        if (![self addDevice: keyboard tag: keyboardTag])
+        {
+            JRLogInfo(@"Could not add keyboard, skipping");
+            continue;
+        }
         [keyboard setDelegate: self];
-        [keyboard startListening];
+        keyboardTag++;
     }
 }
 
@@ -417,14 +440,9 @@ static NSString * format(NSString * format, ...);
 {
     int entry;
     
-#if 1
     NSMutableData * data = utf8Data(name);
     char * bytes = [data mutableBytes];
-    [p->mJoystickNames addObject: data];
-#else
-    const char * bytes = [name cStringUsingEncoding: NSUTF8StringEncoding];
-    [p->mJoystickNames addObject: name];
-#endif
+    [p->mDeviceNames addObject: data];
 
     // find the table entry, if there is one
     for (entry = 0; entry < ELEMENTS(joy_trans_table); entry++)
@@ -442,22 +460,26 @@ static NSString * format(NSString * format, ...);
 
 - (void) initJoyCodes;
 {
+    int joystickTag = 0;
     NSArray * joysticks = [DDHidJoystick allJoysticks];
     int joystickCount = MIN([joysticks count], MAX_JOYSTICKS);
     int joystickNumber;
     for (joystickNumber = 0; joystickNumber < joystickCount; joystickNumber++)
     {
         DDHidJoystick * joystick = [joysticks objectAtIndex: joystickNumber];
-        
-        [p->mJoysticks addObject: joystick];
-        [joystick setTag: joystickNumber];
-        [joystick setDelegate: self];
-        [joystick startListening];
-
         NSArray * buttons = [joystick buttonElements];
         JRLogInfo(@"Found joystick: %@ (%@), %d stick(s), %d button(s)",
                   [joystick productName], [joystick manufacturer],
                   [joystick countOfSticks], [buttons count]);
+
+        if (![self addDevice: joystick tag: joystickTag])
+        {
+            JRLogInfo(@"Could not add joystick, skipping");
+            continue;
+        }
+        [joystick setDelegate: self];
+        joystickTag++;
+
         unsigned i;
         // TODO: Handle more sticks.
         // for (i = 0; i < [joystick countOfSticks]; i++)
@@ -556,21 +578,23 @@ static NSString * format(NSString * format, ...);
 
 - (void) initMouseCodes;
 {
+    int mouseTag = 0;
     NSArray * mice = [DDHidMouse allMice];
     int mouseCount = MIN([mice count], MAX_MICE);
     int mouseNumber;
     for (mouseNumber = 0; mouseNumber < mouseCount; mouseNumber++)
     {
         DDHidMouse * mouse = [mice objectAtIndex: mouseNumber];
-        [p->mJoysticks addObject: mouse];
-        [mouse setTag: mouseNumber];
-        
         NSArray * buttons = [mouse buttonElements];
         JRLogInfo(@"Found mouse: %@ (%@), %d button(s)",
                   [mouse productName], [mouse manufacturer], [buttons count]);
-        
+        if (![self addDevice: mouse tag: mouseTag])
+        {
+            JRLogInfo(@"Could not add mouse, skipping");
+            continue;
+        }
         [mouse setDelegate: self];
-        [mouse startListening];
+        mouseTag++;
 
         DDHidElement * axis;
         NSString * name;
