@@ -1629,33 +1629,41 @@ enum {
             float verticalSize =
                 [[displayDict objectForKey: NSSTR(kDisplayVerticalImageSize)]
                     floatValue];
+                
             uint32_t rotation =
                 [[displayDict objectForKey: NSSTR(kIOFBTransformKey)]
                     unsignedIntValue];
 
-            //    Make sure to release the dictionary we got from IOKit
+            // Make sure to release the dictionary we got from IOKit
             [displayDict release];
             
-            float displayWidth =
-                [[displayMode objectForKey: (NSString *) kCGDisplayWidth]
-                    floatValue];
-            float displayHeight =
-                [[displayMode objectForKey: (NSString *)  kCGDisplayHeight]
-                    floatValue];
-            
-            float horizontalPixelsPerMM;
-            float verticalPixlesPerMM;
-            if ((rotation == kIOFBRotate90) || (rotation == kIOFBRotate270))
+            if ((horizontalSize == 0.0) || (verticalSize == 0.0))
             {
-                horizontalPixelsPerMM = displayHeight/horizontalSize;
-                verticalPixlesPerMM = displayWidth/verticalSize;
+                JRLogInfo(@"Horizontal or vertical display size is zero.");
             }
             else
             {
-                horizontalPixelsPerMM = displayWidth/horizontalSize;
-                verticalPixlesPerMM = displayHeight/verticalSize;
+                float displayWidth =
+                    [[displayMode objectForKey: (NSString *) kCGDisplayWidth]
+                        floatValue];
+                float displayHeight =
+                    [[displayMode objectForKey: (NSString *)  kCGDisplayHeight]
+                        floatValue];
+                
+                float horizontalPixelsPerMM;
+                float verticalPixlesPerMM;
+                if ((rotation == kIOFBRotate90) || (rotation == kIOFBRotate270))
+                {
+                    horizontalPixelsPerMM = displayHeight/horizontalSize;
+                    verticalPixlesPerMM = displayWidth/verticalSize;
+                }
+                else
+                {
+                    horizontalPixelsPerMM = displayWidth/horizontalSize;
+                    verticalPixlesPerMM = displayHeight/verticalSize;
+                }
+                aspectRatio = horizontalPixelsPerMM/verticalPixlesPerMM;
             }
-            aspectRatio = horizontalPixelsPerMM/verticalPixlesPerMM;
         }
     }
     return aspectRatio;

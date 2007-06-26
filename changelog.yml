@@ -1,13 +1,14 @@
 <% version = "0.116" %>
 - version: "<%=version%>"
-  date: 2007-07-01
+  date: 2007-06-26
   changes:
     - Upgrade to 0.116 core.
     - Fix aspect ratio for rotated displays.
-    - Save and restore audit results (Thanks to b.bum)
-    - Enable dynamic recompiler (DRC) on Intel
+    - Save and restore audit results.  (Thanks to b.bum)
+    - Enable dynamic recompiler (DRC) on Intel.
     - Ignore HID devices that could not be open.  Should fix Wacom tablet issues.
-
+    - Assume square pixels if display size cannot be determined, i.e. a TV.
+  
 <% version = "0.114" %>
 - version: "<%=version%>"
   date: 2007-04-04
