@@ -384,6 +384,8 @@
 		5595F0C00B1BDD9B00631777 /* RomAuditSummary.h in Headers */ = {isa = PBXBuildFile; fileRef = 5595F0BE0B1BDD9B00631777 /* RomAuditSummary.h */; };
 		5595F0C10B1BDD9B00631777 /* RomAuditSummary.m in Sources */ = {isa = PBXBuildFile; fileRef = 5595F0BF0B1BDD9B00631777 /* RomAuditSummary.m */; };
 		55A3A5230AA7B36400921B71 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55A3A5220AA7B36400921B71 /* QuartzCore.framework */; };
+		55A5AE520C30D0A70009D5AE /* whatsnew.txt in Resources */ = {isa = PBXBuildFile; fileRef = 55A5AE510C30D0A70009D5AE /* whatsnew.txt */; };
+		55A5AE530C30D0A70009D5AE /* whatsnew.txt in Resources */ = {isa = PBXBuildFile; fileRef = 55A5AE510C30D0A70009D5AE /* whatsnew.txt */; };
 		55A99AB10B20C5D900D4E406 /* effects in Resources */ = {isa = PBXBuildFile; fileRef = 55A99AA60B20C5D900D4E406 /* effects */; };
 		55A99AB20B20C5D900D4E406 /* effects in Resources */ = {isa = PBXBuildFile; fileRef = 55A99AA60B20C5D900D4E406 /* effects */; };
 		55B8B49C0C2A4E8E00B1CD96 /* 34010fld.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B8B4400C2A4E8B00B1CD96 /* 34010fld.c */; };
@@ -3480,6 +3482,7 @@
 		5595F0BE0B1BDD9B00631777 /* RomAuditSummary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RomAuditSummary.h; sourceTree = "<group>"; };
 		5595F0BF0B1BDD9B00631777 /* RomAuditSummary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RomAuditSummary.m; sourceTree = "<group>"; };
 		55A3A5220AA7B36400921B71 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = /System/Library/Frameworks/QuartzCore.framework; sourceTree = "<absolute>"; };
+		55A5AE510C30D0A70009D5AE /* whatsnew.txt */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; name = whatsnew.txt; path = mame/whatsnew.txt; sourceTree = SOURCE_ROOT; };
 		55A99AA60B20C5D900D4E406 /* effects */ = {isa = PBXFileReference; lastKnownFileType = folder; path = effects; sourceTree = "<group>"; };
 		55B8B4400C2A4E8B00B1CD96 /* 34010fld.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = 34010fld.c; path = tms34010/34010fld.c; sourceTree = "<group>"; };
 		55B8B4410C2A4E8B00B1CD96 /* adsp2100.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = adsp2100.c; path = adsp2100/adsp2100.c; sourceTree = "<group>"; };
@@ -6091,6 +6094,7 @@
 				55A99AA60B20C5D900D4E406 /* effects */,
 				55F4D7BD0B86DAFC001EED08 /* manual */,
 				55D2934C0B1762E6002C9199 /* release_notes.html */,
+				55A5AE510C30D0A70009D5AE /* whatsnew.txt */,
 				556A4C2A0AA50D6200602CC5 /* Info.plist */,
 				551A61390AC24B2000AECE1E /* ui.bdf */,
 				556A4C500AA50E5800602CC5 /* MainMenu.nib */,
@@ -9909,6 +9913,7 @@
 				55F4D7410B86B937001EED08 /* APPL.icns in Resources */,
 				55F4D7C30B86DAFC001EED08 /* manual in Resources */,
 				55F15B850BC01D4D00366C65 /* MameEffect.cikernel in Resources */,
+				55A5AE530C30D0A70009D5AE /* whatsnew.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9933,6 +9938,7 @@
 				55C71AB90B2B02FA001FF0BE /* AudioEffects.nib in Resources */,
 				55F4D7400B86B937001EED08 /* APPL.icns in Resources */,
 				55F4D7C20B86DAFC001EED08 /* manual in Resources */,
+				55A5AE520C30D0A70009D5AE /* whatsnew.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
