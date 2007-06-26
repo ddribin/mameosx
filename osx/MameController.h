@@ -149,6 +149,8 @@ extern "C" {
 
 - (IBAction) showReleaseNotes: (id) sender;
 
+- (IBAction) showWhatsNew: (id) sender;
+
 - (void) logWithLevel: (JRLogLevel) callerLevel
              instance: (NSString*) instance
                  file: (const char*) file

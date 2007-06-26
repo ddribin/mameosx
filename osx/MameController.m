@@ -546,6 +546,14 @@ static void exit_sleeper()
     [[NSWorkspace sharedWorkspace] openFile: releaseNotes];
 }
 
+- (IBAction) showWhatsNew: (id) sender;
+{
+    NSBundle * myBundle = [NSBundle bundleForClass: [self class]];
+    NSString * whatsNew = 
+        [myBundle pathForResource: @"whatsnew" ofType: @"txt"];
+    [[NSWorkspace sharedWorkspace] openFile: whatsNew];
+}
+
 - (void) logWithLevel: (JRLogLevel) callerLevel
              instance: (NSString*) instance
                  file: (const char*) file
