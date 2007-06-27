@@ -1617,7 +1617,6 @@ enum {
 // http://developer.apple.com/qa/qa2001/qa1217.html
 - (float) aspectRatioForDisplay: (CGDirectDisplayID) displayId;
 {
-    NSDictionary * displayMode = (NSDictionary *) CGDisplayCurrentMode(displayId);
     // Assume square pixels, if we can't determine it.
     float aspectRatio = 1.0;
     
@@ -1652,6 +1651,9 @@ enum {
             }
             else
             {
+                NSDictionary * displayMode = (NSDictionary *) CGDisplayCurrentMode(displayId);
+                JRLogDebug(@"displayMode: %@", displayMode);
+
                 float displayWidth =
                     [[displayMode objectForKey: (NSString *) kCGDisplayWidth]
                         floatValue];
