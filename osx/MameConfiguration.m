@@ -147,6 +147,11 @@
     [self setBoolOption: cheat withName: OPTION_CHEAT];
 }
 
+- (void) setCheatFile: (NSString *) cheatFile;
+{
+    [self setStringOption: cheatFile withName: OPTION_CHEAT_FILE];
+}
+
 #pragma mark -
 #pragma mark Messages
 

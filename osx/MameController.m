@@ -798,6 +798,8 @@ static void exit_sleeper()
             [mConfiguration fontPath], [myBundle resourcePath], nil];
         [mConfiguration setFontPath: [fontPath componentsJoinedByString: @";"]];
     }
+    [mConfiguration setCheatFile:
+        [MameApplicationSupportDirectory() stringByAppendingPathComponent: @"cheat.dat"]];
 }
 
 - (void) setGameLoading: (BOOL) gameLoading;

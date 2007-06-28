@@ -762,14 +762,9 @@ NSString * MameBiosKey = @"Bios";
 
     NSFileManager * fileManager = [NSFileManager defaultManager];
     NSArray * paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
-    NSAssert([paths count] > 0, @"Could not locate NSLibraryDirectory in user domain");
+    NSAssert([paths count] > 0, @"Could not locate NSApplicationSupportDirectory in user domain");
 
-    NSString * baseDirectory = [paths objectAtIndex: 0];
-    if (![fileManager fileExistsAtPath: baseDirectory])
-        [fileManager createDirectoryAtPath: baseDirectory attributes: nil];
-    baseDirectory = [baseDirectory stringByAppendingPathComponent: @"MAME OS X"];
-    if (![fileManager fileExistsAtPath: baseDirectory])
-        [fileManager createDirectoryAtPath: baseDirectory attributes: nil];
+    NSString * baseDirectory = MameApplicationSupportDirectory();
 
     int i;
     for (i = 0; defaultPaths[i].path != nil; i++)
@@ -782,4 +777,19 @@ NSString * MameBiosKey = @"Bios";
 }
 
 @end
+
+NSString * MameApplicationSupportDirectory(void)
+{
+    NSFileManager * fileManager = [NSFileManager defaultManager];
+    NSArray * paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
+    NSCAssert([paths count] > 0, @"Could not locate NSApplicationSupportDirectory in user domain");
+    
+    NSString * directory = [paths objectAtIndex: 0];
+    if (![fileManager fileExistsAtPath: directory])
+        [fileManager createDirectoryAtPath: directory attributes: nil];
+    directory = [directory stringByAppendingPathComponent: @"MAME OS X"];
+    if (![fileManager fileExistsAtPath: directory])
+        [fileManager createDirectoryAtPath: directory attributes: nil];
+    return directory;
+}
 

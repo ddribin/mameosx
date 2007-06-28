@@ -70,6 +70,8 @@
 
 - (void) setCheat: (BOOL) cheat;
 
+- (void) setCheatFile: (NSString *) cheatFile;
+
 #pragma mark -
 #pragma mark Messages
 

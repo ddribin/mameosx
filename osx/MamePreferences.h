@@ -207,6 +207,8 @@
 
 @end
 
+NSString * MameApplicationSupportDirectory(void);
+
 #pragma mark -
 #pragma mark Preference Keys
 

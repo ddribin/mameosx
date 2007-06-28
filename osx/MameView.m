@@ -29,7 +29,6 @@
 #import "MameAudioController.h"
 #import "MameTimingController.h"
 #import "MameFileManager.h"
-#import "MameConfiguration.h"
 #import "MameFilter.h"
 #import "JRLog.h"
 #import "MameChud.h"
