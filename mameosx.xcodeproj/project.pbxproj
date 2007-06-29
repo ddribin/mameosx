@@ -78,7 +78,7 @@
 		5537F2FB0BBEE15D001A390F /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5537EF890BBEAE14001A390F /* QuickTime.framework */; };
 		553A07300AFD9E2700531E1F /* MameFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = 553A072E0AFD9E2700531E1F /* MameFilter.h */; };
 		553A07320AFDA09900531E1F /* MameFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 553A07310AFDA09900531E1F /* MameFilter.m */; };
-		553A09B10AFF11B300531E1F /* CustomMameFilters.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 553A09AE0AFF11B300531E1F /* CustomMameFilters.h */; };
+		553A09B10AFF11B300531E1F /* CustomMameFilters.h in Copy to Frameworks */ = {isa = PBXBuildFile; fileRef = 553A09AE0AFF11B300531E1F /* CustomMameFilters.h */; };
 		553A09BD0AFF12BA00531E1F /* MameFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = 553A072E0AFD9E2700531E1F /* MameFilter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5548ECDF0ABCB463008D1F74 /* MameFileManagerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5548ECDE0ABCB463008D1F74 /* MameFileManagerTest.m */; };
 		5548EDCB0ABE3CEF008D1F74 /* file.txt in Resources */ = {isa = PBXBuildFile; fileRef = 5548EDCA0ABE3CEF008D1F74 /* file.txt */; };
@@ -2572,6 +2572,13 @@
 		55A99AB10B20C5D900D4E406 /* effects in Resources */ = {isa = PBXBuildFile; fileRef = 55A99AA60B20C5D900D4E406 /* effects */; };
 		55A99AB20B20C5D900D4E406 /* effects in Resources */ = {isa = PBXBuildFile; fileRef = 55A99AA60B20C5D900D4E406 /* effects */; };
 		55ACAA980C34D17000F647CE /* cpuintrf.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A42800AA4EB9200602CC5 /* cpuintrf.c */; };
+		55ACAAE20C35406F00F647CE /* mameosx-util-main.m in Sources */ = {isa = PBXBuildFile; fileRef = 55ACAAE10C35406F00F647CE /* mameosx-util-main.m */; };
+		55ACAAEA0C35413800F647CE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 556A4ACF0AA4FBA000602CC5 /* Foundation.framework */; };
+		55ACAB7B0C35421700F647CE /* MameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55BEF9A00AEC5E5C00357340 /* MameKit.framework */; };
+		55ACAB830C3542B700F647CE /* clifront.c in Sources */ = {isa = PBXBuildFile; fileRef = 55ACAB810C3542B700F647CE /* clifront.c */; };
+		55ACAB840C3542B700F647CE /* clifront.h in Headers */ = {isa = PBXBuildFile; fileRef = 55ACAB820C3542B700F647CE /* clifront.h */; };
+		55ACAB880C35435D00F647CE /* sdldir.c in Sources */ = {isa = PBXBuildFile; fileRef = 55ACAB870C35435D00F647CE /* sdldir.c */; };
+		55ACABAC0C3545CE00F647CE /* mameosx-util in CopyFiles */ = {isa = PBXBuildFile; fileRef = 55ACAAD80C35402600F647CE /* mameosx-util */; };
 		55B8C61C0C2A56CA00B1CD96 /* goldnpkr.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55B8C6170C2A56A300B1CD96 /* goldnpkr.lay */; };
 		55B8C61D0C2A56CA00B1CD96 /* pmpoker.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55B8C6180C2A56A300B1CD96 /* pmpoker.lay */; };
 		55B8C61E0C2A56CA00B1CD96 /* pottnpkr.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55B8C6190C2A56A300B1CD96 /* pottnpkr.lay */; };
@@ -2631,7 +2638,7 @@
 		55BEFB360AEC6DA400357340 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55A3A5220AA7B36400921B71 /* QuartzCore.framework */; };
 		55BEFB430AEC6DD100357340 /* ui.bdf in Resources */ = {isa = PBXBuildFile; fileRef = 551A61390AC24B2000AECE1E /* ui.bdf */; };
 		55BEFB440AEC6DF000357340 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 556A4C500AA50E5800602CC5 /* MainMenu.nib */; };
-		55BEFB5F0AEC6E7500357340 /* MameKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 55BEF9A00AEC5E5C00357340 /* MameKit.framework */; };
+		55BEFB5F0AEC6E7500357340 /* MameKit.framework in Copy to Frameworks */ = {isa = PBXBuildFile; fileRef = 55BEF9A00AEC5E5C00357340 /* MameKit.framework */; };
 		55C60C700B4F8B5000BF103D /* debugcmd.c in Sources */ = {isa = PBXBuildFile; fileRef = 5530FDF20ACA42270083BB04 /* debugcmd.c */; };
 		55C60C710B4F8B5000BF103D /* debugcmd.h in Headers */ = {isa = PBXBuildFile; fileRef = 5530FDF30ACA42270083BB04 /* debugcmd.h */; };
 		55C60C720B4F8B5000BF103D /* debugcmt.c in Sources */ = {isa = PBXBuildFile; fileRef = 5530FDF40ACA42270083BB04 /* debugcmt.c */; };
@@ -2657,7 +2664,7 @@
 		55CA69090BA3CF390012CF7B /* DDHidKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 55CA69080BA3CF390012CF7B /* DDHidKeyboard.m */; };
 		55D00ADA0B2E8CD500F7961F /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55D00AD90B2E8CD500F7961F /* IOKit.framework */; };
 		55D00BA20B2E8E4800F7961F /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55D00AD90B2E8CD500F7961F /* IOKit.framework */; };
-		55D2836F0B12D5CA002C9199 /* MamePreferences.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 55D2836C0B12D5CA002C9199 /* MamePreferences.h */; };
+		55D2836F0B12D5CA002C9199 /* MamePreferences.h in Copy to Frameworks */ = {isa = PBXBuildFile; fileRef = 55D2836C0B12D5CA002C9199 /* MamePreferences.h */; };
 		55D28E1A0B13CBB8002C9199 /* VirtualRingBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 55D28E180B13CBB8002C9199 /* VirtualRingBuffer.h */; };
 		55D28E1B0B13CBB8002C9199 /* VirtualRingBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D28E190B13CBB8002C9199 /* VirtualRingBuffer.m */; };
 		55D292650B1756A9002C9199 /* CustomMameFilters.m in Sources */ = {isa = PBXBuildFile; fileRef = 553A09AF0AFF11B300531E1F /* CustomMameFilters.m */; };
@@ -2685,7 +2692,7 @@
 		55D4039F0B3664DF00E5E613 /* DDCoreAudio.h in Headers */ = {isa = PBXBuildFile; fileRef = 55D403920B3664DF00E5E613 /* DDCoreAudio.h */; };
 		55D5ABC60B1CEC8900457216 /* osx_ppc.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D5ABC50B1CEC8900457216 /* osx_ppc.c */; };
 		55D5ABD40B1CED3600457216 /* osx_mips3.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D5ABD30B1CED3600457216 /* osx_mips3.c */; };
-		55E03CF10B0A320600988109 /* PreferencesWindowController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 55E03CEF0B0A320600988109 /* PreferencesWindowController.h */; };
+		55E03CF10B0A320600988109 /* PreferencesWindowController.h in Copy to Frameworks */ = {isa = PBXBuildFile; fileRef = 55E03CEF0B0A320600988109 /* PreferencesWindowController.h */; };
 		55E03D090B0A32EE00988109 /* Preferences.nib in Resources */ = {isa = PBXBuildFile; fileRef = 55E03D070B0A32EE00988109 /* Preferences.nib */; };
 		55E03D0A0B0A32EF00988109 /* Preferences.nib in Resources */ = {isa = PBXBuildFile; fileRef = 55E03D070B0A32EE00988109 /* Preferences.nib */; };
 		55E93D600B29166E003CBB89 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55E93D5F0B29166E003CBB89 /* AudioToolbox.framework */; };
@@ -2759,7 +2766,7 @@
 		55FCA1060BB8D5920095FC7B /* subroc3d.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55FCA0C90BB8D5660095FC7B /* subroc3d.lay */; };
 		55FCA1070BB8D5920095FC7B /* tinv2650.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55FCA0CA0BB8D5660095FC7B /* tinv2650.lay */; };
 		55FCA1080BB8D5920095FC7B /* turbo.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55FCA0CB0BB8D5660095FC7B /* turbo.lay */; };
-		55FCC9FE0B0BD255003A5FB3 /* VersionChecker.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 55FCC9FC0B0BD255003A5FB3 /* VersionChecker.h */; };
+		55FCC9FE0B0BD255003A5FB3 /* VersionChecker.h in Copy to Frameworks */ = {isa = PBXBuildFile; fileRef = 55FCC9FC0B0BD255003A5FB3 /* VersionChecker.h */; };
 		55FE26330AAD33AB00C4054A /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55FE26320AAD33AB00C4054A /* AudioUnit.framework */; };
 		55FEC76B0AEC52F7001A1CAB /* tiny.c in Sources */ = {isa = PBXBuildFile; fileRef = 55FEC76A0AEC52F7001A1CAB /* tiny.c */; };
 /* End PBXBuildFile section */
@@ -2910,6 +2917,20 @@
 			remoteGlobalIDString = 557449DF0AAB35D800EC1423;
 			remoteInfo = file2str;
 		};
+		55ACAADA0C35403300F647CE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 556A42440AA4E9CE00602CC5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 55BEF99F0AEC5E5C00357340 /* MameKit */;
+			remoteInfo = MameKit;
+		};
+		55ACAB920C35451700F647CE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 556A42440AA4E9CE00602CC5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 55ACAAD70C35402600F647CE /* mameosx-util */;
+			remoteInfo = "mameosx-util";
+		};
 		55BEF9840AEC5C7D00357340 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 556A42440AA4E9CE00602CC5 /* Project object */;
@@ -3023,18 +3044,29 @@
 			name = "Copy Shark Codes";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		55BEFB5A0AEC6E4A00357340 /* CopyFiles */ = {
+		55ACABAA0C3545C300F647CE /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 6;
+			files = (
+				55ACABAC0C3545CE00F647CE /* mameosx-util in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		55BEFB5A0AEC6E4A00357340 /* Copy to Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				55BEFB5F0AEC6E7500357340 /* MameKit.framework in CopyFiles */,
-				553A09B10AFF11B300531E1F /* CustomMameFilters.h in CopyFiles */,
-				55E03CF10B0A320600988109 /* PreferencesWindowController.h in CopyFiles */,
-				55FCC9FE0B0BD255003A5FB3 /* VersionChecker.h in CopyFiles */,
-				55D2836F0B12D5CA002C9199 /* MamePreferences.h in CopyFiles */,
+				55BEFB5F0AEC6E7500357340 /* MameKit.framework in Copy to Frameworks */,
+				553A09B10AFF11B300531E1F /* CustomMameFilters.h in Copy to Frameworks */,
+				55E03CF10B0A320600988109 /* PreferencesWindowController.h in Copy to Frameworks */,
+				55FCC9FE0B0BD255003A5FB3 /* VersionChecker.h in Copy to Frameworks */,
+				55D2836F0B12D5CA002C9199 /* MamePreferences.h in Copy to Frameworks */,
 			);
+			name = "Copy to Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -5672,6 +5704,11 @@
 		55A3A5220AA7B36400921B71 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = /System/Library/Frameworks/QuartzCore.framework; sourceTree = "<absolute>"; };
 		55A5AE510C30D0A70009D5AE /* whatsnew.txt */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; name = whatsnew.txt; path = mame/whatsnew.txt; sourceTree = SOURCE_ROOT; };
 		55A99AA60B20C5D900D4E406 /* effects */ = {isa = PBXFileReference; lastKnownFileType = folder; path = effects; sourceTree = "<group>"; };
+		55ACAAD80C35402600F647CE /* mameosx-util */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "mameosx-util"; sourceTree = BUILT_PRODUCTS_DIR; };
+		55ACAAE10C35406F00F647CE /* mameosx-util-main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "mameosx-util-main.m"; sourceTree = "<group>"; };
+		55ACAB810C3542B700F647CE /* clifront.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = clifront.c; sourceTree = "<group>"; };
+		55ACAB820C3542B700F647CE /* clifront.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = clifront.h; sourceTree = "<group>"; };
+		55ACAB870C35435D00F647CE /* sdldir.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = sdldir.c; sourceTree = "<group>"; };
 		55B8C6170C2A56A300B1CD96 /* goldnpkr.lay */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = goldnpkr.lay; sourceTree = "<group>"; };
 		55B8C6180C2A56A300B1CD96 /* pmpoker.lay */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = pmpoker.lay; sourceTree = "<group>"; };
 		55B8C6190C2A56A300B1CD96 /* pottnpkr.lay */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = pottnpkr.lay; sourceTree = "<group>"; };
@@ -5956,6 +5993,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		55ACAAD60C35402600F647CE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55ACAAEA0C35413800F647CE /* Foundation.framework in Frameworks */,
+				55ACAB7B0C35421700F647CE /* MameKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8390,6 +8436,7 @@
 				556A4C5A0AA50E7200602CC5 /* Application */,
 				55BEFA220AEC624D00357340 /* osd */,
 				55BEFB6F0AEC706700357340 /* MameKit */,
+				55ACAADC0C35404200F647CE /* mameosx-util */,
 				559873590B230F99003D1982 /* vendor */,
 				5501E8990AB2760B00756C9B /* config */,
 				557449110AAB278200EC1423 /* mame */,
@@ -8421,6 +8468,7 @@
 				553A0A310B00541E00531E1F /* m68kmake */,
 				5567B2420BBA30C600EA2072 /* png2bdc */,
 				5567B25F0BBA322700EA2072 /* libutil.a */,
+				55ACAAD80C35402600F647CE /* mameosx-util */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -8428,6 +8476,8 @@
 		556A42590AA4E9F400602CC5 /* emu */ = {
 			isa = PBXGroup;
 			children = (
+				55ACAB810C3542B700F647CE /* clifront.c */,
+				55ACAB820C3542B700F647CE /* clifront.h */,
 				5567B5200BBB39EE00EA2072 /* emuopts.c */,
 				555590900AF9B57A001ADC6D /* profiler.c */,
 				555590910AF9B57A001ADC6D /* profiler.h */,
@@ -8948,9 +8998,19 @@
 			path = vendor;
 			sourceTree = "<group>";
 		};
+		55ACAADC0C35404200F647CE /* mameosx-util */ = {
+			isa = PBXGroup;
+			children = (
+				55ACAAE10C35406F00F647CE /* mameosx-util-main.m */,
+			);
+			name = "mameosx-util";
+			path = osx;
+			sourceTree = "<group>";
+		};
 		55B8C6F20C2ADB3C00B1CD96 /* sdlmame */ = {
 			isa = PBXGroup;
 			children = (
+				55ACAB870C35435D00F647CE /* sdldir.c */,
 				55B8C6F30C2ADB3C00B1CD96 /* osxutils.h */,
 				55B8C6F40C2ADB3C00B1CD96 /* osxutils.m */,
 				55B8C6F50C2ADB3C00B1CD96 /* sdlwork.c */,
@@ -9349,6 +9409,7 @@
 				553A09BD0AFF12BA00531E1F /* MameFilter.h in Headers */,
 				5567B8360BBBEEE700EA2072 /* cpuintrf.h in Headers */,
 				5567B8380BBBEEEF00EA2072 /* sndintrf.h in Headers */,
+				55ACAB840C3542B700F647CE /* clifront.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9741,6 +9802,23 @@
 			productReference = 55785CC70AFAF55D000AE388 /* liblayouts.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		55ACAAD70C35402600F647CE /* mameosx-util */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 55ACAADD0C35404200F647CE /* Build configuration list for PBXNativeTarget "mameosx-util" */;
+			buildPhases = (
+				55ACAAD50C35402600F647CE /* Sources */,
+				55ACAAD60C35402600F647CE /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				55ACAADB0C35403300F647CE /* PBXTargetDependency */,
+			);
+			name = "mameosx-util";
+			productName = "mameosx-util";
+			productReference = 55ACAAD80C35402600F647CE /* mameosx-util */;
+			productType = "com.apple.product-type.tool";
+		};
 		55BEF99F0AEC5E5C00357340 /* MameKit */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 55BEF9A30AEC5E5C00357340 /* Build configuration list for PBXNativeTarget "MameKit" */;
@@ -9790,7 +9868,8 @@
 				55BEFB090AEC6D0C00357340 /* Resources */,
 				55BEFB0A0AEC6D0C00357340 /* Sources */,
 				55BEFB0B0AEC6D0C00357340 /* Frameworks */,
-				55BEFB5A0AEC6E4A00357340 /* CopyFiles */,
+				55BEFB5A0AEC6E4A00357340 /* Copy to Frameworks */,
+				55ACABAA0C3545C300F647CE /* CopyFiles */,
 				55F4D8440B86E2F2001EED08 /* Generate help */,
 			);
 			buildRules = (
@@ -9798,6 +9877,7 @@
 			dependencies = (
 				55BEFB1B0AEC6D5300357340 /* PBXTargetDependency */,
 				55D292BB0B175A0A002C9199 /* PBXTargetDependency */,
+				55ACAB930C35451700F647CE /* PBXTargetDependency */,
 			);
 			name = "MAME OS X";
 			productName = "MAME OS X";
@@ -9890,6 +9970,7 @@
 				55D293B80B17774C002C9199 /* Disk Image */,
 				5567B2410BBA30C600EA2072 /* png2bdc */,
 				5567B25E0BBA322700EA2072 /* util */,
+				55ACAAD70C35402600F647CE /* mameosx-util */,
 			);
 		};
 /* End PBXProject section */
@@ -10567,6 +10648,14 @@
 				55FCA0DA0BB8D5860095FC7B /* triphsxs.lay in Sources */,
 				55FCA0DB0BB8D5860095FC7B /* vertical.lay in Sources */,
 				55FCA0DC0BB8D5860095FC7B /* voffff20.lay in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		55ACAAD50C35402600F647CE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55ACAAE20C35406F00F647CE /* mameosx-util-main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12491,6 +12580,7 @@
 				55622F6C0C34CD450008AE51 /* zodiack.c in Sources */,
 				55622F6D0C34CD450008AE51 /* zr107.c in Sources */,
 				55622F6E0C34CD450008AE51 /* zs01.c in Sources */,
+				55ACAB830C3542B700F647CE /* clifront.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12539,6 +12629,7 @@
 				55F15B750BC01B6400366C65 /* MameEffectFilter.m in Sources */,
 				55B8C6F70C2ADB3C00B1CD96 /* osxutils.m in Sources */,
 				55B8C6F80C2ADB3C00B1CD96 /* sdlwork.c in Sources */,
+				55ACAB880C35435D00F647CE /* sdldir.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12704,6 +12795,16 @@
 			isa = PBXTargetDependency;
 			target = 557449DF0AAB35D800EC1423 /* file2str */;
 			targetProxy = 55785D240AFAFDEA000AE388 /* PBXContainerItemProxy */;
+		};
+		55ACAADB0C35403300F647CE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 55BEF99F0AEC5E5C00357340 /* MameKit */;
+			targetProxy = 55ACAADA0C35403300F647CE /* PBXContainerItemProxy */;
+		};
+		55ACAB930C35451700F647CE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 55ACAAD70C35402600F647CE /* mameosx-util */;
+			targetProxy = 55ACAB920C35451700F647CE /* PBXContainerItemProxy */;
 		};
 		55BEF9850AEC5C7D00357340 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -13934,6 +14035,48 @@
 			};
 			name = Release;
 		};
+		55ACAADE0C35404200F647CE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INSTALL_PATH = "$(HOME)/bin";
+				PREBINDING = NO;
+				PRODUCT_NAME = "mameosx-util";
+				ZERO_LINK = NO;
+			};
+			name = Debug;
+		};
+		55ACAADF0C35404200F647CE /* Debug [Instrumented] */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				INSTALL_PATH = "$(HOME)/bin";
+				PREBINDING = NO;
+				PRODUCT_NAME = "mameosx-util";
+				ZERO_LINK = NO;
+			};
+			name = "Debug [Instrumented]";
+		};
+		55ACAAE00C35404200F647CE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				INSTALL_PATH = "$(HOME)/bin";
+				PREBINDING = NO;
+				PRODUCT_NAME = "mameosx-util";
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
 		55BEF9890AEC5CAB00357340 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -14427,6 +14570,16 @@
 				55785CD00AFAF5C0000AE388 /* Debug */,
 				5567C34D0BBC566700EA2072 /* Debug [Instrumented] */,
 				55785CD10AFAF5C0000AE388 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		55ACAADD0C35404200F647CE /* Build configuration list for PBXNativeTarget "mameosx-util" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				55ACAADE0C35404200F647CE /* Debug */,
+				55ACAADF0C35404200F647CE /* Debug [Instrumented] */,
+				55ACAAE00C35404200F647CE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
