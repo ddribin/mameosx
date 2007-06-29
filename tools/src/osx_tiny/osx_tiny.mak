@@ -92,7 +92,6 @@ DRVLIBS = \
   $(VIDEO)/argus.o \
   $(VIDEO)/ppu2c0x.o \
   $(VIDEO)/pacman.o \
-  $(VIDEO)/res_net.o \
   $(MACHINE)/pacplus.o \
   $(MACHINE)/vsnes.o \
   $(MACHINE)/acitya.o \
@@ -100,7 +99,7 @@ DRVLIBS = \
   $(MACHINE)/ds1302.o \
   $(MACHINE)/mspacman.o \
   $(MACHINE)/jumpshot.o \
-  $(MACHINE)//segacrpt.o \
+  $(MACHINE)/segacrpt.o \
   $(DRIVERS)/pacman.o \
   $(DRIVERS)/jrpacman.o \
   $(DRIVERS)/pengo.o \

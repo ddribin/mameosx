@@ -3,6 +3,7 @@
 require 'erb'
 require 'optparse'
 require 'ostruct'
+require 'pp'
 
 class MakeVariables
   def initialize
@@ -31,8 +32,11 @@ class MakeVariables
     return @vars[name]
   end
   
+  # Take obj/windows/{target}/mame/mamedriv.o,
+  #  Remove leading obj/windows/mameosx
+  #  Preppend @pwd, and change .o -> .c
   def obj_to_src(obj)
-    obj =~ /obj\/[^\/]+\/(.*)\.o/
+    obj =~ /obj\/windows\/[^\/]+\/(.*)\.o/
     return @pwd + "/mame/src/" + $1 + ".c"
   end
   
