@@ -26,12 +26,12 @@
            "  -x, --listxml                 List game details\n"
            "  -l, --listfull                List driver names and descriptions\n"
            "  -s, --listsource              List source files\n"
-           "  -c, --listclonse              List of clones\n"
+           "  -c, --listclones              List of clones\n"
            "      --listcrc                 List of CRCs\n"
            "      --version                 Display version and exit\n"
            "  -h, --help                    Display this help and exit\n"
            "\n"
-           "A uitility application for MAME OS X.\n");
+           "A utility application for MAME OS X.\n");
 }
 
 - (void) printVersion;
