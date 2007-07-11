@@ -1,8 +1,9 @@
 
+* Fix sound in cyberbal
 * Fix tiny release build.
 * Look into default size of window.
 * Fix audit crash if there's no ROMs.
 * Don't quit on game exit, but show game dialog again.
 * Add advanced preferences UI to expose everything, similar to
   FireFox's about:config.
-* Handle multipe screens (ninjaw).
+* Handle multiple screens (ninjaw, cyberbal).
