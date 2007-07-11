@@ -2,7 +2,7 @@
 - version: "<%=version%>"
   date: xxx
   changes:
-    - Upgrade to 0.xxx baseline.
+    - Upgrade to 0.117 baseline.
     - Add support for cheat.dat.
     - Add preference to enable auto save states.
     - Add mameosx-util command line app.
