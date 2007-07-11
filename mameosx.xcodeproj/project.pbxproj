@@ -2699,6 +2699,10 @@
 		55EB80BF0C4495A400C758F1 /* z80daisy.c in Sources */ = {isa = PBXBuildFile; fileRef = 55EB80A00C4495A400C758F1 /* z80daisy.c */; };
 		55EB80E70C44986E00C758F1 /* tiny.c in Sources */ = {isa = PBXBuildFile; fileRef = 55EB80E60C44986E00C758F1 /* tiny.c */; };
 		55EB80F70C4499C200C758F1 /* connect4.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55EB80F50C4499AC00C758F1 /* connect4.lay */; };
+		55EB810F0C44A4B400C758F1 /* DDCliApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 55EB81090C44A4B400C758F1 /* DDCliApplication.m */; };
+		55EB81100C44A4B400C758F1 /* DDCliUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 55EB810B0C44A4B400C758F1 /* DDCliUtil.m */; };
+		55EB81110C44A4B400C758F1 /* DDGetoptLongParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 55EB810E0C44A4B400C758F1 /* DDGetoptLongParser.m */; };
+		55EB81140C44A4EF00C758F1 /* MameUtilApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 55EB81130C44A4EF00C758F1 /* MameUtilApp.m */; };
 		55F156310BBDF80F00366C65 /* uismall.png in Sources */ = {isa = PBXBuildFile; fileRef = 55F156300BBDF80500366C65 /* uismall.png */; };
 		55F1582D0BBF955600366C65 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55F1582C0BBF955600366C65 /* Quartz.framework */; };
 		55F15B740BC01B6400366C65 /* MameEffectFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = 55F15B720BC01B6400366C65 /* MameEffectFilter.h */; };
@@ -5816,6 +5820,15 @@
 		55EB80A00C4495A400C758F1 /* z80daisy.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = z80daisy.c; path = src/emu/cpu/z80/z80daisy.c; sourceTree = "<group>"; };
 		55EB80E60C44986E00C758F1 /* tiny.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = tiny.c; path = osx/tiny.c; sourceTree = SOURCE_ROOT; };
 		55EB80F50C4499AC00C758F1 /* connect4.lay */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = connect4.lay; sourceTree = "<group>"; };
+		55EB81080C44A4B400C758F1 /* DDCliApplication.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DDCliApplication.h; sourceTree = "<group>"; };
+		55EB81090C44A4B400C758F1 /* DDCliApplication.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DDCliApplication.m; sourceTree = "<group>"; };
+		55EB810A0C44A4B400C758F1 /* DDCliUtil.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DDCliUtil.h; sourceTree = "<group>"; };
+		55EB810B0C44A4B400C758F1 /* DDCliUtil.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DDCliUtil.m; sourceTree = "<group>"; };
+		55EB810C0C44A4B400C758F1 /* DDCommandLineInterface.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DDCommandLineInterface.h; sourceTree = "<group>"; };
+		55EB810D0C44A4B400C758F1 /* DDGetoptLongParser.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DDGetoptLongParser.h; sourceTree = "<group>"; };
+		55EB810E0C44A4B400C758F1 /* DDGetoptLongParser.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DDGetoptLongParser.m; sourceTree = "<group>"; };
+		55EB81120C44A4EF00C758F1 /* MameUtilApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MameUtilApp.h; sourceTree = "<group>"; };
+		55EB81130C44A4EF00C758F1 /* MameUtilApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MameUtilApp.m; sourceTree = "<group>"; };
 		55F156300BBDF80500366C65 /* uismall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = uismall.png; path = emu/uismall.png; sourceTree = "<group>"; };
 		55F1582C0BBF955600366C65 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = /System/Library/Frameworks/Quartz.framework; sourceTree = "<absolute>"; };
 		55F15B720BC01B6400366C65 /* MameEffectFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MameEffectFilter.h; sourceTree = "<group>"; };
@@ -6774,6 +6787,7 @@
 		559873590B230F99003D1982 /* vendor */ = {
 			isa = PBXGroup;
 			children = (
+				55EB81070C44A4B400C758F1 /* ddcli */,
 				55B8C6F20C2ADB3C00B1CD96 /* sdlmame */,
 				55193F630B93F5EC004C0C98 /* NSXReturnThrowError */,
 				55193F380B93F5DC004C0C98 /* DDHidLib */,
@@ -9089,6 +9103,8 @@
 		55ACAADC0C35404200F647CE /* mameosx-util */ = {
 			isa = PBXGroup;
 			children = (
+				55EB81120C44A4EF00C758F1 /* MameUtilApp.h */,
+				55EB81130C44A4EF00C758F1 /* MameUtilApp.m */,
 				55ACAAE10C35406F00F647CE /* mameosx-util-main.m */,
 			);
 			name = "mameosx-util";
@@ -9239,6 +9255,20 @@
 				55A075870C44954900B1E017 /* auto */,
 			);
 			name = tiny;
+			sourceTree = "<group>";
+		};
+		55EB81070C44A4B400C758F1 /* ddcli */ = {
+			isa = PBXGroup;
+			children = (
+				55EB81080C44A4B400C758F1 /* DDCliApplication.h */,
+				55EB81090C44A4B400C758F1 /* DDCliApplication.m */,
+				55EB810A0C44A4B400C758F1 /* DDCliUtil.h */,
+				55EB810B0C44A4B400C758F1 /* DDCliUtil.m */,
+				55EB810C0C44A4B400C758F1 /* DDCommandLineInterface.h */,
+				55EB810D0C44A4B400C758F1 /* DDGetoptLongParser.h */,
+				55EB810E0C44A4B400C758F1 /* DDGetoptLongParser.m */,
+			);
+			path = ddcli;
 			sourceTree = "<group>";
 		};
 		55FCA08D0BB8D53E0095FC7B /* emu */ = {
@@ -10711,6 +10741,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				55ACAAE20C35406F00F647CE /* mameosx-util-main.m in Sources */,
+				55EB810F0C44A4B400C758F1 /* DDCliApplication.m in Sources */,
+				55EB81100C44A4B400C758F1 /* DDCliUtil.m in Sources */,
+				55EB81110C44A4B400C758F1 /* DDGetoptLongParser.m in Sources */,
+				55EB81140C44A4EF00C758F1 /* MameUtilApp.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14035,6 +14069,11 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"$(GCC_PREPROCESSOR_DEFINITIONS_QUOTED_1)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS_QUOTED_1 = "CURRENT_MARKETING_VERSION=\\\"${CURRENT_MARKETING_VERSION}\\\"";
 				INSTALL_PATH = "$(HOME)/bin";
 				PREBINDING = NO;
 				PRODUCT_NAME = "mameosx-util";
@@ -14047,6 +14086,11 @@
 			buildSettings = {
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"$(GCC_PREPROCESSOR_DEFINITIONS_QUOTED_1)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS_QUOTED_1 = "CURRENT_MARKETING_VERSION=\\\"${CURRENT_MARKETING_VERSION}\\\"";
 				INSTALL_PATH = "$(HOME)/bin";
 				PREBINDING = NO;
 				PRODUCT_NAME = "mameosx-util";
@@ -14061,6 +14105,11 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"$(GCC_PREPROCESSOR_DEFINITIONS_QUOTED_1)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS_QUOTED_1 = "CURRENT_MARKETING_VERSION=\\\"${CURRENT_MARKETING_VERSION}\\\"";
 				INSTALL_PATH = "$(HOME)/bin";
 				PREBINDING = NO;
 				PRODUCT_NAME = "mameosx-util";

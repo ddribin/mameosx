@@ -7,18 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-
-// MAME headers
-#include "driver.h"
-#include "clifront.h"
+#import "DDCommandLineInterface.h"
+#import "MameUtilApp.h"
 
 int main(int argc, char * argv[])
 {
-    int result = 0;
-    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-    
-    cli_info_listxml("pacman");
-    
-    [pool release];
-    return 0;
+    return DDCliAppRunWithClass([MameUtilApp class]);
 }
