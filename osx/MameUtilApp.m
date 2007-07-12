@@ -32,7 +32,7 @@
 
 - (void) printUsage: (FILE *) stream;
 {
-    ddfprintf(stream, @"%@: Usage [OPTIONS] [<gamename|wildcard>]\n", DDCliApp);
+    ddfprintf(stream, @"Usage: %@ [OPTIONS] [<gamename|wildcard>]\n", DDCliApp);
 }
 
 - (void) printHelp;
