@@ -1,11 +1,11 @@
 <% version = "0.117" %>
 - version: "<%=version%>"
-  date: xxx
+  date: 2007-07-13
   changes:
     - Upgrade to 0.117 baseline.
     - Add support for cheat.dat.
     - Add preference to enable auto save states.
-    - Add mameosx-util command line app.
+    - Add mameosx-util command line app for --listxm, etc.
 
 <% version = "0.116" %>
 - version: "<%=version%>"
