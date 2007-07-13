@@ -5,7 +5,12 @@
     - Upgrade to 0.117 baseline.
     - Add support for cheat.dat.
     - Add preference to enable auto save states.
-    - Add mameosx-util command line app for --listxm, etc.
+    - Add mameosx-util command line app for --listxml, etc.
+  files:
+    - name: MAMEOSX-<%=version%>.dmg
+      size: 23593591
+    - name: mameosx-<%=version%>.tgz
+      size: 14143924
 
 <% version = "0.116" %>
 - version: "<%=version%>"
