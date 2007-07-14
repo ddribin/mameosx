@@ -5,7 +5,7 @@ CURRENT_MARKETING_VERSION=${CURRENT_MARKETING_VERSION:-x.x.x}
 
 MY_DIR=`dirname "$0"`
 BUILD_DIR="${BUILT_PRODUCTS_DIR}/dmg"
-MNT_DIR="${BUILD_DIR}/mnt"
+MNT_DIR="/tmp/mameosx-mnt"
 
 mkdir -p "$BUILD_DIR"
 mkdir -p "$MNT_DIR"
