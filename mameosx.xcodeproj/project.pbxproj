@@ -2697,7 +2697,7 @@
 		55EB80BD0C4495A400C758F1 /* vsnes.c in Sources */ = {isa = PBXBuildFile; fileRef = 55EB809E0C4495A400C758F1 /* vsnes.c */; };
 		55EB80BE0C4495A400C758F1 /* z80.c in Sources */ = {isa = PBXBuildFile; fileRef = 55EB809F0C4495A400C758F1 /* z80.c */; };
 		55EB80BF0C4495A400C758F1 /* z80daisy.c in Sources */ = {isa = PBXBuildFile; fileRef = 55EB80A00C4495A400C758F1 /* z80daisy.c */; };
-		55EB80E70C44986E00C758F1 /* tiny.c in Sources */ = {isa = PBXBuildFile; fileRef = 55EB80E60C44986E00C758F1 /* tiny.c */; };
+		55EB80E70C44986E00C758F1 /* osx_tiny.c in Sources */ = {isa = PBXBuildFile; fileRef = 55EB80E60C44986E00C758F1 /* osx_tiny.c */; };
 		55EB80F70C4499C200C758F1 /* connect4.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55EB80F50C4499AC00C758F1 /* connect4.lay */; };
 		55EB810F0C44A4B400C758F1 /* DDCliApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 55EB81090C44A4B400C758F1 /* DDCliApplication.m */; };
 		55EB81100C44A4B400C758F1 /* DDCliUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 55EB810B0C44A4B400C758F1 /* DDCliUtil.m */; };
@@ -5818,7 +5818,7 @@
 		55EB809E0C4495A400C758F1 /* vsnes.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = vsnes.c; path = src/mame/drivers/vsnes.c; sourceTree = "<group>"; };
 		55EB809F0C4495A400C758F1 /* z80.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = z80.c; path = src/emu/cpu/z80/z80.c; sourceTree = "<group>"; };
 		55EB80A00C4495A400C758F1 /* z80daisy.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = z80daisy.c; path = src/emu/cpu/z80/z80daisy.c; sourceTree = "<group>"; };
-		55EB80E60C44986E00C758F1 /* tiny.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = tiny.c; path = osx/tiny.c; sourceTree = SOURCE_ROOT; };
+		55EB80E60C44986E00C758F1 /* osx_tiny.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; name = osx_tiny.c; path = osx/osx_tiny.c; sourceTree = SOURCE_ROOT; };
 		55EB80F50C4499AC00C758F1 /* connect4.lay */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = connect4.lay; sourceTree = "<group>"; };
 		55EB81080C44A4B400C758F1 /* DDCliApplication.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DDCliApplication.h; sourceTree = "<group>"; };
 		55EB81090C44A4B400C758F1 /* DDCliApplication.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DDCliApplication.m; sourceTree = "<group>"; };
@@ -6743,7 +6743,7 @@
 			children = (
 				555590820AF9B51A001ADC6D /* generated */,
 				55744A380AAB392F00EC1423 /* layouts */,
-				55EB80E60C44986E00C758F1 /* tiny.c */,
+				55EB80E60C44986E00C758F1 /* osx_tiny.c */,
 				557449E50AAB360100EC1423 /* file2str.c */,
 				5567B2460BBA30EF00EA2072 /* png2bdc.c */,
 				556A42CB0AA4EB9300602CC5 /* version.c */,
@@ -10652,7 +10652,7 @@
 				55EB80BD0C4495A400C758F1 /* vsnes.c in Sources */,
 				55EB80BE0C4495A400C758F1 /* z80.c in Sources */,
 				55EB80BF0C4495A400C758F1 /* z80daisy.c in Sources */,
-				55EB80E70C44986E00C758F1 /* tiny.c in Sources */,
+				55EB80E70C44986E00C758F1 /* osx_tiny.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -22,20 +22,22 @@
  * SOFTWARE.
  */
 
+#include "driver.h"
+
 #ifndef DRIVER_RECURSIVE
 
 #define DRIVER_RECURSIVE
 
 /* step 1: declare all external references */
 #define DRIVER(NAME) extern game_driver driver_##NAME;
-#include "tiny.c"
+#include "osx_tiny.c"
 
 /* step 2: define the drivers[] array */
 #undef DRIVER
 #define DRIVER(NAME) &driver_##NAME,
 const game_driver * const drivers[] =
 {
-#include "tiny.c"
+#include "osx_tiny.c"
 	0	/* end of array */
 };
 
