@@ -4,6 +4,11 @@
   changes:
     - Fix tiny builds.
     - Fix aperature effects.
+  files:
+    - name: MAMEOSX-<%=version%>.dmg
+      size: 23594873
+    - name: mameosx-<%=version%>.tgz
+      size: 14148423
 
 <% version = "0.117" %>
 - version: "<%=version%>"
