@@ -102,7 +102,7 @@
 #pragma mark -
 #pragma mark Vector
 
-- (void) setBeam: (int) beam;
+- (void) setBeam: (float) beam;
 
 - (void) setAntialias: (BOOL) antialias;
 

@@ -213,9 +213,9 @@
 #pragma mark -
 #pragma mark Vector
 
-- (void) setBeam: (int) beam;
+- (void) setBeam: (float) beam;
 {
-    [self setIntOption: beam withName: OPTION_BEAM];
+    [self setFloatOption: beam withName: OPTION_BEAM];
 }
 
 - (void) setAntialias: (BOOL) antialias;
