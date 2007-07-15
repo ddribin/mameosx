@@ -60,6 +60,10 @@
 		551A613A0AC24B2000AECE1E /* ui.bdf in Resources */ = {isa = PBXBuildFile; fileRef = 551A61390AC24B2000AECE1E /* ui.bdf */; };
 		551C7B6A0AFD2716008FF3C7 /* generic.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A43540AA4EC9900602CC5 /* generic.c */; };
 		551C7B6B0AFD2716008FF3C7 /* generic.h in Headers */ = {isa = PBXBuildFile; fileRef = 556A43550AA4EC9900602CC5 /* generic.h */; };
+		552010BC0C4A7D8C00018A42 /* _GameMO.h in Headers */ = {isa = PBXBuildFile; fileRef = 552010B40C4A7D8C00018A42 /* _GameMO.h */; };
+		552010BD0C4A7D8C00018A42 /* _GameMO.m in Sources */ = {isa = PBXBuildFile; fileRef = 552010B50C4A7D8C00018A42 /* _GameMO.m */; };
+		552010C00C4A7D8C00018A42 /* GameMO.h in Headers */ = {isa = PBXBuildFile; fileRef = 552010B80C4A7D8C00018A42 /* GameMO.h */; };
+		552010C10C4A7D8C00018A42 /* GameMO.m in Sources */ = {isa = PBXBuildFile; fileRef = 552010B90C4A7D8C00018A42 /* GameMO.m */; };
 		5522F6150AFD1FD50028E5F8 /* flt_rc.c in Sources */ = {isa = PBXBuildFile; fileRef = 556A433B0AA4EC1B00602CC5 /* flt_rc.c */; };
 		5528612F0BBC5D0800EB3460 /* CHUD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5528612E0BBC5D0800EB3460 /* CHUD.framework */; };
 		552861860BBC61DD00EB3460 /* CHUD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5528612E0BBC5D0800EB3460 /* CHUD.framework */; };
@@ -2609,6 +2613,12 @@
 		55BEFB430AEC6DD100357340 /* ui.bdf in Resources */ = {isa = PBXBuildFile; fileRef = 551A61390AC24B2000AECE1E /* ui.bdf */; };
 		55BEFB440AEC6DF000357340 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 556A4C500AA50E5800602CC5 /* MainMenu.nib */; };
 		55BEFB5F0AEC6E7500357340 /* MameKit.framework in Copy to Frameworks */ = {isa = PBXBuildFile; fileRef = 55BEF9A00AEC5E5C00357340 /* MameKit.framework */; };
+		55C0865A0C4A85DA00CC1E15 /* Mame_DataModel.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 552010AC0C4A7CD300018A42 /* Mame_DataModel.xcdatamodel */; };
+		55C0865B0C4A85DB00CC1E15 /* Mame_DataModel.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 552010AC0C4A7CD300018A42 /* Mame_DataModel.xcdatamodel */; };
+		55C086AB0C4A8BEE00CC1E15 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55C086AA0C4A8BEE00CC1E15 /* CoreData.framework */; };
+		55C086AC0C4A8BEE00CC1E15 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55C086AA0C4A8BEE00CC1E15 /* CoreData.framework */; };
+		55C087850C4AC62400CC1E15 /* BackgroundUpdater.h in Headers */ = {isa = PBXBuildFile; fileRef = 55C087830C4AC62400CC1E15 /* BackgroundUpdater.h */; };
+		55C087860C4AC62400CC1E15 /* BackgroundUpdater.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C087840C4AC62400CC1E15 /* BackgroundUpdater.m */; };
 		55C60C700B4F8B5000BF103D /* debugcmd.c in Sources */ = {isa = PBXBuildFile; fileRef = 5530FDF20ACA42270083BB04 /* debugcmd.c */; };
 		55C60C710B4F8B5000BF103D /* debugcmd.h in Headers */ = {isa = PBXBuildFile; fileRef = 5530FDF30ACA42270083BB04 /* debugcmd.h */; };
 		55C60C720B4F8B5000BF103D /* debugcmt.c in Sources */ = {isa = PBXBuildFile; fileRef = 5530FDF40ACA42270083BB04 /* debugcmt.c */; };
@@ -3090,6 +3100,11 @@
 		55193F640B93F5EC004C0C98 /* NSXReturnThrowError.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = NSXReturnThrowError.h; sourceTree = "<group>"; };
 		55193F650B93F5EC004C0C98 /* NSXReturnThrowError.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = NSXReturnThrowError.m; sourceTree = "<group>"; };
 		551A61390AC24B2000AECE1E /* ui.bdf */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = ui.bdf; sourceTree = "<group>"; };
+		552010AC0C4A7CD300018A42 /* Mame_DataModel.xcdatamodel */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = wrapper.xcdatamodel; path = Mame_DataModel.xcdatamodel; sourceTree = "<group>"; };
+		552010B40C4A7D8C00018A42 /* _GameMO.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = _GameMO.h; sourceTree = "<group>"; };
+		552010B50C4A7D8C00018A42 /* _GameMO.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = _GameMO.m; sourceTree = "<group>"; };
+		552010B80C4A7D8C00018A42 /* GameMO.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = GameMO.h; sourceTree = "<group>"; };
+		552010B90C4A7D8C00018A42 /* GameMO.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = GameMO.m; sourceTree = "<group>"; };
 		5528612E0BBC5D0800EB3460 /* CHUD.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CHUD.framework; path = /System/Library/PrivateFrameworks/CHUD.framework; sourceTree = "<absolute>"; };
 		552F010F0AC812A200A14DFA /* MameOpenGLRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MameOpenGLRenderer.h; sourceTree = "<group>"; };
 		552F01100AC812A200A14DFA /* MameOpenGLRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MameOpenGLRenderer.m; sourceTree = "<group>"; };
@@ -5750,6 +5765,9 @@
 		55BEF9F00AEC618D00357340 /* libosd.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libosd.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		55BEFAEC0AEC694500357340 /* MameKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MameKit.h; sourceTree = "<group>"; };
 		55BEFB0D0AEC6D0C00357340 /* MAME OS X.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MAME OS X.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		55C086AA0C4A8BEE00CC1E15 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
+		55C087830C4AC62400CC1E15 /* BackgroundUpdater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackgroundUpdater.h; sourceTree = "<group>"; };
+		55C087840C4AC62400CC1E15 /* BackgroundUpdater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackgroundUpdater.m; sourceTree = "<group>"; };
 		55C60C660B4F8B3500BF103D /* libcoredebug.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcoredebug.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		55C71A6D0B2AFD2E001FF0BE /* CoreAudioKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudioKit.framework; path = /System/Library/Frameworks/CoreAudioKit.framework; sourceTree = "<absolute>"; };
 		55C71AAD0B2AFFF0001FF0BE /* AudioEffectWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioEffectWindowController.h; sourceTree = "<group>"; };
@@ -6001,6 +6019,7 @@
 				55D00ADA0B2E8CD500F7961F /* IOKit.framework in Frameworks */,
 				5528612F0BBC5D0800EB3460 /* CHUD.framework in Frameworks */,
 				55F1582D0BBF955600366C65 /* Quartz.framework in Frameworks */,
+				55C086AC0C4A8BEE00CC1E15 /* CoreData.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6066,6 +6085,7 @@
 				55D292990B175758002C9199 /* libapp.a in Frameworks */,
 				55BEFB250AEC6D6600357340 /* MameKit.framework in Frameworks */,
 				55BEFB360AEC6DA400357340 /* QuartzCore.framework in Frameworks */,
+				55C086AB0C4A8BEE00CC1E15 /* CoreData.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6174,6 +6194,18 @@
 				55F15B840BC01D4D00366C65 /* MameEffect.cikernel */,
 			);
 			name = Resources;
+			sourceTree = "<group>";
+		};
+		552010AB0C4A7CD300018A42 /* model */ = {
+			isa = PBXGroup;
+			children = (
+				552010B40C4A7D8C00018A42 /* _GameMO.h */,
+				552010B50C4A7D8C00018A42 /* _GameMO.m */,
+				552010B80C4A7D8C00018A42 /* GameMO.h */,
+				552010B90C4A7D8C00018A42 /* GameMO.m */,
+				552010AC0C4A7CD300018A42 /* Mame_DataModel.xcdatamodel */,
+			);
+			path = model;
 			sourceTree = "<group>";
 		};
 		5530FDF10ACA42270083BB04 /* debug */ = {
@@ -6498,6 +6530,7 @@
 		556A4AB00AA4FAA300602CC5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				55C086AA0C4A8BEE00CC1E15 /* CoreData.framework */,
 				55F1582C0BBF955600366C65 /* Quartz.framework */,
 				5528612E0BBC5D0800EB3460 /* CHUD.framework */,
 				5567B3EA0BBA3BE100EA2072 /* Carbon.framework */,
@@ -6526,8 +6559,11 @@
 		556A4C5A0AA50E7200602CC5 /* Application */ = {
 			isa = PBXGroup;
 			children = (
+				552010AB0C4A7CD300018A42 /* model */,
 				556A4CED0AA5117200602CC5 /* MameController.h */,
 				55D282AF0B12C9DD002C9199 /* MameController.m */,
+				55C087830C4AC62400CC1E15 /* BackgroundUpdater.h */,
+				55C087840C4AC62400CC1E15 /* BackgroundUpdater.m */,
 				55D2836C0B12D5CA002C9199 /* MamePreferences.h */,
 				55D2836D0B12D5CA002C9199 /* MamePreferences.m */,
 				55FCC9FC0B0BD255003A5FB3 /* VersionChecker.h */,
@@ -9596,6 +9632,9 @@
 				5595EFA30B1BC84600631777 /* RomAuditWindowController.h in Headers */,
 				5595F0C00B1BDD9B00631777 /* RomAuditSummary.h in Headers */,
 				55C71AB10B2AFFF0001FF0BE /* AudioEffectWindowController.h in Headers */,
+				552010BC0C4A7D8C00018A42 /* _GameMO.h in Headers */,
+				552010C00C4A7D8C00018A42 /* GameMO.h in Headers */,
+				55C087850C4AC62400CC1E15 /* BackgroundUpdater.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10653,6 +10692,7 @@
 				55EB80BE0C4495A400C758F1 /* z80.c in Sources */,
 				55EB80BF0C4495A400C758F1 /* z80daisy.c in Sources */,
 				55EB80E70C44986E00C758F1 /* osx_tiny.c in Sources */,
+				55C0865B0C4A85DB00CC1E15 /* Mame_DataModel.xcdatamodel in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12729,6 +12769,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				55BEFB170AEC6D3F00357340 /* main.m in Sources */,
+				55C0865A0C4A85DA00CC1E15 /* Mame_DataModel.xcdatamodel in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12758,6 +12799,9 @@
 				5595EFA40B1BC84600631777 /* RomAuditWindowController.m in Sources */,
 				5595F0C10B1BDD9B00631777 /* RomAuditSummary.m in Sources */,
 				55C71AB20B2AFFF0001FF0BE /* AudioEffectWindowController.m in Sources */,
+				552010BD0C4A7D8C00018A42 /* _GameMO.m in Sources */,
+				552010C10C4A7D8C00018A42 /* GameMO.m in Sources */,
+				55C087860C4AC62400CC1E15 /* BackgroundUpdater.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

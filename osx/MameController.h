@@ -42,6 +42,7 @@ extern "C" {
 @class MameConfiguration;
 @class VersionChecker;
 @class AudioEffectWindowController;
+@class BackgroundUpdater;
 
 @interface MameController : NSObject <JRLogLogger>
 {
@@ -83,7 +84,25 @@ extern "C" {
     NSDictionary * mLogInfoAttributes;
     NSDictionary * mLogDebugAttributes;
     id<JRLogLogger> mOriginalLogger;
+    
+    NSPersistentStoreCoordinator * persistentStoreCoordinator;
+    NSManagedObjectModel * managedObjectModel;
+    NSManagedObjectContext * managedObjectContext;
+    
+    NSArray * gameSortDescriptors;
+    BackgroundUpdater * mUpdater;
 }
+
+#pragma mark -
+#pragma mark Core Data
+
+- (void) handleCoreDataError: (NSError *) error;
+- (NSManagedObjectModel *) managedObjectModel;
+- (NSPersistentStoreCoordinator *) persistentStoreCoordinator;
+- (NSManagedObjectContext *) managedObjectContext;
+- (IBAction) saveAction: (id) sender;
+
+#pragma mark -
 
 - (MameView *) mameView;
 

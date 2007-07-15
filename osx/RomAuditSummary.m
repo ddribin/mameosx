@@ -195,6 +195,9 @@
         case BEST_AVAILABLE:
             return @"Best Available";
             
+        case NOTFOUND:
+            return @"Not Found";
+            
         default:
             return @"N/A";
     }
