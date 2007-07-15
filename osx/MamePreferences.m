@@ -705,7 +705,7 @@ NSString * MameBiosKey = @"Bios";
     [configuration setGamma: [self gamma]];
     [configuration setPauseBrightness: [self pauseBrightness]];
     
-    [configuration setBeam: (int) ([self beamWidth] * 65536.0f)];
+    [configuration setBeam: [self beamWidth]];
     [configuration setAntialias: [self antialiasBeam]];
     [configuration setVectorFlicker: [self vectorFlicker]];
     
