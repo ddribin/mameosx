@@ -130,6 +130,18 @@ static NSArray * sAllGames = nil;
 
 static NSTimeInterval mLastSave = 0;
 
+- (BOOL) passOne;
+{
+    const game_driver * driver = drivers[mCurrentGameIndex];
+    
+    NSString * shortName = [NSString stringWithUTF8String: driver->name];
+    [mIndexByShortName setObject: [NSNumber numberWithUnsignedInt: mCurrentGameIndex]
+                          forKey: shortName];
+    
+    mCurrentGameIndex++;
+    return (mCurrentGameIndex >= driver_get_count());
+}
+
 - (void) passOneComplete;
 {
     NSManagedObjectContext * context = [mController managedObjectContext];
@@ -158,81 +170,20 @@ static NSTimeInterval mLastSave = 0;
     mLastSave = [NSDate timeIntervalSinceReferenceDate];
 }
 
-- (void) passTwoComplete;
-{
-    NSManagedObjectContext * context = [mController managedObjectContext];
-
-    mPass = 2;
-    JRLogDebug(@"Pass 2 done");
-
-    [mCurrentGame release];
-    [mGameEnumerator release];
-    mCurrentGame = nil;
-    mGameEnumerator = nil;
-    
-    NSError * error = nil;
-    if (![context save: &error])
-    {
-        [mController handleCoreDataError: error];
-    }
-
-    NSArray * allGames = [self fetchAllGames];
-    mGameEnumerator = [[allGames objectEnumerator] retain];
-    mLastSave = [NSDate timeIntervalSinceReferenceDate];
-
-#if 0
-    NSFetchRequest *fetchRequest = [[[NSFetchRequest alloc] init] autorelease];
-    [fetchRequest setEntity:
-        [NSEntityDescription entityForName:@"Game" inManagedObjectContext:context]];
-    
-    // make sure the results are sorted as well
-    [fetchRequest setSortDescriptors: [NSArray arrayWithObject:
-        [[[NSSortDescriptor alloc] initWithKey: @"shortName"
-                                     ascending:YES] autorelease]]];
-    // Execute the fetch
-    error = nil;
-    NSArray * allGames = [context executeFetchRequest:fetchRequest error:&error];
-    mCurrentGameIndex = 0;
-    mGameEnumerator = [[allGames objectEnumerator] retain];
-    mCurrentGame = [[mGameEnumerator nextObject] retain];
-    mLastSave = [NSDate timeIntervalSinceReferenceDate];
-#endif
-}
-
-- (void) passThreeComplete;
-{
-    NSManagedObjectContext * context = [mController managedObjectContext];
-    
-    JRLogDebug(@"Pass 3 done");
-    mPass = 3;
-    
-    [mGameEnumerator release];
-    mGameEnumerator = nil;
-    
-    NSError * error = nil;
-    if (![context save: &error])
-    {
-        [mController handleCoreDataError: error];
-    }
-}
-
-- (BOOL) passOne;
-{
-    const game_driver * driver = drivers[mCurrentGameIndex];
-    
-    NSString * shortName = [NSString stringWithUTF8String: driver->name];
-    [mIndexByShortName setObject: [NSNumber numberWithUnsignedInt: mCurrentGameIndex]
-                          forKey: shortName];
-    
-    mCurrentGameIndex++;
-    return (mCurrentGameIndex >= driver_get_count());
-}
-
 - (BOOL) passTwo;
 {
     NSManagedObjectContext * context = [mController managedObjectContext];
     if ((mCurrentGameIndex % 1000) == 0)
+    {
         JRLogDebug(@"Pass 2 index: %d", mCurrentGameIndex);
+#if 0
+        NSError * error = nil;
+        if (![context save: &error])
+        {
+            [mController handleCoreDataError: error];
+        }
+#endif
+    }
 #if 1
     NSString * currentShortName = [mShortNames objectAtIndex: mCurrentGameIndex];
     unsigned driverIndex = [[mIndexByShortName objectForKey: currentShortName] unsignedIntValue];
@@ -284,6 +235,45 @@ static NSTimeInterval mLastSave = 0;
     return (mCurrentGameIndex >= driver_get_count());
 }
 
+- (void) passTwoComplete;
+{
+    NSManagedObjectContext * context = [mController managedObjectContext];
+
+    mPass = 2;
+    JRLogDebug(@"Pass 2 done");
+
+    [mCurrentGame release];
+    [mGameEnumerator release];
+    mCurrentGame = nil;
+    mGameEnumerator = nil;
+    
+    NSError * error = nil;
+    if (![context save: &error])
+    {
+        [mController handleCoreDataError: error];
+    }
+
+#if 1
+    NSFetchRequest *fetchRequest = [[[NSFetchRequest alloc] init] autorelease];
+    [fetchRequest setEntity:
+        [NSEntityDescription entityForName:@"Game" inManagedObjectContext:context]];
+
+    [fetchRequest setPredicate: [NSPredicate predicateWithFormat: @"(auditStatus == NIL)"]]; 
+    
+    // make sure the results are sorted as well
+    [fetchRequest setSortDescriptors: [NSArray arrayWithObject:
+        [[[NSSortDescriptor alloc] initWithKey: @"shortName"
+                                     ascending:YES] autorelease]]];
+    // Execute the fetch
+    error = nil;
+    JRLogDebug(@"Fetching games that need audit");
+    NSArray * allGames = [context executeFetchRequest:fetchRequest error:&error];
+    JRLogDebug(@"Games that need audit: %d", [allGames count]);
+    mGameEnumerator = [[allGames objectEnumerator] retain];
+    mLastSave = [NSDate timeIntervalSinceReferenceDate];
+#endif
+}
+
 - (BOOL) passThree;
 {
     GameMO * game = [mGameEnumerator nextObject];
@@ -292,7 +282,7 @@ static NSTimeInterval mLastSave = 0;
     
     NSManagedObjectContext * context = [mController managedObjectContext];
     unsigned driverIndex = [game driverIndexValue];
-
+    
     if ([game auditStatus] == nil)
     {
         JRLogDebug(@"Auditing %@", [game shortName]);
@@ -321,8 +311,25 @@ static NSTimeInterval mLastSave = 0;
         [context processPendingChanges];
         // [mController rearrangeObjects];
     }
-
+    
     return NO;
+}
+
+- (void) passThreeComplete;
+{
+    NSManagedObjectContext * context = [mController managedObjectContext];
+    
+    JRLogDebug(@"Pass 3 done");
+    mPass = 3;
+    
+    [mGameEnumerator release];
+    mGameEnumerator = nil;
+    
+    NSError * error = nil;
+    if (![context save: &error])
+    {
+        [mController handleCoreDataError: error];
+    }
 }
 
 - (NSArray *) fetchAllGames;
