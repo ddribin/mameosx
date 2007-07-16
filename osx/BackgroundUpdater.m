@@ -274,7 +274,7 @@ static NSTimeInterval mLastSave = 0;
     }
 #endif
     [game setDriverIndexValue: driverIndex];
-        
+    
     if (mCurrentGame != nil)
     {
         [mCurrentGame release];

@@ -113,8 +113,10 @@ static void exit_sleeper()
         [[MamePreferences standardPreferences] sleepAtExit];
     atexit(exit_sleeper);
     
-    NSSortDescriptor * descriptor = [[NSSortDescriptor alloc] initWithKey: @"shortName"
-                                                                ascending: YES];
+    NSSortDescriptor * descriptor =
+        [[NSSortDescriptor alloc] initWithKey: @"longName"
+                                    ascending: YES
+                                     selector: @selector(caseInsensitiveCompare:)];
     
     gameSortDescriptors = [[NSArray alloc] initWithObjects: descriptor, nil];
     [descriptor release];
@@ -164,6 +166,7 @@ static void exit_sleeper()
     mExtraWindowSize.width = currentWindowSize.width - currentViewSize.width;
     mExtraWindowSize.height = currentWindowSize.height - currentViewSize.height;
     
+    [self updatePredicate];
     [mUpdater start];
 }
 
@@ -331,8 +334,9 @@ Performs the save action for the application, which is to send the save:
 - (void) updatePredicate;
 {
     NSMutableArray * terms = [NSMutableArray array];
+    // [terms addObject: @"(driverIndex != nil)"];
     if (mSubset == 1)
-        [terms addObject: @"(auditStatus != nil AND auditStatus == 0)"];
+        [terms addObject: @"(auditStatus != nil AND (auditStatus == 0 OR auditStatus == 1))"];
     else if (mSubset == 2)
         [terms addObject: @"(favorite == YES)"];
     
