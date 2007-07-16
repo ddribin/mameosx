@@ -24,6 +24,7 @@
                 showPreferencesPanel = id; 
                 showReleaseNotes = id; 
                 showWhatsNew = id; 
+                toggleFavorite = id; 
                 togglePause = id; 
                 toggleThrottled = id; 
                 visualEffectsMenuChanged = id; 
@@ -51,6 +52,7 @@
             SUPERCLASS = DDCustomOpenGLView; 
         }, 
         {CLASS = NSObject; LANGUAGE = ObjC; }, 
+        {CLASS = NSSegmentedControl; LANGUAGE = ObjC; SUPERCLASS = NSControl; }, 
         {
             ACTIONS = {checkForUpdates = id; }; 
             CLASS = VersionChecker; 

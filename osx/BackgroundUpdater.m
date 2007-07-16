@@ -231,7 +231,7 @@ static NSTimeInterval mLastSave = 0;
 - (BOOL) passTwo;
 {
     NSManagedObjectContext * context = [mController managedObjectContext];
-    if ((mCurrentGameIndex % 100) == 0)
+    if ((mCurrentGameIndex % 1000) == 0)
         JRLogDebug(@"Pass 2 index: %d", mCurrentGameIndex);
 #if 1
     NSString * currentShortName = [mShortNames objectAtIndex: mCurrentGameIndex];

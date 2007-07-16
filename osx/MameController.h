@@ -92,6 +92,8 @@ extern "C" {
     NSManagedObjectContext * managedObjectContext;
     
     NSArray * gameSortDescriptors;
+    NSString * mFilterString;
+    int mSubset;
     BackgroundUpdater * mUpdater;
 }
 
@@ -105,6 +107,16 @@ extern "C" {
 - (IBAction) saveAction: (id) sender;
 - (void) rearrangeObjects;
 - (id) newGame;
+
+#pragma mark -
+
+- (void) setFilterString: (NSString *) filterString;
+- (NSString *) filterString;
+
+- (void) setSubset: (int) subset;
+- (int) subset;
+
+- (IBAction) toggleFavorite: (id) sender;
 
 #pragma mark -
 

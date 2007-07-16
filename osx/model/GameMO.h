@@ -4,4 +4,6 @@
 {
 }
 
+- (void) toggleFavorite;
+
 @end

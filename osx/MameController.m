@@ -327,6 +327,62 @@ Performs the save action for the application, which is to send the save:
 }
 
 #pragma mark -
+
+- (void) updatePredicate;
+{
+    NSMutableArray * terms = [NSMutableArray array];
+    if (mSubset == 1)
+        [terms addObject: @"(auditStatus != nil AND auditStatus == 0)"];
+    else if (mSubset == 2)
+        [terms addObject: @"(favorite == YES)"];
+    
+    if (mFilterString != nil)
+        [terms addObject: @"(shortName contains[c] $FILTER OR longName contains[c] $FILTER)"];
+    
+    NSString * format = nil;
+    if ([terms count] > 0)
+        format = [terms componentsJoinedByString: @" AND "];
+    JRLogDebug(@"Setting new predicate: %@", format);
+    NSPredicate * predicate = [NSPredicate predicateWithFormat: format];
+    
+    NSDictionary * variables = [NSDictionary dictionaryWithObjectsAndKeys:
+        mFilterString, @"FILTER", nil];
+    predicate = [predicate predicateWithSubstitutionVariables: variables];
+    
+    [mGamesController setFilterPredicate: predicate];
+}
+
+- (void) setFilterString: (NSString *) filterString;
+{
+    [filterString retain];
+    [mFilterString release];
+    mFilterString = filterString;
+    [self updatePredicate];
+}
+
+- (NSString *) filterString;
+{
+    return mFilterString;
+}
+
+- (void) setSubset: (int) subset;
+{
+    mSubset = subset;
+    [self updatePredicate];
+}
+
+- (int) subset;
+{
+    return mSubset;
+}
+
+- (IBAction) toggleFavorite: (id) sender;
+{
+    NSArray * games = [mGamesController selectedObjects];
+    [games makeObjectsPerformSelector: @selector(toggleFavorite)];
+}
+
+#pragma mark -
 #pragma mark Application Delegates
 
 - (void) applicationDidFinishLaunching: (NSNotification*) notification;
