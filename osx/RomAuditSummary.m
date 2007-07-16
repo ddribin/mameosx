@@ -37,12 +37,21 @@
              recordCount: (int) count
                  records: (const audit_record *) records;
 {
+	const game_driver * driver = drivers[game];
+    return [self initWithGameDriver: driver
+                        recordCount: count
+                            records: records];
+}
+
+- (id) initWithGameDriver: (const game_driver *) gamedrv
+              recordCount: (int) count
+                  records: (const audit_record *) records;
+{
     self = [super init];
     if (self == nil)
         return nil;
 
-	const game_driver *gamedrv = drivers[game];
-    const game_driver *clone_of = driver_get_clone(drivers[game]);
+    const game_driver *clone_of = driver_get_clone(gamedrv);
     
     mGameName = [[NSString alloc] initWithUTF8String: gamedrv->name];
     if (clone_of != NULL)

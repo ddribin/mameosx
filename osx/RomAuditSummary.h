@@ -23,7 +23,8 @@
  */
 
 #import <Cocoa/Cocoa.h>
-#include "audit.h"
+#import "driver.h"
+#import "audit.h"
 
 
 @interface RomAuditSummary : NSObject <NSCoding> {
@@ -39,6 +40,10 @@
 - (id) initWithGameIndex: (int) game
              recordCount: (int) count
                  records: (const audit_record *) records;
+
+- (id) initWithGameDriver: (const game_driver *) driver
+              recordCount: (int) count
+                  records: (const audit_record *) records;
 
 - (NSString *) gameName;
 

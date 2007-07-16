@@ -256,7 +256,9 @@ Returns the persistent store coordinator for the application.  This
     }
     
     persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel: [self managedObjectModel]];
-    if (![persistentStoreCoordinator addPersistentStoreWithType: NSSQLiteStoreType
+    if (![persistentStoreCoordinator addPersistentStoreWithType: 
+        // NSXMLStoreType
+        NSSQLiteStoreType
                                                   configuration: nil URL: url
                                                         options: nil error: &error])
     {
@@ -312,6 +314,16 @@ Performs the save action for the application, which is to send the save:
     {
         [self handleCoreDataError: error];
     }
+}
+
+- (void) rearrangeObjects;
+{
+    [mGamesController rearrangeObjects];
+}
+
+- (id) newGame;
+{
+    return [mGamesController newObject];
 }
 
 #pragma mark -

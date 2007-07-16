@@ -18,6 +18,7 @@
                 resizeToMaximumIntegralSize = id; 
                 resizeToMaximumSize = id; 
                 resizeToOptimalSize = id; 
+                saveAction = id; 
                 showAudioEffectsPanel = id; 
                 showLogWindow = id; 
                 showPreferencesPanel = id; 
@@ -33,6 +34,7 @@
                 mDrawer = NSDrawer; 
                 mEffectsMenu = NSMenu; 
                 mGameTextField = NSComboBox; 
+                mGamesController = NSArrayController; 
                 mMameLogPanel = NSPanel; 
                 mMameLogView = NSTextView; 
                 mMameView = MameView; 

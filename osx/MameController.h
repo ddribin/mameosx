@@ -56,6 +56,8 @@ extern "C" {
     IBOutlet NSPanel * mMameLogPanel;
     IBOutlet NSTextView * mMameLogView;
     
+    IBOutlet NSArrayController * mGamesController;
+    
     // Size of other elements around the view
     NSSize mExtraWindowSize;
     
@@ -101,6 +103,8 @@ extern "C" {
 - (NSPersistentStoreCoordinator *) persistentStoreCoordinator;
 - (NSManagedObjectContext *) managedObjectContext;
 - (IBAction) saveAction: (id) sender;
+- (void) rearrangeObjects;
+- (id) newGame;
 
 #pragma mark -
 

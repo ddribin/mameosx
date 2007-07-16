@@ -16,8 +16,8 @@
     int mPass;
     unsigned mCurrentGameIndex;
     NSMutableArray * mShortNames;
+    NSMutableDictionary * mIndexByShortName;
     GameMO * mCurrentGame;
-    NSString * mCurrentShortName;
     NSEnumerator * mGameEnumerator;
     
     // Weak references
