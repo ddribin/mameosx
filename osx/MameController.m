@@ -166,6 +166,8 @@ static void exit_sleeper()
     mExtraWindowSize.width = currentWindowSize.width - currentViewSize.width;
     mExtraWindowSize.height = currentWindowSize.height - currentViewSize.height;
     
+    [[mFavoriteColumn headerCell] setImage: [NSImage imageNamed: @"Heart_16"]];
+    
     [self updatePredicate];
     [mUpdater start];
 }

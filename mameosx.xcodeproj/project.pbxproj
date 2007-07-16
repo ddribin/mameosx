@@ -2553,6 +2553,8 @@
 		55ACAB840C3542B700F647CE /* clifront.h in Headers */ = {isa = PBXBuildFile; fileRef = 55ACAB820C3542B700F647CE /* clifront.h */; };
 		55ACAB880C35435D00F647CE /* sdldir.c in Sources */ = {isa = PBXBuildFile; fileRef = 55ACAB870C35435D00F647CE /* sdldir.c */; };
 		55ACABAC0C3545CE00F647CE /* mameosx-util in CopyFiles */ = {isa = PBXBuildFile; fileRef = 55ACAAD80C35402600F647CE /* mameosx-util */; };
+		55B5D4EB0C4B3A8200057C2A /* Heart_16.tif in Resources */ = {isa = PBXBuildFile; fileRef = 55B5D4EA0C4B3A8200057C2A /* Heart_16.tif */; };
+		55B5D4EC0C4B3A8200057C2A /* Heart_16.tif in Resources */ = {isa = PBXBuildFile; fileRef = 55B5D4EA0C4B3A8200057C2A /* Heart_16.tif */; };
 		55B8C61C0C2A56CA00B1CD96 /* goldnpkr.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55B8C6170C2A56A300B1CD96 /* goldnpkr.lay */; };
 		55B8C61D0C2A56CA00B1CD96 /* pmpoker.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55B8C6180C2A56A300B1CD96 /* pmpoker.lay */; };
 		55B8C61E0C2A56CA00B1CD96 /* pottnpkr.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55B8C6190C2A56A300B1CD96 /* pottnpkr.lay */; };
@@ -5712,6 +5714,7 @@
 		55ACAB810C3542B700F647CE /* clifront.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = clifront.c; sourceTree = "<group>"; };
 		55ACAB820C3542B700F647CE /* clifront.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = clifront.h; sourceTree = "<group>"; };
 		55ACAB870C35435D00F647CE /* sdldir.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = sdldir.c; sourceTree = "<group>"; };
+		55B5D4EA0C4B3A8200057C2A /* Heart_16.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = Heart_16.tif; sourceTree = "<group>"; };
 		55B8C6170C2A56A300B1CD96 /* goldnpkr.lay */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = goldnpkr.lay; sourceTree = "<group>"; };
 		55B8C6180C2A56A300B1CD96 /* pmpoker.lay */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = pmpoker.lay; sourceTree = "<group>"; };
 		55B8C6190C2A56A300B1CD96 /* pottnpkr.lay */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = pottnpkr.lay; sourceTree = "<group>"; };
@@ -6180,6 +6183,7 @@
 		551A621A0AC2564100AECE1E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				55B5D4EA0C4B3A8200057C2A /* Heart_16.tif */,
 				55F4D73F0B86B937001EED08 /* APPL.icns */,
 				55A99AA60B20C5D900D4E406 /* effects */,
 				55F4D7BD0B86DAFC001EED08 /* manual */,
@@ -10129,6 +10133,7 @@
 				55F4D7C30B86DAFC001EED08 /* manual in Resources */,
 				55F15B850BC01D4D00366C65 /* MameEffect.cikernel in Resources */,
 				55A5AE530C30D0A70009D5AE /* whatsnew.txt in Resources */,
+				55B5D4EC0C4B3A8200057C2A /* Heart_16.tif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10154,6 +10159,7 @@
 				55F4D7400B86B937001EED08 /* APPL.icns in Resources */,
 				55F4D7C20B86DAFC001EED08 /* manual in Resources */,
 				55A5AE520C30D0A70009D5AE /* whatsnew.txt in Resources */,
+				55B5D4EB0C4B3A8200057C2A /* Heart_16.tif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

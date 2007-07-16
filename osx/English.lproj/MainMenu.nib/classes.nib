@@ -34,6 +34,7 @@
             OUTLETS = {
                 mDrawer = NSDrawer; 
                 mEffectsMenu = NSMenu; 
+                mFavoriteColumn = NSTableColumn; 
                 mGameTextField = NSComboBox; 
                 mGamesController = NSArrayController; 
                 mMameLogPanel = NSPanel; 
