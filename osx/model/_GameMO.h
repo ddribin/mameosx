@@ -11,24 +11,20 @@
 @interface _GameMO : NSManagedObject {}
 
 
-- (NSString*)parentShortName;
-- (void)setParentShortName:(NSString*)value_;
+- (NSString*)year;
+- (void)setYear:(NSString*)value_;
 
-//- (BOOL)validateParentShortName:(id*)value_ error:(NSError**)error_;
-
-
-
-- (NSString*)manufacturer;
-- (void)setManufacturer:(NSString*)value_;
-
-//- (BOOL)validateManufacturer:(id*)value_ error:(NSError**)error_;
+//- (BOOL)validateYear:(id*)value_ error:(NSError**)error_;
 
 
 
-- (NSString*)shortName;
-- (void)setShortName:(NSString*)value_;
+- (NSNumber*)driverIndex;
+- (void)setDriverIndex:(NSNumber*)value_;
 
-//- (BOOL)validateShortName:(id*)value_ error:(NSError**)error_;
+- (int)driverIndexValue;
+- (void)setDriverIndexValue:(int)value_;
+
+//- (BOOL)validateDriverIndex:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -39,6 +35,27 @@
 - (void)setFavoriteValue:(BOOL)value_;
 
 //- (BOOL)validateFavorite:(id*)value_ error:(NSError**)error_;
+
+
+
+- (NSString*)manufacturer;
+- (void)setManufacturer:(NSString*)value_;
+
+//- (BOOL)validateManufacturer:(id*)value_ error:(NSError**)error_;
+
+
+
+- (NSString*)parentShortName;
+- (void)setParentShortName:(NSString*)value_;
+
+//- (BOOL)validateParentShortName:(id*)value_ error:(NSError**)error_;
+
+
+
+- (NSString*)shortName;
+- (void)setShortName:(NSString*)value_;
+
+//- (BOOL)validateShortName:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -63,13 +80,6 @@
 - (void)setAuditNotes:(NSString*)value_;
 
 //- (BOOL)validateAuditNotes:(id*)value_ error:(NSError**)error_;
-
-
-
-- (NSString*)year;
-- (void)setYear:(NSString*)value_;
-
-//- (BOOL)validateYear:(id*)value_ error:(NSError**)error_;
 
 
 

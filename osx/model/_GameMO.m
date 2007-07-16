@@ -7,17 +7,17 @@
 
 
 
-- (NSString*)parentShortName {
-	[self willAccessValueForKey:@"parentShortName"];
-	NSString *result = [self primitiveValueForKey:@"parentShortName"];
-	[self didAccessValueForKey:@"parentShortName"];
+- (NSString*)year {
+	[self willAccessValueForKey:@"year"];
+	NSString *result = [self primitiveValueForKey:@"year"];
+	[self didAccessValueForKey:@"year"];
 	return result;
 }
 
-- (void)setParentShortName:(NSString*)value_ {
-    [self willChangeValueForKey:@"parentShortName"];
-    [self setPrimitiveValue:value_ forKey:@"parentShortName"];
-    [self didChangeValueForKey:@"parentShortName"];
+- (void)setYear:(NSString*)value_ {
+    [self willChangeValueForKey:@"year"];
+    [self setPrimitiveValue:value_ forKey:@"year"];
+    [self didChangeValueForKey:@"year"];
 }
 
 
@@ -25,35 +25,27 @@
 
 
 
-- (NSString*)manufacturer {
-	[self willAccessValueForKey:@"manufacturer"];
-	NSString *result = [self primitiveValueForKey:@"manufacturer"];
-	[self didAccessValueForKey:@"manufacturer"];
+- (NSNumber*)driverIndex {
+	[self willAccessValueForKey:@"driverIndex"];
+	NSNumber *result = [self primitiveValueForKey:@"driverIndex"];
+	[self didAccessValueForKey:@"driverIndex"];
 	return result;
 }
 
-- (void)setManufacturer:(NSString*)value_ {
-    [self willChangeValueForKey:@"manufacturer"];
-    [self setPrimitiveValue:value_ forKey:@"manufacturer"];
-    [self didChangeValueForKey:@"manufacturer"];
+- (void)setDriverIndex:(NSNumber*)value_ {
+    [self willChangeValueForKey:@"driverIndex"];
+    [self setPrimitiveValue:value_ forKey:@"driverIndex"];
+    [self didChangeValueForKey:@"driverIndex"];
 }
 
 
 
-
-
-
-- (NSString*)shortName {
-	[self willAccessValueForKey:@"shortName"];
-	NSString *result = [self primitiveValueForKey:@"shortName"];
-	[self didAccessValueForKey:@"shortName"];
-	return result;
+- (int)driverIndexValue {
+	return [[self driverIndex] intValue];
 }
 
-- (void)setShortName:(NSString*)value_ {
-    [self willChangeValueForKey:@"shortName"];
-    [self setPrimitiveValue:value_ forKey:@"shortName"];
-    [self didChangeValueForKey:@"shortName"];
+- (void)setDriverIndexValue:(int)value_ {
+	[self setDriverIndex:[NSNumber numberWithInt:value_]];
 }
 
 
@@ -82,6 +74,60 @@
 
 - (void)setFavoriteValue:(BOOL)value_ {
 	[self setFavorite:[NSNumber numberWithBool:value_]];
+}
+
+
+
+
+
+
+- (NSString*)manufacturer {
+	[self willAccessValueForKey:@"manufacturer"];
+	NSString *result = [self primitiveValueForKey:@"manufacturer"];
+	[self didAccessValueForKey:@"manufacturer"];
+	return result;
+}
+
+- (void)setManufacturer:(NSString*)value_ {
+    [self willChangeValueForKey:@"manufacturer"];
+    [self setPrimitiveValue:value_ forKey:@"manufacturer"];
+    [self didChangeValueForKey:@"manufacturer"];
+}
+
+
+
+
+
+
+- (NSString*)parentShortName {
+	[self willAccessValueForKey:@"parentShortName"];
+	NSString *result = [self primitiveValueForKey:@"parentShortName"];
+	[self didAccessValueForKey:@"parentShortName"];
+	return result;
+}
+
+- (void)setParentShortName:(NSString*)value_ {
+    [self willChangeValueForKey:@"parentShortName"];
+    [self setPrimitiveValue:value_ forKey:@"parentShortName"];
+    [self didChangeValueForKey:@"parentShortName"];
+}
+
+
+
+
+
+
+- (NSString*)shortName {
+	[self willAccessValueForKey:@"shortName"];
+	NSString *result = [self primitiveValueForKey:@"shortName"];
+	[self didAccessValueForKey:@"shortName"];
+	return result;
+}
+
+- (void)setShortName:(NSString*)value_ {
+    [self willChangeValueForKey:@"shortName"];
+    [self setPrimitiveValue:value_ forKey:@"shortName"];
+    [self didChangeValueForKey:@"shortName"];
 }
 
 
@@ -146,24 +192,6 @@
     [self willChangeValueForKey:@"auditNotes"];
     [self setPrimitiveValue:value_ forKey:@"auditNotes"];
     [self didChangeValueForKey:@"auditNotes"];
-}
-
-
-
-
-
-
-- (NSString*)year {
-	[self willAccessValueForKey:@"year"];
-	NSString *result = [self primitiveValueForKey:@"year"];
-	[self didAccessValueForKey:@"year"];
-	return result;
-}
-
-- (void)setYear:(NSString*)value_ {
-    [self willChangeValueForKey:@"year"];
-    [self setPrimitiveValue:value_ forKey:@"year"];
-    [self didChangeValueForKey:@"year"];
 }
 
 

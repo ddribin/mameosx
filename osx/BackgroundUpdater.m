@@ -62,7 +62,7 @@ static NSArray * sAllGames = nil;
 {
     mCurrentGameIndex = 0;
     [mIndexByShortName removeAllObjects];
-    mPass = 0   ;
+    mPass = 0;
     mCurrentGame = nil;
     mGameEnumerator = nil;
     
@@ -107,28 +107,25 @@ static NSArray * sAllGames = nil;
         next = [self passTwo];
     else if (mPass == 2)
         next = [self passThree];
+    else
+        done = YES;
     
     if (next)
     {
         if (mPass == 0)
-        {
             [self passOneComplete];
-        }
         else if (mPass == 1)
-        {
             [self passTwoComplete];
-        }
         else if (mPass == 2)
-        {
             [self passThreeComplete];
+        else
             done = YES;
-        }
     }
     
     if (!done)
-    {
         [self postIdleNotification];
-    }
+    else
+        JRLogDebug(@"Idle done");
 }
 
 static NSTimeInterval mLastSave = 0;
@@ -207,6 +204,7 @@ static NSTimeInterval mLastSave = 0;
     NSManagedObjectContext * context = [mController managedObjectContext];
     
     JRLogDebug(@"Pass 3 done");
+    mPass = 3;
     
     [mGameEnumerator release];
     mGameEnumerator = nil;
@@ -234,7 +232,7 @@ static NSTimeInterval mLastSave = 0;
 {
     NSManagedObjectContext * context = [mController managedObjectContext];
     if ((mCurrentGameIndex % 100) == 0)
-        JRLogDebug(@"ShortName: %d", mCurrentGameIndex);
+        JRLogDebug(@"Pass 2 index: %d", mCurrentGameIndex);
 #if 1
     NSString * currentShortName = [mShortNames objectAtIndex: mCurrentGameIndex];
     unsigned driverIndex = [[mIndexByShortName objectForKey: currentShortName] unsignedIntValue];
@@ -275,35 +273,7 @@ static NSTimeInterval mLastSave = 0;
         [game setLongName: longName];
     }
 #endif
-    
-    if (NO) //[game auditStatus] == nil)
-    {
-        JRLogDebug(@"Auditing %@", [game shortName]);
-		audit_record * auditRecords;
-		int recordCount;
-		int res;
-        
-		/* audit the ROMs in this set */
-		recordCount = audit_images(driverIndex, AUDIT_VALIDATE_FAST, &auditRecords);
-        RomAuditSummary * summary =
-            [[RomAuditSummary alloc] initWithGameIndex: driverIndex
-                                           recordCount: recordCount
-                                               records: auditRecords];
-        free(auditRecords);
-        [summary autorelease];
-        [game setAuditStatusValue: [summary status]];
-        [game setAuditNotes: [summary notes]];
-        NSTimeInterval now = [NSDate timeIntervalSinceReferenceDate];
-        if ((now - mLastSave) > 15.0)
-        {
-            JRLogDebug(@"Saving");
-            [mController saveAction: self];
-            mLastSave = now;
-        }
-
-        [context processPendingChanges];
-        // [mController rearrangeObjects];
-    }
+    [game setDriverIndexValue: driverIndex];
         
     if (mCurrentGame != nil)
     {
@@ -321,8 +291,7 @@ static NSTimeInterval mLastSave = 0;
         return YES;
     
     NSManagedObjectContext * context = [mController managedObjectContext];
-    NSString * currentShortName = [game shortName];
-    unsigned driverIndex = [[mIndexByShortName objectForKey: currentShortName] unsignedIntValue];
+    unsigned driverIndex = [game driverIndexValue];
 
     if ([game auditStatus] == nil)
     {
