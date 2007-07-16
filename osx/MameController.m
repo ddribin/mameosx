@@ -166,7 +166,7 @@ static void exit_sleeper()
     mExtraWindowSize.width = currentWindowSize.width - currentViewSize.width;
     mExtraWindowSize.height = currentWindowSize.height - currentViewSize.height;
     
-    [[mFavoriteColumn headerCell] setImage: [NSImage imageNamed: @"Heart_16"]];
+    [[mFavoriteColumn headerCell] setImage: [NSImage imageNamed: @"favorite-16"]];
     
     [self updatePredicate];
     [mUpdater start];
@@ -371,9 +371,33 @@ Performs the save action for the application, which is to send the save:
     return mFilterString;
 }
 
+
 - (void) setSubset: (int) subset;
 {
     mSubset = subset;
+#if 0
+    static NSTableColumn * mSavedFavoritesColumn = nil;
+    static BOOL mShouldRestoreFavoritesColumn = NO;
+    if (mGamesTable == nil)
+    {
+        mSavedFavoritesColumn = [mFavoriteColumn retain];
+        mGamesTable = [[mFavoriteColumn tableView] retain];
+        [mGamesTable sizeLastColumnToFit];
+    }
+    if (mSubset == 2)
+    {
+        [mGamesTable removeTableColumn: mSavedFavoritesColumn];
+        mShouldRestoreFavoritesColumn = YES;
+    }
+    else
+    {
+        if (mShouldRestoreFavoritesColumn)
+        {
+            [mGamesTable addTableColumn: mSavedFavoritesColumn];
+            mShouldRestoreFavoritesColumn = NO;
+        }
+    }
+#endif
     [self updatePredicate];
 }
 

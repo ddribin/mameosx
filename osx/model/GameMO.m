@@ -20,7 +20,7 @@
 - (NSImage *) favoriteIcon;
 {
     if ([self favoriteValue])
-        return [NSImage imageNamed: @"Heart_16"];
+        return [NSImage imageNamed: @"favorite-16"];
     else
         return nil;
 }

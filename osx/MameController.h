@@ -57,6 +57,7 @@ extern "C" {
     IBOutlet NSTextView * mMameLogView;
     
     IBOutlet NSArrayController * mGamesController;
+    IBOutlet NSTableView * mGamesTable;
     IBOutlet NSTableColumn * mFavoriteColumn;
     
     // Size of other elements around the view
