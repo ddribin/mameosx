@@ -387,6 +387,8 @@
 		5595EFAA0B1BC91200631777 /* RomAudit.nib in Resources */ = {isa = PBXBuildFile; fileRef = 5595EFA70B1BC91200631777 /* RomAudit.nib */; };
 		5595F0C00B1BDD9B00631777 /* RomAuditSummary.h in Headers */ = {isa = PBXBuildFile; fileRef = 5595F0BE0B1BDD9B00631777 /* RomAuditSummary.h */; };
 		5595F0C10B1BDD9B00631777 /* RomAuditSummary.m in Sources */ = {isa = PBXBuildFile; fileRef = 5595F0BF0B1BDD9B00631777 /* RomAuditSummary.m */; };
+		559CEE090C4BB0A000D4AA10 /* Empty_16.tif in Resources */ = {isa = PBXBuildFile; fileRef = 559CEE080C4BB0A000D4AA10 /* Empty_16.tif */; };
+		559CEE0A0C4BB0A100D4AA10 /* Empty_16.tif in Resources */ = {isa = PBXBuildFile; fileRef = 559CEE080C4BB0A000D4AA10 /* Empty_16.tif */; };
 		55A065000C44944F00B1E017 /* 34010fld.c in Sources */ = {isa = PBXBuildFile; fileRef = 55A064A40C44944F00B1E017 /* 34010fld.c */; };
 		55A065010C44944F00B1E017 /* adsp2100.c in Sources */ = {isa = PBXBuildFile; fileRef = 55A064A50C44944F00B1E017 /* adsp2100.c */; };
 		55A065020C44944F00B1E017 /* alph8201.c in Sources */ = {isa = PBXBuildFile; fileRef = 55A064A60C44944F00B1E017 /* alph8201.c */; };
@@ -3520,6 +3522,7 @@
 		5595EFA80B1BC91200631777 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/RomAudit.nib; sourceTree = "<group>"; };
 		5595F0BE0B1BDD9B00631777 /* RomAuditSummary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RomAuditSummary.h; sourceTree = "<group>"; };
 		5595F0BF0B1BDD9B00631777 /* RomAuditSummary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RomAuditSummary.m; sourceTree = "<group>"; };
+		559CEE080C4BB0A000D4AA10 /* Empty_16.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = Empty_16.tif; sourceTree = "<group>"; };
 		55A063EA0C44926E00B1E017 /* append_finder_comment */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.script.sh; path = append_finder_comment; sourceTree = "<group>"; };
 		55A063EB0C44926E00B1E017 /* build_dmg.sh */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.script.sh; path = build_dmg.sh; sourceTree = "<group>"; };
 		55A063EC0C44926E00B1E017 /* changelog2atom */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.script.ruby; path = changelog2atom; sourceTree = "<group>"; };
@@ -6183,6 +6186,7 @@
 		551A621A0AC2564100AECE1E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				559CEE080C4BB0A000D4AA10 /* Empty_16.tif */,
 				55B5D4EA0C4B3A8200057C2A /* Heart_16.tif */,
 				55F4D73F0B86B937001EED08 /* APPL.icns */,
 				55A99AA60B20C5D900D4E406 /* effects */,
@@ -10134,6 +10138,7 @@
 				55F15B850BC01D4D00366C65 /* MameEffect.cikernel in Resources */,
 				55A5AE530C30D0A70009D5AE /* whatsnew.txt in Resources */,
 				55B5D4EC0C4B3A8200057C2A /* Heart_16.tif in Resources */,
+				559CEE090C4BB0A000D4AA10 /* Empty_16.tif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10160,6 +10165,7 @@
 				55F4D7C20B86DAFC001EED08 /* manual in Resources */,
 				55A5AE520C30D0A70009D5AE /* whatsnew.txt in Resources */,
 				55B5D4EB0C4B3A8200057C2A /* Heart_16.tif in Resources */,
+				559CEE0A0C4BB0A100D4AA10 /* Empty_16.tif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -2,6 +2,15 @@
 
 @implementation GameMO
 
++ (void)initialize
+{
+    if (self == [GameMO class])
+    {
+        NSArray *keys = [NSArray arrayWithObjects: @"favorite", nil];
+        [self setKeys: keys triggerChangeNotificationsForDependentKey: @"favoriteIcon"];
+    }
+}
+
 - (void) toggleFavorite;
 {
     BOOL favorite = [self favoriteValue];
