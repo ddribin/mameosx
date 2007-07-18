@@ -18,13 +18,6 @@
 
 
 
-- (NSString*)auditNotes;
-- (void)setAuditNotes:(NSString*)value_;
-
-//- (BOOL)validateAuditNotes:(id*)value_ error:(NSError**)error_;
-
-
-
 - (NSNumber*)favorite;
 - (void)setFavorite:(NSNumber*)value_;
 
@@ -80,13 +73,10 @@
 
 
 
-- (NSNumber*)driverIndex;
-- (void)setDriverIndex:(NSNumber*)value_;
+- (NSString*)auditNotes;
+- (void)setAuditNotes:(NSString*)value_;
 
-- (int)driverIndexValue;
-- (void)setDriverIndexValue:(int)value_;
-
-//- (BOOL)validateDriverIndex:(id*)value_ error:(NSError**)error_;
+//- (BOOL)validateAuditNotes:(id*)value_ error:(NSError**)error_;
 
 
 

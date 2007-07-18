@@ -26,25 +26,6 @@
 
 
 
-- (NSString*)auditNotes {
-	[self willAccessValueForKey:@"auditNotes"];
-	NSString *result = [self primitiveValueForKey:@"auditNotes"];
-	[self didAccessValueForKey:@"auditNotes"];
-
-	return result;
-}
-
-- (void)setAuditNotes:(NSString*)value_ {
-    [self willChangeValueForKey:@"auditNotes"];
-    [self setPrimitiveValue:value_ forKey:@"auditNotes"];
-    [self didChangeValueForKey:@"auditNotes"];
-}
-
-
-
-
-
-
 - (NSNumber*)favorite {
 	[self willAccessValueForKey:@"favorite"];
 	NSNumber *result = [self primitiveValueForKey:@"favorite"];
@@ -198,28 +179,18 @@
 
 
 
-- (NSNumber*)driverIndex {
-	[self willAccessValueForKey:@"driverIndex"];
-	NSNumber *result = [self primitiveValueForKey:@"driverIndex"];
-	[self didAccessValueForKey:@"driverIndex"];
+- (NSString*)auditNotes {
+	[self willAccessValueForKey:@"auditNotes"];
+	NSString *result = [self primitiveValueForKey:@"auditNotes"];
+	[self didAccessValueForKey:@"auditNotes"];
 
 	return result;
 }
 
-- (void)setDriverIndex:(NSNumber*)value_ {
-    [self willChangeValueForKey:@"driverIndex"];
-    [self setPrimitiveValue:value_ forKey:@"driverIndex"];
-    [self didChangeValueForKey:@"driverIndex"];
-}
-
-
-
-- (int)driverIndexValue {
-	return [[self driverIndex] intValue];
-}
-
-- (void)setDriverIndexValue:(int)value_ {
-	[self setDriverIndex:[NSNumber numberWithInt:value_]];
+- (void)setAuditNotes:(NSString*)value_ {
+    [self willChangeValueForKey:@"auditNotes"];
+    [self setPrimitiveValue:value_ forKey:@"auditNotes"];
+    [self didChangeValueForKey:@"auditNotes"];
 }
 
 

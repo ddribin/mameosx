@@ -31,4 +31,17 @@
         @"%@: %@, %@", [self shortName], [self manufacturer], [self year]];
 }
 
+//=========================================================== 
+//  driverIndex 
+//=========================================================== 
+- (unsigned) driverIndex
+{
+    return mDriverIndex;
+}
+
+- (void) setDriverIndex: (unsigned) theDriverIndex
+{
+    mDriverIndex = theDriverIndex;
+}
+
 @end

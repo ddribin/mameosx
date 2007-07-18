@@ -257,7 +257,7 @@ static NSTimeInterval mLastSave = 0;
         [game setLongName: longName];
     }
 #endif
-    [game setDriverIndexValue: driverIndex];
+    [game setDriverIndex: driverIndex];
     
     if (mCurrentGame != nil)
     {
@@ -280,11 +280,13 @@ static NSTimeInterval mLastSave = 0;
     mCurrentGame = nil;
     mGameEnumerator = nil;
     
+    JRLogDebug(@"Saving: %d", [[context updatedObjects] count]);
     NSError * error = nil;
     if (![context save: &error])
     {
         [mController handleCoreDataError: error];
     }
+    JRLogDebug(@"Save done");
 
 #if 1
     NSFetchRequest *fetchRequest = [[[NSFetchRequest alloc] init] autorelease];
@@ -316,7 +318,7 @@ static NSTimeInterval mLastSave = 0;
         return YES;
     
     NSManagedObjectContext * context = [mController managedObjectContext];
-    unsigned driverIndex = [game driverIndexValue];
+    unsigned driverIndex = [game driverIndex];
     
     JRLogDebug(@"Auditing %@", [game shortName]);
     audit_record * auditRecords;
@@ -360,11 +362,13 @@ static NSTimeInterval mLastSave = 0;
     [mGameEnumerator release];
     mGameEnumerator = nil;
     
+    JRLogDebug(@"Saving");
     NSError * error = nil;
     if (![context save: &error])
     {
         [mController handleCoreDataError: error];
     }
+    JRLogDebug(@"Save complete");
 }
 
 - (NSArray *) fetchAllGames;
