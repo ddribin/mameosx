@@ -316,6 +316,16 @@ static NSString * const genericTitle = @"ComBelkadanGenerictoolbar_toolbarItemID
 
 - (void)dealloc
 {
+#if 1
+    NSArray * bindings = [self exposedBindings];
+    NSString * binding;
+    NSEnumerator * e = [bindings objectEnumerator];
+    while (binding = [e nextObject])
+    {
+        [self unbind: binding];
+    }
+#endif
+    
 	[identifier release];
 	[super dealloc];
 }
