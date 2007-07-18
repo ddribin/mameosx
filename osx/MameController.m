@@ -345,6 +345,41 @@ Performs the save action for the application, which is to send the save:
 {
     return [mGamesController newObject];
 }
+#pragma mark -
+#pragma mark Toolbar Delegate Methods
+
+/*
+ * Need to setup these bindings programmatically, because doing it in Xcode
+ * messes up the enabled state of items in the Confugration sheet.  Those
+ * items should always be enabled, rather than track via bindings.  Setting
+ * up bindings only when added to the toolbar fixes this.
+ */
+
+- (void)toolbarWillAddItem:(NSNotification *)note
+{
+    NSToolbarItem * item = [[note userInfo] objectForKey: @"item"];
+    NSString * identifier = [item itemIdentifier];
+    if ([identifier isEqualToString: @"Play"] ||
+        [identifier isEqualToString: @"Favorite"])
+    {
+        [item bind: @"enabled"
+          toObject: mGamesController
+       withKeyPath: @"selectionIndexes.count"
+           options: nil];
+    }
+}
+
+- (void)toolbarDidRemoveItem:(NSNotification *)note
+{
+    NSToolbarItem * item = [[note userInfo] objectForKey: @"item"];
+    NSString * identifier = [item itemIdentifier];
+    if ([identifier isEqualToString: @"Play"] ||
+        [identifier isEqualToString: @"Favorite"])
+    {
+        [item unbind: @"enabled"];
+        
+    }
+}
 
 #pragma mark -
 
