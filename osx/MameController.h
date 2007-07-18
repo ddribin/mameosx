@@ -57,9 +57,8 @@ extern "C" {
     IBOutlet QCView * mScreenshotView;
     IBOutlet NSProgressIndicator * mProgressIndicator;
 
-    IBOutlet RBSplitSubview * mFirstSplit;
-    IBOutlet RBSplitSubview * mSecondSplit;
-    IBOutlet NSImageView * mDragView;
+    IBOutlet RBSplitSubview * mGameSplit;
+    IBOutlet RBSplitSubview * mScreenshotSplit;
     
     IBOutlet NSPanel * mMameLogPanel;
     IBOutlet NSTextView * mMameLogView;

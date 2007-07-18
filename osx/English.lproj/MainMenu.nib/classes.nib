@@ -38,11 +38,10 @@
             CLASS = MameController; 
             LANGUAGE = ObjC; 
             OUTLETS = {
-                mDragView = NSImageView; 
                 mDrawer = NSDrawer; 
                 mEffectsMenu = NSMenu; 
                 mFavoriteColumn = NSTableColumn; 
-                mFirstSplit = RBSplitSubview; 
+                mGameSplit = RBSplitSubview; 
                 mGamesController = NSArrayController; 
                 mGamesTable = NSTableView; 
                 mMameLogPanel = NSPanel; 
@@ -51,8 +50,8 @@
                 mOpenPanel = NSWindow; 
                 mOriginalLogger = id; 
                 mProgressIndicator = NSProgressIndicator; 
+                mScreenshotSplit = RBSplitSubview; 
                 mScreenshotView = QCView; 
-                mSecondSplit = RBSplitSubview; 
                 mToolbar = NSToolbar; 
                 mVersionChecker = VersionChecker; 
             }; 

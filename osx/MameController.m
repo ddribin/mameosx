@@ -35,7 +35,7 @@
 #import "BackgroundUpdater.h"
 #import "JRLog.h"
 #import "GameMO.h"
-#import "RBSplitView/RBSplitView.h"
+#import "RBSplitView.h"
 
 #include <mach/mach_time.h>
 #include <unistd.h>
@@ -386,46 +386,21 @@ Performs the save action for the application, which is to send the save:
 #pragma mark - 
 #pragma mark Split View
 
-#if 1
-// This makes it possible to drag the first divider around by the dragView.
-- (unsigned int) splitView: (RBSplitView *) sender
-           dividerForPoint: (NSPoint) point
-                 inSubview: (RBSplitSubview *) subview
-{
-	if (subview == mFirstSplit)
-    {
-		if ([mDragView mouse:[mDragView convertPoint:point fromView:sender] inRect:[mDragView bounds]])
-        {
-			return 0;	// [firstSplit position], which we assume to be zero
-		}
-	}
-    else if (subview == mSecondSplit)
-    {
-        // return 1;
-	}
-	return NSNotFound;
-}
-
-// This changes the cursor when it's over the dragView.
-- (NSRect) splitView: (RBSplitView *) sender
-          cursorRect: (NSRect) rect
-          forDivider: (unsigned int) divider
-{
-	if (divider == 0)
-    {
-		[sender addCursorRect: [mDragView convertRect: [mDragView bounds]
-                                               toView: sender]
-                       cursor: [RBSplitView cursor: RBSVVerticalCursor]];
-	}
-	return rect;
-}
-
 - (IBAction) toggleScreenshot: (id) sender;
 {
-    [mSecondSplit setHidden: ![mSecondSplit isHidden]];
-}
-
+    // Not sure which behavior I like better, yet...
+#if 0
+    if ([mScreenshotSplit isCollapsed])
+        [mScreenshotSplit expand];
+    else
+        [mScreenshotSplit collapse];
+#else
+    if ([mScreenshotSplit isHidden])
+        [mScreenshotSplit setHidden: NO];
+    else
+        [mScreenshotSplit setHidden: YES];
 #endif
+}
 
 #pragma mark -
 
