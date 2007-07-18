@@ -49,9 +49,9 @@ extern "C" {
     IBOutlet MameView * mMameView;
     IBOutlet NSDrawer * mDrawer;
     IBOutlet NSWindow * mOpenPanel;
-    IBOutlet NSComboBox * mGameTextField;
     IBOutlet VersionChecker *mVersionChecker;
     IBOutlet NSMenu * mEffectsMenu;
+    IBOutlet NSToolbar * mToolbar;
     
     IBOutlet NSPanel * mMameLogPanel;
     IBOutlet NSTextView * mMameLogView;

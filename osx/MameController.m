@@ -128,6 +128,9 @@ static void exit_sleeper()
 
 - (void) awakeFromNib
 {
+    [mOpenPanel setToolbar: mToolbar];
+    [mGamesTable setDoubleAction: @selector(endOpenPanel:)];
+    
     [mMameView setDelegate: self];
 
     [self initVisualEffectsMenu];
@@ -250,7 +253,9 @@ Returns the persistent store coordinator for the application.  This
         [fileManager createDirectoryAtPath:applicationSupportFolder attributes: nil];
     }
     
-    url = [NSURL fileURLWithPath: [applicationSupportFolder stringByAppendingPathComponent: @"MAME OS X.db"]];
+    url = [NSURL fileURLWithPath: [applicationSupportFolder stringByAppendingPathComponent:
+        @"MAME OS X.db"]];
+        // @"MAME OS X.xml"]];
     NSDictionary * storeInfo =
         [NSPersistentStoreCoordinator metadataForPersistentStoreWithURL: url error: &error];
     
@@ -651,7 +656,13 @@ Performs the save action for the application, which is to send the save:
 
 - (IBAction) endOpenPanel: (id) sender;
 {
-    mGameName = [[mGameTextField stringValue] retain];
+    NSArray * selectedGames = [mGamesController selectedObjects];
+    if ([selectedGames count] != 1)
+    {
+        JRLogError(@"[selectedGames coount] != 1: %d", [selectedGames count]);
+    }
+    GameMO * game = [selectedGames objectAtIndex: 0];
+    mGameName = [[game shortName]  retain];
     [self chooseGameAndStart];
 }
 

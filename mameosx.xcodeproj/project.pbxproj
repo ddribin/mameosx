@@ -2557,6 +2557,18 @@
 		55B5D53E0C4BC58D00057C2A /* favorite-16.png in Resources */ = {isa = PBXBuildFile; fileRef = 55B5D53C0C4BC58D00057C2A /* favorite-16.png */; };
 		55B5D5400C4BC5B300057C2A /* favorite.png in Resources */ = {isa = PBXBuildFile; fileRef = 55B5D53F0C4BC5B300057C2A /* favorite.png */; };
 		55B5D5410C4BC5B300057C2A /* favorite.png in Resources */ = {isa = PBXBuildFile; fileRef = 55B5D53F0C4BC5B300057C2A /* favorite.png */; };
+		55B5DD940C4D821600057C2A /* GenericToolbar.h in Headers */ = {isa = PBXBuildFile; fileRef = 55B5DD8C0C4D821600057C2A /* GenericToolbar.h */; };
+		55B5DD950C4D821600057C2A /* GenericToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B5DD8D0C4D821600057C2A /* GenericToolbar.m */; };
+		55B5DD960C4D821600057C2A /* GenericToolbarDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 55B5DD8E0C4D821600057C2A /* GenericToolbarDataSource.h */; };
+		55B5DD970C4D821600057C2A /* GenericToolbarDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B5DD8F0C4D821600057C2A /* GenericToolbarDataSource.m */; };
+		55B5DD980C4D821600057C2A /* GenericToolbarItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 55B5DD900C4D821600057C2A /* GenericToolbarItem.h */; };
+		55B5DD990C4D821600057C2A /* GenericToolbarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B5DD910C4D821600057C2A /* GenericToolbarItem.m */; };
+		55B5DD9A0C4D821600057C2A /* GenericToolbarNibConnector.h in Headers */ = {isa = PBXBuildFile; fileRef = 55B5DD920C4D821600057C2A /* GenericToolbarNibConnector.h */; };
+		55B5DD9B0C4D821600057C2A /* GenericToolbarNibConnector.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B5DD930C4D821600057C2A /* GenericToolbarNibConnector.m */; };
+		55B5DD9D0C4D82DF00057C2A /* start.png in Resources */ = {isa = PBXBuildFile; fileRef = 55B5DD9C0C4D82DF00057C2A /* start.png */; };
+		55B5DD9E0C4D82DF00057C2A /* start.png in Resources */ = {isa = PBXBuildFile; fileRef = 55B5DD9C0C4D82DF00057C2A /* start.png */; };
+		55B5DDC10C4D872200057C2A /* AOSegmentedControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 55B5DDBF0C4D872200057C2A /* AOSegmentedControl.h */; };
+		55B5DDC20C4D872200057C2A /* AOSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B5DDC00C4D872200057C2A /* AOSegmentedControl.m */; };
 		55B8C61C0C2A56CA00B1CD96 /* goldnpkr.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55B8C6170C2A56A300B1CD96 /* goldnpkr.lay */; };
 		55B8C61D0C2A56CA00B1CD96 /* pmpoker.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55B8C6180C2A56A300B1CD96 /* pmpoker.lay */; };
 		55B8C61E0C2A56CA00B1CD96 /* pottnpkr.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55B8C6190C2A56A300B1CD96 /* pottnpkr.lay */; };
@@ -5718,6 +5730,17 @@
 		55ACAB870C35435D00F647CE /* sdldir.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = sdldir.c; sourceTree = "<group>"; };
 		55B5D53C0C4BC58D00057C2A /* favorite-16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "favorite-16.png"; sourceTree = "<group>"; };
 		55B5D53F0C4BC5B300057C2A /* favorite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = favorite.png; sourceTree = "<group>"; };
+		55B5DD8C0C4D821600057C2A /* GenericToolbar.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = GenericToolbar.h; sourceTree = "<group>"; };
+		55B5DD8D0C4D821600057C2A /* GenericToolbar.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = GenericToolbar.m; sourceTree = "<group>"; };
+		55B5DD8E0C4D821600057C2A /* GenericToolbarDataSource.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = GenericToolbarDataSource.h; sourceTree = "<group>"; };
+		55B5DD8F0C4D821600057C2A /* GenericToolbarDataSource.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = GenericToolbarDataSource.m; sourceTree = "<group>"; };
+		55B5DD900C4D821600057C2A /* GenericToolbarItem.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = GenericToolbarItem.h; sourceTree = "<group>"; };
+		55B5DD910C4D821600057C2A /* GenericToolbarItem.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = GenericToolbarItem.m; sourceTree = "<group>"; };
+		55B5DD920C4D821600057C2A /* GenericToolbarNibConnector.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = GenericToolbarNibConnector.h; sourceTree = "<group>"; };
+		55B5DD930C4D821600057C2A /* GenericToolbarNibConnector.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = GenericToolbarNibConnector.m; sourceTree = "<group>"; };
+		55B5DD9C0C4D82DF00057C2A /* start.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = start.png; sourceTree = "<group>"; };
+		55B5DDBF0C4D872200057C2A /* AOSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AOSegmentedControl.h; sourceTree = "<group>"; };
+		55B5DDC00C4D872200057C2A /* AOSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AOSegmentedControl.m; sourceTree = "<group>"; };
 		55B8C6170C2A56A300B1CD96 /* goldnpkr.lay */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = goldnpkr.lay; sourceTree = "<group>"; };
 		55B8C6180C2A56A300B1CD96 /* pmpoker.lay */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = pmpoker.lay; sourceTree = "<group>"; };
 		55B8C6190C2A56A300B1CD96 /* pottnpkr.lay */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = pottnpkr.lay; sourceTree = "<group>"; };
@@ -6585,6 +6608,8 @@
 				5595F0BF0B1BDD9B00631777 /* RomAuditSummary.m */,
 				55C71AAD0B2AFFF0001FF0BE /* AudioEffectWindowController.h */,
 				55C71AAE0B2AFFF0001FF0BE /* AudioEffectWindowController.m */,
+				55B5DDBF0C4D872200057C2A /* AOSegmentedControl.h */,
+				55B5DDC00C4D872200057C2A /* AOSegmentedControl.m */,
 				556A4C650AA50F2800602CC5 /* main.m */,
 				5567C3730BBC57CE00EA2072 /* MameChud.h */,
 				5567C3630BBC56D100EA2072 /* MameOSXSharkEvents.text */,
@@ -6830,6 +6855,7 @@
 		559873590B230F99003D1982 /* vendor */ = {
 			isa = PBXGroup;
 			children = (
+				55B5DD8B0C4D821600057C2A /* generictoolbar */,
 				55EB81070C44A4B400C758F1 /* ddcli */,
 				55B8C6F20C2ADB3C00B1CD96 /* sdlmame */,
 				55193F630B93F5EC004C0C98 /* NSXReturnThrowError */,
@@ -9157,10 +9183,26 @@
 		55B5D53B0C4BC58D00057C2A /* images */ = {
 			isa = PBXGroup;
 			children = (
+				55B5DD9C0C4D82DF00057C2A /* start.png */,
 				55B5D53F0C4BC5B300057C2A /* favorite.png */,
 				55B5D53C0C4BC58D00057C2A /* favorite-16.png */,
 			);
 			path = images;
+			sourceTree = "<group>";
+		};
+		55B5DD8B0C4D821600057C2A /* generictoolbar */ = {
+			isa = PBXGroup;
+			children = (
+				55B5DD8C0C4D821600057C2A /* GenericToolbar.h */,
+				55B5DD8D0C4D821600057C2A /* GenericToolbar.m */,
+				55B5DD8E0C4D821600057C2A /* GenericToolbarDataSource.h */,
+				55B5DD8F0C4D821600057C2A /* GenericToolbarDataSource.m */,
+				55B5DD900C4D821600057C2A /* GenericToolbarItem.h */,
+				55B5DD910C4D821600057C2A /* GenericToolbarItem.m */,
+				55B5DD920C4D821600057C2A /* GenericToolbarNibConnector.h */,
+				55B5DD930C4D821600057C2A /* GenericToolbarNibConnector.m */,
+			);
+			path = generictoolbar;
 			sourceTree = "<group>";
 		};
 		55B8C6F20C2ADB3C00B1CD96 /* sdlmame */ = {
@@ -9651,6 +9693,11 @@
 				552010BC0C4A7D8C00018A42 /* _GameMO.h in Headers */,
 				552010C00C4A7D8C00018A42 /* GameMO.h in Headers */,
 				55C087850C4AC62400CC1E15 /* BackgroundUpdater.h in Headers */,
+				55B5DD940C4D821600057C2A /* GenericToolbar.h in Headers */,
+				55B5DD960C4D821600057C2A /* GenericToolbarDataSource.h in Headers */,
+				55B5DD980C4D821600057C2A /* GenericToolbarItem.h in Headers */,
+				55B5DD9A0C4D821600057C2A /* GenericToolbarNibConnector.h in Headers */,
+				55B5DDC10C4D872200057C2A /* AOSegmentedControl.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10147,6 +10194,7 @@
 				55A5AE530C30D0A70009D5AE /* whatsnew.txt in Resources */,
 				55B5D53E0C4BC58D00057C2A /* favorite-16.png in Resources */,
 				55B5D5410C4BC5B300057C2A /* favorite.png in Resources */,
+				55B5DD9E0C4D82DF00057C2A /* start.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10174,6 +10222,7 @@
 				55A5AE520C30D0A70009D5AE /* whatsnew.txt in Resources */,
 				55B5D53D0C4BC58D00057C2A /* favorite-16.png in Resources */,
 				55B5D5400C4BC5B300057C2A /* favorite.png in Resources */,
+				55B5DD9D0C4D82DF00057C2A /* start.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12822,6 +12871,11 @@
 				552010BD0C4A7D8C00018A42 /* _GameMO.m in Sources */,
 				552010C10C4A7D8C00018A42 /* GameMO.m in Sources */,
 				55C087860C4AC62400CC1E15 /* BackgroundUpdater.m in Sources */,
+				55B5DD950C4D821600057C2A /* GenericToolbar.m in Sources */,
+				55B5DD970C4D821600057C2A /* GenericToolbarDataSource.m in Sources */,
+				55B5DD990C4D821600057C2A /* GenericToolbarItem.m in Sources */,
+				55B5DD9B0C4D821600057C2A /* GenericToolbarNibConnector.m in Sources */,
+				55B5DDC20C4D872200057C2A /* AOSegmentedControl.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

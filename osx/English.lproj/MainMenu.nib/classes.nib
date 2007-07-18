@@ -1,5 +1,10 @@
 {
     IBClasses = (
+        {
+            CLASS = AOSegmentedControl; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSSegmentedControl; 
+        }, 
         {CLASS = DDCustomOpenGLView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
         {
@@ -35,13 +40,14 @@
                 mDrawer = NSDrawer; 
                 mEffectsMenu = NSMenu; 
                 mFavoriteColumn = NSTableColumn; 
-                mGameTextField = NSComboBox; 
                 mGamesController = NSArrayController; 
+                mGamesTable = NSTableView; 
                 mMameLogPanel = NSPanel; 
                 mMameLogView = NSTextView; 
                 mMameView = MameView; 
                 mOpenPanel = NSWindow; 
                 mOriginalLogger = id; 
+                mToolbar = NSToolbar; 
                 mVersionChecker = VersionChecker; 
             }; 
             SUPERCLASS = NSObject; 
