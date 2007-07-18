@@ -359,7 +359,7 @@ Performs the save action for the application, which is to send the save:
 #pragma mark Toolbar Delegate Methods
 
 /*
- * Need to setup these bindings programmatically, because doing it in Xcode
+ * Need to setup these bindings programmatically, because doing it in IB
  * messes up the enabled state of items in the Confugration sheet.  Those
  * items should always be enabled, rather than track via bindings.  Setting
  * up bindings only when added to the toolbar fixes this.
