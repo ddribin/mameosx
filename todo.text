@@ -9,3 +9,5 @@
 * Add advanced preferences UI to expose everything, similar to
   FireFox's about:config.
 * Handle multiple screens (ninjaw, cyberbal).
+* Add Spotlight support
+
