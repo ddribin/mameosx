@@ -15,4 +15,8 @@ If a `mame.patch` file exists, apply the patch like:
 
 If you want to open the NIB files in Interface Builder, you will need to
 install a couple of 3rd party palettes. The first is under
-vendor/generictoolbar/. And the second is under vendor/RBSplitView/.
+vendor/generictoolbar/. And the second is under vendor/RBSplitView/.  If you put them in:
+
+    ~/Library/Palettes
+
+Then IB will pick them up automatically.
