@@ -23,6 +23,7 @@
                 resizeToMaximumIntegralSize = id; 
                 resizeToMaximumSize = id; 
                 resizeToOptimalSize = id; 
+                restoreOpenFrame = id; 
                 saveAction = id; 
                 showAudioEffectsPanel = id; 
                 showLogWindow = id; 

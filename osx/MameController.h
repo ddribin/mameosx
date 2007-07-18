@@ -69,6 +69,7 @@ extern "C" {
     
     // Size of other elements around the view
     NSSize mExtraWindowSize;
+    NSRect mOriginalOpenFrame;
     
     PreferencesWindowController * mPreferencesController;
     AudioEffectWindowController * mAudioEffectsController;
@@ -140,6 +141,8 @@ extern "C" {
 - (void) backgroundUpdateWillFinish;
 
 - (IBAction) toggleScreenshot: (id) sender;
+
+- (IBAction) restoreOpenFrame: (id) sender;
 
 #pragma mark -
 

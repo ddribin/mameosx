@@ -132,6 +132,14 @@ static void exit_sleeper()
 {
     [mOpenPanel setToolbar: mToolbar];
     [mGamesTable setDoubleAction: @selector(endOpenPanel:)];
+
+    /*
+     * By setting the autosave name here, rather than the NIB, we can save
+     * the orignal frame size. Otherwise, the autosave clobbers the values
+     * from the NIB.
+     */
+    mOriginalOpenFrame = [mOpenPanel frame];
+    [mOpenPanel setFrameAutosaveName: @"OpenWindow"];
     
     [mMameView setDelegate: self];
 
@@ -400,6 +408,15 @@ Performs the save action for the application, which is to send the save:
     else
         [mScreenshotSplit setHidden: YES];
 #endif
+}
+
+- (IBAction) restoreOpenFrame: (id) sender;
+{
+    [NSWindow removeFrameUsingName: [mOpenPanel frameAutosaveName]];
+    [mOpenPanel orderOut: self];
+    [mOpenPanel setFrame: mOriginalOpenFrame display: NO];
+    [mOpenPanel center];
+    [mOpenPanel makeKeyAndOrderFront: self];
 }
 
 #pragma mark -
