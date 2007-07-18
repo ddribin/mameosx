@@ -786,6 +786,7 @@ Performs the save action for the application, which is to send the save:
     if ([selectedGames count] != 1)
     {
         JRLogError(@"[selectedGames coount] != 1: %d", [selectedGames count]);
+        return;
     }
     GameMO * game = [selectedGames objectAtIndex: 0];
     mGameName = [[game shortName]  retain];
