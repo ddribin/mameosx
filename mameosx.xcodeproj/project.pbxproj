@@ -84,6 +84,10 @@
 		553A07320AFDA09900531E1F /* MameFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 553A07310AFDA09900531E1F /* MameFilter.m */; };
 		553A09B10AFF11B300531E1F /* CustomMameFilters.h in Copy to Frameworks */ = {isa = PBXBuildFile; fileRef = 553A09AE0AFF11B300531E1F /* CustomMameFilters.h */; };
 		553A09BD0AFF12BA00531E1F /* MameFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = 553A072E0AFD9E2700531E1F /* MameFilter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5542416F0C4DBC95004A1299 /* screenshot.qtz in Resources */ = {isa = PBXBuildFile; fileRef = 5542416E0C4DBC95004A1299 /* screenshot.qtz */; };
+		554241700C4DBC95004A1299 /* screenshot.qtz in Resources */ = {isa = PBXBuildFile; fileRef = 5542416E0C4DBC95004A1299 /* screenshot.qtz */; };
+		554242140C4DC4B8004A1299 /* empty_screenshot in Resources */ = {isa = PBXBuildFile; fileRef = 554242110C4DC4B8004A1299 /* empty_screenshot */; };
+		554242150C4DC4B8004A1299 /* empty_screenshot in Resources */ = {isa = PBXBuildFile; fileRef = 554242110C4DC4B8004A1299 /* empty_screenshot */; };
 		5548ECDF0ABCB463008D1F74 /* MameFileManagerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5548ECDE0ABCB463008D1F74 /* MameFileManagerTest.m */; };
 		5548EDCB0ABE3CEF008D1F74 /* file.txt in Resources */ = {isa = PBXBuildFile; fileRef = 5548EDCA0ABE3CEF008D1F74 /* file.txt */; };
 		554933B40B993F1F000EF4A3 /* MameInputTables.h in Headers */ = {isa = PBXBuildFile; fileRef = 554933B30B993F1E000EF4A3 /* MameInputTables.h */; };
@@ -3153,6 +3157,8 @@
 		553A09AF0AFF11B300531E1F /* CustomMameFilters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomMameFilters.m; sourceTree = "<group>"; };
 		553A0A310B00541E00531E1F /* m68kmake */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = m68kmake; sourceTree = BUILT_PRODUCTS_DIR; };
 		553BF5690B4F94B90067EA3B /* libcpudebug.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcpudebug.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		5542416E0C4DBC95004A1299 /* screenshot.qtz */ = {isa = PBXFileReference; lastKnownFileType = file; path = screenshot.qtz; sourceTree = "<group>"; };
+		554242110C4DC4B8004A1299 /* empty_screenshot */ = {isa = PBXFileReference; lastKnownFileType = folder; path = empty_screenshot; sourceTree = "<group>"; };
 		554339DE0AC4D79800F10925 /* MameOpenGLTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MameOpenGLTexture.h; sourceTree = "<group>"; };
 		554339DF0AC4D79800F10925 /* MameOpenGLTexture.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MameOpenGLTexture.mm; sourceTree = "<group>"; };
 		554339E50AC4DBB300F10925 /* MameTextureTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MameTextureTable.h; sourceTree = "<group>"; };
@@ -6209,6 +6215,7 @@
 		551A621A0AC2564100AECE1E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				554242110C4DC4B8004A1299 /* empty_screenshot */,
 				55B5D53B0C4BC58D00057C2A /* images */,
 				55F4D73F0B86B937001EED08 /* APPL.icns */,
 				55A99AA60B20C5D900D4E406 /* effects */,
@@ -9183,6 +9190,7 @@
 		55B5D53B0C4BC58D00057C2A /* images */ = {
 			isa = PBXGroup;
 			children = (
+				5542416E0C4DBC95004A1299 /* screenshot.qtz */,
 				55B5DD9C0C4D82DF00057C2A /* start.png */,
 				55B5D53F0C4BC5B300057C2A /* favorite.png */,
 				55B5D53C0C4BC58D00057C2A /* favorite-16.png */,
@@ -10195,6 +10203,8 @@
 				55B5D53E0C4BC58D00057C2A /* favorite-16.png in Resources */,
 				55B5D5410C4BC5B300057C2A /* favorite.png in Resources */,
 				55B5DD9E0C4D82DF00057C2A /* start.png in Resources */,
+				5542416F0C4DBC95004A1299 /* screenshot.qtz in Resources */,
+				554242140C4DC4B8004A1299 /* empty_screenshot in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10223,6 +10233,8 @@
 				55B5D53D0C4BC58D00057C2A /* favorite-16.png in Resources */,
 				55B5D5400C4BC5B300057C2A /* favorite.png in Resources */,
 				55B5DD9D0C4D82DF00057C2A /* start.png in Resources */,
+				554241700C4DBC95004A1299 /* screenshot.qtz in Resources */,
+				554242150C4DC4B8004A1299 /* empty_screenshot in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

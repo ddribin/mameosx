@@ -67,18 +67,7 @@ static NSArray * sAllGames = nil;
     mGameEnumerator = nil;
     
     JRLogDebug(@"Start background updater");
-    
-#if 0
-    // [self fetchAllGames];
-    NSLog(@"Fetch twice");
-    GameMO * game;
-    game = [self gameWithShortName: @"amidar"];
-    NSLog(@"game 1: %@", game);
-    game = [self gameWithShortName: @"amidar"];
-    NSLog(@"game 2: %@", game);
-    NSLog(@"Fetch done");
-#endif
-    
+    [mController backgroundUpdateWillStart];
     [self postIdleNotification];
 }
 
@@ -202,9 +191,28 @@ static NSTimeInterval mLastSave = 0;
         game = [mController newGame];
 #endif
         NSString * shortName = [NSString stringWithUTF8String: driver->name];
-        NSString * longName = [NSString stringWithUTF8String: driver->description];
         [game setShortName: shortName];
-        [game setLongName: longName];
+    }
+    
+    if (game != nil)
+    {
+        NSArray * currentKeys = [NSArray arrayWithObjects:
+            @"longName", @"manufacturer", @"year", nil];
+        NSDictionary * currentValues = [game dictionaryWithValuesForKeys: currentKeys];
+        
+        NSString * longName = [NSString stringWithUTF8String: driver->description];
+        NSString * manufacturer = [NSString stringWithUTF8String: driver->manufacturer];
+        NSString * year = [NSString stringWithUTF8String: driver->year];
+        NSDictionary * newValues = [NSDictionary dictionaryWithObjectsAndKeys:
+            longName, @"longName",
+            manufacturer, @"manufacturer",
+            year, @"year",
+            nil];
+        
+        if (![currentValues isEqualToDictionary: newValues])
+        {
+            [game setValuesForKeysWithDictionary: newValues];
+        }
     }
 #else
     unsigned driverIndex = mCurrentGameIndex;
@@ -269,6 +277,8 @@ static NSTimeInterval mLastSave = 0;
     JRLogDebug(@"Fetching games that need audit");
     NSArray * allGames = [context executeFetchRequest:fetchRequest error:&error];
     JRLogDebug(@"Games that need audit: %d", [allGames count]);
+    [mController backgroundUpdateWillBeginAudits: [allGames count]];
+    mCurrentGameIndex = 0;
     mGameEnumerator = [[allGames objectEnumerator] retain];
     mLastSave = [NSDate timeIntervalSinceReferenceDate];
 #endif
@@ -283,34 +293,33 @@ static NSTimeInterval mLastSave = 0;
     NSManagedObjectContext * context = [mController managedObjectContext];
     unsigned driverIndex = [game driverIndexValue];
     
-    if ([game auditStatus] == nil)
+    JRLogDebug(@"Auditing %@", [game shortName]);
+    audit_record * auditRecords;
+    int recordCount;
+    int res;
+    
+    /* audit the ROMs in this set */
+    recordCount = audit_images(driverIndex, AUDIT_VALIDATE_FAST, &auditRecords);
+    RomAuditSummary * summary =
+        [[RomAuditSummary alloc] initWithGameIndex: driverIndex
+                                       recordCount: recordCount
+                                           records: auditRecords];
+    free(auditRecords);
+    [summary autorelease];
+    [game setAuditStatusValue: [summary status]];
+    [game setAuditNotes: [summary notes]];
+    NSTimeInterval now = [NSDate timeIntervalSinceReferenceDate];
+    if ((now - mLastSave) > 15.0)
     {
-        JRLogDebug(@"Auditing %@", [game shortName]);
-		audit_record * auditRecords;
-		int recordCount;
-		int res;
-        
-		/* audit the ROMs in this set */
-		recordCount = audit_images(driverIndex, AUDIT_VALIDATE_FAST, &auditRecords);
-        RomAuditSummary * summary =
-            [[RomAuditSummary alloc] initWithGameIndex: driverIndex
-                                           recordCount: recordCount
-                                               records: auditRecords];
-        free(auditRecords);
-        [summary autorelease];
-        [game setAuditStatusValue: [summary status]];
-        [game setAuditNotes: [summary notes]];
-        NSTimeInterval now = [NSDate timeIntervalSinceReferenceDate];
-        if ((now - mLastSave) > 15.0)
-        {
-            JRLogDebug(@"Saving");
-            [mController saveAction: self];
-            mLastSave = now;
-        }
-        
-        [context processPendingChanges];
-        // [mController rearrangeObjects];
+        JRLogDebug(@"Saving");
+        [mController saveAction: self];
+        mLastSave = now;
     }
+    
+    [context processPendingChanges];
+    
+    [mController backgroundUpdateAuditStatus: mCurrentGameIndex];
+    mCurrentGameIndex++;
     
     return NO;
 }
@@ -320,6 +329,7 @@ static NSTimeInterval mLastSave = 0;
     NSManagedObjectContext * context = [mController managedObjectContext];
     
     JRLogDebug(@"Pass 3 done");
+    [mController backgroundUpdateWillFinish];
     mPass = 3;
     
     [mGameEnumerator release];

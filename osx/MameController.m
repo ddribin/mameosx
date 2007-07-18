@@ -46,6 +46,7 @@ static const int kMameMaxGamesInHistory = 100;
 
 @interface MameController (Private)
 
+- (void) updatePredicate;
 - (void) syncWithUserDefaults;
 - (void) setGameLoading: (BOOL) gameLoading;
 - (void) setGameRunning: (BOOL) gameRunning;
@@ -133,6 +134,15 @@ static void exit_sleeper()
     
     [mMameView setDelegate: self];
 
+    NSBundle * myBundle = [NSBundle bundleForClass: [self class]];
+    NSString * screenshotComposition = 
+        [myBundle pathForResource: @"screenshot" ofType: @"qtz"];
+    [mScreenshotView loadCompositionFromFile: screenshotComposition];
+    [self bind: @"selectedGames"
+      toObject: mGamesController
+   withKeyPath: @"selectedObjects"
+       options: nil];
+   
     [self initVisualEffectsMenu];
     [self setVisualEffectEnabled: NO];
     [self setCurrentEffectIndex: 0];
@@ -259,7 +269,7 @@ Returns the persistent store coordinator for the application.  This
     NSDictionary * storeInfo =
         [NSPersistentStoreCoordinator metadataForPersistentStoreWithURL: url error: &error];
     
-    if(![[storeInfo valueForKey: @"viewVersion"] isEqualToString: @"Version 1"])
+    if(![[storeInfo valueForKey: @"viewVersion"] isEqualToString: @"Version 2"])
     {
         [fileManager removeFileAtPath: [url path] handler: nil];
         [fileManager createDirectoryAtPath:applicationSupportFolder attributes: nil];
@@ -279,7 +289,7 @@ Returns the persistent store coordinator for the application.  This
     {
         managedObjectContext = [[NSManagedObjectContext alloc] init];
         [managedObjectContext setPersistentStoreCoordinator: persistentStoreCoordinator];
-        [[self class] setMetadata: @"Version 1" forKey: @"viewVersion"
+        [[self class] setMetadata: @"Version 2" forKey: @"viewVersion"
                    inStoreWithURL: url inContext: managedObjectContext];
     }
 
@@ -338,31 +348,6 @@ Performs the save action for the application, which is to send the save:
 
 #pragma mark -
 
-- (void) updatePredicate;
-{
-    NSMutableArray * terms = [NSMutableArray array];
-    // [terms addObject: @"(driverIndex != nil)"];
-    if (mSubset == 1)
-        [terms addObject: @"(auditStatus != nil AND (auditStatus == 0 OR auditStatus == 1))"];
-    else if (mSubset == 2)
-        [terms addObject: @"(favorite == YES)"];
-    
-    if (mFilterString != nil)
-        [terms addObject: @"(shortName contains[c] $FILTER OR longName contains[c] $FILTER)"];
-    
-    NSString * format = nil;
-    if ([terms count] > 0)
-        format = [terms componentsJoinedByString: @" AND "];
-    JRLogDebug(@"Setting new predicate: %@", format);
-    NSPredicate * predicate = [NSPredicate predicateWithFormat: format];
-    
-    NSDictionary * variables = [NSDictionary dictionaryWithObjectsAndKeys:
-        mFilterString, @"FILTER", nil];
-    predicate = [predicate predicateWithSubstitutionVariables: variables];
-    
-    [mGamesController setFilterPredicate: predicate];
-}
-
 - (void) setFilterString: (NSString *) filterString;
 {
     [filterString retain];
@@ -375,7 +360,6 @@ Performs the save action for the application, which is to send the save:
 {
     return mFilterString;
 }
-
 
 - (void) setSubset: (int) subset;
 {
@@ -415,6 +399,68 @@ Performs the save action for the application, which is to send the save:
 {
     NSArray * games = [mGamesController selectedObjects];
     [games makeObjectsPerformSelector: @selector(toggleFavorite)];
+}
+
+//=========================================================== 
+// - selectedGames
+//=========================================================== 
+- (NSArray *) selectedGames
+{
+    return mSelectedGames; 
+}
+
+//=========================================================== 
+// - setSelectedGames:
+//=========================================================== 
+- (void) setSelectedGames: (NSArray *) theSelectedGames
+{
+    if (mSelectedGames == theSelectedGames)
+        return;
+    
+    NSBundle * myBundle = [NSBundle bundleForClass: [self class]];
+    NSString * screenshotDir = [[myBundle resourcePath] stringByAppendingPathComponent: @"empty_screenshot"];
+    [mSelectedGames release];
+    mSelectedGames = [theSelectedGames retain];
+    GameMO * selectedGame = nil;
+    if ([mSelectedGames count] == 1)
+        selectedGame = [mSelectedGames objectAtIndex: 0];
+    
+    if (selectedGame != nil)
+    {
+        NSString * dir = [[MamePreferences standardPreferences] snapshotDirectory];
+        dir = [dir stringByAppendingPathComponent: [selectedGame shortName]];
+        NSFileManager * manager = [NSFileManager defaultManager];
+        BOOL isDirectory = NO;
+        if ([manager fileExistsAtPath: dir isDirectory: &isDirectory])
+        {
+            screenshotDir = dir;
+        }
+    }
+    [mScreenshotView setValue: screenshotDir forInputKey: @"Image_Folder_Path"];
+}
+
+- (void) backgroundUpdateWillStart;
+{
+    [mProgressIndicator setIndeterminate: YES];
+    [mProgressIndicator startAnimation: self];
+}
+
+- (void) backgroundUpdateWillBeginAudits: (unsigned) totalAudits;
+{
+    [mProgressIndicator setIndeterminate: NO];
+    [mProgressIndicator setMaxValue: totalAudits];
+    [mProgressIndicator setDoubleValue: 0];
+}
+
+- (void) backgroundUpdateAuditStatus: (unsigned) numberCompleted;
+{
+    [mProgressIndicator setDoubleValue: numberCompleted];
+}
+
+- (void) backgroundUpdateWillFinish;
+{
+    [mProgressIndicator setIndeterminate: YES];
+    [mProgressIndicator stopAnimation: self];
 }
 
 #pragma mark -
@@ -505,8 +551,15 @@ Performs the save action for the application, which is to send the save:
 
 - (BOOL)windowShouldClose: (id) sender;
 {
-    [NSApp terminate: nil];
+    if (sender != mOpenPanel)
+        [NSApp terminate: nil];
     return YES;
+}
+
+- (void) windowWillClose: (NSNotification *) notification
+{
+    if ([notification object] == mOpenPanel)
+        [NSApp terminate: nil];
 }
 
 - (MameView *) mameView;
@@ -663,6 +716,7 @@ Performs the save action for the application, which is to send the save:
     }
     GameMO * game = [selectedGames objectAtIndex: 0];
     mGameName = [[game shortName]  retain];
+    [game setLastPlayed: [NSDate date]];
     [self chooseGameAndStart];
 }
 
@@ -1027,7 +1081,34 @@ Performs the save action for the application, which is to send the save:
 
 @end
 
+#pragma mark -
+
 @implementation MameController (Private)
+
+- (void) updatePredicate;
+{
+    NSMutableArray * terms = [NSMutableArray array];
+    // [terms addObject: @"(driverIndex != nil)"];
+    if (mSubset == 1)
+        [terms addObject: @"(auditStatus != nil AND (auditStatus == 0 OR auditStatus == 1))"];
+    else if (mSubset == 2)
+        [terms addObject: @"(favorite == YES)"];
+    
+    if (mFilterString != nil)
+        [terms addObject: @"(shortName contains[c] $FILTER OR longName contains[c] $FILTER)"];
+    
+    NSString * format = nil;
+    if ([terms count] > 0)
+        format = [terms componentsJoinedByString: @" AND "];
+    JRLogDebug(@"Setting new predicate: %@", format);
+    NSPredicate * predicate = [NSPredicate predicateWithFormat: format];
+    
+    NSDictionary * variables = [NSDictionary dictionaryWithObjectsAndKeys:
+        mFilterString, @"FILTER", nil];
+    predicate = [predicate predicateWithSubstitutionVariables: variables];
+    
+    [mGamesController setFilterPredicate: predicate];
+}
 
 - (void) exitAlertDidEnd: (NSAlert *) aler
               returnCode: (int) returnCode
@@ -1116,6 +1197,16 @@ Performs the save action for the application, which is to send the save:
 - (void) setGameLoading: (BOOL) gameLoading;
 {
     mGameLoading = gameLoading;
+    if (mGameLoading)
+    {
+        [mProgressIndicator setIndeterminate: YES];
+        [mProgressIndicator startAnimation: self];
+    }
+    else
+    {
+        [mProgressIndicator setIndeterminate: YES];
+        [mProgressIndicator stopAnimation: self];
+    }
 }
 
 - (void) setGameRunning: (BOOL) gameRunning;

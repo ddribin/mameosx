@@ -25,4 +25,10 @@
         return nil;
 }
 
+- (NSString *) displayName;
+{
+    return [NSString stringWithFormat:
+        @"%@: %@, %@", [self shortName], [self manufacturer], [self year]];
+}
+
 @end

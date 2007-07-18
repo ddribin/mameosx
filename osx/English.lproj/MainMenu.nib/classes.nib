@@ -47,6 +47,8 @@
                 mMameView = MameView; 
                 mOpenPanel = NSWindow; 
                 mOriginalLogger = id; 
+                mProgressIndicator = NSProgressIndicator; 
+                mScreenshotView = QCView; 
                 mToolbar = NSToolbar; 
                 mVersionChecker = VersionChecker; 
             }; 

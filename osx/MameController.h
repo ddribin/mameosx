@@ -24,6 +24,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import <QuartzCore/QuartzCore.h>
+#import <Quartz/Quartz.h>
 #import "JRLog.h"
 
 #if defined(__cplusplus)
@@ -52,6 +53,8 @@ extern "C" {
     IBOutlet VersionChecker *mVersionChecker;
     IBOutlet NSMenu * mEffectsMenu;
     IBOutlet NSToolbar * mToolbar;
+    IBOutlet QCView * mScreenshotView;
+    IBOutlet NSProgressIndicator * mProgressIndicator;
     
     IBOutlet NSPanel * mMameLogPanel;
     IBOutlet NSTextView * mMameLogView;
@@ -97,6 +100,7 @@ extern "C" {
     NSString * mFilterString;
     int mSubset;
     BackgroundUpdater * mUpdater;
+    NSArray * mSelectedGames;
 }
 
 #pragma mark -
@@ -119,6 +123,17 @@ extern "C" {
 - (int) subset;
 
 - (IBAction) toggleFavorite: (id) sender;
+
+- (NSArray *) selectedGames;
+- (void) setSelectedGames: (NSArray *) theSelectedGames;
+
+- (void) backgroundUpdateWillStart;
+
+- (void) backgroundUpdateWillBeginAudits: (unsigned) totalAudits;
+
+- (void) backgroundUpdateAuditStatus: (unsigned) numberCompleted;
+
+- (void) backgroundUpdateWillFinish;
 
 #pragma mark -
 
