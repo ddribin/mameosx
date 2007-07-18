@@ -391,6 +391,14 @@
 		5595EFAA0B1BC91200631777 /* RomAudit.nib in Resources */ = {isa = PBXBuildFile; fileRef = 5595EFA70B1BC91200631777 /* RomAudit.nib */; };
 		5595F0C00B1BDD9B00631777 /* RomAuditSummary.h in Headers */ = {isa = PBXBuildFile; fileRef = 5595F0BE0B1BDD9B00631777 /* RomAuditSummary.h */; };
 		5595F0C10B1BDD9B00631777 /* RomAuditSummary.m in Sources */ = {isa = PBXBuildFile; fileRef = 5595F0BF0B1BDD9B00631777 /* RomAuditSummary.m */; };
+		559C7EC20C4E7F9400763F73 /* Drag.png in Resources */ = {isa = PBXBuildFile; fileRef = 559C7EC10C4E7F9400763F73 /* Drag.png */; };
+		559C7EC30C4E7F9500763F73 /* Drag.png in Resources */ = {isa = PBXBuildFile; fileRef = 559C7EC10C4E7F9400763F73 /* Drag.png */; };
+		559C7F890C4E8E1100763F73 /* RBSplitSubview.h in Headers */ = {isa = PBXBuildFile; fileRef = 559C7F830C4E8E1100763F73 /* RBSplitSubview.h */; };
+		559C7F8A0C4E8E1100763F73 /* RBSplitSubview.m in Sources */ = {isa = PBXBuildFile; fileRef = 559C7F840C4E8E1100763F73 /* RBSplitSubview.m */; };
+		559C7F8B0C4E8E1100763F73 /* RBSplitView_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 559C7F850C4E8E1100763F73 /* RBSplitView_Prefix.pch */; };
+		559C7F8C0C4E8E1100763F73 /* RBSplitView.h in Headers */ = {isa = PBXBuildFile; fileRef = 559C7F860C4E8E1100763F73 /* RBSplitView.h */; };
+		559C7F8D0C4E8E1100763F73 /* RBSplitView.m in Sources */ = {isa = PBXBuildFile; fileRef = 559C7F870C4E8E1100763F73 /* RBSplitView.m */; };
+		559C7F8E0C4E8E1100763F73 /* RBSplitViewPrivateDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = 559C7F880C4E8E1100763F73 /* RBSplitViewPrivateDefines.h */; };
 		55A065000C44944F00B1E017 /* 34010fld.c in Sources */ = {isa = PBXBuildFile; fileRef = 55A064A40C44944F00B1E017 /* 34010fld.c */; };
 		55A065010C44944F00B1E017 /* adsp2100.c in Sources */ = {isa = PBXBuildFile; fileRef = 55A064A50C44944F00B1E017 /* adsp2100.c */; };
 		55A065020C44944F00B1E017 /* alph8201.c in Sources */ = {isa = PBXBuildFile; fileRef = 55A064A60C44944F00B1E017 /* alph8201.c */; };
@@ -2556,7 +2564,7 @@
 		55ACAB830C3542B700F647CE /* clifront.c in Sources */ = {isa = PBXBuildFile; fileRef = 55ACAB810C3542B700F647CE /* clifront.c */; };
 		55ACAB840C3542B700F647CE /* clifront.h in Headers */ = {isa = PBXBuildFile; fileRef = 55ACAB820C3542B700F647CE /* clifront.h */; };
 		55ACAB880C35435D00F647CE /* sdldir.c in Sources */ = {isa = PBXBuildFile; fileRef = 55ACAB870C35435D00F647CE /* sdldir.c */; };
-		55ACABAC0C3545CE00F647CE /* mameosx-util in CopyFiles */ = {isa = PBXBuildFile; fileRef = 55ACAAD80C35402600F647CE /* mameosx-util */; };
+		55ACABAC0C3545CE00F647CE /* mameosx-util in Copy to Executables */ = {isa = PBXBuildFile; fileRef = 55ACAAD80C35402600F647CE /* mameosx-util */; };
 		55B5D53D0C4BC58D00057C2A /* favorite-16.png in Resources */ = {isa = PBXBuildFile; fileRef = 55B5D53C0C4BC58D00057C2A /* favorite-16.png */; };
 		55B5D53E0C4BC58D00057C2A /* favorite-16.png in Resources */ = {isa = PBXBuildFile; fileRef = 55B5D53C0C4BC58D00057C2A /* favorite-16.png */; };
 		55B5D5400C4BC5B300057C2A /* favorite.png in Resources */ = {isa = PBXBuildFile; fileRef = 55B5D53F0C4BC5B300057C2A /* favorite.png */; };
@@ -3062,14 +3070,25 @@
 			name = "Copy Shark Codes";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		55ACABAA0C3545C300F647CE /* CopyFiles */ = {
+		559C7E980C4E7E7300763F73 /* Copy to Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Copy to Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		55ACABAA0C3545C300F647CE /* Copy to Executables */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 6;
 			files = (
-				55ACABAC0C3545CE00F647CE /* mameosx-util in CopyFiles */,
+				55ACABAC0C3545CE00F647CE /* mameosx-util in Copy to Executables */,
 			);
+			name = "Copy to Executables";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		55BEFB5A0AEC6E4A00357340 /* Copy to Frameworks */ = {
@@ -3540,6 +3559,13 @@
 		5595EFA80B1BC91200631777 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/RomAudit.nib; sourceTree = "<group>"; };
 		5595F0BE0B1BDD9B00631777 /* RomAuditSummary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RomAuditSummary.h; sourceTree = "<group>"; };
 		5595F0BF0B1BDD9B00631777 /* RomAuditSummary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RomAuditSummary.m; sourceTree = "<group>"; };
+		559C7EC10C4E7F9400763F73 /* Drag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Drag.png; sourceTree = "<group>"; };
+		559C7F830C4E8E1100763F73 /* RBSplitSubview.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = RBSplitSubview.h; sourceTree = "<group>"; };
+		559C7F840C4E8E1100763F73 /* RBSplitSubview.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = RBSplitSubview.m; sourceTree = "<group>"; };
+		559C7F850C4E8E1100763F73 /* RBSplitView_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = RBSplitView_Prefix.pch; sourceTree = "<group>"; };
+		559C7F860C4E8E1100763F73 /* RBSplitView.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = RBSplitView.h; sourceTree = "<group>"; };
+		559C7F870C4E8E1100763F73 /* RBSplitView.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = RBSplitView.m; sourceTree = "<group>"; };
+		559C7F880C4E8E1100763F73 /* RBSplitViewPrivateDefines.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = RBSplitViewPrivateDefines.h; sourceTree = "<group>"; };
 		55A063EA0C44926E00B1E017 /* append_finder_comment */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.script.sh; path = append_finder_comment; sourceTree = "<group>"; };
 		55A063EB0C44926E00B1E017 /* build_dmg.sh */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.script.sh; path = build_dmg.sh; sourceTree = "<group>"; };
 		55A063EC0C44926E00B1E017 /* changelog2atom */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.script.ruby; path = changelog2atom; sourceTree = "<group>"; };
@@ -6862,6 +6888,7 @@
 		559873590B230F99003D1982 /* vendor */ = {
 			isa = PBXGroup;
 			children = (
+				559C7E590C4E7E3B00763F73 /* RBSplitView */,
 				55B5DD8B0C4D821600057C2A /* generictoolbar */,
 				55EB81070C44A4B400C758F1 /* ddcli */,
 				55B8C6F20C2ADB3C00B1CD96 /* sdlmame */,
@@ -6875,6 +6902,19 @@
 				55D28E190B13CBB8002C9199 /* VirtualRingBuffer.m */,
 			);
 			path = vendor;
+			sourceTree = "<group>";
+		};
+		559C7E590C4E7E3B00763F73 /* RBSplitView */ = {
+			isa = PBXGroup;
+			children = (
+				559C7F830C4E8E1100763F73 /* RBSplitSubview.h */,
+				559C7F840C4E8E1100763F73 /* RBSplitSubview.m */,
+				559C7F850C4E8E1100763F73 /* RBSplitView_Prefix.pch */,
+				559C7F860C4E8E1100763F73 /* RBSplitView.h */,
+				559C7F870C4E8E1100763F73 /* RBSplitView.m */,
+				559C7F880C4E8E1100763F73 /* RBSplitViewPrivateDefines.h */,
+			);
+			path = RBSplitView;
 			sourceTree = "<group>";
 		};
 		55A063E90C44926E00B1E017 /* tools */ = {
@@ -9190,6 +9230,7 @@
 		55B5D53B0C4BC58D00057C2A /* images */ = {
 			isa = PBXGroup;
 			children = (
+				559C7EC10C4E7F9400763F73 /* Drag.png */,
 				5542416E0C4DBC95004A1299 /* screenshot.qtz */,
 				55B5DD9C0C4D82DF00057C2A /* start.png */,
 				55B5D53F0C4BC5B300057C2A /* favorite.png */,
@@ -9706,6 +9747,10 @@
 				55B5DD980C4D821600057C2A /* GenericToolbarItem.h in Headers */,
 				55B5DD9A0C4D821600057C2A /* GenericToolbarNibConnector.h in Headers */,
 				55B5DDC10C4D872200057C2A /* AOSegmentedControl.h in Headers */,
+				559C7F890C4E8E1100763F73 /* RBSplitSubview.h in Headers */,
+				559C7F8B0C4E8E1100763F73 /* RBSplitView_Prefix.pch in Headers */,
+				559C7F8C0C4E8E1100763F73 /* RBSplitView.h in Headers */,
+				559C7F8E0C4E8E1100763F73 /* RBSplitViewPrivateDefines.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10068,10 +10113,11 @@
 			buildConfigurationList = 55BEFB100AEC6D0C00357340 /* Build configuration list for PBXNativeTarget "MAME OS X" */;
 			buildPhases = (
 				55BEFB090AEC6D0C00357340 /* Resources */,
+				559C7E980C4E7E7300763F73 /* Copy to Frameworks */,
 				55BEFB0A0AEC6D0C00357340 /* Sources */,
 				55BEFB0B0AEC6D0C00357340 /* Frameworks */,
 				55BEFB5A0AEC6E4A00357340 /* Copy to Frameworks */,
-				55ACABAA0C3545C300F647CE /* CopyFiles */,
+				55ACABAA0C3545C300F647CE /* Copy to Executables */,
 				55F4D8440B86E2F2001EED08 /* Generate help */,
 			);
 			buildRules = (
@@ -10205,6 +10251,7 @@
 				55B5DD9E0C4D82DF00057C2A /* start.png in Resources */,
 				5542416F0C4DBC95004A1299 /* screenshot.qtz in Resources */,
 				554242140C4DC4B8004A1299 /* empty_screenshot in Resources */,
+				559C7EC20C4E7F9400763F73 /* Drag.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10235,6 +10282,7 @@
 				55B5DD9D0C4D82DF00057C2A /* start.png in Resources */,
 				554241700C4DBC95004A1299 /* screenshot.qtz in Resources */,
 				554242150C4DC4B8004A1299 /* empty_screenshot in Resources */,
+				559C7EC30C4E7F9500763F73 /* Drag.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12888,6 +12936,8 @@
 				55B5DD990C4D821600057C2A /* GenericToolbarItem.m in Sources */,
 				55B5DD9B0C4D821600057C2A /* GenericToolbarNibConnector.m in Sources */,
 				55B5DDC20C4D872200057C2A /* AOSegmentedControl.m in Sources */,
+				559C7F8A0C4E8E1100763F73 /* RBSplitSubview.m in Sources */,
+				559C7F8D0C4E8E1100763F73 /* RBSplitView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13465,9 +13515,11 @@
 					"$(inherited)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_2)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_3)",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_2 = "\"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_3 = "\"$(SRCROOT)/vendor/RBSplitView\"";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
@@ -13512,9 +13564,11 @@
 					"$(inherited)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_2)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_3)",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_2 = "\"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_3 = "\"$(SRCROOT)/vendor/RBSplitView\"";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -13670,6 +13724,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)/vendor/RBSplitView\"";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
@@ -14049,9 +14108,11 @@
 					"$(inherited)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_2)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_3)",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_2 = "\"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_3 = "\"$(SRCROOT)/vendor/RBSplitView\"";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -14094,9 +14155,11 @@
 					"$(inherited)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_2)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_3)",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_2 = "\"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_3 = "\"$(SRCROOT)/vendor/RBSplitView\"";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
@@ -14396,6 +14459,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)/vendor/RBSplitView\"";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
@@ -14424,6 +14492,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)/vendor/RBSplitView\"";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
@@ -14485,9 +14558,11 @@
 					"$(inherited)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_2)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_3)",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_2 = "\"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_3 = "\"$(SRCROOT)/vendor/RBSplitView\"";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
@@ -14516,9 +14591,11 @@
 					"$(inherited)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_2)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_3)",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_2 = "\"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_3 = "\"$(SRCROOT)/vendor/RBSplitView\"";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;

@@ -31,15 +31,18 @@
                 showWhatsNew = id; 
                 toggleFavorite = id; 
                 togglePause = id; 
+                toggleScreenshot = id; 
                 toggleThrottled = id; 
                 visualEffectsMenuChanged = id; 
             }; 
             CLASS = MameController; 
             LANGUAGE = ObjC; 
             OUTLETS = {
+                mDragView = NSImageView; 
                 mDrawer = NSDrawer; 
                 mEffectsMenu = NSMenu; 
                 mFavoriteColumn = NSTableColumn; 
+                mFirstSplit = RBSplitSubview; 
                 mGamesController = NSArrayController; 
                 mGamesTable = NSTableView; 
                 mMameLogPanel = NSPanel; 
@@ -49,6 +52,7 @@
                 mOriginalLogger = id; 
                 mProgressIndicator = NSProgressIndicator; 
                 mScreenshotView = QCView; 
+                mSecondSplit = RBSplitSubview; 
                 mToolbar = NSToolbar; 
                 mVersionChecker = VersionChecker; 
             }; 

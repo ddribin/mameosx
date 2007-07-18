@@ -5,6 +5,7 @@
 	<key>IBPaletteDependency</key>
 	<array>
 		<string>QuartzComposer</string>
+		<string>RBSplitView</string>
 		<string>GenericToolbar</string>
 	</array>
 </dict>

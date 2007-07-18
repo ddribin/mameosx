@@ -44,6 +44,7 @@ extern "C" {
 @class VersionChecker;
 @class AudioEffectWindowController;
 @class BackgroundUpdater;
+@class RBSplitSubview;
 
 @interface MameController : NSObject <JRLogLogger>
 {
@@ -55,6 +56,10 @@ extern "C" {
     IBOutlet NSToolbar * mToolbar;
     IBOutlet QCView * mScreenshotView;
     IBOutlet NSProgressIndicator * mProgressIndicator;
+
+    IBOutlet RBSplitSubview * mFirstSplit;
+    IBOutlet RBSplitSubview * mSecondSplit;
+    IBOutlet NSImageView * mDragView;
     
     IBOutlet NSPanel * mMameLogPanel;
     IBOutlet NSTextView * mMameLogView;
@@ -134,6 +139,8 @@ extern "C" {
 - (void) backgroundUpdateAuditStatus: (unsigned) numberCompleted;
 
 - (void) backgroundUpdateWillFinish;
+
+- (IBAction) toggleScreenshot: (id) sender;
 
 #pragma mark -
 
