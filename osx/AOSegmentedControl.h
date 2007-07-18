@@ -8,6 +8,10 @@
 
 #import <Cocoa/Cocoa.h>
 
+/*
+ * See:
+ * http://lists.apple.com/archives/cocoa-dev/2005/Jul/msg02532.html
+ */
 
 @interface AOSegmentedControl : NSSegmentedControl
 {
