@@ -21,6 +21,8 @@ static NSArray * sAllGames = nil;
 
 @interface BackgroundUpdater (Private)
 
+- (void) freeResources;
+
 - (NSArray *) fetchAllGames;
 - (GameMO *) gameWithShortName: (NSString *) shortName;
 
@@ -58,13 +60,20 @@ static NSArray * sAllGames = nil;
     return self;
 }
 
+- (void) dealloc
+{
+    [self freeResources];
+    [super dealloc];
+}
+
 - (void) start;
 {
+    [self freeResources];
+    
+    mShortNames = [[NSMutableArray alloc] init];
+    mIndexByShortName = [[NSMutableDictionary alloc] init];
     mCurrentGameIndex = 0;
-    [mIndexByShortName removeAllObjects];
     mPass = 0;
-    mCurrentGame = nil;
-    mGameEnumerator = nil;
     
     JRLogDebug(@"Start background updater");
     [mController backgroundUpdateWillStart];
@@ -74,6 +83,19 @@ static NSArray * sAllGames = nil;
 @end
 
 @implementation BackgroundUpdater (Private)
+
+- (void) freeResources;
+{
+    [mShortNames release];
+    [mIndexByShortName release];
+    [mCurrentGame release];
+    [mGameEnumerator release];
+    
+    mShortNames = nil;
+    mIndexByShortName = nil;
+    mCurrentGame = nil;
+    mGameEnumerator = nil;
+}
 
 - (void) postIdleNotification;
 {
@@ -114,7 +136,10 @@ static NSArray * sAllGames = nil;
     if (!done)
         [self postIdleNotification];
     else
+    {
+        [self freeResources];
         JRLogDebug(@"Idle done");
+    }
 }
 
 static NSTimeInterval mLastSave = 0;
