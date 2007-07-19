@@ -129,7 +129,8 @@ static MameFileManager * sInstance = nil;
     if (createPathsFlag)
     {
         NSString * directory = [nsPath stringByDeletingLastPathComponent];
-        NSMutableArray * components = [[directory pathComponents] mutableCopy];
+        NSMutableArray * components =
+            [[[directory pathComponents] mutableCopy] autorelease];
         [self createDirectoriesForComponents: components
                             currentDirectory: @""];
     }
