@@ -51,8 +51,8 @@
 //=========================================================== 
 - (void) dealloc
 {
-    CVOpenGLTextureCacheRelease(mTextureCache);
     [mTextures release];
+    CVOpenGLTextureCacheRelease(mTextureCache);
     
     mTextures = nil;
     [super dealloc];

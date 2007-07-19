@@ -65,6 +65,23 @@ static void cv_assert(CVReturn cr, NSString * message)
     return self;
 }
 
+- (void) dealloc;
+{
+    if (mPixelBuffer != NULL)
+    {
+        CVPixelBufferRelease(mPixelBuffer);
+        mPixelBuffer = NULL;
+    }
+    
+    if (mCVTexture != NULL)
+    {
+        CVOpenGLTextureRelease(mCVTexture);
+        mCVTexture = NULL;
+    }
+    
+    [super dealloc];
+}
+
 - (BOOL) isEqualToPrimitive: (const render_primitive *) primitive;
 {
     UINT32 primitiveHash = [MameOpenGLTexture computeHashForPrimitive: primitive];

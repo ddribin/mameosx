@@ -46,8 +46,20 @@ static void cv_assert(CVReturn cr, NSString * message)
         return nil;
     
     mOpenGLRenderer = [[MameOpenGLRenderer alloc] init];
+    mGlContext = nil;
+    mCurrentFrameTexture = NULL;
+    mFrameTextureCache = NULL;
+    mCurrentFrame = NULL;
     
     return self;
+}
+
+- (void) dealloc;
+{
+    [self osd_exit];
+    [mOpenGLRenderer release];
+    mOpenGLRenderer = nil;
+    [super dealloc];
 }
 
 - (CVOpenGLTextureRef) currentFrameTexture;
@@ -103,6 +115,36 @@ static void cv_assert(CVReturn cr, NSString * message)
     [mOpenGLRenderer osd_init: mGlContext format: glPixelFormat];
 }
 
+- (void) osd_exit;
+{
+    [mOpenGLRenderer osd_exit];
+    
+    if (mCurrentFrameTexture != NULL)
+    {
+        CVOpenGLTextureRelease(mCurrentFrameTexture);
+        mCurrentFrameTexture = NULL;
+    }
+
+    if (mFrameTextureCache != NULL)
+    {
+        CVOpenGLTextureCacheFlush(mFrameTextureCache, 0);
+        CVOpenGLTextureCacheRelease(mFrameTextureCache);
+        mFrameTextureCache = NULL;
+    }
+    
+    if (mCurrentFrame != NULL)
+    {
+        CVOpenGLBufferRelease(mCurrentFrame);
+        mCurrentFrame = NULL;
+    }
+
+    [mGlContext release];
+    mGlContext = nil;
+    
+    [mTextureTable release];
+    mTextureTable = nil;
+}
+
 - (void) setOpenGLContext: (NSOpenGLContext *) context
               pixelFormat: (NSOpenGLPixelFormat *) pixelFormat;
 {
@@ -128,6 +170,7 @@ static void cv_assert(CVReturn cr, NSString * message)
         mCurrentFrameSize = size;
         
         CVOpenGLBufferRelease(mCurrentFrame);
+        mCurrentFrame = NULL;
         
         NSMutableDictionary * bufferOptions = [NSMutableDictionary dictionary];
         [bufferOptions setValue:[NSNumber numberWithInt: mCurrentFrameSize.width]

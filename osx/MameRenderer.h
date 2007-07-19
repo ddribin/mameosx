@@ -49,6 +49,8 @@
            format: (NSOpenGLPixelFormat *) mameViewFormat
              size: (NSSize) size;
 
+- (void) osd_exit;
+
 - (void) renderFrame: (const render_primitive_list *) primitives
             withSize: (NSSize) size;
 

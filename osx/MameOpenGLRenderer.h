@@ -40,6 +40,8 @@
 - (void) osd_init: (NSOpenGLContext *) mameViewContext
            format: (NSOpenGLPixelFormat *) mameViewFormat;
 
+- (void) osd_exit;
+
 - (void) renderFrame : (const render_primitive_list *) primlist
              withSize: (NSSize) size;
 

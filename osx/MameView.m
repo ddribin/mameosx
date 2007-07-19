@@ -591,6 +591,7 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     
     [self stopAnimation];
     [mAudioController osd_stop_audio_stream];
+    [mRenderer osd_exit];
 }
 
 - (void) mameDidPause: (running_machine *) machine

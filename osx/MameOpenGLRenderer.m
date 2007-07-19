@@ -42,8 +42,16 @@
         return nil;
     
     mLinearFilter = YES;
+    mTextureTable =  nil;
+    mGlContext = nil;
     
     return self;
+}
+
+- (void) dealloc;
+{
+    [self osd_exit];
+    [super dealloc];
 }
 
 - (void) osd_init: (NSOpenGLContext *) mameViewContext
@@ -54,6 +62,15 @@
    
     mTextureTable = [[MameTextureTable alloc] initWithContext: mGlContext 
                                                   pixelFormat: glPixelFormat];
+}
+
+- (void) osd_exit;
+{
+    [mTextureTable release];
+    mTextureTable =  nil;
+    
+    [mGlContext release];
+    mGlContext = nil;
 }
 
 - (BOOL) linearFilter;
@@ -88,8 +105,8 @@ INLINE void set_blendmode(int blendmode)
     }
 }
 
-- (void) renderFrame : (const render_primitive_list *) primlist
-             withSize: (NSSize) size;
+- (void) renderFrame: (const render_primitive_list *) primlist
+            withSize: (NSSize) size;
 {
     // clear the screen and Z-buffer
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
