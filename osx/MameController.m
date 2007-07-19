@@ -1149,7 +1149,17 @@ Performs the save action for the application, which is to send the save:
     }
     else
     {
-        [NSApp terminate: nil];
+        if (mQuitOnError)
+        {
+            [NSApp terminate: nil];
+        }
+        else
+        {
+            [[mMameView window] orderOut: self];
+            [mGameName release];
+            mGameName = nil;
+            [self chooseGameAndStart];
+        }
     }
 }
 
