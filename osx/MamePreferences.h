@@ -205,6 +205,12 @@
 
 - (void) copyToMameConfiguration: (MameConfiguration *) configuration;
 
+#pragma mark -
+#pragma mark UI
+
+- (NSArray *) gamesSortDescriptors;
+- (void) setGamesSortDescriptors: (NSArray *) gamesSortDescriptors;
+
 @end
 
 NSString * MameApplicationSupportDirectory(void);
@@ -298,4 +304,6 @@ extern NSString * MameAutoFrameSkipKey;
 extern NSString * MameSaveGameKey;
 extern NSString * MameAutosaveKey;
 extern NSString * MameBiosKey;
+
+extern NSString * MameGameSortDescriptorsKey;
 

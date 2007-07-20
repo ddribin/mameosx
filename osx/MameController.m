@@ -115,13 +115,7 @@ static void exit_sleeper()
         [[MamePreferences standardPreferences] sleepAtExit];
     atexit(exit_sleeper);
     
-    NSSortDescriptor * descriptor =
-        [[NSSortDescriptor alloc] initWithKey: @"longName"
-                                    ascending: YES
-                                     selector: @selector(caseInsensitiveCompare:)];
-    
-    gameSortDescriptors = [[NSArray alloc] initWithObjects: descriptor, nil];
-    [descriptor release];
+    gameSortDescriptors = [[[MamePreferences standardPreferences] gamesSortDescriptors] retain];
     
     mUpdater = [[BackgroundUpdater alloc] initWithMameController: self];
     
@@ -610,6 +604,9 @@ Performs the save action for the application, which is to send the save:
 {
     [[mMameView window] orderOut: nil];
     [mMameView setFullScreen: false];
+    
+    [[MamePreferences standardPreferences] setGamesSortDescriptors: gameSortDescriptors];
+    [[MamePreferences standardPreferences] synchronize];
 }
 
 - (void) applicationDidBecomeActive: (NSNotification *) notification;

@@ -119,6 +119,8 @@ NSString * MameSaveGameKey = @"SaveGame";
 NSString * MameAutosaveKey = @"AutoSave";
 NSString * MameBiosKey = @"Bios";
 
+NSString * MameGameSortDescriptorsKey = @"GameSortDescriptors";
+
 @implementation MamePreferences
 
 #pragma mark Init and dealloc
@@ -715,6 +717,42 @@ NSString * MameBiosKey = @"Bios";
     [configuration setSaveGame: [self saveGame]];
     [configuration setAutoSave: [self autoSave]];
     [configuration setBios: [self bios]];
+}
+
+
+#pragma mark -
+#pragma mark UI
+
+- (NSArray *) gamesSortDescriptors;
+{
+    NSArray * sortDescriptors = nil;
+    NSData * data = [mDefaults dataForKey: MameGameSortDescriptorsKey];
+    if (data != nil)
+    {
+        sortDescriptors = [NSKeyedUnarchiver unarchiveObjectWithData: data];
+    }
+    
+    if (sortDescriptors == nil)
+    {
+        NSSortDescriptor * descriptor =
+            [[NSSortDescriptor alloc] initWithKey: @"longName"
+                                        ascending: YES
+                                         selector: @selector(caseInsensitiveCompare:)];
+        
+        sortDescriptors = [NSArray arrayWithObject: descriptor];
+    }
+    
+    return sortDescriptors;
+}
+
+- (void) setGamesSortDescriptors: (NSArray *) gamesSortDescriptors;
+{
+    NSData * data = nil;
+    if (gamesSortDescriptors != nil)
+    {
+        data = [NSKeyedArchiver archivedDataWithRootObject: gamesSortDescriptors];
+    }
+    [mDefaults setObject: data forKey: MameGameSortDescriptorsKey];
 }
 
 @end
