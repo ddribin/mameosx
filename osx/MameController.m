@@ -1159,6 +1159,12 @@ Performs the save action for the application, which is to send the save:
             [mGameName release];
             mGameName = nil;
             [self chooseGameAndStart];
+            /*
+             * Only exit full screen, after the MAME window is closed, and the
+             * open window is open.  Otherwise, the MAME window may be briefly
+             * visible, or theopen window may not be.
+             */
+            [mMameView setFullScreen: false];
         }
     }
 }
