@@ -181,9 +181,9 @@ static NSString * format(NSString * format, ...);
 
     
     int i;
-    for (i = 0; i < MAME_OSX_NUM_KEYSTATES; i++)
+    for (i = 0; i < 256; i++)
     {
-        p->mKeyStates[i] = 0;
+        p->mKeyStates2[i] = 0;
     }
 }
 
