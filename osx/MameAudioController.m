@@ -336,6 +336,8 @@ OSStatus static MyRenderer(void	* inRefCon,
 {
     [mGraph stop];
     [mGraph uninitialize];
+    [mRingBuffer release];
+    mRingBuffer = nil;
     
 #if OSX_LOG_SOUND
     NSLog(@"Overflows: %qi, underflows: %qi", mOverflows, mUnderflows);
