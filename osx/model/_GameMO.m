@@ -55,6 +55,35 @@
 
 
 
+- (NSNumber*)playCount {
+	[self willAccessValueForKey:@"playCount"];
+	NSNumber *result = [self primitiveValueForKey:@"playCount"];
+	[self didAccessValueForKey:@"playCount"];
+
+	return result;
+}
+
+- (void)setPlayCount:(NSNumber*)value_ {
+    [self willChangeValueForKey:@"playCount"];
+    [self setPrimitiveValue:value_ forKey:@"playCount"];
+    [self didChangeValueForKey:@"playCount"];
+}
+
+
+
+- (int)playCountValue {
+	return [[self playCount] intValue];
+}
+
+- (void)setPlayCountValue:(int)value_ {
+	[self setPlayCount:[NSNumber numberWithInt:value_]];
+}
+
+
+
+
+
+
 - (NSDate*)lastPlayed {
 	[self willAccessValueForKey:@"lastPlayed"];
 	NSDate *result = [self primitiveValueForKey:@"lastPlayed"];

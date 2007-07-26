@@ -273,7 +273,7 @@ Returns the persistent store coordinator for the application.  This
     NSDictionary * storeInfo =
         [NSPersistentStoreCoordinator metadataForPersistentStoreWithURL: url error: &error];
     
-    if(![[storeInfo valueForKey: @"viewVersion"] isEqualToString: @"Version 2"])
+    if(![[storeInfo valueForKey: @"viewVersion"] isEqualToString: @"Version 3"])
     {
         [fileManager removeFileAtPath: [url path] handler: nil];
         [fileManager createDirectoryAtPath:applicationSupportFolder attributes: nil];
@@ -293,7 +293,7 @@ Returns the persistent store coordinator for the application.  This
     {
         managedObjectContext = [[NSManagedObjectContext alloc] init];
         [managedObjectContext setPersistentStoreCoordinator: persistentStoreCoordinator];
-        [[self class] setMetadata: @"Version 2" forKey: @"viewVersion"
+        [[self class] setMetadata: @"Version 3" forKey: @"viewVersion"
                    inStoreWithURL: url inContext: managedObjectContext];
     }
 
@@ -360,7 +360,7 @@ Performs the save action for the application, which is to send the save:
  * up bindings only when added to the toolbar fixes this.
  */
 
-- (void)toolbarWillAddItem:(NSNotification *)note
+- (void) toolbarWillAddItem: (NSNotification *) note
 {
     NSToolbarItem * item = [[note userInfo] objectForKey: @"item"];
     NSString * identifier = [item itemIdentifier];
@@ -388,7 +388,7 @@ Performs the save action for the application, which is to send the save:
     }
 }
 
-- (void)toolbarDidRemoveItem:(NSNotification *)note
+- (void) toolbarDidRemoveItem: (NSNotification *) note
 {
     NSToolbarItem * item = [[note userInfo] objectForKey: @"item"];
     NSString * identifier = [item itemIdentifier];
@@ -810,6 +810,7 @@ Performs the save action for the application, which is to send the save:
     GameMO * game = [selectedGames objectAtIndex: 0];
     mGameName = [[game shortName]  retain];
     [game setLastPlayed: [NSDate date]];
+    [game setPlayCountValue: [game playCountValue]+1];
     [self chooseGameAndStart];
 }
 

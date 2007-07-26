@@ -28,6 +28,16 @@
 
 
 
+- (NSNumber*)playCount;
+- (void)setPlayCount:(NSNumber*)value_;
+
+- (int)playCountValue;
+- (void)setPlayCountValue:(int)value_;
+
+//- (BOOL)validatePlayCount:(id*)value_ error:(NSError**)error_;
+
+
+
 - (NSDate*)lastPlayed;
 - (void)setLastPlayed:(NSDate*)value_;
 
