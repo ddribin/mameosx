@@ -184,6 +184,7 @@ static void exit_sleeper()
     
     [[mFavoriteColumn headerCell] setImage: [NSImage imageNamed: @"favorite-16"]];
     
+    [self setSubset: 1];
     [self updatePredicate];
     [mUpdater start];
 }
@@ -371,6 +372,20 @@ Performs the save action for the application, which is to send the save:
        withKeyPath: @"selectionIndexes.count"
            options: nil];
     }
+    else if ([identifier isEqualToString: @"Search"])
+    {
+        [[item view] bind: @"value"
+          toObject: self
+       withKeyPath: @"filterString"
+           options: nil];
+    }
+    else if ([identifier isEqualToString: @"Filter"])
+    {
+        [[item view] bind: @"selectedIndex"
+          toObject: self
+       withKeyPath: @"subset"
+           options: nil];
+    }
 }
 
 - (void)toolbarDidRemoveItem:(NSNotification *)note
@@ -381,7 +396,14 @@ Performs the save action for the application, which is to send the save:
         [identifier isEqualToString: @"Favorite"])
     {
         [item unbind: @"enabled"];
-        
+    }
+    else if ([identifier isEqualToString: @"Search"])
+    {
+        [item unbind: @"value"];
+    }
+    else if ([identifier isEqualToString: @"Filter"])
+    {
+        [item unbind: @"selectedIndex"];
     }
 }
 
