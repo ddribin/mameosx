@@ -10,6 +10,7 @@
 #import "MameController.h"
 #import "RomAuditSummary.h"
 #import "GameMO.h"
+#import "GroupMO.h"
 #import "JRLog.h"
 
 #import "driver.h"
@@ -175,9 +176,11 @@ static NSTimeInterval mLastSave = 0;
         [[[NSSortDescriptor alloc] initWithKey: @"shortName"
                                      ascending:YES] autorelease]]];
     // Execute the fetch
+    JRLogDebug(@"Fetching current game list");
     NSError *error = nil;
     NSArray * gamesMatchingNames = [context
         executeFetchRequest:fetchRequest error:&error];
+    JRLogDebug(@"Fetch done");
     mCurrentGameIndex = 0;
     mGameEnumerator = [[gamesMatchingNames objectEnumerator] retain];
     mCurrentGame = [[mGameEnumerator nextObject] retain];
@@ -280,13 +283,19 @@ static NSTimeInterval mLastSave = 0;
     mCurrentGame = nil;
     mGameEnumerator = nil;
     
-    JRLogDebug(@"Saving: %d", [[context updatedObjects] count]);
-    NSError * error = nil;
-    if (![context save: &error])
+    JRLogDebug(@"Saving: %d %d", [[context updatedObjects] count], [context hasChanges]);
+    if ([context hasChanges])
     {
-        [mController handleCoreDataError: error];
+        JRLogDebug(@"Saving");
+        NSError * error = nil;
+        if (![context save: &error])
+        {
+            [mController handleCoreDataError: error];
+        }
+        JRLogDebug(@"Save done");
     }
-    JRLogDebug(@"Save done");
+    else
+        JRLogDebug(@"Skipping save");
 
 #if 1
     NSFetchRequest *fetchRequest = [[[NSFetchRequest alloc] init] autorelease];
@@ -300,7 +309,7 @@ static NSTimeInterval mLastSave = 0;
         [[[NSSortDescriptor alloc] initWithKey: @"shortName"
                                      ascending:YES] autorelease]]];
     // Execute the fetch
-    error = nil;
+    NSError * error = nil;
     JRLogDebug(@"Fetching games that need audit");
     NSArray * allGames = [context executeFetchRequest:fetchRequest error:&error];
     JRLogDebug(@"Games that need audit: %d", [allGames count]);
@@ -362,13 +371,18 @@ static NSTimeInterval mLastSave = 0;
     [mGameEnumerator release];
     mGameEnumerator = nil;
     
-    JRLogDebug(@"Saving");
-    NSError * error = nil;
-    if (![context save: &error])
+    if ([context hasChanges])
     {
-        [mController handleCoreDataError: error];
+        JRLogDebug(@"Saving");
+        NSError * error = nil;
+        if (![context save: &error])
+        {
+            [mController handleCoreDataError: error];
+        }
+        JRLogDebug(@"Save done");
     }
-    JRLogDebug(@"Save complete");
+    else
+        JRLogDebug(@"Skipping save");
 }
 
 - (NSArray *) fetchAllGames;

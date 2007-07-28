@@ -26,35 +26,6 @@
 
 
 
-- (NSNumber*)favorite {
-	[self willAccessValueForKey:@"favorite"];
-	NSNumber *result = [self primitiveValueForKey:@"favorite"];
-	[self didAccessValueForKey:@"favorite"];
-
-	return result;
-}
-
-- (void)setFavorite:(NSNumber*)value_ {
-    [self willChangeValueForKey:@"favorite"];
-    [self setPrimitiveValue:value_ forKey:@"favorite"];
-    [self didChangeValueForKey:@"favorite"];
-}
-
-
-
-- (BOOL)favoriteValue {
-	return [[self favorite] boolValue];
-}
-
-- (void)setFavoriteValue:(BOOL)value_ {
-	[self setFavorite:[NSNumber numberWithBool:value_]];
-}
-
-
-
-
-
-
 - (NSNumber*)playCount {
 	[self willAccessValueForKey:@"playCount"];
 	NSNumber *result = [self primitiveValueForKey:@"playCount"];
@@ -160,25 +131,6 @@
 
 
 
-- (NSString*)longName {
-	[self willAccessValueForKey:@"longName"];
-	NSString *result = [self primitiveValueForKey:@"longName"];
-	[self didAccessValueForKey:@"longName"];
-
-	return result;
-}
-
-- (void)setLongName:(NSString*)value_ {
-    [self willChangeValueForKey:@"longName"];
-    [self setPrimitiveValue:value_ forKey:@"longName"];
-    [self didChangeValueForKey:@"longName"];
-}
-
-
-
-
-
-
 - (NSNumber*)auditStatus {
 	[self willAccessValueForKey:@"auditStatus"];
 	NSNumber *result = [self primitiveValueForKey:@"auditStatus"];
@@ -208,6 +160,25 @@
 
 
 
+- (NSString*)longName {
+	[self willAccessValueForKey:@"longName"];
+	NSString *result = [self primitiveValueForKey:@"longName"];
+	[self didAccessValueForKey:@"longName"];
+
+	return result;
+}
+
+- (void)setLongName:(NSString*)value_ {
+    [self willChangeValueForKey:@"longName"];
+    [self setPrimitiveValue:value_ forKey:@"longName"];
+    [self didChangeValueForKey:@"longName"];
+}
+
+
+
+
+
+
 - (NSString*)auditNotes {
 	[self willAccessValueForKey:@"auditNotes"];
 	NSString *result = [self primitiveValueForKey:@"auditNotes"];
@@ -226,6 +197,57 @@
 
 
 
+
+	
+
+- (GameMO*)parent {
+	[self willAccessValueForKey:@"parent"];
+	GameMO *result = [self primitiveValueForKey:@"parent"];
+	[self didAccessValueForKey:@"parent"];
+	return result;
+}
+
+- (void)setParent:(GameMO*)value_ {
+	[self willChangeValueForKey:@"parent"];
+	[self setPrimitiveValue:value_ forKey:@"parent"];
+	[self didChangeValueForKey:@"parent"];
+}
+
+	
+
+	
+- (void)addGroups:(NSSet*)value_ {
+	[self willChangeValueForKey:@"groups" withSetMutation:NSKeyValueUnionSetMutation usingObjects:value_];
+    [[self primitiveValueForKey:@"groups"] unionSet:value_];
+    [self didChangeValueForKey:@"groups" withSetMutation:NSKeyValueUnionSetMutation usingObjects:value_];
+}
+
+-(void)removeGroups:(NSSet*)value_ {
+	[self willChangeValueForKey:@"groups" withSetMutation:NSKeyValueMinusSetMutation usingObjects:value_];
+	[[self primitiveValueForKey:@"groups"] minusSet:value_];
+	[self didChangeValueForKey:@"groups" withSetMutation:NSKeyValueMinusSetMutation usingObjects:value_];
+}
+	
+- (void)addGroupsObject:(GroupMO*)value_ {
+	NSSet *changedObjects = [[NSSet alloc] initWithObjects:&value_ count:1];
+	[self willChangeValueForKey:@"groups" withSetMutation:NSKeyValueUnionSetMutation usingObjects:changedObjects];
+    [[self primitiveValueForKey:@"groups"] addObject:value_];
+    [self didChangeValueForKey:@"groups" withSetMutation:NSKeyValueUnionSetMutation usingObjects:changedObjects];
+    [changedObjects release];
+}
+
+- (void)removeGroupsObject:(GroupMO*)value_ {
+	NSSet *changedObjects = [[NSSet alloc] initWithObjects:&value_ count:1];
+	[self willChangeValueForKey:@"groups" withSetMutation:NSKeyValueMinusSetMutation usingObjects:changedObjects];
+	[[self primitiveValueForKey:@"groups"] removeObject:value_];
+	[self didChangeValueForKey:@"groups" withSetMutation:NSKeyValueMinusSetMutation usingObjects:changedObjects];
+	[changedObjects release];
+}
+
+- (NSMutableSet*)groupsSet {
+	return [self mutableSetValueForKey:@"groups"];
+}
+	
 
 	
 - (void)addClones:(NSSet*)value_ {

@@ -39,6 +39,7 @@
             CLASS = MameController; 
             LANGUAGE = ObjC; 
             OUTLETS = {
+                mAllGamesController = NSArrayController; 
                 mDrawer = NSDrawer; 
                 mEffectsMenu = NSMenu; 
                 mFavoriteColumn = NSTableColumn; 

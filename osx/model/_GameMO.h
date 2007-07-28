@@ -7,6 +7,10 @@
 
 @class GameMO;
 
+@class GroupMO;
+
+@class GameMO;
+
 
 @interface _GameMO : NSManagedObject {}
 
@@ -15,16 +19,6 @@
 - (void)setYear:(NSString*)value_;
 
 //- (BOOL)validateYear:(id*)value_ error:(NSError**)error_;
-
-
-
-- (NSNumber*)favorite;
-- (void)setFavorite:(NSNumber*)value_;
-
-- (BOOL)favoriteValue;
-- (void)setFavoriteValue:(BOOL)value_;
-
-//- (BOOL)validateFavorite:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -66,13 +60,6 @@
 
 
 
-- (NSString*)longName;
-- (void)setLongName:(NSString*)value_;
-
-//- (BOOL)validateLongName:(id*)value_ error:(NSError**)error_;
-
-
-
 - (NSNumber*)auditStatus;
 - (void)setAuditStatus:(NSNumber*)value_;
 
@@ -83,11 +70,32 @@
 
 
 
+- (NSString*)longName;
+- (void)setLongName:(NSString*)value_;
+
+//- (BOOL)validateLongName:(id*)value_ error:(NSError**)error_;
+
+
+
 - (NSString*)auditNotes;
 - (void)setAuditNotes:(NSString*)value_;
 
 //- (BOOL)validateAuditNotes:(id*)value_ error:(NSError**)error_;
 
+
+
+
+- (GameMO*)parent;
+- (void)setParent:(GameMO*)value_;
+//- (BOOL)validateParent:(id*)value_ error:(NSError**)error_;
+
+
+
+- (void)addGroups:(NSSet*)value_;
+- (void)removeGroups:(NSSet*)value_;
+- (void)addGroupsObject:(GroupMO*)value_;
+- (void)removeGroupsObject:(GroupMO*)value_;
+- (NSMutableSet*)groupsSet;
 
 
 

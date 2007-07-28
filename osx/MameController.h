@@ -64,6 +64,7 @@ extern "C" {
     IBOutlet NSTextView * mMameLogView;
     
     IBOutlet NSArrayController * mGamesController;
+    IBOutlet NSArrayController * mAllGamesController;
     IBOutlet NSTableView * mGamesTable;
     IBOutlet NSTableColumn * mFavoriteColumn;
     
@@ -106,6 +107,7 @@ extern "C" {
     int mSubset;
     BackgroundUpdater * mUpdater;
     NSArray * mSelectedGames;
+    NSArray * mMatchingGames;
 }
 
 #pragma mark -
@@ -131,6 +133,8 @@ extern "C" {
 
 - (NSArray *) selectedGames;
 - (void) setSelectedGames: (NSArray *) theSelectedGames;
+
+- (NSArray *) matchingGames;
 
 - (void) backgroundUpdateWillStart;
 

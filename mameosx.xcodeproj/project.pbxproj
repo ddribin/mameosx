@@ -2581,6 +2581,10 @@
 		55B5DD9E0C4D82DF00057C2A /* start.png in Resources */ = {isa = PBXBuildFile; fileRef = 55B5DD9C0C4D82DF00057C2A /* start.png */; };
 		55B5DDC10C4D872200057C2A /* AOSegmentedControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 55B5DDBF0C4D872200057C2A /* AOSegmentedControl.h */; };
 		55B5DDC20C4D872200057C2A /* AOSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B5DDC00C4D872200057C2A /* AOSegmentedControl.m */; };
+		55B6C6300C5BDA0F009CE244 /* _GroupMO.h in Headers */ = {isa = PBXBuildFile; fileRef = 55B6C62C0C5BDA0F009CE244 /* _GroupMO.h */; };
+		55B6C6310C5BDA0F009CE244 /* _GroupMO.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B6C62D0C5BDA0F009CE244 /* _GroupMO.m */; };
+		55B6C6320C5BDA0F009CE244 /* GroupMO.h in Headers */ = {isa = PBXBuildFile; fileRef = 55B6C62E0C5BDA0F009CE244 /* GroupMO.h */; };
+		55B6C6330C5BDA0F009CE244 /* GroupMO.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B6C62F0C5BDA0F009CE244 /* GroupMO.m */; };
 		55B8C61C0C2A56CA00B1CD96 /* goldnpkr.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55B8C6170C2A56A300B1CD96 /* goldnpkr.lay */; };
 		55B8C61D0C2A56CA00B1CD96 /* pmpoker.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55B8C6180C2A56A300B1CD96 /* pmpoker.lay */; };
 		55B8C61E0C2A56CA00B1CD96 /* pottnpkr.lay in Sources */ = {isa = PBXBuildFile; fileRef = 55B8C6190C2A56A300B1CD96 /* pottnpkr.lay */; };
@@ -5773,6 +5777,10 @@
 		55B5DD9C0C4D82DF00057C2A /* start.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = start.png; sourceTree = "<group>"; };
 		55B5DDBF0C4D872200057C2A /* AOSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AOSegmentedControl.h; sourceTree = "<group>"; };
 		55B5DDC00C4D872200057C2A /* AOSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AOSegmentedControl.m; sourceTree = "<group>"; };
+		55B6C62C0C5BDA0F009CE244 /* _GroupMO.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = _GroupMO.h; sourceTree = "<group>"; };
+		55B6C62D0C5BDA0F009CE244 /* _GroupMO.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = _GroupMO.m; sourceTree = "<group>"; };
+		55B6C62E0C5BDA0F009CE244 /* GroupMO.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = GroupMO.h; sourceTree = "<group>"; };
+		55B6C62F0C5BDA0F009CE244 /* GroupMO.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = GroupMO.m; sourceTree = "<group>"; };
 		55B8C6170C2A56A300B1CD96 /* goldnpkr.lay */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = goldnpkr.lay; sourceTree = "<group>"; };
 		55B8C6180C2A56A300B1CD96 /* pmpoker.lay */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = pmpoker.lay; sourceTree = "<group>"; };
 		55B8C6190C2A56A300B1CD96 /* pottnpkr.lay */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = pottnpkr.lay; sourceTree = "<group>"; };
@@ -6262,6 +6270,10 @@
 		552010AB0C4A7CD300018A42 /* model */ = {
 			isa = PBXGroup;
 			children = (
+				55B6C62C0C5BDA0F009CE244 /* _GroupMO.h */,
+				55B6C62D0C5BDA0F009CE244 /* _GroupMO.m */,
+				55B6C62E0C5BDA0F009CE244 /* GroupMO.h */,
+				55B6C62F0C5BDA0F009CE244 /* GroupMO.m */,
 				552010B40C4A7D8C00018A42 /* _GameMO.h */,
 				552010B50C4A7D8C00018A42 /* _GameMO.m */,
 				552010B80C4A7D8C00018A42 /* GameMO.h */,
@@ -9751,6 +9763,8 @@
 				559C7F8B0C4E8E1100763F73 /* RBSplitView_Prefix.pch in Headers */,
 				559C7F8C0C4E8E1100763F73 /* RBSplitView.h in Headers */,
 				559C7F8E0C4E8E1100763F73 /* RBSplitViewPrivateDefines.h in Headers */,
+				55B6C6300C5BDA0F009CE244 /* _GroupMO.h in Headers */,
+				55B6C6320C5BDA0F009CE244 /* GroupMO.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12938,6 +12952,8 @@
 				55B5DDC20C4D872200057C2A /* AOSegmentedControl.m in Sources */,
 				559C7F8A0C4E8E1100763F73 /* RBSplitSubview.m in Sources */,
 				559C7F8D0C4E8E1100763F73 /* RBSplitView.m in Sources */,
+				55B6C6310C5BDA0F009CE244 /* _GroupMO.m in Sources */,
+				55B6C6330C5BDA0F009CE244 /* GroupMO.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

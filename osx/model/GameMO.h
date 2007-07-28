@@ -1,5 +1,7 @@
 #import "_GameMO.h"
 
+@class GroupMO;
+
 @interface GameMO : _GameMO
 {
     /*
@@ -11,11 +13,13 @@
     unsigned mDriverIndex;
 }
 
-- (void) toggleFavorite;
+- (void) toggleGroupMembership: (GroupMO *) group;
 
 - (NSImage *) favoriteIcon;
 
 - (unsigned) driverIndex;
 - (void) setDriverIndex: (unsigned) theDriverIndex;
+
+- (NSString *) displayName;
 
 @end

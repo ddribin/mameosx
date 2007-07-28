@@ -35,6 +35,7 @@
 #import "BackgroundUpdater.h"
 #import "JRLog.h"
 #import "GameMO.h"
+#import "GroupMO.h"
 #import "RBSplitView.h"
 
 #include <mach/mach_time.h>
@@ -145,7 +146,12 @@ static void exit_sleeper()
       toObject: mGamesController
    withKeyPath: @"selectedObjects"
        options: nil];
-   
+
+    [mAllGamesController addObserver: self
+                          forKeyPath: @"arrangedObjects"
+                             options: 0
+                             context: nil];
+    
     [self initVisualEffectsMenu];
     [self setVisualEffectEnabled: NO];
     [self setCurrentEffectIndex: 0];
@@ -273,7 +279,7 @@ Returns the persistent store coordinator for the application.  This
     NSDictionary * storeInfo =
         [NSPersistentStoreCoordinator metadataForPersistentStoreWithURL: url error: &error];
     
-    if(![[storeInfo valueForKey: @"viewVersion"] isEqualToString: @"Version 3"])
+    if(![[storeInfo valueForKey: @"viewVersion"] isEqualToString: @"Version 4"])
     {
         [fileManager removeFileAtPath: [url path] handler: nil];
         [fileManager createDirectoryAtPath:applicationSupportFolder attributes: nil];
@@ -293,7 +299,7 @@ Returns the persistent store coordinator for the application.  This
     {
         managedObjectContext = [[NSManagedObjectContext alloc] init];
         [managedObjectContext setPersistentStoreCoordinator: persistentStoreCoordinator];
-        [[self class] setMetadata: @"Version 3" forKey: @"viewVersion"
+        [[self class] setMetadata: @"Version 4" forKey: @"viewVersion"
                    inStoreWithURL: url inContext: managedObjectContext];
     }
 
@@ -407,7 +413,21 @@ Performs the save action for the application, which is to send the save:
     }
 }
 
-#pragma mark - 
+#pragma mark -
+#pragma mark Table View Delegate
+
+- (NSString *) tableView: (NSTableView *) tableView
+          toolTipForCell: (NSCell *)aCell
+                    rect: (NSRectPointer)rect
+             tableColumn: (NSTableColumn *)aTableColumn
+                     row: (int)row
+           mouseLocation: (NSPoint)mouseLocation;
+{
+    GameMO * game = [[mGamesController arrangedObjects] objectAtIndex: row];
+    return [game displayName];
+}
+
+#pragma mark -
 #pragma mark Split View
 
 - (IBAction) toggleScreenshot: (id) sender;
@@ -476,6 +496,8 @@ Performs the save action for the application, which is to send the save:
         }
     }
 #endif
+    [self willChangeValueForKey: @"matchingGames"];
+    [self didChangeValueForKey: @"matchingGames"];
     [self updatePredicate];
 }
 
@@ -486,8 +508,12 @@ Performs the save action for the application, which is to send the save:
 
 - (IBAction) toggleFavorite: (id) sender;
 {
+    GroupMO * favorite = [GroupMO findOrCreateGroupWithName: GroupFavorites
+                                                  inContext: [self managedObjectContext]];
+    
     NSArray * games = [mGamesController selectedObjects];
-    [games makeObjectsPerformSelector: @selector(toggleFavorite)];
+    [games makeObjectsPerformSelector: @selector(toggleGroupMembership:)
+                           withObject: favorite];
 }
 
 //=========================================================== 
@@ -526,6 +552,34 @@ Performs the save action for the application, which is to send the save:
         }
     }
     [mScreenshotView setValue: screenshotDir forInputKey: @"Image_Folder_Path"];
+}
+
+- (void) observeValueForKeyPath: (NSString *) keyPath
+                       ofObject: (id) object 
+                         change: (NSDictionary *) change
+                        context: (void *) context;
+{
+    JRLogDebug(@"observeValueForKeyPath: %@ ofObject: %@", keyPath, object);
+    if ((object == mAllGamesController) &&
+        [keyPath isEqualToString: @"arrangedObjects"])
+    {
+        [self willChangeValueForKey: @"matchingGames"];
+        [self didChangeValueForKey: @"matchingGames"];
+    }
+}
+
+- (NSArray *) matchingGames;
+{
+    if (mSubset != 2)
+    {
+        return [mAllGamesController arrangedObjects];
+    }
+    else
+    {
+        GroupMO * favorites = [GroupMO findOrCreateGroupWithName: GroupFavorites
+                                                       inContext: [self managedObjectContext]];
+        return [[favorites membersSet] allObjects];
+    }
 }
 
 - (void) backgroundUpdateWillStart;
@@ -1198,14 +1252,17 @@ Performs the save action for the application, which is to send the save:
 - (void) updatePredicate;
 {
     NSMutableArray * terms = [NSMutableArray array];
+    NSMutableDictionary * variables = [NSMutableDictionary dictionary];
+
     // [terms addObject: @"(driverIndex != nil)"];
     if (mSubset == 1)
         [terms addObject: @"(auditStatus != nil AND (auditStatus == 0 OR auditStatus == 1))"];
-    else if (mSubset == 2)
-        [terms addObject: @"(favorite == YES)"];
     
     if (mFilterString != nil)
+    {
         [terms addObject: @"(shortName contains[c] $FILTER OR longName contains[c] $FILTER)"];
+        [variables setObject: mFilterString forKey: @"FILTER"];
+    }
     
     NSString * format = nil;
     if ([terms count] > 0)
@@ -1213,8 +1270,6 @@ Performs the save action for the application, which is to send the save:
     JRLogDebug(@"Setting new predicate: %@", format);
     NSPredicate * predicate = [NSPredicate predicateWithFormat: format];
     
-    NSDictionary * variables = [NSDictionary dictionaryWithObjectsAndKeys:
-        mFilterString, @"FILTER", nil];
     predicate = [predicate predicateWithSubstitutionVariables: variables];
     
     [mGamesController setFilterPredicate: predicate];
