@@ -72,7 +72,7 @@ static NSString * const genericTitle = @"ComBelkadanGenerictoolbar_toolbarID_%u"
 	if (self != nil) {
 		dataSource = (givenDataSource == nil) ? [GenericToolbarDataSource new] : [givenDataSource retain];
 		identifier = [[self identifier] retain];
-		visible = YES;
+		paletteVisible = YES;
 		showsBaseline = YES;
 		[super setDelegate:dataSource];
 	}
@@ -123,7 +123,7 @@ static NSString * const genericTitle = @"ComBelkadanGenerictoolbar_toolbarID_%u"
 	
 	allowsCustomization	= [decoder decodeBoolForKey:@"allowsCustomization"];
 	autosaves			= [decoder decodeBoolForKey:@"autosaves"];
-	visible				= [decoder decodeBoolForKey:@"visible"];
+	paletteVisible		= [decoder decodeBoolForKey:@"visible"];
 	showsBaseline		= [decoder decodeBoolForKey:@"showsBaselineSeparator"];
 	
 	sizeAsInt			= [decoder decodeInt32ForKey:@"sizeMode"];
@@ -134,7 +134,7 @@ static NSString * const genericTitle = @"ComBelkadanGenerictoolbar_toolbarID_%u"
 						 allowsCustomization:allowsCustomization
 								   autosaves:autosaves
 							   showsBaseline:showsBaseline
-									 visible:visible];
+									 visible:paletteVisible];
 }
 
 /*!
@@ -169,7 +169,7 @@ static NSString * const genericTitle = @"ComBelkadanGenerictoolbar_toolbarID_%u"
 
 	[decoder decodeValueOfObjCType:@encode(BOOL) at:&allowsCustomization];
 	[decoder decodeValueOfObjCType:@encode(BOOL) at:&autosaves];
-	[decoder decodeValueOfObjCType:@encode(BOOL) at:&visible];
+	[decoder decodeValueOfObjCType:@encode(BOOL) at:&paletteVisible];
 	[decoder decodeValueOfObjCType:@encode(BOOL) at:&showsBaseline];
 	
 	if (!([decoder respondsToSelector:@selector(isAtEnd)] && [(NSUnarchiver *)decoder isAtEnd])) {
@@ -197,7 +197,7 @@ static NSString * const genericTitle = @"ComBelkadanGenerictoolbar_toolbarID_%u"
 						 allowsCustomization:allowsCustomization
 								   autosaves:autosaves
 							   showsBaseline:showsBaseline
-									 visible:visible];
+									 visible:paletteVisible];
 }
 
 /*!
@@ -212,8 +212,11 @@ static NSString * const genericTitle = @"ComBelkadanGenerictoolbar_toolbarID_%u"
 						  visible:(BOOL)isVisible
 {		
 	[self setAllowsUserCustomization:allowsCustomization];
-	[self setAutosavesConfiguration:autosaves];
 	[self setVisible:isVisible];
+    // Be sure to call this after setting the visibility, becuase this will
+    // cause the configuration to be saved.  If visibility is not yet set,
+    // the incorrect visibility is saved.
+	[self setAutosavesConfiguration:autosaves];
 	
 	[self setShowsBaselineSeparator:showsBaselineSeparator];
 	
@@ -259,7 +262,7 @@ static NSString * const genericTitle = @"ComBelkadanGenerictoolbar_toolbarID_%u"
 	
 	[coder encodeBool:allowsCustomization forKey:@"allowsCustomization"];
 	[coder encodeBool:autosaves forKey:@"autosaves"];
-	[coder encodeBool:visible forKey:@"visible"];
+	[coder encodeBool:paletteVisible forKey:@"visible"];
 	[coder encodeBool:showsBaseline forKey:@"showsBaselineSeparator"];
 
 	[coder encodeInt:sizeAsInt forKey:@"sizeMode"];
@@ -287,7 +290,7 @@ static NSString * const genericTitle = @"ComBelkadanGenerictoolbar_toolbarID_%u"
 	
 	[coder encodeValueOfObjCType:@encode(BOOL) at:&allowsCustomization];
 	[coder encodeValueOfObjCType:@encode(BOOL) at:&autosaves];
-	[coder encodeValueOfObjCType:@encode(BOOL) at:&visible];
+	[coder encodeValueOfObjCType:@encode(BOOL) at:&paletteVisible];
 	[coder encodeValueOfObjCType:@encode(BOOL) at:&showsBaseline];
 
 	if (sizeof(int) == sizeof(int32_t)) {
@@ -317,7 +320,7 @@ static NSString * const genericTitle = @"ComBelkadanGenerictoolbar_toolbarID_%u"
 	if ([copy respondsToSelector:@selector(setSelectedItemIdentifier:)])
 		[copy setSelectedItemIdentifier:[self selectedItemIdentifier]];
 	
-	copy->visible = self->visible;
+	copy->paletteVisible = self->paletteVisible;
 	copy->showsBaseline = self->showsBaseline;
 	
 	[copy setShowsBaselineSeparator:[self showsBaselineSeparator]];
@@ -398,17 +401,6 @@ static NSString * const genericTitle = @"ComBelkadanGenerictoolbar_toolbarID_%u"
 		dataSource = [newDataSource retain];
 		[super setDelegate:dataSource];
 	}
-}
-
-- (BOOL)isVisible
-{
-	return visible;
-}
-
-- (void)setVisible:(BOOL)changedVisible
-{
-	[super setVisible:changedVisible];
-	visible = changedVisible;
 }
 
 - (BOOL)showsBaselineSeparator

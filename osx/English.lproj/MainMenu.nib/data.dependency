@@ -4,9 +4,9 @@
 <dict>
 	<key>IBPaletteDependency</key>
 	<array>
-		<string>RBSplitView</string>
-		<string>GenericToolbar</string>
 		<string>QuartzComposer</string>
+		<string>GenericToolbar</string>
+		<string>RBSplitView</string>
 	</array>
 </dict>
 </plist>

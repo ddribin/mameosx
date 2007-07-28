@@ -39,7 +39,7 @@
 {
 	id dataSource;
 	NSString *identifier;
-	BOOL visible;
+	BOOL paletteVisible;
 	BOOL showsBaseline;
 }
 
