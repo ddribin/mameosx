@@ -191,7 +191,7 @@ static void exit_sleeper()
     
     [[mFavoriteColumn headerCell] setImage: [NSImage imageNamed: @"favorite-16"]];
     
-    [self setSubset: [preferences gameFilterIndex]];
+    [self setGameFilterIndex: [preferences gameFilterIndex]];
     [self updatePredicate];
     [mUpdater start];
 }
@@ -390,7 +390,7 @@ Performs the save action for the application, which is to send the save:
     {
         [[item view] bind: @"selectedIndex"
           toObject: self
-       withKeyPath: @"subset"
+       withKeyPath: @"gameFilterIndex"
            options: nil];
     }
 }
@@ -478,14 +478,14 @@ Performs the save action for the application, which is to send the save:
     return mFilterString;
 }
 
-- (IBAction) filterAction: (id) sender;
+- (IBAction) gameFilterAction: (id) sender;
 {
-    [self setSubset: [sender tag]];
+    [self setGameFilterIndex: [sender tag]];
 }
 
-- (void) setSubset: (int) subset;
+- (void) setGameFilterIndex: (int) gameFilterIndex;
 {
-    mSubset = subset;
+    mGameFilterIndex = gameFilterIndex;
 #if 0
     static NSTableColumn * mSavedFavoritesColumn = nil;
     static BOOL mShouldRestoreFavoritesColumn = NO;
@@ -495,7 +495,7 @@ Performs the save action for the application, which is to send the save:
         mGamesTable = [[mFavoriteColumn tableView] retain];
         [mGamesTable sizeLastColumnToFit];
     }
-    if (mSubset == 2)
+    if (mGameFilterIndex == 2)
     {
         [mGamesTable removeTableColumn: mSavedFavoritesColumn];
         mShouldRestoreFavoritesColumn = YES;
@@ -515,13 +515,13 @@ Performs the save action for the application, which is to send the save:
     [self updateGameFilterMenu];
 
     MamePreferences * preferences = [MamePreferences standardPreferences];
-    [preferences setGameFilterIndex: mSubset];
+    [preferences setGameFilterIndex: mGameFilterIndex];
     [preferences synchronize];
 }
 
-- (int) subset;
+- (int) gameFilterIndex;
 {
-    return mSubset;
+    return mGameFilterIndex;
 }
 
 - (IBAction) toggleFavorite: (id) sender;
@@ -589,7 +589,7 @@ Performs the save action for the application, which is to send the save:
 
 - (NSArray *) matchingGames;
 {
-    if (mSubset != 2)
+    if (mGameFilterIndex != 2)
     {
         return [mAllGamesController arrangedObjects];
     }
@@ -1281,7 +1281,7 @@ Performs the save action for the application, which is to send the save:
     NSMutableDictionary * variables = [NSMutableDictionary dictionary];
 
     // [terms addObject: @"(driverIndex != nil)"];
-    if (mSubset == 1)
+    if (mGameFilterIndex == 1)
         [terms addObject: @"(auditStatus != nil AND (auditStatus == 0 OR auditStatus == 1))"];
     
     if (mFilterString != nil)
@@ -1510,7 +1510,7 @@ Performs the save action for the application, which is to send the save:
     for (i = 0; i < count; i++)
     {
         NSMenuItem * item = [mGameFilterMenu itemAtIndex: i];
-        int state = mSubset == i? NSOnState : NSOffState;
+        int state = (mGameFilterIndex == i? NSOnState : NSOffState);
         [item setState: state];
     }
 }

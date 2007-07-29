@@ -105,7 +105,7 @@ extern "C" {
     
     NSArray * gameSortDescriptors;
     NSString * mFilterString;
-    int mSubset;
+    int mGameFilterIndex;
     BackgroundUpdater * mUpdater;
     NSArray * mSelectedGames;
     NSArray * mMatchingGames;
@@ -127,10 +127,10 @@ extern "C" {
 - (void) setFilterString: (NSString *) filterString;
 - (NSString *) filterString;
 
-- (IBAction) filterAction: (id) sender;
+- (IBAction) gameFilterAction: (id) sender;
 
-- (void) setSubset: (int) subset;
-- (int) subset;
+- (void) setGameFilterIndex: (int) gameFilterIndex;
+- (int) gameFilterIndex;
 
 - (IBAction) toggleFavorite: (id) sender;
 

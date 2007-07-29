@@ -13,7 +13,7 @@
                 cancelOpenPanel = id; 
                 clearLogWindow = id; 
                 endOpenPanel = id; 
-                filterAction = id; 
+                gameFilterAction = id; 
                 hideOpenPanel = id; 
                 nextVisualEffect = id; 
                 nullAction = id; 
