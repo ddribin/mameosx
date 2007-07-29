@@ -118,7 +118,16 @@
 {
     return [NSArray arrayWithObject:
             [[[NSSortDescriptor alloc] initWithKey: @"shortName"
-                                         ascending:YES] autorelease]];
+                                         ascending: YES] autorelease]];
+}
+
++ (NSArray *) sortByLongName;
+{
+    NSSortDescriptor * descriptor =
+        [[NSSortDescriptor alloc] initWithKey: @"longName"
+                                    ascending: YES
+                                     selector: @selector(caseInsensitiveCompare:)];
+    return [NSArray arrayWithObject: [descriptor autorelease]];
 }
 
 - (void) toggleGroupMembership: (GroupMO *) group;

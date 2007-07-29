@@ -650,6 +650,18 @@ Performs the save action for the application, which is to send the save:
     }
 }
 
+- (IBAction) refreshGames: (id) sender;
+{
+    [self willChangeValueForKey: @"matchingGames"];
+    [self didChangeValueForKey: @"matchingGames"];
+    [mGamesController rearrangeObjects];
+}
+
+- (void) rearrangeGames;
+{
+    [mGamesController rearrangeObjects];
+}
+
 - (void) backgroundUpdateWillStart;
 {
     [mProgressIndicator setIndeterminate: YES];

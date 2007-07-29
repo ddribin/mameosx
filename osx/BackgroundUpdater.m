@@ -302,7 +302,7 @@ static NSTimeInterval mLastSave = 0;
     [fetchRequest setPredicate: [NSPredicate predicateWithFormat: @"(auditStatus == NIL)"]]; 
     
     // make sure the results are sorted as well
-    [fetchRequest setSortDescriptors: [GameMO sortByShortName]];
+    [fetchRequest setSortDescriptors: [GameMO sortByLongName]];
     // Execute the fetch
     NSError * error = nil;
     JRLogDebug(@"Fetching games that need audit");
@@ -324,7 +324,7 @@ static NSTimeInterval mLastSave = 0;
     NSManagedObjectContext * context = [mController managedObjectContext];
     unsigned driverIndex = [game driverIndex];
     
-    JRLogDebug(@"Auditing %@", [game shortName]);
+    JRLogDebug(@"Auditing %@ (%@)", [game shortName], [game longName]);
     audit_record * auditRecords;
     int recordCount;
     int res;
@@ -348,6 +348,7 @@ static NSTimeInterval mLastSave = 0;
     }
     
     [context processPendingChanges];
+    [mController rearrangeGames];
     
     [mController backgroundUpdateAuditStatus: mCurrentGameIndex];
     mCurrentGameIndex++;

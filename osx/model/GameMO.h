@@ -35,6 +35,8 @@
 
 + (NSArray *) sortByShortName;
 
++ (NSArray *) sortByLongName;
+
 - (void) toggleGroupMembership: (GroupMO *) group;
 
 - (BOOL) isFavorite;

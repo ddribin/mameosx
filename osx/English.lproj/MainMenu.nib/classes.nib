@@ -21,6 +21,7 @@
                 nullAction = id; 
                 previousVisualEffects = id; 
                 raiseOpenPanel = id; 
+                refreshGames = id; 
                 resizeToActualSize = id; 
                 resizeToDoubleSize = id; 
                 resizeToMaximumIntegralSize = id; 

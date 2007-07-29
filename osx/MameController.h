@@ -148,6 +148,10 @@ extern "C" {
 
 - (NSArray *) matchingGames;
 
+- (IBAction) refreshGames: (id) sender;
+
+- (void) rearrangeGames;
+
 - (void) backgroundUpdateWillStart;
 
 - (void) backgroundUpdateWillBeginAudits: (unsigned) totalAudits;
