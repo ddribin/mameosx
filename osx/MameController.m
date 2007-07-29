@@ -83,6 +83,15 @@ static const int kMameMaxGamesInHistory = 100;
 - (void) getUrl: (NSAppleEventDescriptor *) event
  withReplyEvent: (NSAppleEventDescriptor *) replyEvent;
 
+#pragma mark -
+#pragma mark Favoritse
+
+- (GroupMO *) favoritesGroup;
+
+- (void) exportFavoritesToFile: (NSString *) file;
+
+- (void) importFavoritesFromFile: (NSString *) file;
+
 @end
 
 static BOOL sSleepAtExit = NO;
@@ -303,7 +312,7 @@ Returns the persistent store coordinator for the application.  This
         [[self class] setMetadata: @"Version 4" forKey: @"viewVersion"
                    inStoreWithURL: url inContext: managedObjectContext];
     }
-
+    
     return persistentStoreCoordinator;
 }
 /**
@@ -526,13 +535,36 @@ Performs the save action for the application, which is to send the save:
 
 - (IBAction) toggleFavorite: (id) sender;
 {
-    GroupMO * favorite = [GroupMO findOrCreateGroupWithName: GroupFavorites
-                                                  inContext: [self managedObjectContext]];
+    GroupMO * favorites = [self favoritesGroup];
     
     NSArray * games = [mGamesController selectedObjects];
     [games makeObjectsPerformSelector: @selector(toggleGroupMembership:)
-                           withObject: favorite];
+                           withObject: favorites];
     // [self saveAction: nil];
+}
+
+- (IBAction) exportFavorites: (id) sender;
+{
+    NSSavePanel * savePanel = [NSSavePanel savePanel];
+    NSArray * types = [NSArray arrayWithObject: @"plist"];
+    [savePanel setAllowedFileTypes: types];
+    
+    int result = [savePanel runModal];
+    if (result != NSOKButton)
+        return;
+    
+    [self exportFavoritesToFile: [savePanel filename]];
+}
+
+- (IBAction) importFavorites: (id) sender;
+{
+    NSOpenPanel * openPanel = [NSOpenPanel openPanel];
+    NSArray * types = [NSArray arrayWithObject: @"plist"];
+    int result = [openPanel runModalForTypes: types];
+    if (result != NSOKButton)
+        return;
+    
+    [self importFavoritesFromFile: [openPanel filename]];
 }
 
 //=========================================================== 
@@ -595,8 +627,7 @@ Performs the save action for the application, which is to send the save:
     }
     else
     {
-        GroupMO * favorites = [GroupMO findOrCreateGroupWithName: GroupFavorites
-                                                       inContext: [self managedObjectContext]];
+        GroupMO * favorites = [self favoritesGroup];
         return [[favorites membersSet] allObjects];
     }
 }
@@ -1699,6 +1730,42 @@ Performs the save action for the application, which is to send the save:
     NSURL * url = [NSURL URLWithString: urlString];
     mGameName = [[url host] retain];
     mQuitOnError = (mGameName == nil)? NO : YES;
+}
+
+#pragma mark -
+#pragma mark Favoritse
+
+- (GroupMO *) favoritesGroup;
+{
+    if (mFavoritesGroup == nil)
+    {
+        mFavoritesGroup = [GroupMO findOrCreateGroupWithName: GroupFavorites
+                                                   inContext: [self managedObjectContext]];
+        [mFavoritesGroup retain];
+    }
+    return mFavoritesGroup;
+}
+
+- (void) exportFavoritesToFile: (NSString *) file;
+{
+    NSManagedObjectContext * context = [self managedObjectContext];
+    GroupMO * favorites = [self favoritesGroup];
+    NSMutableSet * members = [favorites membersSet];
+    NSArray * favoriteNames = [[members valueForKey: @"shortName"] allObjects];
+    [favoriteNames writeToFile: file atomically: YES];
+}
+
+- (void) importFavoritesFromFile: (NSString *) file;
+{
+    NSArray * favoriteNames = [NSArray arrayWithContentsOfFile: file];
+    NSManagedObjectContext * context = [self managedObjectContext];
+    NSArray * favoriteGames = [GameMO gamesWithShortNames: favoriteNames
+                                                inContext: context];
+    GroupMO * favorites = [self favoritesGroup];
+    NSMutableSet * members = [favorites membersSet];
+    [members removeAllObjects];
+    [members addObjectsFromArray: favoriteGames];
+    [self saveAction: nil];
 }
 
 @end

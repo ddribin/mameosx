@@ -13,8 +13,10 @@
                 cancelOpenPanel = id; 
                 clearLogWindow = id; 
                 endOpenPanel = id; 
+                exportFavorites = id; 
                 gameFilterAction = id; 
                 hideOpenPanel = id; 
+                importFavorites = id; 
                 nextVisualEffect = id; 
                 nullAction = id; 
                 previousVisualEffects = id; 

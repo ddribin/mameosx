@@ -1,5 +1,6 @@
 #import "GameMO.h"
 #import "GroupMO.h"
+#import "NSXReturnThrowError.h"
 
 @implementation GameMO
 
@@ -12,6 +13,27 @@
         [self setKeys: keys triggerChangeNotificationsForDependentKey: @"favorite"];
     }
 }
+
++ (NSArray *) gamesWithShortNames: (NSArray *) shortNames
+                        inContext: (NSManagedObjectContext *) context;
+{
+    NSManagedObjectModel * model = [[context persistentStoreCoordinator] managedObjectModel];
+    NSDictionary * variables = [NSDictionary dictionaryWithObject: shortNames
+                                                           forKey: @"SHORT_NAMES"];
+    NSFetchRequest * request =
+        [model fetchRequestFromTemplateWithName: @"gamesWithShortNames"
+                          substitutionVariables: variables];
+    
+    NSError * error = nil;
+    NSArray * results = [context executeFetchRequest: request error: &error];
+    if (results == nil)
+    {
+        NSXRaiseError(error);
+    }
+    
+    return results;
+}
+
 
 - (void) toggleGroupMembership: (GroupMO *) group;
 {

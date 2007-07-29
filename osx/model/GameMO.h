@@ -13,6 +13,9 @@
     unsigned mDriverIndex;
 }
 
++ (NSArray *) gamesWithShortNames: (NSArray *) shortNames
+                        inContext: (NSManagedObjectContext *) context;
+
 - (void) toggleGroupMembership: (GroupMO *) group;
 
 - (BOOL) isFavorite;

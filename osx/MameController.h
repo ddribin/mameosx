@@ -45,6 +45,7 @@ extern "C" {
 @class AudioEffectWindowController;
 @class BackgroundUpdater;
 @class RBSplitSubview;
+@class GroupMO;
 
 @interface MameController : NSObject <JRLogLogger>
 {
@@ -109,6 +110,7 @@ extern "C" {
     BackgroundUpdater * mUpdater;
     NSArray * mSelectedGames;
     NSArray * mMatchingGames;
+    GroupMO * mFavoritesGroup;
 }
 
 #pragma mark -
@@ -133,6 +135,9 @@ extern "C" {
 - (int) gameFilterIndex;
 
 - (IBAction) toggleFavorite: (id) sender;
+
+- (IBAction) exportFavorites: (id) sender;
+- (IBAction) importFavorites: (id) sender;
 
 - (NSArray *) selectedGames;
 - (void) setSelectedGames: (NSArray *) theSelectedGames;
