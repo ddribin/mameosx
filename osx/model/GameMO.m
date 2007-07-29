@@ -9,6 +9,7 @@
     {
         NSArray *keys = [NSArray arrayWithObjects: @"groups", nil];
         [self setKeys: keys triggerChangeNotificationsForDependentKey: @"favoriteIcon"];
+        [self setKeys: keys triggerChangeNotificationsForDependentKey: @"favorite"];
     }
 }
 
@@ -29,14 +30,17 @@
 #endif
 }
 
-- (NSImage *) favoriteIcon;
+- (BOOL) isFavorite;
 {
     GroupMO * favorites =
         [GroupMO findOrCreateGroupWithName: GroupFavorites
                                  inContext: [self managedObjectContext]];
-    BOOL isFavorite = [[favorites membersSet] containsObject: self];
-    
-    if (isFavorite)
+    return [[favorites membersSet] containsObject: self];
+}
+
+- (NSImage *) favoriteIcon;
+{
+    if ([self isFavorite])
         return [NSImage imageNamed: @"favorite-16"];
     else
         return nil;

@@ -15,6 +15,7 @@
 
 - (void) toggleGroupMembership: (GroupMO *) group;
 
+- (BOOL) isFavorite;
 - (NSImage *) favoriteIcon;
 
 - (unsigned) driverIndex;

@@ -57,6 +57,7 @@ static const int kMameMaxGamesInHistory = 100;
 - (void) setSizeFromPrefereneces;
 - (void) initVisualEffects;
 - (void) initVisualEffectsMenu;
+- (void) updateGameFilterMenu;
 
 - (NSSize) constrainFrameToAspectRatio: (NSSize) size;
 - (NSSize) constrainFrameToIntegralNaturalSize: (NSSize) size;
@@ -190,7 +191,7 @@ static void exit_sleeper()
     
     [[mFavoriteColumn headerCell] setImage: [NSImage imageNamed: @"favorite-16"]];
     
-    [self setSubset: 1];
+    [self setSubset: [preferences gameFilterIndex]];
     [self updatePredicate];
     [mUpdater start];
 }
@@ -427,6 +428,13 @@ Performs the save action for the application, which is to send the save:
     return [game displayName];
 }
 
+- (void)tableView: (NSTableView *)tableView
+  willDisplayCell: (id)cell
+   forTableColumn: (NSTableColumn *)tableColumn
+              row: (int)rowIndex;
+{
+}
+
 #pragma mark -
 #pragma mark Split View
 
@@ -470,6 +478,11 @@ Performs the save action for the application, which is to send the save:
     return mFilterString;
 }
 
+- (IBAction) filterAction: (id) sender;
+{
+    [self setSubset: [sender tag]];
+}
+
 - (void) setSubset: (int) subset;
 {
     mSubset = subset;
@@ -499,6 +512,11 @@ Performs the save action for the application, which is to send the save:
     [self willChangeValueForKey: @"matchingGames"];
     [self didChangeValueForKey: @"matchingGames"];
     [self updatePredicate];
+    [self updateGameFilterMenu];
+
+    MamePreferences * preferences = [MamePreferences standardPreferences];
+    [preferences setGameFilterIndex: mSubset];
+    [preferences synchronize];
 }
 
 - (int) subset;
@@ -514,6 +532,7 @@ Performs the save action for the application, which is to send the save:
     NSArray * games = [mGamesController selectedObjects];
     [games makeObjectsPerformSelector: @selector(toggleGroupMembership:)
                            withObject: favorite];
+    // [self saveAction: nil];
 }
 
 //=========================================================== 
@@ -855,6 +874,12 @@ Performs the save action for the application, which is to send the save:
 
 - (IBAction) endOpenPanel: (id) sender;
 {
+    if ((sender == mGamesTable) &&
+        ([mGamesTable clickedRow] == -1))
+    {
+        return;
+    }
+    
     NSArray * selectedGames = [mGamesController selectedObjects];
     if ([selectedGames count] != 1)
     {
@@ -1241,6 +1266,7 @@ Performs the save action for the application, which is to send the save:
             [mMameView setFullScreen: false];
         }
     }
+    [self setGameRunning: NO];
 }
 
 @end
@@ -1474,6 +1500,18 @@ Performs the save action for the application, which is to send the save:
         [mEffectsMenu addItemWithTitle: name
                                 action: @selector(visualEffectsMenuChanged:)
                          keyEquivalent: @""];
+    }
+}
+
+- (void) updateGameFilterMenu;
+{
+    int count = [mGameFilterMenu numberOfItems];
+    int i;
+    for (i = 0; i < count; i++)
+    {
+        NSMenuItem * item = [mGameFilterMenu itemAtIndex: i];
+        int state = mSubset == i? NSOnState : NSOffState;
+        [item setState: state];
     }
 }
 

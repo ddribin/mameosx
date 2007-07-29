@@ -120,6 +120,7 @@ NSString * MameAutosaveKey = @"AutoSave";
 NSString * MameBiosKey = @"Bios";
 
 NSString * MameGameSortDescriptorsKey = @"GameSortDescriptors";
+NSString * MameGameFilterIndexKey = @"GameFilterIndex";
 
 @implementation MamePreferences
 
@@ -258,6 +259,9 @@ NSString * MameGameSortDescriptorsKey = @"GameSortDescriptors";
                       forKey: MameAutosaveKey];
     [defaultValues setObject: @"default"
                       forKey: MameBiosKey];
+    
+    [defaultValues setObject: [NSNumber numberWithInt: 1]
+                      forKey: MameGameFilterIndexKey];
     
     [mDefaults registerDefaults: defaultValues];
 }
@@ -753,6 +757,16 @@ NSString * MameGameSortDescriptorsKey = @"GameSortDescriptors";
         data = [NSKeyedArchiver archivedDataWithRootObject: gamesSortDescriptors];
     }
     [mDefaults setObject: data forKey: MameGameSortDescriptorsKey];
+}
+
+- (int) gameFilterIndex;
+{
+    return [mDefaults integerForKey: MameGameFilterIndexKey];
+}
+
+- (void) setGameFilterIndex: (int) gameFilterIndex;
+{
+    [mDefaults setInteger: gameFilterIndex forKey: MameGameFilterIndexKey];
 }
 
 @end

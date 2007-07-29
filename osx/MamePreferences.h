@@ -211,6 +211,9 @@
 - (NSArray *) gamesSortDescriptors;
 - (void) setGamesSortDescriptors: (NSArray *) gamesSortDescriptors;
 
+- (int) gameFilterIndex;
+- (void) setGameFilterIndex: (int) gameFilterIndex;
+
 @end
 
 NSString * MameApplicationSupportDirectory(void);

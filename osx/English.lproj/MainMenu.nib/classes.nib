@@ -13,6 +13,7 @@
                 cancelOpenPanel = id; 
                 clearLogWindow = id; 
                 endOpenPanel = id; 
+                filterAction = id; 
                 hideOpenPanel = id; 
                 nextVisualEffect = id; 
                 nullAction = id; 
@@ -43,6 +44,7 @@
                 mDrawer = NSDrawer; 
                 mEffectsMenu = NSMenu; 
                 mFavoriteColumn = NSTableColumn; 
+                mGameFilterMenu = NSMenu; 
                 mGameSplit = RBSplitSubview; 
                 mGamesController = NSArrayController; 
                 mGamesTable = NSTableView; 

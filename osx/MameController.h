@@ -53,6 +53,7 @@ extern "C" {
     IBOutlet NSWindow * mOpenPanel;
     IBOutlet VersionChecker *mVersionChecker;
     IBOutlet NSMenu * mEffectsMenu;
+    IBOutlet NSMenu * mGameFilterMenu;
     IBOutlet NSToolbar * mToolbar;
     IBOutlet QCView * mScreenshotView;
     IBOutlet NSProgressIndicator * mProgressIndicator;
@@ -125,6 +126,8 @@ extern "C" {
 
 - (void) setFilterString: (NSString *) filterString;
 - (NSString *) filterString;
+
+- (IBAction) filterAction: (id) sender;
 
 - (void) setSubset: (int) subset;
 - (int) subset;
