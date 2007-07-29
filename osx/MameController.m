@@ -1341,7 +1341,7 @@ Performs the save action for the application, which is to send the save:
     
     if (!mShowClones)
     {
-        [terms addObject: @"(parentShortName != NIL)"];
+        [terms addObject: @"(parentShortName == NIL)"];
     }
     
     NSString * format = nil;
