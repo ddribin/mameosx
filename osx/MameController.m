@@ -84,7 +84,7 @@ static const int kMameMaxGamesInHistory = 100;
  withReplyEvent: (NSAppleEventDescriptor *) replyEvent;
 
 #pragma mark -
-#pragma mark Favoritse
+#pragma mark Favorites
 
 - (GroupMO *) favoritesGroup;
 
@@ -1733,7 +1733,7 @@ Performs the save action for the application, which is to send the save:
 }
 
 #pragma mark -
-#pragma mark Favoritse
+#pragma mark Favorites
 
 - (GroupMO *) favoritesGroup;
 {

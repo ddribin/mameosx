@@ -166,20 +166,11 @@ static NSTimeInterval mLastSave = 0;
     NSArray * shortNames = [mIndexByShortName allKeys];
     [mShortNames addObjectsFromArray: [shortNames sortedArrayUsingSelector: @selector(compare:)]];
     
-    NSFetchRequest *fetchRequest = [[[NSFetchRequest alloc] init] autorelease];
-    [fetchRequest setEntity:
-        [NSEntityDescription entityForName:@"Game" inManagedObjectContext:context]];
-    [fetchRequest setPredicate: [NSPredicate predicateWithFormat: @"(shortName IN %@)", shortNames]];
-    
-    // make sure the results are sorted as well
-    [fetchRequest setSortDescriptors: [NSArray arrayWithObject:
-        [[[NSSortDescriptor alloc] initWithKey: @"shortName"
-                                     ascending:YES] autorelease]]];
     // Execute the fetch
     JRLogDebug(@"Fetching current game list");
-    NSError *error = nil;
-    NSArray * gamesMatchingNames = [context
-        executeFetchRequest:fetchRequest error:&error];
+    NSArray * gamesMatchingNames = [GameMO gamesWithShortNames: shortNames
+                                               sortDescriptors: [GameMO sortByShortName]
+                                                     inContext: context];
     JRLogDebug(@"Fetch done");
     mCurrentGameIndex = 0;
     mGameEnumerator = [[gamesMatchingNames objectEnumerator] retain];
@@ -213,8 +204,7 @@ static NSTimeInterval mLastSave = 0;
     else
     {
 #if 1
-        game = [NSEntityDescription insertNewObjectForEntityForName: @"Game"
-                                             inManagedObjectContext: context];
+        game = [GameMO createInContext: context];
 #else
         game = [mController newGame];
 #endif
@@ -251,8 +241,7 @@ static NSTimeInterval mLastSave = 0;
     if (game == nil)
     {
 #if 0
-        game = [NSEntityDescription insertNewObjectForEntityForName: @"Game"
-                                             inManagedObjectContext: context];
+        game = [GameMO createInContext: context];
 #else
         game = [mController newGame];
 #endif
@@ -299,15 +288,12 @@ static NSTimeInterval mLastSave = 0;
 
 #if 1
     NSFetchRequest *fetchRequest = [[[NSFetchRequest alloc] init] autorelease];
-    [fetchRequest setEntity:
-        [NSEntityDescription entityForName:@"Game" inManagedObjectContext:context]];
+    [fetchRequest setEntity: [GameMO entityInContext: context]];
 
     [fetchRequest setPredicate: [NSPredicate predicateWithFormat: @"(auditStatus == NIL)"]]; 
     
     // make sure the results are sorted as well
-    [fetchRequest setSortDescriptors: [NSArray arrayWithObject:
-        [[[NSSortDescriptor alloc] initWithKey: @"shortName"
-                                     ascending:YES] autorelease]]];
+    [fetchRequest setSortDescriptors: [GameMO sortByShortName]];
     // Execute the fetch
     NSError * error = nil;
     JRLogDebug(@"Fetching games that need audit");
@@ -387,47 +373,14 @@ static NSTimeInterval mLastSave = 0;
 
 - (NSArray *) fetchAllGames;
 {
-    NSManagedObjectContext * context = [mController managedObjectContext];
-    NSFetchRequest *request = [[[NSFetchRequest alloc] init] autorelease];
-    [request setEntity: [NSEntityDescription entityForName: @"Game"
-                                    inManagedObjectContext: context]];
-   
-    [request setSortDescriptors: [NSArray arrayWithObject:
-        [[[NSSortDescriptor alloc] initWithKey: @"shortName"
-                                     ascending:YES] autorelease]]];
-
-    NSError * error = nil;
-    NSArray * results = [context executeFetchRequest: request error: &error];
-    if (results == nil)
-    {
-        [mController handleCoreDataError: error];
-    }
-    return results;
+    return [GameMO allGamesWithSortDesriptors: [GameMO sortByShortName]
+                                    inContext: [mController managedObjectContext]];
 }
 
 - (GameMO *) gameWithShortName: (NSString *) shortName;
 {
-    NSManagedObjectModel * model = [mController managedObjectModel];
-    NSDictionary * variables = [NSDictionary dictionaryWithObject: shortName
-                                                           forKey: @"SHORT_NAME"];
-    NSFetchRequest * request =
-        [model fetchRequestFromTemplateWithName: @"gameWithShortName"
-                          substitutionVariables: variables];
-    
-    NSError * error = nil;
-    NSManagedObjectContext * context = [mController managedObjectContext];
-    NSArray * results = [context executeFetchRequest: request error: &error];
-    if (results == nil)
-    {
-        [mController handleCoreDataError: error];
-        return nil;
-    }
-    
-    NSAssert([results count] <= 1, @"No more than one result");
-    if ([results count] == 0)
-        return nil;
-    else
-        return [results objectAtIndex: 0];
+    return [GameMO gameWithShortName: shortName
+                           inContext: [mController managedObjectContext]];
 }
 
 @end
