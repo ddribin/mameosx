@@ -214,8 +214,6 @@ static NSTimeInterval mLastSave = 0;
     
     if (game != nil)
     {
-        const game_driver * parentDriver = driver_get_clone(driver);
-
         NSArray * currentKeys = [NSArray arrayWithObjects:
             @"longName", @"manufacturer", @"year", @"parentShortName", nil];
         NSDictionary * currentValues = [game dictionaryWithValuesForKeys: currentKeys];
@@ -223,7 +221,9 @@ static NSTimeInterval mLastSave = 0;
         NSString * longName = [NSString stringWithUTF8String: driver->description];
         NSString * manufacturer = [NSString stringWithUTF8String: driver->manufacturer];
         NSString * year = [NSString stringWithUTF8String: driver->year];
+
         id parentShortName = [NSNull null];
+        const game_driver * parentDriver = driver_get_clone(driver);
         if (parentDriver != NULL)
         {
             parentShortName = [NSString stringWithUTF8String: parentDriver->name];
