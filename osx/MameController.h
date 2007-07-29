@@ -70,6 +70,9 @@ extern "C" {
     IBOutlet NSTableView * mGamesTable;
     IBOutlet NSTableColumn * mFavoriteColumn;
     
+    IBOutlet NSPanel * mInfoPanel;
+    IBOutlet NSTextView * mInfoAuditNotes;
+    
     // Size of other elements around the view
     NSSize mExtraWindowSize;
     NSRect mOriginalOpenFrame;

@@ -157,7 +157,12 @@ static void exit_sleeper()
       toObject: mGamesController
    withKeyPath: @"selectedObjects"
        options: nil];
-
+    
+    // The panel should be a utility panel, but not floating.  This cannot
+    // be set in Interface Builder.
+    [mInfoPanel setFloatingPanel: NO];
+    [mInfoAuditNotes setFont: [NSFont systemFontOfSize: [NSFont smallSystemFontSize]]];
+    
     [mAllGamesController addObserver: self
                           forKeyPath: @"arrangedObjects"
                              options: 0

@@ -1,6 +1,7 @@
 #import "GameMO.h"
 #import "GroupMO.h"
 #import "NSXReturnThrowError.h"
+#import "audit.h"
 
 @implementation GameMO
 
@@ -168,6 +169,32 @@
     return [NSString stringWithFormat:
         @"%@: %@, %@", [self shortName], [self manufacturer], [self year]];
 }
+
+- (NSString *) auditStatusString;
+{
+    NSNumber * auditStatus = [self auditStatus];
+    if (auditStatus == nil)
+        return @"N/A";
+    
+    switch ([auditStatus intValue])
+    {
+        case INCORRECT:
+            return @"Bad";
+            
+        case CORRECT:
+            return @"Good";
+            
+        case BEST_AVAILABLE:
+            return @"Best Available";
+            
+        case NOTFOUND:
+            return @"Not Found";
+            
+        default:
+            return @"N/A";
+    }
+}
+
 
 //=========================================================== 
 //  driverIndex 

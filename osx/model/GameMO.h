@@ -46,5 +46,6 @@
 - (void) setDriverIndex: (unsigned) theDriverIndex;
 
 - (NSString *) displayName;
+- (NSString *) auditStatusString;
 
 @end

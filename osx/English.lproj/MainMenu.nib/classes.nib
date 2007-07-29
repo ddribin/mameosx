@@ -51,6 +51,8 @@
                 mGameSplit = RBSplitSubview; 
                 mGamesController = NSArrayController; 
                 mGamesTable = NSTableView; 
+                mInfoAuditNotes = NSTextView; 
+                mInfoPanel = NSPanel; 
                 mMameLogPanel = NSPanel; 
                 mMameLogView = NSTextView; 
                 mMameView = MameView; 
