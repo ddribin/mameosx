@@ -111,6 +111,7 @@ extern "C" {
     NSArray * mSelectedGames;
     NSArray * mMatchingGames;
     GroupMO * mFavoritesGroup;
+    BOOL mShowClones;
 }
 
 #pragma mark -
@@ -133,6 +134,9 @@ extern "C" {
 
 - (void) setGameFilterIndex: (int) gameFilterIndex;
 - (int) gameFilterIndex;
+
+- (BOOL) showClones;
+- (void) setShowClones: (BOOL) flag;
 
 - (IBAction) toggleFavorite: (id) sender;
 

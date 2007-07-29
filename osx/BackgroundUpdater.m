@@ -214,17 +214,26 @@ static NSTimeInterval mLastSave = 0;
     
     if (game != nil)
     {
+        const game_driver * parentDriver = driver_get_clone(driver);
+
         NSArray * currentKeys = [NSArray arrayWithObjects:
-            @"longName", @"manufacturer", @"year", nil];
+            @"longName", @"manufacturer", @"year", @"parentShortName", nil];
         NSDictionary * currentValues = [game dictionaryWithValuesForKeys: currentKeys];
         
         NSString * longName = [NSString stringWithUTF8String: driver->description];
         NSString * manufacturer = [NSString stringWithUTF8String: driver->manufacturer];
         NSString * year = [NSString stringWithUTF8String: driver->year];
+        id parentShortName = [NSNull null];
+        if (parentDriver != NULL)
+        {
+            parentShortName = [NSString stringWithUTF8String: parentDriver->name];
+        }
+
         NSDictionary * newValues = [NSDictionary dictionaryWithObjectsAndKeys:
             longName, @"longName",
             manufacturer, @"manufacturer",
             year, @"year",
+            parentShortName, @"parentShortName",
             nil];
         
         if (![currentValues isEqualToDictionary: newValues])
@@ -379,7 +388,7 @@ static NSTimeInterval mLastSave = 0;
 
 - (GameMO *) gameWithShortName: (NSString *) shortName;
 {
-    return [GameMO gameWithShortName: shortName
+    return [GameMO findWithShortName: shortName
                            inContext: [mController managedObjectContext]];
 }
 

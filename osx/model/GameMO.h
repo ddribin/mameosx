@@ -17,8 +17,11 @@
 
 + (GameMO *) createInContext: (NSManagedObjectContext *) context;
 
-+ (GameMO *) gameWithShortName: (NSString *) shortName
++ (GameMO *) findWithShortName: (NSString *) shortName
                      inContext: (NSManagedObjectContext *) context;
+
++ (GameMO *) findOrCreateWithShortName: (NSString *) shortName
+                             inContext: (NSManagedObjectContext *) context;
 
 + (NSArray *) gamesWithShortNames: (NSArray *) shortNames
                         inContext: (NSManagedObjectContext *) context;

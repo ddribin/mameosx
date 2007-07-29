@@ -127,6 +127,7 @@ static void exit_sleeper()
     atexit(exit_sleeper);
     
     gameSortDescriptors = [[[MamePreferences standardPreferences] gamesSortDescriptors] retain];
+    mShowClones = YES;
     
     mUpdater = [[BackgroundUpdater alloc] initWithMameController: self];
     
@@ -531,6 +532,23 @@ Performs the save action for the application, which is to send the save:
 - (int) gameFilterIndex;
 {
     return mGameFilterIndex;
+}
+
+//=========================================================== 
+//  showClones 
+//=========================================================== 
+- (BOOL) showClones
+{
+    return mShowClones;
+}
+
+- (void) setShowClones: (BOOL) flag
+{
+    if (mShowClones == flag)
+        return;
+    
+    mShowClones = flag;
+    [self updatePredicate];
 }
 
 - (IBAction) toggleFavorite: (id) sender;
@@ -1319,6 +1337,11 @@ Performs the save action for the application, which is to send the save:
     {
         [terms addObject: @"(shortName contains[c] $FILTER OR longName contains[c] $FILTER)"];
         [variables setObject: mFilterString forKey: @"FILTER"];
+    }
+    
+    if (!mShowClones)
+    {
+        [terms addObject: @"(parentShortName != NIL)"];
     }
     
     NSString * format = nil;

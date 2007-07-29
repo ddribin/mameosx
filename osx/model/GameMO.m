@@ -26,7 +26,7 @@
                                   inManagedObjectContext: context];
 }
 
-+ (GameMO *) gameWithShortName: (NSString *) shortName
++ (GameMO *) findWithShortName: (NSString *) shortName
                      inContext: (NSManagedObjectContext *) context;
 {
     NSManagedObjectModel * model = [[context persistentStoreCoordinator] managedObjectModel];
@@ -48,6 +48,18 @@
         return nil;
     else
         return [results objectAtIndex: 0];
+}
+
++ (GameMO *) findOrCreateWithShortName: (NSString *) shortName
+                             inContext: (NSManagedObjectContext *) context;
+{
+    GameMO * game = [self findWithShortName: shortName inContext: context];
+    if (game == nil)
+    {
+        game = [self createInContext: context];
+        [game setShortName: shortName];
+    }
+    return game;
 }
 
 + (NSArray *) gamesWithShortNames: (NSArray *) shortNames
