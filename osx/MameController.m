@@ -450,6 +450,23 @@ Performs the save action for the application, which is to send the save:
 {
 }
 
+- (void) tableViewSelectionDidChange: (NSNotification *) notification
+{
+    // The background updater sets the status, too.  Give it priority
+    if ([mUpdater isRunning])
+        return;
+    
+    NSArray * selectedGames = [mGamesController selectedObjects];
+
+    NSString * status = @"";
+    if ((selectedGames != nil) && ([selectedGames count] != 0))
+    {
+        GameMO * game = [selectedGames objectAtIndex: 0];
+        status = [game displayName];
+    }
+    [self setStatusText: status];
+}
+
 #pragma mark -
 #pragma mark Split View
 
@@ -666,6 +683,26 @@ Performs the save action for the application, which is to send the save:
 {
     [mGamesController rearrangeObjects];
 }
+
+//=========================================================== 
+//  statusText 
+//=========================================================== 
+- (NSString *) statusText
+{
+    return mStatusText; 
+}
+
+- (void) setStatusText: (NSString *) theStatusText
+{
+    if (mStatusText != theStatusText)
+    {
+        [mStatusText release];
+        mStatusText = [theStatusText retain];
+    }
+}
+
+#pragma mark -
+#pragma mark Background Callbacks
 
 - (void) backgroundUpdateWillStart;
 {

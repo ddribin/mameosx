@@ -1,6 +1,8 @@
 #import "GameMO.h"
 #import "GroupMO.h"
+#import "RomAuditSummary.h"
 #import "NSXReturnThrowError.h"
+#import "JRLog.h"
 #import "audit.h"
 
 @implementation GameMO
@@ -195,6 +197,26 @@
     }
 }
 
+- (void) audit;
+{
+    unsigned driverIndex = [self driverIndex];
+    
+    JRLogDebug(@"Auditing %@ (%@)", [self shortName], [self longName]);
+    audit_record * auditRecords;
+    int recordCount;
+    int res;
+    
+    /* audit the ROMs in this set */
+    recordCount = audit_images(driverIndex, AUDIT_VALIDATE_FAST, &auditRecords);
+    RomAuditSummary * summary =
+        [[RomAuditSummary alloc] initWithGameIndex: driverIndex
+                                       recordCount: recordCount
+                                           records: auditRecords];
+    free(auditRecords);
+    [summary autorelease];
+    [self setAuditStatusValue: [summary status]];
+    [self setAuditNotes: [summary notes]];
+}
 
 //=========================================================== 
 //  driverIndex 

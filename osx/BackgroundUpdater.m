@@ -50,6 +50,7 @@ static NSArray * sAllGames = nil;
     
     mController = controller;
     mPass = 0;
+    mRunning = NO;
     mShortNames = [[NSMutableArray alloc] init];
     mIndexByShortName = [[NSMutableDictionary alloc] init];
     
@@ -77,8 +78,15 @@ static NSArray * sAllGames = nil;
     mPass = 0;
     
     JRLogDebug(@"Start background updater");
+    mRunning = YES;
     [mController backgroundUpdateWillStart];
+    [mController setStatusText: @"Updating game list"];
     [self postIdleNotification];
+}
+
+- (BOOL) isRunning;
+{
+    return mRunning;
 }
 
 @end
@@ -139,11 +147,11 @@ static NSArray * sAllGames = nil;
     else
     {
         [self freeResources];
+        [mController setStatusText: @""];
+        mRunning = NO;
         JRLogDebug(@"Idle done");
     }
 }
-
-static NSTimeInterval mLastSave = 0;
 
 - (BOOL) passOne;
 {
@@ -312,6 +320,7 @@ static NSTimeInterval mLastSave = 0;
     mCurrentGameIndex = 0;
     mGameEnumerator = [[allGames objectEnumerator] retain];
     mLastSave = [NSDate timeIntervalSinceReferenceDate];
+    mLastStatus = [[NSDate distantPast] timeIntervalSinceReferenceDate];
 #endif
 }
 
@@ -321,25 +330,16 @@ static NSTimeInterval mLastSave = 0;
     if (game == nil)
         return YES;
     
-    NSManagedObjectContext * context = [mController managedObjectContext];
-    unsigned driverIndex = [game driverIndex];
-    
-    JRLogDebug(@"Auditing %@ (%@)", [game shortName], [game longName]);
-    audit_record * auditRecords;
-    int recordCount;
-    int res;
-    
-    /* audit the ROMs in this set */
-    recordCount = audit_images(driverIndex, AUDIT_VALIDATE_FAST, &auditRecords);
-    RomAuditSummary * summary =
-        [[RomAuditSummary alloc] initWithGameIndex: driverIndex
-                                       recordCount: recordCount
-                                           records: auditRecords];
-    free(auditRecords);
-    [summary autorelease];
-    [game setAuditStatusValue: [summary status]];
-    [game setAuditNotes: [summary notes]];
+    [game audit];
     NSTimeInterval now = [NSDate timeIntervalSinceReferenceDate];
+    if ((now - mLastStatus) > 0.25)
+    {
+        NSString * message = [NSString stringWithFormat: @"Auditing %@",
+            [game longName]];
+        [mController setStatusText: message];
+        mLastStatus = now;
+    }
+
     if ((now - mLastSave) > 15.0)
     {
         JRLogDebug(@"Saving");
@@ -347,6 +347,7 @@ static NSTimeInterval mLastSave = 0;
         mLastSave = now;
     }
     
+    NSManagedObjectContext * context = [mController managedObjectContext];
     [context processPendingChanges];
     [mController rearrangeGames];
     

@@ -48,4 +48,6 @@
 - (NSString *) displayName;
 - (NSString *) auditStatusString;
 
+- (void) audit;
+
 @end

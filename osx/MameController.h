@@ -115,6 +115,7 @@ extern "C" {
     NSArray * mMatchingGames;
     GroupMO * mFavoritesGroup;
     BOOL mShowClones;
+    NSString * mStatusText;
 }
 
 #pragma mark -
@@ -154,6 +155,12 @@ extern "C" {
 - (IBAction) refreshGames: (id) sender;
 
 - (void) rearrangeGames;
+
+- (NSString *) statusText;
+- (void) setStatusText: (NSString *) theStatusText;
+
+#pragma mark -
+#pragma mark Background Callbacks
 
 - (void) backgroundUpdateWillStart;
 

@@ -14,11 +14,14 @@
 @interface BackgroundUpdater : NSObject
 {
     int mPass;
+    BOOL mRunning;
     unsigned mCurrentGameIndex;
     NSMutableArray * mShortNames;
     NSMutableDictionary * mIndexByShortName;
     GameMO * mCurrentGame;
     NSEnumerator * mGameEnumerator;
+    NSTimeInterval mLastSave;
+    NSTimeInterval mLastStatus;
     
     // Weak references
     MameController * mController;
@@ -27,5 +30,7 @@
 - (id) initWithMameController: (MameController *) controller;
 
 - (void) start;
+
+- (BOOL) isRunning;
 
 @end
