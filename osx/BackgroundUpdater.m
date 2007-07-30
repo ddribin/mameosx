@@ -43,7 +43,6 @@ static NSArray * sAllGames = nil;
         return nil;
     
     mController = controller;
-    mPass = 0;
     mRunning = NO;
     mShortNames = [[NSMutableArray alloc] init];
     mIndexByShortName = [[NSMutableDictionary alloc] init];
@@ -62,13 +61,27 @@ static NSArray * sAllGames = nil;
 
 - (void) dealloc
 {
+    [[NSNotificationCenter defaultCenter] removeObserver: self];
     [self freeResources];
+    [mFsm release];
+    mFsm = nil;
     [super dealloc];
 }
 
 - (void) start;
 {
     [mFsm Start];
+}
+
+- (void) pause;
+{
+    [mFsm Pause];
+}
+
+- (void) resume;
+{
+    [mFsm Resume];
+    [self postIdleNotification];
 }
 
 - (BOOL) isRunning;
@@ -79,6 +92,17 @@ static NSArray * sAllGames = nil;
 #pragma mark -
 #pragma mark State Machine Actions
 
+- (void) saveState;
+{
+    mSavedRunning = mRunning;
+    mRunning = NO;
+}
+
+- (void) restoreState;
+{
+    mRunning = mSavedRunning;
+}
+
 - (void) prepareToIndexByShortName;
 {
     [self freeResources];
@@ -86,9 +110,8 @@ static NSArray * sAllGames = nil;
     mShortNames = [[NSMutableArray alloc] init];
     mIndexByShortName = [[NSMutableDictionary alloc] init];
     mCurrentGameIndex = 0;
-    mPass = 0;
     
-    JRLogDebug(@"Start background updater");
+    JRLogDebug(@"Start background update");
     mRunning = YES;
     [mController backgroundUpdateWillStart];
     [mController setStatusText: @"Updating game list"];
@@ -112,8 +135,7 @@ static NSArray * sAllGames = nil;
 {
     NSManagedObjectContext * context = [mController managedObjectContext];
     
-    mPass = 1;
-    JRLogDebug(@"Starting pass 1");
+    JRLogDebug(@"Prepare to update game list");
     NSArray * shortNames = [mIndexByShortName allKeys];
     [mShortNames addObjectsFromArray: [shortNames sortedArrayUsingSelector: @selector(compare:)]];
     
@@ -134,7 +156,7 @@ static NSArray * sAllGames = nil;
     NSManagedObjectContext * context = [mController managedObjectContext];
     if ((mCurrentGameIndex % 1000) == 0)
     {
-        JRLogDebug(@"Pass 2 index: %d", mCurrentGameIndex);
+        JRLogDebug(@"Update game list index: %d", mCurrentGameIndex);
 #if 0
         NSError * error = nil;
         if (![context save: &error])
@@ -226,18 +248,16 @@ static NSArray * sAllGames = nil;
 {
     NSManagedObjectContext * context = [mController managedObjectContext];
     
-    mPass = 2;
-    JRLogDebug(@"Pass 2 done");
+    JRLogDebug(@"Prepare to audit games");
     
     [mCurrentGame release];
     [mGameEnumerator release];
     mCurrentGame = nil;
     mGameEnumerator = nil;
     
-    JRLogDebug(@"Saving: %d %d", [[context updatedObjects] count], [context hasChanges]);
     if ([context hasChanges])
     {
-        JRLogDebug(@"Saving");
+        JRLogDebug(@"Saving: %d", [[context updatedObjects] count]);
         NSError * error = nil;
         if (![context save: &error])
         {
@@ -307,9 +327,8 @@ static NSArray * sAllGames = nil;
 {
     NSManagedObjectContext * context = [mController managedObjectContext];
     
-    JRLogDebug(@"Pass 3 done");
+    JRLogDebug(@"Cleaning up");
     [mController backgroundUpdateWillFinish];
-    mPass = 3;
     
     [mGameEnumerator release];
     mGameEnumerator = nil;
@@ -330,7 +349,7 @@ static NSArray * sAllGames = nil;
     [self freeResources];
     [mController setStatusText: @""];
     mRunning = NO;
-    JRLogDebug(@"Idle done");
+    JRLogDebug(@"Background update done");
 }
 
 @end
@@ -350,8 +369,12 @@ static NSArray * sAllGames = nil;
     mGameEnumerator = nil;
 }
 
+
 - (void) postIdleNotification;
 {
+    if (!mRunning)
+        return;
+
     NSNotification * note =
     [NSNotification notificationWithName: kBackgroundUpdaterIdle
                                   object: self];
@@ -365,10 +388,9 @@ static NSArray * sAllGames = nil;
     mWorkDone = NO;
     [mFsm DoWork];
     if (mWorkDone)
-        [mFsm Done];
+        [mFsm WorkDone];
     
-    if (mRunning)
-        [self postIdleNotification];
+    [self postIdleNotification];
 }
 
 - (NSArray *) fetchAllGames;

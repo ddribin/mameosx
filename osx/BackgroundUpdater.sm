@@ -18,19 +18,33 @@ Idle
 IndexingByShortName
 {
     DoWork nil { indexByShortName(); }
-    Done UpdatingGameList { prepareToUpdateGameList(); }
+    WorkDone UpdatingGameList { prepareToUpdateGameList(); }
 }
 
 UpdatingGameList
 {
     DoWork nil { updateGameList(); }
-    Done AuditingGames { preprateToAuditGames(); }
+    WorkDone AuditingGames { preprateToAuditGames(); }
 }
 
 AuditingGames
 {
     DoWork nil { auditGames(); }
-    Done Idle { cleanUp(); }
+    WorkDone Idle { cleanUp(); }
+}
+
+Default
+{
+    Pause push(Paused) { }
+}
+
+Paused
+Entry { saveState(); }
+Exit { restoreState(); }
+{
+    Pause nil { }
+    DoWork nil { }
+    Resume pop() { }
 }
 
 %%

@@ -14,8 +14,12 @@
 
 @interface BackgroundUpdater : NSObject
 {
-    int mPass;
+    BackgroundUpdaterContext * mFsm;
+
+    // Resources that get released on every stop
     BOOL mRunning;
+    BOOL mSavedRunning;
+    BOOL mWorkDone;
     unsigned mCurrentGameIndex;
     NSMutableArray * mShortNames;
     NSMutableDictionary * mIndexByShortName;
@@ -23,8 +27,6 @@
     NSEnumerator * mGameEnumerator;
     NSTimeInterval mLastSave;
     NSTimeInterval mLastStatus;
-    BackgroundUpdaterContext * mFsm;
-    BOOL mWorkDone;
     
     // Weak references
     MameController * mController;
@@ -33,11 +35,16 @@
 - (id) initWithMameController: (MameController *) controller;
 
 - (void) start;
+- (void) pause;
+- (void) resume;
 
 - (BOOL) isRunning;
 
 #pragma mark -
 #pragma mark State Machine Actions
+
+- (void) saveState;
+- (void) restoreState;
 
 - (void) prepareToIndexByShortName;
 - (void) indexByShortName;

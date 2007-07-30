@@ -6663,6 +6663,7 @@
 				55D282AF0B12C9DD002C9199 /* MameController.m */,
 				55C087830C4AC62400CC1E15 /* BackgroundUpdater.h */,
 				55C087840C4AC62400CC1E15 /* BackgroundUpdater.m */,
+				55754F620C5E3BB00035DB3B /* BackgroundUpdater.sm */,
 				55D2836C0B12D5CA002C9199 /* MamePreferences.h */,
 				55D2836D0B12D5CA002C9199 /* MamePreferences.m */,
 				55FCC9FC0B0BD255003A5FB3 /* VersionChecker.h */,
@@ -6681,7 +6682,6 @@
 				55B5DDC00C4D872200057C2A /* AOSegmentedControl.m */,
 				556A4C650AA50F2800602CC5 /* main.m */,
 				5567C3730BBC57CE00EA2072 /* MameChud.h */,
-				55754F620C5E3BB00035DB3B /* BackgroundUpdater.sm */,
 				5567C3630BBC56D100EA2072 /* MameOSXSharkEvents.text */,
 				551A621A0AC2564100AECE1E /* Resources */,
 			);

@@ -93,7 +93,8 @@ static const int kMameMaxGamesInHistory = 100;
 
 - (GroupMO *) favoritesGroup;
 
-- (void) exportFavoritesToFile: (NSString *) file;
+- (void) exportFavoritesToFile: (NSString *) file
+                   skipIfEmpty: (BOOL) skipIfEmpty;
 
 - (void) importFavoritesFromFile: (NSString *) file;
 
@@ -590,7 +591,7 @@ Performs the save action for the application, which is to send the save:
     if (result != NSOKButton)
         return;
     
-    [self exportFavoritesToFile: [savePanel filename]];
+    [self exportFavoritesToFile: [savePanel filename] skipIfEmpty: NO];
 }
 
 - (IBAction) importFavorites: (id) sender;
@@ -647,7 +648,6 @@ Performs the save action for the application, which is to send the save:
                          change: (NSDictionary *) change
                         context: (void *) context;
 {
-    JRLogDebug(@"observeValueForKeyPath: %@ ofObject: %@", keyPath, object);
     if ((object == mAllGamesController) &&
         [keyPath isEqualToString: @"arrangedObjects"])
     {
@@ -750,7 +750,9 @@ Performs the save action for the application, which is to send the save:
     
     if (managedObjectContext != nil)
     {
-        [self exportFavoritesToFile: [self favoritesFile]];
+        // Backup the Favorites list.  Skip it if it's empty, to avoid
+        // overwriting a valid backup on accidental DB erasure.
+        [self exportFavoritesToFile: [self favoritesFile] skipIfEmpty: YES];
         
         if ([managedObjectContext commitEditing])
         {
@@ -1285,6 +1287,7 @@ Performs the save action for the application, which is to send the save:
      */
     
     [self hideOpenPanel: nil];
+    [mUpdater pause];
     [self setGameLoading: NO];
     [self setGameRunning: YES];
     
@@ -1363,6 +1366,7 @@ Performs the save action for the application, which is to send the save:
             [[mMameView window] orderOut: self];
             [mGameName release];
             mGameName = nil;
+            [mUpdater resume];
             [self chooseGameAndStart];
             /*
              * Only exit full screen, after the MAME window is closed, and the
@@ -1499,6 +1503,7 @@ Performs the save action for the application, which is to send the save:
 - (void) setGameLoading: (BOOL) gameLoading;
 {
     mGameLoading = gameLoading;
+#if 0
     if (mGameLoading)
     {
         [mProgressIndicator setIndeterminate: YES];
@@ -1509,6 +1514,7 @@ Performs the save action for the application, which is to send the save:
         [mProgressIndicator setIndeterminate: YES];
         [mProgressIndicator stopAnimation: self];
     }
+#endif
 }
 
 - (void) setGameRunning: (BOOL) gameRunning;
@@ -1844,13 +1850,19 @@ Performs the save action for the application, which is to send the save:
     return mFavoritesGroup;
 }
 
-- (void) exportFavoritesToFile: (NSString *) file;
+- (void) exportFavoritesToFile: (NSString *) file
+                   skipIfEmpty: (BOOL) skipIfEmpty;
 {
     NSManagedObjectContext * context = [self managedObjectContext];
     GroupMO * favorites = [self favoritesGroup];
     NSMutableSet * members = [favorites membersSet];
     NSArray * favoriteNames = [[members valueForKey: @"shortName"] allObjects];
-    [favoriteNames writeToFile: file atomically: YES];
+    BOOL skipWrite = NO;
+    if (([favoriteNames count] == 0) && skipIfEmpty)
+        skipWrite = YES;
+    
+    if (!skipWrite)
+        [favoriteNames writeToFile: file atomically: YES];
 }
 
 - (void) importFavoritesFromFile: (NSString *) file;
