@@ -214,6 +214,8 @@
 - (int) gameFilterIndex;
 - (void) setGameFilterIndex: (int) gameFilterIndex;
 
+- (BOOL) backgroundUpdateDebug;
+
 @end
 
 NSString * MameApplicationSupportDirectory(void);
@@ -309,4 +311,6 @@ extern NSString * MameAutosaveKey;
 extern NSString * MameBiosKey;
 
 extern NSString * MameGameSortDescriptorsKey;
+extern NSString * MameGameFilterIndexKey;
+extern NSString * MameBackgroundUpdateDebugKey;
 

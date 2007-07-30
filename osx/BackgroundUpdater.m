@@ -9,6 +9,7 @@
 #import "BackgroundUpdater.h"
 #import "BackgroundUpdater_sm.h"
 #import "MameController.h"
+#import "MamePreferences.h"
 #import "RomAuditSummary.h"
 #import "GameMO.h"
 #import "GroupMO.h"
@@ -19,8 +20,6 @@
 
 static NSString * kBackgroundUpdaterIdle = @"BackgroundUpdaterIdle";
 
-static NSArray * sAllGames = nil;
-
 @interface BackgroundUpdater (Private)
 
 - (void) freeResources;
@@ -29,9 +28,6 @@ static NSArray * sAllGames = nil;
 
 - (void) idle: (NSNotification *) notification;
 - (void) save;
-
-- (NSArray *) fetchAllGames;
-- (GameMO *) gameWithShortName: (NSString *) shortName;
 
 @end
 
@@ -54,7 +50,8 @@ static NSArray * sAllGames = nil;
                                                object: self];
     
     mFsm = [[BackgroundUpdaterContext alloc] initWithOwner: self];
-    // [mFsm setDebugFlag: YES];
+    if ([[MamePreferences standardPreferences] backgroundUpdateDebug])
+        [mFsm setDebugFlag: YES];
     [mFsm Init];
 
     return self;
@@ -368,18 +365,6 @@ static NSArray * sAllGames = nil;
     }
     else
         JRLogDebug(@"Skipping save");
-}
-
-- (NSArray *) fetchAllGames;
-{
-    return [GameMO allGamesWithSortDesriptors: [GameMO sortByShortName]
-                                    inContext: [mController managedObjectContext]];
-}
-
-- (GameMO *) gameWithShortName: (NSString *) shortName;
-{
-    return [GameMO findWithShortName: shortName
-                           inContext: [mController managedObjectContext]];
 }
 
 @end

@@ -16,7 +16,7 @@
 {
     BackgroundUpdaterContext * mFsm;
 
-    // Resources that get released on every stop
+    // Resources that get released after background completion
     BOOL mRunning;
     BOOL mSavedRunning;
     BOOL mWorkDone;

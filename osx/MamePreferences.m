@@ -121,6 +121,7 @@ NSString * MameBiosKey = @"Bios";
 
 NSString * MameGameSortDescriptorsKey = @"GameSortDescriptors";
 NSString * MameGameFilterIndexKey = @"GameFilterIndex";
+NSString * MameBackgroundUpdateDebugKey = @"BackgroundUpdateDebug";
 
 @implementation MamePreferences
 
@@ -162,6 +163,8 @@ NSString * MameGameFilterIndexKey = @"GameFilterIndex";
 - (void) registerDefaults;
 {
     NSMutableDictionary * defaultValues = [NSMutableDictionary dictionary];
+    NSNumber * yes = [NSNumber numberWithBool: YES];
+    NSNumber * no = [NSNumber numberWithBool: NO];
     
     [defaultValues setObject: @"WARN"
                       forKey: MameJRLogLevelKey];
@@ -169,19 +172,19 @@ NSString * MameGameFilterIndexKey = @"GameFilterIndex";
     [defaultValues setObject: @"http://mameosx.sourceforge.net/version.plist"
                       forKey: MameVersionUrlKey];
     
-    [defaultValues setObject: [NSNumber numberWithBool: YES]
+    [defaultValues setObject: yes
                       forKey: MameCheckUpdatesAtStartupKey];
     
-    [defaultValues setObject: [NSNumber numberWithBool: YES]
+    [defaultValues setObject: yes
                       forKey: MameWindowedZoomLevelKey];
     
     [defaultValues setObject: MameZoomLevelDouble
                       forKey: MameWindowedZoomLevelKey];
     
-    [defaultValues setObject: [NSNumber numberWithBool: NO]
+    [defaultValues setObject: no
                       forKey: MameFullScreenKey];
     
-    [defaultValues setObject: [NSNumber numberWithBool: NO]
+    [defaultValues setObject: no
                       forKey: MameSwitchResolutionsKey];
     
     [defaultValues setObject: MameFullScreenMaximumValue
@@ -189,10 +192,10 @@ NSString * MameGameFilterIndexKey = @"GameFilterIndex";
     
     [self initializeDefaultPaths: defaultValues];
     
-    [defaultValues setObject: [NSNumber numberWithBool: YES]
+    [defaultValues setObject: yes
                       forKey: MameSyncToRefreshKey];
     
-    [defaultValues setObject: [NSNumber numberWithBool: YES]
+    [defaultValues setObject: yes
                       forKey: MameSoundEnabledKey];
     
 
@@ -202,37 +205,37 @@ NSString * MameGameFilterIndexKey = @"GameFilterIndex";
     [defaultValues setObject: MameRenderingThreadDefaultValue
                       forKey: MameRenderingThreadKey];
         
-    [defaultValues setObject: [NSNumber numberWithBool: NO]
+    [defaultValues setObject: no
                       forKey: MameClearToRedKey];
 
-    [defaultValues setObject: [NSNumber numberWithBool: YES]
+    [defaultValues setObject: yes
                       forKey: MameLinearFilterKey];
     
-    [defaultValues setObject: [NSNumber numberWithBool: YES]
+    [defaultValues setObject: yes
                       forKey: MameSmoothFontKey];
     
-    [defaultValues setObject: [NSNumber numberWithBool: NO]
+    [defaultValues setObject: no
                       forKey: MameGrabMouseKey];
     
 #ifdef MAME_DEBUG
-    [defaultValues setObject: [NSNumber numberWithBool: NO]
+    [defaultValues setObject: no
                       forKey: MameDebugKey];
 #endif
-    [defaultValues setObject: [NSNumber numberWithBool: NO]
+    [defaultValues setObject: no
                       forKey: MameCheatKey];
-    [defaultValues setObject: [NSNumber numberWithBool: NO]
+    [defaultValues setObject: no
                       forKey: MameSkipDisclaimerKey];
-    [defaultValues setObject: [NSNumber numberWithBool: NO]
+    [defaultValues setObject: no
                       forKey: MameSkipGameInfoKey];
-    [defaultValues setObject: [NSNumber numberWithBool: NO]
+    [defaultValues setObject: no
                       forKey: MameSkipWarningsKey];
     
     [defaultValues setObject: [NSNumber numberWithInt: 48000]
                       forKey: MameSampleRateKey];
-    [defaultValues setObject: [NSNumber numberWithBool: YES]
+    [defaultValues setObject: yes
                       forKey: MameUseSamplesKey];
     
-    [defaultValues setObject: [NSNumber numberWithBool: YES]
+    [defaultValues setObject: yes
                       forKey: MameKeepAspectKey];
     [defaultValues setObject: [NSNumber numberWithFloat: 1.0f]
                       forKey: MameBrightnessKey];
@@ -247,15 +250,15 @@ NSString * MameGameFilterIndexKey = @"GameFilterIndex";
                       forKey: MameBeamWidthKey];
     [defaultValues setObject: [NSNumber numberWithFloat: 1.0f]
                       forKey: MameVectorFlickerKey];
-    [defaultValues setObject: [NSNumber numberWithBool: YES]
+    [defaultValues setObject: yes
                       forKey: MameAntialiasBeamKey];
     
-    [defaultValues setObject: [NSNumber numberWithBool: YES]
+    [defaultValues setObject: yes
                       forKey: MameThrottledKey];
-    [defaultValues setObject: [NSNumber numberWithBool: YES]
+    [defaultValues setObject: yes
                       forKey: MameAutoFrameSkipKey];
 
-    [defaultValues setObject: [NSNumber numberWithBool: NO]
+    [defaultValues setObject: no
                       forKey: MameAutosaveKey];
     [defaultValues setObject: @"default"
                       forKey: MameBiosKey];
@@ -263,6 +266,9 @@ NSString * MameGameFilterIndexKey = @"GameFilterIndex";
     [defaultValues setObject: [NSNumber numberWithInt: 1]
                       forKey: MameGameFilterIndexKey];
     
+    [defaultValues setObject: no
+                      forKey: MameBackgroundUpdateDebugKey];
+
     [mDefaults registerDefaults: defaultValues];
 }
 
@@ -767,6 +773,11 @@ NSString * MameGameFilterIndexKey = @"GameFilterIndex";
 - (void) setGameFilterIndex: (int) gameFilterIndex;
 {
     [mDefaults setInteger: gameFilterIndex forKey: MameGameFilterIndexKey];
+}
+
+- (BOOL) backgroundUpdateDebug;
+{
+    return [mDefaults boolForKey: MameBackgroundUpdateDebugKey];
 }
 
 @end
