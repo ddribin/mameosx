@@ -45,7 +45,7 @@ static NSArray * sAllGames = nil;
     
     mController = controller;
     mRunning = NO;
-    mShortNames = [[NSMutableArray alloc] init];
+    mShortNames = nil;
     mIndexByShortName = [[NSMutableDictionary alloc] init];
     
     [[NSNotificationCenter defaultCenter] addObserver: self
@@ -108,7 +108,6 @@ static NSArray * sAllGames = nil;
 {
     [self freeResources];
     
-    mShortNames = [[NSMutableArray alloc] init];
     mIndexByShortName = [[NSMutableDictionary alloc] init];
     mCurrentGameIndex = 0;
     
@@ -134,11 +133,22 @@ static NSArray * sAllGames = nil;
 
 - (void) prepareToUpdateGameList;
 {
+    /*
+     * Setup two sorted arrays, mShortNames and mGameEnumerator.
+     * Loop through both arrays, using a similar algorithm as described here:
+     *
+     * Implementing Find-or-Create Efficiently
+     * http://developer.apple.com/documentation/Cocoa/Conceptual/CoreData/Articles/cdImporting.htm
+     *
+     * Except, we always update the GameMO from the driver, to ensure it's
+     * data is up-to-date.
+     */
+    
     NSManagedObjectContext * context = [mController managedObjectContext];
     
     JRLogDebug(@"Prepare to update game list");
     NSArray * shortNames = [mIndexByShortName allKeys];
-    [mShortNames addObjectsFromArray: [shortNames sortedArrayUsingSelector: @selector(compare:)]];
+    mShortNames = [[shortNames sortedArrayUsingSelector: @selector(compare:)] retain];
     
     // Execute the fetch
     JRLogDebug(@"Fetching current game list");
@@ -158,15 +168,8 @@ static NSArray * sAllGames = nil;
     if ((mCurrentGameIndex % 1000) == 0)
     {
         JRLogDebug(@"Update game list index: %d", mCurrentGameIndex);
-#if 0
-        NSError * error = nil;
-        if (![context save: &error])
-        {
-            [mController handleCoreDataError: error];
-        }
-#endif
     }
-#if 1
+
     NSString * currentShortName = [mShortNames objectAtIndex: mCurrentGameIndex];
     unsigned driverIndex = [[mIndexByShortName objectForKey: currentShortName] unsignedIntValue];
     const game_driver * driver = drivers[driverIndex];
@@ -214,25 +217,8 @@ static NSArray * sAllGames = nil;
         {
             [game setValuesForKeysWithDictionary: newValues];
         }
+        [game setDriverIndex: driverIndex];
     }
-#else
-    unsigned driverIndex = mCurrentGameIndex;
-    const game_driver * driver = drivers[mCurrentGameIndex];
-    NSString * shortName = [NSString stringWithUTF8String: driver->name];
-    NSString * longName = [NSString stringWithUTF8String: driver->description];
-    GameMO * game = [self gameWithShortName: shortName];
-    if (game == nil)
-    {
-#if 0
-        game = [GameMO createInContext: context];
-#else
-        game = [mController newGame];
-#endif
-        [game setShortName: shortName];
-        [game setLongName: longName];
-    }
-#endif
-    [game setDriverIndex: driverIndex];
     
     if (mCurrentGame != nil)
     {
@@ -258,7 +244,6 @@ static NSArray * sAllGames = nil;
     
     [self save];
     
-#if 1
     NSFetchRequest *fetchRequest = [[[NSFetchRequest alloc] init] autorelease];
     [fetchRequest setEntity: [GameMO entityInContext: context]];
     
@@ -271,12 +256,12 @@ static NSArray * sAllGames = nil;
     JRLogDebug(@"Fetching games that need audit");
     NSArray * allGames = [context executeFetchRequest:fetchRequest error:&error];
     JRLogDebug(@"Games that need audit: %d", [allGames count]);
+
     [mController backgroundUpdateWillBeginAudits: [allGames count]];
     mCurrentGameIndex = 0;
     mGameEnumerator = [[allGames objectEnumerator] retain];
     mLastSave = [NSDate timeIntervalSinceReferenceDate];
     mLastStatus = [[NSDate distantPast] timeIntervalSinceReferenceDate];
-#endif
 }
 
 - (void) auditGames;
