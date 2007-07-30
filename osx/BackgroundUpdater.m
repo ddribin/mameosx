@@ -27,10 +27,11 @@ static NSArray * sAllGames = nil;
 
 - (void) postIdleNotification;
 
+- (void) idle: (NSNotification *) notification;
+- (void) save;
+
 - (NSArray *) fetchAllGames;
 - (GameMO *) gameWithShortName: (NSString *) shortName;
-
-- (void) idle: (NSNotification *) notification;
 
 @end
 
@@ -255,18 +256,7 @@ static NSArray * sAllGames = nil;
     mCurrentGame = nil;
     mGameEnumerator = nil;
     
-    if ([context hasChanges])
-    {
-        JRLogDebug(@"Saving: %d", [[context updatedObjects] count]);
-        NSError * error = nil;
-        if (![context save: &error])
-        {
-            [mController handleCoreDataError: error];
-        }
-        JRLogDebug(@"Save done");
-    }
-    else
-        JRLogDebug(@"Skipping save");
+    [self save];
     
 #if 1
     NSFetchRequest *fetchRequest = [[[NSFetchRequest alloc] init] autorelease];
@@ -311,7 +301,7 @@ static NSArray * sAllGames = nil;
     if ((now - mLastSave) > 15.0)
     {
         JRLogDebug(@"Saving");
-        [mController saveAction: self];
+        [self save];
         mLastSave = now;
     }
     
@@ -333,18 +323,7 @@ static NSArray * sAllGames = nil;
     [mGameEnumerator release];
     mGameEnumerator = nil;
     
-    if ([context hasChanges])
-    {
-        JRLogDebug(@"Saving");
-        NSError * error = nil;
-        if (![context save: &error])
-        {
-            [mController handleCoreDataError: error];
-        }
-        JRLogDebug(@"Save done");
-    }
-    else
-        JRLogDebug(@"Skipping save");
+    [self save];
 
     [self freeResources];
     [mController setStatusText: @""];
@@ -391,6 +370,19 @@ static NSArray * sAllGames = nil;
         [mFsm WorkDone];
     
     [self postIdleNotification];
+}
+
+- (void) save;
+{
+    NSManagedObjectContext * context = [mController managedObjectContext];
+    if ([context hasChanges])
+    {
+        JRLogDebug(@"Saving: %d", [[context updatedObjects] count]);
+        [mController saveAction: self];
+        JRLogDebug(@"Save done");
+    }
+    else
+        JRLogDebug(@"Skipping save");
 }
 
 - (NSArray *) fetchAllGames;
