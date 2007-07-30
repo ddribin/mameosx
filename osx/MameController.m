@@ -69,6 +69,11 @@ static const int kMameMaxGamesInHistory = 100;
 - (void) exitAlertDidEnd: (NSAlert *) aler
               returnCode: (int) returnCode
              contextInfo: (void *) contextInfo;
+#pragma mark -
+#pragma mark Folders
+
+- (NSString *) applicationSupportFolder;
+- (NSString *) favoritesFile;
 
 #pragma mark -
 #pragma mark Game Choosing
@@ -213,14 +218,6 @@ static void exit_sleeper()
 
 #pragma mark -
 #pragma mark Core Data Support
-
-- (NSString *) applicationSupportFolder
-{
-    
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
-    NSString *basePath = ([paths count] > 0) ? [paths objectAtIndex:0] : NSTemporaryDirectory();
-    return [basePath stringByAppendingPathComponent:@"MAME OS X"];
-}
 
 - (void) handleCoreDataError: (NSError *) error;
 {
@@ -751,9 +748,14 @@ Performs the save action for the application, which is to send the save:
     NSError * error;
     NSApplicationTerminateReply reply = NSTerminateNow;
     
-    if (managedObjectContext != nil) {
-        if ([managedObjectContext commitEditing]) {
-            if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
+    if (managedObjectContext != nil)
+    {
+        [self exportFavoritesToFile: [self favoritesFile]];
+        
+        if ([managedObjectContext commitEditing])
+        {
+            if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error])
+            {
 				
                 // This error handling simply presents error information in a panel with an 
                 // "Ok" button, which does not include any attempt at error recovery (meaning, 
@@ -773,14 +775,15 @@ Performs the save action for the application, which is to send the save:
                 else
                 {
                     int alertReturn = NSRunAlertPanel(nil, @"Could not save changes while quitting. Quit anyway?" , @"Quit anyway", @"Cancel", nil);
-                    if (alertReturn == NSAlertAlternateReturn) {
+                    if (alertReturn == NSAlertAlternateReturn)
+                    {
                         reply = NSTerminateCancel;	
                     }
                 }
             }
-        } 
-        
-        else {
+        }
+        else
+        {
             reply = NSTerminateCancel;
         }
     }
@@ -1646,6 +1649,24 @@ Performs the save action for the application, which is to send the save:
     size.height += mExtraWindowSize.height;
     size.width  += mExtraWindowSize.width;
     return size;
+}
+
+#pragma mark -
+#pragma mark Folders
+
+- (NSString *) applicationSupportFolder;
+{
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
+    NSString *basePath = ([paths count] > 0) ? [paths objectAtIndex:0] : NSTemporaryDirectory();
+    return [basePath stringByAppendingPathComponent:@"MAME OS X"];
+}
+
+- (NSString *) favoritesFile;
+{
+    NSString * file = [self applicationSupportFolder];
+    file = [file stringByAppendingPathComponent: @"Favorites.plist"];
+    return file;
 }
 
 #pragma mark -
