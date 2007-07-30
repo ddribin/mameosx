@@ -6926,14 +6926,14 @@
 			children = (
 				559C7E590C4E7E3B00763F73 /* RBSplitView */,
 				55B5DD8B0C4D821600057C2A /* generictoolbar */,
-				55EB81070C44A4B400C758F1 /* ddcli */,
 				55B8C6F20C2ADB3C00B1CD96 /* sdlmame */,
 				55193F630B93F5EC004C0C98 /* NSXReturnThrowError */,
-				55193F380B93F5DC004C0C98 /* DDHidLib */,
 				55801E780B530D4F00BB9851 /* JRLog */,
 				55754F420C5E32150035DB3B /* VirtualRingBuffer */,
 				55D403850B3664DF00E5E613 /* DDCoreAudio */,
 				55754F4F0C5E348B0035DB3B /* DDCustomOpenGLView */,
+				55193F380B93F5DC004C0C98 /* DDHidLib */,
+				55EB81070C44A4B400C758F1 /* ddcli */,
 			);
 			path = vendor;
 			sourceTree = "<group>";
