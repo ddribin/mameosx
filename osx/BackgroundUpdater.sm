@@ -1,0 +1,36 @@
+%start BackgroundUpdaterMap::Init
+%class  BackgroundUpdater
+%header BackgroundUpdater.h
+
+%map BackgroundUpdaterMap
+%%
+
+Init
+{
+    Init Idle {}
+}
+
+Idle
+{
+    Start IndexingByShortName { prepareToIndexByShortName(); }
+}
+
+IndexingByShortName
+{
+    DoWork nil { indexByShortName(); }
+    Done UpdatingGameList { prepareToUpdateGameList(); }
+}
+
+UpdatingGameList
+{
+    DoWork nil { updateGameList(); }
+    Done AuditingGames { preprateToAuditGames(); }
+}
+
+AuditingGames
+{
+    DoWork nil { auditGames(); }
+    Done Idle { cleanUp(); }
+}
+
+%%

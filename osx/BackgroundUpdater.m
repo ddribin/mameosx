@@ -7,6 +7,7 @@
 //
 
 #import "BackgroundUpdater.h"
+#import "BackgroundUpdater_sm.h"
 #import "MameController.h"
 #import "RomAuditSummary.h"
 #import "GameMO.h"
@@ -24,19 +25,12 @@ static NSArray * sAllGames = nil;
 
 - (void) freeResources;
 
+- (void) postIdleNotification;
+
 - (NSArray *) fetchAllGames;
 - (GameMO *) gameWithShortName: (NSString *) shortName;
 
-- (void) postIdleNotification;
-
 - (void) idle: (NSNotification *) notification;
-
-- (void) passOneComplete;
-- (void) passTwoComplete;
-- (void) passThreeComplete;
-- (BOOL) passOne;
-- (BOOL) passTwo;
-- (BOOL) passThree;
 
 @end
 
@@ -58,6 +52,10 @@ static NSArray * sAllGames = nil;
                                              selector: @selector(idle:)
                                                  name: kBackgroundUpdaterIdle
                                                object: self];
+    
+    mFsm = [[BackgroundUpdaterContext alloc] initWithOwner: self];
+    // [mFsm setDebugFlag: YES];
+    [mFsm Init];
 
     return self;
 }
@@ -69,6 +67,19 @@ static NSArray * sAllGames = nil;
 }
 
 - (void) start;
+{
+    [mFsm Start];
+}
+
+- (BOOL) isRunning;
+{
+    return mRunning;
+}
+
+#pragma mark -
+#pragma mark State Machine Actions
+
+- (void) prepareToIndexByShortName;
 {
     [self freeResources];
     
@@ -84,76 +95,7 @@ static NSArray * sAllGames = nil;
     [self postIdleNotification];
 }
 
-- (BOOL) isRunning;
-{
-    return mRunning;
-}
-
-@end
-
-@implementation BackgroundUpdater (Private)
-
-- (void) freeResources;
-{
-    [mShortNames release];
-    [mIndexByShortName release];
-    [mCurrentGame release];
-    [mGameEnumerator release];
-    
-    mShortNames = nil;
-    mIndexByShortName = nil;
-    mCurrentGame = nil;
-    mGameEnumerator = nil;
-}
-
-- (void) postIdleNotification;
-{
-    NSNotification * note =
-    [NSNotification notificationWithName: kBackgroundUpdaterIdle
-                                  object: self];
-    NSNotificationQueue * noteQueue = [NSNotificationQueue defaultQueue];
-    [noteQueue enqueueNotification: note
-                      postingStyle: NSPostWhenIdle];
-}
-
-- (void) idle: (NSNotification *) notification;
-{
-    BOOL done = NO;
-    BOOL next = NO;
-    
-    if (mPass == 0)
-        next = [self passOne];
-    else if (mPass == 1)
-        next = [self passTwo];
-    else if (mPass == 2)
-        next = [self passThree];
-    else
-        done = YES;
-    
-    if (next)
-    {
-        if (mPass == 0)
-            [self passOneComplete];
-        else if (mPass == 1)
-            [self passTwoComplete];
-        else if (mPass == 2)
-            [self passThreeComplete];
-        else
-            done = YES;
-    }
-    
-    if (!done)
-        [self postIdleNotification];
-    else
-    {
-        [self freeResources];
-        [mController setStatusText: @""];
-        mRunning = NO;
-        JRLogDebug(@"Idle done");
-    }
-}
-
-- (BOOL) passOne;
+- (void) indexByShortName;
 {
     const game_driver * driver = drivers[mCurrentGameIndex];
     
@@ -162,13 +104,14 @@ static NSArray * sAllGames = nil;
                           forKey: shortName];
     
     mCurrentGameIndex++;
-    return (mCurrentGameIndex >= driver_get_count());
+    if (mCurrentGameIndex >= driver_get_count())
+        mWorkDone = YES;
 }
 
-- (void) passOneComplete;
+- (void) prepareToUpdateGameList;
 {
     NSManagedObjectContext * context = [mController managedObjectContext];
-
+    
     mPass = 1;
     JRLogDebug(@"Starting pass 1");
     NSArray * shortNames = [mIndexByShortName allKeys];
@@ -186,7 +129,7 @@ static NSArray * sAllGames = nil;
     mLastSave = [NSDate timeIntervalSinceReferenceDate];
 }
 
-- (BOOL) passTwo;
+- (void) updateGameList;
 {
     NSManagedObjectContext * context = [mController managedObjectContext];
     if ((mCurrentGameIndex % 1000) == 0)
@@ -229,14 +172,14 @@ static NSArray * sAllGames = nil;
         NSString * longName = [NSString stringWithUTF8String: driver->description];
         NSString * manufacturer = [NSString stringWithUTF8String: driver->manufacturer];
         NSString * year = [NSString stringWithUTF8String: driver->year];
-
+        
         id parentShortName = [NSNull null];
         const game_driver * parentDriver = driver_get_clone(driver);
         if (parentDriver != NULL)
         {
             parentShortName = [NSString stringWithUTF8String: parentDriver->name];
         }
-
+        
         NSDictionary * newValues = [NSDictionary dictionaryWithObjectsAndKeys:
             longName, @"longName",
             manufacturer, @"manufacturer",
@@ -274,16 +217,18 @@ static NSArray * sAllGames = nil;
         mCurrentGame = [[mGameEnumerator nextObject] retain];
     }
     mCurrentGameIndex++;
-    return (mCurrentGameIndex >= driver_get_count());
+    
+    if (mCurrentGameIndex >= driver_get_count())
+        mWorkDone = YES;
 }
 
-- (void) passTwoComplete;
+- (void) preprateToAuditGames;
 {
     NSManagedObjectContext * context = [mController managedObjectContext];
-
+    
     mPass = 2;
     JRLogDebug(@"Pass 2 done");
-
+    
     [mCurrentGame release];
     [mGameEnumerator release];
     mCurrentGame = nil;
@@ -302,11 +247,11 @@ static NSArray * sAllGames = nil;
     }
     else
         JRLogDebug(@"Skipping save");
-
+    
 #if 1
     NSFetchRequest *fetchRequest = [[[NSFetchRequest alloc] init] autorelease];
     [fetchRequest setEntity: [GameMO entityInContext: context]];
-
+    
     [fetchRequest setPredicate: [NSPredicate predicateWithFormat: @"(auditStatus == NIL)"]]; 
     
     // make sure the results are sorted as well
@@ -324,11 +269,14 @@ static NSArray * sAllGames = nil;
 #endif
 }
 
-- (BOOL) passThree;
+- (void) auditGames;
 {
     GameMO * game = [mGameEnumerator nextObject];
     if (game == nil)
-        return YES;
+    {
+        mWorkDone = YES;
+        return;
+    }
     
     [game audit];
     NSTimeInterval now = [NSDate timeIntervalSinceReferenceDate];
@@ -339,7 +287,7 @@ static NSArray * sAllGames = nil;
         [mController setStatusText: message];
         mLastStatus = now;
     }
-
+    
     if ((now - mLastSave) > 15.0)
     {
         JRLogDebug(@"Saving");
@@ -353,11 +301,9 @@ static NSArray * sAllGames = nil;
     
     [mController backgroundUpdateAuditStatus: mCurrentGameIndex];
     mCurrentGameIndex++;
-    
-    return NO;
 }
 
-- (void) passThreeComplete;
+- (void) cleanUp;
 {
     NSManagedObjectContext * context = [mController managedObjectContext];
     
@@ -380,6 +326,49 @@ static NSArray * sAllGames = nil;
     }
     else
         JRLogDebug(@"Skipping save");
+
+    [self freeResources];
+    [mController setStatusText: @""];
+    mRunning = NO;
+    JRLogDebug(@"Idle done");
+}
+
+@end
+
+@implementation BackgroundUpdater (Private)
+
+- (void) freeResources;
+{
+    [mShortNames release];
+    [mIndexByShortName release];
+    [mCurrentGame release];
+    [mGameEnumerator release];
+    
+    mShortNames = nil;
+    mIndexByShortName = nil;
+    mCurrentGame = nil;
+    mGameEnumerator = nil;
+}
+
+- (void) postIdleNotification;
+{
+    NSNotification * note =
+    [NSNotification notificationWithName: kBackgroundUpdaterIdle
+                                  object: self];
+    NSNotificationQueue * noteQueue = [NSNotificationQueue defaultQueue];
+    [noteQueue enqueueNotification: note
+                      postingStyle: NSPostWhenIdle];
+}
+
+- (void) idle: (NSNotification *) notification;
+{
+    mWorkDone = NO;
+    [mFsm DoWork];
+    if (mWorkDone)
+        [mFsm Done];
+    
+    if (mRunning)
+        [self postIdleNotification];
 }
 
 - (NSArray *) fetchAllGames;

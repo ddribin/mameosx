@@ -10,6 +10,7 @@
 
 @class MameController;
 @class GameMO;
+@class BackgroundUpdaterContext;
 
 @interface BackgroundUpdater : NSObject
 {
@@ -22,6 +23,8 @@
     NSEnumerator * mGameEnumerator;
     NSTimeInterval mLastSave;
     NSTimeInterval mLastStatus;
+    BackgroundUpdaterContext * mFsm;
+    BOOL mWorkDone;
     
     // Weak references
     MameController * mController;
@@ -32,5 +35,16 @@
 - (void) start;
 
 - (BOOL) isRunning;
+
+#pragma mark -
+#pragma mark State Machine Actions
+
+- (void) prepareToIndexByShortName;
+- (void) indexByShortName;
+- (void) prepareToUpdateGameList;
+- (void) updateGameList;
+- (void) preprateToAuditGames;
+- (void) auditGames;
+- (void) cleanUp;
 
 @end
