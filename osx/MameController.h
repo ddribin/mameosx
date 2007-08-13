@@ -59,6 +59,7 @@ extern "C" {
     IBOutlet QCView * mScreenshotView;
     IBOutlet NSProgressIndicator * mProgressIndicator;
 
+    IBOutlet NSImageView * mDragView;
     IBOutlet RBSplitSubview * mGameSplit;
     IBOutlet RBSplitSubview * mScreenshotSplit;
     

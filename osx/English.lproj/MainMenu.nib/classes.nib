@@ -44,6 +44,7 @@
             LANGUAGE = ObjC; 
             OUTLETS = {
                 mAllGamesController = NSArrayController; 
+                mDragView = NSImageView; 
                 mDrawer = NSDrawer; 
                 mEffectsMenu = NSMenu; 
                 mFavoriteColumn = NSTableColumn; 

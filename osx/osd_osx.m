@@ -66,12 +66,13 @@ void osd_set_controller(MameView * controller)
                             sController, NULL, NULL);
 }
 
-int osd_init(running_machine *machine)
+void osd_init(running_machine *machine)
 {
     add_exit_callback(machine, mame_did_exit);
     add_pause_callback(machine, mame_did_pause);
     
-    return [sController osd_init: machine];
+    [sController osd_init: machine];
+    return;
 }
 
 static void mame_did_exit(running_machine * machine)
@@ -153,6 +154,7 @@ void osd_set_input_controller(MameInputController * inputController)
     sInputController = inputController;
 }
 
+#if 0
 const os_code_info *osd_get_code_list(void)
 {
     NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
@@ -168,6 +170,7 @@ INT32 osd_get_code_value(os_code code)
     [pool release];
     return rc;
 }
+#endif
 
 void osd_customize_inputport_list(input_port_default_entry *defaults)
 {

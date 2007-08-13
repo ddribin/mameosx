@@ -30,6 +30,14 @@
 
 #include "MameInputTables.h"
 
+enum
+{
+    POVDIR_LEFT = 0,
+    POVDIR_RIGHT,
+    POVDIR_UP,
+    POVDIR_DOWN
+};
+
 typedef struct
 {
     int axes[MAX_AXES];
@@ -44,8 +52,6 @@ typedef struct
     int buttons[MAX_BUTTONS];
 } MouseState;
 
-static float a2d_deadzone = 0.3;
-
 static NSMutableData * utf8Data(NSString * string);
 static NSString * format(NSString * format, ...);
 
@@ -53,10 +59,8 @@ static NSString * format(NSString * format, ...);
 @interface MameInputControllerPrivate : NSObject
 {
   @public
-    os_code_info mCodelist[MAX_KEYS+MAX_JOY];
     int mTotalCodes;
-    INT32 mKeyStates[MAME_OSX_NUM_KEYSTATES];
-    INT32 mKeyStates2[256];
+    uint32_t mKeyStates[MAX_KEYS];
     NSMutableArray * mDeviceNames;
     NSMutableArray * mDevices;
     BOOL mEnabled;
@@ -176,14 +180,10 @@ static NSString * format(NSString * format, ...);
     [self initJoyCodes];
     [self initMouseCodes];
 
-    // terminate array
-    memset(&p->mCodelist[p->mTotalCodes], 0, sizeof(p->mCodelist[0]));
-
-    
     int i;
     for (i = 0; i < 256; i++)
     {
-        p->mKeyStates2[i] = 0;
+        p->mKeyStates[i] = 0;
     }
 }
 
@@ -193,94 +193,6 @@ static NSString * format(NSString * format, ...);
     [p->mDevices removeAllObjects];
     [p->mDeviceNames removeAllObjects];
 }
-
-- (const os_code_info *) osd_get_code_list;
-{
-    return p->mCodelist;
-}
-
-- (INT32) getJoyCodeValue: (os_code) joycode;
-{
-    int joyindex = JOYINDEX(joycode);
-    int codetype = CODETYPE(joycode);
-    int joynum = JOYNUM(joycode);
-    INT32 value = 0;
-
-    switch (codetype)
-    {
-        case CODETYPE_BUTTON:
-            value = p->mJoystickStates[joynum].buttons[joyindex];
-            break;
-
-        case CODETYPE_AXIS_POS:
-        case CODETYPE_AXIS_NEG:
-        {
-            int rawValue = p->mJoystickStates[joynum].axes[joyindex];
-            int top = DDHID_JOYSTICK_VALUE_MAX;
-            int bottom = DDHID_JOYSTICK_VALUE_MIN;
-            int middle = 0;
-            
-            // watch for movement greater "a2d_deadzone" along either axis
-            // FIXME in the two-axis joystick case, we need to find out
-            // the angle. Anything else is unprecise.
-            if (codetype == CODETYPE_AXIS_POS)
-                value = (rawValue > middle + ((top - middle) * a2d_deadzone));
-            else
-                value = (rawValue < middle - ((middle - bottom) * a2d_deadzone));
-            break;
-        }
-            
-        // analog joystick axis
-        case CODETYPE_JOYAXIS:
-            value = ((int *)&p->mJoystickStates[joynum].axes)[joyindex]*2;
-            
-            if (value < ANALOG_VALUE_MIN)
-                value = ANALOG_VALUE_MIN;
-            if (value > ANALOG_VALUE_MAX)
-                value = ANALOG_VALUE_MAX;
-            break;
-            
-        // anywhere from 0-45 (315) deg to 0+45 (45) deg
-        case CODETYPE_POV_UP:
-            value = p->mJoystickStates[joynum].povs[joyindex];
-            return (value != -1 && (value >= 31500 || value <= 4500));
-            
-        // anywhere from 90-45 (45) deg to 90+45 (135) deg
-        case CODETYPE_POV_RIGHT:
-            value = p->mJoystickStates[joynum].povs[joyindex];
-            return (value != -1 && (value >= 4500 && value <= 13500));
-            
-        // anywhere from 180-45 (135) deg to 180+45 (225) deg
-        case CODETYPE_POV_DOWN:
-            value = p->mJoystickStates[joynum].povs[joyindex];
-            return (value != -1 && (value >= 13500 && value <= 22500));
-            
-        // anywhere from 270-45 (225) deg to 270+45 (315) deg
-        case CODETYPE_POV_LEFT:
-            value = p->mJoystickStates[joynum].povs[joyindex];
-            return (value != -1 && (value >= 22500 && value <= 31500));
-            
-        case CODETYPE_MOUSEAXIS:
-            if (joyindex == 0)
-            {
-                value = p->mMiceStates[joynum].x * 512;
-                p->mMiceStates[joynum].x = 0;
-            }
-            if (joyindex == 1)
-            {
-                value = p->mMiceStates[joynum].y * 512;
-                p->mMiceStates[joynum].y = 0;
-            }
-            break;
-            
-        case CODETYPE_MOUSEBUTTON:
-            value = p->mMiceStates[joynum].buttons[joyindex];
-            break;
-    }
-
-    return value;
-}
-
 
 - (BOOL) enabled;
 {
@@ -292,29 +204,9 @@ static NSString * format(NSString * format, ...);
     p->mEnabled = enabled;
 }
 
-- (INT32) osd_get_code_value: (os_code) code;
-{
-    BOOL commandIsDown = ((p->mKeyStates2[kHIDUsage_KeyboardLeftGUI] != 0) ||
-                          (p->mKeyStates2[kHIDUsage_KeyboardRightGUI] != 0));
-
-    if (!p->mEnabled || commandIsDown)
-        return 0;
-    
-    INT32 value;
-    @synchronized(self)
-    {
-        if (IS_KEYBOARD_CODE(code))
-        {
-            value = p->mKeyStates2[code] > 0? 1 : 0;
-        }
-        else
-            return [self getJoyCodeValue: code];
-    }
-    return value;
-}
-
 - (void) osd_customize_inputport_list: (input_port_default_entry *) defaults;
 {
+#if 0
     input_port_default_entry *idef = defaults;
     
     // loop over all the defaults
@@ -331,51 +223,7 @@ static NSString * format(NSString * format, ...);
         
         idef++;
     }
-}
-
-- (void) keyDown: (NSEvent *) event;
-{
-    @synchronized(self)
-    {
-        NSString * characters = [event charactersIgnoringModifiers];
-        unichar firstChar = [characters characterAtIndex: 0];
-        if (isAscii(firstChar))
-        {
-            p->mKeyStates[firstChar] = 1;
-        }
-        else if (isFunctionKey(firstChar))
-        {
-            p->mKeyStates[FUNC_TO_INDEX(firstChar)] = 1;
-        }
-    }
-}
-
-- (void) keyUp: (NSEvent *) event;
-{
-    @synchronized(self)
-    {
-        NSString * characters = [event charactersIgnoringModifiers];
-        unichar firstChar = [characters characterAtIndex: 0];
-        if (isAscii(firstChar))
-        {
-            p->mKeyStates[firstChar] = 0;
-        }
-        else if (isFunctionKey(firstChar))
-        {
-            p->mKeyStates[FUNC_TO_INDEX(firstChar)] = 0;
-        }
-    }
-}
-
-- (void) flagsChanged: (NSEvent *) event;
-{
-    @synchronized(self)
-    {
-        unsigned int flags = [event modifierFlags];
-        p->mKeyStates[MAME_OSX_CONTROL] = (flags & NSControlKeyMask) ? 1 : 0;
-        p->mKeyStates[MAME_OSX_OPTION] = (flags & NSAlternateKeyMask) ? 1 : 0;
-        p->mKeyStates[MAME_OSX_COMMAND] = (flags & NSCommandKeyMask) ? 1 : 0;
-    }
+#endif
 }
 
 @end
@@ -403,18 +251,16 @@ static NSString * format(NSString * format, ...);
     return success;
 }
 
+static INT32 keyboardGetState(void *device_internal, void *item_internal)
+{
+    uint32_t tag = (uint32_t) device_internal;
+    uint32_t keyboardBit = 1 << tag;
+    uint32_t * keyState = (uint32_t *) item_internal;
+    return ((*keyState & keyboardBit) != 0)? 1 : 0;
+}
+
 - (void) initKeyCodes;
 {
-    int i= 0;
-    os_code_info * keyTable = key_trans_table;
-    // os_code_info * keyTable = codelist;
-    while (keyTable[i].name != 0)
-    {
-        p->mCodelist[p->mTotalCodes] = keyTable[i];
-        p->mTotalCodes++;
-        i++;
-    }
-    
     int keyboardTag = 0;
     NSArray * keyboards = [DDHidKeyboard allKeyboards];
     int keyboardCount = MIN([keyboards count], MAX_KEYBOARDS);
@@ -430,32 +276,70 @@ static NSString * format(NSString * format, ...);
             continue;
         }
         [keyboard setDelegate: self];
+        
+        NSString * name = [NSString stringWithFormat: @"Keyboard %d", keyboardTag];
+        JRLogInfo(@"Adding keyboard device: %@", name);
+        input_device * device = input_device_add(DEVICE_CLASS_KEYBOARD,
+                                                 [name UTF8String],
+                                                 (void *) keyboardTag);
+        
+        
+        int i = 0;
+        while (sKeyboardTranslationTable[i].name != 0)
+        {
+            os_code_info * currentKey = &sKeyboardTranslationTable[i];
+            uint32_t * keyState = &p->mKeyStates[currentKey->oscode];
+            input_device_item_add(device,
+                                  currentKey->name,
+                                  keyState,
+                                  currentKey->itemId,
+                                  keyboardGetState);
+
+            i++;
+        }
+        
         keyboardTag++;
     }
 }
 
-- (void) add_joylist_entry: (NSString *) name
-                      code: (os_code) code
-                input_code: (input_code) standardcode;
+static INT32 joystickAxisGetState(void *device_internal, void *item_internal)
 {
-    int entry;
-    
-    NSMutableData * data = utf8Data(name);
-    char * bytes = [data mutableBytes];
-    [p->mDeviceNames addObject: data];
+    int * axisState = (INT32 *) item_internal;
+    return (*axisState);
+}
 
-    // find the table entry, if there is one
-    for (entry = 0; entry < ELEMENTS(joy_trans_table); entry++)
-        if (joy_trans_table[entry][0] == code)
-            break;
+static INT32 joystickPovGetState(void *device_internal, void *item_internal)
+{
+    JoystickState * joystickState = device_internal;
+    int povnum = (FPTR)item_internal / 4;
+    int povdir = (FPTR)item_internal % 4;
     
-    // fill in the joy description
-    p->mCodelist[p->mTotalCodes].name = bytes;
-    p->mCodelist[p->mTotalCodes].oscode = code;
-    if (entry < ELEMENTS(joy_trans_table))
-        standardcode = joy_trans_table[entry][1];
-    p->mCodelist[p->mTotalCodes].inputcode = standardcode;
-    p->mTotalCodes++;
+    int value = joystickState->povs[povnum];
+    switch (povdir)
+    {
+        // anywhere from 0-45 (315) deg to 0+45 (45) deg
+        case POVDIR_UP:
+            return (value != -1 && (value >= 31500 || value <= 4500));
+            
+        // anywhere from 90-45 (45) deg to 90+45 (135) deg
+        case POVDIR_RIGHT:
+            return (value != -1 && (value >= 4500 && value <= 13500));
+            
+        // anywhere from 180-45 (135) deg to 180+45 (225) deg
+        case POVDIR_DOWN:
+            return (value != -1 && (value >= 13500 && value <= 22500));
+            
+        // anywhere from 270-45 (225) deg to 270+45 (315) deg
+        case POVDIR_LEFT:
+            return (value != -1 && (value >= 22500 && value <= 31500));
+    }
+    return 0;
+}
+
+static INT32 joystickButtonGetState(void *device_internal, void *item_internal)
+{
+    int * buttonState = (INT32 *) item_internal;
+    return (*buttonState);
 }
 
 - (void) initJoyCodes;
@@ -478,7 +362,14 @@ static NSString * format(NSString * format, ...);
             continue;
         }
         [joystick setDelegate: self];
-        joystickTag++;
+        
+        NSString * name = [NSString stringWithFormat: @"Joystick %d", joystickTag];
+        JRLogInfo(@"Adding joystick device: %@", name);
+        JoystickState * joystickState = &p->mJoystickStates[joystickTag];
+        input_device * device = input_device_add(DEVICE_CLASS_JOYSTICK,
+                                                 [name UTF8String],
+                                                 (void *) joystickState);
+        
 
         unsigned i;
         // TODO: Handle more sticks.
@@ -486,80 +377,68 @@ static NSString * format(NSString * format, ...);
         i = 0;
         {
             DDHidJoystickStick * stick = [joystick objectInSticksAtIndex: i];
-            DDHidElement * axis;
             NSString * name;
-            axis = [stick xAxisElement];
-            name = format(@"J%d X-Axis -", joystickNumber+1);
-            [self add_joylist_entry: name
-                               code: JOYCODE(joystickNumber, CODETYPE_AXIS_NEG, 0)
-                         input_code: CODE_OTHER_DIGITAL];
+            int * axisState;
             
-            name = format(@"J%d X-Axis +", joystickNumber+1);
-            [self add_joylist_entry: name
-                               code: JOYCODE(joystickNumber, CODETYPE_AXIS_POS, 0)
-                         input_code: CODE_OTHER_DIGITAL];
+            name = @"X-Axis";
+            axisState = &joystickState->axes[0];
+            input_device_item_add(device,
+                                  [name UTF8String],
+                                  axisState,
+                                  ITEM_ID_XAXIS,
+                                  joystickAxisGetState);
             
-            name = format(@"J%d X-Axis", joystickNumber+1);
-            [self add_joylist_entry: name
-                               code: JOYCODE(joystickNumber, CODETYPE_JOYAXIS, 0)
-                         input_code: CODE_OTHER_ANALOG_ABSOLUTE];
-            
-            axis = [stick yAxisElement];
-            name = format(@"J%d Y-Axis -", joystickNumber+1);
-            [self add_joylist_entry: name
-                               code: JOYCODE(joystickNumber, CODETYPE_AXIS_NEG, 1)
-                         input_code: CODE_OTHER_DIGITAL];
-            
-            name = format(@"J%d Y-Axis +", joystickNumber+1);
-            [self add_joylist_entry: name
-                               code: JOYCODE(joystickNumber, CODETYPE_AXIS_POS, 1)
-                         input_code: CODE_OTHER_DIGITAL];
-            
-            name = format(@"J%d Y-Axis", joystickNumber+1);
-            [self add_joylist_entry: name
-                               code: JOYCODE(joystickNumber, CODETYPE_JOYAXIS, 1)
-                         input_code: CODE_OTHER_ANALOG_ABSOLUTE];
+            name = @"Y-Axis";
+            axisState = &joystickState->axes[1];
+            input_device_item_add(device,
+                                  [name UTF8String],
+                                  axisState,
+                                  ITEM_ID_YAXIS,
+                                  joystickAxisGetState);
             
             int j;
             for (j = 0; j < [stick countOfStickElements]; j++)
             {
                 int axisNumber = j+2;
-                axis = [stick objectInStickElementsAtIndex: j];
-                name = format(@"J%d Axis %d -", joystickNumber+1, axisNumber+1);
-                [self add_joylist_entry: name
-                                   code: JOYCODE(joystickNumber, CODETYPE_AXIS_NEG, axisNumber)
-                             input_code: CODE_OTHER_DIGITAL];
-                name = format(@"J%d Axis %d +", joystickNumber+1, axisNumber+1);
-                [self add_joylist_entry: name
-                                   code: JOYCODE(joystickNumber, CODETYPE_AXIS_POS, axisNumber)
-
-                             input_code: CODE_OTHER_DIGITAL];
-                name = format(@"J%d Axis %d", joystickNumber+1, axisNumber+1);
-                [self add_joylist_entry: name
-                                   code: JOYCODE(joystickNumber, CODETYPE_JOYAXIS, axisNumber)
-                             input_code: CODE_OTHER_ANALOG_ABSOLUTE];
+                name = format(@"Axis %d", axisNumber+1);
+                axisState = &joystickState->axes[axisNumber];
+                input_device_item_add(device,
+                                      [name UTF8String],
+                                      axisState,
+                                      ITEM_ID_XAXIS + axisNumber,
+                                      joystickAxisGetState);
             }
             
             for (j = 0; j < [stick countOfPovElements]; j++)
             {
                 DDHidElement * pov = [stick objectInPovElementsAtIndex: j];
-                name = format(@"J%d Hat Switch U", joystickNumber+1);
-                [self add_joylist_entry: name
-                                   code: JOYCODE(joystickNumber, CODETYPE_POV_UP, j)
-                             input_code: CODE_OTHER_DIGITAL];
-                name = format(@"J%d Hat Switch D", joystickNumber+1);
-                [self add_joylist_entry: name
-                                   code: JOYCODE(joystickNumber, CODETYPE_POV_DOWN, j)
-                    
-                             input_code: CODE_OTHER_DIGITAL];
-                name = format(@"J%d Hat Switch L", joystickNumber+1);
-                [self add_joylist_entry: name
-                                   code: JOYCODE(joystickNumber, CODETYPE_POV_LEFT, j)
-                             input_code: CODE_OTHER_DIGITAL];
-                name = format(@"J%d Hat Switch R", joystickNumber+1);
-                [self add_joylist_entry: name
-                                   code: JOYCODE(joystickNumber, CODETYPE_POV_RIGHT, j)
-                             input_code: CODE_OTHER_DIGITAL];
+                name = format(@"Hat Switch %d U", j+1);
+                input_device_item_add(device,
+                                      [name UTF8String],
+                                      (void *) (j * 4 + POVDIR_UP),
+                                      ITEM_ID_OTHER_SWITCH,
+                                      joystickPovGetState);
+                
+                name = format(@"Hat Switch %d D", j+1);
+                input_device_item_add(device,
+                                      [name UTF8String],
+                                      (void *) (j * 4 + POVDIR_DOWN),
+                                      ITEM_ID_OTHER_SWITCH,
+                                      joystickPovGetState);
+                
+                name = format(@"Hat Switch %d L", j+1);
+                input_device_item_add(device,
+                                      [name UTF8String],
+                                      (void *) (j * 4 + POVDIR_LEFT),
+                                      ITEM_ID_OTHER_SWITCH,
+                                      joystickPovGetState);
+
+                name = format(@"Hat Switch %d R", j+1);
+                input_device_item_add(device,
+                                      [name UTF8String],
+                                      (void *) (j * 4 + POVDIR_RIGHT),
+                                      ITEM_ID_OTHER_SWITCH,
+                                      joystickPovGetState);
             }
         }
         
@@ -568,12 +447,30 @@ static NSString * format(NSString * format, ...);
         {
             DDHidElement * button = [buttons objectAtIndex: i];
 
-            NSString * name = format(@"J%d Button %d", joystickNumber+1, i+1);
-            [self add_joylist_entry: name
-                               code: JOYCODE(joystickNumber, CODETYPE_BUTTON, i)
-                         input_code: CODE_OTHER_DIGITAL];
+            NSString * name = format(@"Button %d", i+1);
+            int * buttonState = &joystickState->buttons[i];
+            input_device_item_add(device,
+                                  [name UTF8String],
+                                  buttonState,
+                                  ITEM_ID_BUTTON1 + i,
+                                  joystickButtonGetState);
         }
+        joystickTag++;
     }
+}
+
+static INT32 mouseAxisGetState(void *device_internal, void *item_internal)
+{
+    INT32 * axisState = (INT32 *) item_internal;
+    INT32 result = (*axisState) * INPUT_RELATIVE_PER_PIXEL;
+    *axisState = 0;
+    return result;
+}
+
+static INT32 mouseButtonGetState(void *device_internal, void *item_internal)
+{
+    int * buttonState = (INT32 *) item_internal;
+    return (*buttonState);
 }
 
 - (void) initMouseCodes;
@@ -594,22 +491,33 @@ static NSString * format(NSString * format, ...);
             continue;
         }
         [mouse setDelegate: self];
-        mouseTag++;
 
+        NSString * name = [NSString stringWithFormat: @"Mouse %d", mouseTag];
+        JRLogInfo(@"Adding mouse device: %@", name);
+        MouseState * mouseState = &p->mMiceStates[mouseTag];
+        input_device * device = input_device_add(DEVICE_CLASS_MOUSE,
+                                                 [name UTF8String],
+                                                 (void *) mouseState);
+        
         DDHidElement * axis;
-        NSString * name;
 
         axis = [mouse xElement];
-        name = format(@"M%d X-Axis", mouseNumber+1);
-        [self add_joylist_entry: name
-                           code: JOYCODE(mouseNumber, CODETYPE_MOUSEAXIS, 0)
-                     input_code: CODE_OTHER_DIGITAL];
+        name = @"X-Axis";
+        int * axisState =  &mouseState->x;
+		input_device_item_add(device,
+                              [name UTF8String],
+                              axisState,
+                              ITEM_ID_XAXIS,
+                              mouseAxisGetState);
         
         axis = [mouse xElement];
-        name = format(@"M%d Y-Axis", mouseNumber+1);
-        [self add_joylist_entry: name
-                           code: JOYCODE(mouseNumber, CODETYPE_MOUSEAXIS, 1)
-                     input_code: CODE_OTHER_DIGITAL];
+        name = @"Y-Axis";
+        axisState =  &mouseState->y;
+		input_device_item_add(device,
+                              [name UTF8String],
+                              axisState,
+                              ITEM_ID_YAXIS,
+                              mouseAxisGetState);
         
         int buttonCount = MIN([buttons count], MAX_BUTTONS);
         int i;
@@ -617,11 +525,16 @@ static NSString * format(NSString * format, ...);
         {
             DDHidElement * button = [buttons objectAtIndex: i];
             
-            NSString * name = format(@"M%d Button %d", mouseNumber+1, i+1);
-            [self add_joylist_entry: name
-                               code: JOYCODE(mouseNumber, CODETYPE_MOUSEBUTTON, i)
-                         input_code: CODE_OTHER_DIGITAL];
+            NSString * name = format(@"Button %d", i+1);
+            int * buttonState = &mouseState->buttons[i];
+            input_device_item_add(device,
+                                  [name UTF8String],
+                                  buttonState,
+                                  ITEM_ID_BUTTON1 + i,
+                                  mouseButtonGetState);
         }
+        
+        mouseTag++;
     }
 }
 
@@ -633,14 +546,16 @@ static NSString * format(NSString * format, ...);
                keyDown: (unsigned) usageId;
 {
     uint32_t keyboardBit = 1 << [keyboard tag];
-    p->mKeyStates2[usageId] |= keyboardBit;
+    uint32_t * keyState = &p->mKeyStates[usageId];
+    *keyState |= keyboardBit;
 }
 
 - (void) ddhidKeyboard: (DDHidKeyboard *) keyboard
                  keyUp: (unsigned) usageId;
 {
     uint32_t keyboardBit = 1 << [keyboard tag];
-    p->mKeyStates2[usageId] &= ~keyboardBit;
+    uint32_t * keyState = &p->mKeyStates[usageId];
+    *keyState &= ~keyboardBit;
 }
 
 @end
@@ -699,22 +614,26 @@ static NSString * format(NSString * format, ...);
 
 - (void) ddhidMouse: (DDHidMouse *) mouse xChanged: (SInt32) deltaX;
 {
-    p->mMiceStates[[mouse tag]].x += deltaX;
+    int * axisState = &p->mMiceStates[[mouse tag]].x;
+    *axisState += deltaX;
 }
 
 - (void) ddhidMouse: (DDHidMouse *) mouse yChanged: (SInt32) deltaY;
 {
-    p->mMiceStates[[mouse tag]].y += deltaY;
+    int * axisState = &p->mMiceStates[[mouse tag]].y;
+    *axisState += deltaY;
 }
 
 - (void) ddhidMouse: (DDHidMouse *) mouse buttonDown: (unsigned) buttonNumber;
 {
-    p->mMiceStates[[mouse tag]].buttons[buttonNumber] = 1;
+    int * buttonState = &p->mMiceStates[[mouse tag]].buttons[buttonNumber];
+    *buttonState = 1;
 }
 
 - (void) ddhidMouse: (DDHidMouse *) mouse buttonUp: (unsigned) buttonNumber;
 {
-    p->mMiceStates[[mouse tag]].buttons[buttonNumber] = 0;
+    int * buttonState = &p->mMiceStates[[mouse tag]].buttons[buttonNumber];
+    *buttonState = 0;
 }
 
 @end

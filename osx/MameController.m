@@ -123,7 +123,7 @@ static void exit_sleeper()
     [[self class] setJRLogLogger: self];
     [self registerForUrls];
    
-    mConfiguration = [[MameConfiguration alloc] init];
+    mConfiguration = [MameConfiguration defaultConfiguration];
     [self initVisualEffects];
     
     [self initLogAttributes];
@@ -467,6 +467,27 @@ Performs the save action for the application, which is to send the save:
 
 #pragma mark -
 #pragma mark Split View
+
+
+// This makes it possible to drag the first divider around by the dragView.
+- (unsigned int)splitView:(RBSplitView*)sender dividerForPoint:(NSPoint)point inSubview:(RBSplitSubview*)subview {
+	if (subview==mGameSplit) {
+		if ([mDragView mouse:[mDragView convertPoint:point fromView:sender] inRect:[mDragView bounds]]) {
+			return 0;	// [firstSplit position], which we assume to be zero
+		}
+	} else if (subview==mScreenshotSplit) {
+        //		return 1;
+	}
+	return NSNotFound;
+}
+
+// This changes the cursor when it's over the dragView.
+- (NSRect)splitView:(RBSplitView*)sender cursorRect:(NSRect)rect forDivider:(unsigned int)divider {
+	if (divider==0) {
+		[sender addCursorRect:[mDragView convertRect:[mDragView bounds] toView:sender] cursor:[RBSplitView cursor:RBSVVerticalCursor]];
+	}
+	return rect;
+}
 
 - (IBAction) toggleScreenshot: (id) sender;
 {
@@ -1705,7 +1726,7 @@ Performs the save action for the application, which is to send the save:
     else
     {
         const game_driver * matches[5];
-        driver_get_approx_matches([mGameName UTF8String], ARRAY_LENGTH(matches), matches);
+        driver_list_get_approx_matches(drivers, [mGameName UTF8String], ARRAY_LENGTH(matches), matches);
         NSMutableString * message = [NSMutableString stringWithString: @"Closest matches:"];
         int drvnum;
         for (drvnum = 0; drvnum < ARRAY_LENGTH(matches); drvnum++)

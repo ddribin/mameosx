@@ -124,7 +124,7 @@ static NSString * kBackgroundUpdaterIdle = @"BackgroundUpdaterIdle";
                           forKey: shortName];
     
     mCurrentGameIndex++;
-    if (mCurrentGameIndex >= driver_get_count())
+    if (mCurrentGameIndex >= driver_list_get_count(drivers))
         mWorkDone = YES;
 }
 
@@ -224,7 +224,7 @@ static NSString * kBackgroundUpdaterIdle = @"BackgroundUpdaterIdle";
     }
     mCurrentGameIndex++;
     
-    if (mCurrentGameIndex >= driver_get_count())
+    if (mCurrentGameIndex >= driver_list_get_count(drivers))
         mWorkDone = YES;
 }
 

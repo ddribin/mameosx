@@ -207,7 +207,7 @@
     int res;
     
     /* audit the ROMs in this set */
-    recordCount = audit_images(driverIndex, AUDIT_VALIDATE_FAST, &auditRecords);
+    recordCount = audit_images(drivers[driverIndex], AUDIT_VALIDATE_FAST, &auditRecords);
     RomAuditSummary * summary =
         [[RomAuditSummary alloc] initWithGameIndex: driverIndex
                                        recordCount: recordCount

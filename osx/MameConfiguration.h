@@ -31,6 +31,8 @@
 {
 }
 
++ (MameConfiguration *) defaultConfiguration;
+
 #pragma mark -
 #pragma mark Directories and paths
 
@@ -63,6 +65,16 @@
 - (NSString *) fontPath;
 
 #pragma mark -
+
+- (void) setGameName: (NSString *) gameName;
+
+- (void) setMultiKeyboard: (BOOL) multiKeyboard;
+
+- (void) setMultiMouse: (BOOL) multiMouse;
+
+- (void) setMouseEnabled: (BOOL) mouseEnabled;
+
+- (void) setJoystickEnabled: (BOOL) mouseEnabled;
 
 #ifdef MAME_DEBUG
 - (void) setMameDebug: (BOOL) mameDebug;

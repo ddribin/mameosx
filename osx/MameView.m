@@ -29,6 +29,7 @@
 #import "MameAudioController.h"
 #import "MameTimingController.h"
 #import "MameFileManager.h"
+#import "MameConfiguration.h"
 #import "MameFilter.h"
 #import "JRLog.h"
 #import "MameChud.h"
@@ -616,17 +617,14 @@ NSString * MameExitStatusKey = @"MameExitStatus";
 - (void) keyDown: (NSEvent *) event
 {
     // [NSCursor setHiddenUntilMouseMoves: YES];
-    [mInputController keyDown: event];
 }
 
 - (void) keyUp: (NSEvent *) event
 {
-    [mInputController keyUp: event];
 }
 
 - (void) flagsChanged: (NSEvent *) event
 {
-    [mInputController flagsChanged: event];
 }
 
 - (void) resize
@@ -670,7 +668,16 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     {
         mGameDriver = driver_get_name([mGame UTF8String]);
         if (mGameDriver != NULL)
+        {
+            MameConfiguration * configuration =
+                [MameConfiguration defaultConfiguration];
+            [configuration setGameName: mGame];
+            [configuration setMultiKeyboard: YES];
+            [configuration setMultiMouse: YES];
+            [configuration setMouseEnabled: YES];
+            [configuration setJoystickEnabled: YES];
             return YES;
+        }
         else
             return NO;
     }
@@ -1142,7 +1149,8 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     mMameIsRunning = YES;
     mMameIsPaused = NO;
     // [self updateMouseCursor];
-    int exitStatus = run_game(mGameDriver);
+    
+    int exitStatus = mame_execute();
     mMameIsRunning = NO;
     mMameIsPaused = NO;
     [self updateMouseCursor];
