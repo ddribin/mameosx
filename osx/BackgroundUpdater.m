@@ -171,19 +171,31 @@ static NSString * kBackgroundUpdaterIdle = @"BackgroundUpdaterIdle";
     unsigned driverIndex = [[mIndexByShortName objectForKey: currentShortName] unsignedIntValue];
     const game_driver * driver = drivers[driverIndex];
     GameMO * game = nil;
-    if ((mCurrentGame != nil) && ([[mCurrentGame shortName] isEqualToString: currentShortName]))
+    NSComparisonResult comparison = NSOrderedDescending;
+    BOOL advanceToNextGame = NO;
+    if (mCurrentGame != nil)
+        comparison = [[mCurrentGame shortName] compare: currentShortName];
+    
+    if (comparison == NSOrderedDescending)
     {
-        game = mCurrentGame;
-    }
-    else
-    {
-#if 1
+        // Create new game
         game = [GameMO createInContext: context];
-#else
-        game = [mController newGame];
-#endif
         NSString * shortName = [NSString stringWithUTF8String: driver->name];
         [game setShortName: shortName];
+        advanceToNextGame = NO;
+    }
+    else if (comparison == NSOrderedAscending)
+    {
+        // Delete current game
+        [context deleteObject: mCurrentGame];
+        game = nil;
+        advanceToNextGame = YES;
+    }
+    else // (comparison == NSOrderedSame)
+    {
+        // Update
+        game = mCurrentGame;
+        advanceToNextGame = YES;
     }
     
     if (game != nil)
@@ -217,7 +229,7 @@ static NSString * kBackgroundUpdaterIdle = @"BackgroundUpdaterIdle";
         [game setDriverIndex: driverIndex];
     }
     
-    if (mCurrentGame != nil)
+    if (advanceToNextGame)
     {
         [mCurrentGame release];
         mCurrentGame = [[mGameEnumerator nextObject] retain];
