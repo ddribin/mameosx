@@ -65,16 +65,19 @@
 - (NSString *) fontPath;
 
 #pragma mark -
+#pragma mark Inputs
 
-- (void) setGameName: (NSString *) gameName;
+- (void) setMouseEnabled: (BOOL) mouseEnabled;
+
+- (void) setJoystickEnabled: (BOOL) mouseEnabled;
 
 - (void) setMultiKeyboard: (BOOL) multiKeyboard;
 
 - (void) setMultiMouse: (BOOL) multiMouse;
 
-- (void) setMouseEnabled: (BOOL) mouseEnabled;
+#pragma mark -
 
-- (void) setJoystickEnabled: (BOOL) mouseEnabled;
+- (void) setGameName: (NSString *) gameName;
 
 #ifdef MAME_DEBUG
 - (void) setMameDebug: (BOOL) mameDebug;

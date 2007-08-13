@@ -90,6 +90,11 @@ NSString * MameCommentPath = @"CommentPath";
 NSString * MameFontPath = @"FontPath";
 NSString * MameEffectPath = @"EffectPath";
 
+NSString * MameMouseKey = @"Mouse";
+NSString * MameJoystickKey = @"Joystick";
+NSString * MameMultiKeyboardKey = @"MultiKeyboard";
+NSString * MameMultiMouseKey = @"MultiMouse";
+
 #ifdef MAME_DEBUG
 NSString * MameDebugKey = @"MameDebug";
 #endif
@@ -223,6 +228,12 @@ NSString * MameBackgroundUpdateDebugKey = @"BackgroundUpdateDebug";
 #endif
     [defaultValues setObject: no
                       forKey: MameCheatKey];
+    
+    [defaultValues setObject: yes forKey: MameMouseKey];
+    [defaultValues setObject: yes forKey: MameJoystickKey];
+    [defaultValues setObject: no forKey: MameMultiKeyboardKey];
+    [defaultValues setObject: no forKey: MameMultiMouseKey];
+    
     [defaultValues setObject: no
                       forKey: MameSkipDisclaimerKey];
     [defaultValues setObject: no
@@ -556,6 +567,49 @@ NSString * MameBackgroundUpdateDebugKey = @"BackgroundUpdateDebug";
 }
 
 #pragma mark -
+#pragma mark Inputs
+
+- (BOOL) isMouseEnabled;
+{
+    return [mDefaults boolForKey: MameMouseKey];
+}
+
+- (void) setMouseEnabled: (BOOL) mouseEnabled;
+{
+    [mDefaults setBool: mouseEnabled forKey: MameMouseKey];
+}
+
+- (BOOL) isJoystickEnabled;
+{
+    return [mDefaults boolForKey: MameJoystickKey];
+}
+
+- (void) setJoystickEnabled: (BOOL) joystickEnabled;
+{
+    [mDefaults setBool: joystickEnabled forKey: MameJoystickKey];
+}
+
+- (BOOL) multiKeyboard;
+{
+    return [mDefaults boolForKey: MameMultiKeyboardKey];
+}
+
+- (void) setMultiKeyboard: (BOOL) multiKeyboard;
+{
+    [mDefaults setBool: multiKeyboard forKey: MameMultiKeyboardKey];
+}
+
+- (BOOL) multiMouse;
+{
+    return [mDefaults boolForKey: MameMultiMouseKey];
+}
+
+- (void) setMultiMouse: (BOOL) multiMouse;
+{
+    [mDefaults setBool: multiMouse forKey: MameMultiMouseKey];
+}
+
+#pragma mark -
 #pragma mark Messages
 
 - (BOOL) skipDisclaimer;
@@ -705,6 +759,12 @@ NSString * MameBackgroundUpdateDebugKey = @"BackgroundUpdateDebug";
     [configuration setMameDebug: [self mameDebug]];
 #endif
     [configuration setCheat: [self cheat]];
+    
+    [configuration setMouseEnabled: [self isMouseEnabled]];
+    [configuration setJoystickEnabled: [self isJoystickEnabled]];
+    [configuration setMultiKeyboard: [self multiKeyboard]];
+    [configuration setMultiMouse: [self multiMouse]];
+    
     [configuration setSkipDisclaimer: [self skipDisclaimer]];
     [configuration setSkipGameInfo: [self skipGameInfo]];
     [configuration setSkipWarnings: [self skipWarnings]];

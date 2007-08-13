@@ -145,6 +145,21 @@
 - (BOOL) cheat;
 
 #pragma mark -
+#pragma mark Inputs
+
+- (BOOL) isMouseEnabled;
+- (void) setMouseEnabled: (BOOL) mouseEnabled;
+
+- (BOOL) isJoystickEnabled;
+- (void) setJoystickEnabled: (BOOL) joystickEnabled;
+
+- (BOOL) multiKeyboard;
+- (void) setMultiKeyboard: (BOOL) multiKeyboard;
+
+- (BOOL) multiMouse;
+- (void) setMultiMouse: (BOOL) multiMouse;
+
+#pragma mark -
 #pragma mark Messages
 
 - (BOOL) skipDisclaimer;

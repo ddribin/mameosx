@@ -143,10 +143,16 @@ static MameConfiguration * sDefaultConfiguration = nil;
 }
 
 #pragma mark -
+#pragma mark Inputs
 
-- (void) setGameName: (NSString *) gameName;
+- (void) setMouseEnabled: (BOOL) mouseEnabled;
 {
-    [self setStringOption: gameName withName: OPTION_GAMENAME];
+    [self setBoolOption: mouseEnabled withName: OPTION_MOUSE];
+}
+
+- (void) setJoystickEnabled: (BOOL) mouseEnabled;
+{
+    [self setBoolOption: mouseEnabled withName: OPTION_JOYSTICK];
 }
 
 - (void) setMultiKeyboard: (BOOL) multiKeyboard;
@@ -159,16 +165,12 @@ static MameConfiguration * sDefaultConfiguration = nil;
     [self setBoolOption: multiMouse withName: OPTION_MULTIMOUSE];
 }
 
-- (void) setMouseEnabled: (BOOL) mouseEnabled;
-{
-    [self setBoolOption: mouseEnabled withName: OPTION_MOUSE];
-}
+#pragma mark -
 
-- (void) setJoystickEnabled: (BOOL) mouseEnabled;
+- (void) setGameName: (NSString *) gameName;
 {
-    [self setBoolOption: mouseEnabled withName: OPTION_JOYSTICK];
+    [self setStringOption: gameName withName: OPTION_GAMENAME];
 }
-
 
 #ifdef MAME_DEBUG
 - (void) setMameDebug: (BOOL) mameDebug;

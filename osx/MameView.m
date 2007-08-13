@@ -672,10 +672,6 @@ NSString * MameExitStatusKey = @"MameExitStatus";
             MameConfiguration * configuration =
                 [MameConfiguration defaultConfiguration];
             [configuration setGameName: mGame];
-            [configuration setMultiKeyboard: YES];
-            [configuration setMultiMouse: YES];
-            [configuration setMouseEnabled: YES];
-            [configuration setJoystickEnabled: YES];
             return YES;
         }
         else
