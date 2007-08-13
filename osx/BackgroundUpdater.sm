@@ -11,8 +11,13 @@ Init
 }
 
 Idle
+Entry { setCanAudit(YES); }
+Exit { setCanAudit(NO); }
 {
     Start IndexingByShortName { prepareToIndexByShortName(); }
+    AuditGames(games: NSArray *) AuditingGames {
+        prepareToAuditSelectedGames(games);
+    }
 }
 
 IndexingByShortName
@@ -24,7 +29,7 @@ IndexingByShortName
 UpdatingGameList
 {
     DoWork nil { updateGameList(); }
-    WorkDone AuditingGames { preprateToAuditGames(); }
+    WorkDone AuditingGames { prepareToAuditAllGames(); }
 }
 
 AuditingGames

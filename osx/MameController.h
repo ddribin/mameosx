@@ -117,6 +117,7 @@ extern "C" {
     GroupMO * mFavoritesGroup;
     BOOL mShowClones;
     NSString * mStatusText;
+    BOOL mCanAuditGames;
 }
 
 #pragma mark -
@@ -159,6 +160,9 @@ extern "C" {
 
 - (NSString *) statusText;
 - (void) setStatusText: (NSString *) theStatusText;
+
+- (BOOL) canAuditGames;
+- (void) setCanAuditGames: (BOOL) flag;
 
 #pragma mark -
 #pragma mark Background Callbacks
@@ -232,6 +236,8 @@ extern "C" {
 - (IBAction) resizeToMaximumSize: (id) sender;
 
 - (IBAction) auditRoms: (id) sender;
+
+- (IBAction) auditSelectedGames: (id) sender;
 
 - (IBAction) showLogWindow: (id) sender;
 

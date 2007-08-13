@@ -10,6 +10,7 @@
         {
             ACTIONS = {
                 auditRoms = id; 
+                auditSelectedGames = id; 
                 cancelOpenPanel = id; 
                 clearLogWindow = id; 
                 endOpenPanel = id; 

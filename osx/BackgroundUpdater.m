@@ -87,6 +87,18 @@ static NSString * kBackgroundUpdaterIdle = @"BackgroundUpdaterIdle";
     return mRunning;
 }
 
+- (void) auditGames: (NSArray *) games;
+{
+    [mFsm AuditGames: games];
+    mRunning = YES;
+    [self postIdleNotification];
+}
+
+- (void) setCanAudit: (BOOL) flag
+{
+    [mController setCanAuditGames: flag];
+}
+
 #pragma mark -
 #pragma mark State Machine Actions
 
@@ -240,7 +252,7 @@ static NSString * kBackgroundUpdaterIdle = @"BackgroundUpdaterIdle";
         mWorkDone = YES;
 }
 
-- (void) preprateToAuditGames;
+- (void) prepareToAuditAllGames;
 {
     NSManagedObjectContext * context = [mController managedObjectContext];
     
@@ -269,6 +281,18 @@ static NSString * kBackgroundUpdaterIdle = @"BackgroundUpdaterIdle";
     [mController backgroundUpdateWillBeginAudits: [allGames count]];
     mCurrentGameIndex = 0;
     mGameEnumerator = [[allGames objectEnumerator] retain];
+    mLastSave = [NSDate timeIntervalSinceReferenceDate];
+    mLastStatus = [[NSDate distantPast] timeIntervalSinceReferenceDate];
+}
+
+- (void) prepareToAuditSelectedGames: (NSArray *) selectedGames;
+{
+    NSLog(@"Audit games: %@", selectedGames);
+    JRLogDebug(@"Games that need audit: %d", [selectedGames count]);
+    
+    [mController backgroundUpdateWillBeginAudits: [selectedGames count]];
+    mCurrentGameIndex = 0;
+    mGameEnumerator = [[selectedGames objectEnumerator] retain];
     mLastSave = [NSDate timeIntervalSinceReferenceDate];
     mLastStatus = [[NSDate distantPast] timeIntervalSinceReferenceDate];
 }

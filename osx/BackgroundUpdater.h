@@ -40,6 +40,10 @@
 
 - (BOOL) isRunning;
 
+- (void) auditGames: (NSArray *) games;
+
+- (void) setCanAudit: (BOOL) flag;
+
 #pragma mark -
 #pragma mark State Machine Actions
 
@@ -50,7 +54,8 @@
 - (void) indexByShortName;
 - (void) prepareToUpdateGameList;
 - (void) updateGameList;
-- (void) preprateToAuditGames;
+- (void) prepareToAuditAllGames;
+- (void) prepareToAuditSelectedGames: (NSArray *) selectedGames;
 - (void) auditGames;
 - (void) cleanUp;
 

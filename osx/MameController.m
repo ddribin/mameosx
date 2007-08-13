@@ -719,6 +719,22 @@ Performs the save action for the application, which is to send the save:
     }
 }
 
+//=========================================================== 
+// - canAuditGames
+//=========================================================== 
+- (BOOL) canAuditGames
+{
+    return mCanAuditGames;
+}
+
+//=========================================================== 
+// - setCanAuditGames:
+//=========================================================== 
+- (void) setCanAuditGames: (BOOL) flag
+{
+    mCanAuditGames = flag;
+}
+
 #pragma mark -
 #pragma mark Background Callbacks
 
@@ -1183,6 +1199,13 @@ Performs the save action for the application, which is to send the save:
     NSWindow * window = [controller window];
     [window center];
     [controller showWindow: self];
+}
+
+- (IBAction) auditSelectedGames: (id) sender;
+{
+    NSArray * selectedGames = [self selectedGames];
+    [mUpdater auditGames: selectedGames];
+    
 }
 
 - (IBAction) showLogWindow: (id) sender;
