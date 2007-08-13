@@ -184,7 +184,7 @@
         NSAutoreleasePool * loopPool = [[NSAutoreleasePool alloc] init];
 
 		/* audit the ROMs in this set */
-		recordCount = audit_images(mCurrentAuditIndex, AUDIT_VALIDATE_FAST, &auditRecords);
+		recordCount = audit_images(drivers[mCurrentAuditIndex], AUDIT_VALIDATE_FAST, &auditRecords);
         RomAuditSummary * summary =
             [[RomAuditSummary alloc] initWithGameIndex: mCurrentAuditIndex
                                            recordCount: recordCount
