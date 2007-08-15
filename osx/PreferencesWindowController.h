@@ -29,8 +29,6 @@
 
 @interface PreferencesWindowController : DBPrefsWindowController
 {
-    IBOutlet NSView * mContentView;
-    IBOutlet NSView * mContentSubview;
     IBOutlet NSView * mGeneralPreferenceView;
     IBOutlet NSView * mInputsPreferenceView;
     IBOutlet NSView * mMessagesPreferenceView;
