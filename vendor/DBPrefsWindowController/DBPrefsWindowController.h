@@ -49,6 +49,9 @@
 	
 	BOOL _crossFade;
 	BOOL _shiftSlowsAnimation;
+    float _maxWidth;
+    BOOL _resizeToMaxWidth;
+    BOOL _useUnfiedStyle;
 	
 	NSView *contentSubview;
 	NSViewAnimation *viewAnimation;
@@ -66,6 +69,10 @@
 - (void)setCrossFade:(BOOL)fade;
 - (BOOL)shiftSlowsAnimation;
 - (void)setShiftSlowsAnimation:(BOOL)slows;
+- (BOOL)resizeToMaxWidth;
+- (void)setResizeToMaxWidth:(BOOL)resizeToMaxWidth;
+- (BOOL)useUnifiedStyle;
+- (void)setUseUnifiedStyle:(BOOL)unifiedStyle;
 
 - (void)displayViewForIdentifier:(NSString *)identifier animate:(BOOL)animate;
 - (void)crossFadeView:(NSView *)oldView withView:(NSView *)newView;

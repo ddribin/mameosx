@@ -60,24 +60,27 @@ static DBPrefsWindowController *_sharedPrefsWindowController = nil;
 		
 		[self setCrossFade:YES]; 
 		[self setShiftSlowsAnimation:YES];
+        [self setResizeToMaxWidth: NO];
+        _maxWidth = 0;
+        [self setUseUnifiedStyle: NO];
 	}
 	return self;
 
 	(void)window;  // To prevent compiler warnings.
 }
 
-
-
-
 - (void)windowDidLoad
 {
 		// Create a new window to display the preference views.
 		// If the developer attached a window to this controller
 		// in Interface Builder, it gets replaced with this one.
+    unsigned int styleMask = (NSTitledWindowMask |
+                              NSClosableWindowMask |
+                              NSMiniaturizableWindowMask);
+    if ([self useUnifiedStyle])
+        styleMask |= NSUnifiedTitleAndToolbarWindowMask;
 	NSWindow *window = [[[NSWindow alloc] initWithContentRect:NSMakeRect(0,0,1000,1000)
-												    styleMask:(NSTitledWindowMask |
-															   NSClosableWindowMask |
-															   NSMiniaturizableWindowMask)
+												    styleMask:styleMask
 													  backing:NSBackingStoreBuffered
 													    defer:YES] autorelease];
 	[self setWindow:window];
@@ -128,6 +131,9 @@ static DBPrefsWindowController *_sharedPrefsWindowController = nil;
 {
 	NSAssert (view != nil,
 			  @"Attempted to add a nil view when calling -addView:label:image:.");
+    
+    if (NSWidth([view frame]) > _maxWidth)
+        _maxWidth = NSWidth([view frame]);
 	
 	NSString *identifier = [[label copy] autorelease];
 	
@@ -180,6 +186,25 @@ static DBPrefsWindowController *_sharedPrefsWindowController = nil;
 }
 
 
+- (BOOL)resizeToMaxWidth;
+{
+    return _resizeToMaxWidth;
+}
+
+- (void)setResizeToMaxWidth:(BOOL)resizeToMaxWidth;
+{
+    _resizeToMaxWidth = resizeToMaxWidth;
+}
+
+- (BOOL)useUnifiedStyle;
+{
+    return _useUnfiedStyle;
+}
+
+- (void)setUseUnifiedStyle:(BOOL)unifiedStyle;
+{
+    _useUnfiedStyle = unifiedStyle;
+}
 
 
 #pragma mark -
@@ -326,12 +351,12 @@ static DBPrefsWindowController *_sharedPrefsWindowController = nil;
                                                selector: @selector(windowResizeFinished:)
                                                userInfo: newView
                                                 repeats: NO];
-			[[self window] setFrame:[self frameForView:newView] display:YES animate: YES];
+                [[self window] setFrame:[self frameForView:newView] display:YES animate: YES];
             }
             else {
+                [[self window] setFrame:[self frameForView:newView] display:YES animate: NO];
                 [self showNewView:newView];
                 [newView setHidden:NO];
-                [[self window] setFrame:[self frameForView:newView] display:YES animate: NO];
             }
 		}
 		
@@ -418,8 +443,17 @@ static DBPrefsWindowController *_sharedPrefsWindowController = nil;
 	NSRect contentRect = [[self window] contentRectForFrameRect:windowFrame];
 	float windowTitleAndToolbarHeight = NSHeight(windowFrame) - NSHeight(contentRect);
 
-	windowFrame.size.height = NSHeight([view frame]) + windowTitleAndToolbarHeight;
-	windowFrame.size.width = NSWidth([view frame]);
+    if ([self resizeToMaxWidth])
+    {
+        windowFrame.size.height = NSHeight([view frame]) + windowTitleAndToolbarHeight;
+        windowFrame.size.width = _maxWidth;
+        [view setFrameSize: NSMakeSize(_maxWidth, NSHeight([view frame]))];
+    }
+    else
+    {
+        windowFrame.size.height = NSHeight([view frame]) + windowTitleAndToolbarHeight;
+        windowFrame.size.width = NSWidth([view frame]);
+    }
 	windowFrame.origin.y = NSMaxY([[self window] frame]) - NSHeight(windowFrame);
 	
 	return windowFrame;
