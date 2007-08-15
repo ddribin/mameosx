@@ -94,6 +94,8 @@ static DBPrefsWindowController *_sharedPrefsWindowController = nil;
 
 
 - (void) dealloc {
+    [_resizeTimer invalidate];
+    [_resizeTimer release];
 	[toolbarIdentifiers release];
 	[toolbarViews release];
 	[toolbarItems release];
@@ -309,6 +311,9 @@ static DBPrefsWindowController *_sharedPrefsWindowController = nil;
     NSView * newView = [timer userInfo];
     [self showNewView:newView];
     [newView setHidden:NO];
+    [_resizeTimer invalidate];
+    [_resizeTimer release];
+    _resizeTimer = nil;
 }
 
 - (void)displayViewForIdentifier:(NSString *)identifier animate:(BOOL)animate
@@ -346,11 +351,18 @@ static DBPrefsWindowController *_sharedPrefsWindowController = nil;
 			[oldView removeFromSuperviewWithoutNeedingDisplay];
             if (animate) {
                 NSTimeInterval resizeTime = [[self window] animationResizeTime: [self frameForView:newView]];
-                [NSTimer scheduledTimerWithTimeInterval: resizeTime
-                                                 target: self
-                                               selector: @selector(windowResizeFinished:)
-                                               userInfo: newView
-                                                repeats: NO];
+                if (_resizeTimer != nil)
+                {
+                    [_resizeTimer invalidate];
+                    [_resizeTimer release];
+                    _resizeTimer = nil;
+                }
+                _resizeTimer = 
+                    [[NSTimer scheduledTimerWithTimeInterval: resizeTime
+                                                      target: self
+                                                    selector: @selector(windowResizeFinished:)
+                                                    userInfo: newView
+                                                     repeats: NO] retain];
                 [[self window] setFrame:[self frameForView:newView] display:YES animate: YES];
             }
             else {

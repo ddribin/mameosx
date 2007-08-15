@@ -52,6 +52,7 @@
     float _maxWidth;
     BOOL _resizeToMaxWidth;
     BOOL _useUnfiedStyle;
+    NSTimer * _resizeTimer;
 	
 	NSView *contentSubview;
 	NSViewAnimation *viewAnimation;
