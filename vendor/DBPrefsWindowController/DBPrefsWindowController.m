@@ -273,6 +273,18 @@ static DBPrefsWindowController *_sharedPrefsWindowController = nil;
 
 
 
+- (void) showNewView: (NSView *) newView;
+{
+    [contentSubview addSubview: newView];
+    [[self window] setInitialFirstResponder: newView];
+}
+
+- (void) windowResizeFinished: (NSTimer*) timer;
+{
+    NSView * newView = [timer userInfo];
+    [self showNewView:newView];
+    [newView setHidden:NO];
+}
 
 - (void)displayViewForIdentifier:(NSString *)identifier animate:(BOOL)animate
 {	
@@ -301,21 +313,31 @@ static DBPrefsWindowController *_sharedPrefsWindowController = nil;
 		NSRect frame = [newView bounds];
 		frame.origin.y = NSHeight([contentSubview frame]) - NSHeight([newView bounds]);
 		[newView setFrame:frame];
-		[contentSubview addSubview:newView];
-		[[self window] setInitialFirstResponder:newView];
-
-		if (animate && [self crossFade])
+		if (animate && [self crossFade]) {
+            [self showNewView:newView];
 			[self crossFadeView:oldView withView:newView];
+        }
 		else {
 			[oldView removeFromSuperviewWithoutNeedingDisplay];
-			[newView setHidden:NO];
-			[[self window] setFrame:[self frameForView:newView] display:YES animate:animate];
+            if (animate) {
+                NSTimeInterval resizeTime = [[self window] animationResizeTime: [self frameForView:newView]];
+                [NSTimer scheduledTimerWithTimeInterval: resizeTime
+                                                 target: self
+                                               selector: @selector(windowResizeFinished:)
+                                               userInfo: newView
+                                                repeats: NO];
+			[[self window] setFrame:[self frameForView:newView] display:YES animate: YES];
+            }
+            else {
+                [self showNewView:newView];
+                [newView setHidden:NO];
+                [[self window] setFrame:[self frameForView:newView] display:YES animate: NO];
+            }
 		}
 		
 		[[self window] setTitle:[[toolbarItems objectForKey:identifier] label]];
 	}
 }
-
 
 
 
