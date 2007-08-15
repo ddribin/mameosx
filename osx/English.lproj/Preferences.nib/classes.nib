@@ -1,5 +1,10 @@
 {
     IBClasses = (
+        {
+            CLASS = DBPrefsWindowController; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSWindowController; 
+        }, 
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
         {
             ACTIONS = {
@@ -13,12 +18,18 @@
             LANGUAGE = ObjC; 
             OUTLETS = {
                 mArtworkDirectory = NSPopUpButton; 
+                mContentSubview = NSView; 
+                mContentView = NSView; 
                 mControllerAlias = NSObjectController; 
                 mDiskImageDirectory = NSPopUpButton; 
+                mGeneralPreferenceView = NSView; 
+                mInputsPreferenceView = NSView; 
+                mMessagesPreferenceView = NSView; 
                 mRomDirectory = NSPopUpButton; 
                 mSamplesDirectory = NSPopUpButton; 
+                mVideoPreferencesView = NSView; 
             }; 
-            SUPERCLASS = NSWindowController; 
+            SUPERCLASS = DBPrefsWindowController; 
         }
     ); 
     IBVersion = 1; 

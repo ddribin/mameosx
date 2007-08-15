@@ -23,11 +23,19 @@
  */
 
 #import <Cocoa/Cocoa.h>
+#import "DBPrefsWindowController.h"
 
 @class MameController;
 
-@interface PreferencesWindowController : NSWindowController
+@interface PreferencesWindowController : DBPrefsWindowController
 {
+    IBOutlet NSView * mContentView;
+    IBOutlet NSView * mContentSubview;
+    IBOutlet NSView * mGeneralPreferenceView;
+    IBOutlet NSView * mInputsPreferenceView;
+    IBOutlet NSView * mMessagesPreferenceView;
+    IBOutlet NSView * mVideoPreferencesView;
+    
     IBOutlet NSObjectController * mControllerAlias;
     IBOutlet NSPopUpButton * mRomDirectory;
     IBOutlet NSPopUpButton * mDiskImageDirectory;

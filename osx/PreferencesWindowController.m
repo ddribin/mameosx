@@ -86,6 +86,11 @@ enum
         MameFullScreenStretchValue,
         nil];
     
+	[self setCrossFade: NO];
+	[self setShiftSlowsAnimation: NO];
+    [self setResizeToMaxWidth: YES];
+    [self setUseUnifiedStyle: YES];
+    
     return self;
 }
 
@@ -120,6 +125,14 @@ enum
     mFullScreenZoomValues = nil;
     mButtonsByKey = nil;
     [super dealloc];
+}
+
+- (void) setupToolbar
+{
+	[self addView: mGeneralPreferenceView label: @"General"];
+    [self addView: mInputsPreferenceView label: @"Inputs"];
+    [self addView: mMessagesPreferenceView label: @"Messages"];
+    [self addView: mVideoPreferencesView label: @"Video"];
 }
 
 - (NSDictionary *) name: (NSString *) name stringValue: (NSString *) value
