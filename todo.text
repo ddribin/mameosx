@@ -1,5 +1,4 @@
 
-* Refresh screenshot after exiting
 * Automatically restore favorites when DB is blown away.
 
 * Add GUI pref for vector flicker and beam width

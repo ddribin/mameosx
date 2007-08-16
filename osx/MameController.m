@@ -1801,6 +1801,7 @@ Performs the save action for the application, which is to send the save:
 {
     if (mGameName == nil)
     {
+        [self updateScreenShot];
         [self raiseOpenPanel: nil];
         return;
     }
