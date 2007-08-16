@@ -10147,7 +10147,7 @@
 				556A4C240AA50D6200602CC5 /* Resources */,
 				556A4C250AA50D6200602CC5 /* Sources */,
 				556A4C260AA50D6200602CC5 /* Frameworks */,
-				55F4D7D70B86DBAA001EED08 /* Generate help */,
+				5507E99B0C7500F700CC6B02 /* Copy manual */,
 				5567C3670BBC573E00EA2072 /* Copy Shark Codes */,
 			);
 			buildRules = (
@@ -10271,7 +10271,7 @@
 				55BEFB0B0AEC6D0C00357340 /* Frameworks */,
 				55BEFB5A0AEC6E4A00357340 /* Copy to Frameworks */,
 				55ACABAA0C3545C300F647CE /* Copy to Executables */,
-				55F4D8440B86E2F2001EED08 /* Generate help */,
+				5507E9920C7500AD00CC6B02 /* Copy manual */,
 			);
 			buildRules = (
 			);
@@ -10472,6 +10472,36 @@
 			shellPath = /bin/sh;
 			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
 		};
+		5507E9920C7500AD00CC6B02 /* Copy manual */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy manual";
+			outputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/English.lproj/manual/index.html",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${MY_SCRIPT_DIR}/xcode_copy_manual\"";
+		};
+		5507E99B0C7500F700CC6B02 /* Copy manual */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy manual";
+			outputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/English.lproj/manual/index.html",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${MY_SCRIPT_DIR}/xcode_copy_manual\"\n";
+		};
 		553A0A490B00549C00531E1F /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -10516,40 +10546,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "echo \"Create Disk Image\" 1>&2\n\"${MY_SCRIPT_DIR}/create_dmg.sh\"";
-		};
-		55F4D7D70B86DBAA001EED08 /* Generate help */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/doc/manual.text",
-				"$(SRCROOT)/osx/English.lproj/manual/manual.html",
-			);
-			name = "Generate help";
-			outputPaths = (
-				"$(BUILT_PRODUCTS_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/English.lproj/manual/manual.html",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${MY_SCRIPT_DIR}/xcode_manual\"";
-		};
-		55F4D8440B86E2F2001EED08 /* Generate help */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/doc/manual.text",
-				"$(SRCROOT)/osx/English.lproj/manual/manual.html",
-			);
-			name = "Generate help";
-			outputPaths = (
-				"$(BUILT_PRODUCTS_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/English.lproj/manual/manual.html",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${MY_SCRIPT_DIR}/xcode_manual\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 

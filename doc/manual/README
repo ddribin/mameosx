@@ -1,5 +1,13 @@
 This is the auto-generated Rote documentation source.
 
+In order to generate the manual's HTML, you need to install Rote:
+
+  http://rote.rubyforge.org/
+
+The generated HTML is checked into Subversion, so that users don't need to
+install Rote to compile MAME OS X. So if you update the documentation, you'll
+have to manually regenerate the HTML and then check it in.
+
 To render it using Rote's command-line wrapper (ignoring the included
 Rakefile), type:
 
