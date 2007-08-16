@@ -9,7 +9,7 @@
 		<key>269</key>
 		<string>547 537 346 99 0 0 1440 878 </string>
 		<key>29</key>
-		<string>64 749 469 44 0 0 1440 878 </string>
+		<string>96 1018 469 44 0 0 1920 1178 </string>
 		<key>859</key>
 		<string>659 165 267 195 0 0 1440 878 </string>
 	</dict>
@@ -22,6 +22,6 @@
 		<integer>21</integer>
 	</array>
 	<key>IBSystem Version</key>
-	<string>8R2232</string>
+	<string>8R2218</string>
 </dict>
 </plist>

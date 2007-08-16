@@ -117,7 +117,6 @@ extern "C" {
     GroupMO * mFavoritesGroup;
     BOOL mShowClones;
     NSString * mStatusText;
-    BOOL mCanAuditGames;
 }
 
 #pragma mark -
@@ -161,8 +160,16 @@ extern "C" {
 - (NSString *) statusText;
 - (void) setStatusText: (NSString *) theStatusText;
 
+#pragma mark -
+#pragma mark State
+
 - (BOOL) canAuditGames;
-- (void) setCanAuditGames: (BOOL) flag;
+
+- (unsigned) selectionCount;
+- (BOOL) hasSelection;
+- (BOOL) hasNoSelection;
+- (BOOL) hasOneSelection;
+- (BOOL) hasMultipleSelection;
 
 #pragma mark -
 #pragma mark Background Callbacks

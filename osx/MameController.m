@@ -48,6 +48,22 @@ static const int kMameMaxGamesInHistory = 100;
 
 @interface MameController (Private)
 
+#pragma mark -
+#pragma mark KVO Helpers
+
+- (void) observeValueForKeyPath: (NSString *) keyPath
+                       ofObject: (id) object 
+                         change: (NSDictionary *) change
+                        context: (void *) context;
+
+- (void) keysChanged: (NSArray *) keys;
+- (void) keyChanged: (NSString *) key;
+- (void) arrangedObjectsChanged;
+- (void) idleChanged;
+- (void) selectionCountChanged;
+
+#pragma mark -
+
 - (void) updatePredicate;
 - (void) syncWithUserDefaults;
 - (void) setGameLoading: (BOOL) gameLoading;
@@ -136,6 +152,10 @@ static void exit_sleeper()
     mShowClones = YES;
     
     mUpdater = [[BackgroundUpdater alloc] initWithMameController: self];
+    [mUpdater addObserver: self
+               forKeyPath: @"idle"
+                  options: 0
+                  context: @selector(idleChanged)];
     
     return self;
 }
@@ -172,7 +192,12 @@ static void exit_sleeper()
     [mAllGamesController addObserver: self
                           forKeyPath: @"arrangedObjects"
                              options: 0
-                             context: nil];
+                             context: @selector(arrangedObjectsChanged)];
+    
+    [mGamesController addObserver: self
+                       forKeyPath: @"selectionIndexes.count"
+                          options: 0
+                          context: @selector(selectionCountChanged)];
     
     [self initVisualEffectsMenu];
     [self setVisualEffectEnabled: NO];
@@ -384,12 +409,18 @@ Performs the save action for the application, which is to send the save:
 {
     NSToolbarItem * item = [[note userInfo] objectForKey: @"item"];
     NSString * identifier = [item itemIdentifier];
-    if ([identifier isEqualToString: @"Play"] ||
-        [identifier isEqualToString: @"Favorite"])
+    if ([identifier isEqualToString: @"Play"])
     {
         [item bind: @"enabled"
-          toObject: mGamesController
-       withKeyPath: @"selectionIndexes.count"
+          toObject: self
+       withKeyPath: @"hasOneSelection"
+           options: nil];
+    }
+    else if ([identifier isEqualToString: @"Favorite"])
+    {
+        [item bind: @"enabled"
+          toObject: self
+       withKeyPath: @"hasSelection"
            options: nil];
     }
     else if ([identifier isEqualToString: @"Search"])
@@ -624,6 +655,7 @@ Performs the save action for the application, which is to send the save:
         return;
     
     [self importFavoritesFromFile: [openPanel filename]];
+    [self refreshGames: nil];
 }
 
 //=========================================================== 
@@ -664,19 +696,6 @@ Performs the save action for the application, which is to send the save:
     [mScreenshotView setValue: screenshotDir forInputKey: @"Image_Folder_Path"];
 }
 
-- (void) observeValueForKeyPath: (NSString *) keyPath
-                       ofObject: (id) object 
-                         change: (NSDictionary *) change
-                        context: (void *) context;
-{
-    if ((object == mAllGamesController) &&
-        [keyPath isEqualToString: @"arrangedObjects"])
-    {
-        [self willChangeValueForKey: @"matchingGames"];
-        [self didChangeValueForKey: @"matchingGames"];
-    }
-}
-
 - (NSArray *) matchingGames;
 {
     if (mGameFilterIndex != 2)
@@ -692,8 +711,7 @@ Performs the save action for the application, which is to send the save:
 
 - (IBAction) refreshGames: (id) sender;
 {
-    [self willChangeValueForKey: @"matchingGames"];
-    [self didChangeValueForKey: @"matchingGames"];
+    [self keyChanged: @"matchingGames"];
     [mGamesController rearrangeObjects];
 }
 
@@ -719,20 +737,40 @@ Performs the save action for the application, which is to send the save:
     }
 }
 
+#pragma mark -
+#pragma mark State
+
 //=========================================================== 
 // - canAuditGames
 //=========================================================== 
 - (BOOL) canAuditGames
 {
-    return mCanAuditGames;
+    return [mUpdater isIdle];
 }
 
-//=========================================================== 
-// - setCanAuditGames:
-//=========================================================== 
-- (void) setCanAuditGames: (BOOL) flag
+- (unsigned) selectionCount;
 {
-    mCanAuditGames = flag;
+    return [[mGamesController selectionIndexes] count];
+}
+
+- (BOOL) hasSelection;
+{
+    return ([self selectionCount] > 0);
+}
+
+- (BOOL) hasNoSelection;
+{
+    return ([self selectionCount] == 0);
+}
+
+- (BOOL) hasOneSelection;
+{
+    return ([self selectionCount] == 1);
+}
+
+- (BOOL) hasMultipleSelection;
+{
+    return ([self selectionCount] > 1);
 }
 
 #pragma mark -
@@ -1019,18 +1057,15 @@ Performs the save action for the application, which is to send the save:
 
 - (IBAction) endOpenPanel: (id) sender;
 {
-    if ((sender == mGamesTable) &&
-        ([mGamesTable clickedRow] == -1))
-    {
+    if ((sender == mGamesTable) && ([mGamesTable clickedRow] == -1))
         return;
-    }
     
     NSArray * selectedGames = [mGamesController selectedObjects];
     if ([selectedGames count] != 1)
-    {
-        JRLogError(@"[selectedGames coount] != 1: %d", [selectedGames count]);
+
         return;
-    }
+
+    
     GameMO * game = [selectedGames objectAtIndex: 0];
     mGameName = [[game shortName]  retain];
     [game setLastPlayed: [NSDate date]];
@@ -1428,6 +1463,53 @@ Performs the save action for the application, which is to send the save:
 #pragma mark -
 
 @implementation MameController (Private)
+
+#pragma mark -
+#pragma mark KVO Helpers
+
+- (void) observeValueForKeyPath: (NSString *) keyPath
+                       ofObject: (id) object 
+                         change: (NSDictionary *) change
+                        context: (void *) context;
+{
+    SEL selector = (SEL) context;
+    [self performSelector: selector];
+}
+
+- (void) keysChanged: (NSArray *) keys;
+{
+    unsigned i;
+    unsigned count = [keys count];
+    for (i = 0; i < count; i++)
+        [self willChangeValueForKey: [keys objectAtIndex: i]];
+    for (i = 0; i < count; i++)
+        [self didChangeValueForKey: [keys objectAtIndex: i]];
+}
+
+- (void) keyChanged: (NSString *) key;
+{
+    [self willChangeValueForKey: key];
+    [self didChangeValueForKey: key];
+}
+
+- (void) arrangedObjectsChanged;
+{
+    [self keyChanged: @"matchingGames"];
+}
+
+- (void) idleChanged;
+{
+    [self keyChanged: @"canAuditGames"];
+}
+
+- (void) selectionCountChanged;
+{
+    [self keysChanged: [NSArray arrayWithObjects:
+        @"selectionCount", @"hasSelection", @"hasNoSelection",
+        @"hasOneSelection", @"hasMultipleSelection", nil]];
+}
+
+#pragma mark -
 
 - (void) updatePredicate;
 {

@@ -1,9 +1,5 @@
 
-* Re-audit all ROMs in new UI.
-* Multiple selection.
-* Re-audit selected games
 * Refresh screenshot after exiting
-* Refresh game list on import
 * Automatically restore favorites when DB is blown away.
 
 * Add GUI pref for vector flicker and beam width

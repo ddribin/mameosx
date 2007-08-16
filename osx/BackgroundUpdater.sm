@@ -11,8 +11,8 @@ Init
 }
 
 Idle
-Entry { setCanAudit(YES); }
-Exit { setCanAudit(NO); }
+Entry { setIdle(YES); }
+Exit { setIdle(NO); }
 {
     Start IndexingByShortName { prepareToIndexByShortName(); }
     AuditGames(games: NSArray *) AuditingGames {

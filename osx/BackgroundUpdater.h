@@ -27,6 +27,7 @@
     NSEnumerator * mGameEnumerator;
     NSTimeInterval mLastSave;
     NSTimeInterval mLastStatus;
+    BOOL mIdle;
     
     // Weak references
     MameController * mController;
@@ -42,7 +43,8 @@
 
 - (void) auditGames: (NSArray *) games;
 
-- (void) setCanAudit: (BOOL) flag;
+- (BOOL) isIdle;
+- (void) setIdle: (BOOL) idle;
 
 #pragma mark -
 #pragma mark State Machine Actions

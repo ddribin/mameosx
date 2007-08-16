@@ -94,9 +94,14 @@ static NSString * kBackgroundUpdaterIdle = @"BackgroundUpdaterIdle";
     [self postIdleNotification];
 }
 
-- (void) setCanAudit: (BOOL) flag
+- (BOOL) isIdle;
 {
-    [mController setCanAuditGames: flag];
+    return mIdle;
+}
+
+- (void) setIdle: (BOOL) idle;
+{
+    mIdle = idle;
 }
 
 #pragma mark -
