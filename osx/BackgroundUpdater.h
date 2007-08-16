@@ -28,6 +28,7 @@
     NSTimeInterval mLastSave;
     NSTimeInterval mLastStatus;
     BOOL mIdle;
+    BOOL mAuditing;
     
     // Weak references
     MameController * mController;
@@ -42,9 +43,14 @@
 - (BOOL) isRunning;
 
 - (void) auditGames: (NSArray *) games;
+- (void) auditUnauditedGames;
+- (void) abortAudit;
 
 - (BOOL) isIdle;
 - (void) setIdle: (BOOL) idle;
+
+- (BOOL) auditing;
+- (void) setAuditing: (BOOL) auditing;
 
 #pragma mark -
 #pragma mark State Machine Actions
@@ -57,7 +63,7 @@
 - (void) prepareToUpdateGameList;
 - (void) updateGameList;
 - (void) prepareToAuditAllGames;
-- (void) prepareToAuditSelectedGames: (NSArray *) selectedGames;
+- (void) prepareToAuditGames: (NSArray *) games;
 - (void) auditGames;
 - (void) cleanUp;
 

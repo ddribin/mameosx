@@ -91,6 +91,9 @@
 - (BOOL) grabMouse;
 - (void) setGrabMouse: (BOOL) grabMouse;
 
+- (BOOL) auditAtStartup;
+- (void) setAuditAtStartup: (BOOL) auditAtStartup;
+
 #pragma mark -
 #pragma mark Private MAME OS X Options
 

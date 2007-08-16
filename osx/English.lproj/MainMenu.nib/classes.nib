@@ -9,8 +9,10 @@
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
         {
             ACTIONS = {
+                abortAudit = id; 
                 auditRoms = id; 
                 auditSelectedGames = id; 
+                auditUnauditedGames = id; 
                 cancelOpenPanel = id; 
                 clearLogWindow = id; 
                 endOpenPanel = id; 

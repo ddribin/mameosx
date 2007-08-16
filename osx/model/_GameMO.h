@@ -15,10 +15,24 @@
 @interface _GameMO : NSManagedObject {}
 
 
+- (NSDate*)auditDate;
+- (void)setAuditDate:(NSDate*)value_;
+
+//- (BOOL)validateAuditDate:(id*)value_ error:(NSError**)error_;
+
+
+
 - (NSString*)year;
 - (void)setYear:(NSString*)value_;
 
 //- (BOOL)validateYear:(id*)value_ error:(NSError**)error_;
+
+
+
+- (NSString*)auditVersion;
+- (void)setAuditVersion:(NSString*)value_;
+
+//- (BOOL)validateAuditVersion:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -60,6 +74,13 @@
 
 
 
+- (NSString*)longName;
+- (void)setLongName:(NSString*)value_;
+
+//- (BOOL)validateLongName:(id*)value_ error:(NSError**)error_;
+
+
+
 - (NSNumber*)auditStatus;
 - (void)setAuditStatus:(NSNumber*)value_;
 
@@ -67,13 +88,6 @@
 - (void)setAuditStatusValue:(int)value_;
 
 //- (BOOL)validateAuditStatus:(id*)value_ error:(NSError**)error_;
-
-
-
-- (NSString*)longName;
-- (void)setLongName:(NSString*)value_;
-
-//- (BOOL)validateLongName:(id*)value_ error:(NSError**)error_;
 
 
 

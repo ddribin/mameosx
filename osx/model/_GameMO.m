@@ -7,6 +7,25 @@
 
 
 
+- (NSDate*)auditDate {
+	[self willAccessValueForKey:@"auditDate"];
+	NSDate *result = [self primitiveValueForKey:@"auditDate"];
+	[self didAccessValueForKey:@"auditDate"];
+
+	return result;
+}
+
+- (void)setAuditDate:(NSDate*)value_ {
+    [self willChangeValueForKey:@"auditDate"];
+    [self setPrimitiveValue:value_ forKey:@"auditDate"];
+    [self didChangeValueForKey:@"auditDate"];
+}
+
+
+
+
+
+
 - (NSString*)year {
 	[self willAccessValueForKey:@"year"];
 	NSString *result = [self primitiveValueForKey:@"year"];
@@ -19,6 +38,25 @@
     [self willChangeValueForKey:@"year"];
     [self setPrimitiveValue:value_ forKey:@"year"];
     [self didChangeValueForKey:@"year"];
+}
+
+
+
+
+
+
+- (NSString*)auditVersion {
+	[self willAccessValueForKey:@"auditVersion"];
+	NSString *result = [self primitiveValueForKey:@"auditVersion"];
+	[self didAccessValueForKey:@"auditVersion"];
+
+	return result;
+}
+
+- (void)setAuditVersion:(NSString*)value_ {
+    [self willChangeValueForKey:@"auditVersion"];
+    [self setPrimitiveValue:value_ forKey:@"auditVersion"];
+    [self didChangeValueForKey:@"auditVersion"];
 }
 
 
@@ -131,6 +169,25 @@
 
 
 
+- (NSString*)longName {
+	[self willAccessValueForKey:@"longName"];
+	NSString *result = [self primitiveValueForKey:@"longName"];
+	[self didAccessValueForKey:@"longName"];
+
+	return result;
+}
+
+- (void)setLongName:(NSString*)value_ {
+    [self willChangeValueForKey:@"longName"];
+    [self setPrimitiveValue:value_ forKey:@"longName"];
+    [self didChangeValueForKey:@"longName"];
+}
+
+
+
+
+
+
 - (NSNumber*)auditStatus {
 	[self willAccessValueForKey:@"auditStatus"];
 	NSNumber *result = [self primitiveValueForKey:@"auditStatus"];
@@ -153,25 +210,6 @@
 
 - (void)setAuditStatusValue:(int)value_ {
 	[self setAuditStatus:[NSNumber numberWithInt:value_]];
-}
-
-
-
-
-
-
-- (NSString*)longName {
-	[self willAccessValueForKey:@"longName"];
-	NSString *result = [self primitiveValueForKey:@"longName"];
-	[self didAccessValueForKey:@"longName"];
-
-	return result;
-}
-
-- (void)setLongName:(NSString*)value_ {
-    [self willChangeValueForKey:@"longName"];
-    [self setPrimitiveValue:value_ forKey:@"longName"];
-    [self didChangeValueForKey:@"longName"];
 }
 
 

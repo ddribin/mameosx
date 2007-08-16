@@ -15,9 +15,7 @@ Entry { setIdle(YES); }
 Exit { setIdle(NO); }
 {
     Start IndexingByShortName { prepareToIndexByShortName(); }
-    AuditGames(games: NSArray *) AuditingGames {
-        prepareToAuditSelectedGames(games);
-    }
+    AuditGames(games: NSArray *) AuditingGames { prepareToAuditGames(games); }
 }
 
 IndexingByShortName
@@ -33,14 +31,18 @@ UpdatingGameList
 }
 
 AuditingGames
+Entry { setAuditing(YES); }
+Exit { setAuditing(NO); }
 {
     DoWork nil { auditGames(); }
+    AbortAudit Idle { cleanUp(); }
     WorkDone Idle { cleanUp(); }
 }
 
 Default
 {
     Pause push(Paused) { }
+    DoWork nil { }
 }
 
 Paused
@@ -48,7 +50,6 @@ Entry { saveState(); }
 Exit { restoreState(); }
 {
     Pause nil { }
-    DoWork nil { }
     Resume pop() { }
 }
 

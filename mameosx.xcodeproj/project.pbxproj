@@ -34,6 +34,8 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		5507E85A0C74ED8500CC6B02 /* MameVersion.h in Headers */ = {isa = PBXBuildFile; fileRef = 5507E8580C74ED8500CC6B02 /* MameVersion.h */; };
+		5507E85B0C74ED8500CC6B02 /* MameVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = 5507E8590C74ED8500CC6B02 /* MameVersion.m */; };
 		55193F4E0B93F5DC004C0C98 /* DDHidAppleRemote.h in Headers */ = {isa = PBXBuildFile; fileRef = 55193F390B93F5DC004C0C98 /* DDHidAppleRemote.h */; };
 		55193F4F0B93F5DC004C0C98 /* DDHidAppleRemote.m in Sources */ = {isa = PBXBuildFile; fileRef = 55193F3A0B93F5DC004C0C98 /* DDHidAppleRemote.m */; };
 		55193F500B93F5DC004C0C98 /* DDHidDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = 55193F3B0B93F5DC004C0C98 /* DDHidDevice.h */; };
@@ -3161,6 +3163,8 @@
 		5501E8910AB275F900756C9B /* UnitTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5501E8920AB275FA00756C9B /* UnitTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "UnitTests-Info.plist"; sourceTree = "<group>"; };
 		5503D7F30AB7B63E003F407E /* MameTextureConverter.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = MameTextureConverter.h; sourceTree = "<group>"; };
+		5507E8580C74ED8500CC6B02 /* MameVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MameVersion.h; sourceTree = "<group>"; };
+		5507E8590C74ED8500CC6B02 /* MameVersion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MameVersion.m; sourceTree = "<group>"; };
 		5511A0CB0B1CEBB4009BF71B /* osx_x86drc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = osx_x86drc.c; path = osx/osx_x86drc.c; sourceTree = SOURCE_ROOT; };
 		55193F390B93F5DC004C0C98 /* DDHidAppleRemote.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DDHidAppleRemote.h; sourceTree = "<group>"; };
 		55193F3A0B93F5DC004C0C98 /* DDHidAppleRemote.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DDHidAppleRemote.m; sourceTree = "<group>"; };
@@ -6739,6 +6743,8 @@
 				55C71AAE0B2AFFF0001FF0BE /* AudioEffectWindowController.m */,
 				55B5DDBF0C4D872200057C2A /* AOSegmentedControl.h */,
 				55B5DDC00C4D872200057C2A /* AOSegmentedControl.m */,
+				5507E8580C74ED8500CC6B02 /* MameVersion.h */,
+				5507E8590C74ED8500CC6B02 /* MameVersion.m */,
 				556A4C650AA50F2800602CC5 /* main.m */,
 				5567C3730BBC57CE00EA2072 /* MameChud.h */,
 				5567C3630BBC56D100EA2072 /* MameOSXSharkEvents.text */,
@@ -9897,6 +9903,7 @@
 				55B6C6320C5BDA0F009CE244 /* GroupMO.h in Headers */,
 				55754F600C5E3B570035DB3B /* statemap.h in Headers */,
 				559DF5590C737E7A000B7385 /* DBPrefsWindowController.h in Headers */,
+				5507E85A0C74ED8500CC6B02 /* MameVersion.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13116,6 +13123,7 @@
 				55B6C6330C5BDA0F009CE244 /* GroupMO.m in Sources */,
 				55754F610C5E3B570035DB3B /* statemap.m in Sources */,
 				559DF55A0C737E7A000B7385 /* DBPrefsWindowController.m in Sources */,
+				5507E85B0C74ED8500CC6B02 /* MameVersion.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

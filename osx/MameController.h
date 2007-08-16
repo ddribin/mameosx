@@ -112,7 +112,6 @@ extern "C" {
     NSString * mFilterString;
     int mGameFilterIndex;
     BackgroundUpdater * mUpdater;
-    NSArray * mSelectedGames;
     NSArray * mMatchingGames;
     GroupMO * mFavoritesGroup;
     BOOL mShowClones;
@@ -149,7 +148,6 @@ extern "C" {
 - (IBAction) importFavorites: (id) sender;
 
 - (NSArray *) selectedGames;
-- (void) setSelectedGames: (NSArray *) theSelectedGames;
 
 - (NSArray *) matchingGames;
 
@@ -164,6 +162,7 @@ extern "C" {
 #pragma mark State
 
 - (BOOL) canAuditGames;
+- (BOOL) canAbortAudit;
 
 - (unsigned) selectionCount;
 - (BOOL) hasSelection;
@@ -245,6 +244,8 @@ extern "C" {
 - (IBAction) auditRoms: (id) sender;
 
 - (IBAction) auditSelectedGames: (id) sender;
+- (IBAction) auditUnauditedGames: (id) sender;
+- (IBAction) abortAudit: (id) sender;
 
 - (IBAction) showLogWindow: (id) sender;
 

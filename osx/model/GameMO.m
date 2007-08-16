@@ -1,6 +1,7 @@
 #import "GameMO.h"
 #import "GroupMO.h"
 #import "RomAuditSummary.h"
+#import "MameVersion.h"
 #import "NSXReturnThrowError.h"
 #import "JRLog.h"
 #import "audit.h"
@@ -216,6 +217,8 @@
     [summary autorelease];
     [self setAuditStatusValue: [summary status]];
     [self setAuditNotes: [summary notes]];
+    [self setAuditDate: [NSDate date]];
+    [self setAuditVersion: [MameVersion marketingVersion]];
 }
 
 //=========================================================== 

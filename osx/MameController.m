@@ -60,10 +60,12 @@ static const int kMameMaxGamesInHistory = 100;
 - (void) keyChanged: (NSString *) key;
 - (void) arrangedObjectsChanged;
 - (void) idleChanged;
-- (void) selectionCountChanged;
+- (void) auditingChanged;
+- (void) selectedGamesChanged;
 
 #pragma mark -
 
+- (void) updateScreenShot;
 - (void) updatePredicate;
 - (void) syncWithUserDefaults;
 - (void) setGameLoading: (BOOL) gameLoading;
@@ -156,6 +158,10 @@ static void exit_sleeper()
                forKeyPath: @"idle"
                   options: 0
                   context: @selector(idleChanged)];
+    [mUpdater addObserver: self
+               forKeyPath: @"audting"
+                  options: 0
+                  context: @selector(auditingChanged)];
     
     return self;
 }
@@ -179,10 +185,6 @@ static void exit_sleeper()
     NSString * screenshotComposition = 
         [myBundle pathForResource: @"screenshot" ofType: @"qtz"];
     [mScreenshotView loadCompositionFromFile: screenshotComposition];
-    [self bind: @"selectedGames"
-      toObject: mGamesController
-   withKeyPath: @"selectedObjects"
-       options: nil];
     
     // The panel should be a utility panel, but not floating.  This cannot
     // be set in Interface Builder.
@@ -195,9 +197,9 @@ static void exit_sleeper()
                              context: @selector(arrangedObjectsChanged)];
     
     [mGamesController addObserver: self
-                       forKeyPath: @"selectionIndexes.count"
+                       forKeyPath: @"selectedObjects"
                           options: 0
-                          context: @selector(selectionCountChanged)];
+                          context: @selector(selectedGamesChanged)];
     
     [self initVisualEffectsMenu];
     [self setVisualEffectEnabled: NO];
@@ -318,7 +320,7 @@ Returns the persistent store coordinator for the application.  This
     NSDictionary * storeInfo =
         [NSPersistentStoreCoordinator metadataForPersistentStoreWithURL: url error: &error];
     
-    if(![[storeInfo valueForKey: @"viewVersion"] isEqualToString: @"Version 4"])
+    if(![[storeInfo valueForKey: @"viewVersion"] isEqualToString: @"Version 5"])
     {
         [fileManager removeFileAtPath: [url path] handler: nil];
         [fileManager createDirectoryAtPath:applicationSupportFolder attributes: nil];
@@ -338,7 +340,7 @@ Returns the persistent store coordinator for the application.  This
     {
         managedObjectContext = [[NSManagedObjectContext alloc] init];
         [managedObjectContext setPersistentStoreCoordinator: persistentStoreCoordinator];
-        [[self class] setMetadata: @"Version 4" forKey: @"viewVersion"
+        [[self class] setMetadata: @"Version 5" forKey: @"viewVersion"
                    inStoreWithURL: url inContext: managedObjectContext];
     }
     
@@ -485,7 +487,7 @@ Performs the save action for the application, which is to send the save:
     if ([mUpdater isRunning])
         return;
     
-    NSArray * selectedGames = [mGamesController selectedObjects];
+    NSArray * selectedGames = [self selectedGames];
 
     NSString * status = @"";
     if ((selectedGames != nil) && ([selectedGames count] != 0))
@@ -568,31 +570,7 @@ Performs the save action for the application, which is to send the save:
 - (void) setGameFilterIndex: (int) gameFilterIndex;
 {
     mGameFilterIndex = gameFilterIndex;
-#if 0
-    static NSTableColumn * mSavedFavoritesColumn = nil;
-    static BOOL mShouldRestoreFavoritesColumn = NO;
-    if (mGamesTable == nil)
-    {
-        mSavedFavoritesColumn = [mFavoriteColumn retain];
-        mGamesTable = [[mFavoriteColumn tableView] retain];
-        [mGamesTable sizeLastColumnToFit];
-    }
-    if (mGameFilterIndex == 2)
-    {
-        [mGamesTable removeTableColumn: mSavedFavoritesColumn];
-        mShouldRestoreFavoritesColumn = YES;
-    }
-    else
-    {
-        if (mShouldRestoreFavoritesColumn)
-        {
-            [mGamesTable addTableColumn: mSavedFavoritesColumn];
-            mShouldRestoreFavoritesColumn = NO;
-        }
-    }
-#endif
-    [self willChangeValueForKey: @"matchingGames"];
-    [self didChangeValueForKey: @"matchingGames"];
+    [self keyChanged: @"matchingGames"];
     [self updatePredicate];
     [self updateGameFilterMenu];
 
@@ -627,7 +605,7 @@ Performs the save action for the application, which is to send the save:
 {
     GroupMO * favorites = [self favoritesGroup];
     
-    NSArray * games = [mGamesController selectedObjects];
+    NSArray * games = [self selectedGames];
     [games makeObjectsPerformSelector: @selector(toggleGroupMembership:)
                            withObject: favorites];
     // [self saveAction: nil];
@@ -663,37 +641,7 @@ Performs the save action for the application, which is to send the save:
 //=========================================================== 
 - (NSArray *) selectedGames
 {
-    return mSelectedGames; 
-}
-
-//=========================================================== 
-// - setSelectedGames:
-//=========================================================== 
-- (void) setSelectedGames: (NSArray *) theSelectedGames
-{
-    if (mSelectedGames == theSelectedGames)
-        return;
-    
-    NSBundle * myBundle = [NSBundle bundleForClass: [self class]];
-    NSString * screenshotDir = [[myBundle resourcePath] stringByAppendingPathComponent: @"empty_screenshot"];
-    [mSelectedGames release];
-    mSelectedGames = [theSelectedGames retain];
-    GameMO * selectedGame = nil;
-    if ([mSelectedGames count] == 1)
-        selectedGame = [mSelectedGames objectAtIndex: 0];
-    
-    if (selectedGame != nil)
-    {
-        NSString * dir = [[MamePreferences standardPreferences] snapshotDirectory];
-        dir = [dir stringByAppendingPathComponent: [selectedGame shortName]];
-        NSFileManager * manager = [NSFileManager defaultManager];
-        BOOL isDirectory = NO;
-        if ([manager fileExistsAtPath: dir isDirectory: &isDirectory])
-        {
-            screenshotDir = dir;
-        }
-    }
-    [mScreenshotView setValue: screenshotDir forInputKey: @"Image_Folder_Path"];
+    return [mGamesController selectedObjects];
 }
 
 - (NSArray *) matchingGames;
@@ -746,6 +694,11 @@ Performs the save action for the application, which is to send the save:
 - (BOOL) canAuditGames
 {
     return [mUpdater isIdle];
+}
+
+- (BOOL) canAbortAudit;
+{
+    return [mUpdater auditing];
 }
 
 - (unsigned) selectionCount;
@@ -1060,7 +1013,7 @@ Performs the save action for the application, which is to send the save:
     if ((sender == mGamesTable) && ([mGamesTable clickedRow] == -1))
         return;
     
-    NSArray * selectedGames = [mGamesController selectedObjects];
+    NSArray * selectedGames = [self selectedGames];
     if ([selectedGames count] != 1)
 
         return;
@@ -1240,7 +1193,16 @@ Performs the save action for the application, which is to send the save:
 {
     NSArray * selectedGames = [self selectedGames];
     [mUpdater auditGames: selectedGames];
-    
+}
+
+- (IBAction) auditUnauditedGames: (id) sender;
+{
+    [mUpdater auditUnauditedGames];
+}
+
+- (IBAction) abortAudit: (id) sender;
+{
+    [mUpdater abortAudit];
 }
 
 - (IBAction) showLogWindow: (id) sender;
@@ -1502,14 +1464,44 @@ Performs the save action for the application, which is to send the save:
     [self keyChanged: @"canAuditGames"];
 }
 
-- (void) selectionCountChanged;
+- (void) auditingChanged;
+{
+    [self keyChanged: @"canAbortAudit"];
+}
+
+- (void) selectedGamesChanged;
 {
     [self keysChanged: [NSArray arrayWithObjects:
         @"selectionCount", @"hasSelection", @"hasNoSelection",
         @"hasOneSelection", @"hasMultipleSelection", nil]];
+    [self updateScreenShot];
 }
 
 #pragma mark -
+
+- (void) updateScreenShot;
+{
+    NSArray * selectedGames = [self selectedGames];
+    
+    NSBundle * myBundle = [NSBundle bundleForClass: [self class]];
+    NSString * screenshotDir = [[myBundle resourcePath] stringByAppendingPathComponent: @"empty_screenshot"];
+    GameMO * selectedGame = nil;
+    if ([selectedGames count] == 1)
+        selectedGame = [selectedGames objectAtIndex: 0];
+    
+    if (selectedGame != nil)
+    {
+        NSString * dir = [[MamePreferences standardPreferences] snapshotDirectory];
+        dir = [dir stringByAppendingPathComponent: [selectedGame shortName]];
+        NSFileManager * manager = [NSFileManager defaultManager];
+        BOOL isDirectory = NO;
+        if ([manager fileExistsAtPath: dir isDirectory: &isDirectory])
+        {
+            screenshotDir = dir;
+        }
+    }
+    [mScreenshotView setValue: screenshotDir forInputKey: @"Image_Folder_Path"];
+}
 
 - (void) updatePredicate;
 {

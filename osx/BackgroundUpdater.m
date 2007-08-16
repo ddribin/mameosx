@@ -28,6 +28,7 @@ static NSString * kBackgroundUpdaterIdle = @"BackgroundUpdaterIdle";
 
 - (void) idle: (NSNotification *) notification;
 - (void) save;
+- (NSArray *) fetchGamesThatNeedAudit;
 
 @end
 
@@ -43,6 +44,8 @@ static NSString * kBackgroundUpdaterIdle = @"BackgroundUpdaterIdle";
     mRunning = NO;
     mShortNames = nil;
     mIndexByShortName = [[NSMutableDictionary alloc] init];
+    mIdle = NO;
+    mAuditing = NO;
     
     [[NSNotificationCenter defaultCenter] addObserver: self
                                              selector: @selector(idle:)
@@ -94,6 +97,18 @@ static NSString * kBackgroundUpdaterIdle = @"BackgroundUpdaterIdle";
     [self postIdleNotification];
 }
 
+- (void) auditUnauditedGames;
+{
+    [mFsm AuditGames: [self fetchGamesThatNeedAudit]];
+    mRunning = YES;
+    [self postIdleNotification];
+}
+
+- (void) abortAudit;
+{
+    [mFsm AbortAudit];
+}
+
 - (BOOL) isIdle;
 {
     return mIdle;
@@ -102,6 +117,16 @@ static NSString * kBackgroundUpdaterIdle = @"BackgroundUpdaterIdle";
 - (void) setIdle: (BOOL) idle;
 {
     mIdle = idle;
+}
+
+- (BOOL) auditing;
+{
+    return mAuditing;
+}
+
+- (void) setAuditing: (BOOL) auditing;
+{
+    mAuditing = auditing;
 }
 
 #pragma mark -
@@ -259,9 +284,7 @@ static NSString * kBackgroundUpdaterIdle = @"BackgroundUpdaterIdle";
 
 - (void) prepareToAuditAllGames;
 {
-    NSManagedObjectContext * context = [mController managedObjectContext];
-    
-    JRLogDebug(@"Prepare to audit games");
+    JRLogDebug(@"Prepare to audit all games");
     
     [mCurrentGame release];
     [mGameEnumerator release];
@@ -269,35 +292,20 @@ static NSString * kBackgroundUpdaterIdle = @"BackgroundUpdaterIdle";
     mGameEnumerator = nil;
     
     [self save];
-    
-    NSFetchRequest *fetchRequest = [[[NSFetchRequest alloc] init] autorelease];
-    [fetchRequest setEntity: [GameMO entityInContext: context]];
-    
-    [fetchRequest setPredicate: [NSPredicate predicateWithFormat: @"(auditStatus == NIL)"]]; 
-    
-    // make sure the results are sorted as well
-    [fetchRequest setSortDescriptors: [GameMO sortByLongName]];
-    // Execute the fetch
-    NSError * error = nil;
-    JRLogDebug(@"Fetching games that need audit");
-    NSArray * allGames = [context executeFetchRequest:fetchRequest error:&error];
-    JRLogDebug(@"Games that need audit: %d", [allGames count]);
+    NSArray * gamesThatNeedAudit = [NSArray array];
+    if ([[MamePreferences standardPreferences] auditAtStartup])
+        gamesThatNeedAudit = [self fetchGamesThatNeedAudit];
 
-    [mController backgroundUpdateWillBeginAudits: [allGames count]];
-    mCurrentGameIndex = 0;
-    mGameEnumerator = [[allGames objectEnumerator] retain];
-    mLastSave = [NSDate timeIntervalSinceReferenceDate];
-    mLastStatus = [[NSDate distantPast] timeIntervalSinceReferenceDate];
+    [self prepareToAuditGames: gamesThatNeedAudit];
 }
 
-- (void) prepareToAuditSelectedGames: (NSArray *) selectedGames;
+- (void) prepareToAuditGames: (NSArray *) games;
 {
-    NSLog(@"Audit games: %@", selectedGames);
-    JRLogDebug(@"Games that need audit: %d", [selectedGames count]);
+    JRLogDebug(@"Games that need audit: %d", [games count]);
     
-    [mController backgroundUpdateWillBeginAudits: [selectedGames count]];
+    [mController backgroundUpdateWillBeginAudits: [games count]];
     mCurrentGameIndex = 0;
-    mGameEnumerator = [[selectedGames objectEnumerator] retain];
+    mGameEnumerator = [[games objectEnumerator] retain];
     mLastSave = [NSDate timeIntervalSinceReferenceDate];
     mLastStatus = [[NSDate distantPast] timeIntervalSinceReferenceDate];
 }
@@ -338,8 +346,6 @@ static NSString * kBackgroundUpdaterIdle = @"BackgroundUpdaterIdle";
 
 - (void) cleanUp;
 {
-    NSManagedObjectContext * context = [mController managedObjectContext];
-    
     JRLogDebug(@"Cleaning up");
     [mController backgroundUpdateWillFinish];
     
@@ -406,6 +412,22 @@ static NSString * kBackgroundUpdaterIdle = @"BackgroundUpdaterIdle";
     }
     else
         JRLogDebug(@"Skipping save");
+}
+
+- (NSArray *) fetchGamesThatNeedAudit;
+{
+    NSManagedObjectContext * context = [mController managedObjectContext];
+    NSFetchRequest * fetchRequest = [[[NSFetchRequest alloc] init] autorelease];
+    [fetchRequest setEntity: [GameMO entityInContext: context]];
+    
+    [fetchRequest setPredicate: [NSPredicate predicateWithFormat: @"(auditStatus == NIL)"]]; 
+    
+    // make sure the results are sorted as well
+    [fetchRequest setSortDescriptors: [GameMO sortByLongName]];
+    // Execute the fetch
+    NSError * error = nil;
+    JRLogDebug(@"Fetching games that need audit");
+    return [context executeFetchRequest: fetchRequest error: &error];
 }
 
 @end

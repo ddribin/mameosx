@@ -73,6 +73,7 @@ NSString * MameLinearFilterKey = @"LinearFilter";
 NSString * MameVisualEffectKey = @"VisualEffect";
 NSString * MameSmoothFontKey = @"SmoothFont";
 NSString * MameGrabMouseKey = @"GrabMouse";
+NSString * MameAuditAtStartupKey = @"AuditAtStartup";
 
 NSString * MameRomPath = @"RomPath";
 NSString * MameDiskImagePath = @"DiskImagePath";
@@ -221,6 +222,8 @@ NSString * MameBackgroundUpdateDebugKey = @"BackgroundUpdateDebug";
     
     [defaultValues setObject: no
                       forKey: MameGrabMouseKey];
+    
+    [defaultValues setObject: yes forKey: MameAuditAtStartupKey];
     
 #ifdef MAME_DEBUG
     [defaultValues setObject: no
@@ -444,6 +447,16 @@ NSString * MameBackgroundUpdateDebugKey = @"BackgroundUpdateDebug";
 - (void) setGrabMouse: (BOOL) grabMouse;
 {
     [mDefaults setBool: grabMouse forKey: MameGrabMouseKey];
+}
+
+- (BOOL) auditAtStartup;
+{
+    return [mDefaults boolForKey: MameAuditAtStartupKey];
+}
+
+- (void) setAuditAtStartup: (BOOL) auditAtStartup;
+{
+    [mDefaults setBool: auditAtStartup forKey: MameAuditAtStartupKey];
 }
 
 #pragma mark -
