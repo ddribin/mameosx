@@ -42,7 +42,7 @@ Exit { setAuditing(NO); }
 Default
 {
     Pause push(Paused) { }
-    DoWork nil { }
+    DoWork nil { defaultWork(); }
 }
 
 Paused
@@ -51,6 +51,7 @@ Exit { restoreState(); }
 {
     Pause nil { }
     Resume pop() { }
+    DoWork nil { }
 }
 
 %%

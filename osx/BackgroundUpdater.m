@@ -360,6 +360,14 @@ static NSString * kBackgroundUpdaterIdle = @"BackgroundUpdaterIdle";
     JRLogDebug(@"Background update done");
 }
 
+- (void) defaultWork;
+{
+    // Should never really get here, so just make sure everything is cleaned up,
+    // and make sure we don't idle again.
+    [self freeResources];
+    mRunning = NO;
+}
+
 @end
 
 @implementation BackgroundUpdater (Private)

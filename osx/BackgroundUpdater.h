@@ -66,5 +66,6 @@
 - (void) prepareToAuditGames: (NSArray *) games;
 - (void) auditGames;
 - (void) cleanUp;
+- (void) defaultWork;
 
 @end
