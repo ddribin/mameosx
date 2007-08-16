@@ -177,7 +177,7 @@
 {
     NSNumber * auditStatus = [self auditStatus];
     if (auditStatus == nil)
-        return @"N/A";
+        return @"Never Audited";
     
     switch ([auditStatus intValue])
     {
