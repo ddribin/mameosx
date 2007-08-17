@@ -67,6 +67,7 @@ static const int kMameMaxGamesInHistory = 100;
 
 - (void) updateScreenShot;
 - (void) updatePredicate;
+- (void) updateDragView;
 - (void) syncWithUserDefaults;
 - (void) setGameLoading: (BOOL) gameLoading;
 - (void) setGameRunning: (BOOL) gameRunning;
@@ -190,6 +191,8 @@ static void exit_sleeper()
     // be set in Interface Builder.
     [mInfoPanel setFloatingPanel: NO];
     [mInfoAuditNotes setFont: [NSFont systemFontOfSize: [NSFont smallSystemFontSize]]];
+
+    [self updateDragView];
     
     [mAllGamesController addObserver: self
                           forKeyPath: @"arrangedObjects"
@@ -535,6 +538,7 @@ Performs the save action for the application, which is to send the save:
         [mScreenshotSplit setHidden: NO];
     else
         [mScreenshotSplit setHidden: YES];
+    [self updateDragView];
 #endif
 }
 
@@ -1532,6 +1536,14 @@ Performs the save action for the application, which is to send the save:
     predicate = [predicate predicateWithSubstitutionVariables: variables];
     
     [mGamesController setFilterPredicate: predicate];
+}
+
+- (void) updateDragView;
+{
+    if ([mScreenshotSplit isHidden])
+        [mDragView setImage: [NSImage imageNamed: @"BottomBar"]];
+    else
+        [mDragView setImage: [NSImage imageNamed: @"DBSourceSplitViewThumb"]];
 }
 
 - (void) exitAlertDidEnd: (NSAlert *) aler
