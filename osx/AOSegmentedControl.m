@@ -22,6 +22,8 @@
  * SOFTWARE.
  */
 
+#import "AOSegmentedControl.h"
+
 #define NormalSegmentedCellStyle 1
 #define FlatSegmentedCellStyle 2
 

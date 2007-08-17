@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-#import <Cocoa/Cocoa.h>
+#import <AppKit/AppKit.h>
 
 /*
  * See:
