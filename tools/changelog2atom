@@ -53,7 +53,7 @@ def changelog2atom(changelog, target = $stdout)
         
         if (!release.files.nil?)
           dmg_file = release.files.find { |f| f.name =~ /\.dmg$/ }
-          xml.link :rel => 'enclosure', :type => "application/octet-stream",
+          xml.link :rel => 'enclosure', :type => "application/x-apple-diskimage",
             :title => "Disk Image",
             :href => "http://prdownloads.sourceforge.net/mameosx/" +
               dmg_file.name + "?download",
