@@ -1,8 +1,8 @@
 #!/bin/sh
 
 export PROJECT_NAME="mameosx"
-export CONFIGURATION="Debug"
-export TARGET="MAME OS X.app"
+export CONFIGURATION="${CONFIGURATION:-Debug}"
+export TARGET="${TARGET:-MAME OS X.app}"
 
 export SRCROOT="$PWD"
 export OBJROOT="${PWD}/build"
