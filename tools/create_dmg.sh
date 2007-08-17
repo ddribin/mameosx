@@ -31,4 +31,8 @@ if [ -e "$DISK_IMAGE" ]; then
     rm -f "$DISK_IMAGE"
 fi
 
-hdiutil convert -format UDBZ -o "${DISK_IMAGE}" "${TEMPLATE_IMAGE}"
+#COMPRESSION="-format UDZO -imagekey zlib-level=9"
+COMPRESSION="-format UDBZ"
+#COMPRESSION="-format UDRO"
+hdiutil convert ${COMPRESSION} -o "${DISK_IMAGE}" "${TEMPLATE_IMAGE}"
+#bzip2 "${DISK_IMAGE}"
