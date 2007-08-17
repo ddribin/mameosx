@@ -2,7 +2,12 @@
 - version: "<%=version%>"
   date: xxx
   changes:
-    - Major UI overhaul.
+    - Upgrade to 0.118 baseline.
+    - Major UI overhaul based on audit status.
+    - Allow multiple keyboards to be used as separate devices.
+    - Allow multiple mice to be used as separate devices.
+    - Preferences window uses standard OS X style toolbar.
+    - Help manual is formatted more OS X standard.
 
 <% version = "0.117-1" %>
 - version: "<%=version%>"
