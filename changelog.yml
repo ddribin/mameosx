@@ -8,6 +8,11 @@
     - Allow multiple mice to be used as separate devices.
     - Preferences window uses standard OS X style toolbar.
     - Help manual is broken out into several pages.
+  files:
+    - name: MAMEOSX-<%=version%>.dmg
+      size: 25212804
+    - name: mameosx-<%=version%>.tgz
+      size: 15144723
 
 <% version = "0.117-1" %>
 - version: "<%=version%>"
