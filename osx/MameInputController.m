@@ -206,7 +206,6 @@ static NSString * format(NSString * format, ...);
 
 - (void) osd_customize_inputport_list: (input_port_default_entry *) defaults;
 {
-#if 0
     input_port_default_entry *idef = defaults;
     
     // loop over all the defaults
@@ -214,16 +213,15 @@ static NSString * format(NSString * format, ...);
     {
         switch (idef->type)
         {
-            case IPT_OSD_3:
+            case IPT_UI_FAST_FORWARD:
                 idef->token = "FAST_FORWARD";
                 idef->name = "Fast Forward";
-                seq_set_1(&idef->defaultseq, KEYCODE_PGDN);
+                input_seq_set_1(&idef->defaultseq, KEYCODE_PGDN);
                 break;
         }
         
         idef++;
     }
-#endif
 }
 
 @end
