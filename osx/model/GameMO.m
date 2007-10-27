@@ -1,6 +1,7 @@
 #import "GameMO.h"
 #import "GroupMO.h"
 #import "RomAuditSummary.h"
+#import "MameConfiguration.h"
 #import "MameVersion.h"
 #import "NSXReturnThrowError.h"
 #import "JRLog.h"
@@ -208,7 +209,8 @@
     int res;
     
     /* audit the ROMs in this set */
-    recordCount = audit_images(drivers[driverIndex], AUDIT_VALIDATE_FAST, &auditRecords);
+    recordCount = audit_images([[MameConfiguration defaultConfiguration] coreOptions],
+                               drivers[driverIndex], AUDIT_VALIDATE_FAST, &auditRecords);
     RomAuditSummary * summary =
         [[RomAuditSummary alloc] initWithGameIndex: driverIndex
                                        recordCount: recordCount

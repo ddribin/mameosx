@@ -25,7 +25,6 @@
 #import "MameConfiguration.h"
 #import "MameController.h"
 #import "MameFileManager.h"
-#include "mame.h"
 #include <mach/mach_host.h>
 #include <mach/host_info.h>
 
@@ -64,9 +63,14 @@ static MameConfiguration * sDefaultConfiguration = nil;
     if (self == nil)
         return nil;
 
-    mame_options_init(NULL);
+    mCoreOptions = mame_options_init(NULL);
 
     return self;
+}
+
+- (core_options *) coreOptions;
+{
+    return mCoreOptions;
 }
 
 #pragma mark -
@@ -321,31 +325,31 @@ static MameConfiguration * sDefaultConfiguration = nil;
 {
     if (stringValue == nil)
         return;
-    options_set_string(mame_options(), name, [stringValue UTF8String], OPTION_PRIORITY_CMDLINE);
+    options_set_string(mCoreOptions, name, [stringValue UTF8String], OPTION_PRIORITY_CMDLINE);
 }
 
 - (NSString *) getStringOption: (const char *) name;
 {
-    const char * value = options_get_string(mame_options(), name);
+    const char * value = options_get_string(mCoreOptions, name);
     return [NSString stringWithUTF8String: value];
 }
 
 - (void) setBoolOption: (BOOL) boolValue
               withName: (const char *) name;
 {
-    options_set_bool(mame_options(), name, boolValue, OPTION_PRIORITY_CMDLINE);
+    options_set_bool(mCoreOptions, name, boolValue, OPTION_PRIORITY_CMDLINE);
 }
 
 - (void) setIntOption: (int) intValue
              withName: (const char *) name;
 {
-    options_set_int(mame_options(), name, intValue, OPTION_PRIORITY_CMDLINE);
+    options_set_int(mCoreOptions, name, intValue, OPTION_PRIORITY_CMDLINE);
 }
 
 - (void) setFloatOption: (float) floatvalue
                withName: (const char *) name;
 {
-    options_set_float(mame_options(), name, floatvalue, OPTION_PRIORITY_CMDLINE);
+    options_set_float(mCoreOptions, name, floatvalue, OPTION_PRIORITY_CMDLINE);
 }
 
 @end

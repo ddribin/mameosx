@@ -104,16 +104,17 @@
         game = [[arguments objectAtIndex: 0] UTF8String];
     }
     
+    core_options * options = mame_options_init(NULL);
     if (_listxml)
-        cli_info_listxml(game);
+        cli_info_listxml(options, game);
     else if (_listfull)
-        cli_info_listfull(game);
+        cli_info_listfull(options, game);
     else if (_listsource)
-        cli_info_listsource(game);
+        cli_info_listsource(options, game);
     else if (_listclones)
-        cli_info_listclones(game);
+        cli_info_listclones(options, game);
     else if (_listcrc)
-        cli_info_listcrc(game);
+        cli_info_listcrc(options, game);
     
     return 0;
 }

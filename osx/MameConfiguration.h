@@ -23,15 +23,19 @@
  */
 
 #import <Cocoa/Cocoa.h>
+#include "mame.h"
 
 
 @class MameFileManager;
 
 @interface MameConfiguration : NSObject
 {
+    core_options * mCoreOptions;
 }
 
 + (MameConfiguration *) defaultConfiguration;
+
+- (core_options *) coreOptions;
 
 #pragma mark -
 #pragma mark Directories and paths

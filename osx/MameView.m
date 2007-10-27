@@ -1146,7 +1146,9 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     mMameIsPaused = NO;
     // [self updateMouseCursor];
     
-    int exitStatus = mame_execute();
+    MameConfiguration * configuration =
+        [MameConfiguration defaultConfiguration];
+    int exitStatus = mame_execute([configuration coreOptions]);
     mMameIsRunning = NO;
     mMameIsPaused = NO;
     [self updateMouseCursor];
