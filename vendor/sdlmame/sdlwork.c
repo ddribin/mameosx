@@ -10,9 +10,9 @@
 //============================================================
 
 // MinGW does not have pthreads, defer to Aaron's implementation on that platform
-#ifdef SDLMAME_WIN32
+#if defined(SDLMAME_WIN32)
 #include "../windows/winwork.c"
-#elif SDLMAME_OS2	// use separate OS/2 implementation
+#elif defined(SDLMAME_OS2)	// use separate OS/2 implementation
 #include "os2work.c"
 #else
 
@@ -133,19 +133,19 @@ INLINE long interlocked_decrement(long volatile *addend)
 	return ret;
 }
 
-#elif defined(__ppc64__)
+#elif defined(__ppc64__) || defined(__PPC64__)
 
 INLINE void * compare_exchange_pointer(void * volatile *ptr, void *exchange, void *compare)
 {
 	register void *ret;
 	__asm__ __volatile__ (
-		"1: sync @"
-		" ldarx %[ret], 0, %[ptr] @"
-		" cmpd %[compare], %[ret] @"
-		" bne 2f @"
-		" stdcx. %[exchange], 0, %[ptr] @"
-		" bne-- 1b @"
-		" sync @"
+		"1: sync \n"
+		" ldarx %[ret], 0, %[ptr] \n"
+		" cmpd %[compare], %[ret] \n"
+		" bne 2f \n"
+		" stdcx. %[exchange], 0, %[ptr] \n"
+		" bne-- 1b \n"
+		" sync \n"
 		"2: "
 		: [ret] "=&r" (ret)
 		: [ptr] "r" (ptr)
@@ -160,12 +160,12 @@ INLINE long interlocked_increment(long volatile *addend)
 {
 	register long ret;
 	__asm__ __volatile__ (
-		"1: sync @"
-		" ldarx %[ret], 0, %[addend] @"
-		" addi %[ret], %[ret], 1 @"
-		" stdcx. %[ret], 0, %[addend] @"
-		" bne-- 1b @"
-		" sync @"
+		"1: sync \n"
+		" ldarx %[ret], 0, %[addend] \n"
+		" addi %[ret], %[ret], 1 \n"
+		" stdcx. %[ret], 0, %[addend] \n"
+		" bne-- 1b \n"
+		" sync \n"
 		: [ret] "=&b" (ret)
 		: [addend] "r" (addend)
 		: "%cc"
@@ -177,12 +177,12 @@ INLINE long interlocked_decrement(long volatile *addend)
 {
 	register long ret;
 	__asm__ __volatile__ (
-		"1: sync @"
-		" ldarx %[ret], 0, %[addend] @"
-		" addi %[ret], %[ret], -1 @"
-		" stdcx. %[ret], 0, %[addend] @"
-		" bne-- 1b @"
-		" sync @"
+		"1: sync \n"
+		" ldarx %[ret], 0, %[addend] \n"
+		" addi %[ret], %[ret], -1 \n"
+		" stdcx. %[ret], 0, %[addend] \n"
+		" bne-- 1b \n"
+		" sync \n"
 		: [ret] "=&b" (ret)
 		: [addend] "r" (addend)
 		: "%cc"
@@ -190,19 +190,19 @@ INLINE long interlocked_decrement(long volatile *addend)
 	return ret;
 }
 
-#elif defined(__ppc__)
+#elif defined(__ppc__) || defined(__PPC__)
 
 INLINE void * compare_exchange_pointer(void * volatile *ptr, void *exchange, void *compare)
 {
 	register void *ret;
 	__asm__ __volatile__ (
-		"1: sync @"
-		" lwarx %[ret], 0, %[ptr] @"
-		" cmpw %[compare], %[ret] @"
-		" bne 2f @"
-		" stwcx. %[exchange], 0, %[ptr] @"
-		" bne- 1b @"
-		" sync @"
+		"1: sync \n"
+		" lwarx %[ret], 0, %[ptr] \n"
+		" cmpw %[compare], %[ret] \n"
+		" bne 2f \n"
+		" stwcx. %[exchange], 0, %[ptr] \n"
+		" bne- 1b \n"
+		" sync \n"
 		"2: "
 		: [ret] "=&r" (ret)
 		: [ptr] "r" (ptr)
@@ -217,12 +217,12 @@ INLINE long interlocked_increment(long volatile *addend)
 {
 	register long ret;
 	__asm__ __volatile__ (
-		"1: sync @"
-		" lwarx %[ret], 0, %[addend] @"
-		" addi %[ret], %[ret], 1 @"
-		" stwcx. %[ret], 0, %[addend] @"
-		" bne- 1b @"
-		" sync @"
+		"1: sync \n"
+		" lwarx %[ret], 0, %[addend] \n"
+		" addi %[ret], %[ret], 1 \n"
+		" stwcx. %[ret], 0, %[addend] \n"
+		" bne- 1b \n"
+		" sync \n"
 		: [ret] "=&b" (ret)
 		: [addend] "r" (addend)
 		: "%cc"
@@ -234,12 +234,12 @@ INLINE long interlocked_decrement(long volatile *addend)
 {
 	register long ret;
 	__asm__ __volatile__ (
-		"1: sync @"
-		" lwarx %[ret], 0, %[addend] @"
-		" addi %[ret], %[ret], -1 @"
-		" stwcx. %[ret], 0, %[addend] @"
-		" bne- 1b @"
-		" sync @"
+		"1: sync \n"
+		" lwarx %[ret], 0, %[addend] \n"
+		" addi %[ret], %[ret], -1 \n"
+		" stwcx. %[ret], 0, %[addend] \n"
+		" bne- 1b \n"
+		" sync \n"
 		: [ret] "=&b" (ret)
 		: [addend] "r" (addend)
 		: "%cc"
@@ -394,7 +394,8 @@ int osd_work_queue_wait(osd_work_queue *queue, osd_ticks_t timeout)
 			return FALSE;
 	} while( 1 );
 
-	return FALSE;
+	//Never get here
+	//return FALSE;
 }
 
 
@@ -561,7 +562,8 @@ int osd_work_item_wait(osd_work_item *item, osd_ticks_t timeout)
 			return FALSE;
 	} while( 1 );
 
-	return item->complete;
+	// We never get here
+	// return item->complete;
 }
 
 
