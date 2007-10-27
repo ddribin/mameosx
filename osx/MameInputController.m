@@ -23,6 +23,7 @@
  */
 
 #import "MameInputController.h"
+#import "MameKeyboard.h"
 #import "DDHidLib.h"
 
 // MAME headers
@@ -59,8 +60,6 @@ static NSString * format(NSString * format, ...);
 @interface MameInputControllerPrivate : NSObject
 {
   @public
-    int mTotalCodes;
-    uint32_t mKeyStates[MAX_KEYS];
     NSMutableArray * mDeviceNames;
     NSMutableArray * mDevices;
     BOOL mEnabled;
@@ -101,25 +100,15 @@ static NSString * format(NSString * format, ...);
 
 @end
 
+
 @interface MameInputController (Private)
 
 - (BOOL) addDevice: (DDHidDevice *) device tag: (int) tag;
-
-- (void) initKeyCodes;
 
 - (void) initJoyCodes;
 
 - (void) initMouseCodes;
 
-@end
-
-@interface MameInputController (DDHidKeyboardDelegate)
-
-- (void) ddhidKeyboard: (DDHidKeyboard *) keyboard
-               keyDown: (unsigned) usageId;
-
-- (void) ddhidKeyboard: (DDHidKeyboard *) keyboard
-                 keyUp: (unsigned) usageId;
 @end
 
 @interface MameInputController (DDHidJoystickDelegate)
@@ -159,40 +148,47 @@ static NSString * format(NSString * format, ...);
     
     p = [[MameInputControllerPrivate alloc] init];
     p->mEnabled = NO;
+    mDevices = [[NSMutableArray alloc] init];
     
     return self;
 }
 
 - (void) dealloc
 {
-    [p dealloc];
+    [p release];
+    [mDevices release];
+    
+    p = nil;
+    mDevices = nil;
+    
     [super dealloc];
 }
 
 
 - (void) osd_init;
 {
-    p->mTotalCodes = 0;
     [p->mDevices removeAllObjects];
     [p->mDeviceNames removeAllObjects];
 
-    [self initKeyCodes];
+    [mDevices removeAllObjects];
+    [mDevices addObjectsFromArray: [MameKeyboard allKeyboards]];
+
     [self initJoyCodes];
     [self initMouseCodes];
-
-    int i;
-    for (i = 0; i < 256; i++)
-    {
-        p->mKeyStates[i] = 0;
-    }
 }
 
 - (void) gameFinished;
 {
+    [mDevices makeObjectsPerformSelector: @selector(stopListening)];
+    [mDevices removeAllObjects];
+
     [p->mDevices makeObjectsPerformSelector: @selector(stopListening)];
     [p->mDevices removeAllObjects];
     [p->mDeviceNames removeAllObjects];
 }
+
+// Todo: Fix keyboard enabled static hack
+static BOOL sEnabled = NO;
 
 - (BOOL) enabled;
 {
@@ -202,6 +198,12 @@ static NSString * format(NSString * format, ...);
 - (void) setEnabled: (BOOL) enabled;
 {
     p->mEnabled = enabled;
+    NSEnumerator * e = [mDevices objectEnumerator];
+    MameInputDevice * device;
+    while (device = [e nextObject])
+    {
+        [device setEnabled: enabled];
+    }
 }
 
 - (void) osd_customize_inputport_list: (input_port_default_entry *) defaults;
@@ -247,57 +249,6 @@ static NSString * format(NSString * format, ...);
         success = NO;
     }
     return success;
-}
-
-static INT32 keyboardGetState(void *device_internal, void *item_internal)
-{
-    uint32_t tag = (uint32_t) device_internal;
-    uint32_t keyboardBit = 1 << tag;
-    uint32_t * keyState = (uint32_t *) item_internal;
-    return ((*keyState & keyboardBit) != 0)? 1 : 0;
-}
-
-- (void) initKeyCodes;
-{
-    int keyboardTag = 0;
-    NSArray * keyboards = [DDHidKeyboard allKeyboards];
-    int keyboardCount = MIN([keyboards count], MAX_KEYBOARDS);
-    int keyboardNumber;
-    for (keyboardNumber = 0; keyboardNumber < keyboardCount; keyboardNumber++)
-    {
-        DDHidKeyboard * keyboard = [keyboards objectAtIndex: keyboardNumber];
-        JRLogInfo(@"Found keyboard: %@ (%@)",
-                  [keyboard productName], [keyboard manufacturer]);
-        if (![self addDevice: keyboard tag: keyboardTag])
-        {
-            JRLogInfo(@"Could not add keyboard, skipping");
-            continue;
-        }
-        [keyboard setDelegate: self];
-        
-        NSString * name = [NSString stringWithFormat: @"Keyboard %d", keyboardTag];
-        JRLogInfo(@"Adding keyboard device: %@", name);
-        input_device * device = input_device_add(DEVICE_CLASS_KEYBOARD,
-                                                 [name UTF8String],
-                                                 (void *) keyboardTag);
-        
-        
-        int i = 0;
-        while (sKeyboardTranslationTable[i].name != 0)
-        {
-            os_code_info * currentKey = &sKeyboardTranslationTable[i];
-            uint32_t * keyState = &p->mKeyStates[currentKey->oscode];
-            input_device_item_add(device,
-                                  currentKey->name,
-                                  keyState,
-                                  currentKey->itemId,
-                                  keyboardGetState);
-
-            i++;
-        }
-        
-        keyboardTag++;
-    }
 }
 
 static INT32 joystickAxisGetState(void *device_internal, void *item_internal)
@@ -538,25 +489,6 @@ static INT32 mouseButtonGetState(void *device_internal, void *item_internal)
 
 @end
 
-@implementation MameInputController (DDHidKeyboardDelegate)
-
-- (void) ddhidKeyboard: (DDHidKeyboard *) keyboard
-               keyDown: (unsigned) usageId;
-{
-    uint32_t keyboardBit = 1 << [keyboard tag];
-    uint32_t * keyState = &p->mKeyStates[usageId];
-    *keyState |= keyboardBit;
-}
-
-- (void) ddhidKeyboard: (DDHidKeyboard *) keyboard
-                 keyUp: (unsigned) usageId;
-{
-    uint32_t keyboardBit = 1 << [keyboard tag];
-    uint32_t * keyState = &p->mKeyStates[usageId];
-    *keyState &= ~keyboardBit;
-}
-
-@end
 
 @implementation MameInputController (DDHidJoystickDelegate)
 

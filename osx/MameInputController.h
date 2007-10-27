@@ -23,22 +23,22 @@
  */
 
 #import <Cocoa/Cocoa.h>
+#import "MameInputDevice.h"
 #include "osdepend.h"
+
+
 
 @class MameInputControllerPrivate;
 
 @interface MameInputController : NSObject
 {
     MameInputControllerPrivate * p;
+    NSMutableArray * mDevices;
 }
 
 - (void) osd_init;
 - (void) gameFinished;
 
-#if 0
-- (const os_code_info *) osd_get_code_list;
-- (INT32) osd_get_code_value: (os_code) code;
-#endif
 - (void) osd_customize_inputport_list: (input_port_default_entry *) defaults;
 
 - (BOOL) enabled;

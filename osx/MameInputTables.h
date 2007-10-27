@@ -23,13 +23,13 @@
  */
 
 #include <IOKit/hid/IOHIDUsageTables.h>
+#import "MameInputController.h"
 
 #define MAX_KEYBOARDS       32
 #define MAX_MICE            8
 #define MAX_JOYSTICKS       8
 #define MAX_LIGHTGUNS       2
 
-#define MAX_KEYS            256
 #define MAX_JOY             256
 #define MAX_AXES            8
 #define MAX_BUTTONS         32

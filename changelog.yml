@@ -1,3 +1,9 @@
+<% version = "0.110" %>
+- version: "<%=version%>"
+  date: xxx
+  changes:
+    - Upgrade to 0.119 baseline.
+
 <% version = "0.118" %>
 - version: "<%=version%>"
   date: 2007-08-17
