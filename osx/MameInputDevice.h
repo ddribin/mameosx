@@ -15,10 +15,20 @@
     @protected
     DDHidDevice * mDevice;
     int mMameTag;
-    BOOL mEnabled;
+
+    /* 
+     * Pointer into MameInputController's enabled flag.  This allows us
+     * to check the enabled state without sending a message.  This is important
+     * in the input callbacks because they get called every frame and for
+     * each input element.  This does add a reverse dependency to the input
+     * controller, but it's too much pain to keep our own enabled flag with
+     * threading issues and such.
+     */
+    BOOL * mEnabled;
 }
 
-- (id) initWithDevice: (DDHidDevice *) device mameTag: (int) mameTag;
+- (id) initWithDevice: (DDHidDevice *) device mameTag: (int) mameTag
+              enabled: (BOOL *) enabled;
 
 - (void) osd_init;
 
@@ -27,8 +37,5 @@
 - (BOOL) tryStartListening;
 
 - (void) stopListening;
-
-- (BOOL) enabled;
-- (void) setEnabled: (BOOL) flag;
 
 @end

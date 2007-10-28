@@ -34,6 +34,7 @@
 {
     MameInputControllerPrivate * p;
     NSMutableArray * mDevices;
+    BOOL mEnabled;
 }
 
 - (void) osd_init;

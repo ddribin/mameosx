@@ -26,37 +26,22 @@
 
 @implementation MameKeyboard
 
+- (uint32_t) getState: (int) key;
+{
+    if (!mEnabled)
+        return 0;
+    return mKeyStates[key];
+}
+
+
 static INT32 keyboardGetState(void *device_internal, void *item_internal)
 {
     MameKeyboard * keyboard = (MameKeyboard *) device_internal;
-    int key = (int) item_internal;
-    return [keyboard getState: key];
-}
-
-+ (NSArray *) allKeyboards;
-{
-    NSMutableArray * startedKeyboards = [NSMutableArray array];
-    int keyboardTag = 0;
-    NSArray * keyboards = [DDHidKeyboard allKeyboards];
-    int keyboardCount = [keyboards count];
-    int keyboardNumber;
-    for (keyboardNumber = 0; keyboardNumber < keyboardCount; keyboardNumber++)
-    {
-        DDHidKeyboard * hidKeyboard = [keyboards objectAtIndex: keyboardNumber];
-        JRLogInfo(@"Found keyboard: %@ (%@)",
-                  [hidKeyboard productName], [hidKeyboard manufacturer]);
-        MameKeyboard * keyboard = [[MameKeyboard alloc] initWithDevice: hidKeyboard
-                                                               mameTag: keyboardTag];
-        [keyboard autorelease];
-        if ([keyboard tryStartListening])
-        {
-            [keyboard osd_init];
-            [startedKeyboards addObject: keyboard];
-            keyboardTag++;
-        }
-    }
+    if (!(*keyboard->mEnabled))
+        return 0;
     
-    return startedKeyboards;
+    int key = (int) item_internal;
+    return keyboard->mKeyStates[key];
 }
 
 - (void) osd_init;
@@ -88,13 +73,6 @@ static INT32 keyboardGetState(void *device_internal, void *item_internal)
     {
         mKeyStates[i] = 0;
     }
-}
-
-- (uint32_t) getState: (int) key;
-{
-    if (!mEnabled)
-        return 0;
-    return mKeyStates[key];
 }
 
 @end

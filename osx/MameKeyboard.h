@@ -18,8 +18,6 @@
     uint32_t mKeyStates[MAX_KEYS];
 }
 
-+ (NSArray *) allKeyboards;
-
 - (void) osd_init;
 
 - (uint32_t) getState: (int) key;

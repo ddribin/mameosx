@@ -10,7 +10,8 @@
 
 @implementation MameInputDevice
 
-- (id) initWithDevice: (DDHidDevice *) device mameTag: (int) mameTag;
+- (id) initWithDevice: (DDHidDevice *) device mameTag: (int) mameTag
+              enabled: (BOOL *) enabled;
 {
     self = [super init];
     if (self == nil)
@@ -18,6 +19,7 @@
     
     mDevice = [device retain];
     mMameTag = mameTag;
+    mEnabled = enabled;
     
     return self;
 }
@@ -61,19 +63,6 @@
 - (void) stopListening;
 {
     [mDevice stopListening];
-}
-
-//=========================================================== 
-//  enabled 
-//=========================================================== 
-- (BOOL) enabled
-{
-    return mEnabled;
-}
-
-- (void) setEnabled: (BOOL) flag
-{
-    mEnabled = flag;
 }
 
 @end

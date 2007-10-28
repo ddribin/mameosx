@@ -62,7 +62,6 @@ static NSString * format(NSString * format, ...);
   @public
     NSMutableArray * mDeviceNames;
     NSMutableArray * mDevices;
-    BOOL mEnabled;
     JoystickState mJoystickStates[MAX_JOYSTICKS];
     MouseState mMiceStates[MAX_MICE];
 }
@@ -102,6 +101,8 @@ static NSString * format(NSString * format, ...);
 
 
 @interface MameInputController (Private)
+
+- (void) addAllKeyboards;
 
 - (BOOL) addDevice: (DDHidDevice *) device tag: (int) tag;
 
@@ -147,7 +148,7 @@ static NSString * format(NSString * format, ...);
         return nil;
     
     p = [[MameInputControllerPrivate alloc] init];
-    p->mEnabled = NO;
+    mEnabled = NO;
     mDevices = [[NSMutableArray alloc] init];
     
     return self;
@@ -164,14 +165,13 @@ static NSString * format(NSString * format, ...);
     [super dealloc];
 }
 
-
 - (void) osd_init;
 {
     [p->mDevices removeAllObjects];
     [p->mDeviceNames removeAllObjects];
 
     [mDevices removeAllObjects];
-    [mDevices addObjectsFromArray: [MameKeyboard allKeyboards]];
+    [self addAllKeyboards];
 
     [self initJoyCodes];
     [self initMouseCodes];
@@ -192,18 +192,12 @@ static BOOL sEnabled = NO;
 
 - (BOOL) enabled;
 {
-    return p->mEnabled;
+    return mEnabled;
 }
 
 - (void) setEnabled: (BOOL) enabled;
 {
-    p->mEnabled = enabled;
-    NSEnumerator * e = [mDevices objectEnumerator];
-    MameInputDevice * device;
-    while (device = [e nextObject])
-    {
-        [device setEnabled: enabled];
-    }
+    mEnabled = enabled;
 }
 
 - (void) osd_customize_inputport_list: (input_port_default_entry *) defaults;
@@ -229,6 +223,30 @@ static BOOL sEnabled = NO;
 @end
 
 @implementation MameInputController (Private)
+
+- (void) addAllKeyboards;
+{
+    int keyboardTag = 0;
+    NSArray * keyboards = [DDHidKeyboard allKeyboards];
+    int keyboardCount = [keyboards count];
+    int keyboardNumber;
+    for (keyboardNumber = 0; keyboardNumber < keyboardCount; keyboardNumber++)
+    {
+        DDHidKeyboard * hidKeyboard = [keyboards objectAtIndex: keyboardNumber];
+        JRLogInfo(@"Found keyboard: %@ (%@)",
+                  [hidKeyboard productName], [hidKeyboard manufacturer]);
+        MameKeyboard * keyboard = [[MameKeyboard alloc] initWithDevice: hidKeyboard
+                                                               mameTag: keyboardTag
+                                                               enabled: &mEnabled];
+        [keyboard autorelease];
+        if ([keyboard tryStartListening])
+        {
+            [mDevices addObject: keyboard];
+            [keyboard osd_init];
+            keyboardTag++;
+        }
+    }
+}
 
 - (BOOL) addDevice: (DDHidDevice *) device tag: (int) tag;
 {
