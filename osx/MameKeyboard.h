@@ -9,17 +9,15 @@
 #import <Cocoa/Cocoa.h>
 #import "MameInputDevice.h"
 
-#define MAX_KEYS            256
+#define MameKeyboardMaxKeys 256
 
 @class DDHidKeyboard;
 
 @interface MameKeyboard : MameInputDevice
 {
-    uint32_t mKeyStates[MAX_KEYS];
+    uint32_t mKeyStates[MameKeyboardMaxKeys];
 }
 
 - (void) osd_init;
-
-- (uint32_t) getState: (int) key;
 
 @end

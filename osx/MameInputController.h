@@ -45,5 +45,4 @@
 - (BOOL) enabled;
 - (void) setEnabled: (BOOL) enabled;
 
-
 @end

@@ -26,14 +26,6 @@
 
 @implementation MameKeyboard
 
-- (uint32_t) getState: (int) key;
-{
-    if (!mEnabled)
-        return 0;
-    return mKeyStates[key];
-}
-
-
 static INT32 keyboardGetState(void *device_internal, void *item_internal)
 {
     MameKeyboard * keyboard = (MameKeyboard *) device_internal;
@@ -69,7 +61,7 @@ static INT32 keyboardGetState(void *device_internal, void *item_internal)
         i++;
     }
     
-    for (i = 0; i < MAX_KEYS; i++)
+    for (i = 0; i < MameKeyboardMaxKeys; i++)
     {
         mKeyStates[i] = 0;
     }

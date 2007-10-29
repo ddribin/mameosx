@@ -65,4 +65,15 @@
     [mDevice stopListening];
 }
 
+- (NSString *) format: (NSString *) format, ...;
+{
+    va_list arguments;
+    va_start(arguments, format);
+    NSString * string = [[NSString alloc] initWithFormat: format
+                                               arguments: arguments];
+    [string autorelease];
+    va_end(arguments);
+    return string;
+}
+
 @end

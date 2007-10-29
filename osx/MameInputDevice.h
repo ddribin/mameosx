@@ -38,4 +38,6 @@
 
 - (void) stopListening;
 
+- (NSString *) format: (NSString *) format, ...;
+
 @end

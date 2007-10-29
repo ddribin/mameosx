@@ -24,6 +24,7 @@
 
 #import "MameInputController.h"
 #import "MameKeyboard.h"
+#import "MameMouse.h"
 #import "DDHidLib.h"
 
 // MAME headers
@@ -46,13 +47,6 @@ typedef struct
     int povs[MAX_POV];
 } JoystickState;
 
-typedef struct
-{
-    int x;
-    int y;
-    int buttons[MAX_BUTTONS];
-} MouseState;
-
 static NSMutableData * utf8Data(NSString * string);
 static NSString * format(NSString * format, ...);
 
@@ -63,7 +57,6 @@ static NSString * format(NSString * format, ...);
     NSMutableArray * mDeviceNames;
     NSMutableArray * mDevices;
     JoystickState mJoystickStates[MAX_JOYSTICKS];
-    MouseState mMiceStates[MAX_MICE];
 }
 
 - (id) init;
@@ -103,12 +96,11 @@ static NSString * format(NSString * format, ...);
 @interface MameInputController (Private)
 
 - (void) addAllKeyboards;
+- (void) addAllMice;
 
 - (BOOL) addDevice: (DDHidDevice *) device tag: (int) tag;
 
 - (void) initJoyCodes;
-
-- (void) initMouseCodes;
 
 @end
 
@@ -129,16 +121,6 @@ static NSString * format(NSString * format, ...);
               buttonUp: (unsigned) buttonNumber;
 
 @end
-
-@interface MameInputController (DDHidMouseDelegate)
-
-- (void) ddhidMouse: (DDHidMouse *) mouse xChanged: (SInt32) deltaX;
-- (void) ddhidMouse: (DDHidMouse *) mouse yChanged: (SInt32) deltaY;
-- (void) ddhidMouse: (DDHidMouse *) mouse buttonDown: (unsigned) buttonNumber;
-- (void) ddhidMouse: (DDHidMouse *) mouse buttonUp: (unsigned) buttonNumber;
-
-@end
-
 
 @implementation MameInputController
 
@@ -172,9 +154,9 @@ static NSString * format(NSString * format, ...);
 
     [mDevices removeAllObjects];
     [self addAllKeyboards];
+    [self addAllMice];
 
     [self initJoyCodes];
-    [self initMouseCodes];
 }
 
 - (void) gameFinished;
@@ -239,12 +221,44 @@ static BOOL sEnabled = NO;
                                                                mameTag: keyboardTag
                                                                enabled: &mEnabled];
         [keyboard autorelease];
-        if ([keyboard tryStartListening])
+        if (![keyboard tryStartListening])
         {
-            [mDevices addObject: keyboard];
-            [keyboard osd_init];
-            keyboardTag++;
+            JRLogInfo(@"Could not start listening to keyboard, skipping");
+            continue;
         }
+
+        [mDevices addObject: keyboard];
+        [keyboard osd_init];
+        keyboardTag++;
+    }
+}
+
+- (void) addAllMice;
+{
+    int mouseTag = 0;
+    NSArray * mice = [DDHidMouse allMice];
+    int mouseCount = MIN([mice count], MAX_MICE);
+    int mouseNumber;
+    for (mouseNumber = 0; mouseNumber < mouseCount; mouseNumber++)
+    {
+        DDHidMouse * hidMouse = [mice objectAtIndex: mouseNumber];
+        NSArray * buttons = [hidMouse buttonElements];
+        JRLogInfo(@"Found mouse: %@ (%@), %d button(s)",
+                  [hidMouse productName], [hidMouse manufacturer],
+                  [buttons count]);
+        MameMouse * mouse = [[MameMouse alloc] initWithDevice: hidMouse
+                                                      mameTag: mouseTag
+                                                      enabled: &mEnabled];
+        [mouse autorelease];
+        if (![mouse tryStartListening])
+        {
+            JRLogInfo(@"Could not start listening to mouse, skipping");
+            continue;
+        }
+        
+        [mDevices addObject: mouse];
+        [mouse osd_init];
+        mouseTag++;
     }
 }
 
@@ -426,85 +440,6 @@ static INT32 joystickButtonGetState(void *device_internal, void *item_internal)
     }
 }
 
-static INT32 mouseAxisGetState(void *device_internal, void *item_internal)
-{
-    INT32 * axisState = (INT32 *) item_internal;
-    INT32 result = (*axisState) * INPUT_RELATIVE_PER_PIXEL;
-    *axisState = 0;
-    return result;
-}
-
-static INT32 mouseButtonGetState(void *device_internal, void *item_internal)
-{
-    int * buttonState = (INT32 *) item_internal;
-    return (*buttonState);
-}
-
-- (void) initMouseCodes;
-{
-    int mouseTag = 0;
-    NSArray * mice = [DDHidMouse allMice];
-    int mouseCount = MIN([mice count], MAX_MICE);
-    int mouseNumber;
-    for (mouseNumber = 0; mouseNumber < mouseCount; mouseNumber++)
-    {
-        DDHidMouse * mouse = [mice objectAtIndex: mouseNumber];
-        NSArray * buttons = [mouse buttonElements];
-        JRLogInfo(@"Found mouse: %@ (%@), %d button(s)",
-                  [mouse productName], [mouse manufacturer], [buttons count]);
-        if (![self addDevice: mouse tag: mouseTag])
-        {
-            JRLogInfo(@"Could not add mouse, skipping");
-            continue;
-        }
-        [mouse setDelegate: self];
-
-        NSString * name = [NSString stringWithFormat: @"Mouse %d", mouseTag];
-        JRLogInfo(@"Adding mouse device: %@", name);
-        MouseState * mouseState = &p->mMiceStates[mouseTag];
-        input_device * device = input_device_add(DEVICE_CLASS_MOUSE,
-                                                 [name UTF8String],
-                                                 (void *) mouseState);
-        
-        DDHidElement * axis;
-
-        axis = [mouse xElement];
-        name = @"X-Axis";
-        int * axisState =  &mouseState->x;
-		input_device_item_add(device,
-                              [name UTF8String],
-                              axisState,
-                              ITEM_ID_XAXIS,
-                              mouseAxisGetState);
-        
-        axis = [mouse xElement];
-        name = @"Y-Axis";
-        axisState =  &mouseState->y;
-		input_device_item_add(device,
-                              [name UTF8String],
-                              axisState,
-                              ITEM_ID_YAXIS,
-                              mouseAxisGetState);
-        
-        int buttonCount = MIN([buttons count], MAX_BUTTONS);
-        int i;
-        for (i = 0; i < buttonCount; i++)
-        {
-            DDHidElement * button = [buttons objectAtIndex: i];
-            
-            NSString * name = format(@"Button %d", i+1);
-            int * buttonState = &mouseState->buttons[i];
-            input_device_item_add(device,
-                                  [name UTF8String],
-                                  buttonState,
-                                  ITEM_ID_BUTTON1 + i,
-                                  mouseButtonGetState);
-        }
-        
-        mouseTag++;
-    }
-}
-
 @end
 
 
@@ -553,35 +488,6 @@ static INT32 mouseButtonGetState(void *device_internal, void *item_internal)
               buttonUp: (unsigned) buttonNumber;
 {
     p->mJoystickStates[[joystick tag]].buttons[buttonNumber] = 0;
-}
-
-@end
-
-
-@implementation MameInputController (DDHidMouseDelegate)
-
-- (void) ddhidMouse: (DDHidMouse *) mouse xChanged: (SInt32) deltaX;
-{
-    int * axisState = &p->mMiceStates[[mouse tag]].x;
-    *axisState += deltaX;
-}
-
-- (void) ddhidMouse: (DDHidMouse *) mouse yChanged: (SInt32) deltaY;
-{
-    int * axisState = &p->mMiceStates[[mouse tag]].y;
-    *axisState += deltaY;
-}
-
-- (void) ddhidMouse: (DDHidMouse *) mouse buttonDown: (unsigned) buttonNumber;
-{
-    int * buttonState = &p->mMiceStates[[mouse tag]].buttons[buttonNumber];
-    *buttonState = 1;
-}
-
-- (void) ddhidMouse: (DDHidMouse *) mouse buttonUp: (unsigned) buttonNumber;
-{
-    int * buttonState = &p->mMiceStates[[mouse tag]].buttons[buttonNumber];
-    *buttonState = 0;
 }
 
 @end
