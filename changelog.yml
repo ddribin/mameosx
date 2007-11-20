@@ -1,8 +1,10 @@
-<% version = "0.110" %>
+<% version = "0.119" %>
 - version: "<%=version%>"
   date: xxx
   changes:
     - Upgrade to 0.119 baseline.
+    - Ignores input while in the background.
+    - Properly normalize analog joysticks.
 
 <% version = "0.118" %>
 - version: "<%=version%>"
