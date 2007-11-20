@@ -79,6 +79,10 @@
 
 - (void) setMultiMouse: (BOOL) multiMouse;
 
+- (void) setJoystickDeadzone: (float) deadzone;
+
+- (void) setJoystickSaturation: (float) deadzone;
+
 #pragma mark -
 
 - (void) setGameName: (NSString *) gameName;

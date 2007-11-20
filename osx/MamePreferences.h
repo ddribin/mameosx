@@ -162,6 +162,12 @@
 - (BOOL) multiMouse;
 - (void) setMultiMouse: (BOOL) multiMouse;
 
+- (float) joystickDeadzone;
+- (void) setJoystickDeadzone: (float) joystickDeadzone;
+
+- (float) joystickSaturation;
+- (void) setJoystickSaturation: (float) joystickSaturation;
+
 #pragma mark -
 #pragma mark Messages
 

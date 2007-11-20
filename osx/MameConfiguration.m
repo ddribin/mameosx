@@ -169,6 +169,16 @@ static MameConfiguration * sDefaultConfiguration = nil;
     [self setBoolOption: multiMouse withName: OPTION_MULTIMOUSE];
 }
 
+- (void) setJoystickDeadzone: (float) deadzone;
+{
+    [self setFloatOption: deadzone withName: OPTION_JOYSTICK_DEADZONE];
+}
+
+- (void) setJoystickSaturation: (float) deadzone;
+{
+    [self setFloatOption: deadzone withName: OPTION_JOYSTICK_SATURATION];
+}
+
 #pragma mark -
 
 - (void) setGameName: (NSString *) gameName;

@@ -95,6 +95,8 @@ NSString * MameMouseKey = @"Mouse";
 NSString * MameJoystickKey = @"Joystick";
 NSString * MameMultiKeyboardKey = @"MultiKeyboard";
 NSString * MameMultiMouseKey = @"MultiMouse";
+NSString * MameJoystickDeadzoneKey = @"JoystickDeadzone";
+NSString * MameJoystickSaturationKey = @"JoystickSaturation";
 
 #ifdef MAME_DEBUG
 NSString * MameDebugKey = @"MameDebug";
@@ -620,6 +622,26 @@ NSString * MameBackgroundUpdateDebugKey = @"BackgroundUpdateDebug";
 - (void) setMultiMouse: (BOOL) multiMouse;
 {
     [mDefaults setBool: multiMouse forKey: MameMultiMouseKey];
+}
+
+- (float) joystickDeadzone;
+{
+    return [mDefaults floatForKey: MameJoystickDeadzoneKey];
+}
+
+- (void) setJoystickDeadzone: (float) joystickDeadzone;
+{
+    [mDefaults setFloat: joystickDeadzone forKey: MameJoystickDeadzoneKey];
+}
+
+- (float) joystickSaturation;
+{
+    return [mDefaults floatForKey: MameJoystickSaturationKey];
+}
+
+- (void) setJoystickSaturation: (float) joystickSaturation;
+{
+    [mDefaults setFloat: joystickSaturation forKey: MameJoystickSaturationKey];
 }
 
 #pragma mark -
