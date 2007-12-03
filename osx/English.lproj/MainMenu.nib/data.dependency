@@ -4,8 +4,8 @@
 <dict>
 	<key>IBPaletteDependency</key>
 	<array>
-		<string>QuartzComposer</string>
 		<string>RBSplitView</string>
+		<string>QuartzComposer</string>
 		<string>GenericToolbar</string>
 	</array>
 </dict>
