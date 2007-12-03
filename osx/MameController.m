@@ -214,7 +214,8 @@ static void exit_sleeper()
     MamePreferences * preferences = [MamePreferences standardPreferences];
     
     mGameName = [[preferences game] retain];
-    mQuitOnError = (mGameName == nil)? NO : YES;
+    mTerminateOnGameExit = (mGameName == nil)? NO : YES;
+    mTerminateReplyOnGameExit = NO;
     if ([[[NSProcessInfo processInfo] arguments] count] > 1)
         [NSApp activateIgnoringOtherApps: YES];
 
@@ -829,8 +830,8 @@ Performs the save action for the application, which is to send the save:
     if ([mMameView isRunning])
     {
         [mMameView stop];
-        // Thread notification will actually terminate the app
-        reply =  NSTerminateCancel;
+        reply = NSTerminateLater;
+        mTerminateReplyOnGameExit = YES;
     }
     return reply;
 }
@@ -856,15 +857,34 @@ Performs the save action for the application, which is to send the save:
 
 - (BOOL)windowShouldClose: (id) sender;
 {
-    if (sender != mOpenPanel)
+    if (sender == mOpenPanel)
         [NSApp terminate: nil];
+    else if (sender == [mMameView window])
+    {
+        if ([mMameView isRunning])
+        {
+            [mMameView stop];
+            return NO;
+        }
+        else
+        {
+        }
+    }
     return YES;
 }
 
 - (void) windowWillClose: (NSNotification *) notification
 {
+#if 0
     if ([notification object] == mOpenPanel)
         [NSApp terminate: nil];
+#endif
+    if ([notification object] == [mMameView window])
+    {
+        [mGameName release];
+        mGameName = nil;
+        [mUpdater resume];
+    }
 }
 
 - (MameView *) mameView;
@@ -1377,7 +1397,7 @@ Performs the save action for the application, which is to send the save:
             message = @"A Fatal Error Occured";
         }
         
-        if (mQuitOnError)
+        if (mTerminateOnGameExit)
         {
             JRLogError(@"MAME finished with error: %@ (%d)", message,
                        exitStatus);
@@ -1402,16 +1422,13 @@ Performs the save action for the application, which is to send the save:
     }
     else
     {
-        if (mQuitOnError)
-        {
+        if (mTerminateOnGameExit)
             [NSApp terminate: nil];
-        }
+        else if (mTerminateReplyOnGameExit)
+            [NSApp replyToApplicationShouldTerminate: YES];
         else
         {
-            [[mMameView window] orderOut: self];
-            [mGameName release];
-            mGameName = nil;
-            [mUpdater resume];
+            [[mMameView window] performClose: self];
             [self chooseGameAndStart];
             /*
              * Only exit full screen, after the MAME window is closed, and the
@@ -1554,6 +1571,8 @@ Performs the save action for the application, which is to send the save:
     // Need to use delay to run outside modal loop
     [window performSelector: @selector(performClose:) withObject: nil
                  afterDelay: 0.0f];
+    [self performSelector: @selector(chooseGameAndStart) withObject: nil
+               afterDelay: 0.0f];
 }
 
 - (MameFrameRenderingOption) frameRenderingOption: (NSString *) frameRendering;
@@ -1849,7 +1868,7 @@ Performs the save action for the application, which is to send the save:
             }
         }
         
-        if (mQuitOnError)
+        if (mTerminateOnGameExit)
         {
             NSLog(@"Game not found: %@\n%@", mGameName, message);
             [NSApp terminate: nil];
@@ -1964,7 +1983,7 @@ Performs the save action for the application, which is to send the save:
     JRLogInfo(@"Handle URL: %@", urlString);
     NSURL * url = [NSURL URLWithString: urlString];
     mGameName = [[url host] retain];
-    mQuitOnError = (mGameName == nil)? NO : YES;
+    mTerminateOnGameExit = (mGameName == nil)? NO : YES;
 }
 
 #pragma mark -

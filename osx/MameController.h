@@ -95,7 +95,8 @@ extern "C" {
     NSMutableArray * mPreviousGames;
     BOOL mGameLoading;
     BOOL mGameRunning;
-    BOOL mQuitOnError;
+    BOOL mTerminateOnGameExit;
+    BOOL mTerminateReplyOnGameExit;
     
     NSDictionary * mLogAttributes;
     NSDictionary * mLogErrorAttributes;
