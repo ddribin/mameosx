@@ -8,6 +8,7 @@
     - Fix double Command-Q to quit (#1789071).
     - Fix quitting after errors (#1799359).
     - Fix Command-F enables visual effects on Leopard (#1843080).
+    - Remove "Status" column per mamedev's request.
 
 <% version = "0.118" %>
 - version: "<%=version%>"
