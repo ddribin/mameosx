@@ -48,6 +48,8 @@ static const int kMameMaxGamesInHistory = 100;
 
 @interface MameController (Private)
 
+- (void) cleanupAfterGameFinished;
+
 #pragma mark -
 #pragma mark KVO Helpers
 
@@ -873,12 +875,6 @@ Performs the save action for the application, which is to send the save:
 
 - (void) windowWillClose: (NSNotification *) notification
 {
-    if ([notification object] == [mMameView window])
-    {
-        [mGameName release];
-        mGameName = nil;
-        [mUpdater resume];
-    }
 }
 
 - (MameView *) mameView;
@@ -1422,6 +1418,7 @@ Performs the save action for the application, which is to send the save:
             [NSApp replyToApplicationShouldTerminate: YES];
         else
         {
+            [self cleanupAfterGameFinished];
             [[mMameView window] performClose: self];
             [self chooseGameAndStart];
             /*
@@ -1440,6 +1437,13 @@ Performs the save action for the application, which is to send the save:
 #pragma mark -
 
 @implementation MameController (Private)
+
+- (void) cleanupAfterGameFinished;
+{
+    [mGameName release];
+    mGameName = nil;
+    [mUpdater resume];
+}
 
 #pragma mark -
 #pragma mark KVO Helpers
@@ -1561,10 +1565,13 @@ Performs the save action for the application, which is to send the save:
               returnCode: (int) returnCode
              contextInfo: (void *) contextInfo;
 {
+    [self cleanupAfterGameFinished];
+
+    // Need to use delays to run outside modal loop
     NSWindow * window = [mMameView window];
-    // Need to use delay to run outside modal loop
     [window performSelector: @selector(performClose:) withObject: nil
                  afterDelay: 0.0f];
+
     [self performSelector: @selector(chooseGameAndStart) withObject: nil
                afterDelay: 0.0f];
 }
