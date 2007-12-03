@@ -855,7 +855,7 @@ Performs the save action for the application, which is to send the save:
     [mMameView setInputEnabled: NO];
 }
 
-- (BOOL)windowShouldClose: (id) sender;
+- (BOOL) windowShouldClose: (id) sender;
 {
     if (sender == mOpenPanel)
         [NSApp terminate: nil];
@@ -864,10 +864,8 @@ Performs the save action for the application, which is to send the save:
         if ([mMameView isRunning])
         {
             [mMameView stop];
+            // mameDidFinishGame: will close the window
             return NO;
-        }
-        else
-        {
         }
     }
     return YES;
@@ -875,10 +873,6 @@ Performs the save action for the application, which is to send the save:
 
 - (void) windowWillClose: (NSNotification *) notification
 {
-#if 0
-    if ([notification object] == mOpenPanel)
-        [NSApp terminate: nil];
-#endif
     if ([notification object] == [mMameView window])
     {
         [mGameName release];
