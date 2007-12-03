@@ -5,6 +5,9 @@
     - Upgrade to 0.119 baseline.
     - Ignores input while in the background.
     - Properly normalize analog joysticks.
+    - Fix double Command-Q to quit (#1789071).
+    - Fix quitting after errors (#1799359).
+    - Fix Command-F enables visual effects on Leopard (#1843080).
 
 <% version = "0.118" %>
 - version: "<%=version%>"
