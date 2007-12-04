@@ -116,7 +116,7 @@ extern "C" {
     int mGameFilterIndex;
     BackgroundUpdater * mUpdater;
     NSArray * mMatchingGames;
-    GroupMO * mFavoritesGroup;
+    // GroupMO * mFavoritesGroup;
     BOOL mShowClones;
     NSString * mStatusText;
 }
@@ -287,3 +287,4 @@ extern "C" {
 - (void) mameLogMessage: (NSString *) message;
 
 @end
+

@@ -170,11 +170,17 @@ insertIntoManagedObjectContext: (NSManagedObjectContext *) context
 #endif
 }
 
+extern GroupMO * mFavoritesGroup;
+
 - (BOOL) isFavorite;
 {
+#if 0
     GroupMO * favorites =
         [GroupMO findOrCreateGroupWithName: GroupFavorites
                                  inContext: [self managedObjectContext]];
+#else
+    GroupMO * favorites = mFavoritesGroup;
+#endif
     return [[favorites membersSet] containsObject: self];
 }
 

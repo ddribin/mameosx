@@ -42,6 +42,8 @@
 #include <unistd.h>
 #include "osd_osx.h"
 
+GroupMO * mFavoritesGroup;
+
 static const int kMameRunGame = 0;
 static const int kMameCancelGame = 1;
 static const int kMameMaxGamesInHistory = 100;
