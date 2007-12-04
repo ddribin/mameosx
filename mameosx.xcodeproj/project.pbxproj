@@ -162,11 +162,9 @@
 		555530F90CD3793A00CAB201 /* mb86233.c in Sources */ = {isa = PBXBuildFile; fileRef = 5555309C0CD3793A00CAB201 /* mb86233.c */; };
 		555530FA0CD3793A00CAB201 /* mc68hc11.c in Sources */ = {isa = PBXBuildFile; fileRef = 5555309D0CD3793A00CAB201 /* mc68hc11.c */; };
 		555530FB0CD3793A00CAB201 /* mips3com.c in Sources */ = {isa = PBXBuildFile; fileRef = 5555309E0CD3793A00CAB201 /* mips3com.c */; };
-		555530FC0CD3793A00CAB201 /* mips3drc.c in Sources */ = {isa = PBXBuildFile; fileRef = 5555309F0CD3793A00CAB201 /* mips3drc.c */; };
 		555530FD0CD3793A00CAB201 /* nec.c in Sources */ = {isa = PBXBuildFile; fileRef = 555530A00CD3793A00CAB201 /* nec.c */; };
 		555530FE0CD3793A00CAB201 /* pdp1.c in Sources */ = {isa = PBXBuildFile; fileRef = 555530A10CD3793A00CAB201 /* pdp1.c */; };
 		555530FF0CD3793A00CAB201 /* pic16c5x.c in Sources */ = {isa = PBXBuildFile; fileRef = 555530A20CD3793A00CAB201 /* pic16c5x.c */; };
-		555531000CD3793A00CAB201 /* ppcdrc.c in Sources */ = {isa = PBXBuildFile; fileRef = 555530A30CD3793A00CAB201 /* ppcdrc.c */; };
 		555531010CD3793A00CAB201 /* psx.c in Sources */ = {isa = PBXBuildFile; fileRef = 555530A40CD3793A00CAB201 /* psx.c */; };
 		555531020CD3793A00CAB201 /* r3000.c in Sources */ = {isa = PBXBuildFile; fileRef = 555530A50CD3793A00CAB201 /* r3000.c */; };
 		555531030CD3793A00CAB201 /* rsp.c in Sources */ = {isa = PBXBuildFile; fileRef = 555530A60CD3793A00CAB201 /* rsp.c */; };
@@ -195,7 +193,6 @@
 		5555311A0CD3793A00CAB201 /* v30mz.c in Sources */ = {isa = PBXBuildFile; fileRef = 555530BD0CD3793A00CAB201 /* v30mz.c */; };
 		5555311B0CD3793A00CAB201 /* v60.c in Sources */ = {isa = PBXBuildFile; fileRef = 555530BE0CD3793A00CAB201 /* v60.c */; };
 		5555311C0CD3793A00CAB201 /* v810.c in Sources */ = {isa = PBXBuildFile; fileRef = 555530BF0CD3793A00CAB201 /* v810.c */; };
-		5555311D0CD3793A00CAB201 /* x86drc.c in Sources */ = {isa = PBXBuildFile; fileRef = 555530C00CD3793A00CAB201 /* x86drc.c */; };
 		5555311E0CD3793A00CAB201 /* z80.c in Sources */ = {isa = PBXBuildFile; fileRef = 555530C10CD3793A00CAB201 /* z80.c */; };
 		5555311F0CD3793A00CAB201 /* z80daisy.c in Sources */ = {isa = PBXBuildFile; fileRef = 555530C20CD3793A00CAB201 /* z80daisy.c */; };
 		555531200CD3793A00CAB201 /* z80gb.c in Sources */ = {isa = PBXBuildFile; fileRef = 555530C30CD3793A00CAB201 /* z80gb.c */; };
@@ -10888,11 +10885,9 @@
 				555530F90CD3793A00CAB201 /* mb86233.c in Sources */,
 				555530FA0CD3793A00CAB201 /* mc68hc11.c in Sources */,
 				555530FB0CD3793A00CAB201 /* mips3com.c in Sources */,
-				555530FC0CD3793A00CAB201 /* mips3drc.c in Sources */,
 				555530FD0CD3793A00CAB201 /* nec.c in Sources */,
 				555530FE0CD3793A00CAB201 /* pdp1.c in Sources */,
 				555530FF0CD3793A00CAB201 /* pic16c5x.c in Sources */,
-				555531000CD3793A00CAB201 /* ppcdrc.c in Sources */,
 				555531010CD3793A00CAB201 /* psx.c in Sources */,
 				555531020CD3793A00CAB201 /* r3000.c in Sources */,
 				555531030CD3793A00CAB201 /* rsp.c in Sources */,
@@ -10921,7 +10916,6 @@
 				5555311A0CD3793A00CAB201 /* v30mz.c in Sources */,
 				5555311B0CD3793A00CAB201 /* v60.c in Sources */,
 				5555311C0CD3793A00CAB201 /* v810.c in Sources */,
-				5555311D0CD3793A00CAB201 /* x86drc.c in Sources */,
 				5555311E0CD3793A00CAB201 /* z80.c in Sources */,
 				5555311F0CD3793A00CAB201 /* z80daisy.c in Sources */,
 				555531200CD3793A00CAB201 /* z80gb.c in Sources */,
