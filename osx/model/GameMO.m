@@ -19,15 +19,40 @@
     }
 }
 
++ (NSString *) entityName;
+{
+    return @"Game";
+}
+
 + (NSEntityDescription *) entityInContext: (NSManagedObjectContext *) context;
 {
-    return [NSEntityDescription entityForName: @"Game"
+    return [NSEntityDescription entityForName: [self entityName]
                        inManagedObjectContext: context];
 }
 
-+ (GameMO *) createInContext: (NSManagedObjectContext *) context;
++ (NSArray *) allWithSortDesriptors: (NSArray *) sortDescriptors
+                          inContext: (NSManagedObjectContext *) context;
 {
-    [NSEntityDescription insertNewObjectForEntityForName: @"Game"
+    NSFetchRequest *request = [[[NSFetchRequest alloc] init] autorelease];
+    [request setEntity: [self entityInContext: context]];
+    
+    if (sortDescriptors != nil)
+    {
+        [request setSortDescriptors: sortDescriptors];
+    }
+    
+    NSError * error = nil;
+    NSArray * results = [context executeFetchRequest: request error: &error];
+    if (results == nil)
+    {
+        NSXRaiseError(error);
+    }
+    return results;
+}
+
++ (id) createInContext: (NSManagedObjectContext *) context;
+{
+    [NSEntityDescription insertNewObjectForEntityForName: [self entityName]
                                   inManagedObjectContext: context];
 }
 
@@ -99,26 +124,6 @@
     return results;
 }
 
-+ (NSArray *) allGamesWithSortDesriptors: (NSArray *) sortDescriptors
-                               inContext: (NSManagedObjectContext *) context;
-{
-    NSFetchRequest *request = [[[NSFetchRequest alloc] init] autorelease];
-    [request setEntity: [self entityInContext: context]];
-    
-    if (sortDescriptors != nil)
-    {
-        [request setSortDescriptors: sortDescriptors];
-    }
-    
-    NSError * error = nil;
-    NSArray * results = [context executeFetchRequest: request error: &error];
-    if (results == nil)
-    {
-        NSXRaiseError(error);
-    }
-    return results;
-}
-
 + (NSArray *) sortByShortName;
 {
     return [NSArray arrayWithObject:
@@ -133,6 +138,19 @@
                                     ascending: YES
                                      selector: @selector(caseInsensitiveCompare:)];
     return [NSArray arrayWithObject: [descriptor autorelease]];
+}
+
+- (id) initWithEntity: (NSEntityDescription *) entity
+insertIntoManagedObjectContext: (NSManagedObjectContext *) context
+{
+    self = [super initWithEntity: entity
+  insertIntoManagedObjectContext: context];
+    if (self == nil)
+        return nil;
+    
+    mDriverIndex = NSNotFound;
+    
+    return self;
 }
 
 - (void) toggleGroupMembership: (GroupMO *) group;
@@ -202,6 +220,8 @@
 - (void) audit;
 {
     unsigned driverIndex = [self driverIndex];
+    if (driverIndex == NSNotFound)
+        return;
     
     JRLogDebug(@"Auditing %@ (%@)", [self shortName], [self longName]);
     audit_record * auditRecords;

@@ -169,6 +169,27 @@ static void exit_sleeper()
     return self;
 }
 
+- (NSArray *) fetchAuditedGames
+{
+#if 1
+    NSManagedObjectContext * context = [self managedObjectContext];
+    NSFetchRequest * fetchRequest = [[[NSFetchRequest alloc] init] autorelease];
+    [fetchRequest setEntity: [GameMO entityInContext: context]];
+    
+    [fetchRequest setPredicate: [NSPredicate predicateWithFormat: @"(auditStatus != NIL)"]];
+    [fetchRequest setFetchLimit: 1];
+    
+    // make sure the results are sorted as well
+    // [fetchRequest setSortDescriptors: [GameMO sortByLongName]];
+    // Execute the fetch
+    NSError * error = nil;
+    JRLogDebug(@"Fetching audited");
+    return [context executeFetchRequest: fetchRequest error: &error];
+#else
+    return [NSArray array];
+#endif
+}
+
 - (void) awakeFromNib
 {
     [mOpenPanel setToolbar: mToolbar];
@@ -247,6 +268,10 @@ static void exit_sleeper()
     
     [self setGameFilterIndex: [preferences gameFilterIndex]];
     [self updatePredicate];
+    JRLogDebug(@"Get count");
+    unsigned gameCount = [[GameMO allWithSortDesriptors: nil
+                                              inContext: [self managedObjectContext]] count];
+    JRLogDebug(@"Game count: %d", gameCount);
     [mUpdater start];
 }
 
@@ -315,9 +340,11 @@ Returns the persistent store coordinator for the application.  This
     
     fileManager = [NSFileManager defaultManager];
     applicationSupportFolder = [self applicationSupportFolder];
+    mFreshPersistentStore = NO;
     if (![fileManager fileExistsAtPath:applicationSupportFolder isDirectory:NULL])
     {
         [fileManager createDirectoryAtPath:applicationSupportFolder attributes: nil];
+        mFreshPersistentStore = YES;
     }
     
     url = [NSURL fileURLWithPath: [applicationSupportFolder stringByAppendingPathComponent:
@@ -326,10 +353,11 @@ Returns the persistent store coordinator for the application.  This
     NSDictionary * storeInfo =
         [NSPersistentStoreCoordinator metadataForPersistentStoreWithURL: url error: &error];
     
-    if(![[storeInfo valueForKey: @"viewVersion"] isEqualToString: @"Version 5"])
+    if(![[storeInfo valueForKey: @"viewVersion"] isEqualToString: @"Version 6"])
     {
         [fileManager removeFileAtPath: [url path] handler: nil];
         [fileManager createDirectoryAtPath:applicationSupportFolder attributes: nil];
+        mFreshPersistentStore = YES;
     }
     
     persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel: [self managedObjectModel]];
@@ -346,7 +374,7 @@ Returns the persistent store coordinator for the application.  This
     {
         managedObjectContext = [[NSManagedObjectContext alloc] init];
         [managedObjectContext setPersistentStoreCoordinator: persistentStoreCoordinator];
-        [[self class] setMetadata: @"Version 5" forKey: @"viewVersion"
+        [[self class] setMetadata: @"Version 6" forKey: @"viewVersion"
                    inStoreWithURL: url inContext: managedObjectContext];
     }
     
@@ -576,6 +604,12 @@ Performs the save action for the application, which is to send the save:
 
 - (void) setGameFilterIndex: (int) gameFilterIndex;
 {
+    unsigned auditedGamesCount = [[self fetchAuditedGames] count];
+    if ((gameFilterIndex == 1) && (auditedGamesCount == 0))
+        [self setTableSubstitionHidden: NO];
+    else
+        [self setTableSubstitionHidden: YES];
+
     mGameFilterIndex = gameFilterIndex;
     [self keyChanged: @"matchingGames"];
     [self updatePredicate];
@@ -641,6 +675,12 @@ Performs the save action for the application, which is to send the save:
     
     [self importFavoritesFromFile: [openPanel filename]];
     [self refreshGames: nil];
+}
+
+- (void) restoreFavorites;
+{
+    if (mFreshPersistentStore)
+        [self importFavoritesFromFile: [self favoritesFile]];
 }
 
 //=========================================================== 
@@ -1126,6 +1166,45 @@ Performs the save action for the application, which is to send the save:
     [mMameView toggleThrottled];
 }
 
+- (IBAction) toggleSubstitution: (id) sender;
+{
+    [self setTableSubstitionHidden: ![self isTableSubstitutionHidden]];
+}
+
+- (BOOL) isTableSubstitutionHidden;
+{
+    // Substition is hidden if the table's superview is not nil
+    NSScrollView * scrollView = [mGamesTable enclosingScrollView];
+    NSView * superview = [scrollView superview];
+    return (superview != nil);
+}
+
+- (void) setTableSubstitionHidden: (BOOL) hidden;
+{
+    BOOL currentlyHidden = [self isTableSubstitutionHidden];
+    if (currentlyHidden == hidden)
+        return;
+    
+    NSScrollView * scrollView = [mGamesTable enclosingScrollView];
+    NSView * superview = [scrollView superview];
+    if (currentlyHidden)
+    {
+        [scrollView retain];
+        [scrollView removeFromSuperviewWithoutNeedingDisplay];
+        [mAuditTableSubstitutionView setFrame: [scrollView frame]];
+        [superview addSubview: mAuditTableSubstitutionView];
+    }
+    else
+    {
+        NSView * superview = [mAuditTableSubstitutionView superview];
+        [mAuditTableSubstitutionView removeFromSuperviewWithoutNeedingDisplay];
+        [scrollView setFrame: [mAuditTableSubstitutionView frame]];
+        [superview addSubview: scrollView];
+        [scrollView release];
+    }
+    [superview setNeedsDisplay: YES];
+}
+
 //=========================================================== 
 //  syncToRefresh 
 //=========================================================== 
@@ -1211,6 +1290,7 @@ Performs the save action for the application, which is to send the save:
 
 - (IBAction) auditUnauditedGames: (id) sender;
 {
+    [self setTableSubstitionHidden: YES];
     [mUpdater auditUnauditedGames];
 }
 

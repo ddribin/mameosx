@@ -15,6 +15,7 @@ Entry { setIdle(YES); }
 Exit { setIdle(NO); }
 {
     Start IndexingByShortName { prepareToIndexByShortName(); }
+    StartSkipingUpdate AuditingGames { prepareToAuditAllGames(); }
     AuditGames(games: NSArray *) AuditingGames { prepareToAuditGames(games); }
 }
 

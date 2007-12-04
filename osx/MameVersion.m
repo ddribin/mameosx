@@ -33,4 +33,14 @@
     return [[mainBundle infoDictionary] objectForKey: @"CFBundleShortVersionString"];
 }
 
++ (BOOL) isTiny;
+{
+    NSString * processName = [[NSProcessInfo processInfo] processName];
+    NSRange range = [processName rangeOfString: @"tiny"];
+    if (range.location == NSNotFound)
+        return NO;
+    else
+        return YES;
+}
+
 @end

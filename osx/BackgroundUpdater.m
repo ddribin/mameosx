@@ -29,7 +29,9 @@
 #import "RomAuditSummary.h"
 #import "GameMO.h"
 #import "GroupMO.h"
+#import "MetadataMO.h"
 #import "JRLog.h"
+#import "MameVersion.h"
 
 #import "driver.h"
 #import "audit.h"
@@ -87,7 +89,29 @@ static NSString * kBackgroundUpdaterIdle = @"BackgroundUpdaterIdle";
 
 - (void) start;
 {
-    [mFsm Start];
+    MetadataMO * metadata = [MetadataMO defaultMetadataInContext: [mController managedObjectContext]];
+    BOOL skipUpdate =
+        [[metadata lastUpdateVersion] isEqualToString: [MameVersion marketingVersion]]
+        && [metadata lastUpdateCountValue] == driver_list_get_count(drivers);
+    // Printing after accessing attributes to fire a fault
+    JRLogDebug(@"Initial metadata: %@", metadata);
+
+    if ([[MamePreferences standardPreferences] forceUpdateGameList])
+    {
+        JRLogInfo(@"Game list update forced");
+        [mFsm Start];
+    }
+    else if (skipUpdate)
+    {
+        JRLogInfo(@"Game list is up-to-date, skipping update");
+        [mFsm StartSkipingUpdate];
+    }
+    else
+    {
+        [mFsm Start];
+    }
+    mRunning = YES;
+    [self postIdleNotification];
 }
 
 - (void) pause;
@@ -167,14 +191,13 @@ static NSString * kBackgroundUpdaterIdle = @"BackgroundUpdaterIdle";
     mCurrentGameIndex = 0;
     
     JRLogDebug(@"Start background update");
-    mRunning = YES;
     [mController backgroundUpdateWillStart];
     [mController setStatusText: @"Updating game list"];
-    [self postIdleNotification];
 }
 
 - (void) indexByShortName;
 {
+#if 0
     const game_driver * driver = drivers[mCurrentGameIndex];
     
     NSString * shortName = [NSString stringWithUTF8String: driver->name];
@@ -184,6 +207,24 @@ static NSString * kBackgroundUpdaterIdle = @"BackgroundUpdaterIdle";
     mCurrentGameIndex++;
     if (mCurrentGameIndex >= driver_list_get_count(drivers))
         mWorkDone = YES;
+#else
+    JRLogDebug(@"Start background index: %d", [mIndexByShortName count]);
+    [mIndexByShortName release];
+    mIndexByShortName = [[NSMutableDictionary alloc] init];
+    unsigned count = driver_list_get_count(drivers);
+    mCurrentGameIndex = 0;
+    while (mCurrentGameIndex < count)
+    {
+        const game_driver * driver = drivers[mCurrentGameIndex];
+        NSString * shortName = [NSString stringWithUTF8String: driver->name];
+        [mIndexByShortName setObject: [NSNumber numberWithUnsignedInt: mCurrentGameIndex]
+                              forKey: shortName];
+        
+        mCurrentGameIndex++;
+    }
+    JRLogDebug(@"End background index: %d", [mIndexByShortName count]);
+    mWorkDone = YES;
+#endif
 }
 
 - (void) prepareToUpdateGameList;
@@ -207,11 +248,17 @@ static NSString * kBackgroundUpdaterIdle = @"BackgroundUpdaterIdle";
     
     // Execute the fetch
     JRLogDebug(@"Fetching current game list");
+#if 0
     NSArray * gamesMatchingNames = [GameMO gamesWithShortNames: shortNames
                                                sortDescriptors: [GameMO sortByShortName]
                                                      inContext: context];
+#else
+    NSArray * gamesMatchingNames = [GameMO allWithSortDesriptors: [GameMO sortByShortName]
+                                                       inContext: context];
+#endif
     JRLogDebug(@"Fetch done");
     mCurrentGameIndex = 0;
+    mUpdateGameListIteration = 0;
     mGameEnumerator = [[gamesMatchingNames objectEnumerator] retain];
     mCurrentGame = [[mGameEnumerator nextObject] retain];
     mLastSave = [NSDate timeIntervalSinceReferenceDate];
@@ -220,18 +267,28 @@ static NSString * kBackgroundUpdaterIdle = @"BackgroundUpdaterIdle";
 - (void) updateGameList;
 {
     NSManagedObjectContext * context = [mController managedObjectContext];
-    if ((mCurrentGameIndex % 1000) == 0)
+    if ((mUpdateGameListIteration % 1000) == 0)
     {
-        JRLogDebug(@"Update game list index: %d", mCurrentGameIndex);
+        JRLogDebug(@"Update game list index: %d", mUpdateGameListIteration);
     }
+    mUpdateGameListIteration++;
 
-    NSString * currentShortName = [mShortNames objectAtIndex: mCurrentGameIndex];
+    NSString * currentShortName = nil;
+    if (mCurrentGameIndex < [mShortNames count])
+        currentShortName = [mShortNames objectAtIndex: mCurrentGameIndex];
     unsigned driverIndex = [[mIndexByShortName objectForKey: currentShortName] unsignedIntValue];
     const game_driver * driver = drivers[driverIndex];
+
     GameMO * game = nil;
-    NSComparisonResult comparison = NSOrderedDescending;
     BOOL advanceToNextGame = NO;
-    if (mCurrentGame != nil)
+    BOOL advanceShortGame = NO;
+    
+    NSComparisonResult comparison = NSOrderedDescending;
+    if (mCurrentGame == nil)
+        comparison = NSOrderedDescending;
+    else if (currentShortName == nil)
+        comparison = NSOrderedAscending;
+    else
         comparison = [[mCurrentGame shortName] compare: currentShortName];
     
     if (comparison == NSOrderedDescending)
@@ -241,19 +298,25 @@ static NSString * kBackgroundUpdaterIdle = @"BackgroundUpdaterIdle";
         NSString * shortName = [NSString stringWithUTF8String: driver->name];
         [game setShortName: shortName];
         advanceToNextGame = NO;
+        advanceShortGame = YES;
     }
     else if (comparison == NSOrderedAscending)
     {
         // Delete current game
-        [context deleteObject: mCurrentGame];
+        if ([[MamePreferences standardPreferences] deleteOldGames])
+            [context deleteObject: mCurrentGame];
+        else
+            [game setDriverIndex: driverIndex];
         game = nil;
         advanceToNextGame = YES;
+        advanceShortGame = NO;
     }
     else // (comparison == NSOrderedSame)
     {
         // Update
         game = mCurrentGame;
         advanceToNextGame = YES;
+        advanceShortGame = YES;
     }
     
     if (game != nil)
@@ -292,10 +355,17 @@ static NSString * kBackgroundUpdaterIdle = @"BackgroundUpdaterIdle";
         [mCurrentGame release];
         mCurrentGame = [[mGameEnumerator nextObject] retain];
     }
-    mCurrentGameIndex++;
+    if (advanceShortGame)
+        mCurrentGameIndex++;
     
-    if (mCurrentGameIndex >= driver_list_get_count(drivers))
+    if ((mCurrentGameIndex >= [mShortNames count]) && (mCurrentGame == nil))
+    {
+        MetadataMO * metadata = [MetadataMO defaultMetadataInContext: [mController managedObjectContext]];
+        [metadata setLastUpdateVersion: [MameVersion marketingVersion]];
+        [metadata setLastUpdateCountValue: driver_list_get_count(drivers)];
+
         mWorkDone = YES;
+    }
 }
 
 - (void) prepareToAuditAllGames;
@@ -308,6 +378,7 @@ static NSString * kBackgroundUpdaterIdle = @"BackgroundUpdaterIdle";
     mGameEnumerator = nil;
     
     [self save];
+    [mController restoreFavorites];
     NSArray * gamesThatNeedAudit = [NSArray array];
     if ([[MamePreferences standardPreferences] auditAtStartup])
         gamesThatNeedAudit = [self fetchGamesThatNeedAudit];

@@ -240,6 +240,13 @@
 
 - (BOOL) backgroundUpdateDebug;
 
+#pragma mark -
+#pragma mark Debugging
+
+- (BOOL) forceUpdateGameList;
+
+- (BOOL) deleteOldGames;
+
 @end
 
 NSString * MameApplicationSupportDirectory(void);
@@ -337,4 +344,6 @@ extern NSString * MameBiosKey;
 extern NSString * MameGameSortDescriptorsKey;
 extern NSString * MameGameFilterIndexKey;
 extern NSString * MameBackgroundUpdateDebugKey;
+extern NSString * MameForceUpdateGameListKey;
+extern NSString * MameDeleteOldGamesKey;
 

@@ -37,6 +37,7 @@
     BOOL mSavedRunning;
     BOOL mWorkDone;
     unsigned mCurrentGameIndex;
+    unsigned mUpdateGameListIteration;
     NSArray * mShortNames;
     NSMutableDictionary * mIndexByShortName;
     GameMO * mCurrentGame;

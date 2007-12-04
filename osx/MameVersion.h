@@ -31,4 +31,6 @@
 
 + (NSString *) marketingVersion;
 
++ (BOOL) isTiny;
+
 @end

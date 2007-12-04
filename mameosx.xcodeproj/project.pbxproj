@@ -82,6 +82,14 @@
 		5537F0F40BBEB35E001A390F /* FrameReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 5537F0F20BBEB35E001A390F /* FrameReader.h */; };
 		5537F0F50BBEB35E001A390F /* FrameReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 5537F0F30BBEB35E001A390F /* FrameReader.m */; };
 		5537F2FB0BBEE15D001A390F /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5537EF890BBEAE14001A390F /* QuickTime.framework */; };
+		553843090D0533D600323AC4 /* BackgroundBox.h in Copy Shark Codes */ = {isa = PBXBuildFile; fileRef = 553843070D0533D600323AC4 /* BackgroundBox.h */; };
+		5538430A0D0533D600323AC4 /* BackgroundBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 553843080D0533D600323AC4 /* BackgroundBox.m */; };
+		5538430B0D0533D600323AC4 /* BackgroundBox.h in Copy to Frameworks */ = {isa = PBXBuildFile; fileRef = 553843070D0533D600323AC4 /* BackgroundBox.h */; };
+		5538430C0D0533D600323AC4 /* BackgroundBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 553843080D0533D600323AC4 /* BackgroundBox.m */; };
+		553844CE0D05B11A00323AC4 /* _MetadataMO.h in Headers */ = {isa = PBXBuildFile; fileRef = 553844C20D05B11A00323AC4 /* _MetadataMO.h */; };
+		553844CF0D05B11A00323AC4 /* _MetadataMO.m in Sources */ = {isa = PBXBuildFile; fileRef = 553844C30D05B11A00323AC4 /* _MetadataMO.m */; };
+		553844D00D05B11A00323AC4 /* MetadataMO.h in Headers */ = {isa = PBXBuildFile; fileRef = 553844C40D05B11A00323AC4 /* MetadataMO.h */; };
+		553844D10D05B11A00323AC4 /* MetadataMO.m in Sources */ = {isa = PBXBuildFile; fileRef = 553844C50D05B11A00323AC4 /* MetadataMO.m */; };
 		553A07300AFD9E2700531E1F /* MameFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = 553A072E0AFD9E2700531E1F /* MameFilter.h */; };
 		553A07320AFDA09900531E1F /* MameFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 553A07310AFDA09900531E1F /* MameFilter.m */; };
 		553A09B10AFF11B300531E1F /* CustomMameFilters.h in Copy to Frameworks */ = {isa = PBXBuildFile; fileRef = 553A09AE0AFF11B300531E1F /* CustomMameFilters.h */; };
@@ -3133,6 +3141,7 @@
 			files = (
 				5567C3710BBC576300EA2072 /* MameOSXSharkEvents.text in Copy Shark Codes */,
 				5567C3740BBC57CE00EA2072 /* MameChud.h in Copy Shark Codes */,
+				553843090D0533D600323AC4 /* BackgroundBox.h in Copy Shark Codes */,
 			);
 			name = "Copy Shark Codes";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3143,6 +3152,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				5538430B0D0533D600323AC4 /* BackgroundBox.h in Copy to Frameworks */,
 			);
 			name = "Copy to Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3237,6 +3247,12 @@
 		5537EF890BBEAE14001A390F /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = /System/Library/Frameworks/QuickTime.framework; sourceTree = "<absolute>"; };
 		5537F0F20BBEB35E001A390F /* FrameReader.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = FrameReader.h; sourceTree = "<group>"; };
 		5537F0F30BBEB35E001A390F /* FrameReader.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = FrameReader.m; sourceTree = "<group>"; };
+		553843070D0533D600323AC4 /* BackgroundBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackgroundBox.h; sourceTree = "<group>"; };
+		553843080D0533D600323AC4 /* BackgroundBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackgroundBox.m; sourceTree = "<group>"; };
+		553844C20D05B11A00323AC4 /* _MetadataMO.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = _MetadataMO.h; sourceTree = "<group>"; };
+		553844C30D05B11A00323AC4 /* _MetadataMO.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = _MetadataMO.m; sourceTree = "<group>"; };
+		553844C40D05B11A00323AC4 /* MetadataMO.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = MetadataMO.h; sourceTree = "<group>"; };
+		553844C50D05B11A00323AC4 /* MetadataMO.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = MetadataMO.m; sourceTree = "<group>"; };
 		553A072E0AFD9E2700531E1F /* MameFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MameFilter.h; sourceTree = "<group>"; };
 		553A07310AFDA09900531E1F /* MameFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MameFilter.m; sourceTree = "<group>"; };
 		553A09AE0AFF11B300531E1F /* CustomMameFilters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomMameFilters.h; sourceTree = "<group>"; };
@@ -6385,6 +6401,10 @@
 				552010B50C4A7D8C00018A42 /* _GameMO.m */,
 				552010B80C4A7D8C00018A42 /* GameMO.h */,
 				552010B90C4A7D8C00018A42 /* GameMO.m */,
+				553844C20D05B11A00323AC4 /* _MetadataMO.h */,
+				553844C30D05B11A00323AC4 /* _MetadataMO.m */,
+				553844C40D05B11A00323AC4 /* MetadataMO.h */,
+				553844C50D05B11A00323AC4 /* MetadataMO.m */,
 				552010AC0C4A7CD300018A42 /* Mame_DataModel.xcdatamodel */,
 			);
 			path = model;
@@ -8976,6 +8996,8 @@
 				55C71AAE0B2AFFF0001FF0BE /* AudioEffectWindowController.m */,
 				55B5DDBF0C4D872200057C2A /* AOSegmentedControl.h */,
 				55B5DDC00C4D872200057C2A /* AOSegmentedControl.m */,
+				553843070D0533D600323AC4 /* BackgroundBox.h */,
+				553843080D0533D600323AC4 /* BackgroundBox.m */,
 				5507E8580C74ED8500CC6B02 /* MameVersion.h */,
 				5507E8590C74ED8500CC6B02 /* MameVersion.m */,
 				556A4C650AA50F2800602CC5 /* main.m */,
@@ -9972,6 +9994,8 @@
 				55754F600C5E3B570035DB3B /* statemap.h in Headers */,
 				559DF5590C737E7A000B7385 /* DBPrefsWindowController.h in Headers */,
 				5507E85A0C74ED8500CC6B02 /* MameVersion.h in Headers */,
+				553844CE0D05B11A00323AC4 /* _MetadataMO.h in Headers */,
+				553844D00D05B11A00323AC4 /* MetadataMO.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11064,6 +11088,7 @@
 				55901F960CD37BA800B34B42 /* z80.c in Sources */,
 				55901F970CD37BA800B34B42 /* z80daisy.c in Sources */,
 				559020B80CD3A0BE00B34B42 /* emuopts.c in Sources */,
+				5538430A0D0533D600323AC4 /* BackgroundBox.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13159,6 +13184,7 @@
 			files = (
 				55BEFB170AEC6D3F00357340 /* main.m in Sources */,
 				55C0865A0C4A85DA00CC1E15 /* Mame_DataModel.xcdatamodel in Sources */,
+				5538430C0D0533D600323AC4 /* BackgroundBox.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13204,6 +13230,8 @@
 				55754F610C5E3B570035DB3B /* statemap.m in Sources */,
 				559DF55A0C737E7A000B7385 /* DBPrefsWindowController.m in Sources */,
 				5507E85B0C74ED8500CC6B02 /* MameVersion.m in Sources */,
+				553844CF0D05B11A00323AC4 /* _MetadataMO.m in Sources */,
+				553844D10D05B11A00323AC4 /* MetadataMO.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

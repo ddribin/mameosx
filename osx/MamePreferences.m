@@ -24,6 +24,7 @@
 
 #import "MamePreferences.h"
 #import "MameConfiguration.h"
+#import "MameVersion.h"
 
 @interface MamePreferences (Private)
 
@@ -130,6 +131,8 @@ NSString * MameBiosKey = @"Bios";
 NSString * MameGameSortDescriptorsKey = @"GameSortDescriptors";
 NSString * MameGameFilterIndexKey = @"GameFilterIndex";
 NSString * MameBackgroundUpdateDebugKey = @"BackgroundUpdateDebug";
+NSString * MameForceUpdateGameListKey = @"ForceUpdateGameList";
+NSString * MameDeleteOldGamesKey = @"DeleteOldGames";
 
 @implementation MamePreferences
 
@@ -225,7 +228,7 @@ NSString * MameBackgroundUpdateDebugKey = @"BackgroundUpdateDebug";
     [defaultValues setObject: no
                       forKey: MameGrabMouseKey];
     
-    [defaultValues setObject: yes forKey: MameAuditAtStartupKey];
+    [defaultValues setObject: no forKey: MameAuditAtStartupKey];
     
 #ifdef MAME_DEBUG
     [defaultValues setObject: no
@@ -284,6 +287,12 @@ NSString * MameBackgroundUpdateDebugKey = @"BackgroundUpdateDebug";
     
     [defaultValues setObject: no
                       forKey: MameBackgroundUpdateDebugKey];
+
+    [defaultValues setObject: no
+                      forKey: MameForceUpdateGameListKey];
+    
+    [defaultValues setObject: [MameVersion isTiny]? no : yes
+                      forKey: MameDeleteOldGamesKey];
 
     [mDefaults registerDefaults: defaultValues];
 }
@@ -873,6 +882,19 @@ NSString * MameBackgroundUpdateDebugKey = @"BackgroundUpdateDebug";
 - (BOOL) backgroundUpdateDebug;
 {
     return [mDefaults boolForKey: MameBackgroundUpdateDebugKey];
+}
+
+#pragma mark -
+#pragma mark Debugging
+
+- (BOOL) forceUpdateGameList;
+{
+    return [mDefaults boolForKey: MameForceUpdateGameListKey];
+}
+
+- (BOOL) deleteOldGames;
+{
+    return [mDefaults boolForKey: MameDeleteOldGamesKey];
 }
 
 @end

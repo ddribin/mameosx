@@ -5,6 +5,7 @@
             LANGUAGE = ObjC; 
             SUPERCLASS = NSSegmentedControl; 
         }, 
+        {CLASS = BackgroundBox; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
         {CLASS = DDCustomOpenGLView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
         {
@@ -40,6 +41,7 @@
                 toggleFavorite = id; 
                 togglePause = id; 
                 toggleScreenshot = id; 
+                toggleSubstitution = id; 
                 toggleThrottled = id; 
                 visualEffectsMenuChanged = id; 
             }; 
@@ -47,6 +49,7 @@
             LANGUAGE = ObjC; 
             OUTLETS = {
                 mAllGamesController = NSArrayController; 
+                mAuditTableSubstitutionView = NSView; 
                 mDragView = NSImageView; 
                 mDrawer = NSDrawer; 
                 mEffectsMenu = NSMenu; 

@@ -70,6 +70,7 @@ extern "C" {
     IBOutlet NSArrayController * mAllGamesController;
     IBOutlet NSTableView * mGamesTable;
     IBOutlet NSTableColumn * mFavoriteColumn;
+    IBOutlet NSView * mAuditTableSubstitutionView;
     
     IBOutlet NSPanel * mInfoPanel;
     IBOutlet NSTextView * mInfoAuditNotes;
@@ -108,6 +109,7 @@ extern "C" {
     NSPersistentStoreCoordinator * persistentStoreCoordinator;
     NSManagedObjectModel * managedObjectModel;
     NSManagedObjectContext * managedObjectContext;
+    BOOL mFreshPersistentStore;
     
     NSArray * gameSortDescriptors;
     NSString * mFilterString;
@@ -147,6 +149,7 @@ extern "C" {
 
 - (IBAction) exportFavorites: (id) sender;
 - (IBAction) importFavorites: (id) sender;
+- (void) restoreFavorites;
 
 - (NSArray *) selectedGames;
 
@@ -204,6 +207,9 @@ extern "C" {
 - (IBAction) previousVisualEffects: (id) sender;
 - (IBAction) visualEffectsMenuChanged: (id) sender;
 - (IBAction) toggleThrottled: (id) sender;
+- (IBAction) toggleSubstitution: (id) sender;
+- (BOOL) isTableSubstitutionHidden;
+- (void) setTableSubstitionHidden: (BOOL) hidden;
 
 - (BOOL) syncToRefresh;
 - (void) setSyncToRefresh: (BOOL) flag;

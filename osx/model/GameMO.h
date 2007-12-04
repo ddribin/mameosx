@@ -13,9 +13,14 @@
     unsigned mDriverIndex;
 }
 
++ (NSString *) entityName;
+
 + (NSEntityDescription *) entityInContext: (NSManagedObjectContext *) context;
 
-+ (GameMO *) createInContext: (NSManagedObjectContext *) context;
++ (NSArray *) allWithSortDesriptors: (NSArray *) sortDescriptors
+                          inContext: (NSManagedObjectContext *) context;
+
++ (id) createInContext: (NSManagedObjectContext *) context;
 
 + (GameMO *) findWithShortName: (NSString *) shortName
                      inContext: (NSManagedObjectContext *) context;
@@ -29,9 +34,6 @@
 + (NSArray *) gamesWithShortNames: (NSArray *) shortNames
                   sortDescriptors: (NSArray *) sortDescriptors
                         inContext: (NSManagedObjectContext *) context;
-
-+ (NSArray *) allGamesWithSortDesriptors: (NSArray *) sortDescriptors
-                               inContext: (NSManagedObjectContext *) context;
 
 + (NSArray *) sortByShortName;
 
