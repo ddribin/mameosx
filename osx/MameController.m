@@ -42,7 +42,7 @@
 #include <unistd.h>
 #include "osd_osx.h"
 
-GroupMO * mFavoritesGroup;
+GroupMO * mFavoritesGroup = nil;
 
 static const int kMameRunGame = 0;
 static const int kMameCancelGame = 1;
@@ -606,8 +606,8 @@ Performs the save action for the application, which is to send the save:
 
 - (void) setGameFilterIndex: (int) gameFilterIndex;
 {
-    unsigned auditedGamesCount = [[self fetchAuditedGames] count];
-    if ((gameFilterIndex == 1) && (auditedGamesCount == 0))
+    // unsigned auditedGamesCount = [[self fetchAuditedGames] count];
+    if ((gameFilterIndex == 1) && ([[self fetchAuditedGames] count] == 0))
         [self setTableSubstitionHidden: NO];
     else
         [self setTableSubstitionHidden: YES];

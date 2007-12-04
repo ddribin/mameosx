@@ -288,3 +288,4 @@ extern "C" {
 
 @end
 
+extern GroupMO * mFavoritesGroup;
