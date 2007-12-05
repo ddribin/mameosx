@@ -9,6 +9,8 @@
     - Fix quitting after errors (#1799359).
     - Fix Command-F enables visual effects on Leopard (#1843080).
     - Remove "Status" column per mamedev's request.
+    - Tweak performance of game list.
+    - Don't default to auditing at startup.
 
 <% version = "0.118" %>
 - version: "<%=version%>"
