@@ -64,6 +64,35 @@
 
 
 
+- (NSNumber*)favorite {
+	[self willAccessValueForKey:@"favorite"];
+	NSNumber *result = [self primitiveValueForKey:@"favorite"];
+	[self didAccessValueForKey:@"favorite"];
+
+	return result;
+}
+
+- (void)setFavorite:(NSNumber*)value_ {
+    [self willChangeValueForKey:@"favorite"];
+    [self setPrimitiveValue:value_ forKey:@"favorite"];
+    [self didChangeValueForKey:@"favorite"];
+}
+
+
+
+- (BOOL)favoriteValue {
+	return [[self favorite] boolValue];
+}
+
+- (void)setFavoriteValue:(BOOL)value_ {
+	[self setFavorite:[NSNumber numberWithBool:value_]];
+}
+
+
+
+
+
+
 - (NSNumber*)playCount {
 	[self willAccessValueForKey:@"playCount"];
 	NSNumber *result = [self primitiveValueForKey:@"playCount"];

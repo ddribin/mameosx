@@ -3,6 +3,7 @@
 #import "RomAuditSummary.h"
 #import "MameConfiguration.h"
 #import "MameVersion.h"
+#import "MameDriverIndexMap.h"
 #import "NSXReturnThrowError.h"
 #import "JRLog.h"
 #import "audit.h"
@@ -13,9 +14,11 @@
 {
     if (self == [GameMO class])
     {
+#if 0
         NSArray *keys = [NSArray arrayWithObjects: @"groups", nil];
         [self setKeys: keys triggerChangeNotificationsForDependentKey: @"favoriteIcon"];
         [self setKeys: keys triggerChangeNotificationsForDependentKey: @"favorite"];
+#endif
     }
 }
 
@@ -30,12 +33,10 @@
                        inManagedObjectContext: context];
 }
 
-+ (NSArray *) allWithSortDesriptors: (NSArray *) sortDescriptors
-                          inContext: (NSManagedObjectContext *) context;
++ (NSArray *) executeFetchRequest: (NSFetchRequest *) request
+                  sortDescriptors: (NSArray *) sortDescriptors
+                        inContext: (NSManagedObjectContext *) context;
 {
-    NSFetchRequest *request = [[[NSFetchRequest alloc] init] autorelease];
-    [request setEntity: [self entityInContext: context]];
-    
     if (sortDescriptors != nil)
     {
         [request setSortDescriptors: sortDescriptors];
@@ -47,7 +48,18 @@
     {
         NSXRaiseError(error);
     }
+    
     return results;
+}
+
++ (NSArray *) allWithSortDesriptors: (NSArray *) sortDescriptors
+                          inContext: (NSManagedObjectContext *) context;
+{
+    NSFetchRequest * request = [[[NSFetchRequest alloc] init] autorelease];
+    [request setEntity: [self entityInContext: context]];
+    return [self executeFetchRequest: request
+                     sortDescriptors: sortDescriptors
+                           inContext: context];
 }
 
 + (id) createInContext: (NSManagedObjectContext *) context;
@@ -109,19 +121,9 @@
     NSFetchRequest * request =
         [model fetchRequestFromTemplateWithName: @"gamesWithShortNames"
                           substitutionVariables: variables];
-    if (sortDescriptors != nil)
-    {
-        [request setSortDescriptors: sortDescriptors];
-    }
-    
-    NSError * error = nil;
-    NSArray * results = [context executeFetchRequest: request error: &error];
-    if (results == nil)
-    {
-        NSXRaiseError(error);
-    }
-    
-    return results;
+    return [self executeFetchRequest: request
+                     sortDescriptors: sortDescriptors
+                           inContext: context];
 }
 
 + (NSArray *) sortByShortName;
@@ -138,19 +140,6 @@
                                     ascending: YES
                                      selector: @selector(caseInsensitiveCompare:)];
     return [NSArray arrayWithObject: [descriptor autorelease]];
-}
-
-- (id) initWithEntity: (NSEntityDescription *) entity
-insertIntoManagedObjectContext: (NSManagedObjectContext *) context
-{
-    self = [super initWithEntity: entity
-  insertIntoManagedObjectContext: context];
-    if (self == nil)
-        return nil;
-    
-    mDriverIndex = NSNotFound;
-    
-    return self;
 }
 
 - (void) toggleGroupMembership: (GroupMO *) group;
@@ -174,14 +163,7 @@ extern GroupMO * mFavoritesGroup;
 
 - (BOOL) isFavorite;
 {
-#if 0
-    GroupMO * favorites =
-        [GroupMO findOrCreateGroupWithName: GroupFavorites
-                                 inContext: [self managedObjectContext]];
-#else
-    GroupMO * favorites = mFavoritesGroup;
-#endif
-    return [[favorites membersSet] containsObject: self];
+    return [self favoriteValue];
 }
 
 - (NSImage *) favoriteIcon;
@@ -190,6 +172,11 @@ extern GroupMO * mFavoritesGroup;
         return [NSImage imageNamed: @"favorite-16"];
     else
         return nil;
+}
+
+- (void) toggleFavorite;
+{
+    [self setFavoriteValue: ![self favoriteValue]];
 }
 
 - (NSString *) displayName;
@@ -223,11 +210,11 @@ extern GroupMO * mFavoritesGroup;
     }
 }
 
-- (void) audit;
+- (BOOL) audit;
 {
-    unsigned driverIndex = [self driverIndex];
+    unsigned driverIndex = [MameDriverIndexMap indexForShortName: [self shortName]];
     if (driverIndex == NSNotFound)
-        return;
+        return NO;
     
     JRLogDebug(@"Auditing %@ (%@)", [self shortName], [self longName]);
     audit_record * auditRecords;
@@ -247,19 +234,14 @@ extern GroupMO * mFavoritesGroup;
     [self setAuditNotes: [summary notes]];
     [self setAuditDate: [NSDate date]];
     [self setAuditVersion: [MameVersion marketingVersion]];
+    return YES;
 }
 
-//=========================================================== 
-//  driverIndex 
-//=========================================================== 
-- (unsigned) driverIndex
+- (void) resetAuditStatus;
 {
-    return mDriverIndex;
-}
-
-- (void) setDriverIndex: (unsigned) theDriverIndex
-{
-    mDriverIndex = theDriverIndex;
+    [self setAuditDate: nil];
+    [self setAuditNotes: nil];
+    [self setAuditStatus: nil];
 }
 
 @end

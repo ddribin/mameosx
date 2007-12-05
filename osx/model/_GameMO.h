@@ -36,6 +36,16 @@
 
 
 
+- (NSNumber*)favorite;
+- (void)setFavorite:(NSNumber*)value_;
+
+- (BOOL)favoriteValue;
+- (void)setFavoriteValue:(BOOL)value_;
+
+//- (BOOL)validateFavorite:(id*)value_ error:(NSError**)error_;
+
+
+
 - (NSNumber*)playCount;
 - (void)setPlayCount:(NSNumber*)value_;
 

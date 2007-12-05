@@ -10,12 +10,15 @@
      *
      * http://lists.apple.com/archives/cocoa-dev/2005/Aug/msg01080.html
      */
-    unsigned mDriverIndex;
 }
 
 + (NSString *) entityName;
 
 + (NSEntityDescription *) entityInContext: (NSManagedObjectContext *) context;
+
++ (NSArray *) executeFetchRequest: (NSFetchRequest *) request
+                  sortDescriptors: (NSArray *) sortDescriptors
+                        inContext: (NSManagedObjectContext *) context;
 
 + (NSArray *) allWithSortDesriptors: (NSArray *) sortDescriptors
                           inContext: (NSManagedObjectContext *) context;
@@ -43,13 +46,13 @@
 
 - (BOOL) isFavorite;
 - (NSImage *) favoriteIcon;
-
-- (unsigned) driverIndex;
-- (void) setDriverIndex: (unsigned) theDriverIndex;
+- (void) toggleFavorite;
 
 - (NSString *) displayName;
 - (NSString *) auditStatusString;
 
-- (void) audit;
+- (BOOL) audit;
+
+- (void) resetAuditStatus;
 
 @end

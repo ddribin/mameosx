@@ -42,8 +42,6 @@
 #include <unistd.h>
 #include "osd_osx.h"
 
-GroupMO * mFavoritesGroup = nil;
-
 static const int kMameRunGame = 0;
 static const int kMameCancelGame = 1;
 static const int kMameMaxGamesInHistory = 100;
@@ -51,6 +49,8 @@ static const int kMameMaxGamesInHistory = 100;
 @interface MameController (Private)
 
 - (void) cleanupAfterGameFinished;
+- (BOOL) haveNoAuditedGames;
+
 
 #pragma mark -
 #pragma mark KVO Helpers
@@ -114,8 +114,6 @@ static const int kMameMaxGamesInHistory = 100;
 #pragma mark -
 #pragma mark Favorites
 
-- (GroupMO *) favoritesGroup;
-
 - (void) exportFavoritesToFile: (NSString *) file
                    skipIfEmpty: (BOOL) skipIfEmpty;
 
@@ -171,27 +169,6 @@ static void exit_sleeper()
     return self;
 }
 
-- (NSArray *) fetchAuditedGames
-{
-#if 1
-    NSManagedObjectContext * context = [self managedObjectContext];
-    NSFetchRequest * fetchRequest = [[[NSFetchRequest alloc] init] autorelease];
-    [fetchRequest setEntity: [GameMO entityInContext: context]];
-    
-    [fetchRequest setPredicate: [NSPredicate predicateWithFormat: @"(auditStatus != NIL)"]];
-    [fetchRequest setFetchLimit: 1];
-    
-    // make sure the results are sorted as well
-    // [fetchRequest setSortDescriptors: [GameMO sortByLongName]];
-    // Execute the fetch
-    NSError * error = nil;
-    JRLogDebug(@"Fetching audited");
-    return [context executeFetchRequest: fetchRequest error: &error];
-#else
-    return [NSArray array];
-#endif
-}
-
 - (void) awakeFromNib
 {
     [mOpenPanel setToolbar: mToolbar];
@@ -224,7 +201,7 @@ static void exit_sleeper()
                              options: 0
                              context: @selector(arrangedObjectsChanged)];
     
-    [mGamesController addObserver: self
+    [mAllGamesController addObserver: self
                        forKeyPath: @"selectedObjects"
                           options: 0
                           context: @selector(selectedGamesChanged)];
@@ -425,12 +402,12 @@ Performs the save action for the application, which is to send the save:
 
 - (void) rearrangeObjects;
 {
-    [mGamesController rearrangeObjects];
+    [mAllGamesController rearrangeObjects];
 }
 
 - (id) newGame;
 {
-    return [mGamesController newObject];
+    return [mAllGamesController newObject];
 }
 
 #pragma mark -
@@ -506,7 +483,7 @@ Performs the save action for the application, which is to send the save:
                      row: (int)row
            mouseLocation: (NSPoint)mouseLocation;
 {
-    GameMO * game = [[mGamesController arrangedObjects] objectAtIndex: row];
+    GameMO * game = [[mAllGamesController arrangedObjects] objectAtIndex: row];
     return [game displayName];
 }
 
@@ -606,14 +583,12 @@ Performs the save action for the application, which is to send the save:
 
 - (void) setGameFilterIndex: (int) gameFilterIndex;
 {
-    // unsigned auditedGamesCount = [[self fetchAuditedGames] count];
-    if ((gameFilterIndex == 1) && ([[self fetchAuditedGames] count] == 0))
+    if ((gameFilterIndex == 1) && [self haveNoAuditedGames])
         [self setTableSubstitionHidden: NO];
     else
         [self setTableSubstitionHidden: YES];
 
     mGameFilterIndex = gameFilterIndex;
-    [self keyChanged: @"matchingGames"];
     [self updatePredicate];
     [self updateGameFilterMenu];
 
@@ -646,12 +621,10 @@ Performs the save action for the application, which is to send the save:
 
 - (IBAction) toggleFavorite: (id) sender;
 {
-    GroupMO * favorites = [self favoritesGroup];
-    
     NSArray * games = [self selectedGames];
-    [games makeObjectsPerformSelector: @selector(toggleGroupMembership:)
-                           withObject: favorites];
-    // [self saveAction: nil];
+    [games makeObjectsPerformSelector: @selector(toggleFavorite)
+                           withObject: nil];
+    [mGamesTable reloadData];
 }
 
 - (IBAction) exportFavorites: (id) sender;
@@ -690,31 +663,17 @@ Performs the save action for the application, which is to send the save:
 //=========================================================== 
 - (NSArray *) selectedGames
 {
-    return [mGamesController selectedObjects];
-}
-
-- (NSArray *) matchingGames;
-{
-    if (mGameFilterIndex != 2)
-    {
-        return [mAllGamesController arrangedObjects];
-    }
-    else
-    {
-        GroupMO * favorites = [self favoritesGroup];
-        return [[favorites membersSet] allObjects];
-    }
+    return [mAllGamesController selectedObjects];
 }
 
 - (IBAction) refreshGames: (id) sender;
 {
-    [self keyChanged: @"matchingGames"];
-    [mGamesController rearrangeObjects];
+    [mAllGamesController rearrangeObjects];
 }
 
 - (void) rearrangeGames;
 {
-    [mGamesController rearrangeObjects];
+    [mAllGamesController rearrangeObjects];
 }
 
 //=========================================================== 
@@ -752,7 +711,7 @@ Performs the save action for the application, which is to send the save:
 
 - (unsigned) selectionCount;
 {
-    return [[mGamesController selectionIndexes] count];
+    return [[mAllGamesController selectionIndexes] count];
 }
 
 - (BOOL) hasSelection;
@@ -1290,6 +1249,11 @@ Performs the save action for the application, which is to send the save:
     [mUpdater auditGames: selectedGames];
 }
 
+- (IBAction) auditAllGames: (id) sender;
+{
+    [mUpdater auditAllGames];
+}
+
 - (IBAction) auditUnauditedGames: (id) sender;
 {
     [self setTableSubstitionHidden: YES];
@@ -1299,6 +1263,15 @@ Performs the save action for the application, which is to send the save:
 - (IBAction) abortAudit: (id) sender;
 {
     [mUpdater abortAudit];
+}
+
+- (IBAction) resetAuditStatus: (id) sender;
+{
+    // This is really slow right now
+    NSArray * allGames = [GameMO allWithSortDesriptors: nil
+                                             inContext: [self managedObjectContext]];
+    [allGames makeObjectsPerformSelector: @selector(resetAuditStatus)];
+    [self saveAction: nil];
 }
 
 - (IBAction) showLogWindow: (id) sender;
@@ -1527,6 +1500,26 @@ Performs the save action for the application, which is to send the save:
     [mUpdater resume];
 }
 
+
+- (BOOL) haveNoAuditedGames;
+{
+    NSManagedObjectContext * context = [self managedObjectContext];
+    NSFetchRequest * fetchRequest = [[[NSFetchRequest alloc] init] autorelease];
+    [fetchRequest setEntity: [GameMO entityInContext: context]];
+    
+    [fetchRequest setPredicate: [NSPredicate predicateWithFormat: @"(auditStatus != NIL)"]];
+    [fetchRequest setFetchLimit: 1];
+    
+    // Execute the fetch
+    NSError * error = nil;
+    JRLogDebug(@"Fetching audited");
+    NSArray * result = [context executeFetchRequest: fetchRequest error: &error];
+    JRLogDebug(@"Done");
+    
+    return ([result count] == 0);
+}
+
+
 #pragma mark -
 #pragma mark KVO Helpers
 
@@ -1557,7 +1550,6 @@ Performs the save action for the application, which is to send the save:
 
 - (void) arrangedObjectsChanged;
 {
-    [self keyChanged: @"matchingGames"];
 }
 
 - (void) idleChanged;
@@ -1612,6 +1604,10 @@ Performs the save action for the application, which is to send the save:
     // [terms addObject: @"(driverIndex != nil)"];
     if (mGameFilterIndex == 1)
         [terms addObject: @"(auditStatus != nil AND (auditStatus == 0 OR auditStatus == 1))"];
+    if (mGameFilterIndex == 2)
+    {
+        [terms addObject: @"(favorite == TRUE)"];
+    }
     
     if (mFilterString != nil)
     {
@@ -1632,7 +1628,7 @@ Performs the save action for the application, which is to send the save:
     
     predicate = [predicate predicateWithSubstitutionVariables: variables];
     
-    [mGamesController setFilterPredicate: predicate];
+    [mAllGamesController setFilterPredicate: predicate];
 }
 
 - (void) updateDragView;
@@ -2072,24 +2068,18 @@ Performs the save action for the application, which is to send the save:
 #pragma mark -
 #pragma mark Favorites
 
-- (GroupMO *) favoritesGroup;
-{
-    if (mFavoritesGroup == nil)
-    {
-        mFavoritesGroup = [GroupMO findOrCreateGroupWithName: GroupFavorites
-                                                   inContext: [self managedObjectContext]];
-        [mFavoritesGroup retain];
-    }
-    return mFavoritesGroup;
-}
-
 - (void) exportFavoritesToFile: (NSString *) file
                    skipIfEmpty: (BOOL) skipIfEmpty;
 {
     NSManagedObjectContext * context = [self managedObjectContext];
-    GroupMO * favorites = [self favoritesGroup];
-    NSMutableSet * members = [favorites membersSet];
-    NSArray * favoriteNames = [[members valueForKey: @"shortName"] allObjects];
+    NSFetchRequest * fetchRequest = [[[NSFetchRequest alloc] init] autorelease];
+    [fetchRequest setEntity: [GameMO entityInContext: context]];
+    [fetchRequest setPredicate: [NSPredicate predicateWithFormat: @"(favorite == TRUE)"]];
+    NSArray * members = [GameMO executeFetchRequest: fetchRequest
+                                    sortDescriptors: nil
+                                          inContext: context];
+    NSArray * favoriteNames = [members valueForKey: @"shortName"];
+
     BOOL skipWrite = NO;
     if (([favoriteNames count] == 0) && skipIfEmpty)
         skipWrite = YES;
@@ -2104,10 +2094,8 @@ Performs the save action for the application, which is to send the save:
     NSManagedObjectContext * context = [self managedObjectContext];
     NSArray * favoriteGames = [GameMO gamesWithShortNames: favoriteNames
                                                 inContext: context];
-    GroupMO * favorites = [self favoritesGroup];
-    NSMutableSet * members = [favorites membersSet];
-    [members removeAllObjects];
-    [members addObjectsFromArray: favoriteGames];
+    [favoriteGames makeObjectsPerformSelector: @selector(setFavorite:)
+                                   withObject: [NSNumber numberWithBool: YES]];
     [self saveAction: nil];
 }
 

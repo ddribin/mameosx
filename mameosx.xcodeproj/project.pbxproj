@@ -2628,6 +2628,8 @@
 		5595EFAA0B1BC91200631777 /* RomAudit.nib in Resources */ = {isa = PBXBuildFile; fileRef = 5595EFA70B1BC91200631777 /* RomAudit.nib */; };
 		5595F0C00B1BDD9B00631777 /* RomAuditSummary.h in Headers */ = {isa = PBXBuildFile; fileRef = 5595F0BE0B1BDD9B00631777 /* RomAuditSummary.h */; };
 		5595F0C10B1BDD9B00631777 /* RomAuditSummary.m in Sources */ = {isa = PBXBuildFile; fileRef = 5595F0BF0B1BDD9B00631777 /* RomAuditSummary.m */; };
+		559A7D7C0D060623001152BD /* MameDriverIndexMap.h in Headers */ = {isa = PBXBuildFile; fileRef = 559A7D7A0D060623001152BD /* MameDriverIndexMap.h */; };
+		559A7D7D0D060623001152BD /* MameDriverIndexMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 559A7D7B0D060623001152BD /* MameDriverIndexMap.m */; };
 		559C7EC20C4E7F9400763F73 /* Drag.png in Resources */ = {isa = PBXBuildFile; fileRef = 559C7EC10C4E7F9400763F73 /* Drag.png */; };
 		559C7EC30C4E7F9500763F73 /* Drag.png in Resources */ = {isa = PBXBuildFile; fileRef = 559C7EC10C4E7F9400763F73 /* Drag.png */; };
 		559C7F890C4E8E1100763F73 /* RBSplitSubview.h in Headers */ = {isa = PBXBuildFile; fileRef = 559C7F830C4E8E1100763F73 /* RBSplitSubview.h */; };
@@ -5866,6 +5868,8 @@
 		5595EFA80B1BC91200631777 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/RomAudit.nib; sourceTree = "<group>"; };
 		5595F0BE0B1BDD9B00631777 /* RomAuditSummary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RomAuditSummary.h; sourceTree = "<group>"; };
 		5595F0BF0B1BDD9B00631777 /* RomAuditSummary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RomAuditSummary.m; sourceTree = "<group>"; };
+		559A7D7A0D060623001152BD /* MameDriverIndexMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MameDriverIndexMap.h; sourceTree = "<group>"; };
+		559A7D7B0D060623001152BD /* MameDriverIndexMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MameDriverIndexMap.m; sourceTree = "<group>"; };
 		559C7EC10C4E7F9400763F73 /* Drag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Drag.png; sourceTree = "<group>"; };
 		559C7F830C4E8E1100763F73 /* RBSplitSubview.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = RBSplitSubview.h; sourceTree = "<group>"; };
 		559C7F840C4E8E1100763F73 /* RBSplitSubview.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = RBSplitSubview.m; sourceTree = "<group>"; };
@@ -8997,6 +9001,8 @@
 				553843080D0533D600323AC4 /* BackgroundBox.m */,
 				5507E8580C74ED8500CC6B02 /* MameVersion.h */,
 				5507E8590C74ED8500CC6B02 /* MameVersion.m */,
+				559A7D7A0D060623001152BD /* MameDriverIndexMap.h */,
+				559A7D7B0D060623001152BD /* MameDriverIndexMap.m */,
 				556A4C650AA50F2800602CC5 /* main.m */,
 				5567C3730BBC57CE00EA2072 /* MameChud.h */,
 				5567C3630BBC56D100EA2072 /* MameOSXSharkEvents.text */,
@@ -9993,6 +9999,7 @@
 				5507E85A0C74ED8500CC6B02 /* MameVersion.h in Headers */,
 				553844CE0D05B11A00323AC4 /* _MetadataMO.h in Headers */,
 				553844D00D05B11A00323AC4 /* MetadataMO.h in Headers */,
+				559A7D7C0D060623001152BD /* MameDriverIndexMap.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13226,6 +13233,7 @@
 				5507E85B0C74ED8500CC6B02 /* MameVersion.m in Sources */,
 				553844CF0D05B11A00323AC4 /* _MetadataMO.m in Sources */,
 				553844D10D05B11A00323AC4 /* MetadataMO.m in Sources */,
+				559A7D7D0D060623001152BD /* MameDriverIndexMap.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

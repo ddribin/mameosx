@@ -39,7 +39,6 @@
     unsigned mCurrentGameIndex;
     unsigned mUpdateGameListIteration;
     NSArray * mShortNames;
-    NSMutableDictionary * mIndexByShortName;
     GameMO * mCurrentGame;
     NSEnumerator * mGameEnumerator;
     NSTimeInterval mLastSave;
@@ -60,6 +59,7 @@
 - (BOOL) isRunning;
 
 - (void) auditGames: (NSArray *) games;
+- (void) auditAllGames;
 - (void) auditUnauditedGames;
 - (void) abortAudit;
 
@@ -75,8 +75,6 @@
 - (void) saveState;
 - (void) restoreState;
 
-- (void) prepareToIndexByShortName;
-- (void) indexByShortName;
 - (void) prepareToUpdateGameList;
 - (void) updateGameList;
 - (void) prepareToAuditAllGames;

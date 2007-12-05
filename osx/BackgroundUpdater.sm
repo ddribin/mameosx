@@ -14,15 +14,9 @@ Idle
 Entry { setIdle(YES); }
 Exit { setIdle(NO); }
 {
-    Start IndexingByShortName { prepareToIndexByShortName(); }
+    Start UpdatingGameList { prepareToUpdateGameList(); }
     StartSkipingUpdate AuditingGames { prepareToAuditAllGames(); }
     AuditGames(games: NSArray *) AuditingGames { prepareToAuditGames(games); }
-}
-
-IndexingByShortName
-{
-    DoWork nil { indexByShortName(); }
-    WorkDone UpdatingGameList { prepareToUpdateGameList(); }
 }
 
 UpdatingGameList

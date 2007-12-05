@@ -66,7 +66,6 @@ extern "C" {
     IBOutlet NSPanel * mMameLogPanel;
     IBOutlet NSTextView * mMameLogView;
     
-    IBOutlet NSArrayController * mGamesController;
     IBOutlet NSArrayController * mAllGamesController;
     IBOutlet NSTableView * mGamesTable;
     IBOutlet NSTableColumn * mFavoriteColumn;
@@ -115,8 +114,6 @@ extern "C" {
     NSString * mFilterString;
     int mGameFilterIndex;
     BackgroundUpdater * mUpdater;
-    NSArray * mMatchingGames;
-    // GroupMO * mFavoritesGroup;
     BOOL mShowClones;
     NSString * mStatusText;
 }
@@ -152,8 +149,6 @@ extern "C" {
 - (void) restoreFavorites;
 
 - (NSArray *) selectedGames;
-
-- (NSArray *) matchingGames;
 
 - (IBAction) refreshGames: (id) sender;
 
@@ -251,8 +246,10 @@ extern "C" {
 - (IBAction) auditRoms: (id) sender;
 
 - (IBAction) auditSelectedGames: (id) sender;
+- (IBAction) auditAllGames: (id) sender;
 - (IBAction) auditUnauditedGames: (id) sender;
 - (IBAction) abortAudit: (id) sender;
+- (IBAction) resetAuditStatus: (id) sender;
 
 - (IBAction) showLogWindow: (id) sender;
 
@@ -287,5 +284,3 @@ extern "C" {
 - (void) mameLogMessage: (NSString *) message;
 
 @end
-
-extern GroupMO * mFavoritesGroup;
