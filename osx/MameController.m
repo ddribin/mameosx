@@ -46,6 +46,9 @@ static const int kMameRunGame = 0;
 static const int kMameCancelGame = 1;
 static const int kMameMaxGamesInHistory = 100;
 
+static NSString * kMameStoreVersionKey = @"viewVersion";
+static NSString * kMameStoreVersion = @"Version 7";
+
 @interface MameController (Private)
 
 - (void) cleanupAfterGameFinished;
@@ -169,7 +172,7 @@ static void exit_sleeper()
     return self;
 }
 
-- (void) awakeFromNib
+- (void) safeAwakeFromNib
 {
     [mOpenPanel setToolbar: mToolbar];
     [mGamesTable setDoubleAction: @selector(endOpenPanel:)];
@@ -247,11 +250,23 @@ static void exit_sleeper()
     
     [self setGameFilterIndex: [preferences gameFilterIndex]];
     [self updatePredicate];
-    JRLogDebug(@"Get count");
-    unsigned gameCount = [[GameMO allWithSortDesriptors: nil
-                                              inContext: [self managedObjectContext]] count];
-    JRLogDebug(@"Game count: %d", gameCount);
+    [self managedObjectContext];
     [mUpdater start];
+}
+
+- (void) awakeFromNib
+{
+    @try
+    {
+        [self safeAwakeFromNib];
+    }
+    @catch (NSException * e)
+    {
+        NSError * error = [[e userInfo] objectForKey: @"error"];
+        if (error != nil)
+            [NSApp presentError: error];
+        JRLogWarn(@"Caught: %@", e);
+    }
 }
 
 #pragma mark -
@@ -332,8 +347,10 @@ Returns the persistent store coordinator for the application.  This
     NSDictionary * storeInfo =
         [NSPersistentStoreCoordinator metadataForPersistentStoreWithURL: url error: &error];
     
-    if(![[storeInfo valueForKey: @"viewVersion"] isEqualToString: @"Version 6"])
+    if(![[storeInfo valueForKey: kMameStoreVersionKey] isEqualToString: kMameStoreVersion])
     {
+        JRLogWarn(@"Store version (%@) is out of date (%@), trashing store",
+                  [storeInfo valueForKey: kMameStoreVersionKey], kMameStoreVersion);
         [fileManager removeFileAtPath: [url path] handler: nil];
         [fileManager createDirectoryAtPath:applicationSupportFolder attributes: nil];
         mFreshPersistentStore = YES;
@@ -353,7 +370,7 @@ Returns the persistent store coordinator for the application.  This
     {
         managedObjectContext = [[NSManagedObjectContext alloc] init];
         [managedObjectContext setPersistentStoreCoordinator: persistentStoreCoordinator];
-        [[self class] setMetadata: @"Version 6" forKey: @"viewVersion"
+        [[self class] setMetadata: kMameStoreVersion forKey: kMameStoreVersionKey
                    inStoreWithURL: url inContext: managedObjectContext];
     }
     
@@ -1601,13 +1618,10 @@ Performs the save action for the application, which is to send the save:
     NSMutableArray * terms = [NSMutableArray array];
     NSMutableDictionary * variables = [NSMutableDictionary dictionary];
 
-    // [terms addObject: @"(driverIndex != nil)"];
     if (mGameFilterIndex == 1)
         [terms addObject: @"(auditStatus != nil AND (auditStatus == 0 OR auditStatus == 1))"];
-    if (mGameFilterIndex == 2)
-    {
+    else if (mGameFilterIndex == 2)
         [terms addObject: @"(favorite == TRUE)"];
-    }
     
     if (mFilterString != nil)
     {
