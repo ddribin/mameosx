@@ -51,6 +51,7 @@ static NSString * kMameStoreVersion = @"Version 7";
 
 @interface MameController (Private)
 
+- (void) initGameSortDescriptors;
 - (void) cleanupAfterGameFinished;
 - (BOOL) haveNoAuditedGames;
 
@@ -156,7 +157,7 @@ static void exit_sleeper()
         [[MamePreferences standardPreferences] sleepAtExit];
     atexit(exit_sleeper);
     
-    gameSortDescriptors = [[[MamePreferences standardPreferences] gamesSortDescriptors] retain];
+    [self initGameSortDescriptors];
     mShowClones = YES;
     
     mUpdater = [[BackgroundUpdater alloc] initWithMameController: self];
@@ -580,6 +581,23 @@ Performs the save action for the application, which is to send the save:
 
 #pragma mark -
 
+//=========================================================== 
+//  gameSortDescriptors 
+//=========================================================== 
+- (NSArray *) gameSortDescriptors
+{
+    return mGameSortDescriptors; 
+}
+
+- (void) setGameSortDescriptors: (NSArray *) theGameSortDescriptors
+{
+    if (mGameSortDescriptors != theGameSortDescriptors)
+    {
+        [mGameSortDescriptors release];
+        mGameSortDescriptors = [theGameSortDescriptors retain];
+    }
+}
+
 - (void) setFilterString: (NSString *) filterString;
 {
     [filterString retain];
@@ -861,7 +879,7 @@ Performs the save action for the application, which is to send the save:
     [[mMameView window] orderOut: nil];
     [mMameView setFullScreen: false];
     
-    [[MamePreferences standardPreferences] setGamesSortDescriptors: gameSortDescriptors];
+    [[MamePreferences standardPreferences] setGamesSortDescriptors: mGameSortDescriptors];
     [[MamePreferences standardPreferences] synchronize];
 }
 
@@ -1509,6 +1527,42 @@ Performs the save action for the application, which is to send the save:
 #pragma mark -
 
 @implementation MameController (Private)
+
+- (void) initGameSortDescriptors;
+{
+    /*
+     * This whole validation crap is necessary because I screwed up in 0.118.
+     * When it persisted sort descriptors, it allowed Cocoa-based sort
+     * descriptors, i.e. sorting on keys that are fake attributes, not real
+     * persistent attributes.  After 0.118, the array controller fetches
+     * against the database using these sort descriptors.  This causes
+     * exceptions since the fake attributes have no valid SQL column.  I
+     * should have only used real attributes on the sort descriptors.  Now,
+     * we have to filter out all non-attribute keys.  See this for more
+     * sinformation:
+     *
+     * "SQLite store does not work with sorting"
+     * http://developer.apple.com/documentation/Cocoa/Conceptual/CoreData/Articles/cdTroubleshooting.html
+     *
+     */
+    NSEntityDescription * gameEntity = [GameMO entityInContext: [self managedObjectContext]];
+    NSDictionary * attributes = [gameEntity attributesByName];
+    NSSet * validKeys = [NSSet setWithArray: [attributes allKeys]];
+    
+    NSArray * gameSortDescriptors = [[MamePreferences standardPreferences] gamesSortDescriptors];
+    JRLogDebug(@"Saved sort descriptors: %@", gameSortDescriptors);
+    NSMutableArray * validDescriptors = [NSMutableArray array];
+    NSEnumerator * e = [gameSortDescriptors objectEnumerator];
+    NSSortDescriptor * sortDescriptor;
+    while (sortDescriptor = [e nextObject])
+    {
+        if ([validKeys containsObject: [sortDescriptor key]])
+            [validDescriptors addObject: sortDescriptor];
+    }
+    
+    JRLogDebug(@"Valid sort descriptors: %@", validDescriptors);
+    mGameSortDescriptors = [validDescriptors copy];
+}
 
 - (void) cleanupAfterGameFinished;
 {

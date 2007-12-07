@@ -110,7 +110,7 @@ extern "C" {
     NSManagedObjectContext * managedObjectContext;
     BOOL mFreshPersistentStore;
     
-    NSArray * gameSortDescriptors;
+    NSArray * mGameSortDescriptors;
     NSString * mFilterString;
     int mGameFilterIndex;
     BackgroundUpdater * mUpdater;
@@ -130,6 +130,9 @@ extern "C" {
 - (id) newGame;
 
 #pragma mark -
+
+- (NSArray *) gameSortDescriptors;
+- (void) setGameSortDescriptors: (NSArray *) theGameSortDescriptors;
 
 - (void) setFilterString: (NSString *) filterString;
 - (NSString *) filterString;
