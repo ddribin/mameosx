@@ -4,13 +4,15 @@
   changes:
     - Upgrade to 0.119 baseline.
     - Ignores input while in the background.
-    - Properly normalize analog joysticks.
+    - Properly normalize analog joysticks (#1780515).
     - Fix double Command-Q to quit (#1789071).
     - Fix quitting after errors (#1799359).
     - Fix Command-F enables visual effects on Leopard (#1843080).
     - Remove "Status" column per mamedev's request.
     - Tweak performance of game list.
     - Don't default to auditing at startup.
+    - Fix vector flicker default setting.
+    - Add joystick deadzone and saturation UI preferences.
 
 <% version = "0.118" %>
 - version: "<%=version%>"
