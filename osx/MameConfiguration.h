@@ -81,7 +81,7 @@
 
 - (void) setJoystickDeadzone: (float) deadzone;
 
-- (void) setJoystickSaturation: (float) deadzone;
+- (void) setJoystickSaturation: (float) saturation;
 
 #pragma mark -
 
@@ -129,7 +129,7 @@
 
 - (void) setAntialias: (BOOL) antialias;
 
-- (void) setVectorFlicker: (BOOL) vectorFlicker;
+- (void) setVectorFlicker: (float) vectorFlicker;
 
 #pragma mark -
 #pragma mark Performance

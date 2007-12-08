@@ -174,9 +174,9 @@ static MameConfiguration * sDefaultConfiguration = nil;
     [self setFloatOption: deadzone withName: OPTION_JOYSTICK_DEADZONE];
 }
 
-- (void) setJoystickSaturation: (float) deadzone;
+- (void) setJoystickSaturation: (float) saturation;
 {
-    [self setFloatOption: deadzone withName: OPTION_JOYSTICK_SATURATION];
+    [self setFloatOption: saturation withName: OPTION_JOYSTICK_SATURATION];
 }
 
 #pragma mark -
@@ -274,9 +274,9 @@ static MameConfiguration * sDefaultConfiguration = nil;
     [self setBoolOption: antialias withName: OPTION_ANTIALIAS];
 }
 
-- (void) setVectorFlicker: (BOOL) vectorFlicker;
+- (void) setVectorFlicker: (float) vectorFlicker;
 {
-    [self setBoolOption: vectorFlicker withName: OPTION_FLICKER];
+    [self setFloatOption: vectorFlicker withName: OPTION_FLICKER];
 }
 
 #pragma mark -

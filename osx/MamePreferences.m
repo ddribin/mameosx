@@ -243,6 +243,10 @@ NSString * MamePreferencesVersionKey = @"PreferencesVersion";
     [defaultValues setObject: yes forKey: MameJoystickKey];
     [defaultValues setObject: no forKey: MameMultiKeyboardKey];
     [defaultValues setObject: no forKey: MameMultiMouseKey];
+    [defaultValues setObject: [NSNumber numberWithFloat: 0.3f]
+                      forKey: MameJoystickDeadzoneKey];
+    [defaultValues setObject: [NSNumber numberWithFloat: 0.85f]
+                      forKey: MameJoystickSaturationKey];
     
     [defaultValues setObject: no
                       forKey: MameSkipDisclaimerKey];
@@ -267,9 +271,9 @@ NSString * MamePreferencesVersionKey = @"PreferencesVersion";
     [defaultValues setObject: [NSNumber numberWithFloat: 0.65f]
                       forKey: MamePauseBrightnessKey];
     
-    [defaultValues setObject: [NSNumber numberWithFloat: 1.1f]
-                      forKey: MameBeamWidthKey];
     [defaultValues setObject: [NSNumber numberWithFloat: 1.0f]
+                      forKey: MameBeamWidthKey];
+    [defaultValues setObject: [NSNumber numberWithFloat: 0.0f]
                       forKey: MameVectorFlickerKey];
     [defaultValues setObject: yes
                       forKey: MameAntialiasBeamKey];
@@ -758,9 +762,9 @@ NSString * MamePreferencesVersionKey = @"PreferencesVersion";
     return [mDefaults boolForKey: MameAntialiasBeamKey];
 }
 
-- (BOOL) vectorFlicker;
+- (float) vectorFlicker;
 {
-    return [mDefaults boolForKey: MameVectorFlickerKey];
+    return [mDefaults floatForKey: MameVectorFlickerKey];
 }
 
 #pragma mark -
@@ -810,6 +814,8 @@ NSString * MamePreferencesVersionKey = @"PreferencesVersion";
     [configuration setJoystickEnabled: [self isJoystickEnabled]];
     [configuration setMultiKeyboard: [self multiKeyboard]];
     [configuration setMultiMouse: [self multiMouse]];
+    [configuration setJoystickDeadzone: [self joystickDeadzone]];
+    [configuration setJoystickSaturation: [self joystickSaturation]];
     
     [configuration setSkipDisclaimer: [self skipDisclaimer]];
     [configuration setSkipGameInfo: [self skipGameInfo]];

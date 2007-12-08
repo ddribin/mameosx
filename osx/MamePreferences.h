@@ -214,7 +214,7 @@
 
 - (BOOL) antialiasBeam;
 
-- (BOOL) vectorFlicker;
+- (float) vectorFlicker;
 
 #pragma mark -
 

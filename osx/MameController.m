@@ -1545,6 +1545,9 @@ Performs the save action for the application, which is to send the save:
          *
          */
         [defaults setValue: nil forKey: MameGameSortDescriptorsKey];
+        
+        // This used to be a BOOL but it should be a float.
+        [defaults setValue: nil forKey: MameVectorFlickerKey];
     }
     
     [defaults setValue: [MameVersion version]
