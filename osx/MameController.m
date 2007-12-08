@@ -249,9 +249,9 @@ static void exit_sleeper()
     
     [[mFavoriteColumn headerCell] setImage: [NSImage imageNamed: @"favorite-16"]];
     
-    [self setGameFilterIndex: [preferences gameFilterIndex]];
-    [self updatePredicate];
+    // Force creation of the MOC to catch any errrors early
     [self managedObjectContext];
+    [self setGameFilterIndex: [preferences gameFilterIndex]];
     [mUpdater start];
 }
 
@@ -416,16 +416,6 @@ Performs the save action for the application, which is to send the save:
     {
         [self handleCoreDataError: error];
     }
-}
-
-- (void) rearrangeObjects;
-{
-    [mAllGamesController rearrangeObjects];
-}
-
-- (id) newGame;
-{
-    return [mAllGamesController newObject];
 }
 
 #pragma mark -

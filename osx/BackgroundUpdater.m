@@ -208,18 +208,12 @@ static NSString * kBackgroundUpdaterIdle = @"BackgroundUpdaterIdle";
     
     // Execute the fetch
     JRLogDebug(@"Fetching current game list");
-#if 0
-    NSArray * gamesMatchingNames = [GameMO gamesWithShortNames: shortNames
-                                               sortDescriptors: [GameMO sortByShortName]
-                                                     inContext: context];
-#else
-    NSArray * gamesMatchingNames = [GameMO allWithSortDesriptors: [GameMO sortByShortName]
-                                                       inContext: context];
-#endif
+    NSArray * games = [GameMO allWithSortDesriptors: [GameMO sortByShortName]
+                                          inContext: context];
     JRLogDebug(@"Fetch done");
     mCurrentGameIndex = 0;
     mUpdateGameListIteration = 0;
-    mGameEnumerator = [[gamesMatchingNames objectEnumerator] retain];
+    mGameEnumerator = [[games objectEnumerator] retain];
     mCurrentGame = [[mGameEnumerator nextObject] retain];
     mLastSave = [NSDate timeIntervalSinceReferenceDate];
     

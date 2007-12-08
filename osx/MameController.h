@@ -126,8 +126,6 @@ extern "C" {
 - (NSPersistentStoreCoordinator *) persistentStoreCoordinator;
 - (NSManagedObjectContext *) managedObjectContext;
 - (IBAction) saveAction: (id) sender;
-- (void) rearrangeObjects;
-- (id) newGame;
 
 #pragma mark -
 
