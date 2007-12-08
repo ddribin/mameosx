@@ -179,6 +179,9 @@ static INT32 joystickButtonGetState(void *device_internal, void *item_internal)
                  stick: (unsigned) stick
               xChanged: (int) value;
 {
+    value = [self normalizeRawValue: value
+                             rawMin: DDHID_JOYSTICK_VALUE_MIN
+                             rawMax: DDHID_JOYSTICK_VALUE_MAX];
     mAxes[0] = value;
 }
 
@@ -187,6 +190,9 @@ static INT32 joystickButtonGetState(void *device_internal, void *item_internal)
               yChanged: (int) value;
 
 {
+    value = [self normalizeRawValue: value
+                             rawMin: DDHID_JOYSTICK_VALUE_MIN
+                             rawMax: DDHID_JOYSTICK_VALUE_MAX];
     mAxes[1] = value;
 }
 
@@ -195,6 +201,9 @@ static INT32 joystickButtonGetState(void *device_internal, void *item_internal)
              otherAxis: (unsigned) otherAxis
           valueChanged: (int) value;
 {
+    value = [self normalizeRawValue: value
+                             rawMin: DDHID_JOYSTICK_VALUE_MIN
+                             rawMax: DDHID_JOYSTICK_VALUE_MAX];
     int axisNumber = otherAxis+2;
     mAxes[axisNumber] = value;
 }

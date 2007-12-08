@@ -76,4 +76,31 @@
     return string;
 }
 
+- (INT32) normalizeRawValue: (INT32) rawValue
+                     rawMin: (INT32) rawMin
+                     rawMax: (INT32) rawMax;
+{
+	INT32 center = (rawMax + rawMin) / 2;
+    
+	// make sure we have valid data
+	if (rawMin >= rawMax)
+		return rawValue;
+	
+	// above center
+	if (rawValue >= center)
+	{
+		INT32 result = ((INT64)(rawValue - center) *
+                        (INT64)INPUT_ABSOLUTE_MAX / (INT64)(rawMax - center));
+		return MIN(result, INPUT_ABSOLUTE_MAX);
+	}
+	
+	// below center
+	else
+	{
+		INT32 result = -((INT64)(center - rawValue) *
+                         (INT64)-INPUT_ABSOLUTE_MIN / (INT64)(center - rawMin));
+		return MAX(result, INPUT_ABSOLUTE_MIN);
+	}
+}
+
 @end

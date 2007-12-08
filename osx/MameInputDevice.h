@@ -8,6 +8,9 @@
 
 #import <Cocoa/Cocoa.h>
 
+// MAME headers
+#include "driver.h"
+
 @class DDHidDevice;
 
 @interface MameInputDevice : NSObject
@@ -39,5 +42,9 @@
 - (void) stopListening;
 
 - (NSString *) format: (NSString *) format, ...;
+
+- (INT32) normalizeRawValue: (INT32) rawValue
+                     rawMin: (INT32) rawMin
+                     rawMax: (INT32) rawMax;
 
 @end
