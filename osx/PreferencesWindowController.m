@@ -47,6 +47,8 @@ enum
                     returnCode: (int) returnCode
                    contextInfo: (void *) contextInfo;
 
+- (void) resetDefaultsWithKeys: (NSArray *) keys;
+
 @end
 
 @implementation PreferencesWindowController
@@ -133,6 +135,7 @@ enum
     [self addView: mInputsPreferenceView label: @"Inputs"];
     [self addView: mMessagesPreferenceView label: @"Messages"];
     [self addView: mVideoPreferencesView label: @"Video"];
+    [self addView: mVectorPreferencesView label: @"Vector"];
 }
 
 - (NSDictionary *) name: (NSString *) name stringValue: (NSString *) value
@@ -275,44 +278,75 @@ enum
                       withTitle: @"Choose Artwork Directory"];
 }
 
-- (IBAction) resetToDefaults: (id) sender;
+- (IBAction) resetToDefaultsGeneral: (id) sender;
 {
     NSArray * keys = [NSArray arrayWithObjects:
         MameRomPath, MameDiskImagePath, MameSamplePath, MameArtworkPath,
         MameCheckUpdatesAtStartupKey,
+        MameSmoothFontKey,
+        nil];
+    [self resetDefaultsWithKeys: keys];
+    [self updatePopUpButtons];
+}
+
+- (IBAction) resetToDefaultsInputs: (id) sender;
+{
+    NSArray * keys = [NSArray arrayWithObjects:
+        MameMouseKey,
+        MameJoystickKey,
+        MameMultiKeyboardKey,
+        MameMultiMouseKey,
+        MameJoystickDeadzoneKey,
+        MameJoystickSaturationKey,
+        nil];
+    [self resetDefaultsWithKeys: keys];
+}
+
+- (IBAction) resetToDefaultsMessages: (id) sender;
+{
+    NSArray * keys = [NSArray arrayWithObjects:
         MameSkipDisclaimerKey, MameSkipGameInfoKey, MameSkipWarningsKey,
-        MameJRLogLevelKey,
-        MameSyncToRefreshKey, MameThrottledKey, MameLinearFilterKey,
+        nil];
+    [self resetDefaultsWithKeys: keys];
+    [self setLogLevelIndex: LogWarnIndex];
+}
+
+- (IBAction) resetToDefaultsVideo: (id) sender;
+{
+    NSArray * keys = [NSArray arrayWithObjects:
+        MameSyncToRefreshKey,
+        MameThrottledKey,
+        MameLinearFilterKey,
+        MameKeepAspectKey,
         MameFullScreenKey,
         MameSwitchResolutionsKey,
         MameFullScreenZoomLevelKey,
-        MameKeepAspectKey,
         MameWindowedZoomLevelKey,
         MameFrameRenderingKey,
         MameRenderingThreadKey,
-        MameSmoothFontKey,
         nil];
 
-    [self setLogLevelIndex: LogWarnIndex];
     [self willChangeValueForKey: @"windowedZoomLevelIndex"];
     [self willChangeValueForKey: @"frameRenderingIndex"];
     [self willChangeValueForKey: @"renderingThreadIndex"];
     [self willChangeValueForKey: @"fullScreenZoomLevelIndex"];
-    
-    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-    NSEnumerator * e = [keys objectEnumerator];
-    NSString * key;
-    while (key = [e nextObject])
-    {
-        [defaults setValue: nil forKey: key];
-    }
 
+    [self resetDefaultsWithKeys: keys];
+    
     [self didChangeValueForKey: @"windowedZoomLevelIndex"];
     [self didChangeValueForKey: @"frameRenderingIndex"];
     [self didChangeValueForKey: @"renderingThreadIndex"];
     [self didChangeValueForKey: @"fullScreenZoomLevelIndex"];
+}
 
-    [self updatePopUpButtons];
+- (IBAction) resetToDefaultsVector: (id) sender;
+{
+    NSArray * keys = [NSArray arrayWithObjects:
+        MameBeamWidthKey,
+        MameAntialiasBeamKey,
+        MameVectorFlickerKey,
+        nil];
+    [self resetDefaultsWithKeys: keys];
 }
 
 //=========================================================== 
@@ -403,6 +437,17 @@ enum
     else
     {
         [button selectItemAtIndex: 0];
+    }
+}
+
+- (void) resetDefaultsWithKeys: (NSArray *) keys;
+{
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    NSEnumerator * e = [keys objectEnumerator];
+    NSString * key;
+    while (key = [e nextObject])
+    {
+        [defaults setValue: nil forKey: key];
     }
 }
 

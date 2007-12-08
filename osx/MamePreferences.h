@@ -312,6 +312,13 @@ extern NSString * MameCommentPath;
 extern NSString * MameFontPath;
 extern NSString * MameEffectPath;
 
+extern NSString * MameMouseKey;
+extern NSString * MameJoystickKey;
+extern NSString * MameMultiKeyboardKey;
+extern NSString * MameMultiMouseKey;
+extern NSString * MameJoystickDeadzoneKey;
+extern NSString * MameJoystickSaturationKey;
+
 #ifdef MAME_DEBUG
 extern NSString * MameDebugKey;
 #endif

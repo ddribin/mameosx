@@ -33,6 +33,7 @@
     IBOutlet NSView * mInputsPreferenceView;
     IBOutlet NSView * mMessagesPreferenceView;
     IBOutlet NSView * mVideoPreferencesView;
+    IBOutlet NSView * mVectorPreferencesView;
     
     IBOutlet NSObjectController * mControllerAlias;
     IBOutlet NSPopUpButton * mRomDirectory;
@@ -54,7 +55,12 @@
 - (IBAction) chooseDiskImageDirectory: (id) sender;
 - (IBAction) chooseSamplesDirectory: (id) sender;
 - (IBAction) chooseArtworkDirectory: (id) sender;
-- (IBAction) resetToDefaults: (id) sender;
+
+- (IBAction) resetToDefaultsGeneral: (id) sender;
+- (IBAction) resetToDefaultsInputs: (id) sender;
+- (IBAction) resetToDefaultsMessages: (id) sender;
+- (IBAction) resetToDefaultsVideo: (id) sender;
+- (IBAction) resetToDefaultsVector: (id) sender;
 
 - (int) logLevelIndex;
 - (void) setLogLevelIndex: (int) logLevelIndex;

@@ -12,7 +12,11 @@
                 chooseDiskImageDirectory = id; 
                 chooseRomDirectory = id; 
                 chooseSamplesDirectory = id; 
-                resetToDefaults = id; 
+                resetToDefaultsGeneral = id; 
+                resetToDefaultsInputs = id; 
+                resetToDefaultsMessages = id; 
+                resetToDefaultsVector = id; 
+                resetToDefaultsVideo = id; 
             }; 
             CLASS = PreferencesWindowController; 
             LANGUAGE = ObjC; 
@@ -25,6 +29,7 @@
                 mMessagesPreferenceView = NSView; 
                 mRomDirectory = NSPopUpButton; 
                 mSamplesDirectory = NSPopUpButton; 
+                mVectorPreferencesView = NSView; 
                 mVideoPreferencesView = NSView; 
             }; 
             SUPERCLASS = DBPrefsWindowController; 
