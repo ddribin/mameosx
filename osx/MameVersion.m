@@ -33,6 +33,12 @@
     return [[mainBundle infoDictionary] objectForKey: @"CFBundleShortVersionString"];
 }
 
++ (NSString *) version;
+{
+    NSBundle * mainBundle = [NSBundle mainBundle];
+    return [[mainBundle infoDictionary] objectForKey: @"CFBundleVersion"];
+}
+
 + (BOOL) isTiny;
 {
     NSString * processName = [[NSProcessInfo processInfo] processName];
@@ -41,6 +47,38 @@
         return NO;
     else
         return YES;
+}
+
++ (NSComparisonResult) compareVersion: (NSString *) version1
+                            toVersion: (NSString *) version2;
+{
+    if (version1 == nil)
+        return NSOrderedAscending;
+    
+    NSArray * version1Parts = [version1 componentsSeparatedByString: @"."];
+    NSArray * version2Parts = [version2 componentsSeparatedByString: @"."];
+    NSComparisonResult result = NSOrderedSame;
+    unsigned i;
+    for (i = 0; i < [version1Parts count]; i++)
+    {
+        NSString * part1String = [version1Parts objectAtIndex: i];
+        NSString * part2String = [version2Parts objectAtIndex: i];
+        int part1 = [part1String intValue];
+        int part2 = [part2String intValue];
+        if (part1 < part2)
+        {
+            result = NSOrderedAscending;
+            break;
+        }
+        if (part1 > part2)
+        {
+            result = NSOrderedDescending;
+            break;
+        }
+        
+    }
+    
+    return result;
 }
 
 @end

@@ -134,6 +134,8 @@ NSString * MameBackgroundUpdateDebugKey = @"BackgroundUpdateDebug";
 NSString * MameForceUpdateGameListKey = @"ForceUpdateGameList";
 NSString * MameDeleteOldGamesKey = @"DeleteOldGames";
 
+NSString * MamePreferencesVersionKey = @"PreferencesVersion";
+
 @implementation MamePreferences
 
 #pragma mark Init and dealloc

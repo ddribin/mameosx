@@ -31,6 +31,11 @@
 
 + (NSString *) marketingVersion;
 
++ (NSString *) version;
+
 + (BOOL) isTiny;
+
++ (NSComparisonResult) compareVersion: (NSString *) version1
+                            toVersion: (NSString *) version2;
 
 @end

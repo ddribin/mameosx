@@ -347,3 +347,5 @@ extern NSString * MameBackgroundUpdateDebugKey;
 extern NSString * MameForceUpdateGameListKey;
 extern NSString * MameDeleteOldGamesKey;
 
+extern NSString * MamePreferencesVersionKey;
+

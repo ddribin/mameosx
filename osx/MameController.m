@@ -28,6 +28,7 @@
 #import <MameKit/MameKit.h>
 #import "MameConfiguration.h"
 #import "VersionChecker.h"
+#import "MameVersion.h"
 #import "PreferencesWindowController.h"
 #import "MamePreferences.h"
 #import "RomAuditWindowController.h"
@@ -51,7 +52,7 @@ static NSString * kMameStoreVersion = @"Version 7";
 
 @interface MameController (Private)
 
-- (void) initGameSortDescriptors;
+- (void) upgradePreferences;
 - (void) cleanupAfterGameFinished;
 - (BOOL) haveNoAuditedGames;
 
@@ -147,6 +148,8 @@ static void exit_sleeper()
     mOriginalLogger = [[self class] JRLogLogger];
     [[self class] setJRLogLogger: self];
     [self registerForUrls];
+    
+    [self upgradePreferences];
    
     mConfiguration = [MameConfiguration defaultConfiguration];
     [self initVisualEffects];
@@ -156,8 +159,8 @@ static void exit_sleeper()
     sSleepAtExit =
         [[MamePreferences standardPreferences] sleepAtExit];
     atexit(exit_sleeper);
-    
-    [self initGameSortDescriptors];
+
+    mGameSortDescriptors = [[[MamePreferences standardPreferences] gamesSortDescriptors] retain];
     mShowClones = YES;
     
     mUpdater = [[BackgroundUpdater alloc] initWithMameController: self];
@@ -1518,40 +1521,35 @@ Performs the save action for the application, which is to send the save:
 
 @implementation MameController (Private)
 
-- (void) initGameSortDescriptors;
+- (void) upgradePreferences;
 {
-    /*
-     * This whole validation crap is necessary because I screwed up in 0.118.
-     * When it persisted sort descriptors, it allowed Cocoa-based sort
-     * descriptors, i.e. sorting on keys that are fake attributes, not real
-     * persistent attributes.  After 0.118, the array controller fetches
-     * against the database using these sort descriptors.  This causes
-     * exceptions since the fake attributes have no valid SQL column.  I
-     * should have only used real attributes on the sort descriptors.  Now,
-     * we have to filter out all non-attribute keys.  See this for more
-     * sinformation:
-     *
-     * "SQLite store does not work with sorting"
-     * http://developer.apple.com/documentation/Cocoa/Conceptual/CoreData/Articles/cdTroubleshooting.html
-     *
-     */
-    NSEntityDescription * gameEntity = [GameMO entityInContext: [self managedObjectContext]];
-    NSDictionary * attributes = [gameEntity attributesByName];
-    NSSet * validKeys = [NSSet setWithArray: [attributes allKeys]];
-    
-    NSArray * gameSortDescriptors = [[MamePreferences standardPreferences] gamesSortDescriptors];
-    JRLogDebug(@"Saved sort descriptors: %@", gameSortDescriptors);
-    NSMutableArray * validDescriptors = [NSMutableArray array];
-    NSEnumerator * e = [gameSortDescriptors objectEnumerator];
-    NSSortDescriptor * sortDescriptor;
-    while (sortDescriptor = [e nextObject])
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    NSString * preferencesVersion = [defaults stringForKey: MamePreferencesVersionKey];
+
+    // nil means 0.118 or earlier
+    if (preferencesVersion == nil)
     {
-        if ([validKeys containsObject: [sortDescriptor key]])
-            [validDescriptors addObject: sortDescriptor];
+        /*
+         * This is necessary because I screwed up in 0.118.
+         * When it persisted sort descriptors, it allowed Cocoa-based sort
+         * descriptors, i.e. sorting on keys that are fake attributes, not real
+         * persistent attributes.  After 0.118, the array controller fetches
+         * against the database using these sort descriptors.  This causes
+         * exceptions since the fake attributes have no valid SQL column.  I
+         * should have only used real attributes on the sort descriptors.  To,
+         * fix it, we'll just blow this away, and use the default.  See this
+         * for more sinformation:
+         *
+         * "SQLite store does not work with sorting"
+         * http://developer.apple.com/documentation/Cocoa/Conceptual/CoreData/Articles/cdTroubleshooting.html
+         *
+         */
+        [defaults setValue: nil forKey: MameGameSortDescriptorsKey];
     }
     
-    JRLogDebug(@"Valid sort descriptors: %@", validDescriptors);
-    mGameSortDescriptors = [validDescriptors copy];
+    [defaults setValue: [MameVersion version]
+                forKey: MamePreferencesVersionKey];
+    [defaults synchronize];
 }
 
 - (void) cleanupAfterGameFinished;
