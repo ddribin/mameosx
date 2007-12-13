@@ -13,6 +13,7 @@
     - Don't default to auditing at startup.
     - Fix vector flicker default setting.
     - Add joystick deadzone and saturation UI preferences.
+    - Fix crash on exit for games with overlays and artwork (#1785151)
 
 <% version = "0.118" %>
 - version: "<%=version%>"
