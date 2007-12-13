@@ -593,6 +593,7 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     [self stopAnimation];
     [mAudioController osd_stop_audio_stream];
     [mRenderer osd_exit];
+    render_target_free(mTarget);
     
     [mWindowedCiContext release];
     mWindowedCiContext = nil;
