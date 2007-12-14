@@ -593,9 +593,11 @@ Performs the save action for the application, which is to send the save:
 
 - (void) setFilterString: (NSString *) filterString;
 {
-    [filterString retain];
+    if (mFilterString == filterString)
+        return;
+    
     [mFilterString release];
-    mFilterString = filterString;
+    mFilterString = [filterString retain];
     [self updatePredicate];
 }
 
