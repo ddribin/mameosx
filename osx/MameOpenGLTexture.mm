@@ -191,6 +191,8 @@ static void cv_assert(CVReturn cr, NSString * message)
     {
         NSLog(@"Unknown texture blendmode=%d format=%d\n", PRIMFLAG_GET_BLENDMODE(flags), 
               PRIMFLAG_GET_TEXFORMAT(flags));
+        cv_assert(CVPixelBufferUnlockBaseAddress(mPixelBuffer, 0),
+                  @"Could not unlock pixel buffer");
         return;
     }
 
