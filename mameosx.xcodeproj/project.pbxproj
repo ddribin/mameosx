@@ -76,6 +76,8 @@
 		5530FE130ACA42270083BB04 /* textbuf.h in Headers */ = {isa = PBXBuildFile; fileRef = 5530FE020ACA42270083BB04 /* textbuf.h */; };
 		5533C2FE0D0A7D6D0039BB42 /* MameJoystick.h in Headers */ = {isa = PBXBuildFile; fileRef = 5533C2FC0D0A7D6D0039BB42 /* MameJoystick.h */; };
 		5533C2FF0D0A7D6D0039BB42 /* MameJoystick.m in Sources */ = {isa = PBXBuildFile; fileRef = 5533C2FD0D0A7D6D0039BB42 /* MameJoystick.m */; };
+		5533C4540D0B41420039BB42 /* Vector.png in Resources */ = {isa = PBXBuildFile; fileRef = 5533C4530D0B41420039BB42 /* Vector.png */; };
+		5533C4550D0B41420039BB42 /* Vector.png in Resources */ = {isa = PBXBuildFile; fileRef = 5533C4530D0B41420039BB42 /* Vector.png */; };
 		5537EF490BBEACC2001A390F /* FrameMovieExporter.h in Headers */ = {isa = PBXBuildFile; fileRef = 5537EF470BBEACC2001A390F /* FrameMovieExporter.h */; };
 		5537EF4A0BBEACC2001A390F /* FrameMovieExporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5537EF480BBEACC2001A390F /* FrameMovieExporter.m */; };
 		5537EF660BBEAD6C001A390F /* FrameCompressor.h in Headers */ = {isa = PBXBuildFile; fileRef = 5537EF640BBEAD6C001A390F /* FrameCompressor.h */; };
@@ -3242,6 +3244,7 @@
 		5530FE020ACA42270083BB04 /* textbuf.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = textbuf.h; sourceTree = "<group>"; };
 		5533C2FC0D0A7D6D0039BB42 /* MameJoystick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MameJoystick.h; sourceTree = "<group>"; };
 		5533C2FD0D0A7D6D0039BB42 /* MameJoystick.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MameJoystick.m; sourceTree = "<group>"; };
+		5533C4530D0B41420039BB42 /* Vector.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Vector.png; sourceTree = "<group>"; };
 		5537EF470BBEACC2001A390F /* FrameMovieExporter.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = FrameMovieExporter.h; sourceTree = "<group>"; };
 		5537EF480BBEACC2001A390F /* FrameMovieExporter.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = FrameMovieExporter.m; sourceTree = "<group>"; };
 		5537EF640BBEAD6C001A390F /* FrameCompressor.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = FrameCompressor.h; sourceTree = "<group>"; };
@@ -9460,6 +9463,7 @@
 		55B5D53B0C4BC58D00057C2A /* images */ = {
 			isa = PBXGroup;
 			children = (
+				5533C4530D0B41420039BB42 /* Vector.png */,
 				559DF56B0C738015000B7385 /* General.png */,
 				559DF5800C738170000B7385 /* Inputs.png */,
 				559DF5A50C73838C000B7385 /* Messages.png */,
@@ -10512,6 +10516,7 @@
 				559DF5840C738170000B7385 /* Inputs.png in Resources */,
 				559DF5850C738170000B7385 /* Video.png in Resources */,
 				559DF5A70C73838C000B7385 /* Messages.png in Resources */,
+				5533C4550D0B41420039BB42 /* Vector.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10551,6 +10556,7 @@
 				559DF5820C738170000B7385 /* Inputs.png in Resources */,
 				559DF5830C738170000B7385 /* Video.png in Resources */,
 				559DF5A60C73838C000B7385 /* Messages.png in Resources */,
+				5533C4540D0B41420039BB42 /* Vector.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
