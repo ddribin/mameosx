@@ -148,7 +148,7 @@
 {
     NSEnumerator * e = [elements objectEnumerator];
     DDHidElement * element;
-    while (element = [e nextObject])
+    while ((element = [e nextObject]))
     {
         unsigned usagePage = [[element usage] usagePage];
         unsigned usageId = [[element usage] usageId];
@@ -168,7 +168,7 @@
 - (void) ddhidQueueHasEvents: (DDHidQueue *) hidQueue;
 {
     DDHidEvent * event;
-    while (event = [hidQueue nextEvent])
+    while ((event = [hidQueue nextEvent]))
     {
         DDHidElement * element = [self elementForCookie: [event elementCookie]];
         unsigned usageId = [[element usage] usageId];
@@ -179,13 +179,11 @@
 }
 
 #define UPC_A_BARCODE_LENGTH (12)
-#define BARCODE_INPUT_TIMEOUT (0.25)
+#define BARCODE_INPUT_TIMEOUT (0.5)
    
 - (void) processBarcodeDigit: (unsigned) usageId;
 {
-    if (usageId <= kHIDUsage_KeyboardZ)
-    {
-        // an alphabetic key was pressed => probably not a barcode scanner
+    if (usageId <= kHIDUsage_KeyboardZ || usageId >= kHIDUsage_KeyboardCapsLock) { // an alphabetic key was pressed => probably not a barcode scanner
         [self willChangeValueForKey:@"isLikelyKeyboardBarcodeScanner"];
         mIsLikelyKeyboardBarcodeScanner = NO;
         [self didChangeValueForKey:@"isLikelyKeyboardBarcodeScanner"];
@@ -194,34 +192,23 @@
         return;
     }
     
-    if (!mBarcodeInputTimer)
-    {
-        // schedule a timer to make sure we get the rest of the digits in a timely manner
+    if (!mBarcodeInputTimer) // schedule a timer to make sure we get the rest of the digits in a timely manner
         mBarcodeInputTimer = [[NSTimer scheduledTimerWithTimeInterval:BARCODE_INPUT_TIMEOUT target:self selector:@selector(fireBarcodeInputTimeout:) userInfo:nil repeats:NO] retain];
-    }
     
     [mAccumulatedDigits appendString:[NSString stringWithFormat:@"%d", (usageId + 1) % 10]];
-    
-    if ([mAccumulatedDigits length] >= UPC_A_BARCODE_LENGTH)
-    {
-        NSString * barcode = [[mAccumulatedDigits copy] autorelease];
-        [self clearAccumulatedInput];
-        [self ddhidKeyboardBarcodeScanner: self gotBarcode: barcode];
-    }
 }
 
 - (void) fireBarcodeInputTimeout: (NSTimer *) timer;
 {
-    [self willChangeValueForKey:@"isLikelyKeyboardBarcodeScanner"];
-    mIsLikelyKeyboardBarcodeScanner = NO;
-    [self didChangeValueForKey:@"isLikelyKeyboardBarcodeScanner"];
-    
+    if ([mAccumulatedDigits length] >= UPC_A_BARCODE_LENGTH)
+        [self ddhidKeyboardBarcodeScanner: self gotBarcode: [[mAccumulatedDigits copy] autorelease]];
     [self clearAccumulatedInput];
 }
 
 - (void) clearAccumulatedInput;
 {
     [mAccumulatedDigits deleteCharactersInRange:NSMakeRange(0, [mAccumulatedDigits length])];
+    
     [self invalidateBarcodeInputTimer];
 }
 

@@ -95,8 +95,8 @@
 
 @end
 
-#define DDHID_JOYSTICK_VALUE_MIN -32768
-#define DDHID_JOYSTICK_VALUE_MAX 32768
+#define DDHID_JOYSTICK_VALUE_MIN -65536
+#define DDHID_JOYSTICK_VALUE_MAX 65536
 
 @interface NSObject (DDHidJoystickDelegate)
 
