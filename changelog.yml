@@ -14,6 +14,11 @@
     - Fix vector flicker default setting.
     - Add joystick deadzone and saturation UI preferences.
     - Fix crash on exit for games with overlays and artwork (#1785151)
+  files:
+    - name: MAMEOSX-<%=version%>.dmg
+      size: 25324422
+    - name: mameosx-<%=version%>.tgz
+      size: 15272227
 
 <% version = "0.118" %>
 - version: "<%=version%>"
