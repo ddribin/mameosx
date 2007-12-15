@@ -1,6 +1,6 @@
 <% version = "0.119" %>
 - version: "<%=version%>"
-  date: xxx
+  date: 2007-12-14
   changes:
     - Upgrade to 0.119 baseline.
     - Ignores input while in the background.
