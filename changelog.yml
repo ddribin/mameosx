@@ -6,6 +6,7 @@
     - Fix bug on Leopard where default log level is "Debug".
     - Send Info and Debug log messages to a file in ~/Library/Logs/net.mame.mameosx/
     - Log file is rotated on every launch.
+    - Fix log window's resizing (#1856565)
 
 <% version = "0.119" %>
 - version: "<%=version%>"
