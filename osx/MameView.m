@@ -83,8 +83,8 @@
 
 - (NSRect) centerNSSize: (NSSize) size withinRect: (NSRect) rect;
 
-- (void) updatePixelAspectRatio;
-- (float) aspectRatioForDisplay: (CGDirectDisplayID) displayId;
+- (void) updateDisplayProperties;
+- (void) setPropertiesWithDisplay: (CGDirectDisplayID) displayId;
 
 #if MAME_EXPORT_MOVIE
 - (void) createMovieExporter;
@@ -506,7 +506,7 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     INT32 minimumWidth;
     INT32 minimumHeight;
     render_target_get_minimum_size(mTarget, &minimumWidth, &minimumHeight);
-    [self updatePixelAspectRatio];
+    [self updateDisplayProperties];
     INT32 visibleWidth, visibleHeight;
     render_target_compute_visible_area(mTarget, minimumWidth, minimumHeight,
                                        mPixelAspectRatio, ROT0,
@@ -1561,6 +1561,7 @@ NSString * MameExitStatusKey = @"MameExitStatus";
         code = 'W';
     }
 
+    render_target_set_max_update_rate(mTarget, mRefreshRate);
     if (mRenderInCoreVideoThread)
     {
         render_target_set_bounds(mTarget, renderSize.width, renderSize.height,
@@ -1598,13 +1599,11 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     [mTimingController frameWasRendered];
 }
 
-- (void) updatePixelAspectRatio;
+- (void) updateDisplayProperties;
 {
     mPixelAspectRatio = 0.0;
-    if (mKeepAspectRatio)
-    {
-        mPixelAspectRatio = [self aspectRatioForDisplay: kCGDirectMainDisplay];
-    }
+    mRefreshRate = 0.0;
+    [self setPropertiesWithDisplay: kCGDirectMainDisplay];
 }
 
 #define NSSTR(_cString_) [NSString stringWithCString: _cString_]
@@ -1625,9 +1624,9 @@ enum {
 };
 
 
-// See: 
+// For aspect ratio calculation, see:
 // http://developer.apple.com/qa/qa2001/qa1217.html
-- (float) aspectRatioForDisplay: (CGDirectDisplayID) displayId;
+- (void) setPropertiesWithDisplay: (CGDirectDisplayID) displayId;
 {
     // Assume square pixels, if we can't determine it.
     float aspectRatio = 1.0;
@@ -1672,6 +1671,16 @@ enum {
                 float displayHeight =
                     [[displayMode objectForKey: (NSString *)  kCGDisplayHeight]
                         floatValue];
+                double refreshRate = [[displayMode objectForKey: (NSString *) kCGDisplayRefreshRate] doubleValue];
+
+                if (refreshRate == 0)
+                {
+                    // LCDs report 0, but they're effectively 60Hz.
+                    JRLogInfo(@"Detected refresh of 0, defaulting to 60");
+                    mRefreshRate = 60.0;
+                }
+                else
+                    mRefreshRate = refreshRate;
                 
                 float horizontalPixelsPerMM;
                 float verticalPixlesPerMM;
@@ -1689,7 +1698,9 @@ enum {
             }
         }
     }
-    return aspectRatio;
+
+    if (mKeepAspectRatio)
+        mPixelAspectRatio = aspectRatio;
 }
 
 #if MAME_EXPORT_MOVIE

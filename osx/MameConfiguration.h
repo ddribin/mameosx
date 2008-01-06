@@ -138,6 +138,8 @@
 
 - (void) setThrottle: (BOOL) throttle;
 
+- (void) setRefreshSpeed: (BOOL) refreshSpeed;
+
 #pragma mark -
 
 - (NSString *) saveGame;

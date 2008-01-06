@@ -80,6 +80,7 @@ typedef enum _MameFullScreenZoom
     MameFrameRenderingOption mFrameRenderingOption;
     NSSize mRenderSize;
     float mPixelAspectRatio;
+    double mRefreshRate;
     
     BOOL mRenderInCoreVideoThread;
     CIFilter * mFilter;

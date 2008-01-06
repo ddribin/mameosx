@@ -123,6 +123,7 @@ NSString * MameAntialiasBeamKey = @"AntialiasBeam";
 
 NSString * MameThrottledKey = @"Throttled";
 NSString * MameAutoFrameSkipKey = @"AutoFrameSkip";
+NSString * MameRefreshSpeedKey = @"RefreshSpeed";
 
 NSString * MameSaveGameKey = @"SaveGame";
 NSString * MameAutosaveKey = @"AutoSave";
@@ -278,10 +279,12 @@ NSString * MamePreferencesVersionKey = @"PreferencesVersion";
     [defaultValues setObject: yes
                       forKey: MameAntialiasBeamKey];
     
-    [defaultValues setObject: yes
+    [defaultValues setObject: yes 
                       forKey: MameThrottledKey];
     [defaultValues setObject: yes
                       forKey: MameAutoFrameSkipKey];
+    [defaultValues setObject: no
+                      forKey: MameRefreshSpeedKey];
 
     [defaultValues setObject: no
                       forKey: MameAutosaveKey];
@@ -749,6 +752,16 @@ NSString * MamePreferencesVersionKey = @"PreferencesVersion";
     [mDefaults setBool: flag forKey: MameAutoFrameSkipKey];
 }
 
+- (BOOL) refreshSpeed;
+{
+    return [mDefaults boolForKey: MameRefreshSpeedKey];
+}
+
+- (void) setRefreshSpeed: (BOOL) flag;
+{
+    [mDefaults setBool: flag forKey: MameRefreshSpeedKey];
+}
+
 #pragma mark -
 #pragma mark Vector
 
@@ -835,6 +848,7 @@ NSString * MamePreferencesVersionKey = @"PreferencesVersion";
     
     [configuration setThrottle: [self throttled]];
     [configuration setAutoFrameSkip: [self autoFrameSkip]];
+    [configuration setRefreshSpeed: [self refreshSpeed]];
     
     [configuration setSaveGame: [self saveGame]];
     [configuration setAutoSave: [self autoSave]];

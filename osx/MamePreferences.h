@@ -207,6 +207,9 @@
 - (BOOL) autoFrameSkip;
 - (void) setAutoFrameSkip: (BOOL) flag;
 
+- (BOOL) refreshSpeed;
+- (void) setRefreshSpeed: (BOOL) flag;
+
 #pragma mark -
 #pragma mark Vector
 
@@ -343,6 +346,7 @@ extern NSString * MameAntialiasBeamKey;
 
 extern NSString * MameThrottledKey;
 extern NSString * MameAutoFrameSkipKey;
+extern NSString * MameRefreshSpeedKey;
 
 extern NSString * MameSaveGameKey;
 extern NSString * MameAutosaveKey;

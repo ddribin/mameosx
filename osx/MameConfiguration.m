@@ -292,6 +292,11 @@ static MameConfiguration * sDefaultConfiguration = nil;
     [self setBoolOption: throttle withName: OPTION_THROTTLE];
 }
 
+- (void) setRefreshSpeed: (BOOL) refreshSpeed;
+{
+    [self setBoolOption: refreshSpeed withName: OPTION_REFRESHSPEED];
+}
+
 #pragma mark -
 
 //=========================================================== 
