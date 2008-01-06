@@ -262,7 +262,6 @@ int osd_num_processors(void)
 #elif defined(_SC_NPROCESSORS_ONLN)
 	processors = sysconf(_SC_NPROCESSORS_ONLN);
 #endif
-    printf("osd_num_processors = %d\n", processors);
 	return processors;
 }
 
