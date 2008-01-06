@@ -16,6 +16,7 @@
     NSFileHandle * mFileHandle;
     // Use CF instead of Foundation to keep object creation low
     CFDateFormatterRef mDateFormatter;
+    BOOL mLogAllToConsole;
 }
 
 + (id) defaultLogger;

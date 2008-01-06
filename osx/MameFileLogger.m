@@ -7,6 +7,7 @@
 //
 
 #import "MameFileLogger.h"
+#import "MamePreferences.h"
 #include <unistd.h>
 
 
@@ -64,7 +65,6 @@
     NSString * firstRotation = [NSString stringWithFormat: @"%@.1", path];
     if ([fileManager fileExistsAtPath: path])
         [fileManager movePath: path toPath: firstRotation handler: nil];
-
 }
 
 - (id) initWithPath: (NSString *) path;
@@ -72,9 +72,6 @@
     self = [super init];
     if (self == nil)
         return nil;
-    
-    NSLog(@"STDERR_FILENO: %d, stderr: %d, isatty: %d", STDERR_FILENO, fileno(stderr),
-          isatty(STDERR_FILENO));
     
     CFLocaleRef currentLocale = CFLocaleCopyCurrent();
     mDateFormatter = CFDateFormatterCreate(
@@ -88,6 +85,8 @@
     [fileManager createDirectoryAtPath: directory attributes: nil];
     [fileManager createFileAtPath: path contents: nil attributes: nil];
     mFileHandle = [[NSFileHandle fileHandleForWritingAtPath: path] retain];
+    
+    mLogAllToConsole = [[MamePreferences standardPreferences] logAllToConsole];
     
     return self;
 }
@@ -104,23 +103,25 @@
     
     @try
     {
+        NSString * formattedMessage = [NSString stringWithFormat:
+            @"%@:%u: %@",
+            [[NSString stringWithUTF8String:file_] lastPathComponent],
+            line_,
+            message_];
+        
         NSString * dateString = (NSString *)
             CFDateFormatterCreateStringWithAbsoluteTime
                 (NULL, mDateFormatter, CFAbsoluteTimeGetCurrent());
         [dateString autorelease];
         
         NSString * finalMessage = [NSString stringWithFormat:
-            @"%@ %@:%u: %@\n",
-            dateString,
-            [[NSString stringWithUTF8String:file_] lastPathComponent],
-            line_,
-            message_];
+            @"%@ %@\n", dateString, formattedMessage];
 
         NSData * utf8Data = [finalMessage dataUsingEncoding: NSUTF8StringEncoding];
         [mFileHandle writeData: utf8Data];
 
-        if (callerLevel_ >= JRLogLevel_Warn)
-            fprintf(stderr, "%s", [utf8Data bytes]);
+        if ((callerLevel_ >= JRLogLevel_Warn) || mLogAllToConsole)
+            NSLog(@"%@", formattedMessage);
     }
     @finally
     {

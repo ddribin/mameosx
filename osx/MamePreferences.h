@@ -250,6 +250,8 @@
 
 - (BOOL) deleteOldGames;
 
+- (BOOL) logAllToConsole;
+
 @end
 
 NSString * MameApplicationSupportDirectory(void);
@@ -357,6 +359,7 @@ extern NSString * MameGameFilterIndexKey;
 extern NSString * MameBackgroundUpdateDebugKey;
 extern NSString * MameForceUpdateGameListKey;
 extern NSString * MameDeleteOldGamesKey;
+extern NSString * MameLogAllToConsoleKey;
 
 extern NSString * MamePreferencesVersionKey;
 

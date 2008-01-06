@@ -134,6 +134,7 @@ NSString * MameGameFilterIndexKey = @"GameFilterIndex";
 NSString * MameBackgroundUpdateDebugKey = @"BackgroundUpdateDebug";
 NSString * MameForceUpdateGameListKey = @"ForceUpdateGameList";
 NSString * MameDeleteOldGamesKey = @"DeleteOldGames";
+NSString * MameLogAllToConsoleKey = @"LogAllToConsole";
 
 NSString * MamePreferencesVersionKey = @"PreferencesVersion";
 
@@ -302,6 +303,8 @@ NSString * MamePreferencesVersionKey = @"PreferencesVersion";
     
     [defaultValues setObject: [MameVersion isTiny]? no : yes
                       forKey: MameDeleteOldGamesKey];
+    
+    [defaultValues setObject: no forKey: MameLogAllToConsoleKey];
 
     [mDefaults registerDefaults: defaultValues];
 }
@@ -917,6 +920,11 @@ NSString * MamePreferencesVersionKey = @"PreferencesVersion";
 - (BOOL) deleteOldGames;
 {
     return [mDefaults boolForKey: MameDeleteOldGamesKey];
+}
+
+- (BOOL) logAllToConsole;
+{
+    return [mDefaults boolForKey: MameLogAllToConsoleKey];
 }
 
 @end
