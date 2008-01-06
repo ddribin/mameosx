@@ -124,6 +124,7 @@
 #define HAS_PPC601 1
 #define HAS_PPC602 1
 #define HAS_PPC603 1
+#define HAS_PPC604 0
 #define HAS_MPC8240 1
 #define HAS_V20 1
 #define HAS_V25 1
@@ -162,6 +163,7 @@
 #define HAS_TMS32025 1
 #define HAS_TMS32026 1
 #define HAS_TMS32031 1
+#define HAS_TMS32032 1
 #define HAS_TMS32051 1
 #define HAS_TLCS90 1
 #define HAS_TX0_64KW 0

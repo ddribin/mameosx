@@ -13,12 +13,14 @@
 
 MAMESRC = $(SRC)/mame
 MAMEOBJ = $(OBJ)/mame
+EMUOBJ = $(OBJ)/emu
 
 AUDIO = $(MAMEOBJ)/audio
 DRIVERS = $(MAMEOBJ)/drivers
 LAYOUT = $(MAMEOBJ)/layout
 MACHINE = $(MAMEOBJ)/machine
 VIDEO = $(MAMEOBJ)/video
+EMUMACHINE = $(EMUOBJ)/machine
 
 OBJDIRS += \
         $(AUDIO) \
@@ -96,7 +98,7 @@ DRVLIBS = \
   $(MACHINE)/vsnes.o \
   $(MACHINE)/acitya.o \
   $(MACHINE)/theglobp.o \
-  $(MACHINE)/ds1302.o \
+  $(EMUMACHINE)/ds1302.o \
   $(MACHINE)/mspacman.o \
   $(MACHINE)/jumpshot.o \
   $(MACHINE)/segacrpt.o \

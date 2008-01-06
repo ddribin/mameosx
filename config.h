@@ -2,6 +2,8 @@
 #define CONFIG_H
 
 #define SDLMAME_DARWIN 1
+#define SDLMAME_UNIX 1
+#define SDLMAME_MACOSX 1
 
 #if __ppc__
 # define PPC_ASM 1

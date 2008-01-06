@@ -83,7 +83,7 @@ static inline cycles_t osd_cycles_internal()
 
 @interface MameTimingController (Private)
 
-- (void) updateFps: (mame_time) emutime;
+- (void) updateFps: (attotime) emutime;
 
 - (void) checkOsdInputs;
 
@@ -136,7 +136,7 @@ static inline cycles_t osd_cycles_internal()
     return mach_absolute_time();
 }
 
-- (int) osd_update: (mame_time) emutime;
+- (int) osd_update: (attotime) emutime;
 {
     [self updateThrottle: emutime];
     [self updateFps: emutime];
@@ -168,11 +168,12 @@ static inline cycles_t osd_cycles_internal()
     mAutoFrameSkip = autoFrameSkip;
 }
 
-- (void) updateThrottle: (mame_time) emutime;
+- (void) updateThrottle: (attotime) emutime;
 {
+#if 0
 #if OSX_LOG_TIMING
     char code = 'U';
-    mame_time start_realtime = mThrottleRealtime;
+    attotime start_realtime = mThrottleRealtime;
 #endif
 
     int paused = mame_is_paused(Machine);
@@ -181,11 +182,11 @@ static inline cycles_t osd_cycles_internal()
 #if OSX_LOG_TIMING
         code = 'P';
 #endif
-        mThrottleRealtime = mThrottleEmutime = sub_subseconds_from_mame_time(emutime, MAX_SUBSECONDS / Machine->screen[0].refresh);
+        mThrottleRealtime = mThrottleEmutime = attotime_sub_subseconds(emutime, MAX_SUBSECONDS / Machine->screen[0].refresh);
     }
     
     // if time moved backwards (reset), or if it's been more than 1 second in emulated time, resync
-    if (compare_mame_times(emutime, mThrottleEmutime) < 0 || sub_mame_times(emutime, mThrottleEmutime).seconds > 0)
+    if (attotime_compare(emutime, mThrottleEmutime) < 0 || sub_mame_times(emutime, mThrottleEmutime).seconds > 0)
     {
 #if OSX_LOG_TIMING
         code = 'B';
@@ -208,11 +209,11 @@ static inline cycles_t osd_cycles_internal()
     }
     
     subseconds_t subsecsPerCycle = MAX_SUBSECONDS / cyclesPerSecond;
-    mThrottleRealtime = add_subseconds_to_mame_time(mThrottleRealtime, diffCycles * subsecsPerCycle);
+    mThrottleRealtime = attotime_add_subseconds(mThrottleRealtime, diffCycles * subsecsPerCycle);
     mThrottleEmutime = emutime;
     
     // if we're behind, just sync
-    if (compare_mame_times(mThrottleEmutime, mThrottleRealtime) <= 0)
+    if (attotime_compare(mThrottleEmutime, mThrottleRealtime) <= 0)
     {
 #if OSX_LOG_TIMING
         code = 'S';
@@ -220,7 +221,7 @@ static inline cycles_t osd_cycles_internal()
         goto resync;
     }
     
-    mame_time timeTilTarget = sub_mame_times(mThrottleEmutime, mThrottleRealtime);
+    mame_time timeTilTarget = attotime_sub(mThrottleEmutime, mThrottleRealtime);
     cycles_t cyclesTilTarget = timeTilTarget.subseconds / subsecsPerCycle;
     cycles_t target = mThrottleLastCycles + cyclesTilTarget;
     
@@ -240,7 +241,7 @@ static inline cycles_t osd_cycles_internal()
     // update realtime
     diffCycles = osd_cycles_internal() - mThrottleLastCycles;
     mThrottleLastCycles += diffCycles;
-    mThrottleRealtime = add_subseconds_to_mame_time(mThrottleRealtime, diffCycles * subsecsPerCycle);
+    mThrottleRealtime = attotime_add_subseconds(mThrottleRealtime, diffCycles * subsecsPerCycle);
 #if OSX_LOG_TIMING
     update_stats(code, emutime, start_realtime, mThrottleRealtime, count,
                  mFrameSkipLevel, mFrameSkipCounter, mFrameSkipAdjustment);
@@ -255,6 +256,7 @@ resync:
                      mFrameSkipLevel, mFrameSkipCounter, mFrameSkipAdjustment);
 #endif
     return;
+#endif
 }
 
 - (void) updateAutoFrameSkip;
@@ -367,7 +369,7 @@ resync:
 
 @implementation MameTimingController (Private)
 
-- (void) updateFps: (mame_time) emutime;
+- (void) updateFps: (attotime) emutime;
 {
     cycles_t currentCycles = osd_cycles_internal();
     if (mFrameStartTime == 0)

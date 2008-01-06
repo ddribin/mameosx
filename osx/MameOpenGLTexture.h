@@ -29,6 +29,13 @@
 extern "C" {
 #endif
     
+// Hack for 0.122
+#define __CPUINTRF_H__
+#define __SOUND_H__
+#define __SNDINTRF_H__
+#define __MACHINE_GENERIC_H__
+#define __DRIVER_H__
+
 #include "render.h"
 #include "palette.h"
     

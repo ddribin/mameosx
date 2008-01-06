@@ -36,8 +36,8 @@ typedef osd_ticks_t cycles_t;
     cycles_t mCyclesPerSecond;
 
     cycles_t mThrottleLastCycles;
-    mame_time mThrottleRealtime;
-    mame_time mThrottleEmutime;
+    attotime mThrottleRealtime;
+    attotime mThrottleEmutime;
     
     int mFrameSkipCounter;
     int mFrameSkipLevel;
@@ -57,7 +57,7 @@ typedef osd_ticks_t cycles_t;
 
 - (osd_ticks_t) osd_profiling_ticks;
 
-- (int) osd_update: (mame_time) emutime;
+- (int) osd_update: (attotime) emutime;
 
 - (BOOL) throttled;
 - (void) setThrottled: (BOOL) flag;
@@ -65,7 +65,7 @@ typedef osd_ticks_t cycles_t;
 - (BOOL) autoFrameSkip;
 - (void) setAutoFrameSkip: (BOOL) autoFrameSkip;
 
-- (void) updateThrottle: (mame_time) emutime;
+- (void) updateThrottle: (attotime) emutime;
 
 - (void) updateAutoFrameSkip;
 

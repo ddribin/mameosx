@@ -65,6 +65,7 @@
 #define HAS_TMS3615 1
 #define HAS_TMS5110 1
 #define HAS_TMS5220 1
+#define HAS_M58817 1
 #define HAS_VLM5030 1
 #define HAS_VOTRAX 0
 #define HAS_VRENDER0 1

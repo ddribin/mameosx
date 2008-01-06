@@ -25,6 +25,8 @@
 #ifndef __OSINLINE__
 #define __OSINLINE__
 
+#include <libkern/OSAtomic.h>
+
 #include "osd_cpu.h"
 
 //============================================================
@@ -71,5 +73,37 @@ INLINE int _vec_mult(int x, int y)
 }
 
 #endif /* _MSC_VER */
+
+#if defined(__i386__) || defined(__x86_64__)
+
+INLINE void osd_yield_processor(void)
+{
+	__asm__ __volatile__ ( " rep ; nop ;" );
+}
+
+#elif defined(__ppc__) || defined (__PPC__) || defined(__ppc64__) || defined(__PPC64__)
+
+INLINE void osd_yield_processor(void)
+{
+	__asm__ __volatile__ ( " nop \n nop \n" );
+}
+
+#endif
+
+#if 0 // Don't do this, yet.  Use the MAME supplied implementations
+
+INLINE INT32 osx_compare_exchange32(INT32 volatile *ptr, INT32 compare, INT32 exchange)
+{
+    INT32 oldValue = *ptr;
+    OSAtomicCompareAndSwap32Barrier(oldValue, exchange, (int32_t *) ptr);
+    return oldValue;
+}
+
+#ifndef compare_exchange32
+#warning Using OSAtomic for compare_exchange32
+#define compare_exchange32 osx_compare_exchange32
+#endif /* compare_exchange32 */
+
+#endif
 
 #endif /* __OSINLINE__ */
