@@ -137,7 +137,7 @@ static void exit_sleeper()
 
 + (void) initialize
 {
-    [[MamePreferences standardPreferences] registerDefaults];
+    // [[MamePreferences standardPreferences] registerDefaults];
 }
 
 - (id) init

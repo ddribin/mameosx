@@ -3045,6 +3045,12 @@
 		55ECBBEC0D309B8800F3F67E /* voodoo.c in Sources */ = {isa = PBXBuildFile; fileRef = 55ECBBBC0D309B8800F3F67E /* voodoo.c */; };
 		55ECBBED0D309B8800F3F67E /* voodoo.h in Headers */ = {isa = PBXBuildFile; fileRef = 55ECBBBD0D309B8800F3F67E /* voodoo.h */; };
 		55ECBBF90D309CB200F3F67E /* ds1302.c in Sources */ = {isa = PBXBuildFile; fileRef = 55ECB9BB0D30947F00F3F67E /* ds1302.c */; };
+		55ECBD750D314C8300F3F67E /* MameApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = 55ECBD730D314C8300F3F67E /* MameApplication.h */; };
+		55ECBD760D314C8300F3F67E /* MameApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 55ECBD740D314C8300F3F67E /* MameApplication.m */; };
+		55ECBD770D314C8300F3F67E /* MameApplication.h in Copy Shark Codes */ = {isa = PBXBuildFile; fileRef = 55ECBD730D314C8300F3F67E /* MameApplication.h */; };
+		55ECBD780D314C8300F3F67E /* MameApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 55ECBD740D314C8300F3F67E /* MameApplication.m */; };
+		55ECBD790D314C8300F3F67E /* MameApplication.h in Copy to Frameworks */ = {isa = PBXBuildFile; fileRef = 55ECBD730D314C8300F3F67E /* MameApplication.h */; };
+		55ECBD7A0D314C8300F3F67E /* MameApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 55ECBD740D314C8300F3F67E /* MameApplication.m */; };
 		55F156310BBDF80F00366C65 /* uismall.png in Sources */ = {isa = PBXBuildFile; fileRef = 55F156300BBDF80500366C65 /* uismall.png */; };
 		55F1582D0BBF955600366C65 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55F1582C0BBF955600366C65 /* Quartz.framework */; };
 		55F15B740BC01B6400366C65 /* MameEffectFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = 55F15B720BC01B6400366C65 /* MameEffectFilter.h */; };
@@ -3383,6 +3389,7 @@
 				5567C3710BBC576300EA2072 /* MameOSXSharkEvents.text in Copy Shark Codes */,
 				5567C3740BBC57CE00EA2072 /* MameChud.h in Copy Shark Codes */,
 				553843090D0533D600323AC4 /* BackgroundBox.h in Copy Shark Codes */,
+				55ECBD770D314C8300F3F67E /* MameApplication.h in Copy Shark Codes */,
 			);
 			name = "Copy Shark Codes";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3394,6 +3401,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				5538430B0D0533D600323AC4 /* BackgroundBox.h in Copy to Frameworks */,
+				55ECBD790D314C8300F3F67E /* MameApplication.h in Copy to Frameworks */,
 			);
 			name = "Copy to Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -6391,6 +6399,8 @@
 		55ECBBBB0D309B8800F3F67E /* vooddefs.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = vooddefs.h; sourceTree = "<group>"; };
 		55ECBBBC0D309B8800F3F67E /* voodoo.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = voodoo.c; sourceTree = "<group>"; };
 		55ECBBBD0D309B8800F3F67E /* voodoo.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = voodoo.h; sourceTree = "<group>"; };
+		55ECBD730D314C8300F3F67E /* MameApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MameApplication.h; sourceTree = "<group>"; };
+		55ECBD740D314C8300F3F67E /* MameApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MameApplication.m; sourceTree = "<group>"; };
 		55F156300BBDF80500366C65 /* uismall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = uismall.png; path = emu/uismall.png; sourceTree = "<group>"; };
 		55F1582C0BBF955600366C65 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = /System/Library/Frameworks/Quartz.framework; sourceTree = "<absolute>"; };
 		55F15B720BC01B6400366C65 /* MameEffectFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MameEffectFilter.h; sourceTree = "<group>"; };
@@ -7287,6 +7297,8 @@
 				5507E8590C74ED8500CC6B02 /* MameVersion.m */,
 				559A7D7A0D060623001152BD /* MameDriverIndexMap.h */,
 				559A7D7B0D060623001152BD /* MameDriverIndexMap.m */,
+				55ECBD730D314C8300F3F67E /* MameApplication.h */,
+				55ECBD740D314C8300F3F67E /* MameApplication.m */,
 				556A4C650AA50F2800602CC5 /* main.m */,
 				5567C3730BBC57CE00EA2072 /* MameChud.h */,
 				5567C3630BBC56D100EA2072 /* MameOSXSharkEvents.text */,
@@ -10650,6 +10662,7 @@
 				55ECBBE90D309B8800F3F67E /* v9938.h in Headers */,
 				55ECBBEB0D309B8800F3F67E /* vooddefs.h in Headers */,
 				55ECBBED0D309B8800F3F67E /* voodoo.h in Headers */,
+				55ECBD750D314C8300F3F67E /* MameApplication.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11758,6 +11771,7 @@
 				55ECB9EF0D30947F00F3F67E /* vsnes.c in Sources */,
 				55ECB9F00D30947F00F3F67E /* z80.c in Sources */,
 				55ECB9F10D30947F00F3F67E /* z80daisy.c in Sources */,
+				55ECBD780D314C8300F3F67E /* MameApplication.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13825,6 +13839,7 @@
 				55BEFB170AEC6D3F00357340 /* main.m in Sources */,
 				55C0865A0C4A85DA00CC1E15 /* Mame_DataModel.xcdatamodel in Sources */,
 				5538430C0D0533D600323AC4 /* BackgroundBox.m in Sources */,
+				55ECBD7A0D314C8300F3F67E /* MameApplication.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13987,6 +14002,7 @@
 				55ECBBE60D309B8800F3F67E /* tms34061.c in Sources */,
 				55ECBBE80D309B8800F3F67E /* v9938.c in Sources */,
 				55ECBBEC0D309B8800F3F67E /* voodoo.c in Sources */,
+				55ECBD760D314C8300F3F67E /* MameApplication.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
