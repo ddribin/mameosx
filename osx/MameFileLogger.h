@@ -9,12 +9,18 @@
 #import <Cocoa/Cocoa.h>
 #import "JRLog.h"
 
+#define kMameFileLoggerDefaultRotations 10
+
 @interface MameFileLogger : NSObject<JRLogLogger>
 {
     NSFileHandle * mFileHandle;
+    // Use CF instead of Foundation to keep object creation low
+    CFDateFormatterRef mDateFormatter;
 }
 
 + (id) defaultLogger;
+
++ (NSString *) defaultPath;
 
 + (void) rotateLogAtPath: (NSString *) path rotations: (int) rotations;
 
@@ -26,5 +32,7 @@
 				line:(unsigned)line_
 			function:(const char*)function_
 			 message:(NSString*)message_;
+
+- (void) flushLogFile;
 
 @end

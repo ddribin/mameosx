@@ -22,4 +22,10 @@
     [NSObject setJRLogLogger: [MameFileLogger defaultLogger]];
 }
 
+- (void) run;
+{
+    [super run];
+    [[MameFileLogger defaultLogger] flushLogFile];
+}
+
 @end

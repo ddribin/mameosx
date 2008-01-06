@@ -968,8 +968,6 @@ static int availableCpus()
     };
 
     NSFileManager * fileManager = [NSFileManager defaultManager];
-    NSArray * paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
-    NSAssert([paths count] > 0, @"Could not locate NSApplicationSupportDirectory in user domain");
 
     NSString * baseDirectory = MameApplicationSupportDirectory();
 
