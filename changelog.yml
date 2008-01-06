@@ -1,3 +1,12 @@
+<% version = "0.122" %>
+- version: "<%=version%>"
+  date: xxx
+  changes:
+    - Upgrade to 0.122 baseline.
+    - Fix bug on Leopard where default log level is "Debug".
+    - Send Info and Debug log messages to a file in ~/Library/Logs/net.mame.mameosx/
+    - Log file is rotated on every launch.
+
 <% version = "0.119" %>
 - version: "<%=version%>"
   date: 2007-12-14
