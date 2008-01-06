@@ -8,7 +8,7 @@
 
 #import "MameApplication.h"
 #import "MamePreferences.h"
-
+#import "MameFileLogger.h"
 
 @implementation MameApplication
 
@@ -19,6 +19,7 @@
     // is loaded is to subclass NSApplication.  This is loaded and
     // initialized before the main NIB is even loaded.
     [[MamePreferences standardPreferences] registerDefaults];
+    [NSObject setJRLogLogger: [MameFileLogger defaultLogger]];
 }
 
 @end
