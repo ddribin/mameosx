@@ -135,11 +135,6 @@ static void exit_sleeper()
 
 @implementation MameController
 
-+ (void) initialize
-{
-    // [[MamePreferences standardPreferences] registerDefaults];
-}
-
 - (id) init
 {
     if (![super init])

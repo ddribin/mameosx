@@ -11051,6 +11051,7 @@
 		556A42440AA4E9CE00602CC5 /* Project object */ = {
 			isa = PBXProject;
 			buildConfigurationList = 556A42450AA4E9CE00602CC5 /* Build configuration list for PBXProject "mameosx" */;
+			compatibilityVersion = "Xcode 2.4";
 			hasScannedForEncodings = 0;
 			mainGroup = 556A42420AA4E9CE00602CC5;
 			productRefGroup = 556A42510AA4E9E500602CC5 /* Products */;
