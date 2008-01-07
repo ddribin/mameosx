@@ -47,13 +47,17 @@
     if (rotations < 1)
         return;
     
+    // Name log files 0 through # rotatations - 1
+    rotations--;
+    
     NSFileManager * fileManager = [NSFileManager defaultManager];
     NSString * lastLog = [NSString stringWithFormat: @"%@.%d", path, rotations];
     if ([fileManager fileExistsAtPath: lastLog])
         [fileManager removeFileAtPath: lastLog handler: NULL];
-
+    
+    rotations--;
     int i;
-    for (i = rotations-1; i >= 1; i--)
+    for (i = rotations; i >= 0; i--)
     {
         NSString * currentLog = [NSString stringWithFormat: @"%@.%d", path, i];
         NSString * rotatedLog = [NSString stringWithFormat: @"%@.%d", path, i+1];
@@ -62,7 +66,7 @@
             [fileManager movePath: currentLog toPath: rotatedLog handler: nil];
     }
     
-    NSString * firstRotation = [NSString stringWithFormat: @"%@.1", path];
+    NSString * firstRotation = [NSString stringWithFormat: @"%@.0", path];
     if ([fileManager fileExistsAtPath: path])
         [fileManager movePath: path toPath: firstRotation handler: nil];
 }
