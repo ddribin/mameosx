@@ -8,6 +8,11 @@
       ~/Library/Logs/net.mame.mameosx/
     - Log file is rotated on every launch.
     - Fix log window's resizing (#1856565)
+  files:
+    - name: MAMEOSX-<%=version%>.dmg
+      size: 25859933
+    - name: mameosx-<%=version%>.tgz
+      size: 15572865
 
 <% version = "0.119" %>
 - version: "<%=version%>"
