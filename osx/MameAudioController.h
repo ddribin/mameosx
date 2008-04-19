@@ -93,9 +93,10 @@
 #pragma mark -
 #pragma mark OS Dependent API
 
-- (void) osd_init;
+- (void) osd_init: (running_machine *) machine;
 
-- (void) osd_update_audio_stream: (INT16 *) buffer
+- (void) osd_update_audio_stream: (running_machine *) machine
+                          buffer: (INT16 *) buffer
               samples_this_frame: (int) samples_this_frame;
 
 - (void) osd_stop_audio_stream;

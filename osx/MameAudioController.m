@@ -249,7 +249,7 @@ OSStatus static MyRenderer(void	* inRefCon,
 #pragma mark -
 #pragma mark OS Dependent API
 
-- (void) osd_init;
+- (void) osd_init: (running_machine *) machine;
 {
 	OSStatus err = noErr;
     
@@ -267,7 +267,7 @@ OSStatus static MyRenderer(void	* inRefCon,
 	// necessary from your format to the device's format.
 	AudioStreamBasicDescription streamFormat;
     streamFormat.mFormatID = kAudioFormatLinearPCM;
-    streamFormat.mSampleRate = Machine->sample_rate;
+    streamFormat.mSampleRate = machine->sample_rate;
     streamFormat.mChannelsPerFrame = 2;
     streamFormat.mFormatFlags = formatFlags;
 
@@ -303,11 +303,12 @@ OSStatus static MyRenderer(void	* inRefCon,
     }
 }
 
-- (void) osd_update_audio_stream: (INT16 *) buffer
+- (void) osd_update_audio_stream: (running_machine *) machine
+                          buffer: (INT16 *) buffer
               samples_this_frame: (int) samples_this_frame;
 {
     mSamplesThisFrame = samples_this_frame;
-    if (Machine->sample_rate != 0 && mRingBuffer && !mPaused)
+    if (machine->sample_rate != 0 && mRingBuffer && !mPaused)
     {
         int inputBytes = samples_this_frame * mBytesPerFrame;
         void * writePointer;

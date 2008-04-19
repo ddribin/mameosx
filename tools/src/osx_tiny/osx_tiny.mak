@@ -98,7 +98,6 @@ DRVLIBS = \
   $(MACHINE)/vsnes.o \
   $(MACHINE)/acitya.o \
   $(MACHINE)/theglobp.o \
-  $(EMUMACHINE)/ds1302.o \
   $(MACHINE)/mspacman.o \
   $(MACHINE)/jumpshot.o \
   $(MACHINE)/segacrpt.o \

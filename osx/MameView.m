@@ -494,7 +494,7 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     
     mMachine = machine;
     [mInputController osd_init];
-    [mAudioController osd_init];
+    [mAudioController osd_init: machine];
     [mTimingController osd_init];
     
     mTarget = render_target_alloc(NULL, FALSE);
@@ -523,8 +523,18 @@ NSString * MameExitStatusKey = @"MameExitStatus";
         mOptimalSize.height *= 2;
     }
     
+	const device_config * primaryScreen = video_screen_first(mMachine->config);
+	double targetRefresh = 60.0;
+	// determine the refresh rate of the primary screen
+	if (primaryScreen != NULL)
+	{
+		const screen_config * config = primaryScreen->inline_config;
+		targetRefresh = ATTOSECONDS_TO_HZ(config->refresh);
+	}
+    JRLogInfo(@"Target refresh: %.3f", targetRefresh);
+    
     [self setFullScreenWidth: mNaturalSize.width height: mNaturalSize.height];
-    [self setFullScreenRefreshRate: mMachine->screen[0].refresh];
+    [self setFullScreenRefreshRate: targetRefresh];
 
     [mMameLock unlock];
     [self performSelectorOnMainThread: @selector(sendMameWillStartGame)

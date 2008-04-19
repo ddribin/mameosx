@@ -129,9 +129,10 @@ void osd_set_audio_controller(MameAudioController * audioController)
     sAudioController = audioController;
 }
 
-void osd_update_audio_stream(INT16 *buffer, int samples_this_frame)
+void osd_update_audio_stream(running_machine *machine, INT16 *buffer, int samples_this_frame)
 {
-    [sAudioController osd_update_audio_stream: buffer
+    [sAudioController osd_update_audio_stream: machine
+                                       buffer: buffer
                            samples_this_frame: samples_this_frame];
 }
 
@@ -184,7 +185,7 @@ void osd_customize_inputport_list(input_port_default_entry *defaults)
 
 ******************************************************************************/
 
-void osd_update(int skip_redraw)
+void osd_update(running_machine *machine, int skip_redraw)
 {
     [sController osd_update: skip_redraw];
 }

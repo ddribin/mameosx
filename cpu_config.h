@@ -50,7 +50,10 @@
 #define HAS_I8035 1
 #define HAS_I8039 1
 #define HAS_I8048 1
+#define HAS_I8749 1
 #define HAS_N7751 1
+#define HAS_MB8884 1
+#define HAS_M58715 1
 #define HAS_I8X41 1
 #define HAS_I8051 1
 #define HAS_I8052 1
@@ -79,6 +82,7 @@
 #define HAS_PIC16C57 1
 #define HAS_PIC16C58 1
 #define HAS_R3000 1
+#define HAS_R3041 1
 #define HAS_R4600 1
 #define HAS_R4650 1
 #define HAS_R4700 1
@@ -137,6 +141,8 @@
 #define HAS_V810 1
 #define HAS_UPD7810 1
 #define HAS_UPD7807 1
+#define HAS_UPD7801 0
+#define HAS_MINX 0
 #define HAS_RSP 1
 #define HAS_SATURN 1
 #define HAS_S2650 1
@@ -144,7 +150,7 @@
 #define HAS_SM8500 1
 #define HAS_SPC700 1
 #define HAS_PSXCPU 1
-#define HAS_SSP1610 1
+#define HAS_SSP1601 1
 #define HAS_TMS7000 1
 #define HAS_TMS7000_EXL 1
 #define HAS_TMS9900 1
@@ -169,9 +175,8 @@
 #define HAS_TX0_64KW 0
 #define HAS_TX0_8KW 0
 #define HAS_Z80 1
+#define HAS_Z80GB 1
 #define HAS_Z180 1
 #define HAS_Z8000 1
-#define HAS_Z80GB 1
-#define HAS_MINX 0
 
 #endif
