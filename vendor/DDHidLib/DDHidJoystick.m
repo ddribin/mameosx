@@ -55,6 +55,7 @@
 
 @interface DDHidJoystick (Private)
 
+- (void) initLogicalDeviceElements;
 - (void) initJoystickElements: (NSArray *) elements;
 - (void) addStick: (NSArray *) stickElements;
 - (void) ddhidQueueHasEvents: (DDHidQueue *) hidQueue;
@@ -106,15 +107,34 @@
     return allJoysticks;
 }
 
-- (id) initWithDevice: (io_object_t) device error: (NSError **) error_;
+- (id) initLogicalWithDevice: (io_object_t) device 
+         logicalDeviceNumber: (int) logicalDeviceNumber
+                       error: (NSError **) error;
 {
-    self = [super initWithDevice: device error: error_];
+    self = [super initLogicalWithDevice: device
+                    logicalDeviceNumber: logicalDeviceNumber
+                                  error: error];
     if (self == nil)
         return nil;
     
     mButtonElements = [[NSMutableArray alloc] init];
     mSticks = [[NSMutableArray alloc] init];
-    [self initJoystickElements: [self elements]];
+    mLogicalDeviceElements = [[NSMutableArray alloc] init];
+
+    [self initLogicalDeviceElements];
+    int logicalDeviceCount = [mLogicalDeviceElements count];
+    if (logicalDeviceCount ==  0)
+    {
+        [self release];
+        return nil;
+    }
+
+    mLogicalDeviceNumber = logicalDeviceNumber;
+    if (mLogicalDeviceNumber >= logicalDeviceCount)
+        mLogicalDeviceNumber = logicalDeviceCount - 1;
+    
+    [self initJoystickElements:
+        [mLogicalDeviceElements objectAtIndex: mLogicalDeviceNumber]];
     [mButtonElements sortUsingSelector: @selector(compareByUsage:)];
     mDelegate = nil;
     
@@ -126,12 +146,19 @@
 //=========================================================== 
 - (void) dealloc
 {
+    [mLogicalDeviceElements release];
     [mSticks release];
     [mButtonElements release];
     
+    mLogicalDeviceElements = nil;
     mSticks = nil;
     mButtonElements = nil;
     [super dealloc];
+}
+
+- (int) logicalDeviceCount;
+{
+    return [mLogicalDeviceElements count];
 }
 
 #pragma mark -
@@ -192,6 +219,29 @@
 @end
 
 @implementation DDHidJoystick (Private)
+
+- (void) initLogicalDeviceElements;
+{
+    NSArray * topLevelElements = [self elements];
+    if ([topLevelElements count] == 0)
+    {
+        [mLogicalDeviceElements addObject: topLevelElements];
+        return;
+    }
+    
+    NSEnumerator * e = [topLevelElements objectEnumerator];
+    DDHidElement * element;
+    while (element = [e nextObject])
+    {
+        unsigned usagePage = [[element usage] usagePage];
+        unsigned usageId = [[element usage] usageId];
+        if (usagePage == kHIDPage_GenericDesktop &&
+            (usageId == kHIDUsage_GD_Joystick || usageId == kHIDUsage_GD_GamePad)) 
+        {
+            [mLogicalDeviceElements addObject: [NSArray arrayWithObject: element]];
+        }
+    }
+}
 
 - (void) initJoystickElements: (NSArray *) elements;
 {

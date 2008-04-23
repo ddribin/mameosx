@@ -29,7 +29,14 @@
 #import "NSDictionary+DDHidExtras.h"
 #import "NSXReturnThrowError.h"
 
+#include <IOKit/hid/IOHIDUsageTables.h>
+
 @interface DDHidDevice (Private)
+
++ (void) addDevice: (io_object_t) hidDevice
+         withClass: (Class) hidClass
+ skipZeroLocations: (BOOL) skipZeroLocations
+      toDeviceList: (NSMutableArray *) devices;
 
 - (BOOL) initPropertiesWithError: (NSError **) error_;
 - (BOOL) createDeviceInterfaceWithError: (NSError **) error_;
@@ -38,30 +45,41 @@
 
 @implementation DDHidDevice
 
-- (id) initWithDevice: (io_object_t) device error: (NSError **) error_;
+- (id) initWithDevice: (io_object_t) device error: (NSError **) error;
+{
+    return [self initLogicalWithDevice: device
+                   logicalDeviceNumber: 0
+                                 error: error];
+}
+
+- (id) initLogicalWithDevice: (io_object_t) device
+         logicalDeviceNumber: (int) logicalDeviceNumber
+                       error: (NSError **) error;
 {
     self = [super init];
     if (self == nil)
         return nil;
     
     mHidDevice = device;
-    
-    if (![self initPropertiesWithError: error_])
+    IOObjectRetain(mHidDevice);
+ 
+    if (![self initPropertiesWithError: error])
     {
         [self release];
         return nil;
     }
     
-    if (![self createDeviceInterfaceWithError: error_])
+    if (![self createDeviceInterfaceWithError: error])
     {
         [self release];
         return nil;
     }
     
+    mLogicalDeviceNumber = logicalDeviceNumber;
     mListenInExclusiveMode = NO;
     mDefaultQueue = nil;
     mTag = 0;
-    
+	
     return self;
 }
 
@@ -141,18 +159,10 @@
         io_object_t hidDevice;
         while (hidDevice = IOIteratorNext(hidObjectIterator))
         {
-            NSError * error = nil;
-            DDHidDevice * device = [[hidClass alloc] initWithDevice: hidDevice
-                                                              error: &error];
-            if (device == nil)
-            {
-                NSXRaiseError(error);
-            }
-            [device autorelease];
-            if (([device locationId] == 0) && skipZeroLocations)
-                continue;
-            
-            [devices addObject: device];
+            [self addDevice: hidDevice
+                  withClass: hidClass
+          skipZeroLocations: skipZeroLocations
+               toDeviceList: devices];
         }
         
         // This makes sure the array return is consistent from run to run, 
@@ -166,6 +176,11 @@
     }
     
     return devices;
+}
+
+- (int) logicalDeviceCount;
+{
+    return 1;
 }
 
 #pragma mark -
@@ -278,7 +293,13 @@
 //=========================================================== 
 - (NSString *) productName
 {
-    return [mProperties ddhid_stringForString: kIOHIDProductKey]; 
+    NSString * productName = [mProperties ddhid_stringForString: kIOHIDProductKey];
+    if ([self logicalDeviceCount] > 1)
+    {
+        productName = [productName stringByAppendingString:
+                       [NSString stringWithFormat:@" #%d", mLogicalDeviceNumber + 1]];
+    }
+    return productName;
 }
 
 //=========================================================== 
@@ -416,6 +437,50 @@
 @end
 
 @implementation DDHidDevice (Private)
+
++ (void) addDevice: (io_object_t) hidDevice
+         withClass: (Class) hidClass
+ skipZeroLocations: (BOOL) skipZeroLocations
+      toDeviceList: (NSMutableArray *) devices;
+{
+    @try
+    {
+        NSError * error = nil;
+        DDHidDevice * device = [[hidClass alloc] initWithDevice: hidDevice
+                                                          error: &error];
+        if (device == nil)
+        {
+            NSXRaiseError(error);
+        }
+        [device autorelease];
+        
+        if (([device locationId] == 0) && skipZeroLocations)
+            return;
+        
+        [devices addObject: device];
+
+        // Add remainnig logical devices
+        int i;
+        for (i = 1; i < [device logicalDeviceCount]; i++)
+        {
+            device = [[hidClass alloc] initLogicalWithDevice: hidDevice
+                                         logicalDeviceNumber: i
+                                                       error: &error];
+            
+            if (device == nil)
+            {
+                NSXRaiseError(error);
+            }
+            [device autorelease];
+            
+            [devices addObject: device];
+        }
+    }
+    @finally
+    {
+        IOObjectRelease(hidDevice);
+    }
+}
 
 - (void) indexElements: (NSArray *) elements;
 {

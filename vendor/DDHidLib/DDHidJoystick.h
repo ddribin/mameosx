@@ -63,13 +63,18 @@
 {
     NSMutableArray * mSticks;
     NSMutableArray * mButtonElements;
+    NSMutableArray * mLogicalDeviceElements;
 
     id mDelegate;
 }
 
 + (NSArray *) allJoysticks;
 
-- (id) initWithDevice: (io_object_t) device error: (NSError **) error_;
+- (id) initLogicalWithDevice: (io_object_t) device 
+         logicalDeviceNumber: (int) logicalDeviceNumber 
+                       error: (NSError **) error;
+
+- (int) logicalDeviceCount;
 
 #pragma mark -
 #pragma mark Joystick Elements

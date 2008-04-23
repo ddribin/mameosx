@@ -45,9 +45,14 @@
     BOOL mListenInExclusiveMode;
     DDHidQueue * mDefaultQueue;
     int mTag;
+    int mLogicalDeviceNumber;
 }
 
-- (id) initWithDevice: (io_object_t) device error: (NSError **) error_;
+- (id) initWithDevice: (io_object_t) device error: (NSError **) error;
+- (id) initLogicalWithDevice: (io_object_t) device
+         logicalDeviceNumber: (int) logicalDeviceNumber
+                       error: (NSError **) error;
+- (int) logicalDeviceCount;
 
 #pragma mark -
 #pragma mark Finding Devices
