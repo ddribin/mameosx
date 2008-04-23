@@ -3,6 +3,7 @@
   date: 2008-01-06
   changes:
     - Upgrade to 0.124 baseline.
+    - Support HID devices like PS/2 to USB as separate joysticks.
   files:
     - name: MAMEOSX-<%=version%>.dmg
       size: 25859933
