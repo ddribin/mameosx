@@ -1,6 +1,6 @@
 <% version = "0.124" %>
 - version: "<%=version%>"
-  date: 2008-01-06
+  date: 2008-04-23
   changes:
     - Upgrade to 0.124 baseline.
     - Support HID devices like PS/2 to USB as separate joysticks.
