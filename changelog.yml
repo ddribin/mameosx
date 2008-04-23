@@ -4,11 +4,6 @@
   changes:
     - Upgrade to 0.124 baseline.
     - Support HID devices like PS/2 to USB as separate joysticks.
-  files:
-    - name: MAMEOSX-<%=version%>.dmg
-      size: 25859933
-    - name: mameosx-<%=version%>.tgz
-      size: 15572865
 
 <% version = "0.122" %>
 - version: "<%=version%>"
