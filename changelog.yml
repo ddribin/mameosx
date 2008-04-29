@@ -1,3 +1,10 @@
+<% version = "0.12x" %>
+- version: "<%=version%>"
+  date: xxx
+  changes:
+    - Upgrade to 0.12x baseline.
+    - Controlling master volume from on screen display now works.
+
 <% version = "0.124" %>
 - version: "<%=version%>"
   date: 2008-04-23
