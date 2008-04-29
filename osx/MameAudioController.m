@@ -138,6 +138,7 @@ OSStatus static MyRenderer(void	* inRefCon,
     [mConverterUnit setRenderCallback: MyRenderer context: self];
     
     mEffectUnit = [[mEffectNode audioUnit] retain];
+    mOutputUnit = [[mOutputNode audioUnit] retain];
     
     return self;
 }
@@ -348,7 +349,15 @@ OSStatus static MyRenderer(void	* inRefCon,
 
 - (void) osd_set_mastervolume: (int) attenuation;
 {
-    mAttenuation = attenuation;
+    // Convert dB to linear volume between 0.0 and 1.0
+    Float32 volume = 1.0;
+    while (attenuation++ < 0)
+        volume /= 1.122018454;      //  = (10 ^ (1/20)) = 1dB
+    [mOutputUnit setParameter: kHALOutputParam_Volume
+                        scope: kAudioUnitParameterFlag_Output
+                      element: 0
+                        value: volume
+                 bufferOffset: 0];
 }
 
 @end
