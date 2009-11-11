@@ -22,7 +22,7 @@
     int mPovs[MameJoystickMaxPovs];
 }
 
-- (void) osd_init;
+- (void) osd_init: (running_machine*) machine;
 
 #pragma mark -
 #pragma mark DDJoystickDelegate

@@ -44,14 +44,15 @@ static INT32 keyboardGetState(void *device_internal, void *item_internal)
     return keyboard->mKeyStates[key];
 }
 
-- (void) osd_init;
+- (void) osd_init: (running_machine*) machine;
 {
     DDHidKeyboard * keyboard = (DDHidKeyboard *) mDevice;
     [keyboard setDelegate: self];
     
     NSString * name = [NSString stringWithFormat: @"Keyboard %d", mMameTag];
     JRLogInfo(@"Adding keyboard device: %@", name);
-    input_device * device = input_device_add(DEVICE_CLASS_KEYBOARD,
+    input_device * device = input_device_add(machine,
+											 DEVICE_CLASS_KEYBOARD,
                                              [name UTF8String],
                                              self);
     

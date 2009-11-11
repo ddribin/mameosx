@@ -493,11 +493,11 @@ NSString * MameExitStatusKey = @"MameExitStatus";
     JRLogInfo(@"osd_init");
     
     mMachine = machine;
-    [mInputController osd_init];
+    [mInputController osd_init: machine];
     [mAudioController osd_init: machine];
-    [mTimingController osd_init];
+    [mTimingController osd_init: machine];
     
-    mTarget = render_target_alloc(NULL, FALSE);
+    mTarget = render_target_alloc(machine, NULL, FALSE);
     
     render_target_set_orientation(mTarget, ROT0);
     render_target_set_layer_config(mTarget, LAYER_CONFIG_DEFAULT);

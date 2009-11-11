@@ -74,14 +74,14 @@ static INT32 joystickButtonGetState(void *device_internal, void *item_internal)
     return (*buttonState);
 }
 
-- (void) osd_init;
+- (void) osd_init: (running_machine*) machine;
 {
     DDHidJoystick * joystick = (DDHidJoystick *) mDevice;
     [joystick setDelegate: self];
     
     NSString * name = [NSString stringWithFormat: @"Joystick %d", mMameTag];
     JRLogInfo(@"Adding joystick device: %@", name);
-    input_device * device = input_device_add(DEVICE_CLASS_JOYSTICK,
+    input_device * device = input_device_add(machine, DEVICE_CLASS_JOYSTICK,
                                              [name UTF8String],
                                              (void *) self);
     

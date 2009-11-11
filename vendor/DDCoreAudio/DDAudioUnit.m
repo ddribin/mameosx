@@ -117,26 +117,6 @@
                                   sizeof(AudioStreamBasicDescription)));
 }
 
-- (void) setParameter: (AudioUnitParameterID) parameter
-                scope: (AudioUnitScope) scope
-              element: (AudioUnitElement) element
-                value: (Float32) value
-         bufferOffset: (UInt32) bufferOffset;
-{
-    THROW_IF(AudioUnitSetParameter([self AudioUnit], parameter, scope,
-                                   element, value, bufferOffset));
-}
-
-- (Float32) getParameter: (AudioUnitParameterID) parameter
-                   scope: (AudioUnitScope) scope
-                 element: (AudioUnitElement) element;
-{
-    Float32 value = 0;
-    THROW_IF(AudioUnitGetParameter([self AudioUnit], parameter, scope,
-                                   element, &value));
-    return value;
-}
-
 #pragma mark -
 #pragma mark Presets
 

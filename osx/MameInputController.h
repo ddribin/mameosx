@@ -37,10 +37,10 @@
     BOOL mEnabled;
 }
 
-- (void) osd_init;
+- (void) osd_init: (running_machine *) machine;
 - (void) gameFinished;
 
-- (void) osd_customize_inputport_list: (input_port_default_entry *) defaults;
+- (void) osd_customize_input_type_list: (input_type_desc *) defaults;
 
 - (BOOL) enabled;
 - (void) setEnabled: (BOOL) enabled;

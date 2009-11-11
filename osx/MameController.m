@@ -42,6 +42,7 @@
 #include <mach/mach_time.h>
 #include <unistd.h>
 #include "osd_osx.h"
+#include "driver.h"
 
 static const int kMameRunGame = 0;
 static const int kMameCancelGame = 1;

@@ -24,20 +24,22 @@
 
 #import <Cocoa/Cocoa.h>
 
-
+/*
 #if defined(__cplusplus)
 extern "C" {
 #endif
     
 #define class klass
+*/
 #include "render.h"
 #include "palette.h"
+/*
 #undef class
     
 #if defined(__cplusplus)
 }
 #endif
-
+*/
 #import <QuartzCore/QuartzCore.h>
 
 @interface MameOpenGLTexture : NSObject

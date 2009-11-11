@@ -74,9 +74,9 @@
 
 @interface MameInputController (Private)
 
-- (void) addAllKeyboards;
-- (void) addAllMice;
-- (void) addAllJoysticks;
+- (void) addAllKeyboards: (running_machine *) machine;
+- (void) addAllMice: (running_machine *) machine;
+- (void) addAllJoysticks: (running_machine *) machine;
 
 @end
 
@@ -123,15 +123,15 @@
     [super dealloc];
 }
 
-- (void) osd_init;
+- (void) osd_init: (running_machine *) machine;
 {
     [p->mDevices removeAllObjects];
     [p->mDeviceNames removeAllObjects];
 
     [mDevices removeAllObjects];
-    [self addAllKeyboards];
-    [self addAllMice];
-    [self addAllJoysticks];
+    [self addAllKeyboards: machine];
+    [self addAllMice: machine];
+    [self addAllJoysticks: machine];
 }
 
 - (void) gameFinished;
@@ -157,31 +157,28 @@ static BOOL sEnabled = NO;
     mEnabled = enabled;
 }
 
-- (void) osd_customize_inputport_list: (input_port_default_entry *) defaults;
+- (void) osd_customize_input_type_list: (input_type_desc *) defaults;
 {
-    input_port_default_entry *idef = defaults;
-    
+	input_type_desc * idef = NULL;
+
     // loop over all the defaults
-    while (idef->type != IPT_END)
-    {
-        switch (idef->type)
-        {
+	for (idef = defaults; idef = idef->next; idef->next != NULL) {
+	
+        switch (idef->type) {
             case IPT_UI_FAST_FORWARD:
                 idef->token = "FAST_FORWARD";
                 idef->name = "Fast Forward";
-                input_seq_set_1(&idef->defaultseq, KEYCODE_PGDN);
+                input_seq_set_1(&idef->seq[SEQ_TYPE_STANDARD], KEYCODE_PGDN);
                 break;
         }
-        
-        idef++;
-    }
+	}
 }
 
 @end
 
 @implementation MameInputController (Private)
 
-- (void) addAllKeyboards;
+- (void) addAllKeyboards: (running_machine*) machine;
 {
     int keyboardTag = 0;
     NSArray * keyboards = [DDHidKeyboard allKeyboards];
@@ -203,12 +200,12 @@ static BOOL sEnabled = NO;
         }
 
         [mDevices addObject: keyboard];
-        [keyboard osd_init];
+        [keyboard osd_init: machine];
         keyboardTag++;
     }
 }
 
-- (void) addAllMice;
+- (void) addAllMice: (running_machine*) machine;
 {
     int mouseTag = 0;
     NSArray * mice = [DDHidMouse allMice];
@@ -232,13 +229,13 @@ static BOOL sEnabled = NO;
         }
         
         [mDevices addObject: mouse];
-        [mouse osd_init];
+        [mouse osd_init: machine];
         mouseTag++;
     }
 }
 
 
-- (void) addAllJoysticks;
+- (void) addAllJoysticks: (running_machine *) machine;
 {
     int joystickTag = 0;
     NSArray * joysticks = [DDHidJoystick allJoysticks];
@@ -262,7 +259,7 @@ static BOOL sEnabled = NO;
         }
         
         [mDevices addObject: joystick];
-        [joystick osd_init];
+        [joystick osd_init: machine];
         joystickTag++;
     }
 }

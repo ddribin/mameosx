@@ -48,16 +48,6 @@
 - (void) setStreamFormatWithDescription:
     (const AudioStreamBasicDescription *) streamFormat;
 
-- (void) setParameter: (AudioUnitParameterID) parameter
-                scope: (AudioUnitScope) scope
-              element: (AudioUnitElement) element
-                value: (Float32) value
-         bufferOffset: (UInt32) bufferOffset;
-
-- (Float32) getParameter: (AudioUnitParameterID) parameter
-                   scope: (AudioUnitScope) scope
-                 element: (AudioUnitElement) element;
-
 #pragma mark -
 #pragma mark Presets
 

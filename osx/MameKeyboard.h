@@ -18,6 +18,6 @@
     uint32_t mKeyStates[MameKeyboardMaxKeys];
 }
 
-- (void) osd_init;
+- (void) osd_init: (running_machine*) machine;
 
 @end

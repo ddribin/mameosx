@@ -1,7 +1,6 @@
 #ifndef SOUND_CONFIG_H
 #define SOUND_CONFIG_H
 
-#define HAS_CUSTOM 1
 #define HAS_SAMPLES 1
 #define HAS_DAC 1
 #define HAS_DMADAC 1
@@ -36,14 +35,16 @@
 #define HAS_NAMCO_CUS30 1
 #define HAS_NAMCO_52XX 1
 #define HAS_NAMCO_63701X 1
-#define HAS_NAMCONA 1
 #define HAS_C140 1
 #define HAS_C352 1
+#define HAS_DIGITALKER 1
 #define HAS_NES 1
 #define HAS_UPD7759 1
 #define HAS_MSM5205 1
 #define HAS_MSM5232 1
+#define HAS_OKIM6376 1
 #define HAS_OKIM6295 1
+#define HAS_OKIM6258 1
 #define HAS_SAA1099 1
 #define HAS_QSOUND 1
 #define HAS_RF5C68 1
@@ -53,9 +54,12 @@
 #define HAS_SCSP 1
 #define HAS_AICA 1
 #define HAS_ST0016 1
+#define HAS_NILE 1
 #define HAS_X1_010 1
 #define HAS_SID6581 0
 #define HAS_SID8580 0
+#define HAS_T6W28 1
+#define HAS_SNKWAVE 1
 #define HAS_PSXSPU 1
 #define HAS_SP0256 1
 #define HAS_SP0250 1
@@ -71,14 +75,13 @@
 #define HAS_TMC0281 1
 #define HAS_CD2802 1
 #define HAS_M58817 1
-#define HAS_TMS5110 1
 #define HAS_TMC0285 1
 #define HAS_TMS5200 1
 #define HAS_TMS5220 1
 #define HAS_VLM5030 1
 #define HAS_VOTRAX 0
 #define HAS_VRENDER0 1
-#define HAS_WAVE 0
+#define HAS_WAVE 1
 #define HAS_YM2151 1
 #define HAS_YM2203 1
 #define HAS_YM2413 1

@@ -173,9 +173,9 @@ INT32 osd_get_code_value(os_code code)
 }
 #endif
 
-void osd_customize_inputport_list(input_port_default_entry *defaults)
+void osd_customize_input_type_list(input_type_desc *defaults)
 {
-    [sInputController osd_customize_inputport_list: defaults];
+    [sInputController osd_customize_input_type_list: defaults];
 }
 
 
@@ -190,7 +190,7 @@ void osd_update(running_machine *machine, int skip_redraw)
     [sController osd_update: skip_redraw];
 }
 
-void osd_wait_for_debugger(void)
+void osd_wait_for_debugger(const device_config *device, int firststop)
 {
 }
 

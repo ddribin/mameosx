@@ -36,14 +36,14 @@ static INT32 mouseButtonGetState(void *device_internal, void *item_internal)
     return (*buttonState);
 }
 
-- (void) osd_init;
+- (void) osd_init: (running_machine*) machine;
 {
     DDHidMouse * mouse = (DDHidMouse *) mDevice;;
     [mouse setDelegate: self];
     
     NSString * name = [NSString stringWithFormat: @"Mouse %d", mMameTag];
     JRLogInfo(@"Adding mouse device: %@", name);
-    input_device * device = input_device_add(DEVICE_CLASS_MOUSE,
+    input_device * device = input_device_add(machine, DEVICE_CLASS_MOUSE,
                                              [name UTF8String],
                                              (void *) self);
     

@@ -35,6 +35,7 @@
 {
     BOOL mEnabled;
     BOOL mPaused;
+    int mAttenuation;
 
     DDAudioUnitGraph * mGraph;
 
@@ -44,7 +45,6 @@
 
     DDAudioUnit * mConverterUnit;
     DDAudioUnit * mEffectUnit;
-    DDAudioUnit * mOutputUnit;
 
     NSArray * mEffectComponents;
     unsigned mIndexOfCurrentEffect;

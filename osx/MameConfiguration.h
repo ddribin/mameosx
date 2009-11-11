@@ -24,6 +24,7 @@
 
 #import <Cocoa/Cocoa.h>
 #include "mame.h"
+#include <emu/emuopts.h>
 
 
 @class MameFileManager;

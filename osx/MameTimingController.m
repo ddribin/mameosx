@@ -103,7 +103,7 @@ static inline cycles_t osd_cycles_internal()
     return self;
 }
 
-- (void) osd_init;
+- (void) osd_init: (running_machine*) machine;
 {
     mach_timebase_info_data_t info;
     mach_timebase_info(&info);
@@ -119,6 +119,8 @@ static inline cycles_t osd_cycles_internal()
     mFramesDisplayed = 0;
     mFramesRendered = 0;
     mFrameStartTime = 0;
+	
+	mMachine = machine;
 }
 
 - (osd_ticks_t) osd_ticks;
@@ -389,7 +391,7 @@ resync:
     BOOL resetFrameCounters = NO;
 
 	// increment frameskip?
-	if (input_ui_pressed(IPT_UI_FRAMESKIP_INC))
+	if (ui_input_pressed(mMachine, IPT_UI_FRAMESKIP_INC))
 	{
 		// if autoframeskip, disable auto and go to 0
 		if (mAutoFrameSkip)
@@ -416,7 +418,7 @@ resync:
 	}
 
 	// decrement frameskip?
-	if (input_ui_pressed(IPT_UI_FRAMESKIP_DEC))
+	if (ui_input_pressed(mMachine,IPT_UI_FRAMESKIP_DEC))
 	{
 		// if autoframeskip, disable auto and go to max
 		if (mAutoFrameSkip)
@@ -440,7 +442,7 @@ resync:
 	}
 
 	// toggle throttle?
-	if (input_ui_pressed(IPT_UI_THROTTLE))
+	if (ui_input_pressed(mMachine, IPT_UI_THROTTLE))
 	{
 		[self setThrottled: !mThrottled];
         

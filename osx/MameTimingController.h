@@ -47,9 +47,11 @@ typedef osd_ticks_t cycles_t;
     uint64_t mFramesRendered;
     cycles_t mFrameStartTime;
     cycles_t mFrameEndTime;
+	
+	running_machine * mMachine;
 }
 
-- (void) osd_init;
+- (void) osd_init: (running_machine*) machine;
 
 - (osd_ticks_t) osd_ticks;
 

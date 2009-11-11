@@ -200,7 +200,7 @@ static MameConfiguration * sDefaultConfiguration = nil;
 
 - (void) setCheatFile: (NSString *) cheatFile;
 {
-    [self setStringOption: cheatFile withName: OPTION_CHEAT_FILE];
+    [self setStringOption: cheatFile withName: OPTION_CHEATPATH];
 }
 
 #pragma mark -
