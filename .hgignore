@@ -1,0 +1,15 @@
+syntax: regexp
+
+\.xcodeproj/.*\.mode1$
+\.xcodeproj/.*\.mode1v3$
+\.xcodeproj/.*\.pbxuser$
+
+syntax: glob
+
+build
+scratch
+mame
+mame-*
+
+.DS_Store
+*.~.nib
