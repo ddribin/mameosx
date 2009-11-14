@@ -19,6 +19,8 @@
 #define HAS_ES8712 1
 #define HAS_GAELCO_CG1V 1
 #define HAS_GAELCO_GAE1 1
+#define HAS_CDP1863 1
+#define HAS_CDP1864 1
 #define HAS_CDP1869 1
 #define HAS_AY8910 1
 #define HAS_HC55516 1
@@ -33,7 +35,6 @@
 #define HAS_NAMCO 1
 #define HAS_NAMCO_15XX 1
 #define HAS_NAMCO_CUS30 1
-#define HAS_NAMCO_52XX 1
 #define HAS_NAMCO_63701X 1
 #define HAS_C140 1
 #define HAS_C352 1
@@ -68,15 +69,7 @@
 #define HAS_SN76496 1
 #define HAS_TMS36XX 1
 #define HAS_TMS3615 1
-#define HAS_TMS5100 1
 #define HAS_TMS5110 1
-#define HAS_TMS5110A 1
-#define HAS_CD2801 1
-#define HAS_TMC0281 1
-#define HAS_CD2802 1
-#define HAS_M58817 1
-#define HAS_TMC0285 1
-#define HAS_TMS5200 1
 #define HAS_TMS5220 1
 #define HAS_VLM5030 1
 #define HAS_VOTRAX 0
