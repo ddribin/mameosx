@@ -1,8 +1,8 @@
 <% version = "0.135" %>
 - version: "<%=version%>"
-  date: 2000-11-14
+  date: 2000-11-15
   changes:
-    - Upgrade to 0.135 baseline.
+    - Upgrade to 0.135 baseline. Much thanks to Zuki Gottlieb!
 
 <% version = "0.124" %>
 - version: "<%=version%>"
